@@ -1,13 +1,13 @@
-package com.kh.samdado.listpage.model.dao;
+package com.kh.samdado.bussiness.model.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.samdado.listpage.model.vo.Alliance;
+import com.kh.samdado.bussiness.model.vo.Alliance;
 
 @Repository 
-public class ListpageDaoImpl implements ListpageDao {
+public class bussinessDaoImpl implements bussinessDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;

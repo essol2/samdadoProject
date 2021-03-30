@@ -1,4 +1,4 @@
-package com.kh.samdado.listpage.model.vo;
+package com.kh.samdado.bussiness.model.vo;
 
 import java.util.Date;
 

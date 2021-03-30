@@ -53,7 +53,7 @@
                  <li><a href="#" class="center" id="navi-menu-buss-rent"><p>렌트카 등록하기</p></a></li>
                  <li><a href="#" class="center" id="navi-menu-buss-restau"><p>음식점 등록하기</p></a></li>
                  <li><a href="#" class="center" id="navi-menu-buss-attrac"><p>관광지 등록하기</p></a></li>
-                 <li><a href="${ contextPath }/listpage/submit/bannerAd" class="center" id="navi-menu-buss-banner"><p>배너(리스팅)광고</p></a></li>
+                 <li><a href="${ contextPath }/bussiness/submit/bannerAd" class="center" id="navi-menu-buss-banner"><p>배너(리스팅)광고</p></a></li>
              </ul>
          </li>
          </c:if>
