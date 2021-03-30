@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mypageMapper">
+	<resultMap type="User" id="userResultSet">
+	<id property="usno" column="US_NO" />
+	<result property="usid" column="US_ID" />
+	<result property="uspwd" column="US_PWD" />
+	<result property="usname" column="US_NAME" />
+	<result property="usbirth" column="US_BIRTH" />
+	<result property="usemail" column="US_EMAIL" />
+	<result property="usphone" column="US_PHONE" />
+	<result property="busno" column="BUS_NO" />
+	<result property="uspart" column="US_PART" />
+	<result property="usstatus" column="US_STATUS" />
+	<result property="usstop" column="US_STOP" />
+	<result property="authKey" column="AUTH_KEY" />
+	</resultMap>
+	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
+	<!-- 1. 이메일, 전화번호 변경 메소드 -->
+	<update id="updateUserInfo" parameterType="User">
+		UPDATE
+				"USER"
+		   SET
+		   		US_EMAIL = #{usemail},
+		   		US_PHONE = #{usphone}
+		 WHERE
+				US_ID = #{usid}
+		   AND  US_STOP IS NULL
+	</update>
+	
+</mapper>

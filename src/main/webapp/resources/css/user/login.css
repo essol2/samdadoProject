@@ -1,0 +1,83 @@
+/* 공통 - 폰트 */
+* {
+    font-family: 'Jeju Myeongjo', serif;
+}
+
+#loginBtn {
+    border-style: none;
+    background-color: white;
+    outline: none;
+}
+
+#closeBtn {
+    border-style: none;
+    background-color: white;
+}
+
+.modal-header {
+    padding: 5%;
+    margin: auto;
+}
+
+.modal-header img {
+    width:100px;
+    height: 100px;
+}
+
+.modal-body {
+    padding: 10%;
+}
+
+.modal-content{
+    margin: 0;
+    width: 100%;
+}
+
+.modal-body input {
+    width: 100%;
+}
+
+#name ,#id, #pwd {
+    border: none;
+    border-bottom: 1px solid;
+    line-height: 30px;
+    display: block;
+}
+
+label {
+    line-height: 50px;
+}
+
+#name:focus, #id:focus, #pwd:focus{
+    outline: none;
+}
+
+.modal-body div {
+    margin-bottom: 10%;
+}
+
+a:link { color:rgb(80, 80, 80); text-decoration: rgb(80, 80, 80);}
+a:visited { color: rgb(80, 80, 80); text-decoration: rgb(80, 80, 80);}
+a:hover { color:rgb(4, 124, 0); text-decoration: rgb(80, 80, 80);}
+
+#test_id_label, #test_pwd_label {
+    color: red;
+}
+
+#find_id_pwd{
+    margin-right: 40%;
+}
+
+.easy_login_imgs img {
+    padding: 5%;
+}
+
+.col-sm{
+    border: 1px solid black;
+    margin: 1%;
+    border-radius: 10px;
+}
+
+#google_img{
+    margin-left: 10%;
+}

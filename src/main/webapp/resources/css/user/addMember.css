@@ -1,0 +1,114 @@
+/* 공통 폰트 */
+* {
+    font-family: 'Jeju Myeongjo', serif;
+}
+
+#addMemberBtn {
+    border-style: none;
+    background-color: white;
+    outline: none;
+}
+
+/* 회원가입 버튼 + 모달 */
+
+#goaddMemberBtn {
+    border-style: none;
+    background-color: white;
+    outline: none;
+}
+
+#closeBtn {
+    border-style: none;
+    background-color: white;
+}
+
+.modal-header {
+    padding: 5%;
+    margin: auto;
+}
+
+.modal-header img {
+    width:100px;
+    height: 100px;
+}
+
+.modal-body {
+    padding: 10%;
+}
+
+.modal-content{
+    margin: 0;
+    width: 100%;
+}
+
+.modal-body input {
+    width: 100%;
+}
+
+
+#name ,#id, #pwd, #pwd2, #email, #birth, #phone {
+    border: none;
+    border-bottom: 1px solid;
+    line-height: 30px;
+    display: block;
+}
+
+label {
+    line-height: 50px;
+}
+
+#name:focus, #id:focus, #pwd:focus, #pwd2:focus, #email:focus, #birth:focus, #bussiness_no:focus, #phone:focus {
+    outline: none;
+}
+
+.modal-body div {
+    margin-bottom: 10%;
+}
+
+.test_div {
+    color: red;
+}
+
+#agreement_label{
+    margin-right: 35%;
+}
+
+#agreement_checkbox {
+    margin-left: -118%;
+}
+
+#bussiness_text{
+    color: darkred;
+}
+
+#bussiness_no{
+    border: none;
+    border-bottom: 1px solid;
+    line-height: 30px;
+}
+
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: black; text-decoration: none;}
+
+#addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn {
+	color: white;
+	background-color: rgba( 255, 255, 255, 0 );
+	border: none;
+	float: right;
+	margin-right: 5%;
+	font-size: 15px;
+}
+
+#gologinBtn{
+	border: none;
+	background-color: white;
+}
+
+#find_id_pwd{
+    margin-right: 40%;
+}
+
+#bussiness_no_div{
+	display : none;
+}

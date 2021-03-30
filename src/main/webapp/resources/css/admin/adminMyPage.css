@@ -1,0 +1,41 @@
+#A {
+    height: 1200px;
+    background-color: rgba(250, 250, 250, 0.863);
+    padding-top: 2%;
+}
+
+#B {
+    height: 100vh;
+}
+
+#D {
+    width: 98%;
+    margin: auto;
+}
+
+li {
+    list-style:none;
+    color: black;
+}
+
+#right_4contents .card:hover {
+    background-color: rgb(190, 192, 192);
+}
+
+.id_div {
+    display: flex;
+}
+
+#box-container{
+    display: block;
+    width: 40%;
+
+}
+
+.input-group-text{
+    width: 150px;
+}
+
+#updateInfoBtn{
+    margin-left: 34%;
+}

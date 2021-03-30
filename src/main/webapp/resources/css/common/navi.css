@@ -1,0 +1,302 @@
+@charset "UTF-8";
+
+
+/* 제휴회원 네비 css */
+#buss-navi-id li > ul {
+    /* 평소에는 보이지 않게 */
+    opacity: 0;
+    visibility: hidden;
+
+    /* 트랜지션 */
+    transition: all 0.6s;
+}
+
+#buss-navi-id li:hover ul {
+    /* 메인 메뉴에 마우스 오버 시 서브 메뉴 보이게 */
+    opacity: 1;
+    visibility: visible;
+}
+
+.ul-class{
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style:none;
+    color: black;
+}
+
+
+ /* 네비 css */
+ #back {
+    width: 100%;
+    height: auto;
+    margin: auto;
+    top: 0;
+}
+
+header {
+    position:fixed;
+    width: 240px;
+    top: 0;
+    left:1200px;
+    height:100%;
+    -webkit-transition-duration:0.2s;
+    -webkit-transition-timing-function:ease;
+    transition-duration:0.2s;
+    transition-timing-function:ease;
+    color: black;
+    border-left: 3px solid black;
+    z-index: 1;
+}
+
+.down {
+    -webkit-transition-duration:0.2s;
+    -webkit-transition-timing-function:ease;
+    transition-duration:0.2s;
+    transition-timing-function:ease;
+}
+
+.down #navi {
+    -webkit-transition-duration:0.4s;
+    -webkit-transition-timing-function:ease;
+    transition-duration:0.4s;
+    transition-timing-function:ease;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+    position: relative;
+    right: 10%;
+    margin: auto;
+}
+
+#navi-title {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+
+#navi-menu, #navi-menu-buss, #navi-menu-buss-hotel, #navi-menu-buss-rent, #navi-menu-buss-attrac, #navi-menu-buss-banner, #navi-menu-buss-restau{
+
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.navi {
+    height: 600px;
+    /* border : 1px solid pink; */
+    margin-left: 2%;
+    width : 100%;
+}
+
+
+.navi li {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    color: black;
+}
+
+.navi li a:hover{
+    display: block;
+    text-decoration: none; 
+    text-align: center;
+    color: #467355;
+}
+
+/* .navi ul li:last-child:hover{
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    color: red;
+} */
+
+/* 배너 리스팅 광고 마우스 오버시 빨간색으로 */
+#navi-menu-buss-banner:hover {
+    color: red;
+}
+
+#navi-menu-buss{
+    color: #467355;
+ }
+
+
+.img {
+    position: relative;
+    left: 70%;
+}
+
+
+/* 회원가입 버튼 + 모달 */
+#goaddMemberBtn {
+    border-style: none;
+    background-color: white;
+    outline: none;
+}
+
+#closeBtn {
+    border-style: none;
+    background-color: white;
+}
+
+
+.modal-header {
+    padding: 5%;
+    margin: auto;
+}
+
+.modal-header img {
+    width:100px;
+    height: 100px;
+}
+
+.modal-body {
+    padding: 10%;
+}
+
+.modal-content{
+    margin: 0;
+    width: 100%;
+}
+
+.modal-body input {
+    width: 100%;
+}
+
+
+#name ,#id, #pwd, #pwd2, #email, #birth, #phone {
+    border: none;
+    border-bottom: 1px solid;
+    line-height: 30px;
+    display: block;
+}
+
+label {
+    line-height: 50px;
+}
+
+#name:focus, #id:focus, #pwd:focus, #pwd2:focus, #email:focus, #birth:focus, #bussiness_no:focus, #phone:focus {
+    outline: none;
+}
+
+.modal-body div {
+    margin-bottom: 10%;
+}
+
+.test_div {
+    color: red;
+}
+
+#agreement_label{
+    margin-right: 35%;
+}
+
+#agreement_checkbox {
+    margin-left: -118%;
+}
+
+#bussiness_text{
+    color: darkred;
+}
+
+#bussiness_no{
+    border: none;
+    border-bottom: 1px solid;
+    line-height: 30px;
+}
+
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: black; text-decoration: none;}
+
+#addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn {
+	color: white;
+	background-color: rgba( 255, 255, 255, 0 );
+	border: none;
+	float: right;
+	margin-right: 5%;
+	font-size: 15px;
+}
+
+#gologinBtn{
+	border: none;
+	background-color: white;
+}
+
+#find_id_pwd{
+    margin-right: 40%;
+}
+
+#bussiness_no_div{
+	display : none;
+}
+
+.helloName{
+	/* float : left; */
+	text-align : right;
+	font-size : x-large;
+	/* border : 1px solid red; */
+			margin-left : 36%;
+	width : fit-content;
+	margin-right : 1%;
+	
+}
+
+ /* 반응형 */
+ @media (max-width:1920px){
+    header {
+        position:fixed;
+        width: 240px;
+        top: 0;
+        left:87%;
+        height:100%;
+        -webkit-transition-duration:0.2s;
+        -webkit-transition-timing-function:ease;
+        transition-duration:0.2s;
+        transition-timing-function:ease;
+        color: black;
+        border-left: 3px solid black;
+        z-index: 1;
+    }
+}
+
+@media (max-width:1650px){
+    header {
+        position:fixed;
+        width: 240px;
+        top: 0;
+        left:85%;
+        height:100%;
+        -webkit-transition-duration:0.2s;
+        -webkit-transition-timing-function:ease;
+        transition-duration:0.2s;
+        transition-timing-function:ease;
+        color: black;
+        border-left: 3px solid black;
+        z-index: 1;
+    }
+}
+
+@media (max-width:1440px){
+    header {
+        position:fixed;
+        width: 240px;
+        top: 0;
+        left:83%;
+        height:100%;
+        -webkit-transition-duration:0.2s;
+        -webkit-transition-timing-function:ease;
+        transition-duration:0.2s;
+        transition-timing-function:ease;
+        color: black;
+        border-left: 3px solid black;
+        z-index: 1;
+    }
+
+}

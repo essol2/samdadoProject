@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="userMapper">
+	<resultMap type="User" id="userResultSet">
+	<id property="usno" column="US_NO" />
+	<result property="usid" column="US_ID" />
+	<result property="uspwd" column="US_PWD" />
+	<result property="usname" column="US_NAME" />
+	<result property="usbirth" column="US_BIRTH" />
+	<result property="usemail" column="US_EMAIL" />
+	<result property="usphone" column="US_PHONE" />
+	<result property="busno" column="BUS_NO" />
+	<result property="uspart" column="US_PART" />
+	<result property="usstatus" column="US_STATUS" />
+	<result property="usstop" column="US_STOP" />
+	<result property="authKey" column="AUTH_KEY" />
+	</resultMap>
+	
+	<!-- 로그인 -->
+	<select id="selectUser" parameterType="User" resultMap="userResultSet">
+		  SELECT
+			    US_NO
+			  , US_ID
+			  , US_PWD
+			  , US_NAME
+			  , US_BIRTH
+			  , US_EMAIL
+			  , US_PHONE
+			  , BUS_NO
+			  , US_PART
+			  , US_STATUS
+			  , US_STOP
+		   FROM
+		   		"USER"
+		  WHERE
+		  		US_ID = #{usid}
+		  	<!-- 암호화 적용 후 삭제 : AND PWD = #{pwd} -->
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertUser" parameterType="User"> <!-- DB insert -> resultMap x -->
+		INSERT
+		INTO "USER"
+		(
+			US_NO
+		  , US_ID
+		  , US_PWD
+		  , US_NAME
+		  , US_BIRTH
+		  , US_EMAIL
+		  , US_PHONE
+		  , BUS_NO
+		  , US_PART
+		  , US_STATUS
+		)
+		VALUES
+		(
+		    USER_SEQ_NO.NEXTVAL
+		  , #{usid}
+		  , #{uspwd}
+		  , #{usname}
+		  , #{usbirth}
+		  , #{usemail}
+		  , #{usphone}
+		  , #{busno} <!-- 일반 회원일시 NULL -->
+		  , #{uspart}
+		  , DEFAULT
+		)
+	</insert>
+	
+	<select id="findUserId" parameterType="User" resultMap="userResultSet">
+		  SELECT
+			    US_NO
+			  , US_ID
+			  , US_PWD
+			  , US_NAME
+			  , US_BIRTH
+			  , US_EMAIL
+			  , US_PHONE
+			  , BUS_NO
+			  , US_PART
+			  , US_STATUS
+			  , US_STOP
+		   FROM
+		   		"USER"
+		  WHERE
+		  		US_NAME = #{usname}
+		  	AND	US_EMAIL = #{usemail}
+		  	AND US_PHONE = #{usphone}
+	</select>
+	
+	<select id="findUserPwd" parameterType="User" resultMap="userResultSet">
+		SELECT
+			    US_NO
+			  , US_ID
+			  , US_PWD
+			  , US_NAME
+			  , US_BIRTH
+			  , US_EMAIL
+			  , US_PHONE
+			  , BUS_NO
+			  , US_PART
+			  , US_STATUS
+			  , US_STOP
+		   FROM
+		   		"USER"
+		  WHERE
+		  		US_NAME = #{usname}
+		  	AND US_ID = #{usid}
+		  	AND	US_EMAIL = #{usemail}
+		  	AND US_PHONE = #{usphone}
+	</select>
+	
+	<select id="selectIdCheckUser" parameterType="User" resultMap="userResultSet">
+		SELECT
+			    US_NO
+			  , US_ID
+			  , US_PWD
+			  , US_NAME
+			  , US_BIRTH
+			  , US_EMAIL
+			  , US_PHONE
+			  , BUS_NO
+			  , US_PART
+			  , US_STATUS
+			  , US_STOP
+		   FROM
+		   		"USER"
+		  WHERE
+		  		US_ID = #{usid}
+		  AND   US_STOP IS NULL	
+	</select>
+	
+	<select id="selectEmailCheckUser" parameterType="User" resultMap="userResultSet">
+		SELECT
+			    US_NO
+			  , US_ID
+			  , US_PWD
+			  , US_NAME
+			  , US_BIRTH
+			  , US_EMAIL
+			  , US_PHONE
+			  , BUS_NO
+			  , US_PART
+			  , US_STATUS
+			  , US_STOP
+		   FROM
+		   		"USER"
+		  WHERE
+		  		US_EMAIL = #{usemail}
+		  AND   US_STOP IS NULL	
+	</select>
+	
+	<select id="selectPhoneCheckUser" parameterType="User" resultMap="userResultSet">
+		SELECT
+			    US_NO
+			  , US_ID
+			  , US_PWD
+			  , US_NAME
+			  , US_BIRTH
+			  , US_EMAIL
+			  , US_PHONE
+			  , BUS_NO
+			  , US_PART
+			  , US_STATUS
+			  , US_STOP
+		   FROM
+		   		"USER"
+		  WHERE
+		  		US_PHONE = #{usphone}
+		  AND   US_STOP IS NULL	
+	</select>
+	
+	<!-- 인증키 셋팅 -->
+	<update id="updateUser" parameterType="User">
+		UPDATE
+				"USER"
+		   SET
+		   		AUTH_KEY = #{authKey}
+		 WHERE
+				US_ID = #{usid}
+		   AND  US_STOP IS NULL
+	</update>
+	
+	<select id="selectChangePwdUser" parameterType="User" resultMap="userResultSet">
+		SELECT
+			    US_NO
+			  , US_ID
+			  , US_PWD
+			  , US_NAME
+			  , US_BIRTH
+			  , US_EMAIL
+			  , US_PHONE
+			  , BUS_NO
+			  , US_PART
+			  , US_STATUS
+			  , US_STOP
+			  , AUTH_KEY
+		   FROM
+		   		"USER"
+		  WHERE
+		  		US_EMAIL = #{usemail}
+		  AND   AUTH_KEY = #{authKey}
+		  AND 	US_STOP IS NULL
+	</select>
+	
+	<update id="updatePwdUser" parameterType="User">
+		UPDATE
+				"USER"
+		   SET
+		   		US_PWD = #{uspwd}
+		 WHERE
+				US_ID = #{usid}
+		   AND  US_NAME = #{usname}
+		   AND  US_STOP IS NULL
+	</update>
+	
+
+	
+</mapper>

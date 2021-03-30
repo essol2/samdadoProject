@@ -1,0 +1,50 @@
+#floatingTextarea{
+    width: 100%;
+    resize: none;
+    margin: auto;
+}
+
+.inner_content{
+    padding: 3%;
+    text-align: left;
+    width: 100%;
+}
+
+
+#exp_img_part{
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    max-height: 400px;
+}
+
+#page_title{
+   text-align: left;
+   margin-top: 7%;
+   font-size: 40px;
+   font-family: 'Jeju Myeongjo', serif;
+}
+
+#ad_img{
+    width: 150px;
+    height: 150px;
+    margin-left: 77%;
+}
+
+#title{
+    text-align: center;
+
+}
+
+#inner_content_1{
+    display: flex;
+}
+
+#showDetailBtn{
+    margin-left: 2%;
+}
+
+#inner_content_1_title{
+    margin-top: 0.5%;
+}
