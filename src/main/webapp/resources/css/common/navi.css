@@ -110,13 +110,6 @@ header {
     color: #467355;
 }
 
-/* .navi ul li:last-child:hover{
-    display: block;
-    text-decoration: none;
-    text-align: center;
-    color: red;
-} */
-
 /* 배너 리스팅 광고 마우스 오버시 빨간색으로 */
 #navi-menu-buss-banner:hover {
     color: red;

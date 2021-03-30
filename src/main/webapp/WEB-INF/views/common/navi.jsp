@@ -78,8 +78,8 @@
 	   		
 	   	<!-- 로그인 유저가 없다면 -->
 	   	<c:if test="${ empty sessionScope.loginUser }">
-	   		<a href="${ contextPath }/user/myPage" ><p class="right" data-bs-toggle="modal" data-bs-target="#loginModal">들어가기</p></a>
-	   		<a href="${ contextPath }/user/myPage" ><p class="right" data-bs-toggle="modal" data-bs-target="#addUserModal">회원가입</p></a>
+	   		<p class="right" data-bs-toggle="modal" data-bs-target="#loginModal" id="navi-menu">들어가기</p>
+		    <p class="right" data-bs-toggle="modal" data-bs-target="#addUserModal" id="navi-menu">회원가입</p>
 	   	</c:if>
    </div>       
 
