@@ -1,4 +1,4 @@
-package com.kh.samdado.listpage.controller;
+package com.kh.samdado.bussiness.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,61 +14,61 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.samdado.listpage.model.exception.ListpageException;
-import com.kh.samdado.listpage.model.service.ListpageService;
-import com.kh.samdado.listpage.model.vo.Alliance;
+import com.kh.samdado.bussiness.model.exception.bussinessException;
+import com.kh.samdado.bussiness.model.service.bussinessService;
+import com.kh.samdado.bussiness.model.vo.Alliance;
 
 @Controller
-@RequestMapping("/listpage")
-public class ListpageController {
+@RequestMapping("/bussiness")
+public class bussinessController {
 	
-	@Autowired ListpageService lService;
+	@Autowired bussinessService bService;
 	
 	@GetMapping("/hotel_list")
 	public String hotelList() {
-		return "listpage/hotel_list";
+		return "bussiness/hotel_list";
 		
 	}
 	
 	@GetMapping("/hotel_detail")
 	public String hotelDetail() {
-		return "listpage/hotel_detail";
+		return "bussiness/hotel_detail";
 		
 	}
 	
 	@GetMapping("/tour_list")
-	public String tourList() {
-		return "listpage/tour_list";
+	public String bussiness() {
+		return "bussiness/tour_list";
 		
 	}
 	
 	@GetMapping("/tour_detail")
 	public String tourDetail() {
-		return "listpage/tour_detail";
+		return "bussiness/tour_detail";
 		
 	}
 	
 	@GetMapping("/restaurant_list")
 	public String restaurantList() {
-		return "listpage/restaurant_list";
+		return "bussiness/restaurant_list";
 		
 	}
 	
 	@GetMapping("/restaurant_detail")
 	public String restaurantDetail() {
-		return "listpage/restaurant_detail";
+		return "bussiness/restaurant_detail";
 		
 	}
 	
 	@GetMapping("/car_list")
 	public String carList() {
-		return "listpage/car_list";
+		return "bussiness/car_list";
 		
 	}
 	
 	@GetMapping("/car_detail")
 	public String carDetail() {
-		return "listpage/car_detail";
+		return "bussiness/car_detail";
 		
 	}
 	
@@ -98,12 +98,12 @@ public class ListpageController {
 		}
 		
 		// * 2) DB에 insert
-		int result = lService.insertAlliance(a);
+		int result = bService.insertAlliance(a);
 		
 		if(result > 0) {
 			return "redirect:/mypage"; // 마이페이지 컨트롤러로 리다이렉트
 		} else {
-			throw new ListpageException("배너광고 신청에 실패하였습니다.");
+			throw new bussinessException("배너광고 신청에 실패하였습니다.");
 		}
 		
 	}
