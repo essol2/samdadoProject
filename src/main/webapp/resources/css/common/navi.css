@@ -264,6 +264,11 @@ a:hover { color: black; text-decoration: none;}
         border-left: 3px solid black;
         z-index: 1;
     }
+    
+    li {
+    list-style:none;
+    color: white;
+}
 }
 
 @media (max-width:1650px){
@@ -271,7 +276,7 @@ a:hover { color: black; text-decoration: none;}
         position:fixed;
         width: 240px;
         top: 0;
-        left:85%;
+        left:75%;
         height:100%;
         -webkit-transition-duration:0.2s;
         -webkit-transition-timing-function:ease;
