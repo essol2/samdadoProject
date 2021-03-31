@@ -44,7 +44,7 @@
          <br><br>
          <p class="center" id="navi-title">삼다도</p>
          <a href="#" ><p class="center" id="navi-menu">나만의 길 만들기</p></a>
-         <a href="#" ><p class="center" id="navi-menu">전체 제주 관광지 보기</p></a>
+         <a href="#" ><p class="center" id="navi-menu" onclick="location.href='${ contextPath }/bussiness/tour_list'">전체 제주 관광지 보기</p></a>
          
          <c:if test="${!empty sessionScope.loginUser && loginUser.uspart eq '제휴' && loginUser.uspart ne '관리자' }">
          <li class="naviforB-li-class"><a href="#" class="center" id="navi-menu-buss"><p>삼다도에서 사업하기</p></a>

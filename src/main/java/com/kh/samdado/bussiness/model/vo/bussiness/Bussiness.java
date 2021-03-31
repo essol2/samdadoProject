@@ -1,4 +1,4 @@
-package com.kh.samdado.bussiness.model.vo;
+package com.kh.samdado.bussiness.model.vo.bussiness;
 
 import java.sql.Date;
 
@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 
-public class bussiness {
+public class Bussiness {
 //	BUS_CODE	NUMBER
 //	US_NO	VARCHAR2(15 BYTE)
 //	BUS_NAME	VARCHAR2(100 BYTE)
