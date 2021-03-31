@@ -34,7 +34,8 @@ public interface UserService {
 	  // 비번 수정
 	  public int updatePwdUser(User u);
 
-
+	  // 관리자 정보 수정
+	  public int updateAdminUser(User u);
 
 
 	

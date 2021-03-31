@@ -23,7 +23,7 @@
               <div class="card" style="width: 99%; border-style: none;">
                   <img src="jQ/WORKSPACE/image/city1.PNG" class="card-img-top" alt="...">
                   <div style="padding-top: 4%; padding-bottom: 2%; padding-right: 2%;">
-                    <h5 style="text-align: center;"><b>관리자</b></h5>
+                    <h5 style="text-align: center;"><b>${ loginUser.usid }</b></h5>
                   </div>
                 </div>
                 <br>

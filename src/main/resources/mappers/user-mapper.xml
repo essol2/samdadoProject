@@ -217,6 +217,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		   AND  US_STOP IS NULL
 	</update>
 	
+	<update id="updateAdminUser" parameterType="User"> 
+        UPDATE
+              "USER"
+         <set>
+	         <if test="usname != null">
+				US_NAME = #{usname}, 
+			 </if>
+			 <if test="usemail != null">
+				US_EMAIL = #{usemail}, 
+			 </if>
+			 <if test="busno != null">
+				BUS_NO = #{busno}, 
+			 </if>
+			 <if test="usphone != null">
+				US_PHONE = #{usphone}
+			 </if>
+		 </set>
+		 WHERE
+			    US_PART = #{uspart}
+		   AND  US_ID = #{usid}
+   </update>
+	
+	
 
 	
 </mapper>

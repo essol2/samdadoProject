@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!-- fmt 라이브러리 사용 -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- core 라이브러리 사용 -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!-- 메뉴바는 어떤 페이지이든 포함하고 있으므로 contextPath 변수 선언 후 application에서 모두 사용 -->
+<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -9,12 +17,19 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminMyPage.css" type="text/css">
+    <link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminMypage.css" type="text/css">
 
      <!--차트 api cdn-->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
   </head>
   <body>
+  
+   <!-- 메세지가 있다면 출력하고 지우기 -->
+   <c:if test="${ !empty msg }">
+   		<script>alert('${ msg }')</script>
+   		<c:remove var="msg" />
+   </c:if>
+   
     <div class="container-fluid">
       <div class="row">
         <div class="col-2" id="A">
@@ -109,44 +124,36 @@
             <br>
             <!-- 관리자 정보 select -->
             <h3>관리자 <span style="color: red;">정보</span></h3>
-            <br>
-
-            <div id="box-container">
-              <div class="input-group">
-                <span class="input-group-text">이름</span>
-                <input type="text" aria-label="name" class="form-control" value="관리자" readonly>
-              </div>
-              <div class="input-group">
-                <span class="input-group-text">아이디</span>
-                <input type="text" aria-label="name" class="form-control" value="samdado" readonly>
-              </div>
-              <div class="input-group">
-                <span class="input-group-text">생년월일</span>
-                <input type="text" aria-label="name" class="form-control" value="1994/09/28" readonly>
-              </div>
-              <div class="input-group">
-                <span class="input-group-text">이메일</span>
-                <input type="text" aria-label="name" class="form-control" value="clareseong0928@gmail.com" readonly>
-              </div>
-              <div class="input-group">
-                <span class="input-group-text">사업자등록번호</span>
-                <input type="text" aria-label="name" class="form-control" value="1234567890" readonly>
-              </div>
-              <div class="input-group">
-                <span class="input-group-text">휴대전화</span>
-                <input type="text" aria-label="name" class="form-control" value="010-8234-2105" readonly>
-              </div>
-              <div class="input-group">
-                <span class="input-group-text">상태</span>
-                <input type="text" aria-label="name" class="form-control" value="Y" readonly>
-              </div>
-
+            <br>	
+            	<div id="box-container">
+	              <div class="input-group">
+	                <span class="input-group-text">이름</span>
+	                <input type="text" aria-label="usname" name="usname" class="form-control" value="${ loginUser.usname }" readonly>
+	              </div>
+	              <div class="input-group">
+	                <span class="input-group-text">아이디</span>
+	                <input type="text" aria-label="usid" name="usid" class="form-control" value="${ loginUser.usid }" readonly>
+	              </div>
+	              <div class="input-group">            	
+	                <span class="input-group-text">생년월일</span>
+		                <input type="text" aria-label="usbirth" name="usbirth" class="form-control"  value="<fmt:formatDate value='${ loginUser.usbirth }' type='both' pattern='yyyy-MM-dd' />" readonly>
+	              </div>
+	              <div class="input-group">
+	                <span class="input-group-text">이메일</span>
+	                <input type="text" aria-label="usemail" name="usemail" class="form-control" value="${ loginUser.usemail }" readonly>
+	              </div>
+	              <div class="input-group">
+	                <span class="input-group-text">사업자등록번호</span>
+	                <input type="text" aria-label="busno" name="busno" class="form-control" value="${ loginUser.busno }" readonly>
+	              </div>
+	              <div class="input-group">
+	                <span class="input-group-text">휴대전화</span>
+	                <input type="text" aria-label="usphone" name="usphone" class="form-control" value="${ loginUser.usphone }" readonly>
+	              </div>
               </div>
               <br>
-              <button class="btn btn-secondary" id="updateInfoBtn" onclick="updateInfo();">수정하기</button>
+              <button class="btn btn-secondary" id="updateInfoBtn" onclick="location.href='${ contextPath }/admin/updateAdminInfoPage'">수정하기</button>  
           </div>
-
-   
     </div>
 </div>
     <!-- Optional JavaScript; choose one of the two! -->
