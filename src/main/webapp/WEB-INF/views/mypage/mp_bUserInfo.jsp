@@ -22,7 +22,7 @@
 
     /* 마이페이지 css */
     
-      #back {
+    #back {
         width: 1440px;
         height: 100%;
         /* margin: auto; */
@@ -48,7 +48,7 @@
         position:relative;
         top : 3%;
         left : 3%;
-        margin-left : 3%;
+        margin-left : 1%;
         align-items: center;
     }
     .menuButton{
@@ -95,7 +95,7 @@
         text-align : center;
         display : inline-block;
         margin-top : 2%;
-        margin-left : 1%;
+        margin-left : 3%;
         border-radius: 2px;
         align-items: center;
     }
@@ -229,12 +229,12 @@
             <div id="topMenu">
                 <div class="menuBox" id="menuBox">
 
-                    <button class="clickedBtn" id="myInfo"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/mp_userW.png" class="btnImg"> <br> 내 정보</div></button>
+                    <button class="clickedBtn" id="myInfo" onclick="location.href='${ contextPath }/mypage/buserinfo'"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/mp_userW.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/adverB.png" class="btnImg"> <br> 광고관리</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 포인트</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/qnaB.png" class="btnImg"> <br> 문의하기</div></button>
+                    <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/gotoqna'""> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/qnaB.png" class="btnImg"> <br> 문의하기</div></button>
 
                 </div>
             </div>

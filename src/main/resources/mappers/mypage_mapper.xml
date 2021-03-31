@@ -30,4 +30,26 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		   AND  US_STOP IS NULL
 	</update>
 	
+	<insert id="insertNewQnA" parameterType="QnA">
+		INSERT
+		INTO "QnA"
+		(
+			QNA_NO
+		  , QCONT
+		  , QDATE
+		  , QREPLY
+		  , QSTATUS
+		  , US_NO
+		)
+		VALUES
+		(
+			QNA_SEQ_NO.NEXTVAL
+		  , #{qcont}
+		  , SYSDATE
+		  , #{qreply}
+		  , DEFAULT
+		  , #{usno}
+		)
+	</insert>
+	
 </mapper>
