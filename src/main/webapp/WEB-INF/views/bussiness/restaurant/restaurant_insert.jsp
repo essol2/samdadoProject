@@ -322,14 +322,12 @@
 </head>
 <body>
 	<!-- 네비  -->
-	<jsp:include page="${ contextPath }/common/navi.jsp"/>
+	<jsp:include page="../../common/navi.jsp"/>
 	<!-- 메인 -->
 	<div class="main-container">
         <div class="main-wrap">
           <div class="logo-wrap" id="logo-div">
-            <label class="title_img">음식점 등록페이지
-                <img src="image/삼다도 로고 라산이 1.png" width="100px" height="80px" >
-            </label>
+            <label class="title_img">음식점 등록페이지</label>
           </div>
       <section class="signup-section-wrap">
 
