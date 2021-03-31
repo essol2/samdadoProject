@@ -1,6 +1,5 @@
 package com.kh.samdado.mypage.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.samdado.mypage.model.service.MypageService;
+import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 
@@ -33,16 +33,23 @@ public class MypageController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	// 1. session에 저장되어있는 로그인 유저의 정보 가져오
+	// 일반회원 마이페이지로 이동
 	 @GetMapping("/userinfo")
 	 public String mypageUserFirstView() { 
 			return "mypage/mp_UserInfo";
 	}
 	 
+	 // 제휴회원 마이페이지로 이동
 	 @GetMapping("/buserinfo")
 	 public String mypageBuserFirstView() {
 			return "mypage/mp_bUserInfo";
 	}
+	 
+	 // 제휴회원 QnA 페이지로 이동
+	 @GetMapping("/gotoqna")
+	 public String goToQnA() {
+		 return "mypage/mp_QnA";
+	 }
 	 
 	 // 일반회원 -  비밀번호 수정 메소드
 	 @PostMapping("/updatepwd")
@@ -172,12 +179,12 @@ public class MypageController {
 	 // 제휴회원 - 이메일, 전화번호 수정 메소드
 	 @PostMapping("/updatebuInfo")
 	 public String updateBuInfo(@ModelAttribute("loginUser") User u,
-				              Model model,
-				              HttpSession session,
-				              RedirectAttributes rd,
-				              @RequestParam(name="email", defaultValue="null") String email,
-				              @RequestParam(name="phone", defaultValue="null") String phone,
-				              @RequestParam(name="usid") String usid) {
+				                Model model,
+				                HttpSession session,
+				                RedirectAttributes rd,
+				                @RequestParam(name="email", defaultValue="null") String email,
+				                @RequestParam(name="phone", defaultValue="null") String phone,
+				                @RequestParam(name="usid") String usid) {
 		 
 		 
 		 User loginUser = uService.loginUser(u);
@@ -211,7 +218,26 @@ public class MypageController {
 			return "/mypage/mp_bUserInfo";
 		}
 		 
+	 }
+	 
+	// 제휴회원 - 문의하기
+	 @PostMapping("/sendQnA")
+	 public String sendQnA(Model model,
+				 		   @ModelAttribute QnA qna) {
 
+		 System.out.println("qna객체에 어떻게 들어왔는지 확인 : " + qna);
+		 
+		 // DB에 insert
+		 int result = mService.insertNewQnA(qna);
+		 
+		 
+		 if (result > 0) {
+				model.addAttribute("msg", "문의가 접수되었습니다!");
+				return "redirect:/mypage/gotoqna";
+			} else {
+			    model.addAttribute("msg", "문의 전송에 실패했습니다. 다시 시도해주세요.");
+				return "/mypage/gotoqna";
+			}
 	 }
 	 
 	 

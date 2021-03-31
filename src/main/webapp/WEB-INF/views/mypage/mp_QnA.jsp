@@ -16,15 +16,14 @@
     }
 
     /*마이페이지 css*/
-    #back {
+      #back {
         width: 1440px;
         height: 100%;
         /* margin: auto; */
         top: 0;
     }
     body{
-        background-image: url('${contextPath}/resources/images/image_mp/backgroundImg.png');
-        background-repeat: no-repeat;
+        background-image: url('../resources/images/image_mp/backgroundImg.png');
         background-size: 100%;
     }
     #topMenu{
@@ -41,9 +40,9 @@
         /* border : 1px solid blue; */
         display : inline-block;
         position:relative;
-        top : -10%;
+        top : 3%;
         left : 3%;
-        margin-left : 3%;
+        margin-left : 1%;
         align-items: center;
     }
     .menuButton{
@@ -58,8 +57,6 @@
         margin-left : 3%;
         border-radius: 2px;
         align-items: center;
-        /* -webkit-transition-duration : 0.4s;
-        transition-duration: 0.4s; */
     }
 
     .menuButton:hover{
@@ -92,7 +89,7 @@
         text-align : center;
         display : inline-block;
         margin-top : 2%;
-        margin-left : 1%;
+        margin-left : 3%;
         border-radius: 2px;
         align-items: center;
     }
@@ -101,6 +98,7 @@
         box-shadow: 6px 6px gray;
         cursor: pointer;
     }
+    
     /* mainBox */
     #mainBox{
         position : absolute;
@@ -110,6 +108,8 @@
         border : 5px solid white;
         width : 77%;
         height : 700px;
+         margin-top : 5%;
+        margin-left : 3%;
     }
 
     #leftBox{
@@ -163,7 +163,7 @@
         font-size: 14px;
     }
 
-    #qestionBox{
+    #qcont{
         margin-left : 25%;
         margin-right : 10%;
     }
@@ -287,7 +287,7 @@
             <div id="topMenu">
                 <div class="menuBox" id="menuBox">
 
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
+                    <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/buserinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/adverB.png" class="btnImg"> <br> 광고관리</div></button>
@@ -300,12 +300,15 @@
             <div id="mainBox">
                <div id="contextArea">
                     <br><br>
-                   <h1 style="text-align: center; color: #467355;">관리자에게 문의 보내기.</h1>
-                   <p style="text-align: center; font-size: small;">삼다도에 대한 어떤 문의든 남겨주세요. 답변은 최대 3일 소요될 수 있습니다.(주말, 공휴일 제외)<br><br>
-                    최대한 빨리 답변 드리도록 하겠습니다.<br><br>
-                    답변은 ‘내소식' 메뉴에서 확인하실 수 있습니다.</p>
-                    <p><textarea cols="80" rows="10" id="qestionBox"></textarea></p>
-                    <input type="submit" value="전송" id="subBtn">
+                   <h1 style="text-align: center; color: #467355;">관리자에게 문의 보내기.<br></h1>
+                   <form action="${ contextPath }/mypage/sendQnA" method="POST" onsubmit="return submitValidate();">
+	                   <p style="text-align: center; font-size: small;">삼다도에 대한 어떤 문의든 남겨주세요. 답변은 최대 3일 소요될 수 있습니다. &nbsp(주말, 공휴일 제외)<br><br>
+	                    최대한 빨리 답변 드리도록 하겠습니다.<br><br>
+	                    답변은 ‘내소식' 메뉴에서 확인하실 수 있습니다.</p>
+	                    <p><textarea cols="80" rows="10" id="qcont" name="qcont"></textarea></p>
+	                    <input type="hidden" name="usno" id="usno" value="${ loginUser.usno }">
+	                    <input type="submit" value="전송" id="subBtn">
+	               </form>
                </div>
             </div>
         </section>
