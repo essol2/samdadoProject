@@ -15,7 +15,383 @@
 <!-- css 외부 파일 첨부 -->
 <link rel="stylesheet" href="${ contextPath }/resources/css/common/navi.css" type="text/css">
 <link rel="stylesheet" href="${ contextPath }/resources/css/user/addMember.css" type="text/css">
+<style>
+		/* 공통 - 폰트 */
+        * {
+            font-family: 'Jeju Myeongjo', serif;
+        }
+        
+        /* 혜윤 : 네비 css */
+        header {
+            position:fixed;
+            width: 240px;
+            top: 0;
+            left:1200px;
+            height:100%;
+            border-left: 3px solid black;
+            z-index: 1;
+        }
 
+        #content {
+            width: 80%;
+            height: auto;
+            /* background-color: rgb(255, 181, 181); */
+        }
+        
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+            position: relative;
+            right: 10%;
+            margin: auto;
+            /* color : white; */
+        }
+
+        #navi-title {
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .center {
+        	font-size: 15px;
+            font-weight: 500;
+        }
+        
+        .navi {
+            height: 600px;
+            /* border : 1px solid pink; */
+            margin-left: 2%;
+            width : 100%;
+        }
+
+        .navi_logoimg {
+            position: relative;
+            top : 92%;
+            left: 70%;
+        }
+
+		.helloName{
+			/* float : left; */
+			text-align : right;
+			font-size : x-large;
+			/* border : 1px solid red; */
+  			margin-left : 36%;
+			width : fit-content;
+			margin-right : 1%;
+			
+		}
+		
+		 /* 반응형 */
+        @media (max-width:1920px){
+            header {
+                position:fixed;
+                width: 240px;
+                top: 0;
+                left:87%;
+                height:100%;
+                z-index: 1;
+        
+            }
+
+	        #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
+				/* color: white; */
+				background-color: rgba( 255, 255, 255, 0 );
+				border: none;
+				float: right;
+				margin-right: 5%;
+				font-size: 15px;
+				border : 1px solid red;
+
+			}
+	 
+
+            #bannerBoxLeft{
+                width : 43%;
+                height : auto;
+                display : inline-block;
+                margin-left : 5%;
+                margin-right : 6%;
+            }
+
+            #bannerBoxRight{
+                width : 43%;
+                height : auto;
+                display:inline-block;
+                /* margin-right : 2%; */
+            }
+
+            #content {
+                width: 100%;
+                height: auto;
+                /* background-color: rgb(255, 181, 181); */
+                
+            }
+
+            #bottom {
+                width: 1640px;
+                height: auto;
+                display: flex;
+            }
+
+        }
+
+        @media (max-width:1650px){
+            header {
+                position:fixed;
+                width: 240px;
+                top: 0;
+                left:85%;
+                height:100%;
+                border-left: 3px solid black;
+                z-index: 1;
+            }
+            
+	           #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
+					color: white;
+					background-color: rgba( 255, 255, 255, 0 );
+					border: none;
+					float: right;
+					margin-right: 5%;
+					font-size: 15px;
+					border : 1px solid blue;
+				}
+	 
+
+            #bannerBoxLeft{
+                width : 40%;
+                height : auto;
+                display : inline-block;
+                margin-left : 10%;
+                margin-right : 4%;
+            }
+
+            #bannerBoxRight{
+                width : 40%;
+                height : auto;
+                display:inline-block;
+                /* margin-right : 2%; */
+            }
+
+            #content {
+                width: 95%;
+                height: auto;
+                /* background-color: rgb(255, 181, 181); */
+            }
+            #bottom {
+                width: 1440px;
+                height: auto;
+                display: flex;
+            }
+
+        }
+
+        @media (max-width:1440px){
+            header {
+                position:fixed;
+                width: 240px;
+                top: 0;
+                left:83%;
+                height:100%;
+                border-left: 3px solid black;
+                z-index: 1;
+            }
+            
+           #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
+				color: white;
+				background-color: rgba( 255, 255, 255, 0 );
+				border: none;
+				float: right;
+				margin-right: 5%;
+				font-size: 15px;
+				border : 1px solid pink;
+			}
+	 
+            #left_side_text {
+                max-width: 48%;
+                max-height: 800px;
+                /* border : 1px solid red; */
+                margin-left : 3%;
+            }
+
+            /* 오른쪽 이미지 영역 전체 */
+            #right_side_img {
+                max-width: 48%;
+                max-height: 800px;
+                /* border : 1px solid blue; */
+            }
+
+            #bannerBoxLeft{
+                width : 46%;
+                height : auto;
+                display : inline-block;
+                margin-left : 3%;
+                margin-right : 2%;
+            }
+
+            #bannerBoxRight{
+                width : 46%;
+                height : auto;
+                display:inline-block;
+                /* margin-right : 2%; */
+            }
+
+            #content {
+                width: 80%;
+                height: auto;
+                /* background-color: rgb(255, 181, 181); */
+            }
+
+            #bottom {
+                width: 1440px;
+                height: auto;
+                display: flex;
+            }
+
+        }
+        
+        /* 회원가입 버튼 + 모달 */
+
+		#goaddMemberBtn {
+		    border-style: none;
+		    background-color: white;
+		    outline: none;
+		}
+		
+		#closeBtn {
+		    border-style: none;
+		    background-color: white;
+		}
+		
+		
+		.modal-header {
+		    padding: 5%;
+		    margin: auto;
+		}
+		
+		.modal-header img {
+		    width:100px;
+		    height: 100px;
+		}
+		
+		.modal-body {
+		    padding: 10%;
+		}
+		
+		.modal-content{
+		    margin: 0;
+		    width: 100%;
+		}
+		
+		.modal-body input {
+		    width: 100%;
+		}
+		
+		
+		#name ,#id, #pwd, #pwd2, #email, #birth, #phone {
+		    border: none;
+		    border-bottom: 1px solid;
+		    line-height: 30px;
+		    display: block;
+		}
+		
+		label {
+		    line-height: 50px;
+		}
+		
+		#name:focus, #id:focus, #pwd:focus, #pwd2:focus, #email:focus, #birth:focus, #bussiness_no:focus, #phone:focus {
+		    outline: none;
+		}
+		
+		.modal-body div {
+		    margin-bottom: 10%;
+		}
+		
+		.test_div {
+		    color: red;
+		}
+		
+		#agreement_label{
+		    margin-right: 35%;
+		}
+		
+		#agreement_checkbox {
+		    margin-left: -118%;
+		}
+		
+		#bussiness_text{
+		    color: darkred;
+		}
+		
+		#bussiness_no{
+		    border: none;
+		    border-bottom: 1px solid;
+		    line-height: 30px;
+		}
+		
+		a:link { color: black; text-decoration: none;}
+		a:visited { color: black; text-decoration: none;}
+		a:hover { color: black; text-decoration: none;}
+		
+		#addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn {
+			color: white;
+			background-color: rgba( 255, 255, 255, 0 );
+			border: none;
+			float: right;
+			margin-right: 5%;
+			font-size: 15px;
+		}
+		
+		#gologinBtn{
+			border: none;
+			background-color: white;
+		}
+		
+		#find_id_pwd{
+		    margin-right: 40%;
+		}
+		
+		#bussiness_no_div{
+			display : none;
+		}
+		
+		.ul-class{
+			list-style:none;
+		    padding: 0;
+		    margin: 0;
+		}
+		
+		.buss-li-class {
+		    list-style:none;
+		    color: white;
+		}
+		
+	    /* 제휴회원 네비 css */
+	    li > ul {
+	    /* 평소에는 보이지 않게 */
+	    opacity: 0;
+	    visibility: hidden;
+	
+	    /* 트랜지션 */
+	    transition: all 0.6s;
+	}
+	
+		li:hover ul {
+	    /* 메인 메뉴에 마우스 오버 시 서브 메뉴 보이게 */
+	    opacity: 1;
+	    visibility: visible;
+	}
+	
+	#navi-menu-buss-banner:hover {
+		color : red;
+	}
+
+	#navi-menu, #navi-title, p:hover{
+		cursor: pointer;
+	}
+</style>
 </head>
 <body>
    <!-- 메세지가 있다면 출력하고 지우기 -->
@@ -40,50 +416,98 @@
    </script>
    
     <header>
-     <div class="navi" id="buss-navi-id">
-         <br><br>
-         <p class="center" id="navi-title">삼다도</p>
-         <a href="#" ><p class="center" id="navi-menu">나만의 길 만들기</p></a>
-         <a href="#" ><p class="center" id="navi-menu">전체 제주 관광지 보기</p></a>
-         
-         <c:if test="${!empty sessionScope.loginUser && loginUser.uspart eq '제휴' && loginUser.uspart ne '관리자' }">
-         <li class="naviforB-li-class"><a href="#" class="center" id="navi-menu-buss"><p>삼다도에서 사업하기</p></a>
-             <ul class="ul-class">
-                 <li><a href="#" class="center" id="navi-menu-buss-hotel"><p>호텔 등록하기</p></a></li>
-                 <li><a href="#" class="center" id="navi-menu-buss-rent"><p>렌트카 등록하기</p></a></li>
-                 <li><a href="#" class="center" id="navi-menu-buss-restau"><p>음식점 등록하기</p></a></li>
-                 <li><a href="#" class="center" id="navi-menu-buss-attrac"><p>관광지 등록하기</p></a></li>
-                 <li><a href="${ contextPath }/bussiness/submit/bannerAd" class="center" id="navi-menu-buss-banner"><p>배너(리스팅)광고</p></a></li>
-             </ul>
-         </li>
-         </c:if>
-     </div>
-       
-    <div>
-	   	<img class="img" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
-	   	
-	   	<h5 class="helloName">${ loginUser.usname }님 <br>
-	   	혼저옵서예</h5> 
-	    <!-- 관리자 일때만 보이는 관리자 홈 버튼 -->
-	    <c:if test="${!empty sessionScope.loginUser && loginUser.uspart eq '관리자'}">
-	    	<a href="${ contextPath }/admin/home" ><p class="right" id="adminHomeBtn">관리자 홈</p></a>
-	    	<a href="${ contextPath }/user/logout" ><p class="right" id="logOutBtn">일상으로</p></a>
-	    </c:if>
-	    
-	    <!-- 일반유저 혹은 제휴회원 일때만 보이는 내정보 버튼 -->
-	    <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '제휴' || loginUser.uspart eq '일반' && loginUser.uspart ne '관리자' }">
-	    	<a href="${ contextPath }/user/myPage" ><p class="right" id="myPage">내 정보</p></a>
-	    	<a href="${ contextPath }/user/logout" ><p class="right" id="logOutBtn">일상으로</p></a>
-	    </c:if>
-	   		
-	   	<!-- 로그인 유저가 없다면 -->
-	   	<c:if test="${ empty sessionScope.loginUser }">
-	   		<p class="right" data-bs-toggle="modal" data-bs-target="#loginModal" id="navi-menu">들어가기</p>
-		    <p class="right" data-bs-toggle="modal" data-bs-target="#addUserModal" id="navi-menu">회원가입</p>
-	   	</c:if>
-   </div>       
+            <div> 
+                <!-- 1. 로그인 유저가 없을 때 -->
+                <c:if test="${ empty sessionScope.loginUser }">
+                <div class="navi">
+                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+	                <br><br>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 
-  </header>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/listpage/tour_list'">전체 제주 관광지 보기</p>
+
+	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+            	</div>
+                
+                <div>
+				    <p class="right" data-bs-toggle="modal" data-bs-target="#loginModal" id="navi-menu">들어가기</p>
+				    <p class="right" data-bs-toggle="modal" data-bs-target="#addUserModal" id="navi-menu">회원가입</p>
+
+				</div>
+                </c:if>
+                
+                <!-- 2. 로그인 유저가 있을 때(일반회원)-->
+                <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '일반' }">
+                <div class="navi">
+                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+	                <br><br>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
+	                <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+            	</div>
+                
+                <div>
+                <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
+                <!-- <h5 class="helloName"> 혼저옵서예.</h5> -->
+ 
+				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/userinfo'">내 정보</p>
+				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
+				</div>				    
+                </c:if>
+                
+                <!-- 3. 로그인 유저가 있을 때(제휴회원) 및 로그인 유저가 관리자가 아닐 때 -->
+                <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '제휴' && loginUser.usid ne 'samdado' }">
+                <div class="navi">
+                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+	                <br><br>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
+	                <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+	                
+	                <li class="buss-li-class"><p class="center" id="navi-menu-buss">삼다도에서 사업하기</p>
+		                <ul class="ul-class">                
+			                <li><p class="center" id="navi-menu-buss-hotel">호텔 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-buss-rent">렌트카 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-buss-restau" onclick="location.href='${ contextPath }/bussiness/restaurant/insert'">음식점 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-buss-attrac">관광지 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-buss-banner" onclick="location.href='${ contextPath }/bussiness/bannerAd'">배너(리스팅)광고</p><li>
+		                </ul>
+            		</li>
+            	</div>
+                
+                <div>
+                <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
+
+	                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">내 정보</p>
+				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			    
+
+                </div>
+                </c:if>
+               
+                <!-- 4. 로그인 유저가 관리자 일때 -->
+                <c:if test="${!empty sessionScope.loginUser && loginUser.uspart eq '관리자'}">    
+                <div class="navi">
+                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+	                <br><br>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
+	                <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+            	</div>
+                
+                <div>
+                <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
+                    
+				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/admin/home'">관리자 홈</p>
+				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
+
+				</div>			    
+                </c:if>
+            </div>
+        </header>
     
     <!-- 회원가입 Modal -->
     <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -91,7 +515,7 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <img src="resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
+            <img src="${ contextPath }/resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
             <h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2>
             <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
@@ -165,7 +589,7 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <img src="resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
+            <img src="${ contextPath }/resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
             <h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2>
             <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
@@ -194,13 +618,13 @@
 	                        <div class="container">
 	                            <div class="row">
 	                            <div class="col-sm">
-	                                <a href="#"><img src="resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
+	                                <a href="#"><img src="${ contextPath }/resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
 	                            </div>
 	                              <div class="col-sm">
-	                               <a href="#"><img src="resources/images/image_user/naver.png" alt=""> 네이버</a>
+	                               <a href="#"><img src="${ contextPath }/resources/images/image_user/naver.png" alt=""> 네이버</a>
 	                              </div>
 	                              <div class="col-sm">
-	                                <a href="#"><img src="resources/images/image_user/kakao.png" alt=""> 카카오</a>
+	                                <a href="#"><img src="${ contextPath }/resources/images/image_user/kakao.png" alt=""> 카카오</a>
 	                              </div>
 	                            </div>
 	                          </div>
