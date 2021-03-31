@@ -24,6 +24,7 @@ public class bussinessController {
 	
 	@Autowired bussinessService bService;
 	
+	// 호텔
 	@GetMapping("/hotel_list")
 	public String hotelList() {
 		return "bussiness/hotel/hotel_list";
@@ -36,6 +37,12 @@ public class bussinessController {
 		
 	}
 	
+	@GetMapping("/hotel_insert")
+	public String hotelInsert() {
+		return "bussiness/hotel/hotel_insert";
+	}
+	
+	// 관광
 	@GetMapping("/tour_list")
 	public String bussiness() {
 		return "bussiness/tour/tour_list";
@@ -48,6 +55,12 @@ public class bussinessController {
 		
 	}
 	
+	@GetMapping("/tour_insert")
+	public String tourInsert() {
+		return "bussiness/tour/tour_insert";
+	}
+	
+	// 음식점
 	@GetMapping("/restaurant_list")
 	public String restaurantList() {
 		return "bussiness/restaurant/restaurant_list";
@@ -60,6 +73,12 @@ public class bussinessController {
 		
 	}
 	
+	@GetMapping("/restaurant_insert")
+	public String restaurantInsert() {
+		return "bussiness/restaurant/restaurant_insert";
+	}
+	
+	// 렌트카
 	@GetMapping("/car_list")
 	public String carList() {
 		return "bussiness/rentcar/car_list";
@@ -72,9 +91,9 @@ public class bussinessController {
 		
 	}
 	
-	@GetMapping("/restaurant/insert")
-	public String resInsert() {
-		return "bussiness/rentcar/restaurant_insert";
+	@GetMapping("/rentcar_insert")
+	public String rentcarInsert() {
+		return "bussiness/rentcar/rentcar_insert";
 		
 	}
 	
