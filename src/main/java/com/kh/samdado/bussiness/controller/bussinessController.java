@@ -72,6 +72,12 @@ public class bussinessController {
 		
 	}
 	
+	@GetMapping("/restaurant/insert")
+	public String resInsert() {
+		return "bussiness/restaurant_insert";
+		
+	}
+	
 	// ************* 지혜 *************
 	// 배너 등록 페이지로 이동
 	@GetMapping("/bannerAd")
