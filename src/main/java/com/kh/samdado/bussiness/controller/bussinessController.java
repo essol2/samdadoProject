@@ -26,55 +26,55 @@ public class bussinessController {
 	
 	@GetMapping("/hotel_list")
 	public String hotelList() {
-		return "bussiness/hotel_list";
+		return "bussiness/hotel/hotel_list";
 		
 	}
 	
 	@GetMapping("/hotel_detail")
 	public String hotelDetail() {
-		return "bussiness/hotel_detail";
+		return "bussiness/hotel/hotel_detail";
 		
 	}
 	
 	@GetMapping("/tour_list")
 	public String bussiness() {
-		return "bussiness/tour_list";
+		return "bussiness/tour/tour_list";
 		
 	}
 	
 	@GetMapping("/tour_detail")
 	public String tourDetail() {
-		return "bussiness/tour_detail";
+		return "bussiness/tour/tour_detail";
 		
 	}
 	
 	@GetMapping("/restaurant_list")
 	public String restaurantList() {
-		return "bussiness/restaurant_list";
+		return "bussiness/restaurant/restaurant_list";
 		
 	}
 	
 	@GetMapping("/restaurant_detail")
 	public String restaurantDetail() {
-		return "bussiness/restaurant_detail";
+		return "bussiness/restaurant/restaurant_detail";
 		
 	}
 	
 	@GetMapping("/car_list")
 	public String carList() {
-		return "bussiness/car_list";
+		return "bussiness/rentcar/car_list";
 		
 	}
 	
 	@GetMapping("/car_detail")
 	public String carDetail() {
-		return "bussiness/car_detail";
+		return "bussiness/rentcar/car_detail";
 		
 	}
 	
 	@GetMapping("/restaurant/insert")
 	public String resInsert() {
-		return "bussiness/restaurant_insert";
+		return "bussiness/rentcar/restaurant_insert";
 		
 	}
 	

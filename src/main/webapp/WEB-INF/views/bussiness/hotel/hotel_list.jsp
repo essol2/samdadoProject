@@ -443,13 +443,13 @@
                                 style="color: white;">숙박</label></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/listpage/tour_list'>관광지</a></div>
+                        <div class="cover"><a href='${ contextPath }/bussiness/tour_list'>관광지</a></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/listpage/restaurant_list'>음식점</a></div>
+                        <div class="cover"><a href='${ contextPath }/bussiness/restaurant_list'>음식점</a></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/listpage/car_list'>렌트카</a></div>
+                        <div class="cover"><a href='${ contextPath }/bussiness/car_list'>렌트카</a></div>
                     </li>
                 </ul>
 
@@ -519,7 +519,7 @@
 
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                    <div class='profile' onclick="location.href='${ contextPath }/listpage/hotel_detail'">
+                    <div class='profile' onclick="location.href='${ contextPath }/bussiness/hotel_detail'">
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
                         <img class="image" src="../resources/images/image_listpage/hotel1.png">
                         <b>★4.90(후기 99+개)</b>

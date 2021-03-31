@@ -438,16 +438,16 @@
             <nav id="choise-nav">
                 <ul id="choise">
                     <li>
-                        <div class="cover"><a href='${ contextPath }/listpage/hotel_list'>숙박</a></div>
+                        <div class="cover"><a href='${ contextPath }/bussiness/hotel_list'>숙박</a></div>
                     </li>
                     <li>
                         <div class="cover" style="background-color: rgb(70, 115, 85);"><label style="color: white;">관광지</label></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/listpage/restaurant_list'>음식점</a></div>
+                        <div class="cover"><a href='${ contextPath }/bussiness/restaurant_list'>음식점</a></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/listpage/car_list'>렌트카</a></div>
+                        <div class="cover"><a href='${ contextPath }/bussiness/car_list'>렌트카</a></div>
                     </li>
                 </ul>
 
@@ -517,7 +517,7 @@
 
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                    <div class='profile' onclick="location.href='${ contextPath }/listpage/tour_detail'">
+                    <div class='profile' onclick="location.href='${ contextPath }/bussiness/tour_detail'">
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
                         <img class="image" src="../resources/images/image_listpage/tour1.png">
                         <b>★4.90(후기 99+개)</b>
