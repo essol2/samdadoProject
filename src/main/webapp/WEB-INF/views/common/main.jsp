@@ -604,7 +604,7 @@
                 <div class="navi">
                 <img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img>
 	                <br><br>
-	                <p class="center" id="navi-title">삼다도</p>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/bussiness/tour_list'">전체 제주 관광지 보기</p>
@@ -860,7 +860,6 @@
 
  	
  	<!-- 네비 이미지 체인지 토글 -->
-
     <script>
         $(function(){
             var $header = $('header'); //헤더를 변수에 넣기

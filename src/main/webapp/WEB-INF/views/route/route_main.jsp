@@ -18,102 +18,6 @@
             font-family: 'Jeju Myeongjo', serif;
         }
 
-        /* 혜윤 : 네비 css */
-        #back {
-            width: 100%;
-            height: auto;
-            margin: auto;
-            top: 0;
-        }
-
-        header {
-            position:fixed;
-            width: 240px;
-            top: 0;
-            left:1200px;
-            height:100%;
-            -webkit-transition-duration:0.2s;
-            -webkit-transition-timing-function:ease;
-            transition-duration:0.2s;
-            transition-timing-function:ease;
-            color: white;
-            border-left: 3px solid white;
-            z-index: 1;
-        }
-
-        .down {
-            color: black;
-            -webkit-transition-duration:0.2s;
-            -webkit-transition-timing-function:ease;
-            transition-duration:0.2s;
-            transition-timing-function:ease;
-            border-left: 3px solid black;
-        }
-
-        .down #navi {
-            color:black;
-            -webkit-transition-duration:0.4s;
-            -webkit-transition-timing-function:ease;
-            transition-duration:0.4s;
-            transition-timing-function:ease;
-        }
-
-        #top {
-            width: 100%;
-            height: auto;
-            background-color: black;
-        }
-        #bottom {
-            width: 1440px;
-            height: auto;
-            display: flex;
-        }
-
-        #content {
-            width: 90%;
-            height: auto;
-            /* background-color: rgb(255, 181, 181); */
-        }
-        .center {
-            text-align: center;
-        }
-
-        .right {
-            text-align: right;
-            position: relative;
-            right: 10%;
-            margin: auto;
-        }
-
-        #navi-title {
-            font-size: 40px;
-            font-weight: bold;
-        }
-
-        #navi-menu {
-            font-size: 15px;
-            font-weight: 500;
-        }
-        
-        .navi {
-            height: 600px;
-            /* border : 1px solid pink; */
-            margin-left: 2%;
-            width : 100%;
-        }
-
-        .img {
-            position: relative;
-            left: 70%;
-        }
-
-        /* 동영상 css */        
-        .wrap{ width:100%; } 
-
-        .content{ position:relative; padding-top:56%; width:100%; } 
-
-        #backgroundGif{ position:absolute; top:0; left:0; width:100%; height:100%; }
-
         /* 푸터 css */
         footer{
             background-color: rgb(70, 115, 85);
@@ -187,7 +91,7 @@
             }
 
             #content {
-                width: 100%;
+                width: 90%;
                 height: auto;
                 /* background-color: rgb(255, 181, 181); */               
             }
@@ -375,32 +279,7 @@
     </style>
 </head>
 <body>
-    <!-- 혜윤 : 네비 -->
-    <div id="back">
-        <header>
-            <div class="navi">
-                <br><br>
-                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="cursor: pointer;">삼다도</p>
-                <p class="center" id="navi-menu">나만의 길 만들기</p>
-                <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
-                <p class="center" id="navi-menu">제주도 필수 예약</p>
-            </div>
-            <div>
-                <img class="img" width="50px" height="50px" src="../resources/images/image_main/logo_w.png">
-                <p class="right" id="navi-menu">들어가기</p>
-                <p class="right" id="navi-menu">회원가입</p>
-            </div>
-        </header>
-        <!-- 한빈 : 동영상 올리기 -->
-        <div id="top">
-            <div class="wrap">
-                <div class="content">
-                    <img src="../resources/images/image_main/samdado.gif" id="backgroundGif">
-                </div>
-            </div>
-        </div>
-        <section class="page-start">
-
+   <jsp:include page="../common/navi.jsp"/>
         <!-- 내용 -->
         <div id="bottom">
             <div id="content">
