@@ -663,7 +663,7 @@
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
 
-	                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/userinfo'">내 정보</p>
+	                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">내 정보</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			    
 
                 </div>
