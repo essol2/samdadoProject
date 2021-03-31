@@ -24,57 +24,76 @@ public class bussinessController {
 	
 	@Autowired bussinessService bService;
 	
+	// 호텔
 	@GetMapping("/hotel_list")
 	public String hotelList() {
-		return "bussiness/hotel_list";
+		return "bussiness/hotel/hotel_list";
 		
 	}
 	
 	@GetMapping("/hotel_detail")
 	public String hotelDetail() {
-		return "bussiness/hotel_detail";
+		return "bussiness/hotel/hotel_detail";
 		
 	}
 	
+	@GetMapping("/hotel_insert")
+	public String hotelInsert() {
+		return "bussiness/hotel/hotel_insert";
+	}
+	
+	// 관광
 	@GetMapping("/tour_list")
 	public String bussiness() {
-		return "bussiness/tour_list";
+		return "bussiness/tour/tour_list";
 		
 	}
 	
 	@GetMapping("/tour_detail")
 	public String tourDetail() {
-		return "bussiness/tour_detail";
+		return "bussiness/tour/tour_detail";
 		
 	}
 	
+	@GetMapping("/tour_insert")
+	public String tourInsert() {
+		return "bussiness/tour/tour_insert";
+	}
+	
+	// 음식점
 	@GetMapping("/restaurant_list")
 	public String restaurantList() {
-		return "bussiness/restaurant_list";
+		return "bussiness/restaurant/restaurant_list";
 		
 	}
 	
 	@GetMapping("/restaurant_detail")
 	public String restaurantDetail() {
-		return "bussiness/restaurant_detail";
+		return "bussiness/restaurant/restaurant_detail";
 		
 	}
 	
+	@GetMapping("/restaurant_insert")
+	public String restaurantInsert() {
+		return "bussiness/restaurant/restaurant_insert";
+	}
+	
+	// 렌트카
 	@GetMapping("/car_list")
 	public String carList() {
-		return "bussiness/car_list";
+		return "bussiness/rentcar/car_list";
 		
 	}
 	
 	@GetMapping("/car_detail")
 	public String carDetail() {
-		return "bussiness/car_detail";
+		return "bussiness/rentcar/car_detail";
 		
 	}
 	
-	@GetMapping("/restaurant/insert")
-	public String resInsert() {
-		return "bussiness/restaurant_insert";
+	@GetMapping("/rentcar_insert")
+	public String rentcarInsert() {
+		return "bussiness/rentcar/rentcar_insert";
 		
 	}
 	
