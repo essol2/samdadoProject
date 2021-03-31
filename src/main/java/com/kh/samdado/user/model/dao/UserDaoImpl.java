@@ -65,5 +65,12 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		return sqlSession.update("userMapper.updatePwdUser", u);
 	}
+	
+	@Override
+	public int updateAdminUser(User u) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("userMapper.updateAdminUser", u);
+	}
+
 
 }

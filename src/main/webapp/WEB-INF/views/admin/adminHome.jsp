@@ -180,76 +180,31 @@
                   
                         <div class="row" style="padding-top: 4%;">
                             <div>
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">여기도 차트</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <canvas id="myLineChart"></canvas>
                             </div>
+                                    	
+		                  	<script>
+		                  	      var ctx = document.getElementById('myLineChart').getContext('2d');
+			                  	  var chart = new Chart(ctx, {
+			                  	    // The type of chart we want to create
+			                  	    type: 'line',
+	
+			                  	    // The data for our dataset
+			                  	    data: {
+			                  	        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			                  	        datasets: [{
+			                  	            label: '매출',
+			                  	            backgroundColor: 'rgb(255, 99, 132)',
+			                  	            borderColor: 'rgb(255, 99, 132)',
+			                  	            data: [0, 10, 5, 2, 20, 30, 45]
+			                  	        }]
+			                  	    },
+	
+			                  	    // Configuration options go here
+			                  	    options: {}
+			                  	});
+		                  	</script>
+                  	
                         </div>
                     </div>
                 </div>
@@ -365,45 +320,18 @@
                         <thead>
                         <tr>
                             <th scope="col">No</th>
-                            <th scope="col">제목</th>
+                            <th scope="col">작성자</th>
                             <th scope="col">내용</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                        </tr>
+                        <c:forEach var="q" items="${ qnaList }">
+	                        <tr>
+	                            <th scope="row">${ q.qnano }</th>
+	                            <td>${ q.usname }</td>
+	                            <td>${ q.qcontent }</td>
+	                        </tr>
+                        </c:forEach>                     
                         </tbody>
                     </table>
                 </div>
