@@ -607,7 +607,7 @@
 	                <p class="center" id="navi-title">삼다도</p>
 
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/listpage/tour_list'">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/bussiness/tour_list'">전체 제주 관광지 보기</p>
 
 	                <p class="center" id="navi-menu">제주도 필수 예약</p>
             	</div>
@@ -626,7 +626,7 @@
 	                <br><br>
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/bussiness/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu">제주도 필수 예약</p>
             	</div>
                 
@@ -646,7 +646,7 @@
 	                <br><br>
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/bussiness/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu">제주도 필수 예약</p>
 	                
 	                <li class="buss-li-class"><p class="center" id="navi-menu-buss">삼다도에서 사업하기</p>
@@ -663,7 +663,7 @@
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
 
-	                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/userinfo'">내 정보</p>
+	                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">내 정보</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			    
 
                 </div>
@@ -676,7 +676,7 @@
 	                <br><br>
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/bussiness/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu">제주도 필수 예약</p>
             	</div>
                 
