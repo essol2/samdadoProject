@@ -1,4 +1,4 @@
-package com.kh.samdado.user.model.vo;
+package com.kh.samdado.route.model.vo;
 
 import java.util.Date;
 
@@ -18,20 +18,11 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 //@Data
-public class User {
+public class RouteFinal {
+	private int route_no; 		// 루트 번호
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date route_date;	// 루트 날짜
+	private int route_price;	// 총 예상 예산
+	private String us_no;		// 회원 번호
 	
-	private String usno;
-	private String usid;
-	private String uspwd;
-	private String usname;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date usbirth;
-	private String usemail;
-	private String usphone;
-	private String busno;
-	private String uspart;
-	private String usstatus;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date usstop;
-	private String authKey;
 }

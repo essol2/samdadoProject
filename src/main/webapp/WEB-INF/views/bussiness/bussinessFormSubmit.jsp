@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -22,39 +23,23 @@
     
     <!-- 중간영역 -->
     <div class="container-fluid">
-     <!-- 네비 따로 빼서 인클루드 하기 -->
      <div class="row">
-        <div id="nav_part">
-            <div id="back">
-                <header>
-                    <div class="navi">
-                        <br><br>
-                        <p class="center" id="navi-title">삼다도</p>
-                        <p class="center" id="navi-menu">나만의 길 만들기</p>
-                        <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
-                        <p class="center" id="navi-menu">삼다도에서 사업하기</p>
-                        <p class="center" id="navi-menu-buss-hotel">호텔 등록하기</p>
-                        <p class="center" id="navi-menu-buss-rent">음식점/렌트카 등록하기</p>
-                        <p class="center" id="navi-menu-buss-attrac">관광지 등록하기</p>
-                        <p class="center" id="navi-menu-buss-banner">배너(리스팅)광고</p>
-                    </div>
-                    <div>
-                        <image class="img" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></image>
-                        <p class="right" id="navi-menu">들어가기</p>
-                        <p class="right" id="navi-menu">회원가입</p>
-                    </div>
-                </header>
-            </div>
-        </div>
+        
         <div id="content_div">
+        	<!-- 네비 -->
+     	<div class="col">
+     		<jsp:include page="../common/navi.jsp"/>
+     	</div>
             <!--삼다도 광고 신청-->
             <div class="row" id="include_img_div">
                 <div class="row">
                       <div class="col-1">
+                      	<br>
                         <a href="${ contextPath }/main"><img class="d-block mx-auto mb-4" src="${ contextPath }/resources/images/image_main/logo_w.png" alt="" width="72" height="57"></a> 
                       </div>
                       <div class="col-11">
-                        <h3 id="page_title">삼다도 배너 광고 신청</h3>
+                      	<br>
+                        <h4 id="page_title">삼다도 제휴회원 배너 광고 신청</h4>
                       </div>
                 </div>  
             </div>
@@ -91,11 +76,11 @@
                     </div>
                 </div> 
 
-            <form action="${ contextPath }/submit/bannerAd" method="POST">
+            <form action="${ contextPath }/insert/bannerAd" method="post" enctype="multipart/form-data"> <!-- pom.xml에  multipart/form-data 사용 라이브러리 추가 -->
                 <div class="inner_content">
                     <h4>1. 신청하실 사업장을 선택하세요.</h4> <br>
                     <select class="form-select" name="searchBannerAD" id="searchBannerAD" aria-label="Default select example">
-                        <option value="all" <c:if test="${ param.searchBannerAD == 'all' }">selected</c:if>>전체</option>
+                        <option>선택</option>
 							<option value="writer" <c:if test="${ param.searchCondition == 'writer' }">selected</c:if>>작성자</option>
 							<option value="title" <c:if test="${ param.searchCondition == 'title' }">selected</c:if>>제목</option>
 							<option value="content" <c:if test="${ param.searchCondition == 'content' }">selected</c:if>>내용</option>
@@ -105,17 +90,19 @@
                 <div class="inner_content">
                     <h4>2. 배너 이미지를 등록해주세요.</h4> <br>
                     <div class="mb-3">
-                        <input class="form-control" type="file" id="formFile" name="uploadFile">
+                        <input class="form-control" type="file" id="formFile" name="uploadFile" required>
                         <br>
-                        <div id="exp_img_part">
-                            <img src="${ contextPath }/resources/images/냠냠제주.jpg" alt="">
-                        </div>
+                        <!-- 업로드한 이미지가 노출되는 부분 -->
+                        <div class="img_div_part">
+							<img id="exp_img_part">
+	  					</div>
+                    
                     </div>
                 </div>
                 <div class="inner_content">
                     <h4>3. 기업에 대한 간단한 소개를 해주세요.</h4> <br>
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="기업에 대한 간단한 소개를 해주세요." id="floatingTextarea"></textarea>
+                        <textarea class="form-control" name="intro" placeholder="기업에 대한 간단한 소개를 해주세요." id="floatingTextarea" required></textarea>
                     </div>  
                 </div>
               
@@ -127,13 +114,54 @@
         </div>
     </div>
  </div>
+ 	<br><br>
+ 	<!-- 푸터 -->
+ 	<div class="row" style="width: 88.2%;">             
+ 		<jsp:include page="../common/footer.jsp"/>
+    </div> 
+ 
+ </div>
 
-<!-- 모달창 자동 onload -->
+ <!-- 모달창 자동 onload -->
  <script>
       $(document).ready(function() {
             $('#myModal').modal("show");
         });
  </script>
+ 
+ <!-- 업로드한 첨부파일 아래에 출력되도록 -->
+ <script>
+	$(function () {
+		$("[type=file]").change(function() { 
+			loadImg(this);
+		});
+	});
+	
+	function loadImg(element) { 
+		if (element.files && element.files[0]) {
+
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				
+				var selector;
+				var size;
+
+				switch(element.name) {
+				case "uploadFile" :
+					selector = "#exp_img_part";
+					size = {width:"800px", height:"1000px"};
+					break;
+				}
+				
+				$(selector).attr("src", e.target.result).css(size); 
+
+			}
+
+			reader.readAsDataURL(element.files[0]);
+		}
+	}	
+</script>
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
@@ -143,8 +171,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
 -->
-
-    <!-- 푸터 인클루드 하기 -->
    
 </body>
 </html>

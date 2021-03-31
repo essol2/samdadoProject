@@ -653,9 +653,9 @@
 		                <ul class="ul-class">                
 			                <li><p class="center" id="navi-menu-buss-hotel">호텔 등록하기</p></li>
 			                <li><p class="center" id="navi-menu-buss-rent">렌트카 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-buss-restau">음식점 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-buss-restau" onclick="location.href='${ contextPath }/bussiness/restaurant/insert'">음식점 등록하기</p></li>
 			                <li><p class="center" id="navi-menu-buss-attrac">관광지 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-buss-banner" onclick="location.href='${ contextPath }/listpage/bannerAd'">배너(리스팅)광고</p><li>
+			                <li><p class="center" id="navi-menu-buss-banner" onclick="location.href='${ contextPath }/bussiness/bannerAd'">배너(리스팅)광고</p><li>
 		                </ul>
             		</li>
             	</div>

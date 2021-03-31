@@ -14,11 +14,13 @@
 <!-- typeAliases -->
 	<typeAliases>
 		<typeAlias type="com.kh.samdado.user.model.vo.User" alias="User"/>
+   <!-- <typeAlias type="com.kh.samdado.listpage.model.vo.Alliance" alias="Alliance"/> -->
 	</typeAliases>
 
 	 <!-- mappers -->
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
-		<mapper resource="mappers/mypage_mapper.xml"/>      
+		<mapper resource="mappers/mypage_mapper.xml"/>    
+   <!-- <mapper resource="mappers/listpage-mapper.xml"/>    -->     
 	</mappers>
 </configuration>
