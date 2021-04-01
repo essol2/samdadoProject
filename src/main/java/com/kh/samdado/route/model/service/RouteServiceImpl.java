@@ -15,42 +15,42 @@ public class RouteServiceImpl implements RouteService {
 	
    @Autowired
    private RouteDao rDao;
-
-@Override
-public List<Route> routeSearch() {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-@Override
-public int spotDelete() {
-	// TODO Auto-generated method stub
-	return 0;
-}
-
-@Override
-public List<TourSpot> spotSearch() {
-	// TODO Auto-generated method stub
-	return null;
-}
-
-@Override
-public int spotAdd() {
-	// TODO Auto-generated method stub
-	return 0;
-}
-
-@Override
-public int routeChange() {
-	// TODO Auto-generated method stub
-	return 0;
-}
-
-@Override
-public int routeAdd() {
-	// TODO Auto-generated method stub
-	return 0;
-}
+	
+	@Override
+	public List<Route> routeSearch() {
+		// TODO Auto-generated method stub
+		return rDao.routeSearch();
+	}
+	
+	@Override
+	public int spotDelete() {
+		// TODO Auto-generated method stub
+		return rDao.spotDelete();
+	}
+	
+	@Override
+	public List<TourSpot> spotSearch() {
+		// TODO Auto-generated method stub
+		return rDao.spotSearch();
+	}
+	
+	@Override
+	public int spotAdd() {
+		// TODO Auto-generated method stub
+		return rDao.spotAdd();
+	}
+	
+	@Override
+	public int routeChange() {
+		// TODO Auto-generated method stub
+		return rDao.routeChange();
+	}
+	
+	@Override
+	public int routeAdd() {
+		// TODO Auto-generated method stub
+		return rDao.routeAdd();
+	}
  
    
 }
