@@ -53,10 +53,11 @@ public class AdminController {
 		
 		// 1_5. 관리자 메인 페이지에서 신규 QnA 신청 카운트 select
 		int countQnAResult = aService.countQnA();
-		System.out.println("회원 수 result : " + countQnAResult);
-		
-		if (qnaList != null)
-			model.addAttribute("qnaList", qnaList);
+		// System.out.println("QnA result : " + countQnAResult);
+
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("countQnAResult", countQnAResult);
+		model.addAttribute("countUserResult", countUserResult);
 		
 		return "admin/adminHome";
 	}
