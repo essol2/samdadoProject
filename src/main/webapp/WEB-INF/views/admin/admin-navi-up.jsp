@@ -19,7 +19,7 @@
               </svg>
               <br>
               <div>
-                  <h4>128</h4>
+                  <h4>${ countUserResult }</h4>
                   <h6 style="color: gray;">누적 회원수</h6>
               </div>
           </div>
@@ -59,7 +59,7 @@
               </svg>
               <br>
               <div>
-                  <h4>4</h4>
+                  <h4>${ countQnAResult }</h4>
                   <h6 style="color: gray;">신규 Q&A</h6>
               </div>
           </div>
