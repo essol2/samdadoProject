@@ -1,15 +1,15 @@
 package com.kh.samdado.mypage.model.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.samdado.bussiness.model.vo.Alliance;
-import com.kh.samdado.bussiness.model.vo.Jjim;
-import com.kh.samdado.bussiness.model.vo.bussiness.Bussiness;
+import com.kh.samdado.business.model.vo.Alliance;
+import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
@@ -40,7 +40,13 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.selectList("mypageMapper.selectAdvertList", usno);
 	}
 	
-	// 제휴회원 - 포인트 관리 메소드
+	// 제휴회원 -  포인트 충전 내역 insert 메소드
+	@Override
+	public int insertNewPayment(Income ic) {
+		return sqlSession.insert("mypageMapper.insertNewPayment", ic);
+	}	
+	
+	// 제휴회원 - 포인트 리스트 출력 메소드
 	@Override
 	public List<Point> selectPointList(String usno) {
 		return sqlSession.selectList("mypageMapper.selectPointList", usno);
@@ -48,7 +54,7 @@ public class MypageDaoImpl implements MypageDao{
 	
 	// 제휴회원 - 사업장 조회 메소드
 	@Override
-	public List<Bussiness> selectBussList(String usno) {
+	public List<Business> selectBussList(String usno) {
 		return sqlSession.selectList("mypageMapper.selectBussList", usno);
 	}
 	
@@ -80,5 +86,6 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public int insertNewAcc(AccountBook acc) {
 		return sqlSession.insert("mypageMapper.selectAccountList", acc);
-	}	
+	}
+
 }

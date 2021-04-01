@@ -15,6 +15,7 @@
 	<typeAliases>
 		<typeAlias type="com.kh.samdado.user.model.vo.User" alias="User"/>
 		<typeAlias type="com.kh.samdado.mypage.model.vo.QnA" alias="QnA"/>
+		<typeAlias type="com.kh.samdado.common.model.vo.Income" alias="Income"/>
    <!-- <typeAlias type="com.kh.samdado.listpage.model.vo.Alliance" alias="Alliance"/> -->
 	</typeAliases>
 

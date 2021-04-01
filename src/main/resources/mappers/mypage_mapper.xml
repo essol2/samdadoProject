@@ -30,6 +30,33 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		   AND  US_STOP IS NULL
 	</update>
 	
+	<insert id="insertNewPayment" parameterType="Income">
+		INSERT
+		INTO Income
+		(
+			PAY_NO
+		  , ITEM
+		  , AMOUNT
+		  , PDATE
+		  , EXDATE
+		  , US_NO
+		)
+		VALUES
+		(
+			INC_SEQ_NO.NEXTVAL
+		  , #{item}
+		  , #{amount}
+		  , SYSDATE
+		  , NULL
+		  , #{usno}
+		)
+	</insert>
+	
+	<!-- <select id="selectPointList" resultMap="Point">
+		SELECT
+				
+	</select> -->
+	
 	<insert id="insertNewQnA" parameterType="QnA">
 		INSERT
 		INTO "QnA"
@@ -51,5 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usno}
 		)
 	</insert>
+	
+	
 	
 </mapper>
