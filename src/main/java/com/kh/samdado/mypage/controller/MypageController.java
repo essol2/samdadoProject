@@ -1,5 +1,7 @@
 package com.kh.samdado.mypage.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.samdado.common.model.Income;
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.service.MypageService;
-import com.kh.samdado.mypage.model.vo.AccountBook;
+import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
@@ -133,25 +135,35 @@ public class MypageController {
 	 // 제휴회원 포인트 페이지로 이동
 	 @GetMapping("/point")
 	 public String goToPoint(@ModelAttribute User u,
-			 				 @ModelAttribute AccountBook ab) {
+			 				 @ModelAttribute Point po) {
 		 
-		 //System.out.println("usno가 잘 들어오는지 확인 : " + u.getUsno());
+		 // System.out.println("user 객체 확인 : " +u);
 		 
-		 //DB가서 이 회원의 잔여 포인트,사용 내역 불러오기
+		 // u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
+		 List<Point> pList = mService.selectPointList(u.getUsno());
 		 
-		 
+	
 		 return "mypage/mp_Point";
 		 
 	 }
 	 
-	 // 제휴회원 - 포인트 충전하기
-	 // 결제 API로 이동
+	 // 제휴회원 - 포인트 충전 후 DB에 insert.
 	 @GetMapping("/payment")
-	 public String goToPayment(@ModelAttribute Income ic) {
+	 public String goToPayment(@ModelAttribute Income ic,
+			 				   Model model) {
 		
-		 System.out.println("income 확인 : " + ic);
+		 // System.out.println("income 확인 : " + ic);
 		 
-		 return "mypage/mp_Point";
+		 // DB에 결제 내역 insert하기
+		 int result = mService.insertNewPayment(ic);
+		 
+		 if(result>0) {
+			//System.out.println("디비 인서트 성공!");
+			return "mypage/mp_Point";
+		 } else {
+			 model.addAttribute("msg", "오류입니다. 관리자에게 문의주세요.");
+			return "mypage/mp_Point";
+		 }
 	 }
 	 
 	 // 제휴회원 사업장 페이지로 이동

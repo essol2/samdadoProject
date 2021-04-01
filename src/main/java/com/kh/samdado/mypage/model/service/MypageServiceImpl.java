@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.samdado.bussiness.model.vo.Alliance;
-import com.kh.samdado.bussiness.model.vo.Jjim;
-import com.kh.samdado.bussiness.model.vo.bussiness.Bussiness;
+import com.kh.samdado.business.model.vo.Alliance;
+import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.dao.MypageDao;
 import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
@@ -39,7 +40,13 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectAdvertList(usno);
 	}
 
-	// 제휴회원 - 포인트 관리 메소드
+	// 제휴회원 - 포인트 충전 내역 insert 메소드
+	@Override
+	public int insertNewPayment(Income ic) {
+		return mDao.insertNewPayment(ic);
+	}
+
+	// 제휴회원 - 포인트 리스트 출력 메소드
 	@Override
 	public List<Point> selectPointList(String usno) {
 		return mDao.selectPointList(usno);
@@ -47,7 +54,7 @@ public class MypageServiceImpl implements MypageService{
 
 	// 제휴회원 - 사업장 조회 메소드
 	@Override
-	public List<Bussiness> selectBussList(String usno) {
+	public List<Business> selectBussList(String usno) {
 		return mDao.selectBussList(usno);
 	}
 	
@@ -81,6 +88,7 @@ public class MypageServiceImpl implements MypageService{
 	public int insertNewAcc(AccountBook acc) {
 		return mDao.insertNewAcc(acc);
 	}
+
 	
 	
 

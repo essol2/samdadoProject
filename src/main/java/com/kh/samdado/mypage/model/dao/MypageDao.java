@@ -2,9 +2,10 @@ package com.kh.samdado.mypage.model.dao;
 
 import java.util.List;
 
-import com.kh.samdado.bussiness.model.vo.Alliance;
-import com.kh.samdado.bussiness.model.vo.Jjim;
-import com.kh.samdado.bussiness.model.vo.bussiness.Bussiness;
+import com.kh.samdado.business.model.vo.Alliance;
+import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
@@ -22,12 +23,15 @@ public interface MypageDao {
 
 	// 제휴회원 - 광고 관리 메소드
 	public List<Alliance> selectAdvertList(String usno);
+	
+	// 제휴회원 - 포인트 충전 내역 insert 메소드
+	public int insertNewPayment(Income ic);
 
-	// 제휴회원 - 포인트 관리 메소드
+	// 제휴회원 - 포인트 리스트 출력 메소드
 	public List<Point> selectPointList(String usno);
 
 	// 제휴회원 - 사업장 조회 메소드
-	public List<Bussiness> selectBussList(String usno);
+	public List<Business> selectBussList(String usno);
 	
 	// 제휴회원 - 문의 DB에 저장하는 메소드
 	public int insertNewQnA(QnA qna);
