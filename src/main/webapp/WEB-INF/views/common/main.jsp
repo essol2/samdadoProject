@@ -478,7 +478,7 @@
 		    line-height: 50px;
 		}
 		
-		#name:focus, #id:focus, #pwd:focus, #pwd2:focus, #email:focus, #birth:focus, #bussiness_no:focus, #phone:focus {
+		#name:focus, #id:focus, #pwd:focus, #pwd2:focus, #email:focus, #birth:focus, #business_no:focus, #phone:focus {
 		    outline: none;
 		}
 		
@@ -498,11 +498,11 @@
 		    margin-left: -118%;
 		}
 		
-		#bussiness_text{
+		#business_text{
 		    color: darkred;
 		}
 		
-		#bussiness_no{
+		#business_no{
 		    border: none;
 		    border-bottom: 1px solid;
 		    line-height: 30px;
@@ -530,7 +530,7 @@
 		    margin-right: 40%;
 		}
 		
-		#bussiness_no_div{
+		#business_no_div{
 			display : none;
 		}
 		
@@ -540,7 +540,7 @@
 		    margin: 0;
 		}
 		
-		.buss-li-class {
+		.bus-li-class {
 		    list-style:none;
 		    color: white;
 		}
@@ -561,7 +561,7 @@
 	    visibility: visible;
 	}
 	
-	#navi-menu-buss-banner:hover {
+	#navi-menu-bus-banner:hover {
 		color : red;
 	}
 
@@ -582,10 +582,8 @@
    <!-- 회원가입 제휴회원 버튼 js -->
    <script>
        function display() {
-           var control = document.getElementById("bussiness_no_div");    
-           
-           <%--alert(control.style.display);--%>
-           
+           var control = document.getElementById("business_no_div");    
+
            if (control.style.display == 'block') {
                control.style.display = 'none';
            } else {
@@ -607,7 +605,7 @@
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/bussiness/tour_list'">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 
 	                <p class="center" id="navi-menu">제주도 필수 예약</p>
             	</div>
@@ -626,7 +624,7 @@
 	                <br><br>
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/bussiness/tour_list'">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu">제주도 필수 예약</p>
             	</div>
                 
@@ -646,16 +644,16 @@
 	                <br><br>
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/bussiness/tour_list'">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu">제주도 필수 예약</p>
 	                
-	                <li class="buss-li-class"><p class="center" id="navi-menu-buss">삼다도에서 사업하기</p>
+	                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
 		                <ul class="ul-class">                
-			                <li><p class="center" id="navi-menu-buss-hotel" onclick="location.href='${ contextPath }/bussiness/hotel_insert'">호텔 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-buss-rent" onclick="location.href='${ contextPath }/bussiness/rentcar_insert'">렌트카 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-buss-restau" onclick="location.href='${ contextPath }/bussiness/restaurant_insert'">음식점 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-buss-attrac" onclick="location.href='${ contextPath }/bussiness/tour_insert'">관광지 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-buss-banner" onclick="location.href='${ contextPath }/bussiness/bannerAd'">배너(리스팅)광고</p><li>
+			                <li><p class="center" id="navi-menu-bus-hotel" onclick="location.href='${ contextPath }/business/hotel_insert'">호텔 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-rent" onclick="location.href='${ contextPath }/business/rentcar_insert'">렌트카 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-restau" onclick="location.href='${ contextPath }/business/restaurant_insert'">음식점 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-attrac" onclick="location.href='${ contextPath }/business/tour_insert'">관광지 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-banner" onclick="location.href='${ contextPath }/business/bannerAd'">배너(리스팅)광고</p><li>
 		                </ul>
             		</li>
             	</div>
@@ -676,7 +674,7 @@
 	                <br><br>
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/bussiness/tour_list'">전체 제주 관광지 보기</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu">제주도 필수 예약</p>
             	</div>
                 
@@ -783,11 +781,11 @@
 	                    <input type="text" id="phone" name="usphone" placeholder="01012345678" required>
 	                </div>
 	                <!--사업자등록번호-->
-	                <a href="javascript:display();"><h5 id="bussiness_text"><b>&gt;&gt; 제휴회원 이세요?</b></h5></a>
-	                <div id="bussiness_no_div">
-	                    <label for="bussiness_no">* 사업자등록번호</label>
-	                    <label id="test_bussiness_no_label" class="test_div"></label>
-	                    <input type="text" id="bussiness_no" name="busno" placeholder="000-00-00000">
+	                <a href="javascript:display();"><h5 id="business_text"><b>&gt;&gt; 제휴회원 이세요?</b></h5></a>
+	                <div id="business_no_div">
+	                    <label for="business_no">* 사업자등록번호</label>
+	                    <label id="test_business_no_label" class="test_div"></label>
+	                    <input type="text" id="business_no" name="busno" placeholder="000-00-00000">
 	                </div>            
 		            </div>
 		            <div class="modal-footer">
@@ -963,10 +961,10 @@
 			}
 			
 			// 사업자등록번호 유효성검사
-			var bizNum = $("#bussiness_no").val();
+			var bizNum = $("#business_no").val();
 			if(bizNum != "" && !(/\d{3}[-]\d{2}[-]\d{5}/).test(bizNum)){
 				alert('사업자등록번호를 확인해주세요.');
-				$("#bussiness_no").select();
+				$("#business_no").select();
 				return false;
 			}
 
@@ -1136,13 +1134,13 @@
             }
         });
         
-        $("#bussiness_no").change(function () {
-            var busnoval = $("#bussiness_no").val();
+        $("#business_no").change(function () {
+            var busnoval = $("#business_no").val();
             var regbusno = /\d{3}[-]\d{2}[-]\d{5}/; // 258-41-00747 형식 
             if (regbusno.test(busnoval)) {
-                $("#test_bussiness_no_label").html("올바른 입력입니다.").css("color", "green");
+                $("#test_business_no_label").html("올바른 입력입니다.").css("color", "green");
             } else {
-                $("#test_bussiness_no_label").html("올바른 형식이 아닙니다.").css("color", "red");
+                $("#test_business_no_label").html("올바른 형식이 아닙니다.").css("color", "red");
             }
         });
 	

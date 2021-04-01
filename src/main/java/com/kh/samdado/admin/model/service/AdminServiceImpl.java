@@ -32,6 +32,12 @@ public class AdminServiceImpl implements AdminService {
 		return aDao.insertQnaReply(q);
 	}
 
+	@Override
+	public int countQnA() {
+		// TODO Auto-generated method stub
+		return aDao.countQnA();
+	}
+
 
    
 }

@@ -172,38 +172,6 @@
                 </nav>
               </div>
 
-             <!--배너 반려 내역 -->
-             <!-- <h3>배너 <span style="color: red;">반려</span> 내역</h3>
-             <br>
-             <table class="table table-borderless">
-                 <thead>
-                     <tr>
-                        <th>No</th>
-                        <th>신청자</th>
-                        <th>카테고리</th>
-                        <th>포인트</th>
-                        <th>신청폼</th>
-                        <th>신청날짜</th>
-                        <th>반려사유</th>
-                        <th>처리</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr>
-                     <th>1</th>
-                     <td>홍길동</td>
-                     <td>음식점</td>
-                     <td>0</td>
-                     <td><a class="btn btn-info">신청폼</a></td>
-                     <td>2021-03-17</td>
-                     <th style="color: crimson;">포인트 미충전</th>
-                     <td><button type="submit" class="btn btn-secondary">삭제</button></td>
-                   </tr>
-                 </tbody>
-               </table> -->
-
-               <!-- <br><hr><br> -->
-
                <div class="find_banner_ad">
                 <h3>배너<span style="color: seagreen;">내역조회</span>하기</h3>
                 <br>
