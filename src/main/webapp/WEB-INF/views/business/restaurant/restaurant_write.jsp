@@ -336,7 +336,7 @@
           </div>
       <section class="signup-section-wrap">
 			
-		<form action="${ contextPath }/business/restaurant_insert" method="post" enctype="multipart/form-data">
+		<form action="${ contextPath }/business/restaurant_insert" id="writeForm" method="post" enctype="multipart/form-data">
             <!-- 사업장명 -->
             <div class="signup-div">
                 <h3 class="join_title">
@@ -367,13 +367,9 @@
                     <input type="text" id="address3" name="bus_address" class="postcodify_details">
                 </span>
             </div>
-            <!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
-			<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-			<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
-			<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
              
              <!-- 카테고리 -->
-             <div class="signup-div">
+              <!--<div class="signup-div">
                 <h3 class="join-title"><label for="category">카테고리</label></h3>
                 <select class="box int_name" id="category" name="catagory">
                     <option value="select" selected>선택</option>
@@ -383,13 +379,13 @@
                     <option value="select">일식</option>
                     <option value="select">기타</option>
                 </select>
-            </div>
+            </div> -->
             
             <!-- 영업시간 -->
             <div class="signup-div">
                 <h3 class="join-title"><label for="opening">영업시간</label></h3>
                 <span class="box int_address">
-                    <input type="text" id="opening" name="opening" class="int" placeholder="매일 08:00 ~ 22:00">
+                    <input type="text" id="opening" name="bus_opening" class="int" placeholder="매일 08:00 ~ 22:00">
                 </span>
             </div>         
            
@@ -447,9 +443,7 @@
               <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
               -->
               <!-- Button trigger modal -->
-              <button id="btnJoin" class="btn btn-primary">
-              <a>등록하기</a>
-              </button>
+              <button id="btnJoin" class="btn btn-primary">등록하기 </button>
               <!-- Modal -->
               <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                    data-bs-toggle="modal" data-bs-target="#staticBackdrop"
@@ -478,6 +472,13 @@
             </section>   
         </div>        
     </div>
+    
+	<!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
+	<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+	<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
+	<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+	
+	
 	<!--은화 : footer-->
 	<footer>
 	    <div id="footer_left">

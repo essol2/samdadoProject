@@ -42,13 +42,19 @@ public class businessController {
 	}
 	
 	@GetMapping("/hotel_write")
-	public String hotelInsert() {
+	public String hotelWrite() {
 		return "business/hotel/hotel_write";
+	}
+	
+	@PostMapping("/restaurant_insert")
+	public String hotelInsert() {
+		
+		return "";
 	}
 	
 	// 관광
 	@GetMapping("/tour_list")
-	public String business() {
+	public String tourList() {
 		return "business/tour/tour_list";
 		
 	}
@@ -60,8 +66,14 @@ public class businessController {
 	}
 	
 	@GetMapping("/tour_write")
-	public String tourInsert() {
+	public String tourWrite() {
 		return "business/tour/tour_write";
+	}
+	
+	@PostMapping("/tour_insert")
+	public String tourInsert() {
+		
+		return "";
 	}
 	
 	// 음식점
@@ -78,18 +90,16 @@ public class businessController {
 	}
 	
 	@GetMapping("/restaurant_write")
-	public String restaurantInsert() {
+	public String restaurantWrite() {
 		return "business/restaurant/restaurant_write";
 	}
 	
 	// 음식점 등록 - 파일첨부(리네임)
 	@PostMapping("/restaurant_insert")
-	public String insertRestaurant(Business b, BusinessAtt ba,
+	public String restaurantInsert(Business b, BusinessAtt ba,
 							  @RequestParam(value="uploadFile") MultipartFile file,
 							  HttpServletRequest request) {
 		
-		System.out.println("비즈니스" + b);
-		System.out.println("비즈니스 첨부파일" + ba);
 		// 업로드 파일 서버에 저장
 		// 파일이 첨부 되었다면
 		if(!file.getOriginalFilename().equals("")) {
@@ -152,11 +162,16 @@ public class businessController {
 	}
 	
 	@GetMapping("/rentcar_write")
-	public String rentcarInsert() {
+	public String rentcarWrite() {
 		return "business/rentcar/rentcar_write";
 		
 	}
 	
+	@PostMapping("/rentcar_insert")
+	public String rentcarInsert() {
+		
+		return "";
+	}
 	// ************* 지혜 *************
 	// 배너 등록 페이지로 이동
 	@GetMapping("/bannerAd")

@@ -30,6 +30,24 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.insert("businessMapper.insertRestaurant2", ba);
 	}
 
+	@Override
+	public int inserthotel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int inserttour() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertrentcar() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 
 }
