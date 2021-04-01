@@ -12,4 +12,6 @@ public interface AdminDao {
 
 	int insertQnaReply(QnA q);
 
+	int countQnA();
+
 }

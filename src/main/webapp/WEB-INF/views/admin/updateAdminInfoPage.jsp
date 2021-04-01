@@ -63,7 +63,7 @@
 		              </div>
 		              <div class="input-group">
 		                <span class="input-group-text">사업자등록번호</span>
-		                <input type="text" id="bussiness_no" aria-label="busno" name="busno" class="form-control" value="${ loginUser.busno }">
+		                <input type="text" id="business_no" aria-label="busno" name="busno" class="form-control" value="${ loginUser.busno }">
 		              </div>
 		              <div class="input-group">
 		                <span class="input-group-text">휴대전화</span>
@@ -120,10 +120,10 @@
 			}
 			
 			// 사업자등록번호 유효성검사
-			var bizNum = $("#bussiness_no").val();
+			var bizNum = $("#business_no").val();
 			if(bizNum != "" && !(/\d{3}[-]\d{2}[-]\d{5}/).test(bizNum)){
 				alert('사업자등록번호를 확인해주세요.');
-				$("#bussiness_no").select();
+				$("#business_no").select();
 				return false;
 			}
 			
@@ -190,13 +190,13 @@
   
         });
      	
-         $("#bussiness_no").change(function () {
+         $("#business_no").change(function () {
              var busnoval = $("#bussiness_no").val();
              var regbusno = /\d{3}[-]\d{2}[-]\d{5}/;
              if (regbusno.test(busnoval)) {
-                 $("#test_bussiness_no_label").html("올바른 입력입니다.").css("color", "green");
+                 $("#test_business_no_label").html("올바른 입력입니다.").css("color", "green");
              } else {
-                 $("#test_bussiness_no_label").html("올바른 형식이 아닙니다.").css("color", "red");
+                 $("#test_business_no_label").html("올바른 형식이 아닙니다.").css("color", "red");
              }
          });
     	

@@ -11,6 +11,10 @@ public interface AdminService {
 	List<QnA> adminQnaSelect();
 
 	int insertQnaReply(QnA q);
+
+	// 신규 QnA 갯수 select
+	int countQnA();
+
 	
    
 

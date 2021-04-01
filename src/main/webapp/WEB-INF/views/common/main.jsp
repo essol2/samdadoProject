@@ -540,7 +540,7 @@
 		    margin: 0;
 		}
 		
-		.buss-li-class {
+		.bus-li-class {
 		    list-style:none;
 		    color: white;
 		}
@@ -561,7 +561,7 @@
 	    visibility: visible;
 	}
 	
-	#navi-menu-buss-banner:hover {
+	#navi-menu-bus-banner:hover {
 		color : red;
 	}
 
@@ -583,9 +583,8 @@
    <script>
        function display() {
            var control = document.getElementById("business_no_div");    
-           
-           <%--alert(control.style.display);--%>
-           
+
+
            if (control.style.display == 'block') {
                control.style.display = 'none';
            } else {
@@ -649,13 +648,15 @@
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu">제주도 필수 예약</p>
 	                
-	                <li class="buss-li-class"><p class="center" id="navi-menu-buss">삼다도에서 사업하기</p>
+	                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
 		                <ul class="ul-class">                
-			                <li><p class="center" id="navi-menu-buss-hotel" onclick="location.href='${ contextPath }/business/hotel_write'">호텔 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-buss-rent" onclick="location.href='${ contextPath }/business/rentcar_write'">렌트카 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-buss-restau" onclick="location.href='${ contextPath }/business/restaurant_write'">음식점 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-buss-attrac" onclick="location.href='${ contextPath }/business/tour_write'">관광지 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-buss-banner" onclick="location.href='${ contextPath }/business/bannerAd'">배너(리스팅)광고</p><li>
+
+			                <li><p class="center" id="navi-menu-bus-hotel" onclick="location.href='${ contextPath }/business/hotel_insert'">호텔 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-rent" onclick="location.href='${ contextPath }/business/rentcar_insert'">렌트카 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-restau" onclick="location.href='${ contextPath }/business/restaurant_insert'">음식점 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-attrac" onclick="location.href='${ contextPath }/business/tour_insert'">관광지 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-banner" onclick="location.href='${ contextPath }/business/bannerAd'">배너(리스팅)광고</p><li>
+
 		                </ul>
             		</li>
             	</div>

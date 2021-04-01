@@ -42,4 +42,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	     WHERE
 	     	   QNA_NO = #{qnano}
 	</update>
+	
+	<select id="countQnA" resultType="_int">
+		SELECT 
+			  COUNT(*)
+		  FROM
+		       "QnA"
+         WHERE
+               QSTATUS = 'N'
+	</select>
+
 </mapper>

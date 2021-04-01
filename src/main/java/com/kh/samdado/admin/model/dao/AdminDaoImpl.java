@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.samdado.mypage.model.vo.QnA;
-import com.kh.samdado.user.model.vo.User;
 
 @Repository 
 public class AdminDaoImpl implements AdminDao {
@@ -33,6 +32,11 @@ public class AdminDaoImpl implements AdminDao {
 		return sqlSession.update("adminMapper.insertQnaReply", q);
 	}
 
+	@Override
+	public int countQnA() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminMapper.countQnA");
+	}
 
 	
 

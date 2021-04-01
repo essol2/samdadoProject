@@ -72,6 +72,12 @@ public class UserServiceImpl implements UserService {
 		return uDao.updateAdminUser(u);
 	}
 
+	@Override
+	public int countUser() {
+		// TODO Auto-generated method stub
+		return uDao.countUser();
+	}
+
 
 	
 

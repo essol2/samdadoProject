@@ -72,5 +72,11 @@ public class UserDaoImpl implements UserDao {
 		return sqlSession.update("userMapper.updateAdminUser", u);
 	}
 
+	@Override
+	public int countUser() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("userMapper.countUser");
+	}
+
 
 }

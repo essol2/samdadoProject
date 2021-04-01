@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.samdado.admin.model.exception.AdminException;
 import com.kh.samdado.admin.model.service.AdminService;
+import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
@@ -29,6 +30,9 @@ public class AdminController {
 	@Autowired
 	private AdminService aService;
 	
+	@Autowired
+	private businessService bService;
+	
 	// 1. 관리자 홈 페이지로
 	@GetMapping("/home")
 	public String adminHomeView(Model model) {
@@ -37,12 +41,27 @@ public class AdminController {
 		List<QnA> qnaList = aService.adminMainQnaSelect();	
 		//System.out.println("qnaList : " + qnaList);
 		
+		// 1_2. 관리자 메인 페이지에서 총 회원수 카운트 select
+		int countUserResult = uService.countUser();
+		//System.out.println("회원 수 countUserResult : " + countUserResult);
+		
+		// 1_3. 관리자 메인 페이지에서 신규 광고 신청 카운트 select
+		// int countAdResult = bService.countAd();
+		
+		// 1_4. 관리자 메인 페이지에서 신규 신고 신청 카운트 select
+		// int countReportResult = bService.countReport();
+		
+		// 1_5. 관리자 메인 페이지에서 신규 QnA 신청 카운트 select
+		int countQnAResult = aService.countQnA();
+		System.out.println("회원 수 result : " + countQnAResult);
+		
 		if (qnaList != null)
 			model.addAttribute("qnaList", qnaList);
 		
 		return "admin/adminHome";
 	}
 	
+
 	// 2_1. 관리자 홈 배너 광고관리 페이지로
 	@GetMapping("/advertise1")
 	public String adminAdvertise1View() {

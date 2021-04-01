@@ -26,6 +26,8 @@ public interface UserDao {
 	
 	public int updateAdminUser(User u);
 
+	public int countUser();
+
 
 
 }

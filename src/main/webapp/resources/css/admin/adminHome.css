@@ -18,10 +18,12 @@ li {
     color: black;
 }
 
-#right_4contents .card:hover {
-    background-color: rgb(190, 192, 192);
-}
 
 .id_div {
     display: flex;
+}
+
+#right_4contents .card:hover {
+    background-color: rgb(190, 192, 192);
+    cursor: pointer;
 }
