@@ -4,23 +4,24 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminMapper">
 	<resultMap type="QnA" id="qnaResultSet">
-		<id property="qnano" column="QnA_NO" />
-		<result property="qcontent" column="QCONTENT" />
+		<id property="qnano" column="QNA_NO" />
+		<result property="qcont" column="QCONT" />
 		<result property="qdate" column="QDATE" />
 		<result property="qreply" column="QREPLY" />
 		<result property="qstatus" column="QSTATUS" />
 		<result property="usno" column="US_NO" />	
-		<result property="usname" column="US_NAME" />	<!-- USER 테이블 조인을 위한 필드 -->
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
 	</resultMap>
 	
-	<select id="selectAdminQna" resultMap="qnaResultSet">
+	<select id="selectAdminMainQnaSelect" resultMap="qnaResultSet">
 		SELECT *
 		  FROM
-              (SELECT "QnA_NO", QCONTENT, US_NAME
+              (SELECT "QNA_NO", QCONT, US_NAME
                FROM "QnA", "USER"
                WHERE  "QnA".US_NO = "USER".US_NO
-               ORDER BY "QnA_NO")
+               ORDER BY "QNA_NO")
 		 WHERE 
-		       ROWNUM <![CDATA[<=]]> 5;
+		       ROWNUM <![CDATA[<=]]> 5 <!-- admin 메인 페이지에 5개의 qna 만 보이도록 limit절 처리 -->
 	</select>		
 </mapper>

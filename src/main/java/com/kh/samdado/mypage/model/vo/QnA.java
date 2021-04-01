@@ -34,4 +34,6 @@ public class QnA {
 	private char qstatus;
 	private String usno;
 	
+	private String usname; // USER 테이블 조인을 위한 필드
+	
 }

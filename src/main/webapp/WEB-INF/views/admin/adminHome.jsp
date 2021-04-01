@@ -329,7 +329,7 @@
 	                        <tr>
 	                            <th scope="row">${ q.qnano }</th>
 	                            <td>${ q.usname }</td>
-	                            <td>${ q.qcontent }</td>
+	                            <td>${ q.qcont }</td>
 	                        </tr>
                         </c:forEach>                     
                         </tbody>

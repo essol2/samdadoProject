@@ -21,7 +21,7 @@
 	 <!-- mappers -->
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
-	<!-- <mapper resource="mappers/admin-mapper.xml"/> -->
+	    <mapper resource="mappers/admin-mapper.xml"/>
 		<mapper resource="mappers/mypage_mapper.xml"/>    
    <!-- <mapper resource="mappers/listpage-mapper.xml"/> -->     
 	</mappers>

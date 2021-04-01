@@ -14,11 +14,11 @@ public class AdminServiceImpl implements AdminService {
    @Autowired
    private AdminDao aDao;
 
-@Override
-public List<QnA> adminMainQnaSelect() {
-	// TODO Auto-generated method stub
-	return null;
-}
+	@Override
+	public List<QnA> adminMainQnaSelect() {
+		// TODO Auto-generated method stub
+		return aDao.adminMainQnaSelect();
+	}
    
   
    
