@@ -19,7 +19,19 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return aDao.adminMainQnaSelect();
 	}
-   
-  
+
+	@Override
+	public List<QnA> adminQnaSelect() {
+		// TODO Auto-generated method stub
+		return aDao.adminQnaSelect();
+	}
+
+	@Override
+	public int insertQnaReply(QnA q) {
+		// TODO Auto-generated method stub
+		return aDao.insertQnaReply(q);
+	}
+
+
    
 }

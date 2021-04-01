@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.kh.samdado.admin.model.exception.AdminException;
 import com.kh.samdado.admin.model.service.AdminService;
 import com.kh.samdado.mypage.model.vo.QnA;
-import com.kh.samdado.user.model.exception.UserException;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 
@@ -27,14 +27,14 @@ public class AdminController {
 	private UserService uService;
 	
 	@Autowired
-	private AdminService qnaService;
+	private AdminService aService;
 	
 	// 1. 관리자 홈 페이지로
 	@GetMapping("/home")
 	public String adminHomeView(Model model) {
 		
-		List<QnA> qnaList = qnaService.adminMainQnaSelect();
-		
+		// 1_1. 관리자 메인 페이지에서 미답변 qna 5개만 보이는 limit절 select
+		List<QnA> qnaList = aService.adminMainQnaSelect();	
 		//System.out.println("qnaList : " + qnaList);
 		
 		if (qnaList != null)
@@ -63,7 +63,13 @@ public class AdminController {
 	
 	// 4. 관리자 홈 Q&A관리 페이지로
 	@GetMapping("/qna")
-	public String adminQnaView() {
+	public String adminQnaView(Model model) {
+		
+		// 미답변인 QnA 리스트 select 해오기
+		List<QnA> qnaList = aService.adminQnaSelect();
+
+		model.addAttribute("qnaList", qnaList);
+		
 		return "admin/adminQna";
 	}
 	
@@ -100,9 +106,25 @@ public class AdminController {
 			model.addAttribute("msg", "관리자 정보가 수정되었습니다.");
 			return "redirect:/admin/mypage";
 		} else {
-			throw new UserException("관리자 정보 수정에 실패하였습니다.");
+			throw new AdminException("관리자 정보 수정에 실패하였습니다.");
 		}
 
+	}
+	
+	@PostMapping("/insertReplyQna")
+	public String insertReplyQna(QnA q, Model model) {
+		
+		// System.out.println("답변 넘어오나 확인! q : " + q);
+		
+		int result = aService.insertQnaReply(q); // update
+		
+		if (result > 0) {
+			model.addAttribute("msg", "답변 완료!");
+			return "redirect:/admin/qna";
+		} else {
+			throw new AdminException("답변에 실패하였습니다.");
+		}
+		
 	}
 	
 	

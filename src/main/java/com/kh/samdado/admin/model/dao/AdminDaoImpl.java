@@ -21,6 +21,19 @@ public class AdminDaoImpl implements AdminDao {
 		return sqlSession.selectList("adminMapper.selectAdminMainQnaSelect");
 	}
 
+	@Override
+	public List<QnA> adminQnaSelect() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("adminMapper.adminQnaSelect");
+	}
+
+	@Override
+	public int insertQnaReply(QnA q) { // update
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.insertQnaReply", q);
+	}
+
+
 	
 
 }
