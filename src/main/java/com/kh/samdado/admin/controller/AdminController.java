@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.samdado.admin.model.service.AdminService;
-//import com.kh.samdado.admin.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.exception.UserException;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
@@ -31,9 +31,14 @@ public class AdminController {
 	
 	// 1. 관리자 홈 페이지로
 	@GetMapping("/home")
-	public String adminHomeView() {
+	public String adminHomeView(Model model) {
 		
-//		List<QnA> qnaList = qnaService.adminMainQnaSelect();
+		List<QnA> qnaList = qnaService.adminMainQnaSelect();
+		
+		//System.out.println("qnaList : " + qnaList);
+		
+		if (qnaList != null)
+			model.addAttribute("qnaList", qnaList);
 		
 		return "admin/adminHome";
 	}
