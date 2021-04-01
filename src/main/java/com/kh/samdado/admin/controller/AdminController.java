@@ -64,7 +64,16 @@ public class AdminController {
 	
 	// 5. 관리자 홈 마이페이지로 (readonly)
 	@GetMapping("/mypage")	
-	public String adminMypageView() {		
+	public String adminMypageView(HttpSession session, Model model) {
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		User admin = uService.loginUser(loginUser);
+		
+		// System.out.println("admin" + admin);
+		
+		model.addAttribute("loginUser", loginUser);
+		
 		return "admin/adminMypage";
 	}
 	
@@ -76,16 +85,15 @@ public class AdminController {
 	
 	@PostMapping("/updateAdminInfo")
 	public String updateAdminInfo(User u, Model model) {
-		
-		System.out.println("u확인 : " + u);
-		
+
 		int result = uService.updateAdminUser(u);
 		
-		// System.out.println("result가 1이면 성공인건뎅 : " + result);
-		
+		User loginUser = uService.loginUser(u);
+
 		if (result > 0) {
+			model.addAttribute("loginUser", loginUser);
 			model.addAttribute("msg", "관리자 정보가 수정되었습니다.");
-			return "admin/adminMypage";
+			return "redirect:/admin/mypage";
 		} else {
 			throw new UserException("관리자 정보 수정에 실패하였습니다.");
 		}
