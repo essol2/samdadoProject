@@ -42,6 +42,12 @@ public class businessServiceImpl implements businessService {
 
 	@Override
 	public int bookingTour(TourBooking tourbooking) {
+  // TODO Auto-generated method stub
+		return 0;
+  }
+  
+  @Override
+	public int inserthotel() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -49,12 +55,19 @@ public class businessServiceImpl implements businessService {
 
 	@Override
 	public int bookingHotel(RoomBooking roombooking) {
+    // TODO Auto-generated method stub
+		return 0;
+  }
+  
+   @Override
+	public int inserttour() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 
 	@Override
+
 	public int bookingCar(CarBooking carbooking) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -84,6 +97,12 @@ public class businessServiceImpl implements businessService {
 
 	@Override
 	public int jjim(Jjim jjim) {
+  // TODO Auto-generated method stub
+		return 0;
+  }
+  
+  @Override
+	public int insertrentcar() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

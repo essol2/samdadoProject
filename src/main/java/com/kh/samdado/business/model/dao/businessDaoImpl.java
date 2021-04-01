@@ -37,6 +37,23 @@ public class businessDaoImpl implements businessDao {
 	public int insertRestaurant2(BusinessAtt ba) {
 		return sqlSession.insert("businessMapper.insertRestaurant2", ba);
 	}
+  
+  	public int inserthotel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int inserttour() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertrentcar() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	@Override
 	public int bookingTour(TourBooking tourbooking) {
@@ -79,6 +96,8 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 	
 
 }

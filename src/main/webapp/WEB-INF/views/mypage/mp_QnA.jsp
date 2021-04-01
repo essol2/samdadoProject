@@ -107,7 +107,7 @@
         background-color:rgba( 255, 255, 255, 0.8 );
         border : 5px solid white;
         width : 77%;
-        height : 700px;
+        height : fit-content;
          margin-top : 5%;
         margin-left : 3%;
     }
@@ -291,8 +291,8 @@
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/adverB.png" class="btnImg"> <br> 광고관리</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 포인트</div></button>
-                    <button class="clickedBtn" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/qnaW.png" class="btnImg"> <br> 문의하기</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToPoint()"> <div class="menuBoxEle" onclick="location.href='${ contextPath }/mypage/point'"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 포인트</div></button>
+                    <button class="clickedBtn" id="myInfo" onclick="location.href='${ contextPath }/mypage/gotoqna'"> <div class="menuBoxEle" onclick="location.href='${ contextPath }/mypage/gotoqna'"><br><img src="${contextPath}/resources/images/image_mp/qnaW.png" class="btnImg"> <br> 문의하기</div></button>
 
                 </div>
             </div>
@@ -308,12 +308,18 @@
 	                    <p><textarea cols="80" rows="10" id="qcont" name="qcont"></textarea></p>
 	                    <input type="hidden" name="usno" id="usno" value="${ loginUser.usno }">
 	                    <input type="submit" value="전송" id="subBtn">
+	                    <br><br>
 	               </form>
                </div>
             </div>
         </section>
     </div>
-
+   <script>
+	function goToPoint(){
+		/* console.log("jsp안에서 usno확인 : " + usno); */
+		location.href='${contextPath}/mypage/point?usno='+${loginUser.usno};
+	};
+	</script>
     
 </body>
 </html>
