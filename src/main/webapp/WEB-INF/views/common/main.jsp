@@ -584,6 +584,7 @@
        function display() {
            var control = document.getElementById("business_no_div");    
 
+
            if (control.style.display == 'block') {
                control.style.display = 'none';
            } else {
@@ -649,11 +650,13 @@
 	                
 	                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
 		                <ul class="ul-class">                
+
 			                <li><p class="center" id="navi-menu-bus-hotel" onclick="location.href='${ contextPath }/business/hotel_insert'">호텔 등록하기</p></li>
 			                <li><p class="center" id="navi-menu-bus-rent" onclick="location.href='${ contextPath }/business/rentcar_insert'">렌트카 등록하기</p></li>
 			                <li><p class="center" id="navi-menu-bus-restau" onclick="location.href='${ contextPath }/business/restaurant_insert'">음식점 등록하기</p></li>
 			                <li><p class="center" id="navi-menu-bus-attrac" onclick="location.href='${ contextPath }/business/tour_insert'">관광지 등록하기</p></li>
 			                <li><p class="center" id="navi-menu-bus-banner" onclick="location.href='${ contextPath }/business/bannerAd'">배너(리스팅)광고</p><li>
+
 		                </ul>
             		</li>
             	</div>
