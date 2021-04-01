@@ -19,7 +19,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class QnA {
-//	QnA _NO	NUMBER
+//	QNA_NO	NUMBER
 //	QCONT	VARCHAR2(1500 BYTE)
 //	QDATE	DATE
 //	QREPLY	VARCHAR2(100 BYTE)
