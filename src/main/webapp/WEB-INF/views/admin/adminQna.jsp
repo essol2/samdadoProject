@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,6 +17,13 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
   </head>
   <body>
+  
+   <!-- 메세지가 있다면 출력하고 지우기 -->
+   <c:if test="${ !empty msg }">
+   		<script>alert('${ msg }')</script>
+   		<c:remove var="msg" />
+   </c:if>
+   
     <div class="container-fluid">
       <div class="row">
         
@@ -41,28 +50,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <!--반복문 -->
-                  <tr>
-                    <th>1</th>
-                    <td>김춘추</td>
-                    <td scope="row">배너광고는 최소 얼마를 충전해야 하나요?</td>
-                    <td><input type="text" id="replyValue" class="form-control"></td>
-                    <td><button type="submit" class="btn btn-secondary">답변</button></td>
-                    <td>2021-03-17</td>
-                  </tr>
-                  <tr>
-                    <th>2</th>
-                    <td>강제주</td>
-                    <td scope="row">배너광고 신청했는데 결과는 얼마나 기다려야 하냐요?</td>
-                    <td><input type="text" id="replyValue" class="form-control"></td>
-                    <td><button type="submit" class="btn btn-secondary">답변</button></td>
-                    <td>2021-03-17</td>
-                  </tr>
+                 <form action="${ contextPath }/admin/insertReplyQna" method="post">
+          		  <c:forEach var="q" items="${ qnaList }">
+                   <tr>
+                       <th scope="row">${ q.qnano }</th>
+                       <td>${ q.usname }</td>
+                       <td>${ q.qcont }</td>
+                       <input type="hidden" name="qnano" value="${ q.qnano }">
+                       <td><input type="text" name="qreply" id="replyValue" class="form-control"></td>
+                       <td><button type="submit" class="btn btn-secondary">답변</button></td>
+                       <td>${ q.qdate }</td>
+                   </tr>
+                  </c:forEach>              
+				</form>
                 </tbody>
               </table>
 
-             <br> <hr>
+             <br><hr>
 
               <!-- 페이지네이션 -->
               <div class="row-page">

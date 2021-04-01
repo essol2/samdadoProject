@@ -8,4 +8,8 @@ public interface AdminDao {
 
 	List<QnA> adminMainQnaSelect();
 
+	List<QnA> adminQnaSelect();
+
+	int insertQnaReply(QnA q);
+
 }

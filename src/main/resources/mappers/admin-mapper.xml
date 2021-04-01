@@ -20,8 +20,26 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
               (SELECT "QNA_NO", QCONT, US_NAME
                FROM "QnA", "USER"
                WHERE  "QnA".US_NO = "USER".US_NO
+           AND QSTATUS = 'N'	<!-- 미답변만 select -->
                ORDER BY "QNA_NO")
 		 WHERE 
 		       ROWNUM <![CDATA[<=]]> 5 <!-- admin 메인 페이지에 5개의 qna 만 보이도록 limit절 처리 -->
-	</select>		
+	</select>	
+	
+	<select id="adminQnaSelect" resultMap="qnaResultSet">
+        SELECT *
+          FROM "QnA", "USER"
+         WHERE "QnA".US_NO = "USER".US_NO
+   AND QSTATUS = 'N'	<!-- 미답변만 select -->
+      ORDER BY "QNA_NO"
+	</select>	
+	
+	<update id="insertQnaReply" parameterType="QnA">
+		UPDATE "QnA"
+		   SET
+			   QREPLY = #{qreply},
+			   QSTATUS = 'Y'
+	     WHERE
+	     	   QNA_NO = #{qnano}
+	</update>
 </mapper>
