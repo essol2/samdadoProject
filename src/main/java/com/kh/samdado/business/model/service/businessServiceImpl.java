@@ -30,5 +30,26 @@ public class businessServiceImpl implements businessService {
 	public int insertRestaurant2(BusinessAtt ba) {
 		return bDao.insertRestaurant2(ba);
 	}
+
+
+	@Override
+	public int inserthotel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public int inserttour() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public int insertrentcar() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
    
 }
