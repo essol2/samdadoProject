@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -173,34 +174,56 @@
 
                 <div id="route_select">
                 	<br>
-                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get">
+                	<c:if test="${ param.area == 'east' }">
+                		<c:set var="check1" value="checked"/>
+                	</c:if>
+                	<c:if test="${ param.area == 'west' }">
+                		<c:set var="check2" value="checked"/>
+                	</c:if>
+                	<c:if test="${ param.area == 'south' }">
+                		<c:set var="check3" value="checked"/>
+                	</c:if>
+                	<c:if test="${ param.area == 'north' }">
+                		<c:set var="check4" value="checked"/>
+                	</c:if>
+                	
+                	<c:if test="${ param.thema == 'sightseeing' }">
+                		<c:set var="check5" value="checked"/>
+                	</c:if>
+                	<c:if test="${ param.thema == 'break' }">
+                		<c:set var="check6" value="checked"/>
+                	</c:if>
+                	<c:if test="${ param.thema == 'beach' }">
+                		<c:set var="check7" value="checked"/>
+                	</c:if>
+                 	
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="radio" name="area" id="east" value="east">
+                		<input type="radio" name="area" id="east" value="east" ${ check1 }>
                 		<label for="east">  동부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west" ${ check2 }>
                 		<label for="west">  서부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south" ${ check3 }>
                 		<label for="south">  남부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north" ${ check4 }>
                 		<label for="north">  북부</label>
                 		
                 		<br>
                 		
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold" stype="padding: 10%;">주제</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="radio" name="thema" id="sightseeing" value="sightseeing">
+                		<input type="radio" name="thema" id="sightseeing" value="sightseeing" ${ check5 }>
                 		<label for="sightseeing">  관광</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break" ${ check6 }>
                 		<label for="break">  휴식</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach" ${ check7 }>
                 		<label for="beach">  바다</label>
                 		
                 		<br>
                 		
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">날짜</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="date" name="routeDate" id="routeDate" value="routeDate">
+                		<input type="date" name="routeDate" id="routeDate" value="${routeDate}">
                 		
                 		<button class="_btn" id="searchbtn">검색하기</button>
-                	</form>
+                	
                 </div>
                 <br>
                 

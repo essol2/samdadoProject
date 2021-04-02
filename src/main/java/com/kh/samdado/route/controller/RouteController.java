@@ -1,13 +1,20 @@
 package com.kh.samdado.route.controller;
 
+import java.sql.Date;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.samdado.route.model.service.RouteService;
+import com.kh.samdado.route.model.vo.Search;
 
 @Controller
 @RequestMapping("/route")
@@ -21,21 +28,29 @@ public class RouteController {
 	}
 	
 	@GetMapping("/search")
-	public String searchRoute() {		// 루트 검색 -
+	public String searchRoute(Model model, 
+							@RequestParam("area") String area, 
+							@RequestParam("thema") String thema, 
+							@RequestParam("routeDate") Date routeDate ) {		// 루트 검색
+
+		model.addAttribute("area", area);
+		model.addAttribute("thema", thema);
+		model.addAttribute("routeDate", routeDate);
 		
 		return "route/route_result";
 	}
+
 	
-	public String deleteSpot() {		// 여행지 삭제 -
+	public String deleteSpot() {		// 여행지 삭제
 		
 		return "";
 	}
 	
-	public String searchSpot() {		// 여행지 검색 -
+	public String searchSpot() {		// 여행지 검색
 		return "";
 	}
 	
-	public String addSpot() {			// 여행지 추가 -
+	public String addSpot() {			// 여행지 추가
 		return "";
 	}
 	
@@ -43,11 +58,11 @@ public class RouteController {
 		return "";
 	}
 	
-	public String changeRoute() {		// 여행지 순서 바꾸기 완료 -
+	public String changeRoute() {		// 여행지 순서 바꾸기 완료
 		return "";
 	}
 	
-	public String addRoute() {			// 루트 저장하기 -
+	public String addRoute() {			// 루트 저장하기
 		return "";
 	}
 	
