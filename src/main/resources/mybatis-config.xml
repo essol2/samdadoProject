@@ -14,19 +14,11 @@
 <!-- typeAliases -->
 	<typeAliases>
 		<typeAlias type="com.kh.samdado.user.model.vo.User" alias="User"/>
-		<typeAlias type="com.kh.samdado.mypage.model.vo.QnA" alias="QnA"/>
-		<typeAlias type="com.kh.samdado.mypage.model.vo.Point" alias="Point"/>
-		<typeAlias type="com.kh.samdado.common.model.vo.Income" alias="Income"/>
-   <!-- <typeAlias type="com.kh.samdado.listpage.model.vo.Alliance" alias="Alliance"/> -->
-   		<typeAlias type="com.kh.samdado.business.model.vo.business.Business" alias="Business"/>
-   		<typeAlias type="com.kh.samdado.business.model.vo.business.BusinessAtt" alias="BusinessAtt"/>
 	</typeAliases>
 
 	 <!-- mappers -->
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
-	    <mapper resource="mappers/admin-mapper.xml"/>	
-		<mapper resource="mappers/mypage_mapper.xml"/>    
-   		<mapper resource="mappers/business-mapper.xml"/>    
+		<mapper resource="mappers/mypage_mapper.xml"/>      
 	</mappers>
 </configuration>

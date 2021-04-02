@@ -65,18 +65,6 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return uDao.updatePwdUser(u);
 	}
-	
-	@Override
-	public int updateAdminUser(User u) {
-		// TODO Auto-generated method stub
-		return uDao.updateAdminUser(u);
-	}
-
-	@Override
-	public int countUser() {
-		// TODO Auto-generated method stub
-		return uDao.countUser();
-	}
 
 
 	

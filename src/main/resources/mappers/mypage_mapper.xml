@@ -17,16 +17,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<result property="usstop" column="US_STOP" />
 	<result property="authKey" column="AUTH_KEY" />
 	</resultMap>
-	
-	<resultMap type="Point" id="pointResultSet">
-	<id property="pno" column="PNO" />
-	<result property="pdate" column="PDATE" />
-	<result property="pdetail" column="PDETAIL" />
-	<result property="pbalance" column="PBALANCE" />
-	<result property="pamount" column="PAMOUNT" />
-	<result property="usno" column="US_NO" />
-	</resultMap>
-	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
 	<!-- 1. 이메일, 전화번호 변경 메소드 -->
 	<update id="updateUserInfo" parameterType="User">
@@ -39,103 +29,5 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				US_ID = #{usid}
 		   AND  US_STOP IS NULL
 	</update>
-	
-	<insert id="insertNewPayment" parameterType="Income">
-		INSERT
-		INTO Income
-		(
-			PAY_NO
-		  , ITEM
-		  , AMOUNT
-		  , PDATE
-		  , EXDATE
-		  , US_NO
-		)
-		VALUES
-		(
-			INC_SEQ_NO.NEXTVAL
-		  , #{item}
-		  , #{amount}
-		  , SYSDATE
-		  , NULL
-		  , #{usno}
-		)
-	</insert>
-	
-	<select id="prePoint" parameterType="Point" resultMap="pointResultSet">
-		SELECT *
-		FROM (
-		        SELECT *
-		        FROM POINT
-		        WHERE US_NO = 21
-		        ORDER BY PDATE DESC
-      		 )
-		WHERE 
-				ROWNUM = 1
-	</select>
-	
-	<insert id="insertNewPoint" parameterType="Point">
-		INSERT
-		INTO POINT
-		(
-			PNO
-		  , PDATE
-		  , PDETAIL
-		  , PBALANCE
-		  , PAMOUNT
-		  , US_NO
-		)
-		VALUES
-		(
-			PON_SEQ_NO.NEXTVAL
-		  , SYSDATE
-		  , '포인트 충전'
-		  , #{pbalance}
-		  , #{pamount}
-		  , #{usno}
-		)
-	</insert>
-
-	
-	<select id="selectPointList" parameterType="Point" resultMap="pointResultSet">
-		SELECT 
-				PNO
-			  , PDATE
-			  , PDETAIL
-			  , PBALANCE
-			  , PAMOUNT
-			  , US_NO
-		FROM
-				POINT
-		WHERE
-				US_NO = #{usno}
-		ORDER BY
-	           PNO DESC
-				
-	</select>
-	
-	<insert id="insertNewQnA" parameterType="QnA">
-		INSERT
-		INTO "QnA"
-		(
-			QNA_NO
-		  , QCONT
-		  , QDATE
-		  , QREPLY
-		  , QSTATUS
-		  , US_NO
-		)
-		VALUES
-		(
-			QNA_SEQ_NO.NEXTVAL
-		  , #{qcont}
-		  , SYSDATE
-		  , #{qreply}
-		  , DEFAULT
-		  , #{usno}
-		)
-	</insert>
-	
-	
 	
 </mapper>

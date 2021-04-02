@@ -2,7 +2,7 @@
 
 
 /* 제휴회원 네비 css */
-#bus-navi-id li > ul {
+#buss-navi-id li > ul {
     /* 평소에는 보이지 않게 */
     opacity: 0;
     visibility: hidden;
@@ -11,7 +11,7 @@
     transition: all 0.6s;
 }
 
-#bus-navi-id li:hover ul {
+#buss-navi-id li:hover ul {
     /* 메인 메뉴에 마우스 오버 시 서브 메뉴 보이게 */
     opacity: 1;
     visibility: visible;
@@ -82,7 +82,7 @@ header {
 }
 
 
-#navi-menu, #navi-menu-bus, #navi-menu-bus-hotel, #navi-menu-bus-rent, #navi-menu-bus-attrac, #navi-menu-bus-banner, #navi-menu-bus-restau{
+#navi-menu, #navi-menu-buss, #navi-menu-buss-hotel, #navi-menu-buss-rent, #navi-menu-buss-attrac, #navi-menu-buss-banner, #navi-menu-buss-restau{
 
     font-size: 15px;
     font-weight: 500;
@@ -110,12 +110,19 @@ header {
     color: #467355;
 }
 
+/* .navi ul li:last-child:hover{
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    color: red;
+} */
+
 /* 배너 리스팅 광고 마우스 오버시 빨간색으로 */
-#navi-menu-bus-banner:hover {
+#navi-menu-buss-banner:hover {
     color: red;
 }
 
-#navi-menu-bus{
+#navi-menu-buss{
     color: #467355;
  }
 
@@ -141,7 +148,7 @@ header {
 
 .modal-header {
     padding: 5%;
-   /*  margin: auto; */
+    margin: auto;
 }
 
 .modal-header img {
@@ -149,9 +156,9 @@ header {
     height: 100px;
 }
 
-/* .modal-body {
+.modal-body {
     padding: 10%;
-} */
+}
 
 .modal-content{
     margin: 0;
@@ -174,7 +181,7 @@ label {
     line-height: 50px;
 }
 
-#name:focus, #id:focus, #pwd:focus, #pwd2:focus, #email:focus, #birth:focus, #business_no:focus, #phone:focus {
+#name:focus, #id:focus, #pwd:focus, #pwd2:focus, #email:focus, #birth:focus, #bussiness_no:focus, #phone:focus {
     outline: none;
 }
 
@@ -194,11 +201,11 @@ label {
     margin-left: -118%;
 }
 
-#business_text{
+#bussiness_text{
     color: darkred;
 }
 
-#business_no{
+#bussiness_no{
     border: none;
     border-bottom: 1px solid;
     line-height: 30px;
@@ -226,7 +233,7 @@ a:hover { color: black; text-decoration: none;}
     margin-right: 40%;
 }
 
-#business_no_div{
+#bussiness_no_div{
 	display : none;
 }
 
@@ -257,11 +264,6 @@ a:hover { color: black; text-decoration: none;}
         border-left: 3px solid black;
         z-index: 1;
     }
-    
-    li {
-    list-style:none;
-    color: white;
-}
 }
 
 @media (max-width:1650px){
@@ -269,7 +271,7 @@ a:hover { color: black; text-decoration: none;}
         position:fixed;
         width: 240px;
         top: 0;
-        left:75%;
+        left:85%;
         height:100%;
         -webkit-transition-duration:0.2s;
         -webkit-transition-timing-function:ease;

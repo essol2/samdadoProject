@@ -52,13 +52,13 @@
         color : white;
         text-align : center;
         font-size: 30px;
-        margin-left : 4%;
-        margin-top : 5%;
+        margin-left : 3%;
+        margin-top : 3%;
     }
     .menuBox{
         width : 55%;
         height : 150px;
-       /*  border : 1px solid blue; */
+       /*  border : 1px solid blue;  */
         display : inline-block;
         position:relative;
         top : -60%;
@@ -68,17 +68,19 @@
         align-items: center;
     }
     .menuButton{
-        width : 155px;
-        height : 140px;
+        width : 140px;
+        height : 130px;
         border : 1px solid white;
         background-color: white;
         color : #bfbfbf;
         text-align : center;
         display : inline-block;
         margin-top : 2%;
-        margin-left : 2%;
+        margin-left : 1%;
         border-radius: 2px;
         align-items: center;
+        /* -webkit-transition-duration : 0.4s;
+        transition-duration: 0.4s; */
     }
 
     .menuButton:hover{
@@ -91,27 +93,27 @@
         width : 110px;
         height : 110px;
         text-align: center;
-        margin-left : 11%;
+        margin-left : 5%;
         padding : 0;
     }
 
     .btnImg{
         width: 60px;
         height : 60px;
-      /*  border : 1px solid yellow; */
+       /*  border : 1px solid yellow; */
     }
 
     .clickedBtn{
         box-shadow: 3px 3px gray;
-        width : 155px;
-        height : 140px;
+        width : 140px;
+        height : 130px;
         border : 1px solid #467355;
         background-color:#467355;
         color : white;
         text-align : center;
         display : inline-block;
         margin-top : 2%;
-        margin-left : 2%;
+        margin-left : 1%;
         border-radius: 2px;
         align-items: center;
        	
@@ -219,7 +221,7 @@
 	
 	#modal .modal_content {
 	  width:430px;
-	  height :530px;
+	  height :500px;
 	  /* margin:100px auto; */
 	  margin-left : 30%;
 	  margin-top : 10%;
@@ -239,16 +241,8 @@
 	  /* border : 1px solid red; */
 	} 
 	
-	#test_uspwd_label{
-		font-size : small;
-	}
-	
-	#forMargin{
-		margin-bottom : 0;
-	}
-	
-   /*  @media (max-width:1440px){
-         /* 마이페이지 css 
+    @media (max-width:1650px){
+         /* 마이페이지 css */
             body{
                 background-image: url('../resources/images/image_mp/backgroundImg.png');
                 background-size: 100%;
@@ -257,10 +251,10 @@
                 align-items: center;
                 width : 80%;
                 height : 150px;
-                border : 1px solid black;
+                /* border : 1px solid black; */
             }
             #countDday{
-                border : 1px solid pink;
+                /* border : 1px solid pink; */
                 display : inline-block;
                 position : absolute;
                 width : 20%;
@@ -271,9 +265,9 @@
                 margin-left : 3%;
             }
             .menuBox{
-                width : 80%;
+                width : 70%;
                 height : 150px;
-                border : 1px solid blue;
+                /* border : 1px solid blue; */
                 display : inline-block;
                 position:relative;
                 top : 0;
@@ -282,7 +276,7 @@
                 align-items: center;
             }
             .menuButton{
-                width : 150px;
+                width : 120px;
                 height : 110px;
                 border : 1px solid white;
                 background-color: white;
@@ -293,6 +287,8 @@
                 margin-left : 2%;
                 border-radius: 2px;
                 align-items: center;
+                /* -webkit-transition-duration : 0.4s;
+                transition-duration: 0.4s; */
             }
 
             .menuButton:hover{
@@ -301,7 +297,7 @@
             }
 
             .menuBoxEle{
-                border : 1px solid red;
+                /* border : 1px solid red; */
                 width : 110px;
                 height : 110px;
                 text-align: center;
@@ -313,7 +309,7 @@
             .btnImg{
                 width: 60px;
                 height : 60px;
-                border : 1px solid yellow;
+                /* border : 1px solid yellow; */
             }
 
             .clickedBtn{
@@ -336,7 +332,7 @@
                 cursor: pointer;
             }
 
-        } */
+        }
 </style>
 
 </head>
@@ -409,7 +405,38 @@
             
             <div id="modal">
             	<div class="modal_content">
-				
+					<%-- <h2 style="color:#467355;">비밀번호 수정</h2>
+					<hr style="color : #467355;">
+					<form action="${ contextPath }/mypage/updatepwd" method="post" onsubmit="return submitValidate();">
+						<div id="chPwdArea">
+						<table>
+							<tr>
+								<td> 현재 비밀번호 </td>
+								<td>&nbsp&nbsp<input type="password" id="checkPwd" name="currentPwd"></td>
+							</tr>
+							<tr>
+								<td> 새로운 비밀번호 </td>
+								<label id="test_pwd_label" class="test_div"></label>
+								<td>&nbsp&nbsp<input type="password" id="uspwd" name="newPwd" placeholder="대소문자 포함 8글자 이상" required><br></td>
+							</tr>
+							<tr>
+								<td> 새로운 비밀번호 확인 </td>
+								<label id="test_pwd2_label" class="test_div"></label>
+								<td>&nbsp&nbsp<input type="password" id="uspwd2" name="newPwd2" placeholder="대소문자 포함 8글자 이상" required><br></td>
+							</tr>
+							<tr>
+								<td colspan="2">&nbsp</td>
+							</tr>
+							<tr>
+							<td>&nbsp</td>
+							<td style="padding-left : 7%"><button type="button" id="modal_close_btn" class="chButtons">취소</button>  
+							<input type="submit" id="modal_submit_btn" class="chButtons" value="확인">   </td>
+							</tr>
+						</table>
+							
+						</div>
+						
+					</form> --%>
 					 <div>
                     <h4>- 비밀번호 재설정</h4>
 
@@ -422,25 +449,24 @@
                         </div>
                         
                         <div class="col-12">
-                            <label for="_pwd" class="form-label" id="forMargin">수정할 비밀번호</label>
-                            <label id="test_uspwd_label" class="test_div"></label>
+                            <label for="_pwd" class="form-label">수정할 비밀번호</label>
+                            <label id="test_pwd_label" class="test_div"></label>
                             <input type="password" class="form-control" name="newPwd" id="uspwd" placeholder="영어대소문자/숫자/특수문자를 포함한 8~16자" required>                           
                         </div>
                         
                         <div class="col-12">
                             <label for="_pwd" class="form-label">비밀번호 확인</label>
-                            <label id="test_uspwd2_label" class="test_div"></label>
+                            <label id="test_pwd2_label" class="test_div"></label>
                             <input type="password" class="form-control" name="newPwd2" id="uspwd2" placeholder="비밀번호 확인" required>                           
                         </div>
                                     
                       </div>
                       <input type="hidden" name="usid" id="usid" value="${ loginUser.usid }">
                       <input type="hidden" name="usname" id="usname" value="${ loginUser.usname }">
-            		  <div id="buttonBoxes">
-	                      <hr class="my-4">
-	                      <button type="submit" id="modal_submit_btn" class="chButtons">확인</button>
-	            		  <button type="button" id="modal_close_btn" class="chButtons">취소</button>
-            		  </div>
+            
+                      <hr class="my-4">
+                      <button type="submit" id="modal_submit_btn" class="chButtons">확인</button>
+            		  <button type="button" id="modal_close_btn" class="chButtons">취소</button>
                     </form>
                   </div>
 				</div>
@@ -475,23 +501,21 @@
 		
     </script>
     <script>
-	    $("#uspwd").keyup(function () { 
-	    	/* console.log("이거 맞나염?"); */
+	    $("#uspwd").change(function () { 
 	        var regpwd = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/;
 	        if (!regpwd.test($(this).val())) {
-	            $("#test_uspwd_label").html("영어대소문자/숫자/특수문자를 포함한 8~16자").css("color", "red");
+	            $("#test_pwd_label").html("영어대소문자/숫자/특수문자를 포함한 8~16자").css("color", "red");
 	        } else {
-	            $("#test_uspwd_label").html("사용 가능한 비밀번호입니다.").css("color", "green");
+	            $("#test_pwd_label").html("사용 가능한 비밀번호입니다.").css("color", "green");
 	        }
 	        
 	    });
 	
-	    $("#uspwd2").keyup(function () {
-	    	/* console.log("이벤트 확인 돼랏!"); */
-	        if ($("#uspwd2").val() != $("#uspwd").val()) {
-	            $("#test_uspwd2_label").html("비밀번호가 일치하지 않습니다.").css("color", "red");
+	    $("#uspwd2").change(function () {
+	        if ($("#pwd2").val() != $("#uspwdf").val()) {
+	            $("#test_pwd2_label").html("비밀번호가 일치하지 않습니다.").css("color", "red");
 	        } else {
-	            $("#test_uspwd2_label").html("비밀번호가 일치합니다.").css("color", "green");
+	            $("#test_pwd2_label").html("비밀번호가 일치합니다.").css("color", "green");
 	        }
 	    });
     </script>
