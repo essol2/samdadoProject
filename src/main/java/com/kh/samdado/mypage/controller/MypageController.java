@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.samdado.common.model.vo.Income;
@@ -134,17 +135,24 @@ public class MypageController {
 	 
 	 // 제휴회원 포인트 페이지로 이동
 	 @GetMapping("/point")
-	 public String goToPoint(@ModelAttribute User u,
+	 public ModelAndView goToPoint(ModelAndView mv,
+			 				 @ModelAttribute User u,
 			 				 @ModelAttribute Point po) {
 		 
-		 // System.out.println("user 객체 확인 : " +u);
+		  //System.out.println("user 객체 확인 : " +u);
 		 
 		 // u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
-//		 List<Point> pList = mService.selectPointList(u.getUsno());
+		 List<Point> pList = mService.selectPointList(u.getUsno());
+		 //System.out.println("pList 객체 확인 : " + pList);
 		 
-	
-		 return "mypage/mp_Point";
-		 
+		 if(pList != null) {
+			 mv.addObject("pList", pList);
+			 mv.setViewName("mypage/mp_Point");
+		 }else {
+			 mv.addObject("msg", "포인트 조회 오류입니다.");
+			 mv.setViewName("mypage/mp_bUesrInfo");
+		 }
+		 return mv;
 	 }
 	 
 	 // 제휴회원 - 포인트 충전 후 Income DB에 insert.
@@ -163,20 +171,19 @@ public class MypageController {
 		 // point 잔액은 기존 잔액+충전액 넣어주기
 		 // 1. 기존에 있었던 balance 찾아오기
 		 Point prePoint = mService.prePoint(po);
-		 System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
+		 //System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
 		 
 		 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
 		 po.setPbalance(prePoint.getPbalance()+ic.getAmount());
 		 
-		 System.out.println("Point객체 확인 : " + po);
+		 //System.out.println("Point객체 확인 : " + po);
 		 
 		 // Point DB에 포인트 넣어주기
 		 int result2 = mService.insertNewPoint(po);
 		 
 		 if(result>0 || result2>0) {
-			//System.out.println("디비 인서트 성공!");
+			 model.addAttribute("msg", "포인트 적립 끝.");
 			return "mypage/mp_Point";
-//			 String insertAmount = insertPointAmount(ic);
 		 } else if(result>0 || result2<=0){
 			 model.addAttribute("msg", "포인트 적립 오류입니다. 관리자에게 문의주세요.");
 			 return "mypage/mp_Point";

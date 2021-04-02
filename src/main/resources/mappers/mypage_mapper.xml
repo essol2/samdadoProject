@@ -97,20 +97,22 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</insert>
 
 	
-<!-- 	 <select id="selectPointList" resultMap="Point">
+	<select id="selectPointList" parameterType="Point" resultMap="pointResultSet">
 		SELECT 
 				PNO
 			  , PDATE
 			  , PDETAIL
 			  , PBALANCE
 			  , PAMOUNT
-			  , USNO
+			  , US_NO
 		FROM
 				POINT
 		WHERE
-				USNO = #{usno}
+				US_NO = #{usno}
+		ORDER BY
+	           PNO DESC
 				
-	</select> -->
+	</select>
 	
 	<insert id="insertNewQnA" parameterType="QnA">
 		INSERT
