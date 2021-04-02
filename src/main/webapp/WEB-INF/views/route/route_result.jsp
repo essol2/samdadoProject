@@ -157,92 +157,13 @@
             height: 35px;
         }
         
-        <!-- 모달 --!>
-       /*  .MapSearchbtn {
-            background-color: rgba(189, 189, 189, 0.4);
-            width: 50px;
-            height: 50px;
-            border: 0px;
-            border-top-right-radius: 50px;
-            border-bottom-right-radius: 50px;
-            border-top-left-radius: 50px;
-            border-bottom-left-radius: 50px;
-        } */
-        
-        /* .srcimg {
-            width: 30px;
-            height: 30px;
-        } */
-
-        .modal-header {
-            border: 0px;
-        }
-
-        #modal-body {
-            /* height: auto; */
-            max-height: 420px;
-            overflow: auto;
-            overflow-x: hidden;
-        }
-
-        #search_input {
-            width: 80%;
-            margin-left: 10%;
-            margin-right: 10%;
-
-            border-top-right-radius: 20px;
-            border-bottom-right-radius: 20px;
-            border-top-left-radius: 20px;
-            border-bottom-left-radius: 20px;
-        }
-
-        #modal-body input {
-            background-image: url(../resources/images/image_route/search.png);
-            background-repeat: no-repeat;
-            background-size: 30px;
-            padding-left: 35px;
-        }
-
-        #searchtitle {
-            font-size: larger;
-            margin: 0px;
-        }
-
-        #zzim {
-            font-size: 20px;
-            margin-left: 10%;
-            font-weight: 400;
-            margin-bottom: 0%;
-        }
-
-        .zzim_list {
-            margin-left: 10%;
-            margin-right: 10%;
-            border-bottom: 1px solid #467355 ;
-            margin-top: 3%;
-        }
-
-        .zzim_content_title {
-            margin-bottom: 0px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .zzim_content {
-            margin-bottom: 0px;
-            font-size: 13px;
-        }
-
-        #addbtn {
-            background-color: white;
-            border: 0px;
-            margin-left: 65%;
-        }
+       
         
 </style>
 </head>
 <body>
 <jsp:include page="../common/navi.jsp"/>
+<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_modal.css" type="text/css">
 		<div id="bottom">
             <div id="content">
                 <br><br><br>
@@ -494,7 +415,7 @@
                     <p id="searchtitle">관광지 검색</p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <class class="modal-body" id="modal-body" style="max-height: 420px; overflow: auto; overflow-x: hidden;">
+                <class class="_modal-body" id="modal-body" style="max-height: 420px; overflow: auto; overflow-x: hidden;">
                     <input type="text" id="search_input" placeholder="관광지를 검색하세요.">
                     <br><br>
                     <p id="zzim">삼다수 님이 찜하신 관광지</p>
