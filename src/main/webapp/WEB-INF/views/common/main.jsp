@@ -445,7 +445,7 @@
 		
 		.modal-header {
 		    padding: 5%;
-		    margin: auto;
+		    /* margin: auto; */
 		}
 		
 		.modal-header img {
@@ -453,9 +453,9 @@
 		    height: 100px;
 		}
 		
-		.modal-body {
+		/* .modal-body {
 		    padding: 10%;
-		}
+		} */
 		
 		.modal-content{
 		    margin: 0;
