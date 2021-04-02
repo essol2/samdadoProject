@@ -15,6 +15,7 @@ import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.SearchPoint;
 import com.kh.samdado.user.model.vo.User;
 
 @Repository
@@ -44,8 +45,7 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public int insertNewPayment(Income ic) {
 		return sqlSession.insert("mypageMapper.insertNewPayment", ic);
-	}	
-	
+	}
 
 	//제휴회원 - 포인트 DB에 포인트 넣어주는 메소드
 	@Override
@@ -63,6 +63,12 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public List<Point> selectPointList(String usno) {
 		return sqlSession.selectList("mypageMapper.selectPointList", usno);
+	}
+
+	//제휴회원 - point 테이블에 검색결과 조회하러 가기
+	@Override
+	public List<Point> selectSearchList(SearchPoint sp) {
+		return sqlSession.selectList("mypageMapper.selectSearchList", sp);
 	}
 	
 	// 제휴회원 - 사업장 조회 메소드
@@ -100,5 +106,6 @@ public class MypageDaoImpl implements MypageDao{
 	public int insertNewAcc(AccountBook acc) {
 		return sqlSession.insert("mypageMapper.selectAccountList", acc);
 	}
+
 
 }
