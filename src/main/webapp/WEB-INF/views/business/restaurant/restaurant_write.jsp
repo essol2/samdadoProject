@@ -316,7 +316,7 @@
         
     }
 
-    #searchBtn {
+    #postcodify_search_button {
         background-color:#467355;
         border-radius:6px;
         border:1px solid #467355;
@@ -337,6 +337,9 @@
       <section class="signup-section-wrap">
 			
 		<form action="${ contextPath }/business/restaurant_insert" id="writeForm" method="post" enctype="multipart/form-data">
+            
+            <input type="hidden" name="us_no" value="${ loginUser.us_no }">
+            
             <!-- 사업장명 -->
             <div class="signup-div">
                 <h3 class="join_title">
@@ -368,9 +371,9 @@
                 </span>
             </div>
              
-             <!-- 카테고리 -->
-              <!--<div class="signup-div">
-                <h3 class="join-title"><label for="category">카테고리</label></h3>
+            <!-- 카테고리 -->
+            <div class="signup-div">
+            	<h3 class="join-title"><label for="category">카테고리</label></h3>
                 <select class="box int_name" id="category" name="catagory">
                     <option value="select" selected>선택</option>
                     <option value="select">한식</option>
@@ -379,7 +382,7 @@
                     <option value="select">일식</option>
                     <option value="select">기타</option>
                 </select>
-            </div> -->
+            </div>
             
             <!-- 영업시간 -->
             <div class="signup-div">
@@ -399,30 +402,31 @@
             </div>
 
             <!-- 매장사진 -->
-            <!-- <div class="signup-div">
+            <div class="signup-div">
                 <h3 class="join_title"><label for="mainPhoto">매장사진</label></h3>
                 <span class="photo">
                     <input type="file"   id="mainPhoto" class="int" maxlength="16">
                 </span>
-			</div> -->
+			</div>
             
             <!-- 추가사진 -->
-            <!-- <div class="signup-div">
+            <div class="signup-div">
                 <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
                 <span class="photo">
                     <input type="file"  name="res_add_file" id="mobile" class="int" maxlength="16">
                 </span>
                 <span class="error_next_box"></span>    
-            </div> -->
+            </div>
+            
 
             <!-- 추가사진 -->
-            <!-- <div class="signup-div">
+            <div class="signup-div">
                 <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
                 <span class="photo">
                     <input type="file"  name="res_add_file" id="mobile" class="int" maxlength="16">
                 </span>
                 <span class="error_next_box"></span>    
-            </div> -->
+            </div>
 
             <!-- 소개글 -->
             <div class="signup-div">
@@ -438,10 +442,9 @@
               <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
               <!-- Option 2: Separate Popper and Bootstrap JS -->
-              <!--
               <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
               <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-              -->
+              
               <!-- Button trigger modal -->
               <button id="btnJoin" class="btn btn-primary">등록하기 </button>
               
@@ -465,7 +468,7 @@
                   </div>
               </div>
 		
-              <button type="button" href="#" id="btnJoin" class="btn btn-primary">
+              <button type="button" onclick="javascript:history.back();" id="btnJoin" class="btn btn-primary">
               <a>뒤로가기</a>
               </button>
             </div>  
