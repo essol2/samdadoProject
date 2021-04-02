@@ -30,7 +30,7 @@ public class Point {
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date pdate;
 	private String pdetail;
-	private String pbalance;
-	private String pamount;
+	private int pbalance;
+	private int pamount;
 	private String usno;
 }

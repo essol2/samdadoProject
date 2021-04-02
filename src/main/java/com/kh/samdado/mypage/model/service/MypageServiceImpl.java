@@ -46,6 +46,18 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.insertNewPayment(ic);
 	}
 
+	//제휴회원 - 포인트 DB에 포인트 넣어주는 메소드
+	@Override
+	public int insertNewPoint(Point po) {
+		return mDao.insertNewPoint(po);
+	}
+	
+	// 제휴회원 - 기존 회원의 포인트 정보 가져오는 메소드
+	@Override
+	public Point prePoint(Point po) {
+		return mDao.prePoint(po);
+	}
+	
 	// 제휴회원 - 포인트 리스트 출력 메소드
 	@Override
 	public List<Point> selectPointList(String usno) {
@@ -88,6 +100,8 @@ public class MypageServiceImpl implements MypageService{
 	public int insertNewAcc(AccountBook acc) {
 		return mDao.insertNewAcc(acc);
 	}
+
+
 
 	
 	

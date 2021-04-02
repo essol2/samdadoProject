@@ -397,7 +397,7 @@
   <class id="41" language="java" name="com.kh.samdado.admin.model.service.AdminServiceImpl" project="samdadoProject" 
     file="/samdadoProject/src/main/java/com/kh/samdado/admin/model/service/AdminServiceImpl.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="155" width="209" x="10941" y="-341"/>    
+    <position height="-1" width="-1" x="11090" y="95"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -427,7 +427,7 @@
   <class id="44" language="java" name="com.kh.samdado.business.model.vo.business.BusinessAtt" project="samdadoProject" 
     file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/business/BusinessAtt.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="551" width="319" x="9769" y="-341"/>    
+    <position height="-1" width="-1" x="9931" y="273"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -446,7 +446,7 @@
   <class id="46" language="java" name="com.kh.samdado.mypage.model.dao.MypageDaoImpl" project="samdadoProject" 
     file="/samdadoProject/src/main/java/com/kh/samdado/mypage/model/dao/MypageDaoImpl.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="299" width="266" x="10705" y="-341"/>    
+    <position height="-1" width="-1" x="10837" y="60"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -455,7 +455,7 @@
   </class>  
   <class id="47" language="java" name="com.kh.samdado.common.model.vo.Income" project="samdadoProject" 
     file="/samdadoProject/src/main/java/com/kh/samdado/common/model/vo/Income.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="10476" y="119"/>    
+    <position height="-1" width="-1" x="10533" y="216"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

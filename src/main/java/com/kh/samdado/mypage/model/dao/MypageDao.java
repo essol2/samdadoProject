@@ -27,6 +27,12 @@ public interface MypageDao {
 	// 제휴회원 - 포인트 충전 내역 insert 메소드
 	public int insertNewPayment(Income ic);
 
+	//제휴회원 - 포인트 DB에 포인트 넣어주는 메소드
+	public int insertNewPoint(Point po);
+	
+	// 제휴회원 - 기존 회원의 포인트 정보 가져오는 메소드
+	public Point prePoint(Point po);
+
 	// 제휴회원 - 포인트 리스트 출력 메소드
 	public List<Point> selectPointList(String usno);
 

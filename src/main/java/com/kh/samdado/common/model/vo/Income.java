@@ -29,7 +29,7 @@ public class Income {
 
 	private int payno;
 	private String item;
-	private String amount;
+	private int amount;
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date pdate;
 	@DateTimeFormat(pattern = "yyyy.MM.dd")

@@ -140,32 +140,54 @@ public class MypageController {
 		 // System.out.println("user 객체 확인 : " +u);
 		 
 		 // u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
-		 List<Point> pList = mService.selectPointList(u.getUsno());
+//		 List<Point> pList = mService.selectPointList(u.getUsno());
 		 
 	
 		 return "mypage/mp_Point";
 		 
 	 }
 	 
-	 // 제휴회원 - 포인트 충전 후 DB에 insert.
+	 // 제휴회원 - 포인트 충전 후 Income DB에 insert.
 	 @GetMapping("/payment")
 	 public String goToPayment(@ModelAttribute Income ic,
+			 				   @ModelAttribute Point po,
 			 				   Model model) {
 		
 		 // System.out.println("income 확인 : " + ic);
 		 
-		 // DB에 결제 내역 insert하기
+		 // Income DB에 결제 내역 insert하기
 		 int result = mService.insertNewPayment(ic);
 		 
-		 if(result>0) {
+		 // point 객체에 충전량 넣어주기
+		 po.setPamount(ic.getAmount());
+		 // point 잔액은 기존 잔액+충전액 넣어주기
+		 // 1. 기존에 있었던 balance 찾아오기
+		 Point prePoint = mService.prePoint(po);
+		 System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
+		 
+		 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
+		 po.setPbalance(prePoint.getPbalance()+ic.getAmount());
+		 
+		 System.out.println("Point객체 확인 : " + po);
+		 
+		 // Point DB에 포인트 넣어주기
+		 int result2 = mService.insertNewPoint(po);
+		 
+		 if(result>0 || result2>0) {
 			//System.out.println("디비 인서트 성공!");
 			return "mypage/mp_Point";
-		 } else {
-			 model.addAttribute("msg", "오류입니다. 관리자에게 문의주세요.");
+//			 String insertAmount = insertPointAmount(ic);
+		 } else if(result>0 || result2<=0){
+			 model.addAttribute("msg", "포인트 적립 오류입니다. 관리자에게 문의주세요.");
+			 return "mypage/mp_Point";
+		 } else if(result<=0 || result2>0) {
+			 model.addAttribute("msg", "수익저장 오류입니다. 관리자에게 문의주세요.");
+			 return "mypage/mp_Point";
+		 }else {
+			model.addAttribute("msg", "알 수 없는 오류가 발생했습니다. 관리자에게 문의주세요.");
 			return "mypage/mp_Point";
 		 }
 	 }
-	 
 	 // 제휴회원 사업장 페이지로 이동
 	 @GetMapping("/mybus")
 	 public String myBusiness() {

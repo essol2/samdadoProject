@@ -230,7 +230,7 @@
  	.cAbountBtn:checked + label{
 	 	background-color: #467355;
 	 	color : white;
-		box-shadow: 3px 3px 0 0 gray;
+		/* box-shadow: 3px 3px 0 0 gray; */
  	}
  	
  	.cAbountBtn:not(:checked) + label{
