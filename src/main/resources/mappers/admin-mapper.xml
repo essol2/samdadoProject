@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminMapper">
+	<resultMap type="QnA" id="qnaResultSet">
+		<id property="qnano" column="QNA_NO" />
+		<result property="qcont" column="QCONT" />
+		<result property="qdate" column="QDATE" />
+		<result property="qreply" column="QREPLY" />
+		<result property="qstatus" column="QSTATUS" />
+		<result property="usno" column="US_NO" />	
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
+	</resultMap>
+	
+	<select id="selectAdminMainQnaSelect" resultMap="qnaResultSet">
+		SELECT *
+		  FROM
+              (SELECT "QNA_NO", QCONT, US_NAME
+               FROM "QnA", "USER"
+               WHERE  "QnA".US_NO = "USER".US_NO
+           AND QSTATUS = 'N'	<!-- 미답변만 select -->
+               ORDER BY "QNA_NO")
+		 WHERE 
+		       ROWNUM <![CDATA[<=]]> 5 <!-- admin 메인 페이지에 5개의 qna 만 보이도록 limit절 처리 -->
+	</select>	
+	
+	<select id="adminQnaSelect" resultMap="qnaResultSet">
+        SELECT *
+          FROM "QnA", "USER"
+         WHERE "QnA".US_NO = "USER".US_NO
+   AND QSTATUS = 'N'	<!-- 미답변만 select -->
+      ORDER BY "QNA_NO"
+	</select>	
+	
+	<update id="insertQnaReply" parameterType="QnA">
+		UPDATE "QnA"
+		   SET
+			   QREPLY = #{qreply},
+			   QSTATUS = 'Y'
+	     WHERE
+	     	   QNA_NO = #{qnano}
+	</update>
+	
+	<select id="countQnA" resultType="_int">
+		SELECT 
+			  COUNT(*)
+		  FROM
+		       "QnA"
+         WHERE
+               QSTATUS = 'N'
+	</select>
+
+</mapper>

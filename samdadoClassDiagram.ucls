@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <interface id="1" language="java" name="com.kh.samdado.route.model.dao.RouteDao" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/route/model/dao/RouteDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="173" width="179" x="6761" y="1168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="2" language="java" name="com.kh.samdado.admin.model.dao.AdminDaoImpl" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/admin/model/dao/AdminDaoImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="173" width="209" x="10692" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.kh.samdado.business.model.vo.hotel.RoomAtt" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/hotel/RoomAtt.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="551" width="302" x="163" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="com.kh.samdado.user.model.vo.Email" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/user/model/vo/Email.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="335" width="165" x="505" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="5" language="java" name="com.kh.samdado.user.model.dao.UserDao" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/user/model/dao/UserDao.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="281" width="214" x="9891" y="1168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="6" language="java" name="com.kh.samdado.user.model.service.UserService" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/user/model/service/UserService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="281" width="214" x="10145" y="1168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="7" language="java" name="com.kh.samdado.business.model.vo.rentcar.CarAtt" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/rentcar/CarAtt.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="551" width="289" x="710" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="8" language="java" name="com.kh.samdado.admin.model.service.AdminService" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/admin/model/service/AdminService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="137" width="209" x="9642" y="1168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="9" language="java" name="com.kh.samdado.business.model.vo.hotel.Room" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/hotel/Room.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="659" width="307" x="1039" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.kh.samdado.business.model.vo.tour.TourBooking" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/tour/TourBooking.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="875" width="475" x="1386" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.kh.samdado.route.model.vo.Route" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/route/model/vo/Route.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="281" width="165" x="1901" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="12" language="java" name="com.kh.samdado.mypage.model.dao.MypageDao" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/mypage/model/dao/MypageDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="263" width="266" x="10705" y="1168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="13" language="java" name="com.kh.samdado.user.model.dao.UserDaoImpl" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/user/model/dao/UserDaoImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="317" width="214" x="9891" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="com.kh.samdado.route.model.dao.RouteDaoImpl" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/route/model/dao/RouteDaoImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="209" width="200" x="4348" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="com.kh.samdado.business.model.vo.hotel.RoomBooking" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/hotel/RoomBooking.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="821" width="430" x="2106" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="com.kh.samdado.business.model.vo.tour.TourProduct" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/tour/TourProduct.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="389" width="197" x="2576" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="com.kh.samdado.mypage.model.vo.AccountBook" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/mypage/model/vo/AccountBook.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="727" width="298" x="2813" y="-341"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="com.kh.samdado.route.model.vo.TourSpot" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/route/model/vo/TourSpot.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="605" width="301" x="3215" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="com.kh.samdado.mypage.model.vo.QnA" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/mypage/model/vo/QnA.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="551" width="265" x="3556" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="com.kh.samdado.route.model.vo.RouteDetail" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/route/model/vo/RouteDetail.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="389" width="165" x="3861" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="21" language="java" name="com.kh.samdado.admin.model.dao.AdminDao" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/admin/model/dao/AdminDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="137" width="209" x="9393" y="1168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="22" language="java" name="com.kh.samdado.mypage.model.vo.Point" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/mypage/model/vo/Point.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="497" width="242" x="4066" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="com.kh.samdado.route.model.service.RouteServiceImpl" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/route/model/service/RouteServiceImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="191" width="179" x="9174" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="com.kh.samdado.mypage.model.vo.Alert" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/mypage/model/vo/Alert.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1469" width="733" x="4588" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="com.kh.samdado.admin.model.vo.Report" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/admin/model/vo/Report.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="713" width="383" x="5361" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="26" language="java" name="com.kh.samdado.route.model.service.RouteService" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/route/model/service/RouteService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="173" width="179" x="9174" y="1168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="27" language="java" name="com.kh.samdado.user.model.vo.EmailSender" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/user/model/vo/EmailSender.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="119" width="180" x="5784" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="com.kh.samdado.business.model.vo.Review" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/Review.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="767" width="403" x="6004" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="29" language="java" name="com.kh.samdado.mypage.model.service.MypageService" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/mypage/model/service/MypageService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="263" width="266" x="10399" y="1168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="30" language="java" name="com.kh.samdado.route.model.vo.RouteFinal" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/route/model/vo/RouteFinal.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="389" width="185" x="6447" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="31" language="java" name="com.kh.samdado.business.model.service.businessService" 
+    project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/service/businessService.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="299" width="209" x="11260" y="1168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="32" language="java" name="com.kh.samdado.business.model.vo.Alliance" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/Alliance.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="713" width="389" x="6672" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="com.kh.samdado.user.model.vo.User" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/user/model/vo/User.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="821" width="461" x="7101" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="com.kh.samdado.business.model.dao.businessDaoImpl" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/dao/businessDaoImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="335" width="209" x="11011" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="com.kh.samdado.mypage.model.service.MypageServiceImpl" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/mypage/model/service/MypageServiceImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="281" width="266" x="10399" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="36" language="java" name="com.kh.samdado.business.model.dao.businessDao" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/dao/businessDao.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="299" width="209" x="11011" y="1168"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="37" language="java" name="com.kh.samdado.admin.model.vo.PageInfo" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/admin/model/vo/PageInfo.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="497" width="191" x="7602" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="com.kh.samdado.business.model.vo.business.Business" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/business/Business.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="1091" width="601" x="7833" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="com.kh.samdado.mypage.model.vo.Booking" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/mypage/model/vo/Booking.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="83" width="168" x="8474" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="com.kh.samdado.business.model.vo.rentcar.CarBooking" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/rentcar/CarBooking.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="875" width="452" x="8682" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="com.kh.samdado.admin.model.service.AdminServiceImpl" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/admin/model/service/AdminServiceImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="11090" y="95"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="com.kh.samdado.business.model.vo.rentcar.Rentcar" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/rentcar/Rentcar.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="659" width="336" x="9393" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="com.kh.samdado.user.model.service.UserServiceImpl" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/user/model/service/UserServiceImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="299" width="214" x="10145" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="com.kh.samdado.business.model.vo.business.BusinessAtt" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/business/BusinessAtt.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="9931" y="273"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="com.kh.samdado.business.model.vo.Jjim" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/vo/Jjim.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="497" width="236" x="10128" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="com.kh.samdado.mypage.model.dao.MypageDaoImpl" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/mypage/model/dao/MypageDaoImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="10837" y="60"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="com.kh.samdado.common.model.vo.Income" project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/common/model/vo/Income.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="10533" y="216"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="48" language="java" name="com.kh.samdado.business.model.service.businessServiceImpl" 
+    project="samdadoProject" 
+    file="/samdadoProject/src/main/java/com/kh/samdado/business/model/service/businessServiceImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="317" width="209" x="11260" y="-341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <realization id="49">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="8"/>  
+  </realization>  
+  <realization id="50">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="21"/>  
+  </realization>  
+  <association id="51">    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="52" name="mDao"/>      
+      <multiplicity id="53" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="54">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <realization id="55">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <association id="56">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="57" name="rDao"/>      
+      <multiplicity id="58" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="59">    
+    <end type="SOURCE" refId="41" navigable="false">      
+      <attribute id="60" name="aDao"/>      
+      <multiplicity id="61" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="62">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="26"/>  
+  </realization>  
+  <realization id="63">    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="29"/>  
+  </realization>  
+  <realization id="64">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="36"/>  
+  </realization>  
+  <realization id="65">    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="31"/>  
+  </realization>  
+  <association id="66">    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="67" name="uDao"/>      
+      <multiplicity id="68" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="69">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="12"/>  
+  </realization>  
+  <association id="70">    
+    <end type="SOURCE" refId="48" navigable="false">      
+      <attribute id="71" name="bDao"/>      
+      <multiplicity id="72" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="73">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

@@ -23,6 +23,10 @@ public interface UserDao {
 	public User selectChangePwdUser(User u);
 
 	public int updatePwdUser(User u);
+	
+	public int updateAdminUser(User u);
+
+	public int countUser();
 
 
 

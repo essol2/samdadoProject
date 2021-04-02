@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <html>
@@ -12,147 +13,6 @@
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
     <style>
-
-        /* 공통 - 폰트 */
-        * {
-            font-family: 'Jeju Myeongjo', serif;
-        }
-
-        /* 혜윤 : 네비 css */
-        #back {
-            width: 100%;
-            height: auto;
-            margin: auto;
-            top: 0;
-        }
-
-        header {
-            position:fixed;
-            width: 240px;
-            top: 0;
-            left:1200px;
-            height:100%;
-            -webkit-transition-duration:0.2s;
-            -webkit-transition-timing-function:ease;
-            transition-duration:0.2s;
-            transition-timing-function:ease;
-            color: white;
-            border-left: 3px solid white;
-            z-index: 1;
-        }
-
-        .down {
-            color: black;
-            -webkit-transition-duration:0.2s;
-            -webkit-transition-timing-function:ease;
-            transition-duration:0.2s;
-            transition-timing-function:ease;
-            border-left: 3px solid black;
-        }
-
-        .down #navi {
-            color:black;
-            -webkit-transition-duration:0.4s;
-            -webkit-transition-timing-function:ease;
-            transition-duration:0.4s;
-            transition-timing-function:ease;
-        }
-
-        #top {
-            width: 100%;
-            height: auto;
-            background-color: black;
-        }
-        #bottom {
-            width: 1440px;
-            height: auto;
-            display: flex;
-        }
-
-        #content {
-            width: 90%;
-            height: auto;
-            /* background-color: rgb(255, 181, 181); */
-        }
-        .center {
-            text-align: center;
-        }
-
-        .right {
-            text-align: right;
-            position: relative;
-            right: 10%;
-            margin: auto;
-        }
-
-        #navi-title {
-            font-size: 40px;
-            font-weight: bold;
-        }
-
-        #navi-menu {
-            font-size: 15px;
-            font-weight: 500;
-        }
-        
-        .navi {
-            height: 600px;
-            /* border : 1px solid pink; */
-            margin-left: 2%;
-            width : 100%;
-        }
-
-        .img {
-            position: relative;
-            left: 70%;
-        }
-
-        /* 동영상 css */        
-        .wrap{ width:100%; } 
-
-        .content{ position:relative; padding-top:56%; width:100%; } 
-
-        #backgroundGif{ position:absolute; top:0; left:0; width:100%; height:100%; }
-
-        /* 푸터 css */
-        footer{
-            background-color: rgb(70, 115, 85);
-            height : 190px;
-        }
-
-        .leftImg{
-            margin-left:6%;
-            margin-top:20px;
-        }
-
-        #footer_center {
-            margin-left:30%;
-            margin-top:-130px;
-            color:white;
-        }
-
-        #footer_right{
-            margin-left:60%;
-            margin-top:-120px;
-            color:white;
-        }
-
-        .rightImg{
-            padding-right: 15px;
-        }
-
-        #copyRight{
-            color:white;
-            margin-left: 40%;
-            margin-right : 40%;
-            margin-top:10px;
-            margin-bottom: 0px;
-            opacity: 0.5;
-        }
-
-        hr{
-            color:white;
-        }
 
         /* 반응형 */
         @media (max-width:1920px){
@@ -187,7 +47,7 @@
             }
 
             #content {
-                width: 100%;
+                width: 90%;
                 height: auto;
                 /* background-color: rgb(255, 181, 181); */               
             }
@@ -364,43 +224,20 @@
             border-bottom-left-radius: 5px;
             font-weight: 300;
             margin-bottom: 10px;
-            margin-left: 90%;
+            margin-left: 88%;
+            width: 100px;
+            height: 35px;
         }
 
         #map {
             width: 100%;
             margin: auto;
         }
-      
+        
     </style>
 </head>
 <body>
-    <!-- 혜윤 : 네비 -->
-    <div id="back">
-        <header>
-            <div class="navi">
-                <br><br>
-                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="cursor: pointer;">삼다도</p>
-                <p class="center" id="navi-menu">나만의 길 만들기</p>
-                <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
-                <p class="center" id="navi-menu">제주도 필수 예약</p>
-            </div>
-            <div>
-                <img class="img" width="50px" height="50px" src="../resources/images/image_main/logo_w.png">
-                <p class="right" id="navi-menu">들어가기</p>
-                <p class="right" id="navi-menu">회원가입</p>
-            </div>
-        </header>
-        <!-- 한빈 : 동영상 올리기 -->
-        <div id="top">
-            <div class="wrap">
-                <div class="content">
-                    <img src="../resources/images/image_main/samdado.gif" id="backgroundGif">
-                </div>
-            </div>
-        </div>
-        <section class="page-start">
-
+   <jsp:include page="../common/navi.jsp"/>
         <!-- 내용 -->
         <div id="bottom">
             <div id="content">
@@ -412,59 +249,45 @@
                 </div>
 
                 <div id="route_select">
-                    <table id="select">
-                        <tr class="tabletr">
-                            <br>
-                            <td class="bold">지역</td>
-                            <td><input type="radio">  동부</td>
-                            <td><input type="radio">  서부</td>
-                            <td><input type="radio">  남부</td>
-                            <td><input type="radio">  북부</td>
-                        </tr>
-                        <tr class="tabletr">
-                            <td class="bold">주제</td>
-                            <td><input type="radio">  관광</td>
-                            <td><input type="radio">  휴식</td>
-                            <td><input type="radio">  바다</td>
-                        </tr>
-                        <tr class="tabletr">
-                            <td class="bold">날짜</td>
-                            <td colspan="2"><input type="date"></td>
-                        </tr>
-                    </table>
-                    <button id="searchbtn">검색하기</button>
+                	<br>
+                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                		<input type="radio" name="area" id="east" value="east">
+                		<label for="east">  동부</label>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west">
+                		<label for="west">  서부</label>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south">
+                		<label for="south">  남부</label>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north">
+                		<label for="north">  북부</label>
+                		
+                		<br>
+                		
+                		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold" stype="padding: 10%;">주제</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                		<input type="radio" name="thema" id="sightseeing" value="sightseeing">
+                		<label for="sightseeing">  관광</label>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break">
+                		<label for="break">  휴식</label>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach">
+                		<label for="beach">  바다</label>
+                		
+                		<br>
+                		
+                		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">날짜</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                		<input type="date" name="routeDate" id="routeDate" value="routeDate">
+                		
+                		<button class="btn" id="searchbtn">검색하기</button>
+                	</form>
                 </div>
                 <br>
-                <div id="map" style="width: 1200px; height:800px;">
-                </div>
+                <div id="map" style="width: 1200px; height:800px;"></div>
                 <br><br><br>
             </div>
         </div>
-        </section>
-
-        <!--은화 : footer-->
         <footer>
-            <div id="footer_left">
-                <img src="../resources/images/image_footer/footerlogo.png" class="leftImg">
-            </div>
-            <div id="footer_center">
-                <img src="../resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
-                <img src="../resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
-                <img src="../resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
-            </div>
-            <div id="footer_right">
-                <p id="samdado_news">삼다도 소식</p>
-                <img src="../resources/images/image_footer/facebook.png" class="rightImg">
-                <img src="../resources/images/image_footer/twitter.png" class="rightImg">
-                <img src="../resources/images/image_footer/LinkedIn.png" class="rightImg">
-                <img src="../resources/images/image_footer/pininterest.png" class="rightImg">
-            </div>
-            <br>
-            <br>
-            <hr>
-            <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
+           <jsp:include page="../common/footer.jsp"/>
         </footer>
-    </div>
+    
     <script>
         $(function(){
             var $header = $('header'); //헤더를 변수에 넣기

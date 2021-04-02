@@ -20,7 +20,7 @@ import lombok.ToString;
 //@Data
 public class User {
 	
-	private int usno;
+	private String usno;
 	private String usid;
 	private String uspwd;
 	private String usname;

@@ -34,8 +34,11 @@ public interface UserService {
 	  // 비번 수정
 	  public int updatePwdUser(User u);
 
+	  // 관리자 정보 수정
+	  public int updateAdminUser(User u);
 
-
+	  // 총 회원수 구하기
+	  public int countUser();
 
 	
 

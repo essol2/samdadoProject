@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -15,94 +17,20 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
   </head>
   <body>
+  
+   <!-- 메세지가 있다면 출력하고 지우기 -->
+   <c:if test="${ !empty msg }">
+   		<script>alert('${ msg }')</script>
+   		<c:remove var="msg" />
+   </c:if>
+   
     <div class="container-fluid">
       <div class="row">
-        <div class="col-2" id="A">
-          <div>
-              <!-- 프로필사진 -------------------------------------------------------------------------------------------------------------------------------->
-              <div class="card" style="width: 99%; border-style: none;">
-                  <img src="jQ/WORKSPACE/image/city1.PNG" class="card-img-top" alt="...">
-                  <div style="padding-top: 4%; padding-bottom: 2%; padding-right: 2%;">
-                    <h5 style="text-align: center;"><b>관리자</b></h5>
-                  </div>
-                </div>
-                <br>
-                
-                <!-- 왼쪽 네비바 ------------------------------------------------------------------------------------------------------------------------------------->
-                <div>
-                  <li class="nav-item" style="text-decoration-style: none;">
-                      <a class="nav-link active" aria-current="page" href="#">
-                        <span data-feather="home">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-columns-gap" viewBox="0 0 16 16">
-                            <path d="M6 1v3H1V1h5zM1 0a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm14 12v3h-5v-3h5zm-5-1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5zM6 8v7H1V8h5zM1 7a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H1zm14-6v7h-5V1h5zm-5-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1h-5z"/>
-                          </svg>
-                        </span>
-                        대시 보드
-                      </a>
-                    </li>
-                    <br>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <span data-feather="file">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16">
-                            <path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
-                          </svg>
-                        </span>
-                        광고 관리
-                      </a>
-                    </li>
-                  <br>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <span data-feather="shopping-cart">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-diamond" viewBox="0 0 16 16">
-                            <path d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.482 1.482 0 0 1 0-2.098L6.95.435zm1.4.7a.495.495 0 0 0-.7 0L1.134 7.65a.495.495 0 0 0 0 .7l6.516 6.516a.495.495 0 0 0 .7 0l6.516-6.516a.495.495 0 0 0 0-.7L8.35 1.134z"/>
-                            <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
-                          </svg>
-                        </span>
-                        신고 관리
-                      </a>
-                    </li>
-                    <br>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">
-                        <span data-feather="users">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots" viewBox="0 0 16 16">
-                            <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                            <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                          </svg>
-                        </span>
-                        Q&A 관리
-                      </a>
-                    </li>
-                  </ul>
-                </div> 
-  
-                <br>
-                <hr style="width: 98%;">
-  
-                <br>
-                <span>settings</span>
-                <a class="link-secondary" href="#" aria-label="Add a new report">
-                  <span data-feather="plus-circle"></span>
-                </a>
-              </h6>
-              <ul class="nav flex-column mb-2">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <span data-feather="file-text">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
-                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                        <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-                      </svg>
-                    </span>
-                    마이페이지
-                  </a>
-                </li>
-              </ul>
-          </div>
-        </div>
-
+        
+         
+         <!-- admin-navi 인클루드 -->
+         <jsp:include page="admin-navi.jsp"/>
+         
         <!-- B영역 -->
 
         <div class="col-10" id="B">
@@ -122,47 +50,61 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <!--반복문 -->
-                  <tr>
-                    <th>1</th>
-                    <td>김춘추</td>
-                    <td scope="row">배너광고는 최소 얼마를 충전해야 하나요?</td>
-                    <td><input type="text" id="replyValue" class="form-control"></td>
-                    <td><button type="submit" class="btn btn-secondary">답변</button></td>
-                    <td>2021-03-17</td>
-                  </tr>
-                  <tr>
-                    <th>2</th>
-                    <td>강제주</td>
-                    <td scope="row">배너광고 신청했는데 결과는 얼마나 기다려야 하냐요?</td>
-                    <td><input type="text" id="replyValue" class="form-control"></td>
-                    <td><button type="submit" class="btn btn-secondary">답변</button></td>
-                    <td>2021-03-17</td>
-                  </tr>
+                 <form action="${ contextPath }/admin/insertReplyQna" method="post">
+          		  <c:forEach var="q" items="${ qnaList }">
+                   <tr>
+                       <th scope="row">${ q.qnano }</th>
+                       <td>${ q.usname }</td>
+                       <td>${ q.qcont }</td>
+                       <input type="hidden" name="qnano" value="${ q.qnano }">
+                       <td><input type="text" name="qreply" id="replyValue" class="form-control"></td>
+                       <td><button type="submit" class="btn btn-secondary">답변</button></td>
+                       <td>${ q.qdate }</td>
+                   </tr>
+                  </c:forEach>              
+				</form>
                 </tbody>
               </table>
 
-             <br> <hr>
+             <br><hr>
 
               <!-- 페이지네이션 -->
               <div class="row-page">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    </ul>
+                    <!-- [이전] -->
+	               <c:if test="${ pi.currentPage <= 1 }">
+	                  [이전] &nbsp;
+	               </c:if>
+	               <c:if test="${ pi.currentPage > 1 }">
+	                  <c:url var="before" value="/admin/qna">
+	                     <c:param name="page" value="${ pi.currentPage - 1 }"/>
+	                  </c:url>
+	                  <a href="${ before }">[이전]</a> &nbsp;
+	               </c:if>
+	               <!-- 페이지 숫자 -->
+	               <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                  <c:if test="${ p eq pi.currentPage }">
+	                     <font color="red" size="4"><b>[${ p }]</b></font>
+	                  </c:if>
+	                  <c:if test="${ p ne pi.currentPage }">
+	                     <c:url var="pagination" value="/admin/qna">
+	                        <c:param name="page" value="${ p }"/>
+	                     </c:url>
+	                     <a href="${ pagination }">${ p }</a> &nbsp;
+	                  </c:if>
+	               </c:forEach>
+	               <!-- [다음] -->
+	               <c:if test="${ pi.currentPage >= pi.maxPage }">
+	                  [다음]
+	               </c:if>
+	               <c:if test="${ pi.currentPage < pi.maxPage }">
+	                  <c:url var="after" value="/admin/qna">
+	                     <c:param name="page" value="${ pi.currentPage + 1 }" />
+	                  </c:url>
+	                  <a href="${ after }">[다음]</a>
+	               </c:if>
+	              </ul>
                 </nav>
             </div>
 
@@ -237,7 +179,8 @@
         </div>
    
     </div>
-</div>
+  </div>
+
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
