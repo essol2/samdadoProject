@@ -252,23 +252,23 @@
                 	<br>
                  	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get">
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="radio" name="area" id="east" value="east" checked>
+                		<input type="radio" name="area" id="east" value="east">
                 		<label for="east">  동부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west" checked>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west">
                 		<label for="west">  서부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south" checked>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south">
                 		<label for="south">  남부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north" checked>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north">
                 		<label for="north">  북부</label>
                 		
                 		<br>
                 		
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold" stype="padding: 10%;">주제</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="radio" name="thema" id="sightseeing" value="sightseeing" checked>
+                		<input type="radio" name="thema" id="sightseeing" value="sightseeing">
                 		<label for="sightseeing">  관광</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break" checked>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break">
                 		<label for="break">  휴식</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach" checked>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach">
                 		<label for="beach">  바다</label>
                 		
                 		<br>

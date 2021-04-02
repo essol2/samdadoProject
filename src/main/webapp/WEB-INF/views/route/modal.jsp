@@ -104,7 +104,7 @@
 
     <!-- Button trigger modal -->
     <button type="button" class="mapSearchbtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        <img class="srcimg" src="image/search.png">
+        <img class="srcimg" src="../resources/images/image_main/search.png">
     </button>
   
     <!-- Modal -->

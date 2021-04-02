@@ -388,7 +388,7 @@
 		color : red;
 	}
 
-	#navi-menu, #navi-title, p:hover{
+	#navi-menu, #navi-title, /* p:hover */ #navi-menu{
 		cursor: pointer;
 	}
 </style>

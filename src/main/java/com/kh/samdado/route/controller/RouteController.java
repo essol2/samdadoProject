@@ -20,12 +20,6 @@ public class RouteController {
 		return "route/route_main";
 	}
 	
-	// 삭제할 거임
-	@GetMapping("/r_modal")				// 모달창
-	public String modal() {
-		return "route/modal";
-	}
-	
 	@GetMapping("/search")
 	public String searchRoute() {		// 루트 검색 -
 		
