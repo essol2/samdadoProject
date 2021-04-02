@@ -21,8 +21,6 @@ public interface businessService {
 	int insertRestaurant(Business b);
 
 	int insertRestaurant2(BusinessAtt ba);  
-  
-	int insertRestaurant2(BusinessAtt ba);
 	
 	// 호텔등록
 	int inserthotel();
@@ -34,25 +32,25 @@ public interface businessService {
 	// 렌트카등록
 	int insertrentcar();
   
-  	  // 관광지 예약
-	  public int bookingTour(TourBooking tourbooking);
-
-	  // 호텔 예약
-	  public int bookingHotel(RoomBooking roombooking);
-
-	  // 렌트카 예약
-	  public int bookingCar(CarBooking carbooking);
-
-	  // 업체검색기능
-	  public List<Business> businessSearch();
+	// 관광지 예약
+	public int bookingTour(TourBooking tourbooking);
+	
+	// 호텔 예약
+	public int bookingHotel(RoomBooking roombooking);
+	
+	// 렌트카 예약
+	public int bookingCar(CarBooking carbooking);
+	
+	// 업체검색기능
+	public List<Business> businessSearch();
 	  
-	  // 후기등록	 
-	  public int insertReview(Review review);
+	// 후기등록	 
+	public int insertReview(Review review);
 	  
-	  // 신고하기
-	  public int report(Report report);
+	// 신고하기
+	public int report(Report report);
 	  
-	  // 찜하기
-	  public int jjim(Jjim jjim); 
+	// 찜하기
+	public int jjim(Jjim jjim); 
   
 }
