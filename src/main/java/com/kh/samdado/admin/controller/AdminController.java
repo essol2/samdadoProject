@@ -10,10 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.samdado.admin.model.exception.AdminException;
 import com.kh.samdado.admin.model.service.AdminService;
+import com.kh.samdado.admin.model.vo.PageInfo;
+import com.kh.samdado.admin.model.vo.Pagination;
 import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
@@ -41,19 +44,33 @@ public class AdminController {
 		List<QnA> qnaList = aService.adminMainQnaSelect();	
 		//System.out.println("qnaList : " + qnaList);
 		
-		// 1_2. 관리자 메인 페이지에서 총 회원수 카운트 select
+		// 1_2. 관리자 메인 페이지에서 신고? or 신규 사업장 limit절 select
+		
+		// ---------------------------------------------------
+		
+		// 1_3. 관리자 메인 페이지에서 총 회원수 카운트 select
 		int countUserResult = uService.countUser();
 		//System.out.println("회원 수 countUserResult : " + countUserResult);
 		
-		// 1_3. 관리자 메인 페이지에서 신규 광고 신청 카운트 select
+		// 1_4. 관리자 메인 페이지에서 신규 광고 신청 카운트 select
 		// int countAdResult = bService.countAd();
 		
-		// 1_4. 관리자 메인 페이지에서 신규 신고 신청 카운트 select
+		// 1_5. 관리자 메인 페이지에서 신규 신고 신청 카운트 select
 		// int countReportResult = bService.countReport();
 		
-		// 1_5. 관리자 메인 페이지에서 신규 QnA 신청 카운트 select
+		// 1_6. 관리자 메인 페이지에서 신규 QnA 신청 카운트 select
 		int countQnAResult = aService.countQnA();
 		// System.out.println("QnA result : " + countQnAResult);
+		
+		// -----------------------------------------------------
+		
+		// 1_7. 관리자 메인 페이지에서 총 매출 차트 select
+		
+		// 1_8. 관리자 메인 페이지에서 각 광고별 매출 차트 select
+		
+		// -----------------------------------------------------
+		
+		// 1_9. 상단바 오른쪽 달력 파트
 
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("countQnAResult", countQnAResult);
@@ -83,12 +100,25 @@ public class AdminController {
 	
 	// 4. 관리자 홈 Q&A관리 페이지로
 	@GetMapping("/qna")
-	public String adminQnaView(Model model) {
+	public String adminQnaView(Model model,
+			                  @RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
+		
+		// 페이징 처리 로직
+		// 1. 게시글 갯수 구하기
+		int listCount = aService.countQnA();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		List<QnA> qnaList = aService.adminQnaSelect(pi);
 		
 		// 미답변인 QnA 리스트 select 해오기
-		List<QnA> qnaList = aService.adminQnaSelect();
-
-		model.addAttribute("qnaList", qnaList);
+		//List<QnA> qnaList = aService.adminQnaSelect();
+		
+		if (qnaList != null) {
+			model.addAttribute("qnaList", qnaList);
+			model.addAttribute("pi", pi);
+		} else {
+			model.addAttribute("msg", "QnA 리스트 조회에 실패하였습니다.");
+		}
 		
 		return "admin/adminQna";
 	}
@@ -100,8 +130,6 @@ public class AdminController {
 		User loginUser = (User)session.getAttribute("loginUser");
 		
 		User admin = uService.loginUser(loginUser);
-		
-		// System.out.println("admin" + admin);
 		
 		model.addAttribute("loginUser", loginUser);
 		
@@ -133,9 +161,7 @@ public class AdminController {
 	
 	@PostMapping("/insertReplyQna")
 	public String insertReplyQna(QnA q, Model model) {
-		
-		// System.out.println("답변 넘어오나 확인! q : " + q);
-		
+	
 		int result = aService.insertQnaReply(q); // update
 		
 		if (result > 0) {
