@@ -250,31 +250,31 @@
 
                 <div id="route_select">
                 	<br>
-                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get">
+                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get" onsubmint="return searchForm();">
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="radio" name="area" id="east" value="east">
+                		<input type="radio" name="area" id="east" value="east" required>
                 		<label for="east">  동부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west" required>
                 		<label for="west">  서부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south" required>
                 		<label for="south">  남부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north" required>
                 		<label for="north">  북부</label>
                 		
                 		<br>
                 		
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold" stype="padding: 10%;">주제</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="radio" name="thema" id="sightseeing" value="sightseeing">
+                		<input type="radio" name="thema" id="sightseeing" value="sightseeing" required>
                 		<label for="sightseeing">  관광</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break" required>
                 		<label for="break">  휴식</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach" required>
                 		<label for="beach">  바다</label>
                 		
                 		<br>
                 		
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">날짜</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="date" name="routeDate" id="routeDate" value="routeDate">
+                		<input type="date" name="routeDate" id="routeDate" value="routeDate" required>
                 		
                 		<button class="btn" id="searchbtn">검색하기</button>
                 	</form>
@@ -288,28 +288,6 @@
            <jsp:include page="../common/footer.jsp"/>
         </footer>
     
-    <script>
-        $(function(){
-            var $header = $('header'); //헤더를 변수에 넣기
-            var $page = $('.page-start'); //색상이 변할 부분
-            var $window = $(window);
-            var pageOffsetTop = $page.offset().top;//색상 변할 부분의 top값 구하기
-
-        $window.resize(function(){ //반응형을 대비하여 리사이즈시 top값을 다시 계산
-            pageOffsetTop = $page.offset().top;
-            });
-
-        $window.on('scroll', function(){ //스크롤시
-            var scrolled = $window.scrollTop() >= pageOffsetTop; //스크롤된 상태; true or false
-            $header.toggleClass('down', scrolled); //클래스 토글
-            if($window.scrollTop() >= pageOffsetTop) {
-                $(".img").attr("src", $("img").attr("src").replace("_w","_g"));
-            } else if($window.scrollTop() < pageOffsetTop) {
-                $(".img").attr("src", $("img").attr("src").replace("_g","_w"));
-            }
-            });
-        });
-    </script>
    <script>
 		var container = document.getElementById('map');
 		var options = {
