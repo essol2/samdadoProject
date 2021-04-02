@@ -46,7 +46,7 @@ public class businessController {
 		return "business/hotel/hotel_write";
 	}
 	
-	@PostMapping("/restaurant_insert")
+	@PostMapping("/hotel_insert")
 	public String hotelInsert() {
 		
 		return "";

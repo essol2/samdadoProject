@@ -444,8 +444,9 @@
               -->
               <!-- Button trigger modal -->
               <button id="btnJoin" class="btn btn-primary">등록하기 </button>
+              
               <!-- Modal -->
-              <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                    data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                   <div class="modal-dialog">
                   <div class="modal-content">
@@ -462,7 +463,7 @@
                         </div>
                   </div>
                   </div>
-              </div> -->
+              </div>
 		
               <button type="button" href="#" id="btnJoin" class="btn btn-primary">
               <a>뒤로가기</a>
