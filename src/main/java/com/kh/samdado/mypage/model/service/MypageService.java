@@ -11,6 +11,7 @@ import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.SearchPoint;
 import com.kh.samdado.user.model.vo.User;
 
 public interface MypageService {
@@ -36,6 +37,9 @@ public interface MypageService {
 	// 제휴회원 - 포인트 리스트 출력 메소드
 	public List<Point> selectPointList(String usno);
 	
+	//제휴회원 - point 테이블에 검색결과 조회하러 가기
+	public List<Point> selectSearchList(SearchPoint sp);
+	
 	// 제휴회원 - 사업장 조회 메소드
 	public List<Business> selectBussList(String usno);
 
@@ -53,6 +57,8 @@ public interface MypageService {
 
 	// 일반회원 - 가계부 입력 메소드
 	public int insertNewAcc(AccountBook acc);
+
+	
 
 
 	

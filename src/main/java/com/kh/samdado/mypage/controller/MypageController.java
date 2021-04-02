@@ -21,6 +21,7 @@ import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.SearchPoint;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 
@@ -136,8 +137,8 @@ public class MypageController {
 	 // 제휴회원 포인트 페이지로 이동
 	 @GetMapping("/point")
 	 public ModelAndView goToPoint(ModelAndView mv,
-			 				 @ModelAttribute User u,
-			 				 @ModelAttribute Point po) {
+				 				 @ModelAttribute User u,
+				 				 @ModelAttribute Point po) {
 		 
 		  //System.out.println("user 객체 확인 : " +u);
 		 
@@ -195,6 +196,27 @@ public class MypageController {
 			return "mypage/mp_Point";
 		 }
 	 }
+	 
+	 // 제휴회원 - 포인트 사용 내역 기간 조회
+	 @GetMapping("/searchPeriod")
+	 public ModelAndView searchPointPeriod(@ModelAttribute SearchPoint sp,
+			 						 ModelAndView mv) {
+		 
+		 System.out.println("들어온 선택자 확인 : " + sp);
+		 
+		 //point 테이블에 검색결과 조회하러 가기
+//		 List<Point> searchPPList = mService.selectSearchList(sp);
+//		 
+//		 if(searchPPList != null) {
+//			 mv.addObject("searchPPList", searchPPList);
+//			 mv.setViewName("mypage/mp_Point");
+//		 }else {
+//			 mv.addObject("msg", "포인트 조회 오류입니다.");
+//			 mv.setViewName("mypage/mp_bUesrInfo");
+//		 }
+		 return mv;
+	 }
+	 
 	 // 제휴회원 사업장 페이지로 이동
 	 @GetMapping("/mybus")
 	 public String myBusiness() {

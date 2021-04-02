@@ -15,6 +15,7 @@ import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.SearchPoint;
 import com.kh.samdado.user.model.vo.User;
 
 @Service
@@ -63,6 +64,13 @@ public class MypageServiceImpl implements MypageService{
 	public List<Point> selectPointList(String usno) {
 		return mDao.selectPointList(usno);
 	}
+	
+	//제휴회원 - point 테이블에 검색결과 조회하러 가기
+	@Override
+	public List<Point> selectSearchList(SearchPoint sp) {
+		return mDao. selectSearchList(sp);
+	}
+
 
 	// 제휴회원 - 사업장 조회 메소드
 	@Override
@@ -101,9 +109,5 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.insertNewAcc(acc);
 	}
 
-
-
-	
-	
 
 }

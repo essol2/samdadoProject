@@ -10,6 +10,10 @@
     <title>mypage_point</title>
 </head>
 <style>
+	
+	$bg: #332f35;
+	$fg: lighten($bg,20%);
+	$borderWidth: 3px;
 
     /* 폰트 */
     * {
@@ -126,14 +130,25 @@
         
     }
 
-    #rightArea{
-        order : 2;
+    #rtopArea{
         background-color: white;
-        width : 40%;
-        height : 510px;
-        margin : 10px;
-        margin-top : 2.5%;
+        width : 97%;
+        height : 440px;
+        margin-top : 0px;
+        margin-left : 10px;
+        margin-right : 10px;
+        margin-bottom : 10px;
+        /* border : 1px solid hotpink; */
 /*         margin-bottom : 5%; */
+    }
+    
+    #rightArea{
+    	order : 2;
+    	width : 40%;
+        height : fit-content;
+        /* border : 1px solid pink; */
+        margin-top:35px;
+        padding : 0px;
     }
 
     #topArea{
@@ -143,6 +158,7 @@
         margin-bottom: 5%;
         padding : 5%;
         height : 220px;
+        /* border : 1px solid blue; */
     }
 
     #bottomArea{
@@ -151,6 +167,7 @@
         padding : 5%;
         margin-bottom : 3%;
         height : 260px;
+        /* border : 1px solid yellow; */
     }
 
     #showPoint{
@@ -198,8 +215,8 @@
         border-bottom : 1px solid lightgray;
     }
     
-    [type="radio"]:checked,
-	[type="radio"]:not(:checked){
+    .cAbountBtn:checked,
+	.cAbountBtn:not(:checked){
 		position: absolute;
 		left: -9999px;
 		width: 0;
@@ -207,8 +224,8 @@
 		visibility: hidden;
 	}
 	
-	.cAbountBtn:checked + label,
-	.cAbountBtn:not(:checked) + label{
+	.cAbountBtn:checked + .makeBorder,
+	.cAbountBtn:not(:checked) + .makeBorder{
 		display : inline-block;
 		border : 1px solid #467355;
 		width : 25%;
@@ -223,26 +240,124 @@
 		font-size : 20px;
 	}
  	
- 	.cAbountBtn:not(:checked) + label{
+ 	.cAbountBtn:not(:checked) + .makeBorder{
  		background-color : white;
  		box-shadow: 3px 3px 0 0 gray;
  	}
  	
- 	.cAbountBtn:checked + label{
+ 	.cAbountBtn:checked + .makeBorder{
 	 	background-color: #467355;
 	 	color : white;
 		/* box-shadow: 3px 3px 0 0 gray; */
  	}
  	
- 	.cAbountBtn:not(:checked) + label{
+ 	.cAbountBtn:not(:checked) + .makeBorder{
  		box-shadow: 3px 3px 0 0 gray;
  	}
  	
- 	.cAbountBtn:checked + label span,
-	.cAbountBtn:not(:checked) + label span{
+ 	.cAbountBtn:checked + .makeBorder span,
+	.cAbountBtn:not(:checked) + .makeBorder span{
 		display: block;
 	}
- 	
+	
+	#searchArea{
+		/* border : 1px solid red; */
+		width : 100%;
+		height : 40px;
+		display : inline-block;
+		margin-left : 5px;
+	}
+	#searchBtn{
+		border-radius : 3px;
+		background-color : #467355;
+		border-style : none;
+		width : 50px;
+		height : 20px;
+		color : white;
+	}
+	
+	.seRadio {
+	  position: absolute;
+	  visibility: hidden;
+	  display: none;
+	}
+	
+	.seLabel {
+	  color: lighten($bg,40%);
+	  display: inline-block;
+	  cursor: pointer;
+	  /* font-weight: bold; */
+	  padding: 5px 10px;
+	  text-align : center;
+	  font-size : medium;
+	  vertical-align : middle;
+	  /* border : 1px solid red; */
+	}
+	
+	.seRadio:checked + .seLabel{
+	  color: lighten($bg,60%);
+	  background-color: #467355
+	}
+
+	.radio-group {
+	  border: solid #467355;
+	  display: inline-block;
+	  /* margin: 20px; */
+	  border-radius: 10px;
+	  overflow: hidden;
+	}
+	
+	#searchArea{
+		/* border : 1px solid purple; */
+		height : 60px;
+		margin-top : 0px;
+		display : inline-block;
+		text-align : center;
+		align-items : center;
+		padding-top : auto;
+		padding-bottom:auto;
+	}
+
+	#searchThisBtn{
+		border-style:none;
+		background-color : #467355;
+		border-radius : 5px;	
+		height : 50px;
+		color : white;
+		margin-top: 3px;
+		margin-right : 3px;
+		margin-bottom : 10%;
+		margin-left : 5px;
+		padding-top : 10px;
+		padding-left : 20px;
+		padding-right : 20px;
+		padding-bottom : 10px;
+		/* padding:20px; */
+		vertical-align : center;
+		flex : 1;
+	}
+	
+	#fromHereDate{
+		vertical-align : center;
+		margin-left : 5px;
+		margin-bottom : 10px;
+		flex : 1;
+	}
+	
+	input[type="date"]::-webkit-clear-button, input[type="date"]::-webkit-inner-spin-button { 
+	 /* display: none;  */
+	} 
+	input[type="date"]::-webkit-calendar-picker-indicator { 
+	 color: #467355; 
+	} 
+	input[type="date"] { 
+	 background: rgb(0,0,0,0.1); 
+	 color: #467355; 
+	 border-style : none;
+	 width : 210px;
+	 height : 50px;
+	}
+
     @media (max-width:1650px){
          /* 마이페이지 css */
             body{
@@ -395,23 +510,50 @@
                         </div>
                     </div>
                     <div id="rightArea">
-                        <h2 style="color:#467355; text-align : center; margin-top : 4%;">포인트 사용내역</h2>
-                        <hr style="background-color: #467355; width : 100%; "> 
-                        <table id="pointTable">
-                            <tr>
-                                <th>날짜</th>
-                                <th>내용</th>
-                                <th>금액</th>
-                            </tr>
-                            <c:forEach var="p" items="${ pList }">
+                    	<div id="rtopArea">
+                    	<br>
+	                        <h2 style="color:#467355; text-align : center; margin-top : 4%;">포인트 사용내역</h2>
+	                        <hr style="background-color: #467355; width : 100%; "> 
+	                        <table id="pointTable">
 	                            <tr>
-	                                <td>${ p.pdate }</td>
-	                                <td>${ p.pdetail }</td>
-	                                <td style="color : #467355">${ p.pamount }</td>
+	                                <th>날짜</th>
+	                                <th>내용</th>
+	                                <th>금액</th>
 	                            </tr>
-                            </c:forEach>
+	                            <c:forEach var="p" items="${ pList }">
+		                            <tr>
+		                                <td>${ p.pdate }</td>
+		                                <td>${ p.pdetail }</td>
+		                                <td style="color : #467355">${ p.pamount }</td>
+		                            </tr>
+	                            </c:forEach>
+	
+	                        </table> 
+                        </div>
+	                     <div id="searchArea">
+							<form action="${contextPath}/mypage/searchPeriod" method="GET" style="height : 100%;">
+							<table>
+								<tr>
+									<td style="padding-top : 15px;">
+										<input type="date" id="fromHereDate" name="startDate" style="margin-top: -5%;">
+									</td>
+									<td>	
+										<div class="radio-group" style="height : 51px; margin-left : 7px; margin-top : 5px;">
+											<input type="radio" id="option-one" name="selector" class="seRadio" value="1개월">
+											<label for="option-one" class="seLabel" style="padding-top : 0px; paddig-bottom: 0px;">1개월</label>
+											<input type="radio" id="option-two" name="selector" class="seRadio" value="3개월">
+											<label for="option-two" class="seLabel" style="padding-top : 0px; paddig-bottom: 0px;">3개월</label>
+											<input type="radio" id="option-three" name="selector" class="seRadio" value="6개월">
+											<label for="option-three" class="seLabel" style="padding-top : 0px; paddig-bottom: 0px;">6개월</label>
+											<input type="hidden" name="usno" id="usno" value=${ loginUser.usno }>
+										</div>
+									</td>
+									<td style="padding-top : 5px;"> <button type="submit" id="searchThisBtn">검색</button></td>
+								</tr>
+							</table>
 
-                        </table>
+							</form>
+	                    </div>
                     </div>
                 </div>
             </div>
@@ -467,6 +609,7 @@
 	    });
   	});
     </script>
+
     
 </body>
 </html>
