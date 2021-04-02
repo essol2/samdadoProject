@@ -12,6 +12,8 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+	<jsp:include page="../common/navi.jsp"/>
+	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_modal.css" type="text/css">
 <style>
 		.route_title {
             max-width: 48%;
@@ -62,7 +64,6 @@
             width: 100%;
             position: relative;
             margin-left: 12%;
-            z-index: -1;
         }
 
         .c_border {
@@ -117,6 +118,7 @@
             text-align: center;
             font-weight: bolder;
             font-size: 25px;
+            cursor: default;
         }
 
         .spot_btn {
@@ -156,123 +158,40 @@
             width: 100px;
             height: 35px;
         }
-        
-        <!-- 모달 --!>
-       /*  .MapSearchbtn {
-            background-color: rgba(189, 189, 189, 0.4);
-            width: 50px;
-            height: 50px;
-            border: 0px;
-            border-top-right-radius: 50px;
-            border-bottom-right-radius: 50px;
-            border-top-left-radius: 50px;
-            border-bottom-left-radius: 50px;
-        } */
-        
-        /* .srcimg {
-            width: 30px;
-            height: 30px;
-        } */
-
-        .modal-header {
-            border: 0px;
-        }
-
-        #modal-body {
-            /* height: auto; */
-            max-height: 420px;
-            overflow: auto;
-            overflow-x: hidden;
-        }
-
-        #search_input {
-            width: 80%;
-            margin-left: 10%;
-            margin-right: 10%;
-
-            border-top-right-radius: 20px;
-            border-bottom-right-radius: 20px;
-            border-top-left-radius: 20px;
-            border-bottom-left-radius: 20px;
-        }
-
-        #modal-body input {
-            background-image: url(../resources/images/image_route/search.png);
-            background-repeat: no-repeat;
-            background-size: 30px;
-            padding-left: 35px;
-        }
-
-        #searchtitle {
-            font-size: larger;
-            margin: 0px;
-        }
-
-        #zzim {
-            font-size: 20px;
-            margin-left: 10%;
-            font-weight: 400;
-            margin-bottom: 0%;
-        }
-
-        .zzim_list {
-            margin-left: 10%;
-            margin-right: 10%;
-            border-bottom: 1px solid #467355 ;
-            margin-top: 3%;
-        }
-
-        .zzim_content_title {
-            margin-bottom: 0px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .zzim_content {
-            margin-bottom: 0px;
-            font-size: 13px;
-        }
-
-        #addbtn {
-            background-color: white;
-            border: 0px;
-            margin-left: 65%;
-        }
-        
+	
 </style>
 </head>
 <body>
-<jsp:include page="../common/navi.jsp"/>
 		<div id="bottom">
             <div id="content">
                 <br><br><br>
                 <div class="route_title">
                     <image id="content_logo" width="70px" height="70px" src="../resources/images/image_main/logo_g.png"></image>
                     &nbsp;
-                    <p class="content-title">길 만들기</p>
+                    <label class="content-title">길 만들기</label>
                 </div>
 
                 <div id="route_select">
                 	<br>
                  	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get">
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="radio" name="area" id="east" value="east" checked>
+                		<input type="radio" name="area" id="east" value="east">
                 		<label for="east">  동부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west" checked>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west">
                 		<label for="west">  서부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south" checked>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south">
                 		<label for="south">  남부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north" checked>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north">
                 		<label for="north">  북부</label>
                 		
                 		<br>
                 		
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold" stype="padding: 10%;">주제</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="radio" name="thema" id="sightseeing" value="sightseeing" checked>
+                		<input type="radio" name="thema" id="sightseeing" value="sightseeing">
                 		<label for="sightseeing">  관광</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break" checked>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break">
                 		<label for="break">  휴식</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach" checked>
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach">
                 		<label for="beach">  바다</label>
                 		
                 		<br>
@@ -284,19 +203,19 @@
                 	</form>
                 </div>
                 <br>
+                
                 <div id="map" style="width: 1200px; height:800px;">
-                	
+                	<button type="button" class="mapSearchbtn" data-bs-toggle="modal" data-bs-target="#exampleModal" style="position: relative; z-index: 10; margin-left: 91%; margin-top: 1%;">
+        				<img class="srcimg" src="../resources/images/image_route/search.png">
+    				</button>
                 </div>
-                <!-- Button trigger modal -->
-		    	<button class="MapSearchbtn" data-bs-toggle="modal" data-bs-target="#exampleModal" style=" background-color: rgba(189, 189, 189, 0.4); width: 80px; height: 80px; border: 0px; border-top-right-radius: 50px;  border-bottom-right-radius: 50px; border-top-left-radius: 50px;  border-bottom-left-radius: 50px;" >
-		        	<img class="srcimg" src="../resources/images/image_route/search.png">
-		    	</button>
+                
     	
                 <br><br><br>
                 <div id="content_bottom">
                     <table style="width: 100%;">
                         <th style="width: 50%;">
-                            <p class="content-title" id="title1" >추천 길</p>
+                            <label class="content-title" id="title1" >추천 길</label>
                             <div class="c_border" id="left-border">
                                <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                    <tr>
@@ -391,8 +310,8 @@
                                         </td>
                                     </tr>
 
-                                   <tr><td colspan="2"><p id="navi-menu" style="text-align: center; margin-top: 10%; font-size: 16px;">총 이동 거리 40.1km </p></td></tr>
-                                   <tr><td colspan="2"><p id="navi-menu" style="text-align: center; margin-top: -5%; font-size: 16px; margin-bottom: 10%;">예상 이동 시간 83분</p></td></tr>
+                                   <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: 10%; font-size: 16px;">총 이동 거리 40.1km </p></td></tr>
+                                   <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: -5%; font-size: 16px; margin-bottom: 10%;">예상 이동 시간 83분</p></td></tr>
                                    
                                    <tr>
                                         <td colspan="2"> 
@@ -406,14 +325,14 @@
                         
                         <th style="width: 50%;"> 
                             <div id="content_right" style="width: 100%;">
-                                <p class="content-title" id="title2">예상 예산</p>
+                                <label class="content-title" id="title2">예상 예산</label>
                                 <div class="c1_border" id="right-top-border">
                                     <table style="width=100%">
                                         <tr>
-                                            <td id="navi-menu" style="padding: 10px;">&nbsp;만장굴 입장료 (성인) 4,000원</td>
+                                            <td id="navi-content" style="padding: 10px;">&nbsp;만장굴 입장료 (성인) 4,000원</td>
                                         </tr>
                                         <tr> 
-                                            <td id="navi-menu" style="text-align: right; padding: 10px;" >총 4,000원&nbsp;</td>
+                                            <td id="navi-content" style="text-align: right; padding: 10px;" >총 4,000원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -421,17 +340,17 @@
                                
                                 <br>
                                 
-                                <p class="content-title" id="title3">삼다수 님을 위한 <br> 삼다도의 추천 숙박</p>
+                                <label class="content-title" id="title3">삼다수 님을 위한 <br> 삼다도의 추천 숙박</label>
                                 <div class="c1_border" id="right-middle-border">
                                     <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                         <tr>
                                             <td><img src="../resources/images/image_route/호텔이미지.png"></td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-menu" style="padding-top: 10px;">★4.90(후기 99+개)</td>
+                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-menu">제주도 좋은 호텔1</td>
+                                            <td id="navi-content">제주도 좋은 호텔1</td>
                                         </tr>
                                     </table>
                                     <table style="margin: auto; margin-bottom: 10%;">
@@ -439,10 +358,10 @@
                                             <td><img src="../resources/images/image_route/호텔이미지.png"></td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-menu" style="padding-top: 10px;">★4.90(후기 99+개)</td>
+                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-menu">제주도 좋은 호텔2</td>
+                                            <td id="navi-content">제주도 좋은 호텔2</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -451,17 +370,17 @@
                                 <button class="_btn" id="morebtn">숙박 더 보러 가기</button>
                                 
                                 <br><br>
-                                <p class="content-title" id="title4">삼다수 님이 찜하신 숙박</p>
+                                <label class="content-title" id="title4">삼다수 님이 찜하신 숙박</label>
                                 <div class="c1_border" id="right-bottom-border">
                                     <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                         <tr>
                                             <td><img src="../resources/images/image_route/호텔이미지.png"></td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-menu" style="padding-top: 10px;">★4.90(후기 99+개)</td>
+                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-menu">제주도 좋은 호텔1</td>
+                                            <td id="navi-content">제주도 좋은 호텔1</td>
                                         </tr>
                                     </table>
                                     <table style="margin: auto; margin-bottom: 10%;">
@@ -469,10 +388,10 @@
                                             <td><img src="../resources/images/image_route/호텔이미지.png"></td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-menu" style="padding-top: 10px;">★4.90(후기 99+개)</td>
+                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-menu">제주도 좋은 호텔2</td>
+                                            <td id="navi-content">제주도 좋은 호텔2</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -484,8 +403,6 @@
             </div>
         </div>
         
-        <p onclick="location.href='${ contextPath }/route/r_modal'">모달</p>
-        
         <!-- 모달 -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -494,7 +411,7 @@
                     <p id="searchtitle">관광지 검색</p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <class class="modal-body" id="modal-body" style="max-height: 420px; overflow: auto; overflow-x: hidden;">
+                <class class="_modal-body" id="modal-body" style="max-height: 420px; overflow: auto; overflow-x: hidden;">
                     <input type="text" id="search_input" placeholder="관광지를 검색하세요.">
                     <br><br>
                     <p id="zzim">삼다수 님이 찜하신 관광지</p>
@@ -532,18 +449,18 @@
                         <p class="zzim_content_title" >제주김만복 본점</p>
                         <p class="zzim_content">제주 제주시 오라로 41</p>
                         <p class="zzim_content">
-                            오라 3동 2250-1
+                            	오라 3동 2250-1
                             <button id="addbtn">
                                 <img src="../resources/images/image_route/download.png">추가하기
                             </button>
                         </p>
                     </div>
-                    
+                    <br>
                 </class>
                 </div>
             </div>
         </div>
-        <script>
+         <script>
 		var container = document.getElementById('map');
 		var options = {
 			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),

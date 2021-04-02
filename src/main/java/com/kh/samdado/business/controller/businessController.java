@@ -99,6 +99,7 @@ public class businessController {
 	public String restaurantInsert(Business b, BusinessAtt ba,
 							  @RequestParam(value="uploadFile") MultipartFile file,
 							  HttpServletRequest request) {
+		System.out.println("b : " + b);
 		
 		// 업로드 파일 서버에 저장
 		// 파일이 첨부 되었다면

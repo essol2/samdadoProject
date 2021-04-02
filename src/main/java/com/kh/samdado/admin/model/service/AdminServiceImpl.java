@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.samdado.admin.model.dao.AdminDao;
+import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.mypage.model.vo.QnA;
 
 @Service
@@ -21,9 +22,9 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<QnA> adminQnaSelect() {
+	public List<QnA> adminQnaSelect(PageInfo pi) {
 		// TODO Auto-generated method stub
-		return aDao.adminQnaSelect();
+		return aDao.adminQnaSelect(pi);
 	}
 
 	@Override

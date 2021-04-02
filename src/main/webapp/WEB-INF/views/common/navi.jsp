@@ -268,7 +268,7 @@
 		
 		.modal-header {
 		    padding: 5%;
-		    margin: auto;
+		    /* margin: auto; */
 		}
 		
 		.modal-header img {
@@ -276,9 +276,9 @@
 		    height: 100px;
 		}
 		
-		.modal-body {
+		/* .modal-body {
 		    padding: 10%;
-		}
+		} */
 		
 		.modal-content{
 		    margin: 0;
@@ -388,7 +388,7 @@
 		color : red;
 	}
 
-	#navi-menu, #navi-title, p:hover{
+	#navi-menu, #navi-title, /* p:hover */ #navi-menu{
 		cursor: pointer;
 	}
 </style>
