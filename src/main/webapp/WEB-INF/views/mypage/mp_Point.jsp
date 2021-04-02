@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -370,7 +371,7 @@
                         <div id="topArea">
                             <h2 class="titles">현재 잔여 포인트</h2>
                             <div id="showPoint">
-                                <h1 style="text-align: center;">128,000</h1>
+                                <h1 style="text-align: center;">${pList.get(0).getPbalance()}</h1>
                             </div>
                         </div>
                         <div id="bottomArea">
@@ -402,16 +403,14 @@
                                 <th>내용</th>
                                 <th>금액</th>
                             </tr>
-                            <tr>
-                                <td>21.03.02</td>
-                                <td>충전</td>
-                                <td style="color : #467355">+300,000</td>
-                            </tr>
-                            <tr>
-                                <td>21.03.03</td>
-                                <td>배너클릭</td>
-                                <td style="color : red;">-500</td>
-                            </tr>
+                            <c:forEach var="p" items="${ pList }">
+	                            <tr>
+	                                <td>${ p.pdate }</td>
+	                                <td>${ p.pdetail }</td>
+	                                <td style="color : #467355">${ p.pamount }</td>
+	                            </tr>
+                            </c:forEach>
+
                         </table>
                     </div>
                 </div>
