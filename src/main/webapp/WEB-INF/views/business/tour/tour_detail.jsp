@@ -71,138 +71,6 @@
         }
 
 
-        /* 네비 css */
-        #back {
-            width: 100%;
-            height: auto;
-            margin: auto;
-            top: 0;
-        }
-
-        header {
-            position: fixed;
-            width: 240px;
-            top: 0;
-            left: 1200px;
-            height: 100%;
-            -webkit-transition-duration: 0.2s;
-            -webkit-transition-timing-function: ease;
-            transition-duration: 0.2s;
-            transition-timing-function: ease;
-            color: black;
-            border-left: 3px solid black;
-            z-index: 1;
-        }
-
-        .down {
-            -webkit-transition-duration: 0.2s;
-            -webkit-transition-timing-function: ease;
-            transition-duration: 0.2s;
-            transition-timing-function: ease;
-        }
-
-        .down #navi {
-            -webkit-transition-duration: 0.4s;
-            -webkit-transition-timing-function: ease;
-            transition-duration: 0.4s;
-            transition-timing-function: ease;
-        }
-
-        .center {
-            text-align: center;
-        }
-
-        .right {
-            text-align: right;
-            position: relative;
-            right: 10%;
-            margin: auto;
-        }
-
-        #navi-title {
-            font-size: 40px;
-            font-weight: bold;
-        }
-
-        #navi-menu {
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        .navi {
-            height: 600px;
-            /* border : 1px solid pink; */
-            margin-left: 2%;
-            width: 100%;
-        }
-
-        .img {
-            position: relative;
-            left: 70%;
-        }
-
-        /* 반응형 */
-        @media (max-width:1920px) {
-            header {
-                position: fixed;
-                width: 240px;
-                top: 0;
-                left: 87%;
-                height: 100%;
-                -webkit-transition-duration: 0.2s;
-                -webkit-transition-timing-function: ease;
-                transition-duration: 0.2s;
-                transition-timing-function: ease;
-                color: black;
-                border-left: 3px solid black;
-                z-index: 1;
-            }
-        }
-
-        @media (max-width:1650px) {
-            header {
-                position: fixed;
-                width: 240px;
-                top: 0;
-                left: 85%;
-                height: 100%;
-                -webkit-transition-duration: 0.2s;
-                -webkit-transition-timing-function: ease;
-                transition-duration: 0.2s;
-                transition-timing-function: ease;
-                color: black;
-                border-left: 3px solid black;
-                z-index: 1;
-            }
-        }
-
-        @media (max-width:1440px) {
-            header {
-                position: fixed;
-                width: 240px;
-                top: 0;
-                left: 83%;
-                height: 100%;
-                -webkit-transition-duration: 0.2s;
-                -webkit-transition-timing-function: ease;
-                transition-duration: 0.2s;
-                transition-timing-function: ease;
-                color: black;
-                border-left: 3px solid black;
-                z-index: 1;
-            }
-
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            height: auto;
-            box-sizing: border-box;
-            background: white;
-            color: black;
-        }
-
         /* 컨테이너 */
         #main-container {
             height: 100%;
@@ -270,7 +138,9 @@
             margin-top: 0;
         }
 
-
+		.small_view label{
+			line-height: 20px;
+		}
 
         .small_view_btn {
             border: 0;
@@ -616,21 +486,9 @@
 </head>
 
 <body>
-    <!-- 혜윤 : 네비 -->
-    <header>
-        <div class="navi">
-            <br><br>
-            <p class="center" id="navi-title">삼다도</p>
-            <p class="center" id="navi-menu">나만의 길 만들기</p>
-            <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
-            <p class="center" id="navi-menu">제주도 필수 예약</p>
-        </div>
-        <div>
-            <img class="img" width="50px" height="50px" src="../resources/images/image_main/logo_g.png">
-            <p class="right" id="navi-menu">들어가기</p>
-            <p class="right" id="navi-menu">회원가입</p>
-        </div>
-    </header>
+    <!-- navi.jsp include -->
+    <jsp:include page="../../common/navi.jsp"/>
+    
     <section id="main-container">
         <!-- 상세페이지 헤더 -->
         <div id="ho_header">
@@ -837,45 +695,45 @@
                     <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                 </div>
                 <div class="modal-body">
-                    <!--체크인날짜-->
+                    <!-- 예약날짜-->
                     <div class="start-div">
                         <label for="startDate">예약날짜</label>
-                        <input type="date" id="startDate" name="startDate">
+                        <input type="date" id="startDate" name="startDate" onchange="startDate(this)">
                     </div>
                 </div>
                 <div class="modal-body2">
-                    <h4>2021년 3월 2일</h4>
+                    <h4 id="startDateResult"></h4>
                     <div id="table">
                         <div class="rows">
                             <span class="cell cols1">성인입장권</span>
                             <span class="cell cols2">10000원</span>
-                            <span class="cell cols3"><input type="number">명</span>
+                            <span class="cell cols3"><input type="number" onchange="adult(this)">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">청소년입장권</span>
                             <span class="cell cols2">9000원</span>
-                            <span class="cell cols3"><input type="number">명</span>
+                            <span class="cell cols3"><input type="number" onchange="youth(this)">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">어린이입장권</span>
                             <span class="cell cols2">8000원</span>
-                            <span class="cell cols3"><input type="number">명</span>
+                            <span class="cell cols3"><input type="number" onchange="child(this)">명</span>
                         </div>
                     </div>
                     <div id="table2">
                         <div class="rows2">
                             <span class="cell cols1">성인입장권</span>
-                            <span class="cell cols2">10000원 * 2명</span>
+                            <span class="cell cols2">10000원 *<span id="adultResult"></span>명</span>
                             <span class="cell cols3">20000원</span>
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">청소년입장권</span>
-                            <span class="cell cols2">9000원 * 1명</span>
+                            <span class="cell cols2">9000원 *<span id="youthResult"></span>명</span>
                             <span class="cell cols3">9000원</span>
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">어린이입장권</span>
-                            <span class="cell cols2">8000원 * 1명</span>
+                            <span class="cell cols2">80000원 *<span id="childResult"></span>명</span>
                             <span class="cell cols3">8000원</span>
                         </div>
                     </div>
@@ -889,6 +747,27 @@
             </div>
         </div>
     </div>
+    
+    <script>
+	    function adult(e) {	  	  
+	  	  const value = e.value;	  	  
+	  	  document.getElementById('adultResult').innerText
+	  	    = value;
+	  	}
+	    
+	    function youth(e) {
+		  	  const value = e.value;		  	  
+		  	  document.getElementById('youthResult').innerText
+		  	    = value;		  	  
+		  	}
+	
+	    function child(e) {
+	    	  const value = e.value;	    	  
+	    	  document.getElementById('childResult').innerText
+	    	    = value;
+	    	}
+	
+    </script>
 
      <footer>
             <div id="footer_left">

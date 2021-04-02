@@ -626,7 +626,7 @@
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
-	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
             	</div>
                 
                 <div>
@@ -646,7 +646,7 @@
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
-	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
 	                
 	                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
 		                <ul class="ul-class">                
@@ -678,7 +678,7 @@
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
-	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
             	</div>
                 
                 <div>

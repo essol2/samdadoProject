@@ -56,137 +56,6 @@
         }
 
 
-        /* 네비 css */
-        #back {
-            width: 100%;
-            height: auto;
-            margin: auto;
-            top: 0;
-        }
-
-        header {
-            position: fixed;
-            width: 240px;
-            top: 0;
-            left: 1200px;
-            height: 100%;
-            -webkit-transition-duration: 0.2s;
-            -webkit-transition-timing-function: ease;
-            transition-duration: 0.2s;
-            transition-timing-function: ease;
-            color: black;
-            border-left: 3px solid black;
-            z-index: 1;
-        }
-
-        .down {
-            -webkit-transition-duration: 0.2s;
-            -webkit-transition-timing-function: ease;
-            transition-duration: 0.2s;
-            transition-timing-function: ease;
-        }
-
-        .down #navi {
-            -webkit-transition-duration: 0.4s;
-            -webkit-transition-timing-function: ease;
-            transition-duration: 0.4s;
-            transition-timing-function: ease;
-        }
-
-        .center {
-            text-align: center;
-        }
-
-        .right {
-            text-align: right;
-            position: relative;
-            right: 10%;
-            margin: auto;
-        }
-
-        #navi-title {
-            font-size: 40px;
-            font-weight: bold;
-        }
-
-        #navi-menu {
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        .navi {
-            height: 600px;
-            /* border : 1px solid pink; */
-            margin-left: 2%;
-            width: 100%;
-        }
-
-        .img {
-            position: relative;
-            left: 70%;
-        }
-
-        /* 반응형 */
-        @media (max-width:1920px) {
-            header {
-                position: fixed;
-                width: 240px;
-                top: 0;
-                left: 87%;
-                height: 100%;
-                -webkit-transition-duration: 0.2s;
-                -webkit-transition-timing-function: ease;
-                transition-duration: 0.2s;
-                transition-timing-function: ease;
-                color: black;
-                border-left: 3px solid black;
-                z-index: 1;
-            }
-        }
-
-        @media (max-width:1650px) {
-            header {
-                position: fixed;
-                width: 240px;
-                top: 0;
-                left: 85%;
-                height: 100%;
-                -webkit-transition-duration: 0.2s;
-                -webkit-transition-timing-function: ease;
-                transition-duration: 0.2s;
-                transition-timing-function: ease;
-                color: black;
-                border-left: 3px solid black;
-                z-index: 1;
-            }
-        }
-
-        @media (max-width:1440px) {
-            header {
-                position: fixed;
-                width: 240px;
-                top: 0;
-                left: 83%;
-                height: 100%;
-                -webkit-transition-duration: 0.2s;
-                -webkit-transition-timing-function: ease;
-                transition-duration: 0.2s;
-                transition-timing-function: ease;
-                color: black;
-                border-left: 3px solid black;
-                z-index: 1;
-            }
-
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            height: auto;
-            box-sizing: border-box;
-            background: white;
-            color: black;
-        }
 
         /* 컨테이너 */
 
@@ -226,6 +95,7 @@
         }
 
         /* 검색필터끝 */
+       
 
         /* 사업장종류선택 */
 
@@ -388,15 +258,16 @@
 
         .cover {
             width: 70px;
-            height: 23px;
+            height: 33px;
             border: 1px solid black;
-            border-radius: 20%;            
+            border-radius: 20%;                
         }
 
         .cover a, .cover label {
             text-decoration: none;
             color: black;
             font-family: 'GmarketSansBold' !important;
+            line-height:0px;
         }
 
         .moreBtn {
@@ -417,22 +288,8 @@
 </head>
 
 <body>
-    <!-- 혜윤 : 네비 -->
-    <div id="back">
-        <header>
-            <div class="navi">
-                <br><br>
-                <p class="center" id="navi-title">삼다도</p>
-                <p class="center" id="navi-menu">나만의 길 만들기</p>
-                <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
-                <p class="center" id="navi-menu">제주도 필수 예약</p>
-            </div>
-            <div>
-                <img class="img" width="50px" height="50px" src="../resources/images/image_main/logo_g.png">
-                <p class="right" id="navi-menu">들어가기</p>
-                <p class="right" id="navi-menu">회원가입</p>
-            </div>
-        </header>
+    <!-- navi.jsp include -->
+    <jsp:include page="../../common/navi.jsp"/>
 
         <!-- 전체 section-->
         <section id="main-container">
@@ -443,13 +300,13 @@
                                 style="color: white;">숙박</label></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/bussiness/tour_list'>관광지</a></div>
+                        <div class="cover"><a href='${ contextPath }/business/tour_list'>관광지</a></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/bussiness/restaurant_list'>음식점</a></div>
+                        <div class="cover"><a href='${ contextPath }/business/restaurant_list'>음식점</a></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/bussiness/car_list'>렌트카</a></div>
+                        <div class="cover"><a href='${ contextPath }/business/car_list'>렌트카</a></div>
                     </li>
                 </ul>
 
@@ -519,7 +376,7 @@
 
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                    <div class='profile' onclick="location.href='${ contextPath }/bussiness/hotel_detail'">
+                    <div class='profile' onclick="location.href='${ contextPath }/business/hotel_detail'">
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
                         <img class="image" src="../resources/images/image_listpage/hotel1.png">
                         <b>★4.90(후기 99+개)</b>
@@ -618,7 +475,7 @@
             <hr>
             <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
         </footer>
-</div>
+
 
 </body>
 
