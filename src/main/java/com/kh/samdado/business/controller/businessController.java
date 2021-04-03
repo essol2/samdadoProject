@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
-import com.kh.samdado.business.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
 import com.kh.samdado.business.model.vo.rentcar.Car;

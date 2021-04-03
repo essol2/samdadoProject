@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.samdado.admin.model.vo.Report;
 import com.kh.samdado.business.model.dao.businessDao;
-import com.kh.samdado.business.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -17,6 +15,8 @@ import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
+import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Report;
 
 @Service
 public class businessServiceImpl implements businessService {

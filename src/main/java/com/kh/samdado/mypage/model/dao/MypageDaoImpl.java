@@ -6,9 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.samdado.business.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
