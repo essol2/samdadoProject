@@ -42,7 +42,7 @@ public class Report {
 	private String r_img_cname;	// 첨부파일 바꾼이름
 	private String usno;		// 신고당한 회원번호			// 유저 테이블 조인
 	private int r_count;		// 신고 누적 횟수
-	private int bus_code;		// 신고받은사업장고유번호		// 비지니스 테이블 조인
+	private int bus_code;       // 신고받은사업장고유번호		// 비지니스 테이블 조인
 	
 
 

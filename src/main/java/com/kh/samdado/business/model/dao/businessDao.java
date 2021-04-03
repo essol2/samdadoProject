@@ -53,6 +53,10 @@ public interface businessDao {
 	// 찜하기
 	public int jjim(Jjim jjim);
 
+	// 지혜
+	// 신고 카운트
+	int countReport();
+
 	
 
 

@@ -112,6 +112,14 @@ public class businessServiceImpl implements businessService {
   }
 
 	
+	// 지혜
+	@Override
+	public int countReport() {
+		// TODO Auto-generated method stub
+		return bDao.countReport();
+	}
+
+	
   
 
 

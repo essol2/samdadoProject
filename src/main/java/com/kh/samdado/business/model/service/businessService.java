@@ -55,6 +55,9 @@ public interface businessService {
 	// 찜하기
 	public int jjim(Jjim jjim);
 
+	// 신고 카운트
+	int countReport();
+
 	
 
 
