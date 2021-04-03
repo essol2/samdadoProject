@@ -1,4 +1,4 @@
-package com.kh.samdado.business.model.vo;
+package com.kh.samdado.common.model.vo;
 
 import java.util.Date;
 
