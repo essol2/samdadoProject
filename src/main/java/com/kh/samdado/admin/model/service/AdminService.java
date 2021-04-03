@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.Search;
+import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.QnA;
 
 public interface AdminService {
@@ -19,6 +20,8 @@ public interface AdminService {
 
 	// QnA 검색 
 	List<QnA> searchQnaList(Search search);
+
+	List<Report> adminReportSelect(PageInfo pi);
 
 	
    

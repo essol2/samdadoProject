@@ -104,6 +104,13 @@ public class businessDaoImpl implements businessDao {
 		return null;
 	}
 
+	// 지혜
+	@Override
+	public int countReport() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("businessMapper.countReport");
+	}
+
 
 	
 

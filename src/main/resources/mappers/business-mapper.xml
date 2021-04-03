@@ -56,6 +56,21 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="car_no" column="CAR_NO" />
 	</resultMap>
 	
+	<resultMap type="Report" id="ReportResultSet">
+		<id property="report_no" column="REPORT_NO" />
+		<result property="rep_res" column="REP_RES" />
+		<result property="rep_cont" column="REP_CONT" />
+		<result property="rdate" column="RDATE" />
+		<result property="rstatus" column="RSTATUS" />
+		<result property="rexdate" column="REXDATE" />
+		<result property="r_img_path" column="R_IMG_PATH" />
+		<result property="r_img_name" column="R_IMG_NAME" />
+		<result property="r_img_cname" column="R_IMG_CNAME" />
+		<result property="usno" column="US_NO" />			      <!-- USER 테이블 조인 -->
+		<result property="r_count" column="R_COUNT" />
+		<result property="ref_bus_code" column="REF_BUS_CODE" />  <!-- BUSINESS 테이블 조인 -->
+	</resultMap>
+	
 	<insert id="insertBusiness" parameterType="Business">
 		INSERT
 		  INTO BUSINESS
@@ -166,4 +181,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , CAR_SEQ_NO.CURRVAL
 		  )
 	</insert>
+	
+	<!-- 지혜 -->
+	<select id="countReport" resultType="_int">
+		SELECT 
+   		       COUNT(*)
+		  FROM 
+		  	   REPORT
+		 WHERE 
+		 	   RSTATUS = 'N'
+	</select>
 </mapper>
