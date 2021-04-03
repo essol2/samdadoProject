@@ -12,7 +12,13 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="${ contextPath }/resources/css/admin/QnA.css" type="text/css">
-
+    <link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminHome.css" type="text/css">
+	
+	<!--jQuery-->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    
      <!--차트 api cdn-->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
   </head>
@@ -114,26 +120,41 @@
                 <h3>Q&A<span style="color: red;"> 내역조회 </span>하기</h3>
                 <br>
                 
-                <div class="search_qna_div">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>-------</option>
-                        <option value="qna_no" name="qna_no">Q&A번호</option>
-                        <option value="name" name="name">회원명</option>
-                        <option value="qcontent" name="qcontent">문의내용</option>
-                        <option value="qdate" name="qdate" >문의날짜</option>
-                        <option value="qreply" name="qreply">답변내용</option>
-                    </select>
-                    <input type="text" id="searchValue" class="form-control">
-                    <button class="btn btn-secondary" onclick="searchQna();">검색하기</button>
-                </div>
+             
+			<form id="search_qna_form">
+               <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
+                   <option>--------</option>
+                   <option value="qnano" <c:if test="${ param.searchCondition == 'qnano' }">selected</c:if>>Q&A번호</option>
+                   <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원명</option>
+                   <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
+                   <option value="qcont" <c:if test="${ param.searchCondition == 'qcont' }">selected</c:if>>문의내용</option>
+                   <option value="qdate" <c:if test="${ param.searchCondition == 'qdoate' }">selected</c:if>>문의날짜</option>
+                   <option value="qreply" <c:if test="${ param.searchCondition == 'qreply' }">selected</c:if>>답변내용</option>
+                   <option value="qstatus" <c:if test="${ param.searchCondition == 'qstatus' }">selected</c:if>>답변 상태(Y/N)</option>
+               </select>
+               <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
+               <button class="btn btn-secondary" type="button">검색하기</button>
+			</form>
+            
                 
+                <!-- 
+                <script>
+		         	function searchQna(){
+		         		var searchCondition = $("#searchCondition").val();
+		         		var searchValue = $("#searchValue").val();
+		         		
+		         		location.href="${contextPath}/admin/searchQna?searchCondition=" + searchCondition + "&searchValue=" + searchValue;
+		         	}
+	         	</script>
+                 -->
                 <br>
 
-                <table class="table table-borderless">
+                <table class="table table-borderless" id="resultSearchQnaTable">
                     <thead>
                         <tr>
-                            <th>번호</th>
+                            <th>Q&A번호</th>
                             <th>회원명</th>
+                            <th>회원 번호</th>
                             <th scope="row">문의내용</th>
                             <th>문의날짜</th>
                             <th>답변내용</th>
@@ -141,17 +162,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>강제주</td>
-                            <td>계정 탈퇴하면 재복구 안됨?</td>
-                            <td>2021-01-02</td>
-                            <td>안녕하세요. 탈퇴한 계정은 복구할 수 없습니다. 감사합니다.</td>
-                            <td>완료</td>
-                          </tr>
+                    	<c:forEach var="sq" items="${ searchQnaList }">
+		                   <tr>
+		                       <th scope="row">${ sq.qnano }</th>
+		                       <td>${ sq.usname }</td>
+		                       <td>${ sq.usno }</td>
+		                       <td>${ sq.qcont }</td>
+		                       <td>${ sq.qreply }</td>
+		                       <td>${ q.qstatus }</td>
+		                   </tr>
+		                </c:forEach>  
                     </tbody>
                   </table>
                </div>
+               
+               <script>
+					$(function() {
+						$("#search_qna_form button[type=button]").on("click", function() {
+							var searchCondition = $("#searchCondition").val();
+			         		var searchValue = $("#searchValue").val();
+
+							$.ajax({
+								url : "admin/searchQna",
+								data : search,
+								type : "get", 
+								success : function(data) {
+									alert("서버로 전송 성공!" + data);
+									console.log(data);
+								},
+								error : function(e) {
+									alert("error code : " + e.status + "\n"
+											+ "message : " + e.responseText);
+								}
+							});
+						});
+					});
+				</script>
 
                <br><hr>
 

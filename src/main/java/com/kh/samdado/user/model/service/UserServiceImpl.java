@@ -1,8 +1,11 @@
 package com.kh.samdado.user.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.user.model.dao.UserDao;
 import com.kh.samdado.user.model.vo.User;
 
@@ -76,6 +79,12 @@ public class UserServiceImpl implements UserService {
 	public int countUser() {
 		// TODO Auto-generated method stub
 		return uDao.countUser();
+	}
+
+	@Override
+	public List<User> selectAllUserList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return uDao.selectAllUserList(pi);
 	}
 
 

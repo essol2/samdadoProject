@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.samdado.admin.model.dao.AdminDao;
 import com.kh.samdado.admin.model.vo.PageInfo;
+import com.kh.samdado.admin.model.vo.Search;
 import com.kh.samdado.mypage.model.vo.QnA;
 
 @Service
@@ -37,6 +38,12 @@ public class AdminServiceImpl implements AdminService {
 	public int countQnA() {
 		// TODO Auto-generated method stub
 		return aDao.countQnA();
+	}
+
+	@Override
+	public List<QnA> searchQnaList(Search search) {
+		// TODO Auto-generated method stub
+		return aDao.searchQnaList(search);
 	}
 
 

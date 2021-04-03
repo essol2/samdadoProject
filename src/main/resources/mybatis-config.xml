@@ -17,6 +17,7 @@
 		<typeAlias type="com.kh.samdado.mypage.model.vo.QnA" alias="QnA"/>
 		<typeAlias type="com.kh.samdado.mypage.model.vo.Point" alias="Point"/>
 		<typeAlias type="com.kh.samdado.common.model.vo.Income" alias="Income"/>
+		<typeAlias type="com.kh.samdado.admin.model.vo.Search" alias="Search"/>
    <!-- <typeAlias type="com.kh.samdado.listpage.model.vo.Alliance" alias="Alliance"/> -->
    		<typeAlias type="com.kh.samdado.business.model.vo.business.Business" alias="Business"/>
    		<typeAlias type="com.kh.samdado.business.model.vo.business.BusinessAtt" alias="BusinessAtt"/>

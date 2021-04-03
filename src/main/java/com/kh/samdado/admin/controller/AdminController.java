@@ -2,30 +2,46 @@ package com.kh.samdado.admin.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.samdado.admin.model.exception.AdminException;
 import com.kh.samdado.admin.model.service.AdminService;
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.Pagination;
+import com.kh.samdado.admin.model.vo.Search;
 import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
+import org.json.simple.parser.ParseException;
+import org.json.simple.parser.JSONParser;
+
 
 @Controller
 @RequestMapping("/admin")
 @SessionAttributes({"loginUser", "msg"})
 public class AdminController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	@Autowired
 	private UserService uService;
@@ -49,7 +65,7 @@ public class AdminController {
 		// ---------------------------------------------------
 		
 		// 1_3. 관리자 메인 페이지에서 총 회원수 카운트 select
-		int countUserResult = uService.countUser();
+		int countUserResult = uService.countUser() - 1; // 관리자 1명 제외
 		//System.out.println("회원 수 countUserResult : " + countUserResult);
 		
 		// 1_4. 관리자 메인 페이지에서 신규 광고 신청 카운트 select
@@ -110,9 +126,6 @@ public class AdminController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		List<QnA> qnaList = aService.adminQnaSelect(pi);
 		
-		// 미답변인 QnA 리스트 select 해오기
-		//List<QnA> qnaList = aService.adminQnaSelect();
-		
 		if (qnaList != null) {
 			model.addAttribute("qnaList", qnaList);
 			model.addAttribute("pi", pi);
@@ -168,13 +181,61 @@ public class AdminController {
 			model.addAttribute("msg", "답변 완료!");
 			return "redirect:/admin/qna";
 		} else {
-			throw new AdminException("답변에 실패하였습니다.");
+			throw new AdminException("Q&A 답변 처리에 실패하였습니다.");
 		}
 		
 	}
 	
+
+//	@GetMapping("/searchQna")
+//	public String searchQna(@ModelAttribute Search search,
+//							Model model) {
+//		
+//		List<QnA> searchQnaList = aService.searchQnaList(search);
+//		
+//		model.addAttribute("searchQnaList", searchQnaList);
+//		
+//		return "admin/adminQna";
+//	}
 	
+	@GetMapping("/searchQna")
+	public void test2(HttpServletResponse response, Search search, Model model) {
+		response.setContentType("application/json; charset=utf-8");
+
+		JSONArray jarr = new JSONArray();
+		
+		List<QnA> searchQnaList = aService.searchQnaList(search);
+		
+		for (QnA q : searchQnaList) {
+		
+			JSONObject jqna = new JSONObject();
+			jqna.put("qnano", q.getQnano());
+			jqna.put("qcont", q.getQcont());
+			jqna.put("qdate", q.getQdate());
+			jqna.put("qreply", q.getQreply());
+			jqna.put("qstatus", q.getQstatus());
+			jqna.put("usno", q.getUsno());
+			jqna.put("usname", q.getUsname());
+			
+			jarr.add(jqna);
+		}
+	}
 	
+	@GetMapping("/userList")
+	public String userList(Model model,
+			               @RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
+		
+		int listCount = uService.countUser();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		List<User> allUserList = uService.selectAllUserList(pi);
+		
+		// List<User> allUserList = uService.selectAllUserList();
+		
+		model.addAttribute("allUserList", allUserList);
+		
+		return "admin/adminuserList";
+	}
 	
 	
 	

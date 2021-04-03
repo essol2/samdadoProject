@@ -51,5 +51,48 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
          WHERE
                QSTATUS = 'N'
 	</select>
-
+	
+	<select id="searchQnaList" parameterType="search" resultMap="qnaResultSet">
+	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
+		SELECT
+		       *
+		  FROM
+		       "QnA", "USER"	
+		<where>
+			"QnA".US_NO = "USER".US_NO <!-- 테이블 조인 -->
+			<choose>
+				<when test="searchCondition == 'qnano'">
+				AND "QNA_NO" LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'qcont'">
+				AND QCONT LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'qdate'">
+				AND QDATE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'qreply'">
+				AND QREPLY LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'qstatus'">
+				AND QSTATUS LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usno'">
+				AND US_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usname'">
+				AND US_NAME LIKE #{sv}
+				</when>
+				<otherwise>
+				AND ("QNA_NO" LIKE #{sv}
+					 OR QCONT LIKE #{sv}
+					 OR QDATE LIKE #{sv}
+					 OR QREPLY LIKE #{sv}
+					 OR QSTATUS LIKE #{sv}
+					 OR US_NO LIKE #{sv}
+					 OR US_NAME LIKE #{sv})
+				</otherwise>	
+			</choose>
+		</where>
+		ORDER BY "QNA_NO"
+	</select>
 </mapper>
