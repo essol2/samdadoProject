@@ -46,6 +46,7 @@ public class Business {
 	private String bus_category;
 	private String bus_status;
 	private String bus_phone;
+	private String res_category;
 	private String hotel_category;
 	private String tour_category;
 	private String tour_tema;

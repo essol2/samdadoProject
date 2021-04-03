@@ -21,5 +21,5 @@ public class CarAtt {
 	private String file_status;	// 파일상태
 	private String file_rename;	// 리네임
 	private String file_lv;		// 대표사진lv=0 / 일반사진lv=1
-	private int rent_no;		// 차량번호
+	private int car_no;		// 차량번호
 }
