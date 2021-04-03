@@ -189,7 +189,7 @@
             <div class="row" id="D">
                 <div class="col-4" id="G">
                 <h1>Q&A</h1>
-                <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
+                <h6>미답변 Q&A번호 기준으로 5개의 Q&A만 보여집니다.</h6>
                 <br>
                     <table class="table table-hover" id="qnaTable" style="table-layout: fixed;">
                         <thead>
@@ -274,6 +274,11 @@
           </div>
         </div>
     </div>
+    
+    <script>
+  
+    
+    </script>
     
     <!-- Optional JavaScript; choose one of the two! -->
 
