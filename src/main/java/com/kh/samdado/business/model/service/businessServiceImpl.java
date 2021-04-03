@@ -13,6 +13,8 @@ import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
 import com.kh.samdado.business.model.vo.hotel.RoomBooking;
+import com.kh.samdado.business.model.vo.rentcar.Car;
+import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 
@@ -28,18 +30,26 @@ public class businessServiceImpl implements businessService {
 		return bDao.insertAlliance(a);
 	}
 
-
+	// 사업장 등록
 	@Override
-	public int insertRestaurant(Business b) {
-		return bDao.insertRestaurant(b);
+	public int insertBusAtt(BusinessAtt ba) {
+		return bDao.insertBusAtt(ba);
+	}
+	@Override
+	public int insertBusiness(Business b) {
+		return bDao.insertBusiness(b);
 	}
 
+	// 렌트카 등록
 	@Override
-	public int insertRestaurant2(BusinessAtt ba) {
-		return bDao.insertRestaurant2(ba);
+	public int insertCar(Car c) {
+		return bDao.insertCar(c);
 	}
-
-
+	@Override
+	public int insertCarAtt(CarAtt ca) {
+		return bDao.insertCarAtt(ca);
+	}
+	
 	@Override
 	public int bookingTour(TourBooking tourbooking) {
   // TODO Auto-generated method stub
@@ -100,11 +110,11 @@ public class businessServiceImpl implements businessService {
   // TODO Auto-generated method stub
 		return 0;
   }
+
+	
   
-  @Override
-	public int insertrentcar() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
+
+	
    
 }

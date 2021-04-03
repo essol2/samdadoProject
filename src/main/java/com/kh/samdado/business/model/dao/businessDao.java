@@ -9,25 +9,28 @@ import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
 import com.kh.samdado.business.model.vo.hotel.RoomBooking;
+import com.kh.samdado.business.model.vo.rentcar.Car;
+import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 
 public interface businessDao {
 
 	int insertAlliance(Alliance a);
+	
+	// 사업장 등록
+	int insertBusAtt(BusinessAtt ba);
+	int insertBusiness(Business b);
 
-	// 레스토랑 등록
-	int insertRestaurant(Business b);
-	int insertRestaurant2(BusinessAtt ba);
+	// 렌트카등록
+	int insertCar(Car c);
+	int insertCarAtt(CarAtt ca);
 
 	// 호텔등록
 	int inserthotel();
 	
 	// 관광지등록
 	int inserttour();
-	
-	// 렌트카등록
-	int insertrentcar();
   
 	// 관광지 예약
 	public int bookingTour(TourBooking tourbooking);
@@ -49,5 +52,9 @@ public interface businessDao {
 		  
 	// 찜하기
 	public int jjim(Jjim jjim);
+
+	
+
+
 
 }

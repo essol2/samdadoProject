@@ -13,6 +13,8 @@ import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
 import com.kh.samdado.business.model.vo.hotel.RoomBooking;
+import com.kh.samdado.business.model.vo.rentcar.Car;
+import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 
@@ -28,16 +30,27 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.insert("businessMapper.insertAlliance", a);
 	}
 
+	// 사업장 첨부파일 등록
 	@Override
-	public int insertRestaurant(Business b) {
-		return sqlSession.insert("businessMapper.insertRestaurant", b);
+	public int insertBusAtt(BusinessAtt ba) {
+		return sqlSession.insert("businessMapper.insertBusAtt", ba);
+	}
+	@Override
+	public int insertBusiness(Business b) {
+		return sqlSession.insert("businessMapper.insertBusiness", b);
+	}
+	
+	// 렌트카 등록
+	@Override
+	public int insertCar(Car c) {
+		return sqlSession.insert("businessMapper.insertCar", c);
+	}
+	@Override
+	public int insertCarAtt(CarAtt ca) {
+		return sqlSession.insert("businessMapper.insertCarAtt", ca);
 	}
 
-	@Override
-	public int insertRestaurant2(BusinessAtt ba) {
-		return sqlSession.insert("businessMapper.insertRestaurant2", ba);
-	}
-  
+	// 호텔등록
   	public int inserthotel() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -45,12 +58,6 @@ public class businessDaoImpl implements businessDao {
 
 	@Override
 	public int inserttour() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int insertrentcar() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -96,6 +103,11 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	
+
+
 
 
 	

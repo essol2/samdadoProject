@@ -2,8 +2,10 @@ package com.kh.samdado.business.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +23,8 @@ import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.business.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
+import com.kh.samdado.business.model.vo.rentcar.Car;
+import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 
 @Controller
 @RequestMapping("/business")
@@ -95,59 +99,68 @@ public class businessController {
 	}
 	
 	// 음식점 등록 - 파일첨부(리네임)
-	@PostMapping("/restaurant_insert")
-	public String restaurantInsert(Business b, BusinessAtt ba,
-							  @RequestParam(value="uploadFile") MultipartFile file,
-							  HttpServletRequest request) {
-		System.out.println("b : " + b);
-		
-		// 업로드 파일 서버에 저장
-		// 파일이 첨부 되었다면
-		if(!file.getOriginalFilename().equals("")) {
-			// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
-			String renameFileName = busSaveFile(file, request);
-			// DB에 저장하기 위한 파일명 세팅
-			if(renameFileName != null) {
-				ba.setFile_name(file.getOriginalFilename());
-				ba.setFile_rename(renameFileName);
+		@PostMapping("/restaurant_insert")
+		public String restaurantInsert(Business b, BusinessAtt ba,
+								  @RequestParam(value="uploadFile") MultipartFile file,
+								  HttpServletRequest request, Map map) {
+			
+			// System.out.println("b : " + b);
+			// System.out.println("file : " + file.getOriginalFilename());
+			
+			// 업로드 파일 서버에 저장
+			// 파일이 첨부 되었다면
+			if(!file.getOriginalFilename().equals("")) {
+				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+				Map<String, String> files = busSaveFile(file, request);
+				// DB에 저장하기 위한 파일명 세팅
+				if(files != null) {
+					ba.setFile_name(file.getOriginalFilename());
+					
+					// 맵에 담겨져있는 값의 키 불러오기
+					ba.setFile_rename((String)files.get("rename"));
+					ba.setFile_root((String)files.get("path"));
+				}
+			}
+			
+			int result = bService.insertBusiness(b);
+			int result2 = bService.insertBusAtt(ba);
+			
+			if(result > 0 && result2 > 0) {
+				return "redirect:/business/restaurant/restaurant_list";
+			} else {
+				throw new businessException("사업 등록에 실패하였습니다.");
 			}
 		}
 		
-		int result = bService.insertRestaurant(b);
-		int result2 = bService.insertRestaurant2(ba);
+		// 첨부파일 리네임 메소드 (공용)
+		public Map<String, String> busSaveFile(MultipartFile file, HttpServletRequest request) {
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "\\busUploadFiles";
+			File folder = new File(savePath);
+			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
+			
+			// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String originalFileName = file.getOriginalFilename();
+			String renameFileName = sdf.format(new Date()) + "_"
+								+ (int)(Math.random() * 100000) 
+								+ originalFileName.substring(originalFileName.lastIndexOf("."));
+			
+			String renamePath = folder + "\\" + renameFileName; // 저장하고자하는 경로 + 파일명
 		
-		
-		if(result > 0 && result2 > 0) {
-			return "redirect:/common/main";
-		} else {
-			throw new businessException("사업 등록에 실패하였습니다.");
+			Map<String, String> map = new HashMap<>();
+			map.put("rename", renameFileName);
+			map.put("path", renamePath);
+			
+			try {
+				file.transferTo(new File(renamePath));
+				// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
+			} catch (IllegalStateException | IOException e) {
+				System.out.println("파일 업로드 에러 : " + e.getMessage());
+			} 
+			
+			return map;
 		}
-	}
-	
-	public String busSaveFile(MultipartFile file, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\busUploadFiles";
-		File folder = new File(savePath);
-		if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
-		
-		// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String originalFileName = file.getOriginalFilename();
-		String renameFileName = sdf.format(new Date()) + "_"
-							+ (int)(Math.random() * 100000) 
-							+ originalFileName.substring(originalFileName.lastIndexOf("."));
-		
-		String renamePath = folder + "\\" + renameFileName; // 저장하고자하는 경로 + 파일명
-		
-		try {
-			file.transferTo(new File(renamePath));
-			// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
-		} catch (IllegalStateException | IOException e) {
-			System.out.println("파일 업로드 에러 : " + e.getMessage());
-		} 
-		
-		return renameFileName;
-	}
 	
 	// 렌트카
 	@GetMapping("/car_list")
@@ -169,9 +182,47 @@ public class businessController {
 	}
 	
 	@PostMapping("/rentcar_insert")
-	public String rentcarInsert() {
+		public String rentcarInsert(Business b, CarAtt ca, BusinessAtt ba, Car c,
+						  	@RequestParam(value="uploadFile") MultipartFile busFile,
+						  	@RequestParam(value="car") MultipartFile carFile,
+						  	HttpServletRequest request, Map map) {
+			
 		
-		return "";
+			// 업로드 파일 서버에 저장
+			// 파일이 첨부 되었다면
+		if(!busFile.getOriginalFilename().equals("")) {
+			// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+			Map<String, String> files = busSaveFile(busFile, request);
+			// DB에 저장하기 위한 파일명 세팅
+			if(files != null) {
+				ba.setFile_name(busFile.getOriginalFilename());
+			
+				// 맵에 담겨져있는 값의 키 불러오기
+				ba.setFile_rename((String)files.get("rename"));
+				ba.setFile_root((String)files.get("path"));
+			}
+		}
+		
+		if(!carFile.getOriginalFilename().equals("")) {
+			Map<String, String> files = busSaveFile(busFile, request);
+			
+			if(files != null) {
+				ca.setFile_name(carFile.getOriginalFilename());
+				ca.setFile_rename((String)files.get("rename"));
+				ca.setFile_root((String)files.get("path"));
+			}
+		}
+		
+		int result = bService.insertBusiness(b);
+		int result2 = bService.insertBusAtt(ba);
+		int result3 = bService.insertCar(c);
+		int result4 = bService.insertCarAtt(ca);
+		
+		if(result > 0 && result2 > 0 && result3 > 0 && result4 > 0) {
+		return "redirect:/business/restaurant/restaurant_list";
+		} else {
+		throw new businessException("사업 등록에 실패하였습니다.");
+		}
 	}
 	// ************* 지혜 *************
 	// 배너 등록 페이지로 이동
