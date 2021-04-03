@@ -3,6 +3,7 @@ package com.kh.samdado.admin.model.dao;
 import java.util.List;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
+import com.kh.samdado.admin.model.vo.Search;
 import com.kh.samdado.mypage.model.vo.QnA;
 
 public interface AdminDao {
@@ -14,5 +15,7 @@ public interface AdminDao {
 	int insertQnaReply(QnA q);
 
 	int countQnA();
+
+	List<QnA> searchQnaList(Search search);
 
 }

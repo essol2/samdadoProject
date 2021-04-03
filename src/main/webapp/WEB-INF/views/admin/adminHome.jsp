@@ -41,6 +41,9 @@
          				  <jsp:include page="admin-navi-up.jsp"/>
                   
                            <div class="row" style="padding-top: 4%;">
+                           <h1>광고별 매출</h1>
+                	       <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
+                	       <br>
                             <div>
                                 <canvas id="myLineChart"></canvas>
                             </div>
@@ -70,64 +73,71 @@
                         </div>
                     </div>
                 </div>
+                <br><br>
                 <div class="col-4" id="F">
 
                     <!-- 달력-->
                     <div class="row" style="padding-top: 4%; padding-right: 7%;">
+                    <h1>달력</h1>
+                	 <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
+                	 <br>
                         <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">구글달력좀 넣고싶은데</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                 
-                                    </tbody>
-                                </table>
-                            </div>
+                          <thead>
+                          <tr>
+                              <th scope="col">구글달력좀 넣고싶은데</th>
+                              <th scope="col">First</th>
+                              <th scope="col">Last</th>
+                              <th scope="col">Handle</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr>
+                              <th scope="row">1</th>
+                              <td>Mark</td>
+                              <td>Otto</td>
+                              <td>@mdo</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">2</th>
+                              <td>Jacob</td>
+                              <td>Thornton</td>
+                              <td>@fat</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">3</th>
+                              <td colspan="2">Larry the Bird</td>
+                              <td>@twitter</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">3</th>
+                              <td colspan="2">Larry the Bird</td>
+                              <td>@twitter</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">3</th>
+                              <td colspan="2">Larry the Bird</td>
+                              <td>@twitter</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">3</th>
+                              <td colspan="2">Larry the Bird</td>
+                              <td>@twitter</td>
+                          </tr>
+                          <tr>
+                              <th scope="row">3</th>
+                              <td colspan="2">Larry the Bird</td>
+                              <td>@twitter</td>
+                          </tr>
+                       
+                          </tbody>
+                      </table>
+                  </div>
 
                     <!--막대 그래프(총 매출)-->
                      <div class="row" style="padding-top: 4%; padding-right: 7%; padding-bottom: 5%;">
+                     <h1>최근 6개월 매출</h1>
+                	 <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
+                	 <br>
                         <!--차트 그려지는 영역-->
                         <canvas id="myBarChart" width="400" height="300"></canvas>
 
@@ -175,10 +185,13 @@
                 </div>
             </div>
 
-            <!--공지사항-->
+            <!--Q&A-->
             <div class="row" id="D">
                 <div class="col-4" id="G">
-                    <table class="table table-hover">
+                <h1>Q&A</h1>
+                <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
+                <br>
+                    <table class="table table-hover" id="qnaTable" style="table-layout: fixed;">
                         <thead>
                         <tr>
                             <th scope="col">No</th>
@@ -191,14 +204,17 @@
 	                        <tr>
 	                            <th scope="row">${ q.qnano }</th>
 	                            <td>${ q.usname }</td>
-	                            <td>${ q.qcont }</td>
+	                            <td style="overflow: hidden; white-space : nowrap; text-overflow: ellipsis;">${ q.qcont }</td>
 	                        </tr>
                         </c:forEach>                     
                         </tbody>
                     </table>
                 </div>
-                <!--Q&A-->
+                
                 <div class="col-8" id="H">
+                <h1>다른거</h1>
+                <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
+                <br>
                     <table class="table table-hover">
                         <thead>
                         <tr>

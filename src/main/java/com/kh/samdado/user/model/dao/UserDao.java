@@ -1,5 +1,8 @@
 package com.kh.samdado.user.model.dao;
 
+import java.util.List;
+
+import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.user.model.vo.User;
 
 public interface UserDao {
@@ -27,6 +30,8 @@ public interface UserDao {
 	public int updateAdminUser(User u);
 
 	public int countUser();
+
+	public List<User> selectAllUserList(PageInfo pi);
 
 
 

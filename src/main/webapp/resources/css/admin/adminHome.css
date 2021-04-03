@@ -13,6 +13,10 @@
     margin: auto;
 }
 
+#G {
+	overflow: hidden;
+}
+
 li {
     list-style:none;
     color: black;
@@ -26,4 +30,41 @@ li {
 #right_4contents .card:hover {
     background-color: rgb(190, 192, 192);
     cursor: pointer;
+}
+
+#qnaTable {
+	table-layout: fixed;
+}
+
+#qnaTable td {
+	overflow: hidden; 
+	white-space : nowrap; 
+	text-overflow: ellipsis;
+}
+
+.ul-class{
+	list-style:none;
+    padding: 0;
+    margin: 0;
+}
+
+.bus-li-class {
+    list-style:none;
+    color: white;
+}
+
+   /* 제휴회원 네비 css */
+   li > ul {
+   /* 평소에는 보이지 않게 */
+   opacity: 0;
+   visibility: hidden;
+
+   /* 트랜지션 */
+    transition: all 0.6s;
+}
+
+	li:hover ul {
+    /* 메인 메뉴에 마우스 오버 시 서브 메뉴 보이게 */
+    opacity: 1;
+    visibility: visible;
 }
