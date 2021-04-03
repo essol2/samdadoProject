@@ -43,8 +43,11 @@
             <br>
             <!-- 관리자 정보 select -->
             <h3>관리자 <span style="color: red;">정보</span></h3>
-            <br>	
-            	<div id="box-container">
+            <br>
+			<h6>* 아이디와 생년월일은 수정이 불가합니다.</h6>
+			<h6>* 비밀번호는 <b>'변경하기'</b>를 클릭하시면 수정 페이지에서 수정하실 수 있습니다.</h6>
+            <div class="row">
+            	<div id="box-container" class="col">
 	              <div class="input-group">
 	                <span class="input-group-text">이름</span>
 	                <input type="text" aria-label="usname" name="usname" class="form-control" value="${ loginUser.usname }" readonly>
@@ -70,8 +73,16 @@
 	                <input type="text" aria-label="usphone" name="usphone" class="form-control" value="${ loginUser.usphone }" readonly>
 	              </div>
               </div>
+              <div id="box-container-label" class="col">              
+	               <label id="test_name_label" class="test_div"></label> <br><br><br><br><br>
+	               <label id="test_email_label" class="test_div"></label> <br><br>          
+	               <label id="test_bussiness_no_label" class="test_div"></label><br><br>
+	               <label id="test_phone_label" class="test_div"></label>	                  
+		     </div>
+            </div>
               <br>
-              <button class="btn btn-secondary" id="updateInfoBtn" onclick="location.href='${ contextPath }/admin/updateAdminInfoPage'">수정하기</button>  
+              <button class="btn btn-secondary" style="margin-left : 43.5%; margin-top: -1%;" id="updateInfoBtn" onclick="location.href='${ contextPath }/admin/updateAdminInfoPage'">수정하기</button>  	
+          	
           </div>
     </div>
 </div>
