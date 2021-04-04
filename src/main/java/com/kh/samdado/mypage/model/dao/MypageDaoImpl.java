@@ -67,7 +67,7 @@ public class MypageDaoImpl implements MypageDao{
 
 	//제휴회원 - point 테이블에 검색결과 조회하러 가기
 	@Override
-	public List<Point> selectSearchList(SearchPoint sp) {
+	public List<SearchPoint> selectSearchList(SearchPoint sp) {
 		return sqlSession.selectList("mypageMapper.selectSearchList", sp);
 	}
 	

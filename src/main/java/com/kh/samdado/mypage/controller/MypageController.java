@@ -1,5 +1,9 @@
 package com.kh.samdado.mypage.controller;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -198,24 +204,26 @@ public class MypageController {
 	 }
 	 
 	 // 제휴회원 - 포인트 사용 내역 기간 조회
-	 @GetMapping("/searchPeriod")
-	 public ModelAndView searchPointPeriod(@ModelAttribute SearchPoint sp,
-			 						 ModelAndView mv) {
+	 @RequestMapping("/searchPeriod")
+	 @ResponseBody
+	 public List<SearchPoint> searchPointPeriod(@RequestBody SearchPoint sp) {
 		 
-		 System.out.println("들어온 선택자 확인 : " + sp);
+		 System.out.println("view에서 받아오는 so객체 : " + sp);
+
+		 // List<SearchPoint> 검색
+		 List<SearchPoint> searchPPList = mService.selectSearchList(sp);
+		 System.out.println("searchPPList 확인 : " + searchPPList);
 		 
-		 //point 테이블에 검색결과 조회하러 가기
-//		 List<Point> searchPPList = mService.selectSearchList(sp);
-//		 
-//		 if(searchPPList != null) {
-//			 mv.addObject("searchPPList", searchPPList);
-//			 mv.setViewName("mypage/mp_Point");
-//		 }else {
-//			 mv.addObject("msg", "포인트 조회 오류입니다.");
-//			 mv.setViewName("mypage/mp_bUesrInfo");
-//		 }
-		 return mv;
+		 if(searchPPList != null) {
+			 return searchPPList;
+		 }else {
+			 System.out.println("List 못가져옴");
+			 return null;
+		 }
+		  
+		 //return null;
 	 }
+
 	 
 	 // 제휴회원 사업장 페이지로 이동
 	 @GetMapping("/mybus")

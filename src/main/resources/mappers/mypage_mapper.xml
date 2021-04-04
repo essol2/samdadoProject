@@ -114,6 +114,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				
 	</select>
 	
+	<select id="selectSearchList" resultMap="pointResultSet">
+		SELECT *
+		FROM POINT
+		WHERE US_NO = #{usno}
+		<choose>
+			<when test="selector == '1개월'">
+				AND PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
+			          AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),1), 'YY-MM-DD')
+			</when>
+			<when test="selector == '3개월'">
+				AND PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
+			          AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),3), 'YY-MM-DD')
+			</when>
+			<otherwise>
+				AND PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
+			          AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),6), 'YY-MM-DD')
+			</otherwise>      
+		</choose>
+		ORDER BY PNO DESC
+	</select>
+	
+	
+	
 	<insert id="insertNewQnA" parameterType="QnA">
 		INSERT
 		INTO "QnA"

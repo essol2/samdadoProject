@@ -36,9 +36,9 @@ public interface MypageDao {
 
 	// 제휴회원 - 포인트 리스트 출력 메소드
 	public List<Point> selectPointList(String usno);
-	
+
 	//제휴회원 - point 테이블에 검색결과 조회하러 가기
-	public List<Point> selectSearchList(SearchPoint sp);
+	public List<SearchPoint> selectSearchList(SearchPoint sp);
 
 	// 제휴회원 - 사업장 조회 메소드
 	public List<Business> selectBussList(String usno);
@@ -57,5 +57,7 @@ public interface MypageDao {
 
 	// 일반회원 - 가계부 입력 메소드
 	public int insertNewAcc(AccountBook acc);
+
+
 
 }
