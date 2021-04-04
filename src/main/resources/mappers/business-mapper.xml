@@ -209,6 +209,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , DEFAULT
 		  )
 	</insert>
+	
 	<insert id="insertRoomAtt" parameterType="RoomAtt">
 		INSERT
 		  INTO ROOM_ATT
@@ -230,6 +231,30 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{file_rename}
 		  , DEFAULT
 		  , ROOM_SEQ_NO.CURRVAL
+		  )
+	</insert>
+	
+	<insert id="insertTour" parameterType="TourProduct">
+		INSERT
+		  INTO Tour_Product
+		  (
+		  	PRO_NO
+		  , BUS_CODE
+		  , PRO_NAME
+		  , PRO_PRICE
+		  , PRO_ADULT
+		  , PRO_YOUTH
+		  , PRO_CHILD
+		  )
+		  VALUES
+		  (
+		  	TOUR_SEQ_NO.NEXTVAL
+		  , BUS_SEQ_NO.CURRVAL
+		  , #{pro_name}
+		  , #{pro_price}
+		  , #{pro_adult}
+		  , #{pro_youth}
+		  , #{pro_child}
 		  )
 	</insert>
 	

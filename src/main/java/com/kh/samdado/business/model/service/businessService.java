@@ -15,6 +15,7 @@ import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
+import com.kh.samdado.business.model.vo.tour.TourProduct;
 
 public interface businessService {
 	
@@ -34,7 +35,7 @@ public interface businessService {
 	int insertRoom(Room r);
 
 	// 관광지등록
-	int inserttour();
+	int insertTour(TourProduct tp);
   
 	// 관광지 예약
 	public int bookingTour(TourBooking tourbooking);
@@ -59,6 +60,8 @@ public interface businessService {
 
 	// 신고 카운트
 	int countReport();
+
+
 
 	
 

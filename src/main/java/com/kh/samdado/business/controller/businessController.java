@@ -20,13 +20,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
-import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
 import com.kh.samdado.business.model.vo.hotel.Room;
 import com.kh.samdado.business.model.vo.hotel.RoomAtt;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
+import com.kh.samdado.business.model.vo.tour.TourProduct;
+import com.kh.samdado.common.model.vo.Alliance;
 
 @Controller
 @RequestMapping("/business")
@@ -124,9 +125,41 @@ public class businessController {
 	}
 	
 	@PostMapping("/tour_insert")
-	public String tourInsert() {
+	public String tourInsert(Business b, BusinessAtt ba, TourProduct tp,
+				@RequestParam(value="uploadFile") MultipartFile file,
+				HttpServletRequest request, Map map) {
+
+		System.out.println("b : " + b);
 		
-		return "";
+		System.out.println("b : " + tp);
+		
+		System.out.println("file : " + file.getOriginalFilename());
+		
+		// 업로드 파일 서버에 저장
+		// 파일이 첨부 되었다면
+		if(!file.getOriginalFilename().equals("")) {
+			// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+			Map<String, String> files = busSaveFile(file, request);
+			// DB에 저장하기 위한 파일명 세팅
+			
+			if(files != null) {
+			ba.setFile_name(file.getOriginalFilename());
+			
+			// 맵에 담겨져있는 값의 키 불러오기
+			ba.setFile_rename((String)files.get("rename"));
+			ba.setFile_root((String)files.get("path"));
+			}
+		}
+		
+			int result = bService.insertBusiness(b);
+			int result2 = bService.insertBusAtt(ba);
+			int result3 = bService.insertTour(tp);
+		
+		if(result > 0 && result2 > 0 && result3 > 0) {
+			return "redirect:/business/restaurant/restaurant_list";
+		} else {
+			throw new businessException("사업 등록에 실패하였습니다.");
+		}
 	}
 	
 	// 음식점

@@ -1,9 +1,5 @@
 package com.kh.samdado.business.model.vo.tour;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,4 +20,7 @@ public class TourProduct {
 	private int bus_code;		// 사업장고유번호
 	private String pro_name;	// 상품이름
 	private String pro_price;	// 상품가격
+	private String pro_adult;
+	private String pro_youth;
+	private String pro_child;
 }

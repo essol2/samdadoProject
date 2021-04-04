@@ -17,6 +17,7 @@ import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
+import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Report;
 
@@ -64,11 +65,10 @@ public class businessDaoImpl implements businessDao {
 
 	}
 
-	
+	// 투어등록
 	@Override
-	public int inserttour() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertTour(TourProduct tp) {
+		return sqlSession.insert("businessMapper.insertTour", tp);
 	}
 
 	@Override
@@ -119,6 +119,8 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("businessMapper.countReport");
 	}
+
+	
 
 
 
