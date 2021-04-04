@@ -3,8 +3,6 @@
 PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="businessMapper">
-	
-	
 	<resultMap type="Business" id="BusinessResultSet">
 		<id property="bus_code" column="BUS_CODE" />
 		<result property="us_no" column="US_NO" />
@@ -18,13 +16,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="bus_category" column="BUS_CATEGORY" />
 		<result property="bus_status" column="BUS_STATUS" />
 		<result property="bus_phone" column="BUS_PHONE" />
+		<result property="res_category" column="RES_CATEGORY"/>
 		<result property="hotel_category" column="HOTEL_CATEGORY" />
 		<result property="tour_category" column="TOUR_CATEGORY" />
 		<result property="tour_tema" column="TOUR_TEMA" />
 		<result property="al_no" column="AL_NO" />
 		<result property="bus_opening" column="BUS_OPENING" />
-		
 	</resultMap>
+	
 	<resultMap type="BusinessAtt" id="BusinessAttResultSet">
 		<id property="file_no" column="FILE_NO" />
 		<result property="file_name" column="FILE_NAME" />
@@ -34,7 +33,45 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="file_lv" column="FILE_LV" />
 		<result property="bus_code" column="BUS_CODE" />
 	</resultMap>
-	<insert id="insertRestaurant" parameterType="Business">
+	
+	<resultMap type="Car" id="CarResultSet">
+		<id property="car_no" column="CAR_NO" />
+		<result property="bus_code" column="BUS_CODE" />
+		<result property="car_name" column="CAR_NAME" />
+		<result property="car_type" column="CAR_TYPE" />
+		<result property="car_producer" column="CAR_PORDUCER" />
+		<result property="car_fuel" column="CAR_FUEL" />
+		<result property="car_price" column="CAR_PRICE" />
+		<result property="car_date" column="CAR_DATE" />
+		<result property="car_modify" column="CAR_MODIFY" />
+	</resultMap>
+	
+	<resultMap type="CarAtt" id="CarAttResultSet">
+		<id property="file_no" column="FILE_NO" />
+		<result property="file_name" column="FILE_NAME" />
+		<result property="file_root" column="FILE_ROOT" />
+		<result property="file_status" column="FILE_STATUS" />
+		<result property="file_rename" column="FILE_RENAME" />
+		<result property="file_lv" column="FILE_LV" />
+		<result property="car_no" column="CAR_NO" />
+	</resultMap>
+	
+	<resultMap type="Report" id="ReportResultSet">
+		<id property="report_no" column="REPORT_NO" />
+		<result property="rep_res" column="REP_RES" />
+		<result property="rep_cont" column="REP_CONT" />
+		<result property="rdate" column="RDATE" />
+		<result property="rstatus" column="RSTATUS" />
+		<result property="rexdate" column="REXDATE" />
+		<result property="r_img_path" column="R_IMG_PATH" />
+		<result property="r_img_name" column="R_IMG_NAME" />
+		<result property="r_img_cname" column="R_IMG_CNAME" />
+		<result property="usno" column="US_NO" />			      <!-- USER 테이블 조인 -->
+		<result property="r_count" column="R_COUNT" />
+		<result property="ref_bus_code" column="REF_BUS_CODE" />  <!-- BUSINESS 테이블 조인 -->
+	</resultMap>
+	
+	<insert id="insertBusiness" parameterType="Business">
 		INSERT
 		  INTO BUSINESS
 		  (
@@ -50,6 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , BUS_CATEGORY
 		  , BUS_STATUS
 		  , BUS_PHONE
+		  , RES_CATEGORY
 		  , BUS_OPENING
 		  )
 		  VALUES
@@ -63,14 +101,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , SYSDATE
 		  , DEFAULT
 		  , DEFAULT
+		  , #{bus_category}
 		  , DEFAULT
-		  , DEFAULT
-		  , DEFAULT
+		  , #{bus_phone}
+		  , #{res_category}
+		  , #{bus_opening}
 		  )
 	</insert>
-	<insert id="insertRestaurant2" parameterType="BusinessAtt">
+	<insert id="insertBusAtt" parameterType="BusinessAtt">
 		INSERT
-		  INTO BUSINESSATT
+		  INTO BUSINESS_ATT
 		  (
 		  	FILE_NO
 		  ,	FILE_NAME
@@ -91,4 +131,115 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , BUS_SEQ_NO.CURRVAL
 		  )
 	</insert>
+	<insert id="insertCar">
+		INSERT
+		  INTO CAR
+		  (
+		  	CAR_NO
+		  , BUS_CODE
+		  , CAR_NAME
+		  , CAR_TYPE
+		  , CAR_PRODUCER
+		  , CAR_FUEL
+		  , CAR_PRICE
+		  , CAR_DATE
+		  , CAR_MODIFY
+		  )
+		  VALUES
+		  (
+		  	CAR_SEQ_NO.NEXTVAL
+		  , BUS_SEQ_NO.CURRVAL
+		  , #{car_name}
+		  , #{car_type}
+		  , #{car_producer}
+		  , #{car_fuel}
+		  , #{car_price}
+		  , SYSDATE
+		  , SYSDATE
+		  )
+	</insert>
+	<insert id="insertCarAtt" parameterType="CarAtt">
+		INSERT
+		  INTO CAR_ATT
+		  (
+		  	FILE_NO
+		  ,	FILE_NAME
+		  ,	FILE_ROOT
+		  ,	FILE_STATUS
+		  ,	FILE_RENAME
+		  ,	FILE_LV
+		  ,	CAR_NO
+		  )
+		  VALUES
+		  (
+		  	BUSATT_SEQ_NO.NEXTVAL
+		  , #{file_name}
+		  , #{file_root}
+		  , DEFAULT
+		  , #{file_rename}
+		  , DEFAULT
+		  , CAR_SEQ_NO.CURRVAL
+		  )
+	</insert>
+  
+	<insert id="insertRoom" parameterType="Room">
+		INSERT
+		  INTO ROOM
+		  (
+		  	ROOM_NO
+		  , BUS_CODE
+		  , ROOM_NAME
+		  , ROOM_PRICE
+		  , ROOM_DATE
+		  , ROOM_MODIFY
+		  , ROOM_PEOPLE
+		  , ROOM_AMENITY
+		  , ROOM_STATE
+		  )
+		  VALUES
+		  (
+		  	ROOM_SEQ_NO.NEXTVAL
+		  , BUS_SEQ_NO.CURRVAL
+		  , #{room_name}
+		  , #{room_price}
+		  , SYSDATE
+		  , SYSDATE
+		  , #{room_people}
+		  , #{room_amenity}
+		  , DEFAULT
+		  )
+	</insert>
+	<insert id="insertRoomAtt" parameterType="RoomAtt">
+		INSERT
+		  INTO ROOM_ATT
+		  (
+		  	FILE_NO
+		  , FILE_NAME
+		  , FILE_ROOT
+		  , FILE_STATUS
+		  , FILE_RENAME
+		  , FILE_LV
+		  , ROOM_NO
+		  )
+		  VALUES
+		  (
+		  	BUSATT_SEQ_NO.NEXTVAL
+		  , #{file_name}
+		  , #{file_root}
+		  , DEFAULT
+		  , #{file_rename}
+		  , DEFAULT
+		  , ROOM_SEQ_NO.CURRVAL
+		  )
+	</insert>
+	
+	<!-- 지혜 -->
+	<select id="countReport" resultType="_int">
+		SELECT 
+   		       COUNT(*)
+		  FROM 
+		  	   REPORT
+		 WHERE 
+		 	   RSTATUS = 'N'
+	</select>
 </mapper>

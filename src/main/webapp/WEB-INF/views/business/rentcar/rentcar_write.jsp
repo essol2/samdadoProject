@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	
 <style>
        
     /* 푸터 */
@@ -341,88 +342,78 @@
         	<div class="logo-wrap" id="logo-div">
           		<label class="title_img">렌트카 등록페이지</label>
         	</div>
-			<section class="signup-section-wrap">
-			  	<!-- 사업장명 -->
+        <form action="${ contextPath }/business/rentcar_insert" method="post" enctype="multipart/form-data">
+		
+		<input type="hidden" name="us_no" value="${ loginUser.usno }">
+		<input type="hidden" name="bus_category" value="C">
+		<input type="hidden" name="res_category" value="">
+		
+		<section class="signup-section-wrap">
+			<!-- 사업장명 -->
 			<div class="signup-div" >
 			    <h3 class="join_title">
 			        <label for="id">사업장명</label>
 			    </h3>
 			    <span class="box int_id">
-			        <input type="text" id="id" class="int">               
+			        <input type="text" id="id" class="int" name="bus_name">               
 			    
 			    <span class="error_next_box"></span>
 			</div>
 			
-			<!-- 주소 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="pswd1">주소</label></h3>
-			    <span class="box int_pass" style=" display: -webkit-inline-box;">
-			   <input type="text" id="pswd1" class="int" readonly>
-			   <button id="searchBtn" style="width: 40px; height: 30px;">검색</button>
-			        <span id="alertTxt"></span>                    
-			    </span>
-			    <span class="error_next_box"></span>
-			</div>
+			<!-- 도로명주소 api -->
+            <div class="signup-div">
+                <h3 class="join_title"><label for="address1">우편번호</label></h3>
+                <span class="box int_pass" style=" display: -webkit-inline-box;">
+                    <input type="text" id="address1" name="bus_address" class="postcodify_postcode5" readonly>
+                    <button type="button" id="postcodify_search_button" style="width: 40px; height: 30px;">검색</button>                  
+                </span>
+            </div>
+            <div class="signup-div">
+                <h3 class="join_title"><label for="address2">도로명주소</label></h3>
+                <span class="box int_pass_check">
+                    <input type="text" id="address2" name="bus_address" class="postcodify_address" readonly>                    
+                </span>
+            </div>
+            <div class="signup-div">
+                <h3 class="join_title"><label for="address3">상세주소</label></h3>
+                <span class="box int_name">
+                    <input type="text" id="address3" name="bus_address" class="postcodify_details">
+                </span>
+            </div>
 			
-			<!-- 주소 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="pswd2"></label></h3>
-			    <span class="box int_pass_check">
-			        <input type="text" id="pswd2" class="int" readonly>                    
-			    </span>
-			    <span class="error_next_box"></span>
-			</div>
-			
-			<!-- 상세주소 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="name">상세주소</label></h3>
-			    <span class="box int_name">
-			        <input type="text" id="name" class="int" maxlength="50">
-			    </span>
-			    <span class="error_next_box"></span>
-			</div>
+			<!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
+			<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+			<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
+			<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
 			
 			<!-- 운영시간 -->
 			<div class="signup-div">
 			    <h3 class="join-title"><label for="address">운영시간</label></h3>
 			    <span class="box int_address">
-			        <input type="text" id="address" class="int" maxlength="6">
+			        <input type="text" id="address" class="int" name="bus_opening">
 			    </span>
-			    <span class="error_next_box"></span>
-			</div>   
+			</div>
+			
+			<!-- 전화번호 -->
+			<div class="signup-div">
+			    <h3 class="join-title"><label for="address">운영시간</label></h3>
+			    <span class="box int_address">
+			        <input type="text" id="address" class="int" name="bus_phone">
+			    </span>
+			</div>    
 			
 			<!-- 매장사진 -->
 			<div class="signup-div">
 			    <h3 class="join_title"><label for="phoneNo">매장사진</label></h3>
 			    <span class="box int_mobile">
-			        <input type="file" name="main_file" id="mobile" class="int" maxlength="16">
-			    </span>
-			    <span class="error_next_box"></span>    
-			</div>
-			
-			<!-- 추가사진 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-			    <span class="box int_mobile">
-			        <input type="file"  name="add_file" id="mobile" class="int" maxlength="16">
-			    </span>
-			    <span class="error_next_box"></span>    
-			</div>
-			
-			<!-- 추가사진 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-			    <span class="box int_mobile">
-			        <input type="file"  name="add_file" id="mobile" class="int" maxlength="16">
-			    </span>
-			    <span class="error_next_box"></span>    
+			        <input type="file" name="uploadFile" class="int">
+			    </span>   
 			</div>
 			
 			<!-- 소개글 -->
 			<div class="signup-div">
 			    <h3 class="join_title"><label for="phoneNo">소개글</label></h3>
-			    <textarea id="intArea" name="intro" class="intArea" rows="10" cols="64" ></textarea>
-			    <span class="error_next_box"></span>    
+			    <textarea id="intArea" name="bus_intro" class="intArea" rows="10" cols="64" ></textarea>
 			</div>
 			
 			<br>
@@ -430,98 +421,62 @@
 			<hr>
 			<!-- 차량 추가 버튼 -->
 			<input type="button" value="차량추가" onclick="add_div()" id="car_add"><br/>
-			<!-- 객실 등록 -->
-			<!-- 제작사며 -->
+	
+			<!-- 제작사명 -->
 			<div id="add_car_area">
-			  <hr id="car_line" style="display: none;">
-			<div class="signup-div">
-			    <h3 class="join-title"><label for="address">제작사</label></h3>
-			    <span class="box int_address">
-			        <input type="text" id="address" class="int" maxlength="6">
-			    </span>
-			    <span class="error_next_box"></span>
-			</div> 
-			
-			<!-- 차량 -->
-			<div class="signup-div">
-			    <h3 class="join-title"><label for="address">차량</label></h3>
-			    <span class="box int_address">
-			        <input type="text" id="address" class="int" maxlength="6">
-			    </span>
-			    <span class="error_next_box"></span>
-			</div> 
-			
-			<!-- 가격 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="phoneNo">가격</label></h3>
-			    <span class="box int_mobile">
-			        <input type="tel" id="mobile" class="int" maxlength="16">
-			    </span>
-			    <span class="error_next_box"></span>    
-			</div>
-			
-			<!-- 차종 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="phoneNo">차종</label></h3>
-			        <select class="box int_name">
+				<div class="signup-div">
+				    <h3 class="join-title"><label for="address">제작사</label></h3>
+				    <span class="box int_address">
+				        <input type="text" id="address" class="int" name="car_producer">
+				    </span>
+				</div> 
+				
+				<!-- 차량 -->
+				<div class="signup-div">
+				    <h3 class="join-title"><label for="address">차량</label></h3>
+				    <span class="box int_address">
+				        <input type="text" id="address" class="int" name="car_name">
+				    </span>
+				</div> 
+				
+				<!-- 가격 -->
+				<div class="signup-div">
+				    <h3 class="join_title"><label for="phoneNo">가격</label></h3>
+				    <span class="box int_mobile">
+				        <input type="tel" id="mobile" class="int" name="car_price">
+				    </span>
+				</div>
+				
+				<!-- 차종 -->
+				<div class="signup-div">
+				    <h3 class="join_title"><label for="phoneNo">차종</label></h3>
+			        <select class="box int_name" name="car_type">
 			            <option value="select" selected>선택</option>
-			            <option value="select">소형</option>
-			            <option value="select">중형</option>
-			            <option value="select">준중형</option>
-			            <option value="select">대형</option>
-			            <option value="select">스포츠</option>
+			            <option value="small">소형</option>
+			            <option value="Medium">중형</option>
+			            <option value="large">대형</option>
+			            <option value="sport">스포츠</option>
 			        </select>          
-			    <span class="error_next_box"></span>    
-			</div>
-			
-			<!-- 연료 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="phoneNo">연료</label></h3>
-			        <select class="box int_name">
+				</div>
+				
+				<!-- 연료 -->
+				<div class="signup-div">
+				    <h3 class="join_title"><label for="phoneNo">연료</label></h3>
+			        <select class="box int_name" name="car_fuel">
 			            <option value="select" selected>선택</option>
-			            <option value="select">디젤</option>
-			            <option value="select">가솔린</option>
+			            <option value="diesel">디젤</option>
+			            <option value="gasoline">가솔린</option>
 			        </select>                
-			    <span class="error_next_box"></span>    
-			</div>
-			
-			<!-- 객실사진 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="phoneNo">객실사진</label></h3>
-			    <span class="box int_mobile">
-			        <input type="file"  name="room_file" id="mobile" class="int" maxlength="16">
-			    </span>
-			    <span class="error_next_box"></span>    
-			</div>
-			
-			<!-- 추가사진 -->
+				</div>
+				
+				<!-- 추가사진 -->
 			<div class="signup-div">
 			    <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
 			    <span class="box int_mobile">
-			        <input type="file"  name="room_add_file" id="mobile" class="int" maxlength="16">
+			        <input type="file" name="car" class="int">
 			    </span>
-			    <span class="error_next_box"></span>    
 			</div>
-			
-			<!-- 추가사진 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-			    <span class="box int_mobile">
-			        <input type="file"  name="room_add_file" id="mobile" class="int" maxlength="16">
-			    </span>
-			    <span class="error_next_box"></span>    
-			</div>
-			
-			
-			<!-- 추가사진 -->
-			  <div class="signup-div">
-			      <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-			      <span class="box int_mobile">
-			          <input type="file"  name="room_add_file" id="mobile" class="int" maxlength="16">
-			      </span>
-			      <span class="error_next_box"></span>    
-			  </div>
-			  
+				
 			</div>
 			<input type="button" value="삭제" onclick="remove_div(this)" id="deleteBtn" style="display: none;">
 			<div id="new_car"></div>
@@ -538,9 +493,7 @@
 			     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
 			     -->
 			     <!-- Button trigger modal -->
-			     <button type="button" href="#" id="btnJoin" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-			     <a>등록하기</a>
-			     </button>
+			     <button id="btnJoin" class="btn btn-primary">등록하기</button>
 			     <!-- Modal -->
 			     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			         <div class="modal-dialog">
@@ -564,8 +517,11 @@
 			     </button>
 			 </div>
 			</section>
+			</form>	
         </div>        
     </div> 
+    
+    
 	<!--은화 : footer-->
 	<footer>
 	    <div id="footer_left">

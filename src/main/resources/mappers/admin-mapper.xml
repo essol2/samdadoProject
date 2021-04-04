@@ -14,6 +14,42 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usname" column="US_NAME" />	
 	</resultMap>
 	
+	<resultMap type="Report" id="reportResultSet">
+		<id property="report_no" column="REPORT_NO" />
+		<result property="rep_res" column="REP_RES" />
+		<result property="rep_cont" column="REP_CONT" />
+		<result property="rdate" column="RDATE" />
+		<result property="rstatus" column="RSTATUS" />
+		<result property="rexdate" column="REXDATE" />
+		<result property="r_img_path" column="R_IMG_PATH" />
+		<result property="r_img_name" column="R_IMG_NAME" />
+		<result property="r_img_cname" column="R_IMG_CNAME" />
+		<result property="usno" column="US_NO" />			      <!-- USER 테이블 조인 -->
+		<result property="r_count" column="R_COUNT" />
+		<result property="bus_code" column="REF_BUS_CODE" />      <!-- BUSINESS 테이블 조인 -->
+	</resultMap>
+	
+	<resultMap type="Business" id="BusinessResultSet">
+		<id property="bus_code" column="BUS_CODE" />
+		<result property="us_no" column="US_NO" />
+		<result property="bus_name" column="BUS_NAME" />
+		<result property="bus_address" column="BUS_ADDRESS" />
+		<result property="bus_intro" column="BUS_INTRO" />
+		<result property="bus_date" column="BUS_DATE" />
+		<result property="bus_modify" column="BUS_MODIFY" />
+		<result property="ad_count" column="AD_COUNT" />
+		<result property="bus_classify" column="BUS_CLASSIFY" />
+		<result property="bus_category" column="BUS_CATEGORY" />
+		<result property="bus_status" column="BUS_STATUS" />
+		<result property="bus_phone" column="BUS_PHONE" />
+		<result property="res_category" column="RES_CATEGORY"/>
+		<result property="hotel_category" column="HOTEL_CATEGORY" />
+		<result property="tour_category" column="TOUR_CATEGORY" />
+		<result property="tour_tema" column="TOUR_TEMA" />
+		<result property="al_no" column="AL_NO" />
+		<result property="bus_opening" column="BUS_OPENING" />
+	</resultMap>
+	
 	<select id="selectAdminMainQnaSelect" resultMap="qnaResultSet">
 		SELECT *
 		  FROM
@@ -51,5 +87,57 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
          WHERE
                QSTATUS = 'N'
 	</select>
-
+	
+	<select id="searchQnaList" parameterType="search" resultMap="qnaResultSet">
+	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
+		SELECT
+		       *
+		  FROM
+		       "QnA", "USER"	
+		<where>
+			"QnA".US_NO = "USER".US_NO <!-- 테이블 조인 -->
+			<choose>
+				<when test="searchCondition == 'qnano'">
+					AND "QNA_NO" LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'qcont'">
+					AND QCONT LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'qdate'">
+					AND QDATE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'qreply'">
+					AND QREPLY LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'qstatus'">
+					AND QSTATUS LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usno'">
+					AND US_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usname'">
+					AND US_NAME LIKE #{sv}
+				</when>
+				<otherwise>
+					AND ("QNA_NO" LIKE #{sv}
+						 OR QCONT LIKE #{sv}
+						 OR QDATE LIKE #{sv}
+						 OR QREPLY LIKE #{sv}
+						 OR QSTATUS LIKE #{sv}
+						 OR US_NO LIKE #{sv}
+						 OR US_NAME LIKE #{sv})
+				</otherwise>	
+			</choose>
+		</where>
+			  ORDER BY "QNA_NO"
+	</select>
+	
+	<select id="adminReportSelect" resultMap="reportResultSet">
+			SELECT *
+	          FROM REPORT, BUSINESS
+	         WHERE REF_BUS_CODE = BUS_CODE
+	   AND RSTATUS = 'N'
+	      ORDER BY RDATE
+	</select>
+	
 </mapper>

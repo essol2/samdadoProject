@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- fmt 라이브러리 사용 -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,11 +14,24 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminReportManage.css" type="text/css">
+    <link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminHome.css" type="text/css">
 
+	<!--jQuery-->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	
      <!--차트 api cdn-->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
   </head>
   <body>
+  
+  <!-- 메세지가 있다면 출력하고 지우기 -->
+   <c:if test="${ !empty msg }">
+   		<script>alert('${ msg }')</script>
+   		<c:remove var="msg" />
+   </c:if>
+   
     <div class="container-fluid">
       <div class="row">
        <!-- admin-navi 인클루드 -->
@@ -29,161 +46,100 @@
             <table class="table table-borderless">
                 <thead>
                     <tr>
-                        <th>신고번호</th>
-                        <th>피신고자</th>
-                        <th>신고사유</th>
-                        <th scope="row">신고내용</th>
-                        <th>첨부파일</th>
-                        <th>신고날짜</th>
-                        <th>카테고리</th>
-                        <th>승인처리</th>
-                        <th>반려처리</th>
+                        <th>신고 번호</th>
+                        <th>신고 사유</th>
+                        <th>신고 내용</th>
+                        <th>신고 날짜</th>
+                        <th>첨부 파일</th>
+                        <th>처리 상태</th>
+                        <th>회원 번호</th> <!-- 회원 이름으로 바꾸기 -->
+                        <th>사업장 코드</th>
+                        <th>승인 버튼</th>
+                        <th>반려 버튼</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                    <!--반복문 -->
-                  <tr>
-                    <th>1</th>
-                    <td>김춘추</td>
-                    <td>욕설</td>
-                    <td scope="row">욕설 오짐;; 첨부파일 확인 ㄱ</td>
-                    <td><a class="btn btn-info">보기</a></td>
-                    <td>2021-03-17</td>
-                    <td>일반</td>
-                    <td><button type="submit" class="btn btn-secondary">승인</button></td>
-                    <td><button type="submit" class="btn btn-success">반려</button></td>
-                  </tr>
-                  <tr>
-                    <th>2</th>
-                    <td>강제주</td>
-                    <td>허위매물</td>
-                    <td scope="row">갔는데 읎노;; 하....................</td>
-                    <td><a class="btn btn-info">보기</a></td>
-                    <td>2021-03-17</td>
-                    <td>제휴</td>
-                    <td><button type="submit" class="btn btn-secondary">승인</button></td>
-                    <td><button type="submit" class="btn btn-success">반려</button></td>
-                  </tr>
+                <tbody>  
+                
+                <c:forEach var="rpl" items="${ reportList }">
+                   <tr>
+                       <th>${ rpl.report_no }</th>
+                       <td>${ rpl.rep_res }</td>
+                       <td>${ rpl.rep_cont }</td>                       
+                       <td><fmt:formatDate value='${ rpl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
+                       <td><a class="btn btn-info" href="#">보기</a></td>
+                       <c:if test="${ rpl.rstatus eq 'N' }">
+                       <td>미처리</td>
+                       </c:if>
+                       <td>${ rpl.usno }</td>
+                       <td>${ rpl.bus_code }</td>
+                       <td><button type="submit" class="btn btn-secondary">승인</button></td>
+                       <td><button type="submit" class="btn btn-success">반려</button></td>
+                   </tr>
+                  </c:forEach>   
                 </tbody>
               </table>
 
               <br><hr> 
 
-              <!-- 페이지네이션 -->
+            <!-- 페이지네이션 -->
               <div class="row-page">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                      <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                          <span aria-hidden="true">&laquo;</span>
-                        </a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                      <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                          <span aria-hidden="true">&raquo;</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
-              </div>
-              
+                    <!-- [이전] -->
+	               <c:if test="${ pi.currentPage <= 1 }">
+	                  [이전] &nbsp;
+	               </c:if>
+	               <c:if test="${ pi.currentPage > 1 }">
+	                  <c:url var="before" value="/admin/qna">
+	                     <c:param name="page" value="${ pi.currentPage - 1 }"/>
+	                  </c:url>
+	                  <a href="${ before }">[이전]</a> &nbsp;
+	               </c:if>
+	               <!-- 페이지 숫자 -->
+	               <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                  <c:if test="${ p eq pi.currentPage }">
+	                     <font color="red" size="4"><b>[${ p }]</b></font>
+	                  </c:if>
+	                  <c:if test="${ p ne pi.currentPage }">
+	                     <c:url var="pagination" value="/admin/qna">
+	                        <c:param name="page" value="${ p }"/>
+	                     </c:url>
+	                     <a href="${ pagination }">${ p }</a> &nbsp;
+	                  </c:if>
+	               </c:forEach>
+	               <!-- [다음] -->
+	               <c:if test="${ pi.currentPage >= pi.maxPage }">
+	                  [다음]
+	               </c:if>
+	               <c:if test="${ pi.currentPage < pi.maxPage }">
+	                  <c:url var="after" value="/admin/qna">
+	                     <c:param name="page" value="${ pi.currentPage + 1 }" />
+	                  </c:url>
+	                  <a href="${ after }">[다음]</a>
+	               </c:if>
+	              </ul>
+                </nav>
+            </div>
 
              <br> <br>
 
-             <!--신고 승인 내역 -->
-             <!-- <h3>신고 <span style="color: red;">승인</span> 내역</h3>
-             <br>
-             <table class="table table-borderless">
-                 <thead>
-                     <tr>
-                         <th>신고번호</th>
-                         <th>피신고자</th>
-                         <th>신고사유</th>
-                         <th scope="row">신고내용</th>
-                         <th>첨부파일</th>
-                         <th>신고날짜</th>
-                         <th>카테고리</th>
-                         <th>처리</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr>
-                     
-                   <tr>
-                     <th>1</th>
-                     <td>김춘추</td>
-                     <td>욕설</td>
-                     <td scope="row">욕설 오짐;; 첨부파일 확인 ㄱ</td>
-                     <td><a class="btn btn-info">보기</a></td>
-                     <td>2021-03-17</td>
-                     <td>일반</td>
-                     <td><button type="submit" class="btn btn-secondary">삭제</button></td>
-                   </tr>
-                   <tr>
-                     <th>2</th>
-                     <td>강제주</td>
-                     <td>허위매물</td>
-                     <td scope="row">갔는데 읎노;; 하....................</td>
-                     <td><a class="btn btn-info">보기</a></td>
-                     <td>2021-03-17</td>
-                     <td>제휴</td>
-                     <td><button type="submit" class="btn btn-secondary">삭제</button></td>
-                   </tr>
-                 </tbody>
-               </table>
-  -->
-              <!-- <br> <hr> <br> -->
-
-               <!--신고 반려 내역 -->
-             <!-- <h3>신고 <span style="color: red;">반려</span> 내역</h3>
-             <br>
-             <table class="table table-borderless">
-                 <thead>
-                     <tr>
-                         <th>신고번호</th>
-                         <th>피신고자</th>
-                         <th>신고사유</th>
-                         <th scope="row">신고내용</th>
-                         <th>첨부파일</th>
-                         <th>신고날짜</th>
-                         <th>카테고리</th>
-                         <th>처리</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr>
-                    
-                     <th>1</th>
-                     <td>홍길동</td>
-                     <td>도배</td>
-                     <td scope="row">게시판에 자꾸 도배를 하네요... 강퇴 부탁드립니다.</td>
-                     <td><a class="btn btn-info">보기</a></td>
-                     <td>2021-03-17</td>
-                     <td>일반</td>
-                     <td><button type="submit" class="btn btn-secondary">삭제</button></td>
-                   </tr>
-                 </tbody>
-               </table> -->
-
-               <!-- <br><hr><br> -->
-
                <div class="find_report">
-                <h3>신고<span style="color: seagreen;">내역조회</span>하기</h3>
+                <h3>신고<span style="color: seagreen;"> 내역조회 </span>하기</h3>
                 <br>
                 
                 <div class="search_report_div">
                     <select class="form-select" aria-label="Default select example">
                         <option selected>-------</option>
-                        <option value="1" name="name">피신고자</option>
-                        <option value="2" name="reseon">신고사유</option>
-                        <option value="3" name="content">신고내용</option>
-                        <option value="3" name="date">신고날짜</option>
-                        <option value="3" name="category" >카테고리</option>
-                        <option value="3" name="result">처리여부</option>
+                        <option value="report_no" <c:if test="${ param.searchCondition == 'report_no' }">selected</c:if>>신고 번호</option>
+	                    <option value="rep_res" <c:if test="${ param.searchCondition == 'rep_res' }">selected</c:if>>신고 사유</option>
+	                    <option value="rep_cont" <c:if test="${ param.searchCondition == 'rep_cont' }">selected</c:if>>신고 내용</option> <!-- like 조회 -->
+	                    <option value="rdate" <c:if test="${ param.searchCondition == 'rdate' }">selected</c:if>>신고 날짜</option>
+	                    <option value="rexdate" <c:if test="${ param.searchCondition == 'rexdate' }">selected</c:if>>신고 만기 날짜</option>
+	                    <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option> <!-- 회원 이름으로 바꾸기 -->
+	                    <option value="bus_code" <c:if test="${ param.searchCondition == 'bus_code' }">selected</c:if>>사업장 코드</option>
+	                    <option value="r_count" <c:if test="${ param.searchCondition == 'r_count' }">selected</c:if>>신고 누적 횟수</option>
+	                    <option value="rstatus" <c:if test="${ param.searchCondition == 'rstatus' }">selected</c:if>>처리 상태(승인)</option>
+	                    <option value="rstatus" <c:if test="${ param.searchCondition == 'rstatus' }">selected</c:if>>처리 상태(반려)</option>
                     </select>
                     <input type="text" id="searchValue" class="form-control">
                     <button class="btn btn-secondary" onclick="searchReport();">검색하기</button>
@@ -191,17 +147,19 @@
                 
                 <br>
 
-                <table class="table table-borderless">
+                <table class="table table-borderless" id="resultSearchReportTable">
                     <thead>
                         <tr>
-                            <th>신고번호</th>
-                            <th>피신고자</th>
-                            <th>신고사유</th>
-                            <th scope="row">신고내용</th>
-                            <th>첨부파일</th>
-                            <th>신고날짜</th>
-                            <th>카테고리</th>
-                            <th>처리여부</th>
+                            <th>신고 번호</th>
+                            <th></th>
+                            <th>신고 사유</th>
+                            <th>신고 내용</th>
+                            <th>신고 날짜</th>
+                            <th>신고 만기 날짜</th>
+                            <th>회원 번호</th>
+                            <th>사업장 코드</th>
+                            <th>신고 누적 횟수</th>
+                            <th>처리 상태</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -209,8 +167,8 @@
                             <th>1</th>
                             <td>강제주</td>
                             <td>허위매물</td>
-                            <td scope="row">갔는데 읎노;; 하....................</td>
-                            <td><a class="btn btn-info" href="#">보기</a></td>
+                            <td scope="row">상세페이지랑 달라요.</td>
+                            <td></td>
                             <td>2021-03-17</td>
                             <td>제휴</td>
                             <td>승인</td>
@@ -220,7 +178,7 @@
                </div>
                <br><hr>
                
-                <!-- 페이지네이션 -->
+                <!-- 검색 페이지네이션 -->
                 <div class="row-page">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">

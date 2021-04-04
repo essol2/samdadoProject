@@ -247,6 +247,25 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE 
 		 	   US_STOP IS NULL
    </select>
+   
+   <select id="selectAllUserList" resultMap="userResultSet">
+   		SELECT
+			    US_NO
+			  , US_ID
+			  , US_PWD
+			  , US_NAME
+			  , US_BIRTH
+			  , US_EMAIL
+			  , US_PHONE
+			  , BUS_NO
+			  , US_PART
+			  , US_STATUS
+			  , US_STOP
+			  , AUTH_KEY
+		   FROM
+		   		"USER"
+		  WHERE US_STOP IS NULL	  
+   </select>
 	
 	
 

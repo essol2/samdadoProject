@@ -2,9 +2,9 @@ package com.kh.samdado.mypage.model.service;
 
 import java.util.List;
 
-import com.kh.samdado.business.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
@@ -19,7 +19,7 @@ public interface MypageService {
 	// 이메일, 전화번호 변경 메소드
 	public int updateUserInfo(User u);
 	
-	// 알림 select 메소드
+	// 알림 select 메소드	
 	public List<Alert> selectAlertList(String usno);
 	
 	// 제휴회원 - 광고 관리 메소드

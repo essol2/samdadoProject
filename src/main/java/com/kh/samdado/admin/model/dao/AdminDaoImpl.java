@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
+import com.kh.samdado.admin.model.vo.Search;
+import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.QnA;
 
 @Repository 
@@ -40,6 +42,20 @@ public class AdminDaoImpl implements AdminDao {
 	public int countQnA() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("adminMapper.countQnA");
+	}
+
+	@Override
+	public List<QnA> searchQnaList(Search search) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("adminMapper.searchQnaList", search);
+	}
+
+	@Override
+	public List<Report> adminReportSelect(PageInfo pi) {
+		// TODO Auto-generated method stub
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return sqlSession.selectList("adminMapper.adminReportSelect", null, rowBounds);
 	}
 
 	

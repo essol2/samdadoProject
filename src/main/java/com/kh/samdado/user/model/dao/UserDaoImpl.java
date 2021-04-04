@@ -1,9 +1,13 @@
 package com.kh.samdado.user.model.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.user.model.vo.User;
 
 @Repository 
@@ -76,6 +80,14 @@ public class UserDaoImpl implements UserDao {
 	public int countUser() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("userMapper.countUser");
+	}
+
+	@Override
+	public List<User> selectAllUserList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return sqlSession.selectList("userMapper.selectAllUserList", null, rowBounds);
 	}
 
 

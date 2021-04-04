@@ -9,9 +9,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<div id="right_4contents" class="row" style="text-align: center; padding-top: 4%;">
-      <div class="col">
+	
+	<div style="padding-top: 2%;">
+	<h1>Easy Tool</h1>
+    <h6>클릭하면 해당 페이지로 이동합니다.</h6>
+    <br>
+	</div>
+	<div id="right_4contents" class="row" style="text-align: center; padding-top: 2%;">
+      <div class="col" onclick="location.href='${ contextPath }/admin/userList'">
           <div class="card">
               <br>
               <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16" style="color: lightgray; margin: auto;">
@@ -37,7 +42,7 @@
               </div>
           </div>
       </div>
-      <div class="col">
+      <div class="col" onclick="location.href='${ contextPath }/admin/report'">
           <div class="card">
               <br>
               <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-megaphone" viewBox="0 0 16 16" style="color: lightgray; margin: auto;">
@@ -45,12 +50,12 @@
               </svg>
               <br>
               <div>
-                  <h4>4</h4>
+                  <h4>${ countReportResult }</h4>
                   <h6 style="color: gray;">신규 신고신청</h6>
               </div>
           </div>
       </div>
-      <div class="col">
+      <div class="col" onclick="location.href='${ contextPath }/admin/qna'">
           <div class="card">
               <br>
               <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16" style="color: lightgray; margin: auto;">
