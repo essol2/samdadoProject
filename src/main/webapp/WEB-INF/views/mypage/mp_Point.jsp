@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage_point</title>
+    
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <style>
 	
@@ -337,7 +341,7 @@
 		flex : 1;
 	}
 	
-	#fromHereDate{
+	#startDate{
 		vertical-align : center;
 		margin-left : 5px;
 		margin-bottom : 10px;
@@ -515,27 +519,29 @@
 	                        <h2 style="color:#467355; text-align : center; margin-top : 4%;">포인트 사용내역</h2>
 	                        <hr style="background-color: #467355; width : 100%; "> 
 	                        <table id="pointTable">
-	                            <tr>
-	                                <th>날짜</th>
-	                                <th>내용</th>
-	                                <th>금액</th>
-	                            </tr>
-	                            <c:forEach var="p" items="${ pList }">
+	                        	<thead>
 		                            <tr>
-		                                <td>${ p.pdate }</td>
-		                                <td>${ p.pdetail }</td>
-		                                <td style="color : #467355">${ p.pamount }</td>
+		                                <th>날짜</th>
+		                                <th>내용</th>
+		                                <th>금액</th>
 		                            </tr>
-	                            </c:forEach>
-	
+	                            </thead>
+	                            <tbody>
+		                            <c:forEach var="p" items="${ pList }">
+			                            <tr>
+			                                <td>${ p.pdate }</td>
+			                                <td>${ p.pdetail }</td>
+			                                <td style="color : #467355">${ p.pamount }</td>
+			                            </tr>
+		                            </c:forEach>
+								</tbody>
 	                        </table> 
                         </div>
 	                     <div id="searchArea">
-							<form action="${contextPath}/mypage/searchPeriod" method="GET" style="height : 100%;">
 							<table>
 								<tr>
 									<td style="padding-top : 15px;">
-										<input type="date" id="fromHereDate" name="startDate" style="margin-top: -5%;">
+										<input type="date" id="startDate" name="startDate" style="margin-top: -5%;">
 									</td>
 									<td>	
 										<div class="radio-group" style="height : 51px; margin-left : 7px; margin-top : 5px;">
@@ -548,11 +554,11 @@
 											<input type="hidden" name="usno" id="usno" value=${ loginUser.usno }>
 										</div>
 									</td>
-									<td style="padding-top : 5px;"> <button type="submit" id="searchThisBtn">검색</button></td>
+									<td style="padding-top : 5px;"> <button type="button" id="searchThisBtn">검색</button></td>
 								</tr>
 							</table>
 
-							</form>
+							<!-- </form> -->
 	                    </div>
                     </div>
                 </div>
@@ -566,6 +572,8 @@
 		location.href='${contextPath}/mypage/point?usno='+${loginUser.usno};
 	};
   </script>
+  
+  <!-- 결제API -->
   <script>
 
   	$("#payBtn").click(function() {
@@ -609,7 +617,67 @@
 	    });
   	});
     </script>
-
     
+	<!-- 검색 AJAX -->
+	<script>
+		$(function(){
+			$("#searchThisBtn").on("click", function(){
+				var selector = $('input[name="selector"]:checked').val();
+				console.log(selector);
+				
+				var startDate = $('#startDate').val();
+				console.log(startDate);
+				
+				var usno = ${ loginUser.usno };
+				console.log(usno);
+				
+				var searchPo = new Object();
+				searchPo.selector = selector;
+				searchPo.startdate = startDate;
+				searchPo.usno = usno;
+				console.log(searchPo);
+				
+				$.ajax({
+					url : "searchPeriod",
+					data : JSON.stringify(searchPo),
+					type : "POST",
+					contentType : "application/json; charset=utf-8",
+					success : function(data) {
+						console.log(data);
+						
+						tableBody =$("#pointTable tbody");
+						tableBody.html("");
+						
+						for(var i in data){
+							var pdateFormat = new Date(data[i].pdate);
+							pdateFormat = getFormatDate(pdateFormat);
+							
+							var tr = $("<tr>");
+							var pdate = $("<td>").text(pdateFormat);
+							var pdetail = $("<td>").text(data[i].pdetail);
+							var pamount = $("<td>").text(data[i].pamount);
+							
+							tr.append(pdate, pdetail, pamount);
+							tableBody.append(tr);
+						}
+					},
+					error : function(e){
+						alert("error code : " + e.status + "\n"
+								+ "message : " + e.responseText);
+					}
+				});
+			});
+		});
+		
+		
+	function getFormatDate(date){
+		var year = date.getFullYear();
+        var month = (1 + date.getMonth());
+        month = month >= 10 ? month : '0' + month;
+        var day = date.getDate();
+        day = day >= 10 ? day : '0' + day;
+        return year + '-' + month + '-' + day;
+	}
+	</script>
 </body>
 </html>
