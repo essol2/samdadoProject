@@ -41,6 +41,6 @@ public class RoomBooking {
 	private String booking_phone;
 	private Date booking_trv;
 	private String us_no;
-	private int hotel_no;
+	private int room_no;
 	private int bus_code;
 }
