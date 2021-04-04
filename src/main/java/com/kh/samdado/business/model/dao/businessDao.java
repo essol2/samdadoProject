@@ -2,8 +2,6 @@ package com.kh.samdado.business.model.dao;
 
 import java.util.List;
 
-import com.kh.samdado.admin.model.vo.Report;
-import com.kh.samdado.business.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -15,6 +13,8 @@ import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
+import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Report;
 
 public interface businessDao {
 
@@ -56,6 +56,10 @@ public interface businessDao {
 		  
 	// 찜하기
 	public int jjim(Jjim jjim);
+
+	// 지혜
+	// 신고 카운트
+	int countReport();
 
 	
 

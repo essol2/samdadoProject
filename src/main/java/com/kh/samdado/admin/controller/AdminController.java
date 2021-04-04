@@ -29,6 +29,7 @@ import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.Pagination;
 import com.kh.samdado.admin.model.vo.Search;
 import com.kh.samdado.business.model.service.businessService;
+import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
@@ -72,7 +73,7 @@ public class AdminController {
 		// int countAdResult = bService.countAd();
 		
 		// 1_5. 관리자 메인 페이지에서 신규 신고 신청 카운트 select
-		// int countReportResult = bService.countReport();
+		int countReportResult = bService.countReport();
 		
 		// 1_6. 관리자 메인 페이지에서 신규 QnA 신청 카운트 select
 		int countQnAResult = aService.countQnA();
@@ -91,6 +92,7 @@ public class AdminController {
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("countQnAResult", countQnAResult);
 		model.addAttribute("countUserResult", countUserResult);
+		model.addAttribute("countReportResult", countReportResult);
 		
 		return "admin/adminHome";
 	}
@@ -110,13 +112,30 @@ public class AdminController {
 	
 	// 3. 관리자 홈 신고관리 페이지로
 	@GetMapping("/report")
-	public String adminReportView() {
+	public String adminReport(Model model,
+            					@RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
+		
+		// 페이징 처리 로직
+		// 1. 게시글 갯수 구하기
+		int listCount = bService.countReport();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		List<Report> reportList = aService.adminReportSelect(pi);
+		
+		if (reportList != null) {
+			model.addAttribute("reportList", reportList);
+			model.addAttribute("pi", pi);
+		} else {
+			model.addAttribute("msg", "신고 리스트 조회에 실패하였습니다.");
+		}
+				
+		
 		return "admin/adminReportManage";
 	}
 	
 	// 4. 관리자 홈 Q&A관리 페이지로
 	@GetMapping("/qna")
-	public String adminQnaView(Model model,
+	public String adminQna(Model model,
 			                  @RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
 		
 		// 페이징 처리 로직
@@ -144,7 +163,7 @@ public class AdminController {
 		
 		User admin = uService.loginUser(loginUser);
 		
-		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("loginUser", admin);
 		
 		return "admin/adminMypage";
 	}
