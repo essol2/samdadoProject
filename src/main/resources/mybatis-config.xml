@@ -24,6 +24,8 @@
    		<typeAlias type="com.kh.samdado.business.model.vo.business.BusinessAtt" alias="BusinessAtt"/>
    		<typeAlias type="com.kh.samdado.business.model.vo.rentcar.Car" alias="Car"/>
    		<typeAlias type="com.kh.samdado.business.model.vo.rentcar.CarAtt" alias="CarAtt"/>
+		<typeAlias type="com.kh.samdado.business.model.vo.hotel.Room" alias="Room"/>
+   		<typeAlias type="com.kh.samdado.business.model.vo.hotel.RoomAtt" alias="RoomAtt"/>
 	</typeAliases>
 
 	 <!-- mappers -->

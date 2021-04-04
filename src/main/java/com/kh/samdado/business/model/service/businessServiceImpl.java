@@ -10,6 +10,8 @@ import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
+import com.kh.samdado.business.model.vo.hotel.Room;
+import com.kh.samdado.business.model.vo.hotel.RoomAtt;
 import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
@@ -50,19 +52,23 @@ public class businessServiceImpl implements businessService {
 		return bDao.insertCarAtt(ca);
 	}
 	
+	// 호텔 등록
 	@Override
-	public int bookingTour(TourBooking tourbooking) {
-  // TODO Auto-generated method stub
-		return 0;
-  }
-  
-  @Override
-	public int inserthotel() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertRoomAtt(RoomAtt ra) {
+		return bDao.insertRoomAtt(ra);
 	}
 
-
+	@Override
+	public int insertRoom(Room r) {
+		return bDao.insertRoom(r);
+	}
+	
+	@Override
+	public int bookingTour(TourBooking tourbooking) {
+		// TODO Auto-generated method stub
+		return 0;
+  }
+	
 	@Override
 	public int bookingHotel(RoomBooking roombooking) {
     // TODO Auto-generated method stub
@@ -111,13 +117,13 @@ public class businessServiceImpl implements businessService {
 		return 0;
   }
 
-	
 	// 지혜
 	@Override
 	public int countReport() {
 		// TODO Auto-generated method stub
 		return bDao.countReport();
 	}
+
 
 	
   

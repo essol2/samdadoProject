@@ -10,6 +10,8 @@ import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
+import com.kh.samdado.business.model.vo.hotel.Room;
+import com.kh.samdado.business.model.vo.hotel.RoomAtt;
 import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
@@ -51,11 +53,18 @@ public class businessDaoImpl implements businessDao {
 	}
 
 	// 호텔등록
-  	public int inserthotel() {
-		// TODO Auto-generated method stub
-		return 0;
+	@Override
+	public int insertRoomAtt(RoomAtt ra) {
+		return sqlSession.insert("businessMapper.insertRoomAtt", ra);
+
+	}
+	@Override
+	public int insertRoom(Room r) {
+		return sqlSession.insert("businessMapper.insertRoom", r);
+
 	}
 
+	
 	@Override
 	public int inserttour() {
 		// TODO Auto-generated method stub
@@ -110,6 +119,7 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("businessMapper.countReport");
 	}
+
 
 
 	

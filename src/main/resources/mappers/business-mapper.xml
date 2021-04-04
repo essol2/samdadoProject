@@ -181,6 +181,57 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , CAR_SEQ_NO.CURRVAL
 		  )
 	</insert>
+  
+	<insert id="insertRoom" parameterType="Room">
+		INSERT
+		  INTO ROOM
+		  (
+		  	ROOM_NO
+		  , BUS_CODE
+		  , ROOM_NAME
+		  , ROOM_PRICE
+		  , ROOM_DATE
+		  , ROOM_MODIFY
+		  , ROOM_PEOPLE
+		  , ROOM_AMENITY
+		  , ROOM_STATE
+		  )
+		  VALUES
+		  (
+		  	ROOM_SEQ_NO.NEXTVAL
+		  , BUS_SEQ_NO.CURRVAL
+		  , #{room_name}
+		  , #{room_price}
+		  , SYSDATE
+		  , SYSDATE
+		  , #{room_people}
+		  , #{room_amenity}
+		  , DEFAULT
+		  )
+	</insert>
+	<insert id="insertRoomAtt" parameterType="RoomAtt">
+		INSERT
+		  INTO ROOM_ATT
+		  (
+		  	FILE_NO
+		  , FILE_NAME
+		  , FILE_ROOT
+		  , FILE_STATUS
+		  , FILE_RENAME
+		  , FILE_LV
+		  , ROOM_NO
+		  )
+		  VALUES
+		  (
+		  	BUSATT_SEQ_NO.NEXTVAL
+		  , #{file_name}
+		  , #{file_root}
+		  , DEFAULT
+		  , #{file_rename}
+		  , DEFAULT
+		  , ROOM_SEQ_NO.CURRVAL
+		  )
+	</insert>
 	
 	<!-- 지혜 -->
 	<select id="countReport" resultType="_int">

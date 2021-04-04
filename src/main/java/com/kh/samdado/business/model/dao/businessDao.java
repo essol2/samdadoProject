@@ -6,6 +6,8 @@ import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
+import com.kh.samdado.business.model.vo.hotel.Room;
+import com.kh.samdado.business.model.vo.hotel.RoomAtt;
 import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
@@ -27,7 +29,9 @@ public interface businessDao {
 	int insertCarAtt(CarAtt ca);
 
 	// 호텔등록
-	int inserthotel();
+	int insertRoomAtt(RoomAtt ra);
+	int insertRoom(Room r);
+
 	
 	// 관광지등록
 	int inserttour();
