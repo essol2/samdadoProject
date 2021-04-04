@@ -396,7 +396,7 @@
 			
 			<!-- 전화번호 -->
 			<div class="signup-div">
-			    <h3 class="join-title"><label for="address">운영시간</label></h3>
+			    <h3 class="join-title"><label for="address">전화번호</label></h3>
 			    <span class="box int_address">
 			        <input type="text" id="address" class="int" name="bus_phone">
 			    </span>
