@@ -80,7 +80,7 @@
                     <div class="row" style="padding-top: 4%; padding-right: 7%;">
                     <h1>달력</h1>
                 	 <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
-                	 <br>
+                	 <br><br>
                         <table class="table table-hover">
                           <thead>
                           <tr>
@@ -187,22 +187,22 @@
 
             <!--Q&A-->
             <div class="row" id="D">
-                <div class="col-4" id="G">
+                <div class="col-5" id="G">
                 <h1>Q&A</h1>
-                <h6>미답변 Q&A번호 기준으로 5개의 Q&A만 보여집니다.</h6>
+                <h6>미답변 Q&A기준으로 5개의 Q&A만 보여집니다.</h6>
                 <br>
                     <table class="table table-hover" id="qnaTable" style="table-layout: fixed;">
                         <thead>
                         <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">작성자</th>
-                            <th scope="col">내용</th>
+                            <th>No</th>
+                            <th>작성자</th>
+                            <th>내용</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="q" items="${ qnaList }">
 	                        <tr>
-	                            <th scope="row">${ q.qnano }</th>
+	                            <th>${ q.qnano }</th>
 	                            <td>${ q.usname }</td>
 	                            <td style="overflow: hidden; white-space : nowrap; text-overflow: ellipsis;">${ q.qcont }</td>
 	                        </tr>
@@ -211,8 +211,8 @@
                     </table>
                 </div>
                 
-                <div class="col-8" id="H">
-                <h1>다른거</h1>
+                <div class="col-7" id="H">
+                <h1>신규 사업장</h1>
                 <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
                 <br>
                     <table class="table table-hover">

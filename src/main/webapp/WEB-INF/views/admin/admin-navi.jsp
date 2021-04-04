@@ -14,17 +14,17 @@
    <div class="col-2" id="A"> 
      <div>
        <!-- 프로필사진 -------------------------------------------------------------------------------------------------------------------------------->
-       <div class="card" style="width: 99%; border-style: none;">
-           <img src="${ contextPath }/resources/images/image_admin/logo_g.png" class="card-img-top" alt="...">
+       <div class="card" style="width: 99%; height: 180px; border-style: none;">  		           
+           <img src="${ contextPath }/resources/images/image_admin/samdado_font_main.png" class="card-img-top" alt="...">
            <div style="padding-top: 4%; padding-bottom: 2%; padding-right: 2%;">
-             <h5 style="text-align: center;"><b>관리자</b></h5>
+             <h5 style="text-align: center;"><b>${ loginUser.usname }</b></h5>
            </div>
         </div>
         <br>
            
         <!-- 왼쪽 네비바 ------------------------------------------------------------------------------------------------------------------------------------->
+        <br>
         <div>
-        
         <ul>
         	<li>
         		<a class="nav-link active" href="${ contextPath }/admin/home">
@@ -36,9 +36,9 @@
 	        		&nbsp;대쉬 보드
         		</a>
         	</li>
-        
+        	<br>
         	<li>
-        		<a class="nav-link" href="">
+        		<a class="nav-link" href="${ contextPath }/admin/report">
 	        		<span data-feather="shopping-cart">
 	                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-diamond" viewBox="0 0 16 16">
 	                       <path d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.482 1.482 0 0 1 0-2.098L6.95.435zm1.4.7a.495.495 0 0 0-.7 0L1.134 7.65a.495.495 0 0 0 0 .7l6.516 6.516a.495.495 0 0 0 .7 0l6.516-6.516a.495.495 0 0 0 0-.7L8.35 1.134z"/>
@@ -48,6 +48,7 @@
 	        		&nbsp;신고 관리
         		</a>
         	</li>
+        	<br>
         	<li>
         		<a class="nav-link" href="${ contextPath }/admin/qna">
 	        		<span data-feather="users">
@@ -59,6 +60,7 @@
 	        		&nbsp;Q&A 관리
         		</a>
         	</li>
+        	<br>
         	<li>
         		<a class="nav-link" href="">
 	        		<span data-feather="home">
@@ -74,9 +76,10 @@
 		       </ul>
         	</li>
         </ul>
-        
+        <br>
         <hr>
-        
+        <br>
+        <br>
         <ul>
         	<li>
         		<a class="nav-link" href="${ contextPath }/admin/mypage">

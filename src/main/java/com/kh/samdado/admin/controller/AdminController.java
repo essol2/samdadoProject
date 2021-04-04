@@ -163,7 +163,7 @@ public class AdminController {
 		
 		User admin = uService.loginUser(loginUser);
 		
-		model.addAttribute("loginUser", loginUser);
+		model.addAttribute("loginUser", admin);
 		
 		return "admin/adminMypage";
 	}
