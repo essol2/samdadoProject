@@ -13,6 +13,7 @@
 	<div style="padding-top: 2%;">
 	<h1>Easy Tool</h1>
     <h6>클릭하면 해당 페이지로 이동합니다.</h6>
+    <br>
 	</div>
 	<div id="right_4contents" class="row" style="text-align: center; padding-top: 2%;">
       <div class="col" onclick="location.href='${ contextPath }/admin/userList'">

@@ -117,7 +117,7 @@
             <br><br>
 
                <div class="find_qna">
-                <h3>Q&A<span style="color: red;"> 내역조회 </span>하기</h3>
+                <h3>Q&A<span style="color: seagreen;"> 내역조회 </span>하기</h3>
                 <br>
                 
              
@@ -127,7 +127,7 @@
                    <option value="qnano" <c:if test="${ param.searchCondition == 'qnano' }">selected</c:if>>Q&A번호</option>
                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원명</option>
                    <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
-                   <option value="qcont" <c:if test="${ param.searchCondition == 'qcont' }">selected</c:if>>문의내용</option>
+                   <option value="qcont" <c:if test="${ param.searchCondition == 'qcont' }">selected</c:if>>문의내용</option> <!-- like 조회 -->
                    <option value="qdate" <c:if test="${ param.searchCondition == 'qdoate' }">selected</c:if>>문의날짜</option>
                    <option value="qreply" <c:if test="${ param.searchCondition == 'qreply' }">selected</c:if>>답변내용</option>
                    <option value="qstatus" <c:if test="${ param.searchCondition == 'qstatus' }">selected</c:if>>답변 상태(Y/N)</option>
@@ -201,7 +201,7 @@
 
                <br><hr>
 
-                <!-- 페이지네이션 -->
+                <!-- 검색 페이지네이션 -->
                 <div class="row-page">
                   <nav aria-label="Page navigation example">
                       <ul class="pagination">
