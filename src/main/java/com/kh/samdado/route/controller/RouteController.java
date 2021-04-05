@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.samdado.route.model.service.RouteService;
+import com.kh.samdado.route.model.vo.Route;
 import com.kh.samdado.route.model.vo.Search;
 
 @Controller
@@ -29,6 +30,7 @@ public class RouteController {
 	
 	@GetMapping("/search")
 	public String searchRoute(Model model, 
+							@ModelAttribute Search search,
 							@RequestParam("area") String area, 
 							@RequestParam("thema") String thema, 
 							@RequestParam("routeDate") Date routeDate ) {		// 루트 검색
@@ -36,6 +38,9 @@ public class RouteController {
 		model.addAttribute("area", area);
 		model.addAttribute("thema", thema);
 		model.addAttribute("routeDate", routeDate);
+		
+		List<Route> list = rService.routeSearch(search);
+		model.addAttribute("list", list);
 		
 		return "route/route_result";
 	}
