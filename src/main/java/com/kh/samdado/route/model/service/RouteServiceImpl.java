@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.samdado.route.model.dao.RouteDao;
 import com.kh.samdado.route.model.vo.Route;
+import com.kh.samdado.route.model.vo.Search;
 import com.kh.samdado.route.model.vo.TourSpot;
 
 
@@ -17,9 +18,8 @@ public class RouteServiceImpl implements RouteService {
    private RouteDao rDao;
 	
 	@Override
-	public List<Route> routeSearch() {
-		// TODO Auto-generated method stub
-		return rDao.routeSearch();
+	public List<Route> routeSearch(Search search) {
+		return rDao.routeSearch(search);
 	}
 	
 	@Override

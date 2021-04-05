@@ -20,6 +20,9 @@
    <!-- <typeAlias type="com.kh.samdado.listpage.model.vo.Alliance" alias="Alliance"/> -->
    		<typeAlias type="com.kh.samdado.business.model.vo.business.Business" alias="Business"/>
    		<typeAlias type="com.kh.samdado.business.model.vo.business.BusinessAtt" alias="BusinessAtt"/>
+   		<typeAlias type="com.kh.samdado.route.model.vo.Route" alias="Route"/>
+   		<typeAlias type="com.kh.samdado.route.model.vo.TourSpot" alias="TourSpot"/>
+   		<typeAlias type="com.kh.samdado.route.model.vo.Search" alias="Search"/>
 	</typeAliases>
 
 	 <!-- mappers -->
@@ -28,5 +31,6 @@
 	    <mapper resource="mappers/admin-mapper.xml"/>	
 		<mapper resource="mappers/mypage_mapper.xml"/>    
    		<mapper resource="mappers/business-mapper.xml"/>    
+   		<mapper resource="mappers/route-mapper.xml"/>
 	</mappers>
 </configuration>

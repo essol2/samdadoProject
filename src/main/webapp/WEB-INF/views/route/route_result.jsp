@@ -235,103 +235,36 @@
                 
     	
                 <br><br><br>
-                <div id="content_bottom">
-                    <table style="width: 100%;">
-                        <th style="width: 50%;">
-                            <label class="content-title" id="title1" >추천 길</label>
-                            <div class="c_border" id="left-border">
-                               <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
-                                   <tr>
-                                       <td>
-                                           <img src="../resources/images/image_route/만장굴 1.png">
-                                        </td>
-                                        <td>
-                                            <div class="spot_border">
-                                                <p class="spot_title">만장굴</p>
-                                                <button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-                                            </div>
-                                        </td>
-                                    </tr>
+				<div id="content_bottom">
+					<table style="width: 100%;">
+						<th style="width: 50%;">
+							<label class="content-title" id="title1" >추천 길</label>
+							<div class="c_border" id="left-border">
+								<table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
+									<c:forEach var="r" items="${ list }">
+										<tr>
+											<td>
+												<img src="${ r.spot_path }${ r.spot_oname }">
+											</td>
+											<td>
+												<div class="spot_border">
+													<p class="spot_title">${ r.spot_title }</p>
+													<button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
+												</div>
+											</td>
+										</tr>
 
-                                    <tr>
-                                       <td colspan="2">
-                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
-                                           <span class="detail">26.8km</span>
-                                           <span class="detail">59분</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <img src="../resources/images/image_route/우도 1.png">
-                                        </td>
-                                        <td>
-                                            <div class="spot_border">
-                                                <p class="spot_title">우도</p>
-                                                <button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-                                            </div>
-                                        </td>
-                                    </tr>
+	                                    <tr>
+	                                       <td colspan="2">
+	                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
+	                                           <span class="detail">26.8km</span>
+	                                           <span class="detail">59분</span>
+	                                        </td>
+	                                    </tr>
+                               </c:forEach>
                                    
-                                    <tr>
-                                       <td colspan="2">
-                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
-                                           <span class="detail">26.8km</span>
-                                           <span class="detail">59분</span>
-                                        </td>
-                                    </tr>
 
-                                    <tr>
-                                        <td>
-                                            <img src="../resources/images/image_route/성산일출봉 1.png">
-                                        </td>
-                                        <td>
-                                            <div class="spot_border">
-                                                <p class="spot_title">성산일출봉</p>
-                                                <button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2">
-                                            <img id="arrow" src="../resources/images/image_route/arrow.png">
-                                            <span class="detail">26.8km</span>
-                                            <span class="detail">59분</span>
-                                         </td>
-                                     </tr>
-
-                                    <tr>
-                                        <td>
-                                            <img src="../resources/images/image_route/광치기해변 1.png">
-                                        </td>
-                                        <td>
-                                            <div class="spot_border">
-                                                <p class="spot_title">광치기해변</p>
-                                                <button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2">
-                                            <img id="arrow" src="../resources/images/image_route/arrow.png">
-                                            <span class="detail">26.8km</span>
-                                            <span class="detail">59분</span>
-                                         </td>
-                                     </tr>
-
-                                    <tr>
-                                        <td>
-                                            <img src="../resources/images/image_route/섭지코지 1.png">
-                                        </td>
-                                        <td>
-                                            <div class="spot_border">
-                                                <p class="spot_title">섭지코지</p>
-                                                <button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    
 
                                    <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: 10%; font-size: 16px;">총 이동 거리 40.1km </p></td></tr>
                                    <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: -5%; font-size: 16px; margin-bottom: 10%;">예상 이동 시간 83분</p></td></tr>
