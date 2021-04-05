@@ -21,4 +21,10 @@ public interface AdminDao {
 
 	List<Report> adminReportSelect(PageInfo pi);
 
+	int updateRstatusToY(Report report);
+
+	int updateRstatusToYAndRexdate(Report report);
+
+	int updateRstatusToR(Report report);
+
 }

@@ -43,7 +43,7 @@
             <!--신고 신규 내역 -->
             <h3>신고 <span style="color: red;">신규</span>  내역</h3>
             <br>
-            <table class="table table-borderless">
+            <table class="table table-borderless" id="reportTable">
                 <thead>
                     <tr>
                         <th>신고 번호</th>
@@ -58,11 +58,11 @@
                         <th>반려 버튼</th>
                     </tr>
                 </thead>
-                <tbody>  
                 
+                <tbody>        
                 <c:forEach var="rpl" items="${ reportList }">
                    <tr>
-                       <th>${ rpl.report_no }</th>
+                       <th id="report_no">${ rpl.report_no }</th>
                        <td>${ rpl.rep_res }</td>
                        <td>${ rpl.rep_cont }</td>                       
                        <td><fmt:formatDate value='${ rpl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
@@ -71,13 +71,35 @@
                        <td>미처리</td>
                        </c:if>
                        <td>${ rpl.usno }</td>
-                       <td>${ rpl.bus_code }</td>
-                       <td><button type="submit" class="btn btn-secondary">승인</button></td>
-                       <td><button type="submit" class="btn btn-success">반려</button></td>
+                       <td id="bus_code">${ rpl.bus_code }</td>
+                       <td><button class="btn btn-secondary" id="admitReportBtn">승인</button></td> <!-- db 상태 y -->
+                       <td><button class="btn btn-success" id="rejectReport">반려</button></td> <!-- db 상태 r -->
                    </tr>
                   </c:forEach>   
                 </tbody>
               </table>
+              
+              
+             <script>
+             $("#admitReportBtn").click(function(){
+
+	         		var report_no = $("#report_no").text();
+	         		var bus_code = $("#bus_code").text();
+	         		
+	         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code;
+             });
+         	</script>
+         	
+         	<script>
+         	 $("#rejectReport").click(function(){
+
+	         		var report_no = $("#report_no").text();
+	         		var bus_code = $("#bus_code").text();
+	         		
+	         		location.href="${contextPath}/admin/rejectReport?report_no=" + report_no + "&bus_code=" + bus_code;
+         	 });
+         	</script>
+                 
 
               <br><hr> 
 
@@ -163,16 +185,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>강제주</td>
-                            <td>허위매물</td>
-                            <td scope="row">상세페이지랑 달라요.</td>
-                            <td></td>
-                            <td>2021-03-17</td>
-                            <td>제휴</td>
-                            <td>승인</td>
-                          </tr>
+                        <c:forEach var="srl" items="${ searchReportList }">
+                        	<tr>
+			                     <th>${ srl.report_no }</th>
+			                     <td>${ srl.rep_res }</td>
+			                     <td>${ srl.rep_cont }</td>           
+			                     <td><fmt:formatDate value='${ srl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
+			                     <td><fmt:formatDate value='${ srl.rexdate }' type='both' pattern='yyyy-MM-dd' /></td>
+			                     <td>${ srl.usno }</td>
+			                     <td>${ srl.bus_code }</td>
+			                     <td>${ srl.r_count }</td>
+			                     <td>${ srl.rstatus }</td>
+			                     <td>${ srl.usstatus }</td> <!-- 반려 or 승인 -->
+			                 </tr>
+	               		</c:forEach>  
                     </tbody>
                   </table>
                </div>
@@ -187,9 +213,7 @@
                             <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>           
                         <li class="page-item">
                             <a class="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>

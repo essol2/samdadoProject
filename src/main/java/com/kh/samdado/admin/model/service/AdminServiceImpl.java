@@ -53,6 +53,22 @@ public class AdminServiceImpl implements AdminService {
 		return aDao.adminReportSelect(pi);
 	}
 
+	@Override
+	public int updateRstatusToY(Report report) {
+		// TODO Auto-generated method stub
+		return aDao.updateRstatusToY(report);
+	}
 
-   
+	@Override
+	public int updateRstatusToYAndRexdate(Report report) {
+		// TODO Auto-generated method stub
+		return aDao.updateRstatusToYAndRexdate(report);
+	}
+
+	@Override
+	public int updateRstatusToR(Report report) {
+		// TODO Auto-generated method stub
+		return aDao.updateRstatusToR(report);
+	}
+
 }

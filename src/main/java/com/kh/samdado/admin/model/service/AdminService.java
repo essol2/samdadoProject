@@ -23,6 +23,15 @@ public interface AdminService {
 
 	List<Report> adminReportSelect(PageInfo pi);
 
+	// 신고 승인 상태 (y로 update)
+	int updateRstatusToY(Report report);
+
+	// 신고 승인 상태 (y로 update, rexdate 추가)
+	int updateRstatusToYAndRexdate(Report report);
+
+	// 신고 반려 상태 (r로 update)
+	int updateRstatusToR(Report report);
+
 	
    
 
