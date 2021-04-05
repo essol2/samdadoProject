@@ -623,19 +623,19 @@
 		$(function(){
 			$("#searchThisBtn").on("click", function(){
 				var selector = $('input[name="selector"]:checked').val();
-				console.log(selector);
+				//console.log(selector);
 				
 				var startDate = $('#startDate').val();
-				console.log(startDate);
+				//console.log(startDate);
 				
 				var usno = ${ loginUser.usno };
-				console.log(usno);
+				//console.log(usno);
 				
 				var searchPo = new Object();
 				searchPo.selector = selector;
 				searchPo.startdate = startDate;
 				searchPo.usno = usno;
-				console.log(searchPo);
+				//console.log(searchPo);
 				
 				$.ajax({
 					url : "searchPeriod",
@@ -643,7 +643,7 @@
 					type : "POST",
 					contentType : "application/json; charset=utf-8",
 					success : function(data) {
-						console.log(data);
+						//console.log(data);
 						
 						tableBody =$("#pointTable tbody");
 						tableBody.html("");
