@@ -1,5 +1,6 @@
 package com.kh.samdado.mypage.model.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,14 +99,20 @@ public class MypageServiceImpl implements MypageService{
 
 	// 일반회원 - 가계부
 	@Override
-	public List<AccountBook> selectAccountList(String usno) {
-		return mDao.selectAccountList(usno);
+	public List<AccountBook> selectAccountList(AccountBook ab) {
+		return mDao.selectAccountList(ab);
 	}
 
 	// 일반회원 - 가계부 입력 메소드
 	@Override
-	public int insertNewAcc(AccountBook acc) {
-		return mDao.insertNewAcc(acc);
+	public int insertNewAcc(AccountBook ab) {
+		return mDao.insertNewAcc(ab);
+	}
+
+	// 일반회원 - 가계부 가장 최근 날짜 가져오기
+	@Override
+	public AccountBook selectRecentDate(AccountBook ab) {
+		return mDao.selectRecentDate(ab);
 	}
 
 
