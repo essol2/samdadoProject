@@ -112,3 +112,13 @@ a:hover { color: black; text-decoration: none;}
 #bussiness_no_div{
 	display : none;
 }
+
+.addMember-modal-inner-header{
+	display: flex;
+	margin: auto;
+}
+
+.addMember-modal-inner-body {
+	width: 80%;
+	margin: auto;
+}

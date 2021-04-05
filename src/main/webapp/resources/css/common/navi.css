@@ -241,6 +241,10 @@ a:hover { color: black; text-decoration: none;}
 	
 }
 
+p:hover {
+	cursor:pointer;	
+}
+
  /* 반응형 */
  @media (max-width:1920px){
     header {
@@ -261,7 +265,7 @@ a:hover { color: black; text-decoration: none;}
     li {
     list-style:none;
     color: white;
-}
+	}
 }
 
 @media (max-width:1650px){

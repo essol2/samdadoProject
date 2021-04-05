@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.samdado.business.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.dao.MypageDao;
 import com.kh.samdado.mypage.model.vo.AccountBook;
@@ -25,12 +25,12 @@ public class MypageServiceImpl implements MypageService{
 
 	// 이메일, 전화번호 변경 메소드
 	@Override
-	public int updateUserInfo(User u) {
+	public int updateUserInfo(User u) {	
 		return mDao.updateUserInfo(u);
 	}
 
 	// 알림 select 메소드
-	@Override
+	@Override	
 	public List<Alert> selectAlertList(String usno) {
 		return mDao.selectAlertLis(usno);
 	}
@@ -67,10 +67,9 @@ public class MypageServiceImpl implements MypageService{
 	
 	//제휴회원 - point 테이블에 검색결과 조회하러 가기
 	@Override
-	public List<Point> selectSearchList(SearchPoint sp) {
+	public List<SearchPoint> selectSearchList(SearchPoint sp) {
 		return mDao. selectSearchList(sp);
 	}
-
 
 	// 제휴회원 - 사업장 조회 메소드
 	@Override

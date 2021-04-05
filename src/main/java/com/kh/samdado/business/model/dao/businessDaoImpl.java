@@ -6,15 +6,20 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.samdado.admin.model.vo.Report;
-import com.kh.samdado.business.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
+import com.kh.samdado.business.model.vo.hotel.Room;
+import com.kh.samdado.business.model.vo.hotel.RoomAtt;
 import com.kh.samdado.business.model.vo.hotel.RoomBooking;
+import com.kh.samdado.business.model.vo.rentcar.Car;
+import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
+import com.kh.samdado.business.model.vo.tour.TourProduct;
+import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Report;
 
 @Repository 
 public class businessDaoImpl implements businessDao {
@@ -28,31 +33,42 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.insert("businessMapper.insertAlliance", a);
 	}
 
+	// 사업장 첨부파일 등록
 	@Override
-	public int insertRestaurant(Business b) {
-		return sqlSession.insert("businessMapper.insertRestaurant", b);
+	public int insertBusAtt(BusinessAtt ba) {
+		return sqlSession.insert("businessMapper.insertBusAtt", ba);
+	}
+	@Override
+	public int insertBusiness(Business b) {
+		return sqlSession.insert("businessMapper.insertBusiness", b);
+	}
+	
+	// 렌트카 등록
+	@Override
+	public int insertCar(Car c) {
+		return sqlSession.insert("businessMapper.insertCar", c);
+	}
+	@Override
+	public int insertCarAtt(CarAtt ca) {
+		return sqlSession.insert("businessMapper.insertCarAtt", ca);
 	}
 
+	// 호텔등록
 	@Override
-	public int insertRestaurant2(BusinessAtt ba) {
-		return sqlSession.insert("businessMapper.insertRestaurant2", ba);
+	public int insertRoomAtt(RoomAtt ra) {
+		return sqlSession.insert("businessMapper.insertRoomAtt", ra);
+
 	}
-  
-  	public int inserthotel() {
-		// TODO Auto-generated method stub
-		return 0;
+	@Override
+	public int insertRoom(Room r) {
+		return sqlSession.insert("businessMapper.insertRoom", r);
+
 	}
 
+	// 투어등록
 	@Override
-	public int inserttour() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int insertrentcar() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertTour(TourProduct tp) {
+		return sqlSession.insert("businessMapper.insertTour", tp);
 	}
 
 	@Override
@@ -96,6 +112,21 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	// 지혜
+	@Override
+	public int countReport() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("businessMapper.countReport");
+	}
+
+	
+
+
+
+	
+
+
 
 
 	

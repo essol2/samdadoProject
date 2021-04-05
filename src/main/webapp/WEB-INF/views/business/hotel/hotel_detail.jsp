@@ -849,15 +849,12 @@
 		  	    = value;
 		  	  
 		  	}
-	
-    
-	    
+
 	    function handleOnChange(e) {
 	    	  const value = e.value;	    	  
 	    	  document.getElementById('result').innerText
 	    	    = value;
 	    	}
-	
     </script>
     
     <!-- Modal2 -->

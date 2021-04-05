@@ -5,16 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.samdado.admin.model.vo.Report;
 import com.kh.samdado.business.model.dao.businessDao;
-import com.kh.samdado.business.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
+import com.kh.samdado.business.model.vo.hotel.Room;
+import com.kh.samdado.business.model.vo.hotel.RoomAtt;
 import com.kh.samdado.business.model.vo.hotel.RoomBooking;
+import com.kh.samdado.business.model.vo.rentcar.Car;
+import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
+import com.kh.samdado.business.model.vo.tour.TourProduct;
+import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Report;
 
 @Service
 public class businessServiceImpl implements businessService {
@@ -28,44 +33,54 @@ public class businessServiceImpl implements businessService {
 		return bDao.insertAlliance(a);
 	}
 
-
+	// 사업장 등록
 	@Override
-	public int insertRestaurant(Business b) {
-		return bDao.insertRestaurant(b);
+	public int insertBusAtt(BusinessAtt ba) {
+		return bDao.insertBusAtt(ba);
+	}
+	@Override
+	public int insertBusiness(Business b) {
+		return bDao.insertBusiness(b);
 	}
 
+	// 렌트카 등록
 	@Override
-	public int insertRestaurant2(BusinessAtt ba) {
-		return bDao.insertRestaurant2(ba);
+	public int insertCar(Car c) {
+		return bDao.insertCar(c);
 	}
-
-
+	@Override
+	public int insertCarAtt(CarAtt ca) {
+		return bDao.insertCarAtt(ca);
+	}
+	
+	// 호텔 등록
+	@Override
+	public int insertRoomAtt(RoomAtt ra) {
+		return bDao.insertRoomAtt(ra);
+	}
+	@Override
+	public int insertRoom(Room r) {
+		return bDao.insertRoom(r);
+	}
+	
+	// 투어 등록
+	@Override
+	public int insertTour(TourProduct tp) {
+		return bDao.insertTour(tp);
+	}
+	
 	@Override
 	public int bookingTour(TourBooking tourbooking) {
-  // TODO Auto-generated method stub
-		return 0;
-  }
-  
-  @Override
-	public int inserthotel() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-
+  }
+	
 	@Override
 	public int bookingHotel(RoomBooking roombooking) {
     // TODO Auto-generated method stub
 		return 0;
   }
   
-   @Override
-	public int inserttour() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
 	@Override
 
 	public int bookingCar(CarBooking carbooking) {
@@ -100,11 +115,21 @@ public class businessServiceImpl implements businessService {
   // TODO Auto-generated method stub
 		return 0;
   }
-  
-  @Override
-	public int insertrentcar() {
+
+	// 지혜
+	@Override
+	public int countReport() {
 		// TODO Auto-generated method stub
-		return 0;
+		return bDao.countReport();
 	}
+
+	
+
+
+	
+  
+
+
+	
    
 }

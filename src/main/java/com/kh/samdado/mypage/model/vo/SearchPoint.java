@@ -27,6 +27,7 @@ public class SearchPoint {
 	private int pamount;
 	private String usno;
 	private Date startdate;
+	//private Date enddate;
 	private String selector;
 	
 }

@@ -21,5 +21,5 @@ public class RoomAtt {
 	private String file_status;	// 파일상태
 	private String file_rename;	// 리네임
 	private String file_lv;		// 대표사진lv=0 / 일반사진lv=1
-	private int hotel_no;		// 숙박번호
+	private int room_no;		// 숙박번호
 }
