@@ -19,15 +19,15 @@ import lombok.ToString;
 @EqualsAndHashCode
 
 public class Room {
-//	HOTEL_NO	NUMBER
+//	room_NO	NUMBER
 //	BUS_CODE	NUMBER
-//	HOTEL_NAME	VARCHAR2(100 BYTE)
-//	HOTER_PRICE	NUMBER
-//	HOTEL_DATE	DATE
-//	HOTEL_MODIFY	DATE
-//	HOTEL_PEOPLE	VARCHAR2(10 BYTE)
-//	HOTEL_AMENITY	VARCHAR2(100 BYTE)
-//	HOTEL_STATE	VARCHAR2(1 BYTE)
+//	room_NAME	VARCHAR2(100 BYTE)
+//	romm_PRICE	NUMBER
+//	room_DATE	DATE
+//	room_MODIFY	DATE
+//	room_PEOPLE	VARCHAR2(10 BYTE)
+//	room_AMENITY	VARCHAR2(100 BYTE)
+//	room_STATE	VARCHAR2(1 BYTE)
 	
 //	숙박번호
 //	사업장고유번호
@@ -39,13 +39,13 @@ public class Room {
 //	편의시설 : 주차, 조식 등등
 //	Y/N 삭제여부
 	
-	private int hotel_no;
+	private int room_no;
 	private int bus_code;
-	private String hotel_name;
-	private int hotel_price;
-	private Date hotel_date;
-	private Date hotel_modify;
-	private String hotel_people;
-	private String hotel_amenity;
-	private String hotel_state;
+	private String room_name;
+	private int room_price;
+	private Date room_date;
+	private Date room_modify;
+	private String room_people;
+	private String room_amenity;
+	private String room_state;
 }

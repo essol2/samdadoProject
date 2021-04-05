@@ -1,16 +1,18 @@
 package com.kh.samdado.mypage.model.dao;
 
+import java.sql.Date;
 import java.util.List;
 
-import com.kh.samdado.business.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.SearchPoint;
 import com.kh.samdado.user.model.vo.User;
 
 public interface MypageDao {
@@ -36,6 +38,9 @@ public interface MypageDao {
 	// 제휴회원 - 포인트 리스트 출력 메소드
 	public List<Point> selectPointList(String usno);
 
+	//제휴회원 - point 테이블에 검색결과 조회하러 가기
+	public List<SearchPoint> selectSearchList(SearchPoint sp);
+
 	// 제휴회원 - 사업장 조회 메소드
 	public List<Business> selectBussList(String usno);
 	
@@ -49,10 +54,14 @@ public interface MypageDao {
 	public List<Booking> selectBookList(String usno);
 
 	// 일반회원 - 가계부
-	public List<AccountBook> selectAccountList(String usno);
+	public List<AccountBook> selectAccountList(AccountBook ab);
 
 	// 일반회원 - 가계부 입력 메소드
-	public int insertNewAcc(AccountBook acc);
+	public int insertNewAcc(AccountBook ab);
+
+	// 일반회원 - 가계부 가장 최근 날짜 가져오기
+	public AccountBook selectRecentDate(AccountBook ab);
+
 
 
 }

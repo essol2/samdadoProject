@@ -334,111 +334,142 @@
             </div>
       
             <section class="signup-section-wrap">
-
+			
+			<form action="${ contextPath }/business/tour_insert" id="writeForm" method="post" enctype="multipart/form-data">
+            
+            <input type="hidden" name="us_no" value="${ loginUser.usno }">
+        	<input type="hidden" name="bus_category" value="T">
+			
                 <!-- 사업장명 -->
                 <div class="signup-div">
                     <h3 class="join_title">
                         <label for="id">사업장명</label>
                     </h3>
                     <span class="box int_id">
-                        <input type="text" id="id" class="int">               
-                    
-                    <span class="error_next_box"></span>
+                        <input type="text" id="id" class="int" name="bus_name">
+                    </span>               
                 </div>
 
-                <!-- 주소 -->
-                <div class="signup-div">
-                    <h3 class="join_title"><label for="pswd1">주소</label></h3>
-                    <span class="box int_pass" style=" display: -webkit-inline-box;">
-                        <input type="text" id="pswd1" class="int" readonly>
-                        <button id="searchBtn" style="width: 40px; height: 30px;">검색</button>
-                        <span id="alertTxt"></span>                    
-                    </span>
-                    <span class="error_next_box"></span>
-                </div>
-
-                <!-- 주소 -->
-                <div class="signup-div">
-                    <h3 class="join_title"><label for="pswd2"></label></h3>
-                    <span class="box int_pass_check">
-                        <input type="text" id="pswd2" class="int" readonly>                    
-                    </span>
-                    <span class="error_next_box"></span>
-                </div>
-
-                <!-- 상세주소 -->
-                <div class="signup-div">
-                    <h3 class="join_title"><label for="name">상세주소</label></h3>
-                    <span class="box int_name">
-                        <input type="text" id="name" class="int" maxlength="50">
-                    </span>
-                    <span class="error_next_box"></span>
-                </div>
-                
+                <!-- 도로명주소 api -->
+	            <div class="signup-div">
+	                <h3 class="join_title"><label for="address1">우편번호</label></h3>
+	                <span class="box int_pass" style=" display: -webkit-inline-box;">
+	                    <input type="text" id="address1" name="bus_address" class="postcodify_postcode5" readonly>
+	                    <button type="button" id="postcodify_search_button" style="width: 40px; height: 30px;">검색</button>                  
+	                </span>
+	            </div>
+	            <div class="signup-div">
+	                <h3 class="join_title"><label for="address2">도로명주소</label></h3>
+	                <span class="box int_pass_check">
+	                    <input type="text" id="address2" name="bus_address" class="postcodify_address" readonly>                    
+	                </span>
+	            </div>
+	            <div class="signup-div">
+	                <h3 class="join_title"><label for="address3">상세주소</label></h3>
+	                <span class="box int_name">
+	                    <input type="text" id="address3" name="bus_address" class="postcodify_details">
+	                </span>
+	            </div>
+	            
+	            <!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
+				<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+				<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
+				<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+	            
+	            <!-- 전화번호 -->
+	            <div class="signup-div">
+	                <h3 class="join-title"><label>전화번호</label></h3>
+	                <span class="box int_address">
+	                    <input type="text" id="bus_phone" name="bus_phone" class="int" placeholder="000-000-0000">
+	                </span>
+	            </div>
+	            
+	            <!-- 상품명 -->
+	            <div class="signup-div">
+	                <h3 class="join-title"><label>상품명</label></h3>
+	                <span class="box int_address">
+	                    <input type="text" id="bus_phone" name="pro_name" class="int" >
+	                </span>
+	            </div>
+	            
                 <!-- 테마 -->
                 <div class="signup-div">
-                    <h3 class="join-title"><label for="campany-name">테마</label></h3>
-                    <select class="box int_name">
+                    <h3 class="join-title"><label>테마</label></h3>
+                    <select class="box int_name" name="tour_tema">
                         <option value="select" selected>선택</option>
-                        <option value="select">신혼</option>
-                        <option value="select">졸업</option>
-                        <option value="select">일상</option>
+                        <option value="신혼">신혼</option>
+                        <option value="졸업">졸업</option>
+                        <option value="일상">일상</option>
+                        <option value="기타">기타</option>
                     </select>
-                    <span class="error_next_box"></span>
                 </div>
 
-                <!-- 유향 -->
+                <!-- 유형 -->
                 <div class="signup-div">
-                    <h3 class="join-title"><label for="campany-name">유형</label></h3>
-                    <select class="box int_name">
+                    <h3 class="join-title"><label>유형</label></h3>
+                    <select class="box int_name" name="tour_category">
                         <option value="select" selected>선택</option>
-                        <option value="select">체험</option>
-                        <option value="select">전시회</option>
+                        <option value="체험">체험</option>
+                        <option value="전시회">전시회</option>
                     </select>
-                    <span class="error_next_box"></span>
                 </div>
                 
-                <!-- 입실 -->
+                <!-- 가격 -->
+	            <div class="signup-div">
+	            	<h3 class="join-title"><label>입장료</label></h3>
+	                <span class="box int_address">
+	                    <input type="text" id="bus_phone" name="pro_price" class="int" >
+	                </span>
+	                <h3 class="join-title"><label>어른(가격)</label></h3>
+	                <span class="box int_address">
+	                    <input type="text" id="bus_phone" name="pro_adult" class="int">
+	                </span>
+	                <h3 class="join-title"><label>청소년</label></h3>
+	                <span class="box int_address">
+	                    <input type="text" id="bus_phone" name="pro_youth" class="int" >
+	                </span>
+	                <h3 class="join-title"><label>어린이</label></h3>
+	                <span class="box int_address">
+	                    <input type="text" id="bus_phone" name="pro_child" class="int" >
+	                </span>
+	            </div>
+	            
+                <!-- 인원 -->
                 <div class="signup-div">
-                    <h3 class="join-title"><label for="address">인원</label></h3>
-                    <span class="box int_address">
-                        <input type="text" id="address" class="int" maxlength="6">
-                    </span>
-                    <span class="error_next_box"></span>
-                </div>   
+                    <h3 class="join-title"><label>인원</label></h3>
+                    <select class="box int_name" id="category" name="res_category">
+	                    <option value="select" selected>명</option>
+	                    <option value="1">1</option>
+	                    <option value="2">2</option>
+	                    <option value="3">3</option>
+	                    <option value="4">4</option>
+	                    <option value="etc">5</option>
+                	</select>
+                </div>
+                
+                <!-- 영업시간 -->
+	            <div class="signup-div">
+	                <h3 class="join-title"><label for="opening">영업시간</label></h3>
+	                <span class="box int_address">
+	                    <input type="time" id="opening" name="bus_opening" class="int">
+	                </span>
+	                <span class="box int_address">
+	                    <input type="time" id="opening" name="bus_opening" class="int">
+	                </span>
+	            </div>   
 
                 <!-- 매장사진 -->
                 <div class="signup-div">
                     <h3 class="join_title"><label for="phoneNo">매장사진</label></h3>
                     <span class="box int_mobile">
-                        <input type="file" name="main_file" id="mobile" class="int" maxlength="16">
+                        <input type="file" name="uploadFile" id="mobile" class="int">
                     </span>
-                    <span class="error_next_box"></span>    
                 </div>
                 
-                <!-- 추가사진 -->
-                <div class="signup-div">
-                    <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-                    <span class="box int_mobile">
-                        <input type="file"  name="add_file" id="mobile" class="int" maxlength="16">
-                    </span>
-                    <span class="error_next_box"></span>    
-                </div>
-
-                <!-- 추가사진 -->
-                <div class="signup-div">
-                    <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-                    <span class="box int_mobile">
-                        <input type="file"  name="add_file" id="mobile" class="int" maxlength="16">
-                    </span>
-                    <span class="error_next_box"></span>    
-                </div>
-
                 <!-- 소개글 -->
                 <div class="signup-div">
                     <h3 class="join_title"><label for="phoneNo">소개글</label></h3>
-                    <textarea id="intArea" name="intro" class="intArea" rows="10" cols="64" ></textarea>
-                    <span class="error_next_box"></span>    
+                    <textarea id="intArea" name="bus_intro" class="intArea" rows="10" cols="64" ></textarea>
                 </div>
 
                 <!-- 등록, 뒤로가기 버튼 -->
@@ -454,9 +485,7 @@
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
                     -->
                     <!-- Button trigger modal -->
-                    <button type="button" href="#" id="btnJoin" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    <a>등록하기</a>
-                    </button>
+                    <button id="btnJoin" class="btn btn-primary"><a>등록하기</a></button>
                     <!-- Modal -->
                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -478,10 +507,25 @@
                     <button type="button" href="#" id="btnJoin" class="btn btn-primary">
                     <a>뒤로가기</a>
                     </button>
-                </div> 
+                </div>
+                </form> 
             </section>
         </div>        
     </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <!--은화 : footer-->
 	<footer>
 	    <div id="footer_left">

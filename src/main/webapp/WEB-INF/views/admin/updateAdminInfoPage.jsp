@@ -18,6 +18,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminMypage.css" type="text/css">
+    <link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminHome.css" type="text/css">
 	
 	<!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -41,7 +42,7 @@
             <h3>관리자 <span style="color: red;">정보 수정</span></h3>
             <br>
 			<h6>* 아이디와 생년월일은 수정이 불가합니다.</h6>
-			<h6>* 비밀번호는 '변경하기'를 클릭하시면 수정 페이지로 이동합니다.</h6>
+			<h6>* 비밀번호는  <b>'변경하기'</b>를 클릭하시면 아이디/비밀번호 찾기 페이지로 이동하셔서 수정 가능합니다.</h6>
 			<form action="${ contextPath }/admin/updateAdminInfo" method="post" id="adminUpdateInfoForm" onsubmit="return submitValidate();">
 				<div class="row">
 	            	<div id="box-container" class="col">
@@ -71,7 +72,7 @@
 		              </div>
 		              <div class="input-group">
 		                <span class="input-group-text">비밀번호</span>
-		                <input type="text" id="findPwd" onclick="location.href='${ contextPath }/user/find'" class="form-control" value="변경하기" readonly>         
+		                <input type="text" id="findPwd" onclick="location.href='${ contextPath }/user/find'" class="form-control" value="변경하기" readonly style="cursor:pointer;">         
 		              </div>       
 	                </div>
 	              
@@ -83,6 +84,7 @@
 		              </div>
 	             </div>
 	             <input type="hidden" name="uspart" value="${ loginUser.uspart }">
+	             <br>
               <button class="btn btn-secondary" id="updateInfoBtn" onclick="location.href='${ contextPath }/admin/updateAdminInfo'">수정하기</button>
           
 			</form>

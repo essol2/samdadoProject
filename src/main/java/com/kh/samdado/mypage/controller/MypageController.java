@@ -1,5 +1,6 @@
 package com.kh.samdado.mypage.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,16 +12,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.service.MypageService;
+import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.SearchPoint;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 
@@ -136,8 +141,8 @@ public class MypageController {
 	 // 제휴회원 포인트 페이지로 이동
 	 @GetMapping("/point")
 	 public ModelAndView goToPoint(ModelAndView mv,
-			 				 @ModelAttribute User u,
-			 				 @ModelAttribute Point po) {
+				 				 @ModelAttribute User u,
+				 				 @ModelAttribute Point po) {
 		 
 		  //System.out.println("user 객체 확인 : " +u);
 		 
@@ -195,6 +200,29 @@ public class MypageController {
 			return "mypage/mp_Point";
 		 }
 	 }
+	 
+	 // 제휴회원 - 포인트 사용 내역 기간 조회
+	 @RequestMapping("/searchPeriod")
+	 @ResponseBody
+	 public List<SearchPoint> searchPointPeriod(@RequestBody SearchPoint sp) {
+		 
+		 System.out.println("view에서 받아오는 so객체 : " + sp);
+
+		 // List<SearchPoint> 검색
+		 List<SearchPoint> searchPPList = mService.selectSearchList(sp);
+		 System.out.println("searchPPList 확인 : " + searchPPList);
+		 
+		 if(searchPPList != null) {
+			 return searchPPList;
+		 }else {
+			 System.out.println("List 못가져옴");
+			 return null;
+		 }
+		  
+		 //return null;
+	 }
+
+	 
 	 // 제휴회원 사업장 페이지로 이동
 	 @GetMapping("/mybus")
 	 public String myBusiness() {
@@ -322,9 +350,47 @@ public class MypageController {
 		 
 
 	 }
+
+	 // 일반회원 - 가계부 페이지로 이동
+	 @GetMapping("/wallet")
+	 public ModelAndView walletFirstView(@ModelAttribute AccountBook ab,
+				 					     ModelAndView mv) { 
+		 
+		 // 1. 사용자별 가계부 최근 날짜 가져오기
+		 AccountBook recentDate = mService.selectRecentDate(ab);
+		 //System.out.println(recentDate);
+		 
+		 ab.setSearchDate(recentDate.getAccTripDate());
+		 
+		 List<AccountBook> abList = mService.selectAccountList(ab);
+		 //System.out.println("abList 객체 확인 : " + abList);
+		 
+		 if(abList != null) {
+			 mv.addObject("abList", abList);
+			 mv.setViewName("mypage/mp_Wallet");
+		 }else {
+			 mv.addObject("msg", "가계부 조회 오류입니다.");
+			 mv.setViewName("mypage/mp_Wallet");
+		 }
+		 return mv;
+	}
 	 
-	
-	 
-	 
+	 // 일반회원 - 새로운 가계부 내역 넣기
+	 @PostMapping("/inputNewAB")
+	 public String inputNewAccBook(@ModelAttribute AccountBook ab,
+			 					   Model model) {
+		 
+		 System.out.println("넘어오는 ab객체 확인 : " +ab);
+		 //DB에 insert
+		 int result = mService.insertNewAcc(ab);
+		 
+		 if(result>0) {
+			model.addAttribute("msg", "등록성공!");
+			return "redirerct:/mypage/wallet";
+		 } else {
+			 model.addAttribute("msg", "등록에 실패했습니다. 다시 시도해주세요.");
+		     return "/mypage/mp_Wallet";
+		 }
+	 }
 	 					  
 }

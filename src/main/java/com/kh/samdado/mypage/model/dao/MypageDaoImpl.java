@@ -1,20 +1,22 @@
 package com.kh.samdado.mypage.model.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.samdado.business.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.SearchPoint;
 import com.kh.samdado.user.model.vo.User;
 
 @Repository
@@ -44,8 +46,7 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public int insertNewPayment(Income ic) {
 		return sqlSession.insert("mypageMapper.insertNewPayment", ic);
-	}	
-	
+	}
 
 	//제휴회원 - 포인트 DB에 포인트 넣어주는 메소드
 	@Override
@@ -63,6 +64,12 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public List<Point> selectPointList(String usno) {
 		return sqlSession.selectList("mypageMapper.selectPointList", usno);
+	}
+
+	//제휴회원 - point 테이블에 검색결과 조회하러 가기
+	@Override
+	public List<SearchPoint> selectSearchList(SearchPoint sp) {
+		return sqlSession.selectList("mypageMapper.selectSearchList", sp);
 	}
 	
 	// 제휴회원 - 사업장 조회 메소드
@@ -91,14 +98,21 @@ public class MypageDaoImpl implements MypageDao{
 	
 	// 일반회원 - 가계부 조회 메소드
 	@Override
-	public List<AccountBook> selectAccountList(String usno) {
-		return sqlSession.selectList("mypageMapper.selectAccountList", usno);
+	public List<AccountBook> selectAccountList(AccountBook ab) {
+		return sqlSession.selectList("mypageMapper.selectAccountList", ab);
 	}
 
 	// 일반회원 - 가계부 입력 메소드
 	@Override
-	public int insertNewAcc(AccountBook acc) {
-		return sqlSession.insert("mypageMapper.selectAccountList", acc);
+	public int insertNewAcc(AccountBook ab) {
+		return sqlSession.insert("mypageMapper.insertNewAcc", ab);
 	}
+
+	// 일반회원 - 가계부 가장 최근 날짜 가져오기
+	@Override
+	public AccountBook selectRecentDate(AccountBook ab) {
+		return sqlSession.selectOne("mypageMapper.selectRecentDate", ab);
+	}
+
 
 }

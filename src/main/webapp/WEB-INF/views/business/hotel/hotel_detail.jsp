@@ -71,137 +71,7 @@
         }
 
 
-        /* 네비 css */
-        #back {
-            width: 100%;
-            height: auto;
-            margin: auto;
-            top: 0;
-        }
-
-        header {
-            position: fixed;
-            width: 240px;
-            top: 0;
-            left: 1200px;
-            height: 100%;
-            -webkit-transition-duration: 0.2s;
-            -webkit-transition-timing-function: ease;
-            transition-duration: 0.2s;
-            transition-timing-function: ease;
-            color: black;
-            border-left: 3px solid black;
-            z-index: 1;
-        }
-
-        .down {
-            -webkit-transition-duration: 0.2s;
-            -webkit-transition-timing-function: ease;
-            transition-duration: 0.2s;
-            transition-timing-function: ease;
-        }
-
-        .down #navi {
-            -webkit-transition-duration: 0.4s;
-            -webkit-transition-timing-function: ease;
-            transition-duration: 0.4s;
-            transition-timing-function: ease;
-        }
-
-        .center {
-            text-align: center;
-        }
-
-        .right {
-            text-align: right;
-            position: relative;
-            right: 10%;
-            margin: auto;
-        }
-
-        #navi-title {
-            font-size: 40px;
-            font-weight: bold;
-        }
-
-        #navi-menu {
-            font-size: 15px;
-            font-weight: 500;
-        }
-
-        .navi {
-            height: 600px;
-            /* border : 1px solid pink; */
-            margin-left: 2%;
-            width: 100%;
-        }
-
-        .img {
-            position: relative;
-            left: 70%;
-        }
-
-        /* 반응형 */
-        @media (max-width:1920px) {
-            header {
-                position: fixed;
-                width: 240px;
-                top: 0;
-                left: 87%;
-                height: 100%;
-                -webkit-transition-duration: 0.2s;
-                -webkit-transition-timing-function: ease;
-                transition-duration: 0.2s;
-                transition-timing-function: ease;
-                color: black;
-                border-left: 3px solid black;
-                z-index: 1;
-            }
-        }
-
-        @media (max-width:1650px) {
-            header {
-                position: fixed;
-                width: 240px;
-                top: 0;
-                left: 85%;
-                height: 100%;
-                -webkit-transition-duration: 0.2s;
-                -webkit-transition-timing-function: ease;
-                transition-duration: 0.2s;
-                transition-timing-function: ease;
-                color: black;
-                border-left: 3px solid black;
-                z-index: 1;
-            }
-        }
-
-        @media (max-width:1440px) {
-            header {
-                position: fixed;
-                width: 240px;
-                top: 0;
-                left: 83%;
-                height: 100%;
-                -webkit-transition-duration: 0.2s;
-                -webkit-transition-timing-function: ease;
-                transition-duration: 0.2s;
-                transition-timing-function: ease;
-                color: black;
-                border-left: 3px solid black;
-                z-index: 1;
-            }
-
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            height: auto;
-            box-sizing: border-box;
-            background: white;
-            color: black;
-        }
+        
 
         /* 컨테이너 */
         #main-container {
@@ -271,7 +141,9 @@
             margin-top: 0;
         }
 
-
+		.small_view label{
+			line-height: 20px;
+		}
 
         .small_view_btn {
             border: 0;
@@ -601,21 +473,9 @@
 </head>
 
 <body>
-    <!-- 혜윤 : 네비 -->
-    <header>
-        <div class="navi">
-            <br><br>
-            <p class="center" id="navi-title">삼다도</p>
-            <p class="center" id="navi-menu">나만의 길 만들기</p>
-            <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
-            <p class="center" id="navi-menu">제주도 필수 예약</p>
-        </div>
-        <div>
-            <img class="img" width="50px" height="50px" src="../resources/images/image_main/logo_g.png">
-            <p class="right" id="navi-menu">들어가기</p>
-            <p class="right" id="navi-menu">회원가입</p>
-        </div>
-    </header>
+   <!-- navi.jsp include -->
+    <jsp:include page="../../common/navi.jsp"/>
+    
     <section id="main-container">
         <!-- 상세페이지 헤더 -->
         <div id="ho_header">
@@ -807,7 +667,7 @@
                 <br>
                 <b>110,000원</b><br>
                 <b>1박당 객실 요금</b><br><br>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                     예약하기
                 </button>
             </div>
@@ -922,6 +782,94 @@
                     <!--체크인날짜-->
                     <div class="start-div">
                         <label for="startDate">체크인</label>
+                        <input type="date" id="startDate" name="startDate" onchange="startDate(this)">
+                    </div>
+
+                    <!--체크아웃날짜-->
+                    <div class="end-div">
+                        <label for="endDate">체크아웃</label>
+                        <label id="error" class="error">체크아웃날짜는 체크인날짜 이전 일 수 없습니다.</label>
+                        <input type="date" id="endDate" name="endDate" onchange="endDate(this)">
+                    </div>
+                </div>
+
+                <div class="modal-body2">
+                    <label>80,000원 / 박</label><br>
+                    <div class="modal-book">
+                        <div class="checkin">
+                            <label>체크인</label><br>
+                            <b id="startDateResult"></b>
+                        </div>
+                        <div class="checkout">
+                            <label>체크아웃</label><br>
+                            <b id="endDateResult"></b>
+                        </div>
+                    </div>
+                    <div class="modal-book2">
+                        <div class="people">
+                            <label>인원 : </label>
+                            <label id ="result"></label>                            
+                        </div>
+                        <div class="people2">
+                            <select id="selectBox" onchange="handleOnChange(this)">
+                                <option value="0명">인원</option>
+                                <option value="1명">1명</option>
+                                <option value="2명">2명</option>
+                                <option value="3명">3명</option>
+                                <option value="4명">4명</option>
+                                <option value="5명">5명</option>
+                                <option value="6명">6명 이상</option>
+                            </select>
+                        </div>
+                    </div>
+                    <label>80,000원 * </label>
+                    <label id="travleResult"></label>
+                    <br>
+                    <b>총 합계 : </b>
+                    <b id="payResult"></b>
+                    <button class="payBtn">결제하기</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+	    function startDate(e) {	  	  
+	  	  const value = e.value;	  	  
+	  	  document.getElementById('startDateResult').innerText
+	  	    = value;
+	  	}
+	    
+	    function endDate(e) {
+		  	  const value = e.value;		  	  
+		  	  document.getElementById('endDateResult').innerText
+		  	    = value;
+		  	  
+		  	}
+
+	    function handleOnChange(e) {
+	    	  const value = e.value;	    	  
+	    	  document.getElementById('result').innerText
+	    	    = value;
+	    	}
+    </script>
+    
+    <!-- Modal2 -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="../resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
+                    <h2 class="modal-title" id="exampleModalLabel">안녕.</h2>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                </div>
+                <div class="modal-body">
+                    <!--체크인날짜-->
+                    <div class="start-div">
+                        <label for="startDate">체크인</label>
                         <input type="date" id="startDate" name="startDate">
                     </div>
 
@@ -994,6 +942,50 @@
             <hr>
             <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
         </footer>
+        
+        <script>
+
+  	$("#payBtn").click(function() {
+  		
+  		var name = $('input[name="cAmount"]:checked').val();
+  		
+  		var amount = 0;
+  		if(name == '3만원 충전'){
+  			amount = 300;
+  		} else if(name == '6만원 충전'){
+  			amount = 200;
+  		} else{
+  			amount = 100;
+  		}
+  		
+  		console.log(name);
+  		
+	    var IMP = window.IMP;
+	    IMP.init('imp34313892');
+	    IMP.request_pay({
+	        pg : 'html5_inicis',
+	        pay_method : 'card',
+	        merchant_uid : 'merchant_' + new Date().getTime(),
+	        name : name,
+	        amount : amount,
+	        buyer_email : "${loginUser.usemail}",
+	        buyer_name : "${loginUser.usname}",
+	        buyer_tel : "${loginUser.usphone}",
+	        buyer_addr : '',
+	        buyer_postcode : ''
+	    }, function(rsp) {
+	        if ( rsp.success ) {
+	            var msg = '결제가 완료되었습니다!';
+	            msg += '결제 금액 : ' + rsp.paid_amount;
+	            location.href = '${contextPath}/mypage/payment?amount='+amount+'&item='+name+'&usno='+${loginUser.usno};
+	        } else {
+	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
+	        }
+	    
+	        alert(msg);
+	    });
+  	});
+    </script>
 
 
 

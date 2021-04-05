@@ -5,10 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!--jQuery-->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
 <style>
 /* 푸터 */
     footer{
@@ -338,7 +335,8 @@
 			
 		<form action="${ contextPath }/business/restaurant_insert" id="writeForm" method="post" enctype="multipart/form-data">
             
-            <input type="hidden" name="us_no" value="${ loginUser.us_no }">
+            <input type="hidden" name="us_no" value="${ loginUser.usno }">
+        	<input type="hidden" name="bus_category" value="R">
             
             <!-- 사업장명 -->
             <div class="signup-div">
@@ -370,17 +368,30 @@
                     <input type="text" id="address3" name="bus_address" class="postcodify_details">
                 </span>
             </div>
+            
+            <!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
+			<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+			<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
+			<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+            
+            <!-- 전화번호 -->
+            <div class="signup-div">
+                <h3 class="join-title"><label>전화번호</label></h3>
+                <span class="box int_address">
+                    <input type="text" id="bus_phone" name="bus_phone" class="int" placeholder="000-000-0000">
+                </span>
+            </div>
              
             <!-- 카테고리 -->
             <div class="signup-div">
             	<h3 class="join-title"><label for="category">카테고리</label></h3>
-                <select class="box int_name" id="category" name="catagory">
+                <select class="box int_name" id="category" name="res_category">
                     <option value="select" selected>선택</option>
-                    <option value="select">한식</option>
-                    <option value="select">중식</option>
-                    <option value="select">양식</option>
-                    <option value="select">일식</option>
-                    <option value="select">기타</option>
+                    <option value="korea">한식</option>
+                    <option value="china">중식</option>
+                    <option value="us">양식</option>
+                    <option value="japen">일식</option>
+                    <option value="etc">기타</option>
                 </select>
             </div>
             
@@ -402,38 +413,38 @@
             </div>
 
             <!-- 매장사진 -->
-            <div class="signup-div">
+            <!--<div class="signup-div">
                 <h3 class="join_title"><label for="mainPhoto">매장사진</label></h3>
                 <span class="photo">
                     <input type="file"   id="mainPhoto" class="int" maxlength="16">
                 </span>
-			</div>
+			</div> -->
             
             <!-- 추가사진 -->
-            <div class="signup-div">
+            <!-- <div class="signup-div">
                 <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
                 <span class="photo">
                     <input type="file"  name="res_add_file" id="mobile" class="int" maxlength="16">
                 </span>
                 <span class="error_next_box"></span>    
-            </div>
+            </div> -->
             
 
             <!-- 추가사진 -->
-            <div class="signup-div">
+            <!-- <div class="signup-div">
                 <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
                 <span class="photo">
                     <input type="file"  name="res_add_file" id="mobile" class="int" maxlength="16">
                 </span>
                 <span class="error_next_box"></span>    
-            </div>
+            </div> -->
 
             <!-- 소개글 -->
             <div class="signup-div">
                 <h3 class="join_title"><label for="phoneNo">소개글</label></h3>
                 <textarea id="intArea" name="bus_intro" class="intArea" rows="10" cols="64" ></textarea>
-                <span class="error_next_box"></span>    
             </div>
+            
             <!-- 등록, 뒤로가기 버튼 -->
             <div class="btn_area">
               <!-- Optional JavaScript; choose one of the two! -->
@@ -477,10 +488,18 @@
         </div>        
     </div>
     
-	<!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
-	<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-	<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
-	<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	<!--은화 : footer-->

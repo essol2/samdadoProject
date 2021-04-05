@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -173,34 +174,56 @@
 
                 <div id="route_select">
                 	<br>
-                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get">
+                	<c:if test="${ param.area == 'east' }">
+                		<c:set var="check1" value="checked"/>
+                	</c:if>
+                	<c:if test="${ param.area == 'west' }">
+                		<c:set var="check2" value="checked"/>
+                	</c:if>
+                	<c:if test="${ param.area == 'south' }">
+                		<c:set var="check3" value="checked"/>
+                	</c:if>
+                	<c:if test="${ param.area == 'north' }">
+                		<c:set var="check4" value="checked"/>
+                	</c:if>
+                	
+                	<c:if test="${ param.thema == 'sightseeing' }">
+                		<c:set var="check5" value="checked"/>
+                	</c:if>
+                	<c:if test="${ param.thema == 'break' }">
+                		<c:set var="check6" value="checked"/>
+                	</c:if>
+                	<c:if test="${ param.thema == 'beach' }">
+                		<c:set var="check7" value="checked"/>
+                	</c:if>
+                 	
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="radio" name="area" id="east" value="east">
+                		<input type="radio" name="area" id="east" value="east" ${ check1 }>
                 		<label for="east">  동부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="west" value="west" ${ check2 }>
                 		<label for="west">  서부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="south" value="south" ${ check3 }>
                 		<label for="south">  남부</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="area" id="north" value="north" ${ check4 }>
                 		<label for="north">  북부</label>
                 		
                 		<br>
                 		
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold" stype="padding: 10%;">주제</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="radio" name="thema" id="sightseeing" value="sightseeing">
+                		<input type="radio" name="thema" id="sightseeing" value="sightseeing" ${ check5 }>
                 		<label for="sightseeing">  관광</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="break" value="break" ${ check6 }>
                 		<label for="break">  휴식</label>
-                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach">
+                		&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="thema" id="beach" value="beach" ${ check7 }>
                 		<label for="beach">  바다</label>
                 		
                 		<br>
                 		
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">날짜</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                		<input type="date" name="routeDate" id="routeDate" value="routeDate">
+                		<input type="date" name="routeDate" id="routeDate" value="${routeDate}">
                 		
                 		<button class="_btn" id="searchbtn">검색하기</button>
-                	</form>
+                	
                 </div>
                 <br>
                 
@@ -212,103 +235,36 @@
                 
     	
                 <br><br><br>
-                <div id="content_bottom">
-                    <table style="width: 100%;">
-                        <th style="width: 50%;">
-                            <label class="content-title" id="title1" >추천 길</label>
-                            <div class="c_border" id="left-border">
-                               <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
-                                   <tr>
-                                       <td>
-                                           <img src="../resources/images/image_route/만장굴 1.png">
-                                        </td>
-                                        <td>
-                                            <div class="spot_border">
-                                                <p class="spot_title">만장굴</p>
-                                                <button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-                                            </div>
-                                        </td>
-                                    </tr>
+				<div id="content_bottom">
+					<table style="width: 100%;">
+						<th style="width: 50%;">
+							<label class="content-title" id="title1" >추천 길</label>
+							<div class="c_border" id="left-border">
+								<table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
+									<c:forEach var="r" items="${ list }">
+										<tr>
+											<td>
+												<img src="${ r.spot_path }${ r.spot_oname }">
+											</td>
+											<td>
+												<div class="spot_border">
+													<p class="spot_title">${ r.spot_title }</p>
+													<button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
+												</div>
+											</td>
+										</tr>
 
-                                    <tr>
-                                       <td colspan="2">
-                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
-                                           <span class="detail">26.8km</span>
-                                           <span class="detail">59분</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <img src="../resources/images/image_route/우도 1.png">
-                                        </td>
-                                        <td>
-                                            <div class="spot_border">
-                                                <p class="spot_title">우도</p>
-                                                <button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-                                            </div>
-                                        </td>
-                                    </tr>
+	                                    <tr>
+	                                       <td colspan="2">
+	                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
+	                                           <span class="detail">26.8km</span>
+	                                           <span class="detail">59분</span>
+	                                        </td>
+	                                    </tr>
+                               </c:forEach>
                                    
-                                    <tr>
-                                       <td colspan="2">
-                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
-                                           <span class="detail">26.8km</span>
-                                           <span class="detail">59분</span>
-                                        </td>
-                                    </tr>
 
-                                    <tr>
-                                        <td>
-                                            <img src="../resources/images/image_route/성산일출봉 1.png">
-                                        </td>
-                                        <td>
-                                            <div class="spot_border">
-                                                <p class="spot_title">성산일출봉</p>
-                                                <button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2">
-                                            <img id="arrow" src="../resources/images/image_route/arrow.png">
-                                            <span class="detail">26.8km</span>
-                                            <span class="detail">59분</span>
-                                         </td>
-                                     </tr>
-
-                                    <tr>
-                                        <td>
-                                            <img src="../resources/images/image_route/광치기해변 1.png">
-                                        </td>
-                                        <td>
-                                            <div class="spot_border">
-                                                <p class="spot_title">광치기해변</p>
-                                                <button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2">
-                                            <img id="arrow" src="../resources/images/image_route/arrow.png">
-                                            <span class="detail">26.8km</span>
-                                            <span class="detail">59분</span>
-                                         </td>
-                                     </tr>
-
-                                    <tr>
-                                        <td>
-                                            <img src="../resources/images/image_route/섭지코지 1.png">
-                                        </td>
-                                        <td>
-                                            <div class="spot_border">
-                                                <p class="spot_title">섭지코지</p>
-                                                <button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    
 
                                    <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: 10%; font-size: 16px;">총 이동 거리 40.1km </p></td></tr>
                                    <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: -5%; font-size: 16px; margin-bottom: 10%;">예상 이동 시간 83분</p></td></tr>

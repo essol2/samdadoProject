@@ -1,5 +1,8 @@
 package com.kh.samdado.user.model.service;
 
+import java.util.List;
+
+import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.user.model.vo.User;
 
 public interface UserService {
@@ -40,7 +43,8 @@ public interface UserService {
 	  // 총 회원수 구하기
 	  public int countUser();
 
-	
+	  // 총 회원 리스트 출력
+	  public List<User> selectAllUserList(PageInfo pi);
 
 
 

@@ -626,7 +626,7 @@
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
-	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
             	</div>
                 
                 <div>
@@ -646,7 +646,7 @@
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
-	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
 	                
 	                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
 		                <ul class="ul-class">                
@@ -678,7 +678,7 @@
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
-	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
             	</div>
                 
                 <div>
@@ -732,14 +732,16 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <img src="resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
-            <h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2>
-            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;">
+		            <div class="col-5"><img src="resources/images/image_main/logo_g.png"></div>
+		            <div class="col-8" style="margin-top: 10%;"><h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2></div>
+	            </div>
             </div>
             
            <form action="${ contextPath }/user/join" method="post" id="joinForm" onsubmit="return joinValidate();">
-             <div class="modal-body">
-                <!--이름-->
+             <div class="addMember-modal-inner-body" style="width: 80%;  margin: auto;">
+	             <div class="modal-body">
+	                <!--이름-->
 	                <div class="name_div">
 	                    <label for="id">* 이름</label>
 	                    <label id="test_name_label" class="test_div"></label>
@@ -790,6 +792,7 @@
 	                    <label id="test_business_no_label" class="test_div"></label>
 	                    <input type="text" id="business_no" name="busno" placeholder="000-00-00000">
 	                </div>            
+			            </div>
 		            </div>
 		            <div class="modal-footer">
 		                <label><input type="checkbox" name="agreement" id="agreement_checkbox" value="개인정보수집동의" required>개인정보수집 동의</label>
@@ -806,54 +809,59 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <img src="resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
-            <h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2>
-            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+	            <div class="login-modal-inner-header" style="display: flex; margin: auto;">
+		            <div class="col-5"><img src="resources/images/image_main/logo_g.png"></div>
+		            <div class="col-8" style="margin-top: 10%;"><h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2></div>
+	            </div>           
             </div>
            
              <form action="${ contextPath }/user/login" method="post" id="loginForm"> 
-	            <div class="modal-body">
-	                <!--아이디-->
-	                <div class="id_div">
-	                    <label for="id">* 아이디</label>
-	                    <label id="test_id_label" class="test_div"></label>
-	                    <input type="text" id="id" name="usid" placeholder="영소문자로 시작하는 4~16글자 입력(숫자 포함 가능)" required>
-	                </div>
-	                <!--비밀번호-->
-	                <div class="pwd_div">
-	                    <label for="pwd">* 비밀번호</label>
-	                    <label id="test_pwd_label" class="test_div"></label>
-	                    <input type="password" id="pwd" name="uspwd" placeholder="영어대소문자/숫자/특수문자를 포함한 8~16자" required>
-	                </div> 
-	
-	                <br><br>
-	
-	                <!--간편 로그인-->
-	                <div class="easy_login_div">
-	                    <label for="pwd">간편 로그인</label> <br>
-	                    <div class="easy_login_imgs">
-	                        <div class="container">
-	                            <div class="row">
-		                            <div class="col-sm">
-		                               <a href="${ contextPath }/user/easyLogin/google"><img src="resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
+             
+	            <div class="login-modal-inner-body" style="width: 80%;  margin: auto;">
+		            <div class="modal-body">
+		                <!--아이디-->
+		                <div class="id_div">
+		                    <label for="id">* 아이디</label>
+		                    <label id="test_id_label" class="test_div"></label>
+		                    <input type="text" id="id" name="usid" placeholder="영소문자로 시작하는 4~16글자 입력(숫자 포함)" required>
+		                </div>
+		                <!--비밀번호-->
+		                <div class="pwd_div">
+		                    <label for="pwd">* 비밀번호</label>
+		                    <label id="test_pwd_label" class="test_div"></label>
+		                    <input type="password" id="pwd" name="uspwd" placeholder="영어대소문자/숫자/특수문자를 포함한 8~16자" required>
+		                </div> 
+		
+		                <br><br>
+		
+		                <!--간편 로그인-->
+		                <div class="easy_login_div">
+		                    <label for="pwd">간편 로그인</label> <br>
+		                    <div class="easy_login_imgs">
+		                        <div class="container">
+		                            <div class="row">
+			                            <div class="col-sm">
+			                               <a href="${ contextPath }/user/easyLogin/google"><img src="resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
+			                            </div>
+			                              <div class="col-sm">
+			                               <a id="naver_id_login" href="${ contextPath }/user/easyLogin/naver"><img src="resources/images/image_user/naver.png" alt=""> 네이버</a>
+			                              </div>
+			                              <div class="col-sm">
+			                                <a href="${ contextPath }/user/easyLogin/kakao"><img src="resources/images/image_user/kakao.png" alt=""> 카카오</a>
+			                              </div>
 		                            </div>
-		                              <div class="col-sm">
-		                               <a id="naver_id_login" href="${ contextPath }/user/easyLogin/naver"><img src="resources/images/image_user/naver.png" alt=""> 네이버</a>
-		                              </div>
-		                              <div class="col-sm">
-		                                <a href="${ contextPath }/user/easyLogin/kakao"><img src="resources/images/image_user/kakao.png" alt=""> 카카오</a>
-		                              </div>
-	                            </div>
-	                          </div>
-	                    </div>
-	                </div> 
-	            </div>
+		                          </div>
+		                    </div>
+		                </div> 
+	            	</div>
+	           </div>
 	            <div class="modal-footer">
 	                <a href="${ contextPath }/user/find" id="find_id_pwd">아이디/비밀번호 찾기</a>
 	
 	                <input type="submit" id="gologinBtn" value="로그인">
 	                <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
 	            </div>
+	          
 	         </form>   
         </div>
         </div>

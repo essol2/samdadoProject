@@ -18,10 +18,6 @@ li {
     color: black;
 }
 
-#right_4contents .card:hover {
-    background-color: rgb(190, 192, 192);
-}
-
 .id_div {
     display: flex;
 }
@@ -36,6 +32,8 @@ li {
     width: 150px;
 }
 
-#updateInfoBtn{
-    margin-left: 34%;
+#updateInfoBtn {
+	
+	margin-left : 43.5%;
+	
 }

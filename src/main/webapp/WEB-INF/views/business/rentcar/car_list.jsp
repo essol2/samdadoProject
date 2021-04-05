@@ -387,7 +387,7 @@
 
         .cover {
             width: 70px;
-            height: 23px;
+            height: 33px;
             border: 1px solid black;
             border-radius: 20%;            
         }
@@ -396,6 +396,7 @@
             text-decoration: none;
             color: black;
             font-family: 'GmarketSansBold' !important;
+            line-height:0px;
         }
 
         .moreBtn {
@@ -416,35 +417,21 @@
 </head>
 
 <body>
-    <!-- 혜윤 : 네비 -->
-    <div id="back">
-        <header>
-            <div class="navi">
-                <br><br>
-                <p class="center" id="navi-title">삼다도</p>
-                <p class="center" id="navi-menu">나만의 길 만들기</p>
-                <p class="center" id="navi-menu">전체 제주 관광지 보기</p>
-                <p class="center" id="navi-menu">제주도 필수 예약</p>
-            </div>
-            <div>
-                <img class="img" width="50px" height="50px" src="../resources/images/image_main/logo_g.png">
-                <p class="right" id="navi-menu">들어가기</p>
-                <p class="right" id="navi-menu">회원가입</p>
-            </div>
-        </header>
+     <!-- navi.jsp include -->
+    <jsp:include page="../../common/navi.jsp"/>
 
         <!-- 전체 section-->
         <section id="main-container">
             <nav id="choise-nav">
                 <ul id="choise">
                     <li>
-                        <div class="cover" ><a href='${ contextPath }/bussiness/hotel_list'>숙박</a></div>
+                        <div class="cover" ><a href='${ contextPath }/business/hotel_list'>숙박</a></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/bussiness/tour_list'>관광지</a></div>
+                        <div class="cover"><a href='${ contextPath }/business/tour_list'>관광지</a></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/bussiness/restaurant_list'>음식점</a></div>
+                        <div class="cover"><a href='${ contextPath }/business/restaurant_list'>음식점</a></div>
                     </li>
                     <li>
                         <div class="cover" style="background-color: rgb(70, 115, 85);"><label style="color: white;">렌트카</label></div>
@@ -511,7 +498,7 @@
 
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                    <div class='profile' onclick="location.href='${ contextPath }/bussiness/car_detail'">
+                    <div class='profile' onclick="location.href='${ contextPath }/business/car_detail'">
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
                         <img class="image" src="../resources/images/image_listpage/rentcar1.png">
                         <b>★4.90(후기 99+개)</b>
@@ -582,7 +569,7 @@
             <hr>
             <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
         </footer>
-</div>
+
 
 </body>
 

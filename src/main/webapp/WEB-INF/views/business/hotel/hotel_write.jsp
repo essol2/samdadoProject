@@ -6,6 +6,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>samdado</title>
+<!--jQuery-->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <style>
@@ -325,143 +329,133 @@
         color: #ffffff;
         font-weight: bold;
     }
+    
+    #amenity_div{
+    	dispaly:none;
+    }
 </style>
 <body>
 	<!-- navi.jsp include -->
     <jsp:include page="../../common/navi.jsp"/>
-    
+    <!-- 메인 -->
 	<div class="main-container">
 	  <div class="main-wrap">
 	    <div class="logo-wrap" id="logo-div">
 	        <label class="title_img">관광지 등록페이지</label>
 	    </div>
+	    
+		<form action="${ contextPath }/business/hotel_insert" id="writeForm" method="post" enctype="multipart/form-data">
 	    <section class="signup-section-wrap">
-	
+	       	
+	       	<input type="hidden" name="us_no" value="${ loginUser.usno }">
+        	<input type="hidden" name="bus_category" value="H">
+	       	
 	        <!-- 사업장명 -->
 	        <div class="signup-div">
 	            <h3 class="join_title">
 	                <label for="id">사업장명</label>
 	            </h3>
 	            <span class="box int_id">
-	                <input type="text" id="id" class="int">               
-	            
-	            <span class="error_next_box"></span>
+	                <input type="text" id="id" class="int" name="bus_name">               
+	           	</span>
 	        </div>
 	
-	        <!-- 주소 -->
-	        <div class="signup-div">
-	            <h3 class="join_title"><label for="pswd1">주소</label></h3>
-	            <span class="box int_pass" style=" display: -webkit-inline-box;">
-	                <input type="text" id="pswd1" class="int" readonly>
-	                <button id="searchBtn" style="width: 40px; height: 30px;">검색</button>
-	                <span id="alertTxt"></span>                    
-	            </span>
-	            <span class="error_next_box"></span>
-	        </div>
-	
-	        <!-- 주소 -->
-	        <div class="signup-div">
-	            <h3 class="join_title"><label for="pswd2"></label></h3>
-	            <span class="box int_pass_check">
-	                <input type="text" id="pswd2" class="int" readonly>                    
-	            </span>
-	            <span class="error_next_box"></span>
-	        </div>
-	
-	        <!-- 상세주소 -->
-	        <div class="signup-div">
-	            <h3 class="join_title"><label for="name">상세주소</label></h3>
-	            <span class="box int_name">
-	                <input type="text" id="name" class="int" maxlength="50">
-	            </span>
-	            <span class="error_next_box"></span>
-	        </div>
+	        <!-- 도로명주소 api -->
+            <div class="signup-div">
+                <h3 class="join_title"><label for="address1">우편번호</label></h3>
+                <span class="box int_pass" style=" display: -webkit-inline-box;">
+                    <input type="text" id="address1" name="bus_address" class="postcodify_postcode5" readonly>
+                    <button type="button" id="postcodify_search_button" style="width: 40px; height: 30px;">검색</button>                  
+                </span>
+            </div>
+            <div class="signup-div">
+                <h3 class="join_title"><label for="address2">도로명주소</label></h3>
+                <span class="box int_pass_check">
+                    <input type="text" id="address2" name="bus_address" class="postcodify_address" readonly>                    
+                </span>
+            </div>
+            <div class="signup-div">
+                <h3 class="join_title"><label for="address3">상세주소</label></h3>
+                <span class="box int_name">
+                    <input type="text" id="address3" name="bus_address" class="postcodify_details">
+                </span>
+            </div>
+            
+            <!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
+			<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+			<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
+			<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+            
+	        <!-- 전화번호 -->
+            <div class="signup-div">
+                <h3 class="join-title"><label>전화번호</label></h3>
+                <span class="box int_address">
+                    <input type="text" id="bus_phone" name="bus_phone" class="int" placeholder="000-000-0000">
+                </span>
+            </div>
 	        
-	         <!-- 카테고리 -->
-	         <div class="signup-div">
-	            <h3 class="join-title"><label for="campany-name">카테고리</label></h3>
-	            <select class="box int_name">
+			<!-- 카테고리 -->
+	        <div class="signup-div">
+	            <h3 class="join_title"><label>카테고리</label></h3>
+	            <select class="box int_name" name="hotel_category">
 	                <option value="select" selected>선택</option>
-	                <option value="select">호텔</option>
-	                <option value="select">민박</option>
-	                <option value="select">게스트하우스</option>
+	                <option value="hotel">호텔</option>
+	                <option value="lodge">민박</option>
+	                <option value="guest">게스트하우스</option>
+	                <option value="etc">기타</option>
 	            </select>
-	            <span class="error_next_box"></span>
 	        </div>
 	
 	        <!-- 편의시설 -->
-	        <div class="signup-div">
-	            <h3 class="join_title"><label for="phoneNo">편의시설</label></h3>           
-	                <input type="checkbox" id="bacon" name="bacon" value="bacon">
-	                <label for = "bacon">주차</label>&nbsp;
-	                <input type="checkbox" id="cheese" name="cheese" value="cheese">
-	                <label for = "cheese">편의점</label>&nbsp;
-	                <input type="checkbox" id="onion" name="onion" value="onion">
-	                <label for = "onion">무료인터넷</label>&nbsp;
-	                <input type="checkbox" id="mushroom" name="mushroom" value="mushroom">
-	                <label for = "mushroom">조식</label>&nbsp;
-	                <input type="checkbox" id="mushroom" name="mushroom" value="mushroom">
-	                <label for = "mushroom">TV</label>&nbsp;
-	            <span class="error_next_box"></span>    
+	        <div class="signup-div" >
+	            <h3 class="join_title"><label>편의시설</label></h3>           
+                <input type="checkbox" name="facility" value="parking">
+                <label for = "parking">주차</label>&nbsp;
+                <input type="checkbox" name="facility" value="convenience">
+                <label for = "convenience">편의점</label>&nbsp;
+                <input type="checkbox" name="facility" value="wifi">
+                <label for = "wifi">무료인터넷</label>&nbsp;
+                <input type="checkbox" name="facility" value="breakfast">
+                <label for = "breakfast">조식</label>&nbsp;
+                <input type="checkbox" name="facility" value="tv">
+                <label for = "tv">TV</label>&nbsp;
 	        </div>
 	        
 	        <!-- 입실시간 -->
 	        <div class="signup-div">
-	            <h3 class="join-title"><label for="address">입실시간</label></h3>
+	            <h3 class="join-title"><label for="check_in">입실시간</label></h3>
 	            <span class="box int_address">
-	                <input type="text" id="address" class="int" maxlength="6">
+	                <input type="time" id="check_in" class="int" name="bus_opening">
 	            </span>
-	            <span class="error_next_box"></span>
 	        </div>   
 	
 	       <!-- 퇴실시간 -->
 	        <div class="signup-div">
-	            <h3 class="join-title"><label for="address">퇴실시간</label></h3>
+	            <h3 class="join-title"><label for="check_out">퇴실시간</label></h3>
 	            <span class="box int_address">
-	                <input type="text" id="address" class="int" maxlength="6">
+	                <input type="time" id="check_out" class="int" name="bus_opening">
 	            </span>
-	            <span class="error_next_box"></span>
 	        </div> 
 	
 	        <!-- 매장사진 -->
 	        <div class="signup-div">
-	            <h3 class="join_title"><label for="phoneNo">매장사진</label></h3>
+	            <h3 class="join_title"><label>매장사진</label></h3>
 	            <span class="box int_mobile">
-	                <input type="file" name="main_file" id="mobile" class="int" maxlength="16">
+	                <input type="file" name="uploadFile" id="accomm" class="int">
 	            </span>
-	            <span class="error_next_box"></span>    
 	        </div>
 	        
-	        <!-- 추가사진 -->
-	        <div class="signup-div">
-	            <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-	            <span class="box int_mobile">
-	                <input type="file"  name="add_file" id="mobile" class="int" maxlength="16">
-	            </span>
-	            <span class="error_next_box"></span>    
-	        </div>
-	
-	        <!-- 추가사진 -->
-	        <div class="signup-div">
-	            <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-	            <span class="box int_mobile">
-	                <input type="file"  name="add_file" id="mobile" class="int" maxlength="16">
-	            </span>
-	            <span class="error_next_box"></span>    
-	        </div>
-	
 	        <!-- 소개글 -->
 	        <div class="signup-div">
 	            <h3 class="join_title"><label for="phoneNo">소개글</label></h3>
-	            <textarea id="intArea" name="intro" class="intArea" rows="10" cols="64" ></textarea>
-	            <span class="error_next_box"></span>    
+	            <textarea id="intArea" name="bus_intro" class="intArea" rows="10" cols="64" ></textarea>
 	        </div>
 	
 	        <br>
 	        <hr>
 	
 	        <!-- 객실 추가 버튼 -->
-	        <button href="#" id="room_add">방추가</button>
+	        
 	        
 	        <!-- 객실 등록 -->
 	
@@ -469,89 +463,56 @@
 	         <div class="signup-div">
 	            <h3 class="join-title"><label for="address">객실명</label></h3>
 	            <span class="box int_address">
-	                <input type="text" id="address" class="int" maxlength="6">
+	                <input type="text" id="room_name" class="int" name="room_name">
 	            </span>
-	            <span class="error_next_box"></span>
 	        </div> 
 	        
 	        <!-- 가격 -->
 	        <div class="signup-div">
-	            <h3 class="join_title"><label for="phoneNo">가격</label></h3>
+	            <h3 class="join_title"><label>가격</label></h3>
 	            <span class="box int_mobile">
-	                <input type="tel" id="mobile" class="int" maxlength="16">
+	                <input type="tel" id="room_price" class="int" name=""room_price"">
 	            </span>
-	            <span class="error_next_box"></span>    
 	        </div>
 	        
 	        <!-- 인원 -->
 	        <div class="signup-div">
 	            <h3 class="join_title"><label for="phoneNo">인원</label></h3>
-	            <select class="box int_name">
+	            <select class="box int_name" name="room_people">
 	                <option value="select" selected>선택</option>
-	                <option value="select">2~4명</option>
-	                <option value="select">4~6명</option>
-	                <option value="select">6~8명</option>
-	                <option value="select">기타</option>
+	                <option value="two">2~4명</option>
+	                <option value="four">4~6명</option>
+	                <option value="six">6~8명</option>
+	                <option value="etc">기타</option>
 	            </select>
-	            <span class="error_next_box"></span>    
 	        </div>
 	
 	        <!-- 편의시설 -->
-	        <div class="signup-div">
+	        <div id="hotel_amenity" class="signup-div">
 	            <h3 class="join_title"><label for="phoneNo">내부시설</label></h3>           
-	                <input type="checkbox" id="bacon" name="bacon" value="bacon">
-	                <label for = "bacon">더블사이즈</label>&nbsp;
-	                <input type="checkbox" id="cheese" name="cheese" value="cheese">
-	                <label for = "cheese">편의점</label>&nbsp;
-	                <input type="checkbox" id="onion" name="onion" value="onion">
-	                <label for = "onion">무료인터넷</label>&nbsp;
-	                <input type="checkbox" id="mushroom" name="mushroom" value="mushroom">
-	                <label for = "mushroom">조식</label>&nbsp;
-	                <input type="checkbox" id="mushroom" name="mushroom" value="mushroom">
-	                <label for = "mushroom">TV</label>&nbsp;
-	                <input type="checkbox" id="mushroom" name="mushroom" value="mushroom">
-	                <label for = "mushroom">TV</label>&nbsp;
-	                <input type="checkbox" id="mushroom" name="mushroom" value="mushroom">
-	                <label for = "mushroom">TV</label>&nbsp;
-	            <span class="error_next_box"></span>    
+                <input type="checkbox" id="bacon" name="room_amenity" value="double">
+                <label>더블사이즈</label>&nbsp;
+                <input type="checkbox" id="sigle" name="room_amenity" value="sigle">
+                <label>싱글사이즈</label>&nbsp;
+                <input type="checkbox" id="shower" name="room_amenity" value="shower">
+                <label>샤워실</label>&nbsp;
+                <input type="checkbox" id="ref" name="room_amenity" value="ref">
+                <label>냉장고</label>&nbsp;
+                <input type="checkbox" id="aircon" name="room_amenity" value="aircon">
+                <label>에어컨</label>&nbsp;
+                <input type="checkbox" id="balcony" name="room_amenity" value="balcony">
+                <label>발코니</label>&nbsp;
+                <input type="checkbox" id="breakfast" name="room_amenity" value="breakfast">
+                <label>조식</label>&nbsp;
 	        </div>
-	
-	        <!-- 객실사진 -->
+	        
+	        <!-- <!-- 객실사진 -->
 	        <div class="signup-div">
 	            <h3 class="join_title"><label for="phoneNo">객실사진</label></h3>
 	            <span class="box int_mobile">
 	                <input type="file"  name="room_file" id="mobile" class="int" maxlength="16">
 	            </span>
-	            <span class="error_next_box"></span>    
-	        </div>
-	
-	        <!-- 추가사진 -->
-	        <div class="signup-div">
-	            <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-	            <span class="box int_mobile">
-	                <input type="file"  name="room_add_file" id="mobile" class="int" maxlength="16">
-	            </span>
-	            <span class="error_next_box"></span>    
-	        </div>
-	
-	        <!-- 추가사진 -->
-	        <div class="signup-div">
-	            <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-	            <span class="box int_mobile">
-	                <input type="file"  name="room_add_file" id="mobile" class="int" maxlength="16">
-	            </span>
-	            <span class="error_next_box"></span>    
-	        </div>
-	
-	
-	        <!-- 추가사진 -->
-	        <div class="signup-div">
-	            <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-	            <span class="box int_mobile">
-	                <input type="file"  name="room_add_file" id="mobile" class="int" maxlength="16">
-	            </span>
-	            <span class="error_next_box"></span>    
-	        </div>
+	        </div> -->
 	
 	        <!-- 등록, 뒤로가기 버튼 -->
 	        <div class="btn_area">
@@ -566,9 +527,7 @@
 	            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
 	            -->
 	            <!-- Button trigger modal -->
-	            <button type="button" href="#" id="btnJoin" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-	            <a>등록하기</a>
-	            </button>
+	            <button id="btnJoin">등록하기</button>
 	            <!-- Modal -->
 	            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	                <div class="modal-dialog">
@@ -578,7 +537,7 @@
 	                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	                    </div>
 	                    <div class="modal-body">
-	                        카카오톡 결제
+	                       	 카카오톡 결제
 	                    </div>
 	                    <div class="modal-footer">
 	                    <button type="button" class="btn btn-primary">결제하기</button>
@@ -587,12 +546,29 @@
 	                </div>
 	                </div>
 	            </div>
-	            <button type="button" href="#" id="btnJoin" class="btn btn-primary">
-	            <a>뒤로가기</a>
-	            </button>
-	        </div> 
+	            <button type="button" id="btnJoin" class="btn btn-primary">뒤로가기</button>
+	        </div>
+	        </section>
+	        </form> 
 	    </div>        
     </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	<footer>
             <div id="footer_left">
                 <img src="../resources/images/image_footer/footerlogo.png" class="leftImg">
