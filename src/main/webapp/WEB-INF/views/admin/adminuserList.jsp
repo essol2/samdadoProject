@@ -121,6 +121,87 @@
             </div>
               
            <!-- 검색 추가 -->
+           
+            <br> <br>
+
+               <div class="find_user">
+                <h3>회원<span style="color: seagreen;"> 조회 </span>하기</h3>
+                <br>
+                
+                <div class="search_user_div">
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>-------</option>
+                        <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
+	                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원 이름</option>
+	                    <option value="usid" <c:if test="${ param.searchCondition == 'usid' }">selected</c:if>>회원 아이디</option> 
+	                    <option value="usbirth" <c:if test="${ param.searchCondition == 'usbirth' }">selected</c:if>>생년 월일</option>
+	                    <option value="usemail" <c:if test="${ param.searchCondition == 'usemail' }">selected</c:if>>이메일</option>
+	                    <option value="usphone" <c:if test="${ param.searchCondition == 'usphone' }">selected</c:if>>휴대전화</option>
+	                    <option value="uspart" <c:if test="${ param.searchCondition == 'uspart' }">selected</c:if>>회원 구분</option>
+	                    <option value="busno" <c:if test="${ param.searchCondition == 'busno' }">selected</c:if>>사업자등록번호</option>
+	                    <option value="usstatus" <c:if test="${ param.searchCondition == 'usstatus' }">selected</c:if>>회원 상태</option>	                  
+                    </select>
+                    <input type="text" id="searchValue" class="form-control">
+                    <button class="btn btn-secondary" onclick="searchUser();">검색하기</button>
+                </div>
+                
+                <br>
+
+                <table class="table table-borderless" id="resultSearchUserTable">
+                    <thead>
+                        <tr>
+                            <th>회원 번호</th>
+                            <th>회원 이름</th>
+                            <th>회원 아이디</th>
+                            <th>생년 월일</th>
+                            <th>이메일</th>
+                            <th>휴대 전화</th>
+                            <th>회원 구분</th>
+                            <th>사업자등록번호</th>
+                            <th>회원 상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="aul" items="${ searchUserList }">
+		        		  <c:if test="${ sul.uspart ne '관리자' }">
+			                 <tr>
+			                     <th>${ sul.usno }</th>
+			                     <td>${ sul.usname }</td>
+			                     <td>${ sul.usid }</td>           
+			                     <td><fmt:formatDate value='${ sul.usbirth }' type='both' pattern='yyyy-MM-dd' /></td>
+			                     <td>${ sul.usemail }</td>
+			                     <td>${ sul.usphone }</td>
+			                     <td>${ sul.uspart }</td>
+			                     <td>${ sul.busno }</td>
+			                     <td>${ sul.usstatus }</td>
+			                 </tr>
+			               </c:if>
+	               		</c:forEach>  
+	              </tbody>
+                  </table>
+               </div>
+               <br><hr>
+               
+                <!-- 검색 페이지네이션 -->
+                <div class="row-page">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>                       
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        </ul>
+                    </nav>
+                </div>
+               
+               <br><br>
 
         </div>
    

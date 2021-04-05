@@ -58,6 +58,24 @@ public class AdminDaoImpl implements AdminDao {
 		return sqlSession.selectList("adminMapper.adminReportSelect", null, rowBounds);
 	}
 
+	@Override
+	public int updateRstatusToY(Report report) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateRstatusToY", report);
+	}
+
+	@Override
+	public int updateRstatusToYAndRexdate(Report report) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateRstatusToYAndRexdate", report);
+	}
+
+	@Override
+	public int updateRstatusToR(Report report) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateRstatusToR", report);
+	}
+
 	
 
 }

@@ -140,4 +140,36 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	      ORDER BY RDATE
 	</select>
 	
+	<update id="updateRstatusToY" parameterType="Report">
+		UPDATE REPORT
+		   SET
+			   RSTATUS = 'Y',
+			   R_COUNT = + 1
+	     WHERE
+	     	   REPORT_NO = #{report_no}
+	       AND REF_BUS_CODE = #{bus_code}
+	</update>
+	
+	<update id="updateRstatusToR" parameterType="Report">
+		UPDATE REPORT
+		   SET
+			   RSTATUS = 'R'
+	     WHERE
+	     	   REPORT_NO = #{report_no}
+	       AND REF_BUS_CODE = #{bus_code}
+	</update>
+	
+	<update id="updateRstatusToYAndRexdate" parameterType="Report">
+		UPDATE REPORT
+		   SET
+			   RSTATUS = 'Y',
+			   R_COUNT = + 1,
+			   REXDATE = SYSDATE + 7
+	     WHERE
+	     	   REPORT_NO = #{report_no}
+	       AND REF_BUS_CODE = #{bus_code}
+	</update>
+	
+	
+	
 </mapper>

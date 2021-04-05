@@ -252,8 +252,50 @@ public class AdminController {
 		// List<User> allUserList = uService.selectAllUserList();
 		
 		model.addAttribute("allUserList", allUserList);
+		model.addAttribute("pi", pi);
 		
 		return "admin/adminuserList";
+	}
+	
+	
+	// 신고 승인
+	@GetMapping("/admitReport")
+	public String admitReport(@ModelAttribute Report report,
+							Model model) {
+		
+		//System.out.println("신고 승인 report : ???" + report);
+		
+		int result = 0;
+		
+		// 1. 신고 누적 횟수 비교
+		if (report.getR_count() < 2) {
+			// 2_1. rstatus y로 업데이트, r_count + 1
+			result = aService.updateRstatusToY(report);
+		} else {
+			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가
+			result = aService.updateRstatusToYAndRexdate(report);
+		}	
+
+		if (result > 0) model.addAttribute("msg", "신고 승인 처리가 완료되었습니다.");	
+		else throw new AdminException("신고 승인 처리에 실패하였습니다.");
+
+		return "admin/adminReportManage";
+	}
+	
+	// 신고 거절
+	@GetMapping("/rejectReport")
+	public String rejectReport(@ModelAttribute Report report,
+							Model model) {
+		
+		//System.out.println("신고 반려 report : ???" + report);
+		
+		// rstatus r로 업데이트
+		int result = aService.updateRstatusToR(report);
+
+		if (result > 0) model.addAttribute("msg", "신고 반려 처리가 완료되었습니다.");	
+		else throw new AdminException("신고 반려 처리에 실패하였습니다.");
+
+		return "admin/adminReportManage";
 	}
 	
 	
