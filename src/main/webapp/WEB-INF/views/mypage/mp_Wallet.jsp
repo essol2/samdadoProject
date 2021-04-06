@@ -233,6 +233,10 @@
         background-color: white;
         font-size: small;
     }
+    
+    .walletWhoPay{
+    	width : 10%;
+    }
 
     /* The switch - the box around the slider */
     .switch {
@@ -348,6 +352,12 @@
     	position : fixed; left:5%;bottom:10%;
     	box-shadow: 0px 0px 0px 5px lightgray;
     }
+    
+    #btnExport{
+    	width : 100%;
+    	height : 100%;
+    	box-shadow: 0px 0px 0px 5px lightgray;
+    }
    
   #modal {
 	  position:relative;
@@ -420,7 +430,7 @@
 		padding-right : 2%;
 	}
 	
-	#classifyUser, #countDateUser, #accAccompany, #whoPay{
+	#classifyUser, #countDateUser, #accAccompany, #whopay{
 		display : none;
 	}
 	
@@ -455,9 +465,11 @@
                         <td class="unclickedPreWallet"><button class="preWalDate" id="unclickedDate">21.5.4(1일차)</button></td>
                         <td class="unclickedPreWallet"><button class="preWalDate" id="unclickedDate">21.5.4(1일차)</button></td>
                         <td id="forTopBlank">&nbsp</td>
+                        <td><button class="addingNew" id="btnExport"><b>+엑셀다운</b></button></td>
                         <!-- <td class="newWalletBtn"><button class="addingNew" id="addNewDetail"><b>새 예산 넣기 +</b></button></td> -->
                     </tr>
                 </table>
+                <div id="forExcelExport">
                 <table id="walletMidTable" class="mainTable">
                     <thead>
                       <tr>
@@ -487,10 +499,16 @@
                             </label>
                         </td>
           				<td class="walletStatus">${ab.accOneWon}</td>
-          				<td class="walletWhoPay">${ab.whopay}</td>
+	          			<c:if test="${ empty ab.whopay }">
+	          				<td class="walletWhoPay">1인지불</td>
+	          			</c:if>
+	          			<c:if test="${ !empty ab.whopay}">
+	          				<td class="walletWhoPay">${ab.whopay}</td>
+	          			</c:if>
                     </c:forEach>
                     </tbody>
                   </table>
+                  </div>
                   <table id="walletBottomTable" class="mainTable">
                       <tr>
                           <th class="thisWalletPage">일정</th>
@@ -579,7 +597,7 @@
                             		<input type="number" class="inputeda" id="accAccompany" name="accAccompany" style="width:100%;" placeholder="동행인은 몇명인가요?" value="0">
                             	</td>
                 				<td class="inputTd" colspan="2">
-                					<input type="text" class="inputeda" id="whoPay" name="whoPay" style="width:83%;" placeholder="누가계산했나요?">
+                					<input type="text" class="inputeda" id="whopay" name="whopay" style="width:83%;" placeholder="누가계산했나요?">
                 				</td>
                 			</tr>
                 		</table>
@@ -615,7 +633,7 @@
 		$(document).ready(function() {
 		  $('#accClassify').change(function() {
 		    var result = $('#accClassify option:selected').val();
-		    if (result == "byuser") {
+		    if (result == "직접입력") {
 		      $("#classifyUser").show();
 		    } else {
 		      $("#classifyUser").hide();
@@ -626,7 +644,7 @@
 		$(document).ready(function() {
 			$('#accClassify').change(function() {
 			    var result = $('#accClassify option:selected').val();
-			    if (result == "hotel") {
+			    if (result == "숙박") {
 			      $("#countDateUser").show();
 			    } else {
 			      $("#countDateUser").hide();
@@ -647,12 +665,19 @@
 		$(document).ready(function() {
 			$('#accDutch').change(function() {
 			    if ($(this).prop('checked')) {
-			      $("#whoPay").show();
+			      $("#whopay").show();
 			    } else {
-			      $("#whoPay").hide();
+			      $("#whopay").hide();
 			    }
 			}); 
 		}); 
+	</script>
+	<script>
+	$("#btnExport").click(function (e) {
+		window.open('data:application/vnd.ms-excel,' + encodeURIComponent($("#forExcelExport").html()))
+		 e.preventDefault();
+		});
+	
 	</script>
  
 </body>
