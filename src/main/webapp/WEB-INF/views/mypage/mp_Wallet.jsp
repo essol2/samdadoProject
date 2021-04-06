@@ -126,7 +126,7 @@
         background-color:rgba( 255, 255, 255, 0.8 );
         border : 5px solid white;
         width : 77%;
-        height : 550px;
+        height : 1050px;
     }
 
     .mainTable{
@@ -340,6 +340,13 @@
         background-color: white;
         font-size: medium;
     }
+    
+    #addNewDetail{
+    	border-radius : 50%;
+    	width : 100px;
+    	height : 100px;
+    	position : fixed; left:5%;bottom:10%;
+    }
    
   #modal {
 	  position:relative;
@@ -371,7 +378,7 @@
 	
 	#modal .modal_content {
 	  width:860px;
-	  height :530px;
+	  height :580px;
 	  /* margin:100px auto; */
 	  margin-left : auto;
 	  margin-right : auto;
@@ -411,6 +418,14 @@
 		padding-left : 2%;
 		padding-right : 2%;
 	}
+	
+	#classifyUser, #countDateUser, #accAccompany, #whoPay{
+		display : none;
+	}
+	
+	#accompanyTd{
+		width : 230px;
+	}
 </style>
 <body>
     <div id="back">
@@ -434,12 +449,12 @@
             <div id="mainBox">
                 <table id="walletTopTable" class="mainTable">
                     <tr>
-                        <th class="thisWalletPage">예산세우기</th>
+                        <th class="thisWalletPage">여행 일자</th>
                         <td class="clickedPreWallet"><button class="preWalDate" id="clickedDate">21.5.4(1일차)</button></td>
                         <td class="unclickedPreWallet"><button class="preWalDate" id="unclickedDate">21.5.4(1일차)</button></td>
                         <td class="unclickedPreWallet"><button class="preWalDate" id="unclickedDate">21.5.4(1일차)</button></td>
                         <td id="forTopBlank">&nbsp</td>
-                        <td class="newWalletBtn"><button class="addingNew" id="addNewDetail"><b>새 예산 넣기 +</b></button></td>
+                        <!-- <td class="newWalletBtn"><button class="addingNew" id="addNewDetail"><b>새 예산 넣기 +</b></button></td> -->
                     </tr>
                 </table>
                 <table id="walletMidTable" class="mainTable">
@@ -468,7 +483,7 @@
                                 <span class="slider round"></span>
                             </label>
                         </td>
-         
+          				<td class="walletStatus">${ab.accOneWon }</td>
                     </c:forEach>
                     </tbody>
                   </table>
@@ -487,6 +502,10 @@
         </section>
     </div>
     
+    <div id="fixedAddBtn">
+    	<button class="addingNew" id="addNewDetail"><b>+추가하기</b></button>
+    </div>
+    
 	<div id="modal">
 		<div class="modal_content">
 			<div>
@@ -497,29 +516,54 @@
                 		<table id="addNewAccTable" style="margin-right : 5%;">
                 			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">이름 </label></td>
-                				<td class="inputTd" colspan="3">
+                				<td class="inputTd" colspan="4">
                 				<input type="text" class="inputeda" id="accName" name="accName" style="width:90%;" placeholder="넣고자 하는 상품의 이름을 입력해주세요." required></td>
                 			</tr>
                 			<tr>
                 				<td><label for="_pwd" class="inputeda" id="forMargin" style="float:right;">구분</label></td>
-                				<td class="inputTd" colspan="3">
-                				<input type="text" class="inputeda" id="accClassify" name="accClassify" style="width:90%;" placeholder="ex) 교통비, 숙박, 관광, 식비 등!" required></td>
+                				<td class="inputTd" colspan="2">
+                					<select class="inputeda" id="accClassify" name="accClassify" style="width:90%;">
+                					 	<option value="구분" selected> 구분 </option>
+		                				<option value="hotel">숙박</option>
+		                				<option value="vehicle">교통</option>
+		                				<option value="food">식비</option>
+		                				<option value="ticket">관광지 입장권</option>
+		                				<option value="experience">체험권</option>
+		                				<option value="byuser">직접입력</option>
+	                				</select>
+                				</td>
+                				<td id="showThisTd" colspan="2">
+                					<input type="text" class="inputeda" id="classifyUser" name="classifyUser" style="width:83%;" placeholder="직접 입력해주세요!">
+                					<input type="number" class="inputeda" id="countDateUser" name="countDateUser" style="width:83%;" placeholder="몇일치 예약했나요?">
+                				</td>
                 			</tr>
                 			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">가격 </label></td>
-                				<td class="inputTd">
+                				<td class="inputTd" colspan="2">
                 				<input type="text" class="inputeda" id="accWon" name="accWon" style="width:90%;" placeholder="숫자만 입력해 주세요! ex)15000"  required></td>
                 				<td><label for="_id" class="form-label" style="float:right;"> 여행일자 </label></td>
                 				<td class="inputTd"><input type="date" class="inputeda" id="accTripDate" name="accTripDate" style="width:75%;" required></td>
                 			</tr>
                 			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">결제상태 </label></td>
-                				<td class="inputTd">
+                				<td class="inputTd" colspan="2">
 	                				<select class="inputeda" id="accPstatus" name="accPstatus" style="width:90%;">
 		                				<option value="결제완료">결제완료</option>
 		                				<option value="현장결제">현장결제</option>
 	                				</select>
                 				</td>
+                				<td><label for="_id" class="form-label" style="float:right;"> 결제수단 </label></td>
+                				<td class="inputTd">
+                					<select class="inputeda" id="payMethod" name="payMethod" style="width:75%;">
+                					 	<option value="구분" selected> 결제수단 </option>
+		                				<option value="checkCard">체크카드</option>
+		                				<option value="creditCard">신용카드</option>
+		                				<option value="account">계좌이체</option>
+		                				<option value="note">현금</option>
+	                				</select>
+                				</td>
+                			</tr>
+                			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">더치페이 </label></td>
                 				<td class="inputTd"> 
 	                				<label class="switch">
@@ -527,6 +571,12 @@
 	                                	<span class="slider round"></span>
 	                            	</label>
                             	</td>
+                            	<td class="inputTd" id="accompanyTd">
+                            		<input type="number" class="inputeda" id="accAccompany" name="accAccompany" style="width:100%;" placeholder="동행인은 몇명인가요?" value="0">
+                            	</td>
+                				<td class="inputTd" colspan="2">
+                					<input type="text" class="inputeda" id="whoPay" name="whoPay" style="width:83%;" placeholder="누가계산했나요?">
+                				</td>
                 			</tr>
                 		</table>
                 	<input type="hidden" name="usno" id="usno" value="${ loginUser.usno }">
@@ -557,7 +607,49 @@
 		   $("#modal").fadeOut();
 		});      
 	</script>
-	
+	<script>
+		$(document).ready(function() {
+		  $('#accClassify').change(function() {
+		    var result = $('#accClassify option:selected').val();
+		    if (result == "byuser") {
+		      $("#classifyUser").show();
+		    } else {
+		      $("#classifyUser").hide();
+		    }
+		  }); 
+		}); 
+		
+		$(document).ready(function() {
+			$('#accClassify').change(function() {
+			    var result = $('#accClassify option:selected').val();
+			    if (result == "hotel") {
+			      $("#countDateUser").show();
+			    } else {
+			      $("#countDateUser").hide();
+			    }
+			}); 
+		}); 
+		
+		$(document).ready(function() {
+			$('#accDutch').change(function() {
+			    if ($(this).prop('checked')) {
+			      $("#accAccompany").show();
+			    } else {
+			      $("#accAccompany").hide();
+			    }
+			}); 
+		}); 
+		
+		$(document).ready(function() {
+			$('#accDutch').change(function() {
+			    if ($(this).prop('checked')) {
+			      $("#whoPay").show();
+			    } else {
+			      $("#whoPay").hide();
+			    }
+			}); 
+		}); 
+	</script>
  
 </body>
 </html>

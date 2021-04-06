@@ -110,8 +110,8 @@ public class MypageDaoImpl implements MypageDao{
 
 	// 일반회원 - 가계부 가장 최근 날짜 가져오기
 	@Override
-	public AccountBook selectRecentDate(AccountBook ab) {
-		return sqlSession.selectOne("mypageMapper.selectRecentDate", ab);
+	public AccountBook selectRecentDate(String un) {
+		return sqlSession.selectOne("mypageMapper.selectRecentDate", un);
 	}
 
 
