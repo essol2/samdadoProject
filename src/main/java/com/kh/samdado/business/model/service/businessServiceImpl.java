@@ -24,8 +24,7 @@ import com.kh.samdado.common.model.vo.Report;
 @Service
 public class businessServiceImpl implements businessService {
 	
-    @Autowired
-    private businessDao bDao;
+    @Autowired businessDao bDao;
    
 	@Override
 	public int insertAlliance(Alliance a) {
@@ -103,10 +102,10 @@ public class businessServiceImpl implements businessService {
 	}
 
 
+	// 신고하기
 	@Override
-	public int report(Report report) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertReport(Report r) {			
+		return bDao.insertReport(r);
 	}
 
 
@@ -122,6 +121,13 @@ public class businessServiceImpl implements businessService {
 		// TODO Auto-generated method stub
 		return bDao.countReport();
 	}
+
+	@Override
+	public Report findReportStatus(Report r) {		
+		return bDao.findReportStatus(r);
+	}
+
+	
 
 	
 

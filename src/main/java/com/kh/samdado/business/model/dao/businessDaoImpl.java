@@ -98,8 +98,8 @@ public class businessDaoImpl implements businessDao {
 	}
 
 	@Override
-	public int report(Report report) {
-		return sqlSession.insert("businessMapper.report", report);
+	public int insertReport(Report r) {		
+		return sqlSession.insert("businessMapper.insertReport", r);
 	}
 	
 	@Override
@@ -119,6 +119,13 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("businessMapper.countReport");
 	}
+
+	@Override
+	public Report findReportStatus(Report r) {		
+		return sqlSession.selectOne("businessMapper.findReportStatus");
+	}
+
+	
 
 	
 

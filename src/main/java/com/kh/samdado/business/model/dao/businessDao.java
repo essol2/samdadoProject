@@ -16,6 +16,7 @@ import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.user.model.vo.User;
 
 public interface businessDao {
 
@@ -52,7 +53,7 @@ public interface businessDao {
 	public int insertReview(Review review);
 		  
 	// 신고하기
-	public int report(Report report);
+	int insertReport(Report r);
 		  
 	// 찜하기
 	public int jjim(Jjim jjim);
@@ -60,6 +61,11 @@ public interface businessDao {
 	// 지혜
 	// 신고 카운트
 	int countReport();
+	
+	// Report의 rstatus 확인 메소드
+	public Report findReportStatus(Report r);
+
+	
 
 	
 
