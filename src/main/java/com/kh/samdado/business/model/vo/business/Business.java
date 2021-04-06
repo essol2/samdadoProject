@@ -52,4 +52,6 @@ public class Business {
 	private String tour_tema;
 	private int al_no;
 	private String bus_opening;
+	
+	private String usname; // user 테이블 조인
 }

@@ -20,6 +20,7 @@ import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.user.model.vo.User;
 
 @Service
 public class businessServiceImpl implements businessService {
@@ -121,6 +122,12 @@ public class businessServiceImpl implements businessService {
 	public int countReport() {
 		// TODO Auto-generated method stub
 		return bDao.countReport();
+	}
+
+	@Override
+	public List<Business> selectMyBusinessCategory(User loginUser) {
+		// TODO Auto-generated method stub
+		return bDao.selectMyBusinessCategory(loginUser);
 	}
 
 	
