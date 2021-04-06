@@ -60,7 +60,7 @@ public interface MypageDao {
 	public int insertNewAcc(AccountBook ab);
 
 	// 일반회원 - 가계부 가장 최근 날짜 가져오기
-	public AccountBook selectRecentDate(AccountBook ab);
+	public AccountBook selectRecentDate(String un);
 
 
 
