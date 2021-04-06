@@ -205,11 +205,11 @@ public class MypageController {
 	 @ResponseBody
 	 public List<SearchPoint> searchPointPeriod(@RequestBody SearchPoint sp) {
 		 
-		 System.out.println("view에서 받아오는 so객체 : " + sp);
+		 //System.out.println("view에서 받아오는 so객체 : " + sp);
 
 		 // List<SearchPoint> 검색
 		 List<SearchPoint> searchPPList = mService.selectSearchList(sp);
-		 System.out.println("searchPPList 확인 : " + searchPPList);
+		 //System.out.println("searchPPList 확인 : " + searchPPList);
 		 
 		 if(searchPPList != null) {
 			 return searchPPList;
@@ -276,7 +276,7 @@ public class MypageController {
 		 
 		 
 		 
-		 System.out.println(u);
+		// System.out.println(u);
 		 
 		 User loginUser = uService.loginUser(u);
 		 
@@ -358,21 +358,28 @@ public class MypageController {
 		 
 		 // 1. 사용자별 가계부 최근 날짜 가져오기
 		 AccountBook recentDate = mService.selectRecentDate(un);
-		 System.out.println("recentDate check : " + recentDate);
-		 //System.out.println(recentDate);
+		 //System.out.println("recentDate check : " + recentDate);
 		 
-		 ab.setSearchDate(recentDate.getAccTripDate());
-		 
-		 List<AccountBook> abList = mService.selectAccountList(ab);
-		 System.out.println("abList 객체 확인 : " + abList);
-		 
-		 if(abList != null) {
+		 if(recentDate != null) {
+			 ab.setSearchDate(recentDate.getAccTripDate());
+			 //System.out.println("searchDate check : " + ab.getSearchDate());
+			 List<AccountBook> abList= mService.selectAccountList(ab);
+			 //System.out.println("abList check : " + abList);
+			 if(abList != null) {
+				 mv.addObject("abList", abList);
+				 mv.setViewName("mypage/mp_Wallet");
+			 }else {
+				 mv.addObject("msg", "가계부 조회 오류입니다.");
+				 mv.setViewName("mypage/mp_Wallet");
+			 }
+		 } else{
+			 
+			 List<AccountBook> abList= mService.selectAccountList(ab);
+			 //System.out.println(abList);
 			 mv.addObject("abList", abList);
 			 mv.setViewName("mypage/mp_Wallet");
-		 }else {
-			 mv.addObject("msg", "가계부 조회 오류입니다.");
-			 mv.setViewName("mypage/mp_Wallet");
 		 }
+
 		 return mv;
 	}
 	 
@@ -386,17 +393,24 @@ public class MypageController {
 		 //System.out.println("넘어오는 ab객체 확인 : " +ab);
 		 //System.out.println("classifyUser : " + classifyUser);
 		 //System.out.println("countDateUser : " + countDateUser);
+		 
+		 if(classifyUser != null) {
+			 String accClassify = ab.getAccClassify() + classifyUser;
+			 ab.setAccClassify(accClassify);
+		 }
+		 
 		 if(ab.getAccAccompany() != 0) {
 			int oneWon = Math.round(ab.getAccWon() / ab.getAccAccompany());
-			System.out.println(oneWon);
+			//System.out.println(oneWon);
 			ab.setAccOneWon(oneWon);
 		 } else {
 			 ab.setAccOneWon(ab.getAccWon());
-			 System.out.println(ab.getAccOneWon());
+			 //System.out.println(ab.getAccOneWon());
 		 }
+		 
+		 //System.out.println("ab ckeck : " + ab);
 		 //DB에 insert
 		 int result = mService.insertNewAcc(ab);
-		 System.out.println("result check : " + result);
 		 
 		 if(result>0) {
 			model.addAttribute("msg", "등록성공!");
