@@ -461,7 +461,7 @@ public class businessController {
 				// 신고기록이 있을 때	
 				} else {
 					// Rstatus가 n일 경우
-					if(findReportStatus.getRstatus() == "n") {
+					if(findReportStatus.getRstatus().equals("N")) {
 						return "redirect:/main";
 						
 					// Rstatus가 n이 아닐 경우	
