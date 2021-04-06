@@ -167,6 +167,8 @@
         cursor: pointer;
         margin : 0;
         padding: 0;
+        color : white;
+        background-color : #467355;
     }
 
     .clickedPreWallet{
@@ -206,7 +208,7 @@
     }
 
     .walletPayDate{
-        width : 8%;
+        width : 10%;
     }
 
     .walletStatus{
@@ -214,7 +216,7 @@
     }
 
     .walletTouch{
-        width : 6%;
+        width : 8%;
         padding-left : 1%;
     }
 
@@ -225,6 +227,7 @@
     #walletMidTable th{
         background-color: rgb(228, 228, 228);
         color : gray;
+        text-align : center;
     }
 
     #walletMidTable td{
@@ -232,6 +235,11 @@
         padding-bottom: 0.5%;
         background-color: white;
         font-size: small;
+        text-align : center;
+    }
+    
+    .walletAccompany{
+    	width : 5%;
     }
     
     .walletWhoPay{
@@ -459,15 +467,17 @@
 
             <div id="mainBox">
                 <table id="walletTopTable" class="mainTable">
-                    <tr>
-                        <th class="thisWalletPage">여행 일자</th>
-                        <td class="clickedPreWallet"><button class="preWalDate" id="clickedDate">21.5.4(1일차)</button></td>
-                        <td class="unclickedPreWallet"><button class="preWalDate" id="unclickedDate">21.5.4(1일차)</button></td>
-                        <td class="unclickedPreWallet"><button class="preWalDate" id="unclickedDate">21.5.4(1일차)</button></td>
-                        <td id="forTopBlank">&nbsp</td>
-                        <td><button class="addingNew" id="btnExport"><b>+엑셀다운</b></button></td>
-                        <!-- <td class="newWalletBtn"><button class="addingNew" id="addNewDetail"><b>새 예산 넣기 +</b></button></td> -->
-                    </tr>
+                <tr>
+                	<c:forEach var="rd" items="${rdList}" varStatus="rdNum">
+                        <td class="clickedPreWallet">
+                        	<button class="preWalDate" onclick="location.href='${contextPath}/mypage/chpage?atd='+ ${rdNum.index} +'&usno=' + ${loginUser.usno}">
+                        		<fmt:formatDate value="${rd.accTripDate}" type="date" pattern="yyyy-MM-dd"/>
+                        	</button>
+                        	</td>
+                	</c:forEach>
+                	<td id="forTopBlank">&nbsp</td>
+                	<td><button class="addingNew" id="btnExport"><b>+엑셀다운</b></button></td>
+                </tr>
                 </table>
                 <div id="forExcelExport">
                 <table id="walletMidTable" class="mainTable">
@@ -480,6 +490,7 @@
                         <th class="walletStatus">상태</th>
                         <th class="walletTouch">더치페이</th>
                         <th class="walletPerson">1인 가격</th>
+                        <th class="walletAccompany">인원</th> 
                         <th class="walletWhoPay">결제인</th>
                       </tr>
                     </thead>
@@ -493,16 +504,18 @@
                         <td class="walletPayDate"><fmt:formatDate value="${ ab.accTripDate }" type="date" pattern="yyyy-MM-dd"/></td>
                         <td class="walletStatus">${ab.accPstatus }</td>
                         <td class="walletTouch">
-                            <label class="switch" name="dutchSwitch">
+                            <label class="switch">
                                 <input type="checkbox" <c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
                                 <span class="slider round"></span>
                             </label>
                         </td>
           				<td class="walletStatus">${ab.accOneWon}</td>
 	          			<c:if test="${ empty ab.whopay }">
-	          				<td class="walletWhoPay">1인지불</td>
+	          				<td class="walletAccompany"> 1인지불 </td>
+	          				<td class="walletWhoPay">${ loginUser.usname }</td>
 	          			</c:if>
 	          			<c:if test="${ !empty ab.whopay}">
+	          				<td class="walletAccompany"> ${ ab.accAccompany } </td>
 	          				<td class="walletWhoPay">${ab.whopay}</td>
 	          			</c:if>
                     </c:forEach>
@@ -511,13 +524,13 @@
                   </div>
                   <table id="walletBottomTable" class="mainTable">
                       <tr>
-                          <th class="thisWalletPage">일정</th>
-                          <td id="clickedWallet"><button class="preWalDate" id="clickedDate">예산세우기</button></td>
-                          <td id="unClickedWallet"><button class="preWalDate" id="unclickedDate">가계부1</button></td>
-                          <td id="unClickedWallet"><button class="preWalDate" id="unclickedDate">가계부2</button></td>
-                          <td id="forBottomBlank">&nbsp</td>
-                          <td id="numberTd"><input type="number" id="quantityTogether" name="quantity" min="1" max="10" value="3"></td>
-                          <td id="howManyPeople">동행자수</td>
+                         <th style="width : 20%;">금액 계산</th>
+                         <th style="width : 10%">&nbsp</th>
+                         <td style="color : #467355; width : 10%;">총 합계</td>
+                         <td style="width : 20%;"><fmt:formatNumber value="${ts}" pattern="#,###"/></td>
+                         <td style="color : #467355; width : 10%;">1인당 금액</td>
+                         <td style="width : 20%;"><fmt:formatNumber value="${ots}" pattern="#,###"/></td>
+                         
                       </tr>
                   </table>
             </div>
@@ -588,7 +601,7 @@
                 			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">더치페이 </label></td>
                 				<td class="inputTd"> 
-	                				<label class="switch" name="dutchSwitch">
+	                				<label class="switch">
 	                                	<input type="checkbox" id="accDutch" name="accDutch">
 	                                	<span class="slider round"></span>
 	                            	</label>
@@ -673,12 +686,10 @@
 		}); 
 	</script>
 	<script>
-	$("#btnExport").click(function (e) {
-		window.open('data:application/vnd.ms-excel,' + encodeURIComponent($("#forExcelExport").html()))
-		 e.preventDefault();
+		$("#btnExport").click(function (e) {
+			window.open('data:application/vnd.ms-excel,' + encodeURIComponent($("#forExcelExport").html()))
+			 e.preventDefault();
 		});
-	
 	</script>
- 
 </body>
 </html>
