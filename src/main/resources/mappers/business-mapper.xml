@@ -343,6 +343,48 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 	</insert>
 	
+	<insert id="insertReport" parameterType="Report">
+      INSERT
+        INTO Report
+        (
+           REPORT_NO
+        , REP_RES
+        , REP_CONT
+        , RDATE
+        , RSTATUS
+        , REXDATE
+        , R_IMG_PATH
+        , R_IMG_NAME
+        , R_IMG_CNAME
+        , US_NO
+        , R_COUNT
+        , REF_BUS_CODE
+        )
+        VALUES
+        (
+           REP_SEQ_NO.NEXTVAL
+        , #{rep_res}
+        , #{rep_cont}
+        , DEFAULT
+        , DEFAULT
+        , #{r_img_path}
+        , #{r_img_name}
+        , #{r_img_cname}
+        , #{usno}
+        , NULL
+        , #{bus_code}
+        )
+   </insert>
+   
+   <select id="findReportStatus" parameterType="Report" resultType="ReportResultSet">
+         SELECT 
+                *
+        FROM 
+              REPORT
+       WHERE 
+             REF_BUS_CODE = #{bus_code}
+   </select>
+	
 	
 	
 </mapper>
