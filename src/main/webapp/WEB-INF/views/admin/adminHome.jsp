@@ -79,7 +79,7 @@
                     <!-- 달력-->
                     <div class="row" style="padding-top: 4%; padding-right: 7%;">
                     <h1>달력</h1>
-                	 <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
+                	 <h6>최근 날짜 기준으로 10개의 Q&A만 보여집니다.</h6>
                 	 <br><br>
                         <table class="table table-hover">
                           <thead>
@@ -136,7 +136,7 @@
                     <!--막대 그래프(총 매출)-->
                      <div class="row" style="padding-top: 4%; padding-right: 7%; padding-bottom: 5%;">
                      <h1>최근 6개월 매출</h1>
-                	 <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
+                	 <h6>최근 날짜 기준으로 6개월 간의 매출이 보여집니다.</h6>
                 	 <br>
                         <!--차트 그려지는 영역-->
                         <canvas id="myBarChart" width="400" height="300"></canvas>
@@ -189,7 +189,7 @@
             <div class="row" id="D">
                 <div class="col-5" id="G">
                 <h1>Q&A</h1>
-                <h6>미답변 Q&A기준으로 5개의 Q&A만 보여집니다.</h6>
+                <h6>미답변 Q&A기준으로 10개의 Q&A만 보여집니다.</h6>
                 <br>
                     <table class="table table-hover" id="qnaTable" style="table-layout: fixed;">
                         <thead>
@@ -213,60 +213,28 @@
                 
                 <div class="col-7" id="H">
                 <h1>신규 사업장</h1>
-                <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
+                <h6>최근 날짜 기준으로 10개의 신규 사업장만 보여집니다.</h6>
                 <br>
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">회원명 또는 회원번호</th>
-                            <th scope="col">구분</th>
-                            <th scope="col">제목</th>
+                            <th scope="col">사업장 코드</th>
+                            <th scope="col">회원명</th>
+                            <th scope="col">카테고리</th>
+                            <th scope="col">사업장명</th>
+                            <th scope="col">사업장주소</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        <c:forEach var="bl" items="${ businessList }">
+	                        <tr>
+	                            <th>${ bl.bus_code }</th>
+	                            <td>${ bl.usname }</td>
+	                            <td>${ bl.res_category }</td>
+	                            <td>${ bl.bus_name }</td>
+	                            <td>${ bl.bus_address }</td>
+	                        </tr>
+                        </c:forEach>
                         </tbody>
                     </table>
                 </div>

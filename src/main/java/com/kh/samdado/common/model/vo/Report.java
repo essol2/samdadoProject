@@ -44,6 +44,8 @@ public class Report {
 	private int r_count;		// 신고 누적 횟수
 	private int bus_code;       // 신고받은사업장고유번호		// 비지니스 테이블 조인
 	
+	private String usname; // user 테이블 조인
+	
 
 
 }

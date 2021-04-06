@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.ui.Model;
 
 import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
@@ -28,9 +32,11 @@ import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.user.model.vo.User;
 
 @Controller
 @RequestMapping("/business")
+@SessionAttributes({"loginUser", "msg"})
 public class businessController {
 	
 	@Autowired businessService bService;
@@ -218,6 +224,9 @@ public class businessController {
 		public Map<String, String> busSaveFile(MultipartFile file, HttpServletRequest request) {
 			String root = request.getSession().getServletContext().getRealPath("resources");
 			String savePath = root + "\\busUploadFiles";
+			
+			System.out.println("root : " + root);
+			
 			File folder = new File(savePath);
 			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
 			
@@ -231,8 +240,11 @@ public class businessController {
 			String renamePath = folder + "\\" + renameFileName; // 저장하고자하는 경로 + 파일명
 		
 			Map<String, String> map = new HashMap<>();
+			
 			map.put("rename", renameFileName);
 			map.put("path", renamePath);
+			
+			System.out.println("map : " + map);
 			
 			try {
 				file.transferTo(new File(renamePath));
@@ -307,11 +319,6 @@ public class businessController {
 		}
 	}
 	// ************* 지혜 *************
-	// 배너 등록 페이지로 이동
-	@GetMapping("/bannerAd")
-	public String submitBannerAdView() {
-		return "business/businessFormSubmit";
-	}
 	
 	// 배너 등록 신청 제출 컨트롤러
 	@PostMapping("/insert/bannerAd")
@@ -372,6 +379,18 @@ public class businessController {
 			return filePath;
 	
 	
+	}
+	
+	@GetMapping("/bannerAd")
+	public String bannerAd(HttpSession session, Model model) {
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		List<Business> selectMyBusinessCategory = bService.selectMyBusinessCategory(loginUser);
+		
+		model.addAttribute("selectMyBusinessCategory", selectMyBusinessCategory);
+		
+		return "business/businessFormSubmit";
 	}
 	
 	

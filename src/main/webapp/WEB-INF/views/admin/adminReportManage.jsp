@@ -52,7 +52,7 @@
                         <th>신고 날짜</th>
                         <th>첨부 파일</th>
                         <th>처리 상태</th>
-                        <th>회원 번호</th> <!-- 회원 이름으로 바꾸기 -->
+                        <th>회원 이름</th> <!-- 회원 이름으로 바꾸기 -->
                         <th>사업장 코드</th>
                         <th>승인 버튼</th>
                         <th>반려 버튼</th>
@@ -70,7 +70,7 @@
                        <c:if test="${ rpl.rstatus eq 'N' }">
                        <td>미처리</td>
                        </c:if>
-                       <td>${ rpl.usno }</td>
+                       <td>${ rpl.usname }</td>
                        <td id="bus_code">${ rpl.bus_code }</td>
                        <td><button class="btn btn-secondary" id="admitReportBtn">승인</button></td> <!-- db 상태 y -->
                        <td><button class="btn btn-success" id="rejectReport">반려</button></td> <!-- db 상태 r -->
@@ -178,7 +178,7 @@
                             <th>신고 내용</th>
                             <th>신고 날짜</th>
                             <th>신고 만기 날짜</th>
-                            <th>회원 번호</th>
+                            <th>회원 이름</th>
                             <th>사업장 코드</th>
                             <th>신고 누적 횟수</th>
                             <th>처리 상태</th>
@@ -192,7 +192,7 @@
 			                     <td>${ srl.rep_cont }</td>           
 			                     <td><fmt:formatDate value='${ srl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
 			                     <td><fmt:formatDate value='${ srl.rexdate }' type='both' pattern='yyyy-MM-dd' /></td>
-			                     <td>${ srl.usno }</td>
+			                     <td>${ srl.usname }</td>
 			                     <td>${ srl.bus_code }</td>
 			                     <td>${ srl.r_count }</td>
 			                     <td>${ srl.rstatus }</td>
