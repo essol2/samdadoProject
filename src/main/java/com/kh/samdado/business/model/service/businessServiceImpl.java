@@ -20,12 +20,12 @@ import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.user.model.vo.User;
 
 @Service
 public class businessServiceImpl implements businessService {
 	
-    @Autowired
-    private businessDao bDao;
+    @Autowired businessDao bDao;
    
 	@Override
 	public int insertAlliance(Alliance a) {
@@ -122,10 +122,10 @@ public class businessServiceImpl implements businessService {
 	}
 
 
+	// 신고하기
 	@Override
-	public int report(Report report) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertReport(Report r) {			
+		return bDao.insertReport(r);
 	}
 
 
@@ -140,6 +140,23 @@ public class businessServiceImpl implements businessService {
 	public int countReport() {
 		// TODO Auto-generated method stub
 		return bDao.countReport();
+	}
+	
+  @Override
+	public List<Business> selectMyBusinessCategory(User loginUser) {
+		// TODO Auto-generated method stub
+		return bDao.selectMyBusinessCategory(loginUser);
+	}
+
+	@Override
+	public int insertBannerAd(Alliance a) {
+		// TODO Auto-generated method stub
+		return bDao.insertBannerAd(a);
+	}
+
+  @Override
+	public Report findReportStatus(Report r) {		
+		return bDao.findReportStatus(r);
 	}
 
 	

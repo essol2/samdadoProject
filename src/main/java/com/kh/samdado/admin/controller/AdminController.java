@@ -5,9 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,14 +23,13 @@ import com.kh.samdado.admin.model.exception.AdminException;
 import com.kh.samdado.admin.model.service.AdminService;
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.Pagination;
-import com.kh.samdado.admin.model.vo.Search;
+import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.service.businessService;
+import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
-import org.json.simple.parser.ParseException;
-import org.json.simple.parser.JSONParser;
 
 
 @Controller
@@ -61,7 +56,8 @@ public class AdminController {
 		List<QnA> qnaList = aService.adminMainQnaSelect();	
 		//System.out.println("qnaList : " + qnaList);
 		
-		// 1_2. 관리자 메인 페이지에서 신고? or 신규 사업장 limit절 select
+		// 1_2. 관리자 메인 페이지에서 신규 사업장 limit절 select
+		List<Business> businessList = aService.adminMainBusinessSelect();	
 		
 		// ---------------------------------------------------
 		
@@ -69,8 +65,8 @@ public class AdminController {
 		int countUserResult = uService.countUser() - 1; // 관리자 1명 제외
 		//System.out.println("회원 수 countUserResult : " + countUserResult);
 		
-		// 1_4. 관리자 메인 페이지에서 신규 광고 신청 카운트 select
-		// int countAdResult = bService.countAd();
+		// 1_4. 관리자 메인 페이지에서 신규 배너광고 신청 카운트 select
+		int countAd1Result = aService.countAd1();
 		
 		// 1_5. 관리자 메인 페이지에서 신규 신고 신청 카운트 select
 		int countReportResult = bService.countReport();
@@ -93,6 +89,8 @@ public class AdminController {
 		model.addAttribute("countQnAResult", countQnAResult);
 		model.addAttribute("countUserResult", countUserResult);
 		model.addAttribute("countReportResult", countReportResult);
+		model.addAttribute("businessList", businessList);
+		model.addAttribute("countAd1Result", countAd1Result);
 		
 		return "admin/adminHome";
 	}
@@ -217,29 +215,17 @@ public class AdminController {
 //		return "admin/adminQna";
 //	}
 	
-	@GetMapping("/searchQna")
-	public void test2(HttpServletResponse response, Search search, Model model) {
+	@RequestMapping("/searchQna")
+	@ResponseBody
+	public List<QnA> searchQna(HttpServletResponse response, @RequestBody aSearch search, Model model) {
 		response.setContentType("application/json; charset=utf-8");
 
-		JSONArray jarr = new JSONArray();
-		
 		List<QnA> searchQnaList = aService.searchQnaList(search);
-		
-		for (QnA q : searchQnaList) {
-		
-			JSONObject jqna = new JSONObject();
-			jqna.put("qnano", q.getQnano());
-			jqna.put("qcont", q.getQcont());
-			jqna.put("qdate", q.getQdate());
-			jqna.put("qreply", q.getQreply());
-			jqna.put("qstatus", q.getQstatus());
-			jqna.put("usno", q.getUsno());
-			jqna.put("usname", q.getUsname());
-			
-			jarr.add(jqna);
-		}
+
+		return searchQnaList;
 	}
 	
+
 	@GetMapping("/userList")
 	public String userList(Model model,
 			               @RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
@@ -252,8 +238,46 @@ public class AdminController {
 		// List<User> allUserList = uService.selectAllUserList();
 		
 		model.addAttribute("allUserList", allUserList);
+		model.addAttribute("pi", pi);
 		
 		return "admin/adminuserList";
+	}
+	
+	
+	// 신고 승인
+	@GetMapping("/admitReport")
+	public String admitReport(@ModelAttribute Report report,
+							Model model) {
+		
+		int result = 0;
+		
+		// 1. 신고 누적 횟수 비교
+		if (report.getR_count() < 2) {
+			// 2_1. rstatus y로 업데이트, r_count + 1
+			result = aService.updateRstatusToY(report);
+		} else {
+			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가
+			result = aService.updateRstatusToYAndRexdate(report);
+		}	
+
+		if (result > 0) model.addAttribute("msg", "신고 승인 처리가 완료되었습니다.");	
+		else throw new AdminException("신고 승인 처리에 실패하였습니다.");
+
+		return "redirect:/admin/report";
+	}
+	
+	// 신고 거절
+	@GetMapping("/rejectReport")
+	public String rejectReport(@ModelAttribute Report report,
+							Model model) {
+		
+		// rstatus r로 업데이트
+		int result = aService.updateRstatusToR(report);
+
+		if (result > 0) model.addAttribute("msg", "신고 반려 처리가 완료되었습니다.");	
+		else throw new AdminException("신고 반려 처리에 실패하였습니다.");
+
+		return "redirect:/admin/report";
 	}
 	
 	

@@ -60,12 +60,12 @@ public class UserController {
 		   					Model model,
 		   					RedirectAttributes rd) {
 	   
-	   System.out.println("넘어온 값 : " + u);
+	   // System.out.println("넘어온 값 : " + u);
 	   
 	   if (u.getBusno().equals("")) { // 값이 없으면 일반회원
-		   u.setUspart("일반");
-	   } else {
-		   u.setUspart("제휴"); // 값이 있으면 제휴회원
+		   u.setUspart("일반"); 
+	   } else { // 값이 있으면 제휴회원
+		   u.setUspart("제휴"); 
 	   }
 	   
 	   String encPwd = bcryptPasswordEncoder.encode(u.getUspwd());
@@ -91,16 +91,12 @@ public class UserController {
    public String userLogin(
 		   				   Model model,
 		   				   @ModelAttribute("joinedUser") User joinedUser) { // 회원가입하고 난 후 바로 로그인용 여기서 받음
-	   // System.out.println("74 joinedUser : " + joinedUser.toString());
-	   // System.out.println("u" + u);
 	   
 	   // 회원 가입 후 바로 로그인이니까 암호화 필요x
 	   if (joinedUser.getUsid() != null) { // 널이 아니면
 		   model.addAttribute("loginUser", joinedUser); 
 		   // attribute로 묶어서 (loginUser 키값이 위에 선언한 @SessionAttributes({"loginUser", "msg"}) 키 값과 동일하기 때문에 세션에 있는 loginUser 키값 사용 가능)
 		   // 실제로 rd로 묶어준 값은 휘발성이기 때문에 여기서 joinedUser 값이 휘발되어 날라가고, loginUser는 세션에 값이 저장되기 때문에 다른 페이지에서도 사용 가능
-		   
-		   // System.out.println("joinedUser : " + joinedUser.toString());
 		   
 		   return "redirect:/main"; // 메인으로 리다이렉트
 	   } else {
@@ -115,16 +111,12 @@ public class UserController {
    @PostMapping("/login")// 일반 로그인 post 방식
    public String userLogin(@ModelAttribute User u, 
 		   				   Model model) { 
-	   //System.out.println("u" + u);
 
-	   User loginUser = uService.loginUser(u);
-	   
-	   // System.out.println("loginUser + " + loginUser);	   
+	   User loginUser = uService.loginUser(u);   
 	   
 	   // 일반 로그인이까 암호화 필요 o
 	   if (loginUser != null && bcryptPasswordEncoder.matches(u.getUspwd(), loginUser.getUspwd())) {	   
-		   // System.out.println("loginUser : " + loginUser);
-		   
+
 		   model.addAttribute("loginUser", loginUser);
 		   return "redirect:/main";
 	   } else {

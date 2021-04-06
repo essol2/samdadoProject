@@ -23,6 +23,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="al_no" column="AL_NO" />
 		<result property="bus_opening" column="BUS_OPENING" />
 		<result property="file_rename" column="FILE_RENAME" />	<!-- 비즈니스ATT 대한 JOIN -->
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
 	</resultMap>
 	
 	<resultMap type="BusinessAtt" id="BusinessAttResultSet">
@@ -70,6 +72,21 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usno" column="US_NO" />			      <!-- USER 테이블 조인 -->
 		<result property="r_count" column="R_COUNT" />
 		<result property="ref_bus_code" column="REF_BUS_CODE" />  <!-- BUSINESS 테이블 조인 -->
+	</resultMap>
+	
+	<resultMap type="Alliance" id="AllianceResultSet">
+		<id property="alno" column="AL_NO" />
+		<result property="alintro" column="AL_INTRO" />
+		<result property="alsubdate" column="AL_SUBDATE" />
+		<result property="startdate" column="START_DATE" />
+		<result property="aimgpath" column="A_IMG_PATH" />
+		<result property="aimgname" column="A_IMG_NAME" />
+		<result property="aimgcname" column="A_IMG_CNAME" />
+		<result property="amassage" column="A_MASSAGE" />
+		<result property="usno" column="US_NO" />
+		<result property="bus_code" column="BUS_CODE" />
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
 	</resultMap>
 	
 	<insert id="insertBusiness" parameterType="Business">
@@ -317,8 +334,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE 
 		 	   B.BUS_CODE = #{bus_code}
 	</select>
-	
-	<!-- 지혜 -->
+
+	<!--지혜 -->
+
 	<select id="countReport" resultType="_int">
 		SELECT 
    		       COUNT(*)
@@ -327,4 +345,107 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE 
 		 	   RSTATUS = 'N'
 	</select>
+	
+	<select id="selectMyBusinessCategory" parameterType="User" resultType="Business">
+		SELECT
+				BUS_CODE,
+				US_NO,
+				BUS_NAME,
+				BUS_ADDRESS,
+				BUS_INTRO,
+				BUS_DATE,
+				BUS_MODIFY,
+				AD_COUNT,
+				BUS_CLASSIFY,
+				BUS_CATEGORY,
+				BUS_STATUS,
+				BUS_PHONE,
+				HOTEL_CATEGORY,
+				TOUR_CATEGORY,
+				TOUR_TEMA,
+				AL_NO,
+				BUS_OPENING,
+				RES_CATEGORY
+		FROM    
+				SMBCVIEW
+		WHERE   BUS_CODE NOT IN (SELECT 
+										BUS_CODE
+							     FROM   
+							     		ALLIANCE
+							     WHERE  US_NO = #{usno})
+		  AND	US_NO = #{usno}
+	</select>
+	
+	<insert id="insertBannerAd" parameterType="Alliance">
+		INSERT
+		  INTO ALLIANCE
+		  (
+		  	AL_NO
+		  , AL_INTRO
+		  , AL_SUBDATE
+		  , ALSTATUS
+		  , A_IMG_PATH
+		  , A_IMG_NAME
+		  , A_IMG_CNAME
+		  , US_NO
+		  , BUS_CODE
+		  )
+		  VALUES
+		  (
+		  	AL_SEQ_NO.NEXTVAL
+		  , #{alintro}
+		  , SYSDATE
+		  , 'N'
+		  , #{aimgpath}
+		  , #{aimgname}
+		  , #{aimgcname}
+		  , #{usno}
+		  , #{bus_code}
+		  )
+	</insert>
+	
+	<insert id="insertReport" parameterType="Report">
+      INSERT
+        INTO Report
+        (
+           REPORT_NO
+        , REP_RES
+        , REP_CONT
+        , RDATE
+        , RSTATUS
+        , REXDATE
+        , R_IMG_PATH
+        , R_IMG_NAME
+        , R_IMG_CNAME
+        , US_NO
+        , R_COUNT
+        , REF_BUS_CODE
+        )
+        VALUES
+        (
+           REP_SEQ_NO.NEXTVAL
+        , #{rep_res}
+        , #{rep_cont}
+        , DEFAULT
+        , DEFAULT
+        , #{r_img_path}
+        , #{r_img_name}
+        , #{r_img_cname}
+        , #{usno}
+        , NULL
+        , #{bus_code}
+        )
+   </insert>
+   
+   <select id="findReportStatus" parameterType="Report" resultType="ReportResultSet">
+         SELECT 
+                *
+        FROM 
+              REPORT
+       WHERE 
+             REF_BUS_CODE = #{bus_code}
+   </select>
+	
+	
+	
 </mapper>

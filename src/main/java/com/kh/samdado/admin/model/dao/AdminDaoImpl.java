@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
-import com.kh.samdado.admin.model.vo.Search;
+import com.kh.samdado.admin.model.vo.aSearch;
+import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.QnA;
 
@@ -45,7 +46,7 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public List<QnA> searchQnaList(Search search) {
+	public List<QnA> searchQnaList(aSearch search) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("adminMapper.searchQnaList", search);
 	}
@@ -57,6 +58,37 @@ public class AdminDaoImpl implements AdminDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return sqlSession.selectList("adminMapper.adminReportSelect", null, rowBounds);
 	}
+
+	@Override
+	public int updateRstatusToY(Report report) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateRstatusToY", report);
+	}
+
+	@Override
+	public int updateRstatusToYAndRexdate(Report report) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateRstatusToYAndRexdate", report);
+	}
+
+	@Override
+	public int updateRstatusToR(Report report) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateRstatusToR", report);
+	}
+
+	@Override
+	public List<Business> adminMainBusinessSelect() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("adminMapper.adminMainBusinessSelect");
+	}
+
+	@Override
+	public int countAd1() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminMapper.countAd1");
+	}
+
 
 	
 

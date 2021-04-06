@@ -179,15 +179,22 @@
                <script>
 					$(function() {
 						$("#search_qna_form button[type=button]").on("click", function() {
-							var searchCondition = $("#searchCondition").val();
-			         		var searchValue = $("#searchValue").val();
+							//var searchCondition = $("#searchCondition").val();
+			         		//var searchValue = $("#searchValue").val();
+			         		
+			         		var search = {};
+			         		search.searchCondition =  $("#searchCondition").val();
+			         		search.searchValue =  $("#searchValue").val();
+			         		
 
 							$.ajax({
 								url : "admin/searchQna",
-								data : search,
+								data : JSON.stringify(search),
 								type : "get", 
+								contentType : "application/json; charset=utf-8",
+								dataType : "json",
 								success : function(data) {
-									alert("서버로 전송 성공!" + data);
+									alert("data" + data);
 									console.log(data);
 								},
 								error : function(e) {

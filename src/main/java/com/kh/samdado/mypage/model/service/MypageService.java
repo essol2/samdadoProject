@@ -1,5 +1,6 @@
 package com.kh.samdado.mypage.model.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.kh.samdado.business.model.vo.Jjim;
@@ -53,10 +54,13 @@ public interface MypageService {
 	public List<Booking> selectBookList(String usno);
 	
 	// 일반회원 - 가계부 조회 메소드
-	public List<AccountBook> selectAccountList(String usno);
+	public List<AccountBook> selectAccountList(AccountBook ab);
 
 	// 일반회원 - 가계부 입력 메소드
-	public int insertNewAcc(AccountBook acc);
+	public int insertNewAcc(AccountBook ab);
+
+	// 일반회원 - 가계부 가장 최근 날짜 가져오기
+	public AccountBook selectRecentDate(String un);
 
 	
 

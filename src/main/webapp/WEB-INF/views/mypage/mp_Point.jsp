@@ -527,6 +527,7 @@
 		                            </tr>
 	                            </thead>
 	                            <tbody>
+	                            <c:if test="${ pList }.size() > 0">
 		                            <c:forEach var="p" items="${ pList }">
 			                            <tr>
 			                                <td>${ p.pdate }</td>
@@ -534,6 +535,12 @@
 			                                <td style="color : #467355">${ p.pamount }</td>
 			                            </tr>
 		                            </c:forEach>
+		                         </c:if>
+		                         <c:if test=" ${pList }.size() <= 0">
+		                         	<tr>
+		                         		<td colspan="3">조회된 정보가 없습니다.</td>
+		                         	</tr>
+		                         </c:if>
 								</tbody>
 	                        </table> 
                         </div>
@@ -623,19 +630,19 @@
 		$(function(){
 			$("#searchThisBtn").on("click", function(){
 				var selector = $('input[name="selector"]:checked').val();
-				console.log(selector);
+				//console.log(selector);
 				
 				var startDate = $('#startDate').val();
-				console.log(startDate);
+				//console.log(startDate);
 				
 				var usno = ${ loginUser.usno };
-				console.log(usno);
+				//console.log(usno);
 				
 				var searchPo = new Object();
 				searchPo.selector = selector;
 				searchPo.startdate = startDate;
 				searchPo.usno = usno;
-				console.log(searchPo);
+				//console.log(searchPo);
 				
 				$.ajax({
 					url : "searchPeriod",
@@ -643,7 +650,7 @@
 					type : "POST",
 					contentType : "application/json; charset=utf-8",
 					success : function(data) {
-						console.log(data);
+						//console.log(data);
 						
 						tableBody =$("#pointTable tbody");
 						tableBody.html("");

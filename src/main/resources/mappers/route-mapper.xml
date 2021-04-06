@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="routeMapper">
+	<resultMap type="route" id="RouteResultSet">
+		<id property="or_no" column="OR_NO" />
+		<result property="spot_no" column="SPOT_NO" />
+	</resultMap>
+	<resultMap type="TourSpot" id="TourSpotResultSet">
+		<id property="spot_no" column="SPOT_NO" />
+		<result property="spot_lo" column="SPOT_LO" />
+		<result property="spot_them" column="SPOT_THEM" />
+		<result property="spot_title" column="SPOT_TITLE" />
+		<result property="spot_path" column="SPOT_PATH" />
+		<result property="spot_oname" column="SPOT_ONAME" />
+		<result property="spot_rename" column="SPOT_RENAME" />
+		<result property="spot_content" column="SPOT_CONTENT" />
+	</resultMap>
+	
+	<select id="routeSearch" parameterType="rSearch" resultMap="TourSpotResultSet">
+		SELECT 
+		    OR_NO
+		    , T.SPOT_NO
+		    , T.SPOT_TITLE
+		    , T.SPOT_PATH
+		    , T.SPOT_ONAME
+		    , T.SPOT_CONTENT 
+		FROM
+		    ROUTE R, TOUR_SPOT T
+		WHERE
+		    T.SPOT_NO = R.SPOT_NO
+				<if test="area == 'east'">
+					<choose>
+						<when test="thema == 'sightseeing'">
+							AND OR_NO = 1
+						</when>
+						<when test="thema == 'break'">
+							AND OR_NO = 5
+						</when>
+						<when test="thema == 'beach'">
+							AND OR_NO = 6
+						</when>
+					</choose>
+			   	</if>
+			   	
+			   	<if test="area == 'west'">
+					<choose>
+						<when test="thema == 'sightseeing'">
+							AND OR_NO = 7
+						</when>
+						<when test="thema == 'break'">
+							AND OR_NO = 2
+						</when>
+						<when test="thema == 'beach'">
+							AND OR_NO = 8
+						</when>
+					</choose>
+			   	</if>
+			   	
+			   	<if test="area == 'south'">
+					<choose>
+						<when test="thema == 'sightseeing'">
+							AND OR_NO = 4
+						</when>
+						<when test="thema == 'break'">
+							AND OR_NO = 9
+						</when>
+						<when test="thema == 'beach'">
+							AND OR_NO = 3
+						</when>
+					</choose>
+			   	</if>
+			
+				<if test="area == 'north'">
+					<choose>
+						<when test="thema == 'sightseeing'">
+							AND OR_NO = 10
+						</when>
+						<when test="thema == 'break'">
+							AND OR_NO = 11
+						</when>
+						<when test="thema == 'beach'">
+							AND OR_NO = 12
+						</when>
+					</choose>
+			   	</if>
+	</select>
+
+	
+
+</mapper>
