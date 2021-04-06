@@ -18,10 +18,15 @@
 
 <link rel="stylesheet" href="${ contextPath }/resources/css/Business/businessFormSubmit.css">
 
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 </head>
 <body>
+
+  <!-- 메세지가 있다면 출력하고 지우기 -->
+   <c:if test="${ !empty msg }">
+   		<script>alert('${ msg }')</script>
+   		<c:remove var="msg" />
+   </c:if>
     
     <!-- 중간영역 -->
     <div class="container-fluid">
@@ -59,13 +64,13 @@
                         <div class="modal-body">
                             <h5 id="mymodal_caution_text">배너 광고에 대해 숙지 부탁드립니다.</h5> <br>
                             <h6 id="modal_inner_text">
-                                삼다도 배너 광고는 <b>관리자에 의해 승인</b>이 이루어지면 <br>
-                                신청 순서에 따라 삼다도 메인페이지에 순서대로 노출됩니다. <br>
-                                자세한 사항은 <a href="${ contextPath }/mypage/userinfo"><b>‘삼다도에 대해서’</b></a> 페이지에서 확인 해 주세요! <!-- 페이지 링크 연결-->
-                                <br><br>
-                                배너 광고는 <b style="color: red;">포인트 충전</b>이 필요한 서비스입니다. <br>
-                                포인트 충전은 잊지 않으셨죠?
-                                </h6>             
+				                                삼다도 배너 광고는 <b>관리자에 의해 승인</b>이 이루어지면 <br>
+				                                신청 순서에 따라 삼다도 메인페이지에 순서대로 노출됩니다. <br>
+				                                자세한 사항은 <a href="${ contextPath }/mypage/userinfo"><b>‘삼다도에 대해서’</b></a> 페이지에서 확인 해 주세요! <!-- 페이지 링크 연결-->
+				                                <br><br>
+				                                배너 광고는 <b style="color: red;">포인트 충전</b>이 필요한 서비스입니다. <br>
+				                                포인트 충전은 잊지 않으셨죠?
+                             </h6>             
                         <br>
                         <div class="goToPayBtn_div">
                             <a href="${ contextPath }/mypage/userinfo" id="goMyPageBtn" class="btn btn-secondary" style="color: white; text-decoration: none;">동의 후 포인트 충전하러 가기</a> 
@@ -81,11 +86,11 @@
             <form action="${ contextPath }/insert/bannerAd" method="post" enctype="multipart/form-data"> <!-- pom.xml에  multipart/form-data 사용 라이브러리 추가 -->
                 <div class="inner_content">
                     <h4>1. 신청하실 사업장을 선택하세요.</h4> <br>
-                    <select class="form-select" name="searchBannerAD" id="searchBannerAD" aria-label="Default select example">
-                        <option>선택</option>
-							<option value="writer" <c:if test="${ param.searchCondition == 'writer' }">selected</c:if>>작성자</option>
-							<option value="title" <c:if test="${ param.searchCondition == 'title' }">selected</c:if>>제목</option>
-							<option value="content" <c:if test="${ param.searchCondition == 'content' }">selected</c:if>>내용</option>
+                    <select class="form-select" aria-label="Default select example">
+                        <option>--- 선택 ---</option>
+                        <c:forEach var="smbc" items="${ selectMyBusinessCategory }">
+							<option value="bus_code">No : ${ smbc.bus_code } | ${ smbc.bus_name } | ${ smbc.bus_address }</option>
+						</c:forEach>
                       </select>
                 </div>
               

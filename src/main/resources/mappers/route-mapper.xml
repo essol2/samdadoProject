@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="spot_content" column="SPOT_CONTENT" />
 	</resultMap>
 	
-	<select id="routeSearch" parameterType="Search" resultMap="TourSpotResultSet">
+	<select id="routeSearch" parameterType="rSearch" resultMap="TourSpotResultSet">
 		SELECT 
 		    OR_NO
 		    , T.SPOT_NO

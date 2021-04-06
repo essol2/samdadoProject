@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Search {
+public class aSearch {
 	
 	private String searchCondition;	// 검색 조건
 	private String searchValue;		// 검색 값

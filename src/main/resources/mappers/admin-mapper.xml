@@ -27,9 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usno" column="US_NO" />			      <!-- USER 테이블 조인 -->
 		<result property="r_count" column="R_COUNT" />
 		<result property="bus_code" column="REF_BUS_CODE" />      <!-- BUSINESS 테이블 조인 -->
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
 	</resultMap>
 	
-	<resultMap type="Business" id="BusinessResultSet">
+	<resultMap type="Business" id="businessResultSet">
 		<id property="bus_code" column="BUS_CODE" />
 		<result property="us_no" column="US_NO" />
 		<result property="bus_name" column="BUS_NAME" />
@@ -48,6 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="tour_tema" column="TOUR_TEMA" />
 		<result property="al_no" column="AL_NO" />
 		<result property="bus_opening" column="BUS_OPENING" />
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
 	</resultMap>
 	
 	<select id="selectAdminMainQnaSelect" resultMap="qnaResultSet">
@@ -59,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
            AND QSTATUS = 'N'	<!-- 미답변만 select -->
                ORDER BY "QNA_NO")
 		 WHERE 
-		       ROWNUM <![CDATA[<=]]> 5 <!-- admin 메인 페이지에 5개의 qna 만 보이도록 limit절 처리 -->
+		       ROWNUM <![CDATA[<=]]> 10 <!-- admin 메인 페이지에 10개의 qna 만 보이도록 limit절 처리 -->
 	</select>	
 	
 	<select id="adminQnaSelect" resultMap="qnaResultSet">
@@ -88,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                QSTATUS = 'N'
 	</select>
 	
-	<select id="searchQnaList" parameterType="search" resultMap="qnaResultSet">
+	<select id="searchQnaList" parameterType="aSearch" resultMap="qnaResultSet">
 	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
 		SELECT
 		       *
@@ -133,18 +137,31 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="adminReportSelect" resultMap="reportResultSet">
-			SELECT *
-	          FROM REPORT, BUSINESS
-	         WHERE REF_BUS_CODE = BUS_CODE
-	   AND RSTATUS = 'N'
-	      ORDER BY RDATE
+			SELECT 
+					REPORT_NO,
+					REPORT.US_NO,
+					"USER".US_NAME,
+					REP_RES,
+					REP_CONT,
+					RDATE,
+					RSTATUS,
+					REXDATE,
+					R_IMG_PATH,
+					R_IMG_NAME,
+					R_IMG_CNAME,
+					R_COUNT,
+					REF_BUS_CODE
+			FROM REPORT, "USER"
+			WHERE REPORT.US_NO = "USER".US_NO
+			AND RSTATUS = 'N'
+			ORDER BY RDATE
 	</select>
 	
 	<update id="updateRstatusToY" parameterType="Report">
 		UPDATE REPORT
 		   SET
 			   RSTATUS = 'Y',
-			   R_COUNT = + 1
+			   R_COUNT = R_COUNT + 1
 	     WHERE
 	     	   REPORT_NO = #{report_no}
 	       AND REF_BUS_CODE = #{bus_code}
@@ -163,12 +180,26 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		UPDATE REPORT
 		   SET
 			   RSTATUS = 'Y',
-			   R_COUNT = + 1,
+			   R_COUNT = R_COUNT + 1,	
 			   REXDATE = SYSDATE + 7
 	     WHERE
 	     	   REPORT_NO = #{report_no}
 	       AND REF_BUS_CODE = #{bus_code}
 	</update>
+	
+	
+	<select id="adminMainBusinessSelect" resultMap="businessResultSet">
+		SELECT *
+		  FROM
+              (SELECT US_NAME, BUS_NAME, BUS_CODE, BUS_ADDRESS, RES_CATEGORY 
+               FROM BUSINESS, "USER"
+               WHERE BUSINESS.US_NO = "USER".US_NO
+               ORDER BY BUS_DATE)
+		 WHERE 
+		       ROWNUM <![CDATA[<=]]> 10 <!-- admin 메인 페이지에 10개의 신규사업장만 보이도록 limit절 처리 -->
+	</select>	
+	
+	
 	
 	
 	

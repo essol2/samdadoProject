@@ -3,6 +3,7 @@ package com.kh.samdado.business.model.service;
 import java.util.List;
 
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.user.model.vo.User;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
@@ -60,6 +61,9 @@ public interface businessService {
 
 	// 신고 카운트
 	int countReport();
+
+	// 배너 광고 등록 폼, 본인 사업장 가져오기
+	List<Business> selectMyBusinessCategory(User loginUser);
 
 
 

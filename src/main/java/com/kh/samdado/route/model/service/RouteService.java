@@ -3,12 +3,12 @@ package com.kh.samdado.route.model.service;
 import java.util.List;
 
 import com.kh.samdado.route.model.vo.Route;
-import com.kh.samdado.route.model.vo.Search;
 import com.kh.samdado.route.model.vo.TourSpot;
+import com.kh.samdado.route.model.vo.rSearch;
 
 public interface RouteService {
 	
-	List<Route> routeSearch(Search search);	// 루트 검색
+	List<Route> routeSearch(rSearch search);	// 루트 검색
 
 	public int spotDelete(); 			// 여행지 삭제
 	

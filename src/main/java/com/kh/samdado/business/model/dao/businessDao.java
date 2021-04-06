@@ -16,6 +16,7 @@ import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.user.model.vo.User;
 
 public interface businessDao {
 
@@ -60,6 +61,9 @@ public interface businessDao {
 	// 지혜
 	// 신고 카운트
 	int countReport();
+
+	// 비즈니스 등록 폼, 본인이 등록한 사업장 셀렉
+	List<Business> selectMyBusinessCategory(User loginUser);
 
 	
 
