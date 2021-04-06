@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Search {
+public class rSearch {
 	private String area;
 	private String thema;
 	private Date routeDate;

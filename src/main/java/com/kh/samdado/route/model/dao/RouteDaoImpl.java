@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.samdado.route.model.vo.Route;
-import com.kh.samdado.route.model.vo.Search;
 import com.kh.samdado.route.model.vo.TourSpot;
+import com.kh.samdado.route.model.vo.rSearch;
 
 @Repository 
 public class RouteDaoImpl implements RouteDao {
@@ -17,7 +17,7 @@ public class RouteDaoImpl implements RouteDao {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<Route> routeSearch(Search search) {
+	public List<Route> routeSearch(rSearch search) {
 		return sqlSession.selectList("routeMapper.routeSearch", search);
 	}
 
