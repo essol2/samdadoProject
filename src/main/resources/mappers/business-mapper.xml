@@ -286,9 +286,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="selectMyBusinessCategory" parameterType="User" resultType="Business">
-		SELECT 
+		SELECT
 				BUS_CODE,
-				"USER".US_NO,
+				US_NO,
 				BUS_NAME,
 				BUS_ADDRESS,
 				BUS_INTRO,
@@ -305,11 +305,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				AL_NO,
 				BUS_OPENING,
 				RES_CATEGORY
-		FROM 
-				BUSINESS, "USER"
-		WHERE 
-				BUSINESS.US_NO = "USER".US_NO
-		AND 	"USER".US_NO = #{usno}	
+		FROM    
+				SMBCVIEW
+		WHERE   BUS_CODE NOT IN (SELECT 
+										BUS_CODE
+							     FROM   
+							     		ALLIANCE
+							     WHERE  US_NO = #{usno})
+		  AND	US_NO = #{usno}
 	</select>
 	
 	<insert id="insertBannerAd" parameterType="Alliance">

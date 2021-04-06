@@ -78,4 +78,12 @@ public class AdminServiceImpl implements AdminService {
 		return aDao.adminMainBusinessSelect();
 	}
 
+	@Override
+	public int countAd1() {
+		// TODO Auto-generated method stub
+		return aDao.countAd1();
+	}
+
+
+
 }

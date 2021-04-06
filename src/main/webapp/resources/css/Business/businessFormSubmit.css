@@ -191,6 +191,18 @@ header {
     left: 70%;
 }
 
+.nonSelectCategory {
+	
+	text-align: center;
+	padding: 20%;
+}
+
+.nonSelectCategory a {
+	
+	text-align: center;
+	font-size: 30px;
+}
+
  /* 반응형 */
  @media (max-width:1920px){
     header {
