@@ -346,6 +346,7 @@
     	width : 100px;
     	height : 100px;
     	position : fixed; left:5%;bottom:10%;
+    	box-shadow: 0px 0px 0px 5px lightgray;
     }
    
   #modal {
@@ -467,9 +468,11 @@
                         <th class="walletStatus">상태</th>
                         <th class="walletTouch">더치페이</th>
                         <th class="walletPerson">1인 가격</th>
+                        <th class="walletWhoPay">결제인</th>
                       </tr>
                     </thead>
                     <tbody>
+                    <%-- <c:if test="${ abList } != null"> --%>
                     <c:forEach var="ab" items="${ abList }">
                       <tr>
                         <td class="walletName">${ ab.accName }</td>
@@ -478,12 +481,13 @@
                         <td class="walletPayDate"><fmt:formatDate value="${ ab.accTripDate }" type="date" pattern="yyyy-MM-dd"/></td>
                         <td class="walletStatus">${ab.accPstatus }</td>
                         <td class="walletTouch">
-                            <label class="switch">
-                                <input type="checkbox">
+                            <label class="switch" name="dutchSwitch">
+                                <input type="checkbox" <c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
                                 <span class="slider round"></span>
                             </label>
                         </td>
-          				<td class="walletStatus">${ab.accOneWon }</td>
+          				<td class="walletStatus">${ab.accOneWon}</td>
+          				<td class="walletWhoPay">${ab.whopay}</td>
                     </c:forEach>
                     </tbody>
                   </table>
@@ -524,12 +528,12 @@
                 				<td class="inputTd" colspan="2">
                 					<select class="inputeda" id="accClassify" name="accClassify" style="width:90%;">
                 					 	<option value="구분" selected> 구분 </option>
-		                				<option value="hotel">숙박</option>
-		                				<option value="vehicle">교통</option>
-		                				<option value="food">식비</option>
-		                				<option value="ticket">관광지 입장권</option>
-		                				<option value="experience">체험권</option>
-		                				<option value="byuser">직접입력</option>
+		                				<option value="숙박">숙박</option>
+		                				<option value="교통">교통</option>
+		                				<option value="식비">식비</option>
+		                				<option value="관광지 입장권">관광지 입장권</option>
+		                				<option value="체험권">체험권</option>
+		                				<option value="직접입력">직접입력</option>
 	                				</select>
                 				</td>
                 				<td id="showThisTd" colspan="2">
@@ -566,7 +570,7 @@
                 			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">더치페이 </label></td>
                 				<td class="inputTd"> 
-	                				<label class="switch">
+	                				<label class="switch" name="dutchSwitch">
 	                                	<input type="checkbox" id="accDutch" name="accDutch">
 	                                	<span class="slider round"></span>
 	                            	</label>

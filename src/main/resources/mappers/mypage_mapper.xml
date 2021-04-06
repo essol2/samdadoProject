@@ -40,7 +40,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<result property="accAccompany" column="ACC_ACCOMPANY"/>
 	<result property="accFinWon" column="ACC_FINWON"/>
 	<result property="accPstatus" column="ACC_PSTATUS"/>
-	
+	<result property="whopay" column="WHOPAY"/>
+	<result property="payMethod" column="PAYMETHOD"/>
 	</resultMap>
 	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
@@ -195,6 +196,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , ACC_DUTCH
 		  , ACC_PSTATUS
 		  , ACC_ACCOMPANY
+		  , ACC_ONEWON
+		  , WHOPAY
 		  , US_NO
 		)
 		VALUES
@@ -208,6 +211,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{accDutch}
 		  , #{accPstatus}
 		  , DEFAULT
+		  , #{accOneWon}
+		  , #{whopay}
 		  , #{usno}
 		)
 	</insert>
