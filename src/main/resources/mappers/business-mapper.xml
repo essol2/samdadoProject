@@ -71,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="r_img_cname" column="R_IMG_CNAME" />
 		<result property="usno" column="US_NO" />			      <!-- USER 테이블 조인 -->
 		<result property="r_count" column="R_COUNT" />
-		<result property="ref_bus_code" column="REF_BUS_CODE" />  <!-- BUSINESS 테이블 조인 -->
+		<result property="bus_code" column="REF_BUS_CODE" />  <!-- BUSINESS 테이블 조인 -->
 	</resultMap>
 	
 	<resultMap type="Alliance" id="AllianceResultSet">
@@ -408,7 +408,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
       INSERT
         INTO Report
         (
-           REPORT_NO
+          REPORT_NO
         , REP_RES
         , REP_CONT
         , RDATE
@@ -428,6 +428,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         , #{rep_cont}
         , DEFAULT
         , DEFAULT
+        , NULL
         , #{r_img_path}
         , #{r_img_name}
         , #{r_img_cname}
@@ -437,9 +438,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         )
    </insert>
    
-   <select id="findReportStatus" resultMap="ReportResultSet">
-         SELECT 
-                *
+   <select id="findReportStatus" parameterType="Report" resultMap="ReportResultSet">
+      SELECT 
+              REPORT_NO
+	        , REP_RES
+	        , REP_CONT
+	        , RDATE
+	        , RSTATUS
+	        , REXDATE
+	        , R_IMG_PATH
+	        , R_IMG_NAME
+	        , R_IMG_CNAME
+	        , US_NO
+	        , R_COUNT
+	        , REF_BUS_CODE
         FROM 
               REPORT
        WHERE 

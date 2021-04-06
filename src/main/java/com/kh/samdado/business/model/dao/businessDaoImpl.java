@@ -156,7 +156,7 @@ public class businessDaoImpl implements businessDao {
   
   @Override
 	public Report findReportStatus(Report r) {		
-		return sqlSession.selectOne("businessMapper.findReportStatus");
+		return sqlSession.selectOne("businessMapper.findReportStatus", r);
 	}
 
 	
