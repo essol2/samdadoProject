@@ -213,6 +213,7 @@ public class businessController {
 		} else {
 			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
 			return "business/restaurant/restaurant_list";
+		}
 	  }
 
 	@GetMapping("/restaurant_write")
@@ -289,41 +290,6 @@ public class businessController {
 
 	  }
 
-	// 첨부파일 리네임 메소드 (공용)
-	public Map<String, String> busSaveFile(MultipartFile file, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\busUploadFiles";
-
-		System.out.println("root : " + root);
-
-		File folder = new File(savePath);
-		if (!folder.exists())
-			folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
-
-		// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String originalFileName = file.getOriginalFilename();
-		String renameFileName = sdf.format(new Date()) + "_" + (int) (Math.random() * 100000)
-				+ originalFileName.substring(originalFileName.lastIndexOf("."));
-
-		String renamePath = folder + "\\" + renameFileName; // 저장하고자하는 경로 + 파일명
-
-		Map<String, String> map = new HashMap<>();
-
-		map.put("rename", renameFileName);
-		map.put("path", renamePath);
-
-		System.out.println("map : " + map);
-
-		try {
-			file.transferTo(new File(renamePath));
-			// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
-		} catch (IllegalStateException | IOException e) {
-			System.out.println("파일 업로드 에러 : " + e.getMessage());
-		}
-
-		return map;
-	}
 
 	// 렌트카
 	@GetMapping("/car_list")
