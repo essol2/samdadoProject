@@ -65,6 +65,9 @@ public interface businessService {
 	// 배너 광고 등록 폼, 본인 사업장 가져오기
 	List<Business> selectMyBusinessCategory(User loginUser);
 
+	// 배너 광고 인서트
+	int insertBannerAd(Alliance a);
+
 
 
 	
