@@ -5,18 +5,21 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
@@ -164,14 +167,40 @@ public class businessController {
 	
 	// 음식점
 	@GetMapping("/restaurant_list")
-	public String restaurantList() {
-		return "business/restaurant/restaurant_list";
+	public ModelAndView restaurantList(ModelAndView mv) {
+		
+		int listCount = bService.selectResListCount();
+		
+		// System.out.println("listCount : " + listCount);
+		
+		List<Business> resList = bService.selectList();
+		
+		
+		if(resList != null) {
+			// System.out.println("RE : " + resList);
+			
+			mv.addObject("resList", resList);
+			mv.setViewName("business/restaurant/restaurant_list");
+		}
+		
+		return mv;
 		
 	}
 	
 	@GetMapping("/restaurant_detail")
-	public String restaurantDetail() {
-		return "business/restaurant/restaurant_detail";
+	public String restaurantDetail(@RequestParam int bus_code,
+			   					   Model model) {
+		
+		
+		Business b = bService.selectRestaurant(bus_code);
+		
+		if(b != null) {
+			System.out.println("디테일 : " + b);
+			model.addAttribute("res", b);
+			return "business/restaurant/restaurant_detail";
+		}
+			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
+			return "business/restaurant/restaurant_list";
 		
 	}
 	
@@ -194,6 +223,7 @@ public class businessController {
 			if(!file.getOriginalFilename().equals("")) {
 				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
 				Map<String, String> files = busSaveFile(file, request);
+				
 				// DB에 저장하기 위한 파일명 세팅
 				if(files != null) {
 					ba.setFile_name(file.getOriginalFilename());
@@ -221,6 +251,7 @@ public class businessController {
 			File folder = new File(savePath);
 			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
 			
+			// System.out.println("Root " + root);
 			// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 			String originalFileName = file.getOriginalFilename();
@@ -233,6 +264,8 @@ public class businessController {
 			Map<String, String> map = new HashMap<>();
 			map.put("rename", renameFileName);
 			map.put("path", renamePath);
+			
+			// System.out.println("map : " + map);
 			
 			try {
 				file.transferTo(new File(renamePath));
