@@ -392,9 +392,12 @@
 		color : red;
 	}
 
-	#navi-menu, #navi-title, /* p:hover */ #navi-menu{
+	#navi-menu, #navi-title, p:hover, #navi-menu{
 		cursor: pointer;
 	}
+	
+	
+	
 </style>
 </head>
 <body>
@@ -533,9 +536,7 @@
 	                <!--아이디-->
 	                <div class="id_div">
 	                    <label for="id">* 아이디</label>
-
 	                    <label id="test_id_label" class="test_div"></label>
-
 	                    <input type="text" id="id" name="usid" placeholder="영어숫자포함" required>
 	                </div>	
 	                <!--비밀번호-->

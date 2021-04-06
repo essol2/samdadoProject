@@ -1,9 +1,6 @@
 package com.kh.samdado.mypage.controller;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -25,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.service.MypageService;
+import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
@@ -352,9 +350,47 @@ public class MypageController {
 		 
 
 	 }
+
+	 // 일반회원 - 가계부 페이지로 이동
+	 @GetMapping("/wallet")
+	 public ModelAndView walletFirstView(@ModelAttribute AccountBook ab,
+				 					     ModelAndView mv) { 
+		 
+		 // 1. 사용자별 가계부 최근 날짜 가져오기
+		 AccountBook recentDate = mService.selectRecentDate(ab);
+		 //System.out.println(recentDate);
+		 
+		 ab.setSearchDate(recentDate.getAccTripDate());
+		 
+		 List<AccountBook> abList = mService.selectAccountList(ab);
+		 //System.out.println("abList 객체 확인 : " + abList);
+		 
+		 if(abList != null) {
+			 mv.addObject("abList", abList);
+			 mv.setViewName("mypage/mp_Wallet");
+		 }else {
+			 mv.addObject("msg", "가계부 조회 오류입니다.");
+			 mv.setViewName("mypage/mp_Wallet");
+		 }
+		 return mv;
+	}
 	 
-	
-	 
-	 
+	 // 일반회원 - 새로운 가계부 내역 넣기
+	 @PostMapping("/inputNewAB")
+	 public String inputNewAccBook(@ModelAttribute AccountBook ab,
+			 					   Model model) {
+		 
+		 System.out.println("넘어오는 ab객체 확인 : " +ab);
+		 //DB에 insert
+		 int result = mService.insertNewAcc(ab);
+		 
+		 if(result>0) {
+			model.addAttribute("msg", "등록성공!");
+			return "redirerct:/mypage/wallet";
+		 } else {
+			 model.addAttribute("msg", "등록에 실패했습니다. 다시 시도해주세요.");
+		     return "/mypage/mp_Wallet";
+		 }
+	 }
 	 					  
 }

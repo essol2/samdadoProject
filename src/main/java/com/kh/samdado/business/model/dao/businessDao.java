@@ -58,7 +58,7 @@ public interface businessDao {
 	// 찜하기
 	public int jjim(Jjim jjim);
 
-	// 지혜
+	// ************************** 지혜
 	// 신고 카운트
 	int countReport();
 	
@@ -66,6 +66,12 @@ public interface businessDao {
 	public Report findReportStatus(Report r);
 
 	
+
+	// 비즈니스 등록 폼, 본인이 등록한 사업장 셀렉
+	List<Business> selectMyBusinessCategory(User loginUser);
+
+	//배너 광고 인서트
+	int insertBannerAd(Alliance a);
 
 	
 

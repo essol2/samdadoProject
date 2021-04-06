@@ -45,6 +45,8 @@ public class Report {
 	private int bus_code;       // 신고받은사업장고유번호		// 비지니스 테이블 조인
 	private String bus_name;	// 신고받은 사업장명
 	
+	private String usname; // user 테이블 조인
+	
 
 
 }

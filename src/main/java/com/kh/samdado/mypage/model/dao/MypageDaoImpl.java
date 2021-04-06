@@ -1,5 +1,6 @@
 package com.kh.samdado.mypage.model.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -97,14 +98,20 @@ public class MypageDaoImpl implements MypageDao{
 	
 	// 일반회원 - 가계부 조회 메소드
 	@Override
-	public List<AccountBook> selectAccountList(String usno) {
-		return sqlSession.selectList("mypageMapper.selectAccountList", usno);
+	public List<AccountBook> selectAccountList(AccountBook ab) {
+		return sqlSession.selectList("mypageMapper.selectAccountList", ab);
 	}
 
 	// 일반회원 - 가계부 입력 메소드
 	@Override
-	public int insertNewAcc(AccountBook acc) {
-		return sqlSession.insert("mypageMapper.selectAccountList", acc);
+	public int insertNewAcc(AccountBook ab) {
+		return sqlSession.insert("mypageMapper.insertNewAcc", ab);
+	}
+
+	// 일반회원 - 가계부 가장 최근 날짜 가져오기
+	@Override
+	public AccountBook selectRecentDate(AccountBook ab) {
+		return sqlSession.selectOne("mypageMapper.selectRecentDate", ab);
 	}
 
 

@@ -20,6 +20,7 @@ import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.user.model.vo.User;
 
 @Repository 
 public class businessDaoImpl implements businessDao {
@@ -120,12 +121,23 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.selectOne("businessMapper.countReport");
 	}
 
+	
+  @Override
+	public List<Business> selectMyBusinessCategory(User loginUser) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectMyBusinessCategory", loginUser);
+	}
+
 	@Override
+	public int insertBannerAd(Alliance a) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("businessMapper.insertBannerAd", a);
+	}
+  
+  @Override
 	public Report findReportStatus(Report r) {		
 		return sqlSession.selectOne("businessMapper.findReportStatus");
 	}
-
-	
 
 	
 
