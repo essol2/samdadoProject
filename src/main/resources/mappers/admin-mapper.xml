@@ -206,7 +206,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<select id="adminMainBusinessSelect" resultMap="businessResultSet">
 		SELECT *
 		  FROM
-              (SELECT US_NAME, BUS_NAME, BUS_CODE, BUS_ADDRESS, RES_CATEGORY 
+              (SELECT US_NAME, BUS_NAME, BUS_CODE, BUS_ADDRESS, BUS_CATEGORY 
                FROM BUSINESS, "USER"
                WHERE BUSINESS.US_NO = "USER".US_NO
                ORDER BY BUS_DATE)

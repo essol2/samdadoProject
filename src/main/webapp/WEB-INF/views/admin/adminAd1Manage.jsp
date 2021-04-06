@@ -35,7 +35,7 @@
                         <th>No</th>
                         <th>신청자</th>
                         <th>카테고리</th>
-                        <th>포인트</th>
+                        <th>포인트</th> <!-- income 테이블 조인 -->
                         <th>신청폼</th>
                         <th>신청날짜</th>
                         <th>승인처리</th>
@@ -44,8 +44,6 @@
                 </thead>
                 <tbody>
                     <tr>
-                    <!--반복문 -->
-                  <tr>
                     <th>1</th>
                     <td>김춘추</td>
                     <td>숙박</td>
