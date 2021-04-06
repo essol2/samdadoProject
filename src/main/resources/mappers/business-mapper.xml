@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="tour_tema" column="TOUR_TEMA" />
 		<result property="al_no" column="AL_NO" />
 		<result property="bus_opening" column="BUS_OPENING" />
+		<result property="file_rename" column="FILE_RENAME" />	<!-- 비즈니스ATT 대한 JOIN -->
 		<!-- USER 테이블 조인을 위한 필드 -->
 		<result property="usname" column="US_NAME" />	
 	</resultMap>
@@ -275,7 +276,67 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 	</insert>
 	
+	<select id="selectResListCount" resultType="_int">
+		SELECT
+			   COUNT(*)
+		  FROM
+		       BUSINESS
+		 WHERE
+			   BUS_STATUS = 'Y'
+		   AND BUS_CATEGORY = 'R'
+		   AND BUS_CLASSIFY = 'G'
+	</select>
+	
+	<select id="selectList" resultMap="BusinessResultSet">
+		SELECT 
+       		   B.BUS_CODE
+       		 , US_NO
+             , BUS_NAME
+     		 , BUS_ADDRESS
+     		 , BUS_INTRO
+     		 , BUS_CATEGORY
+     		 , BUS_PHONE
+     		 , BUS_OPENING
+     		 , RES_CATEGORY
+     		 , BT.FILE_RENAME
+  		  FROM 
+  		       BUSINESS B
+  		  JOIN 
+  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE
+ 		 WHERE   
+       		   BUS_STATUS = 'Y'
+       	   AND BUS_CATEGORY = 'R'
+       	   AND BUS_CLASSIFY = 'G'
+	  ORDER BY B.BUS_CODE DESC
+	</select>
+	
+	<select id="selectRestaurant" resultType="_int" resultMap="BusinessResultSet">
+		SELECT
+			   B.BUS_CODE
+			 , US_NO
+			 , BUS_NAME
+			 , BUS_ADDRESS
+			 , BUS_INTRO
+			 , BUS_DATE
+			 , BUS_MODIFY
+			 , AD_COUNT
+			 , BUS_CLASSIFY
+			 , BUS_CATEGORY
+			 , BUS_STATUS
+			 , BUS_PHONE
+			 , RES_CATEGORY
+			 , BUS_OPENING
+			 , BT.FILE_RENAME
+		  FROM 
+  		       BUSINESS B
+  		  JOIN 
+  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE 
+		 WHERE 
+		 	   B.BUS_CODE = #{bus_code}
+	</select>
+
 	<!--지혜 -->
+
 	<select id="countReport" resultType="_int">
 		SELECT 
    		       COUNT(*)

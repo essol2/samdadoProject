@@ -26,6 +26,15 @@ public interface businessDao {
 	int insertBusAtt(BusinessAtt ba);
 	int insertBusiness(Business b);
 
+	// 사업장 리스트 카운트
+	int selectResListCount();
+
+	// 사업장 리스트 가져오기
+	List<Business> selectList();
+	
+	// 음식점 디테일
+	Business selectRestaurant(int bus_code);
+	
 	// 렌트카등록
 	int insertCar(Car c);
 	int insertCarAtt(CarAtt ca);
@@ -73,6 +82,10 @@ public interface businessDao {
 	//배너 광고 인서트
 	int insertBannerAd(Alliance a);
 
+	
+	
+
+	
 	
 
 	

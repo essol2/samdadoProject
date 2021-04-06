@@ -504,13 +504,13 @@
 
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                    <div class='profile' onclick="location.href='${ contextPath }/business/restaurant_detail'">
+                	<div class='profile'>
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/restaurant1.png">
+                        <img class="image" src="../resources/images/image_listpage/restaurant2.png">
                         <b>★4.90(후기 99+개)</b>
-                        <b>삼다도식당</b>
-                        <b>한식</b>                        
-                        <p><img src="../resources/images/image_listpage/heart.png"></p>
+                        <b>JEJU오성</b>
+                        <b>한식</b>
+                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
                     </div>
                     <div class='profile'>
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
@@ -531,34 +531,41 @@
                 </div>
 
                 <div id="secondlist">
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/restaurant4.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>백곱식당</b>
-                        <b>양식</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/restaurant5.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>연돈</b>
-                        <b>일식</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/restaurant6.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>제주회관</b>
-                        <b>한식</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
+	                <c:forEach var="r" items="${ resList }">
+	                    <div class='profile'>
+	                        <img class="premium" src="../resources/images/image_listpage/premium.png">
+	                        <img class="image" src="../resources/busUploadFiles/${ r.file_rename }" onclick="selectRes(${r.bus_code})">
+	                        <b>★4.90(후기 99+개)</b>
+	                        <b>${ r.bus_name }</b>
+	                        <b>${ r.res_category }</b>                        
+	                        <p><img src="../resources/images/image_listpage/heart.png"></p>
+	                    </div>
+	                </c:forEach>
                 </div>        
+			</div>
+			<script>
+				function selectRes(bus_code){
+					location.href='${contextPath}/business/restaurant_detail?bus_code=' + bus_code;
+				}
+			</script>
 
                 <div class="btnarea">
                     <button class="moreBtn">더보기</button>
                 </div>
-
         </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
          <footer>
             <div id="footer_left">

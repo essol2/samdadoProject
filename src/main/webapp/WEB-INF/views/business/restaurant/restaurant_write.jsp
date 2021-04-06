@@ -387,11 +387,11 @@
             	<h3 class="join-title"><label for="category">카테고리</label></h3>
                 <select class="box int_name" id="category" name="res_category">
                     <option value="select" selected>선택</option>
-                    <option value="korea">한식</option>
-                    <option value="china">중식</option>
-                    <option value="us">양식</option>
-                    <option value="japen">일식</option>
-                    <option value="etc">기타</option>
+                    <option value="한식">한식</option>
+                    <option value="중식">중식</option>
+                    <option value="양식">양식</option>
+                    <option value="일식">일식</option>
+                    <option value="기타">기타</option>
                 </select>
             </div>
             
