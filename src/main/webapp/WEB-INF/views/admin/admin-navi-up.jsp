@@ -29,7 +29,7 @@
               </div>
           </div>
       </div>
-      <div class="col">
+      <div class="col" onclick="location.href='${ contextPath }/admin/advertise1'">
           <div class="card">
               <br>
               <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16" style="color: lightgray; margin: auto;">

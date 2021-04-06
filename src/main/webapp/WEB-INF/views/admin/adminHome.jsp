@@ -43,7 +43,7 @@
                            <div class="row" style="padding-top: 4%;">
                            <h1>광고별 매출</h1>
                 	       <h6>최근 날짜 기준으로 5개의 Q&A만 보여집니다.</h6>
-                	       <br>
+                	       <br><br>
                             <div>
                                 <canvas id="myLineChart"></canvas>
                             </div>
@@ -132,12 +132,12 @@
                           </tbody>
                       </table>
                   </div>
-
+					
                     <!--막대 그래프(총 매출)-->
                      <div class="row" style="padding-top: 4%; padding-right: 7%; padding-bottom: 5%;">
                      <h1>최근 6개월 매출</h1>
                 	 <h6>최근 날짜 기준으로 6개월 간의 매출이 보여집니다.</h6>
-                	 <br>
+                	 <br><br>
                         <!--차트 그려지는 영역-->
                         <canvas id="myBarChart" width="400" height="300"></canvas>
 
@@ -184,12 +184,12 @@
                     </div>
                 </div>
             </div>
-
+		
             <!--Q&A-->
             <div class="row" id="D">
                 <div class="col-5" id="G">
                 <h1>Q&A</h1>
-                <h6>미답변 Q&A기준으로 10개의 Q&A만 보여집니다.</h6>
+                <h6>미답변 Q&A기준으로 최대 10개의 Q&A만 보여집니다.</h6>
                 <br>
                     <table class="table table-hover" id="qnaTable" style="table-layout: fixed;">
                         <thead>
@@ -210,15 +210,15 @@
                         </tbody>
                     </table>
                 </div>
-                
+           
                 <div class="col-7" id="H">
                 <h1>신규 사업장</h1>
-                <h6>최근 날짜 기준으로 10개의 신규 사업장만 보여집니다.</h6>
+                <h6>최근 날짜 기준으로 최대 10개의 신규 등록된 사업장만 보여집니다.</h6>
                 <br>
                     <table class="table table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">사업장 코드</th>
+                            <th scope="col">사업장 No</th>
                             <th scope="col">회원명</th>
                             <th scope="col">카테고리</th>
                             <th scope="col">사업장명</th>
@@ -230,7 +230,20 @@
 	                        <tr>
 	                            <th>${ bl.bus_code }</th>
 	                            <td>${ bl.usname }</td>
-	                            <td>${ bl.res_category }</td>
+	                            <c:choose>
+				                  <c:when test="${ bl.bus_category eq 'R' }">
+	                            	<td>음식점</td>
+	                              </c:when>
+	                              <c:when test="${ bl.bus_category eq 'H' }">
+	                            	<td>숙박</td>
+	                              </c:when>
+	                              <c:when test="${ bl.bus_category eq 'T' }">
+	                            	<td>관광지</td>
+	                              </c:when>
+	                              <c:otherwise>
+	                              	<td>렌트</td>
+	                              </c:otherwise>
+	                            </c:choose>
 	                            <td>${ bl.bus_name }</td>
 	                            <td>${ bl.bus_address }</td>
 	                        </tr>
