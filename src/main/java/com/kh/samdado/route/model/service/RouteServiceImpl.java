@@ -7,9 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.samdado.route.model.dao.RouteDao;
 import com.kh.samdado.route.model.vo.Route;
-import com.kh.samdado.route.model.vo.Search;
 import com.kh.samdado.route.model.vo.TourSpot;
-
+import com.kh.samdado.route.model.vo.rSearch;
 
 @Service
 public class RouteServiceImpl implements RouteService {
@@ -18,7 +17,7 @@ public class RouteServiceImpl implements RouteService {
    private RouteDao rDao;
 	
 	@Override
-	public List<Route> routeSearch(Search search) {
+	public List<Route> routeSearch(rSearch search) {
 		return rDao.routeSearch(search);
 	}
 	
