@@ -376,7 +376,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         )
    </insert>
    
-   <select id="findReportStatus" parameterType="Report" resultType="ReportResultSet">
+   <select id="findReportStatus" resultMap="ReportResultSet">
          SELECT 
                 *
         FROM 

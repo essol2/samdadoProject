@@ -394,8 +394,9 @@ public class MypageController {
 		 //System.out.println("classifyUser : " + classifyUser);
 		 //System.out.println("countDateUser : " + countDateUser);
 		 
-		 if(classifyUser != null) {
-			 String accClassify = ab.getAccClassify() + classifyUser;
+		 if(ab.getAccClassify().equals("직접입력")) {
+			 String accClassify = ab.getAccClassify() + " - " + classifyUser;
+			 //System.out.println(accClassify);
 			 ab.setAccClassify(accClassify);
 		 }
 		 
