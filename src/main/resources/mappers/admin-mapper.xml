@@ -92,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                QSTATUS = 'N'
 	</select>
 	
-	<select id="searchQnaList" parameterType="search" resultMap="qnaResultSet">
+	<select id="searchQnaList" parameterType="aSearch" resultMap="qnaResultSet">
 	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
 		SELECT
 		       *
