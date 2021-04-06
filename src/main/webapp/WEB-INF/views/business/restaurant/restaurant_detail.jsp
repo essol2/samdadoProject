@@ -4,7 +4,6 @@
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +14,7 @@
     <title>samdado</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -169,6 +168,7 @@
             width: 100%;
             /* height: 100%; */
             height: 550px;
+            border: 1px solid black;
         }
 
         .other{
@@ -188,7 +188,7 @@
             height: 100%;
         }
 
-        .mapBtn {
+        #mapBtn {
             position: absolute;
             background-color: white;
             border-radius: 6px;
@@ -292,6 +292,10 @@
             font-family: 'GmarketSansBold' !important;
 
         }
+        
+        #report_btn, #jjim_btn{
+        	cursor: pointer;
+        }
 
         /* 후기 */
 
@@ -326,6 +330,83 @@
             margin: 1%;
             margin-bottom: 0;
         }
+        
+
+        #map {
+            margin: auto;
+            border-radius: 6px;
+        }
+		
+		#exampleModalLabel{
+			font-size: 30px;
+			font-weight: bold;
+			
+		}
+
+        /* 부트스트랩 모달*/
+
+        .cal_top {
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .cal {
+            text-align: center;
+        }
+
+        table.calendar {
+            border: 1px solid black;
+            display: inline-table;
+            text-align: left;
+        }
+
+        table.calendar td {
+            vertical-align: top;
+            border: 1px solid skyblue;
+            width: 100px;
+        }
+
+        #closeBtn, #reportBtn {
+            border-style: none;
+            background-color: white;
+        }
+
+        .modal-header {
+            padding: 5%;
+            margin: auto;
+        }
+
+        .modal-header img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .modal-body {
+            padding: 10%;
+        }
+        
+        .modal-content {
+            margin: 0;
+            width: 100%;
+            display: flex;
+        }
+
+        .modal-body input {
+            width: 100%;
+        }
+
+        .modal-content div label {
+            line-height: 50px;
+        }       
+
+        .modal-body div {
+            margin-bottom: 10%;
+        }
+
+        .error {
+            color: red;
+        }
+
 
     </style>
 
@@ -341,38 +422,112 @@
             <div class="title_area">
                 <div class="title_area">
                     <img src="../resources/images/image_listpage/premium.png"><br>
-                    <label id="ho_title" class="title_tag">연돈</label>
+                    <label id="ho_title" class="title_tag">${ res.bus_name }</label>
                     <br>
                 </div>
-                <label id="ho_address">제주특별차치도 서귀포시 </label><br>
-                <label>영업시간 : 09 : 00 ~ 22: 00</label>&nbsp;<label>Break Time : 15:00 ~ 17:00</label>
+                <label id="ho_address">${ res.bus_address }</label><br>
+                <label>영업시간 : ${ res.bus_opening }</label>&nbsp;
             </div>
 
             <div id="ho_info">
                 <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
-                <label id="report_btn"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
-                <label id="report_btn"><img id="report" class="report_img"
-                        src="../resources/images/image_listpage/phone.png">064-738-7060</label>
+
+                <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
+                <label><img id="report" class="report_img"
+                        src="../resources/images/image_listpage/phone.png">${ res.bus_phone }</label>
+
             </div>
         </div>
 
+		<!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-                <img class="mainimage" src="../resources/images/image_listpage/restaurant2.png">
+                <img id="bigPic" class="mainimage" src="../resources/busUploadFiles/${ res.file_rename }">
                 <div class="other">
-                    <img class="otherimage" src="../resources/images/image_listpage/restaurant2_1.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/restaurant2_2.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/restaurant2_3.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/restaurant2_4.png">                   
-
+                	<img id="smallPic" class="otherimage" src="../resources/busUploadFiles/${ res.file_rename }">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour1.png">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour3.png">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/list9.png">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/restaurant2_4.png">                   
                 </div>
             </div>
+            
+            <!-- 매장 사진 클릭 시 변경 스크립트 -->
+			<script>
+                var bigPic = document.querySelector("#bigPic");
+                var smallPic = document.querySelectorAll("#smallPic")
 
+                for(var i = 0; i < smallPic.length; i++){
+                    smallPic[i].addEventListener("click", changepic);
+                    
+                }
+                function changepic(){
+                    var smallPicAttribute = this.getAttribute("src");
+                    bigPic.setAttribute("src", smallPicAttribute);
+
+                }
+            </script>
+            
+            <!-- Optional JavaScript; choose one of the two! -->
+
+            <!-- Option 1: Bootstrap Bundle with Popper -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+            <!-- Option 2: Separate Popper and Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+            
             <div class="col3">
+	            <!-- 구글지도 -->
                 <div class="col2">
-                    <button class="mapBtn">지도에서 보기</button>
-                    <img src="../resources/images/image_listpage/map.png" class="map">
+                    <div id="map" style="width: 555px; height:330px;">
+                    <button type="button" id="mapBtn" 
+                    onclick="window.open('https://map.kakao.com/link/search/${res.bus_name}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
+					
+					<%-- <!-- Modal -->
+					class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">${ res.bus_name } 찾아가기</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+					        ...
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">돌아가기</button>
+					        <button type="button" class="btn btn-primary">길찾기</button>
+					      </div>
+					    </div>
+					  </div>
+					</div> --%>
+                    </div>
                 </div>
+                
+                <!-- 구글지도 api -->
+                <script>
+	             // 이미지 지도에 표시할 마커입니다
+	             // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+	             var markers = [
+	                 {
+	                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
+	                     text: '${res.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+	                 }
+	             ];
+	
+	             var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div  
+	                 staticMapOption = { 
+	                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
+	                     level: 3, // 이미지 지도의 확대 레벨
+	                     marker: markers // 이미지 지도에 표시할 마커 
+	                 };    
+	
+	             // 이미지 지도를 생성합니다
+	             var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+				</script>
+				
                 <!-- 작은 리뷰 -->
                 <div class="col2" id="small_view_area">
                     <button type="button" class="small_view_btn">후기</button><br>
@@ -414,28 +569,11 @@
                 </div>
             </div>
         </div>
-            <div class="checktable">
-                <h2>주요 편의 시설</h2><br>                
-                <label><img src="../resources/images/image_listpage/check.png">테라스</label>
-                <label><img src="../resources/images/image_listpage/check.png">편의점</label>
-                <label><img src="../resources/images/image_listpage/check.png">주차</label><br>
-                
-            </div>
-
             <hr class="boundary">
 
             <div class="introduce">
                 <h2>소개</h2><br>
-                <p>
-                    연돈 예약은 제주도 내에서만 가능합니다.
-
-매일 오후8시부터 다음날 예약접수가 가능합니다.
-
-
-돈까스 한 그릇에 담아내는 장인정신 수제 돈까스 '연돈'
-                </p>
-
-
+                <p>${ res.bus_intro }</p>
             </div>
 
             <hr class="boundary">
@@ -443,28 +581,19 @@
             <div class="list">
                 <div id="firstlist">
                     <div class='profile'>
-                        
                         <img class="image" src="../resources/images/image_listpage/menu1.png">
-                        
-                        
                     </div>
                     <div class='profile'>
-                        
                         <img class="image" src="../resources/images/image_listpage/menu2.png">
-                        
-                        
                     </div>
                     <div class='profile'>
-                        
                         <img class="image" src="../resources/images/image_listpage/menu3.png">                        
-                        
                     </div>
                 </div>
             </div>
-            <div class="btnArea">
-                <button class="moreBtn">더보기</button>
-            </div>
-        
+            
+            <hr>
+            
         <!-- 후기 -->
         <div id="review_area">
             <label>후기</label>&nbsp;&nbsp;<label>★ 4.5(후기 99개)</label><br>
@@ -525,6 +654,48 @@
         </div>
         </div>
     </section>
+    
+    <!-- 신고Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <img src="../resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
+            <h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2>
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <form action="${ contextPath }/business/report" id="writeForm" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+            
+            <input type="hidden" name="rep_res" value="허위매물">
+            <input type="hidden" name="usno" value="${ loginUser.usno }">
+             <input type="hidden" name="bus_code" value="${ res.bus_code }">
+                      
+                <!--신고대상-->
+                <div class="name_div">
+                    <label for="id">신고대상</label>                   
+                    <input type="text" id="name" name="bus_name" value="${ res.bus_name }" readonly>
+                </div>
+                <!--신고사유-->
+                <div class="reason_div">
+                    <label for="reason">신고사유</label>                    
+                    <input type="text" id="reason" name="rep_cont" placeholder="50자 이내로 작성해주세요" required>
+                </div>
+                <!--파일첨부-->
+                <div class="reportimg_div">
+                    <label for="reportimg">파일첨부</label>                    
+                    <input type="file" id="reportimg" name="uploadFile">
+                </div>
+                
+            </div>
+            <div class="modal-footer">                
+                <button type="submit" id="reportBtn">신고하기</button>
+                <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
 
      <footer>
             <div id="footer_left">

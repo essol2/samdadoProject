@@ -26,6 +26,15 @@ public interface businessDao {
 	int insertBusAtt(BusinessAtt ba);
 	int insertBusiness(Business b);
 
+	// 사업장 리스트 카운트
+	int selectResListCount();
+
+	// 사업장 리스트 가져오기
+	List<Business> selectList();
+	
+	// 음식점 디테일
+	Business selectRestaurant(int bus_code);
+	
 	// 렌트카등록
 	int insertCar(Car c);
 	int insertCarAtt(CarAtt ca);
@@ -53,18 +62,30 @@ public interface businessDao {
 	public int insertReview(Review review);
 		  
 	// 신고하기
-	public int report(Report report);
+	int insertReport(Report r);
 		  
 	// 찜하기
 	public int jjim(Jjim jjim);
 
-	// 지혜
+	// ************************** 지혜
 	// 신고 카운트
 	int countReport();
+	
+	// Report의 rstatus 확인 메소드
+	public Report findReportStatus(Report r);
+
+	
 
 	// 비즈니스 등록 폼, 본인이 등록한 사업장 셀렉
 	List<Business> selectMyBusinessCategory(User loginUser);
 
+	//배너 광고 인서트
+	int insertBannerAd(Alliance a);
+
+	
+	
+
+	
 	
 
 	

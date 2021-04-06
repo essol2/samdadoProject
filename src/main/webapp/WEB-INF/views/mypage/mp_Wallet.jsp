@@ -126,7 +126,7 @@
         background-color:rgba( 255, 255, 255, 0.8 );
         border : 5px solid white;
         width : 77%;
-        height : 550px;
+        height : 1050px;
     }
 
     .mainTable{
@@ -167,6 +167,8 @@
         cursor: pointer;
         margin : 0;
         padding: 0;
+        color : white;
+        background-color : #467355;
     }
 
     .clickedPreWallet{
@@ -206,7 +208,7 @@
     }
 
     .walletPayDate{
-        width : 8%;
+        width : 10%;
     }
 
     .walletStatus{
@@ -214,7 +216,7 @@
     }
 
     .walletTouch{
-        width : 6%;
+        width : 8%;
         padding-left : 1%;
     }
 
@@ -225,6 +227,7 @@
     #walletMidTable th{
         background-color: rgb(228, 228, 228);
         color : gray;
+        text-align : center;
     }
 
     #walletMidTable td{
@@ -232,6 +235,15 @@
         padding-bottom: 0.5%;
         background-color: white;
         font-size: small;
+        text-align : center;
+    }
+    
+    .walletAccompany{
+    	width : 5%;
+    }
+    
+    .walletWhoPay{
+    	width : 10%;
     }
 
     /* The switch - the box around the slider */
@@ -340,6 +352,20 @@
         background-color: white;
         font-size: medium;
     }
+    
+    #addNewDetail{
+    	border-radius : 50%;
+    	width : 100px;
+    	height : 100px;
+    	position : fixed; left:5%;bottom:10%;
+    	box-shadow: 0px 0px 0px 5px lightgray;
+    }
+    
+    #btnExport{
+    	width : 100%;
+    	height : 100%;
+    	box-shadow: 0px 0px 0px 5px lightgray;
+    }
    
   #modal {
 	  position:relative;
@@ -371,7 +397,7 @@
 	
 	#modal .modal_content {
 	  width:860px;
-	  height :530px;
+	  height :580px;
 	  /* margin:100px auto; */
 	  margin-left : auto;
 	  margin-right : auto;
@@ -411,6 +437,14 @@
 		padding-left : 2%;
 		padding-right : 2%;
 	}
+	
+	#classifyUser, #countDateUser, #accAccompany, #whopay{
+		display : none;
+	}
+	
+	#accompanyTd{
+		width : 230px;
+	}
 </style>
 <body>
     <div id="back">
@@ -433,15 +467,19 @@
 
             <div id="mainBox">
                 <table id="walletTopTable" class="mainTable">
-                    <tr>
-                        <th class="thisWalletPage">예산세우기</th>
-                        <td class="clickedPreWallet"><button class="preWalDate" id="clickedDate">21.5.4(1일차)</button></td>
-                        <td class="unclickedPreWallet"><button class="preWalDate" id="unclickedDate">21.5.4(1일차)</button></td>
-                        <td class="unclickedPreWallet"><button class="preWalDate" id="unclickedDate">21.5.4(1일차)</button></td>
-                        <td id="forTopBlank">&nbsp</td>
-                        <td class="newWalletBtn"><button class="addingNew" id="addNewDetail"><b>새 예산 넣기 +</b></button></td>
-                    </tr>
+                <tr>
+                	<c:forEach var="rd" items="${rdList}" varStatus="rdNum">
+                        <td class="clickedPreWallet">
+                        	<button class="preWalDate" onclick="location.href='${contextPath}/mypage/chpage?atd='+ ${rdNum.index} +'&usno=' + ${loginUser.usno}">
+                        		<fmt:formatDate value="${rd.accTripDate}" type="date" pattern="yyyy-MM-dd"/>
+                        	</button>
+                        	</td>
+                	</c:forEach>
+                	<td id="forTopBlank">&nbsp</td>
+                	<td><button class="addingNew" id="btnExport"><b>+엑셀다운</b></button></td>
+                </tr>
                 </table>
+                <div id="forExcelExport">
                 <table id="walletMidTable" class="mainTable">
                     <thead>
                       <tr>
@@ -452,9 +490,12 @@
                         <th class="walletStatus">상태</th>
                         <th class="walletTouch">더치페이</th>
                         <th class="walletPerson">1인 가격</th>
+                        <th class="walletAccompany">인원</th> 
+                        <th class="walletWhoPay">결제인</th>
                       </tr>
                     </thead>
                     <tbody>
+                    <%-- <c:if test="${ abList } != null"> --%>
                     <c:forEach var="ab" items="${ abList }">
                       <tr>
                         <td class="walletName">${ ab.accName }</td>
@@ -464,27 +505,40 @@
                         <td class="walletStatus">${ab.accPstatus }</td>
                         <td class="walletTouch">
                             <label class="switch">
-                                <input type="checkbox">
+                                <input type="checkbox" <c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
                                 <span class="slider round"></span>
                             </label>
                         </td>
-         
+          				<td class="walletStatus">${ab.accOneWon}</td>
+	          			<c:if test="${ empty ab.whopay }">
+	          				<td class="walletAccompany"> 1인지불 </td>
+	          				<td class="walletWhoPay">${ loginUser.usname }</td>
+	          			</c:if>
+	          			<c:if test="${ !empty ab.whopay}">
+	          				<td class="walletAccompany"> ${ ab.accAccompany } </td>
+	          				<td class="walletWhoPay">${ab.whopay}</td>
+	          			</c:if>
                     </c:forEach>
                     </tbody>
                   </table>
+                  </div>
                   <table id="walletBottomTable" class="mainTable">
                       <tr>
-                          <th class="thisWalletPage">일정</th>
-                          <td id="clickedWallet"><button class="preWalDate" id="clickedDate">예산세우기</button></td>
-                          <td id="unClickedWallet"><button class="preWalDate" id="unclickedDate">가계부1</button></td>
-                          <td id="unClickedWallet"><button class="preWalDate" id="unclickedDate">가계부2</button></td>
-                          <td id="forBottomBlank">&nbsp</td>
-                          <td id="numberTd"><input type="number" id="quantityTogether" name="quantity" min="1" max="10" value="3"></td>
-                          <td id="howManyPeople">동행자수</td>
+                         <th style="width : 20%;">금액 계산</th>
+                         <th style="width : 10%">&nbsp</th>
+                         <td style="color : #467355; width : 10%;">총 합계</td>
+                         <td style="width : 20%;"><fmt:formatNumber value="${ts}" pattern="#,###"/></td>
+                         <td style="color : #467355; width : 10%;">1인당 금액</td>
+                         <td style="width : 20%;"><fmt:formatNumber value="${ots}" pattern="#,###"/></td>
+                         
                       </tr>
                   </table>
             </div>
         </section>
+    </div>
+    
+    <div id="fixedAddBtn">
+    	<button class="addingNew" id="addNewDetail"><b>+추가하기</b></button>
     </div>
     
 	<div id="modal">
@@ -497,29 +551,54 @@
                 		<table id="addNewAccTable" style="margin-right : 5%;">
                 			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">이름 </label></td>
-                				<td class="inputTd" colspan="3">
+                				<td class="inputTd" colspan="4">
                 				<input type="text" class="inputeda" id="accName" name="accName" style="width:90%;" placeholder="넣고자 하는 상품의 이름을 입력해주세요." required></td>
                 			</tr>
                 			<tr>
                 				<td><label for="_pwd" class="inputeda" id="forMargin" style="float:right;">구분</label></td>
-                				<td class="inputTd" colspan="3">
-                				<input type="text" class="inputeda" id="accClassify" name="accClassify" style="width:90%;" placeholder="ex) 교통비, 숙박, 관광, 식비 등!" required></td>
+                				<td class="inputTd" colspan="2">
+                					<select class="inputeda" id="accClassify" name="accClassify" style="width:90%;">
+                					 	<option value="구분" selected> 구분 </option>
+		                				<option value="숙박">숙박</option>
+		                				<option value="교통">교통</option>
+		                				<option value="식비">식비</option>
+		                				<option value="관광지 입장권">관광지 입장권</option>
+		                				<option value="체험권">체험권</option>
+		                				<option value="직접입력">직접입력</option>
+	                				</select>
+                				</td>
+                				<td id="showThisTd" colspan="2">
+                					<input type="text" class="inputeda" id="classifyUser" name="classifyUser" style="width:83%;" placeholder="직접 입력해주세요!">
+                					<input type="number" class="inputeda" id="countDateUser" name="countDateUser" style="width:83%;" placeholder="몇일치 예약했나요?">
+                				</td>
                 			</tr>
                 			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">가격 </label></td>
-                				<td class="inputTd">
+                				<td class="inputTd" colspan="2">
                 				<input type="text" class="inputeda" id="accWon" name="accWon" style="width:90%;" placeholder="숫자만 입력해 주세요! ex)15000"  required></td>
                 				<td><label for="_id" class="form-label" style="float:right;"> 여행일자 </label></td>
                 				<td class="inputTd"><input type="date" class="inputeda" id="accTripDate" name="accTripDate" style="width:75%;" required></td>
                 			</tr>
                 			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">결제상태 </label></td>
-                				<td class="inputTd">
+                				<td class="inputTd" colspan="2">
 	                				<select class="inputeda" id="accPstatus" name="accPstatus" style="width:90%;">
 		                				<option value="결제완료">결제완료</option>
 		                				<option value="현장결제">현장결제</option>
 	                				</select>
                 				</td>
+                				<td><label for="_id" class="form-label" style="float:right;"> 결제수단 </label></td>
+                				<td class="inputTd">
+                					<select class="inputeda" id="payMethod" name="payMethod" style="width:75%;">
+                					 	<option value="구분" selected> 결제수단 </option>
+		                				<option value="checkCard">체크카드</option>
+		                				<option value="creditCard">신용카드</option>
+		                				<option value="account">계좌이체</option>
+		                				<option value="note">현금</option>
+	                				</select>
+                				</td>
+                			</tr>
+                			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">더치페이 </label></td>
                 				<td class="inputTd"> 
 	                				<label class="switch">
@@ -527,6 +606,12 @@
 	                                	<span class="slider round"></span>
 	                            	</label>
                             	</td>
+                            	<td class="inputTd" id="accompanyTd">
+                            		<input type="number" class="inputeda" id="accAccompany" name="accAccompany" style="width:100%;" placeholder="동행인은 몇명인가요?" value="0">
+                            	</td>
+                				<td class="inputTd" colspan="2">
+                					<input type="text" class="inputeda" id="whopay" name="whopay" style="width:83%;" placeholder="누가계산했나요?">
+                				</td>
                 			</tr>
                 		</table>
                 	<input type="hidden" name="usno" id="usno" value="${ loginUser.usno }">
@@ -557,7 +642,54 @@
 		   $("#modal").fadeOut();
 		});      
 	</script>
-	
- 
+	<script>
+		$(document).ready(function() {
+		  $('#accClassify').change(function() {
+		    var result = $('#accClassify option:selected').val();
+		    if (result == "직접입력") {
+		      $("#classifyUser").show();
+		    } else {
+		      $("#classifyUser").hide();
+		    }
+		  }); 
+		}); 
+		
+		$(document).ready(function() {
+			$('#accClassify').change(function() {
+			    var result = $('#accClassify option:selected').val();
+			    if (result == "숙박") {
+			      $("#countDateUser").show();
+			    } else {
+			      $("#countDateUser").hide();
+			    }
+			}); 
+		}); 
+		
+		$(document).ready(function() {
+			$('#accDutch').change(function() {
+			    if ($(this).prop('checked')) {
+			      $("#accAccompany").show();
+			    } else {
+			      $("#accAccompany").hide();
+			    }
+			}); 
+		}); 
+		
+		$(document).ready(function() {
+			$('#accDutch').change(function() {
+			    if ($(this).prop('checked')) {
+			      $("#whopay").show();
+			    } else {
+			      $("#whopay").hide();
+			    }
+			}); 
+		}); 
+	</script>
+	<script>
+		$("#btnExport").click(function (e) {
+			window.open('data:application/vnd.ms-excel,' + encodeURIComponent($("#forExcelExport").html()))
+			 e.preventDefault();
+		});
+	</script>
 </body>
 </html>

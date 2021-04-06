@@ -83,6 +83,13 @@ public class AdminDaoImpl implements AdminDao {
 		return sqlSession.selectList("adminMapper.adminMainBusinessSelect");
 	}
 
+	@Override
+	public int countAd1() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminMapper.countAd1");
+	}
+
+
 	
 
 }

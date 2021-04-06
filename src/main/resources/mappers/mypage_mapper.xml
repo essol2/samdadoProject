@@ -40,7 +40,25 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<result property="accAccompany" column="ACC_ACCOMPANY"/>
 	<result property="accFinWon" column="ACC_FINWON"/>
 	<result property="accPstatus" column="ACC_PSTATUS"/>
+	<result property="whopay" column="WHOPAY"/>
+	<result property="payMethod" column="PAYMETHOD"/>
+	</resultMap>
 	
+	<resultMap type="AccountBook" id="countResultSet">
+	<id property="accno" column="ACC_NO"/>
+	<result property="usno" column="US_NO"/>
+	<result property="accTripDate" column="ACC_TRIPD"/>
+	<result property="accName" column="ACC_NAME"/>
+	<result property="accClassify" column="ACC_CLASSIFY"/>
+	<result property="accWon" column="ACC_WON"/>
+	<result property="accWrited" column="ACC_WRITED"/>
+	<result property="accDutch" column="ACC_DUTCH"/>
+	<result property="accOneWon" column="ACC_ONEWON"/>
+	<result property="accAccompany" column="ACC_ACCOMPANY"/>
+	<result property="accFinWon" column="ACC_FINWON"/>
+	<result property="accPstatus" column="ACC_PSTATUS"/>
+	<result property="whopay" column="WHOPAY"/>
+	<result property="payMethod" column="PAYMETHOD"/>
 	</resultMap>
 	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
@@ -195,6 +213,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , ACC_DUTCH
 		  , ACC_PSTATUS
 		  , ACC_ACCOMPANY
+		  , ACC_ONEWON
+		  , WHOPAY
 		  , US_NO
 		)
 		VALUES
@@ -207,7 +227,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , SYSDATE
 		  , #{accDutch}
 		  , #{accPstatus}
-		  , DEFAULT
+		  , #{accAccompany}
+		  , #{accOneWon}
+		  , #{whopay}
 		  , #{usno}
 		)
 	</insert>
@@ -226,12 +248,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<!-- 일반회원 - 가계부 가장 최근 날짜 가져오기 -->
-	<select id="selectRecentDate" resultMap="accountResultSet" parameterType="AccountBook">
+<!-- 	<select id="selectRecentDate" resultMap="accountResultSet" parameterType="AccountBook">
 		SELECT ACC_TRIPD, US_NO
 		FROM (  SELECT *
 		        FROM ACCOUNT
 		        WHERE US_NO=#{usno}
 		        ORDER BY ACC_TRIPD DESC )
 		WHERE ROWNUM = 1
+	</select> -->
+	
+	<select id="selectRecentDate" resultMap="accountResultSet" parameterType="AccountBook">
+		SELECT ACC_TRIPD, SUM(ACC_WON) AS totalSum, SUM(ACC_ONEWON) AS oneTotalSum
+		FROM ACCOUNT
+		WHERE US_NO = #{usno}
+		GROUP BY ACC_TRIPD
+		ORDER BY ACC_TRIPD DESC
 	</select>
 </mapper>

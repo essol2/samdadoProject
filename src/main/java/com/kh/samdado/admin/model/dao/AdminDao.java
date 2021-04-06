@@ -30,4 +30,6 @@ public interface AdminDao {
 
 	List<Business> adminMainBusinessSelect();
 
+	int countAd1();
+
 }

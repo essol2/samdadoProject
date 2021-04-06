@@ -83,17 +83,33 @@
                     </div>
                 </div> 
 
-            <form action="${ contextPath }/insert/bannerAd" method="post" enctype="multipart/form-data"> <!-- pom.xml에  multipart/form-data 사용 라이브러리 추가 -->
-                <div class="inner_content">
-                    <h4>1. 신청하실 사업장을 선택하세요.</h4> <br>
-                    <select class="form-select" aria-label="Default select example">
-                        <option>--- 선택 ---</option>
-                        <c:forEach var="smbc" items="${ selectMyBusinessCategory }">
-							<option value="bus_code">No : ${ smbc.bus_code } | ${ smbc.bus_name } | ${ smbc.bus_address }</option>
-						</c:forEach>
-                      </select>
-                </div>
-              
+            <form action="${ contextPath }/business/insert/bannerAd" method="post" enctype="multipart/form-data"> <!-- pom.xml에  multipart/form-data 사용 라이브러리 추가 -->
+			<c:choose>
+				<c:when test="${ !empty selectMyBusinessCategory }">
+	                <div class="inner_content">
+	                    <h4>1. 신청하실 사업장을 선택하세요.</h4> <br>
+	                    <select class="form-select" aria-label="Default select example" name="bus_code">
+	                        <option>--- 선택 ---</option>
+	                        <c:forEach var="smbc" items="${ selectMyBusinessCategory }">
+								<option value="${ smbc.bus_code }">No : ${ smbc.bus_code } | 사업장명 : ${ smbc.bus_name } | 주소 : ${ smbc.bus_address }</option>
+							</c:forEach>
+	                     </select>
+	                </div>
+	            </c:when>
+	            <c:otherwise>
+	            <div class="nonSelectCategory" style="text-align: center; padding: 20%;">
+	            	<h3>--- ${ loginUser.usname }님이 등록하신 사업장이 없습니다. ---</h3>
+	            	<br>
+	            	<h5>[사업장 등록하러 가기]</h5>
+	                <br>
+                    <a href='${ contextPath }/business/hotel_write'>호텔 등록</a> | 
+	                <a href='${ contextPath }/business/rentcar_write'>렌트카 등록</a> | 
+	                <a href='${ contextPath }/business/restaurant_write'>음식점 등록</a> | 
+	                <a href='${ contextPath }/business/tour_write'>관광지 등록</a>
+	            </div>   	
+	            </c:otherwise>
+            </c:choose>
+            	<c:if test="${ !empty selectMyBusinessCategory }">
                 <div class="inner_content">
                     <h4>2. 배너 이미지를 등록해주세요.</h4> <br>
                     <div class="mb-3">
@@ -106,16 +122,25 @@
                     
                     </div>
                 </div>
+                </c:if>
+                
+                <c:if test="${ !empty selectMyBusinessCategory }">
                 <div class="inner_content">
-                    <h4>3. 기업에 대한 간단한 소개를 해주세요.</h4> <br>
+                    <h4>3. 해당 사업장에 대한 간단한 소개를 해주세요.</h4> <br>
                     <div class="form-floating">
-                        <textarea class="form-control" name="intro" placeholder="기업에 대한 간단한 소개를 해주세요." id="floatingTextarea" required></textarea>
+                        <textarea class="form-control" name="alintro" placeholder="해당 사업장에 대한 간단한 소개를 해주세요." id="floatingTextarea" required></textarea>
                     </div>  
                 </div>
-              
+                </c:if>
+                
+              	<input type="hidden" name="usno" value="${ loginUser.usno }">
+              	
+              	<c:if test="${ !empty selectMyBusinessCategory }">
                 <div class="inner_content">               
                     <button type="submit" class="btn btn-secondary" id="submit_bannerBtn">신청하기</button> 
                 </div>
+                </c:if>
+                
             </form>
         
         </div>

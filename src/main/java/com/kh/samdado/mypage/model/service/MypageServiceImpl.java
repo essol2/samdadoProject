@@ -111,8 +111,8 @@ public class MypageServiceImpl implements MypageService{
 
 	// 일반회원 - 가계부 가장 최근 날짜 가져오기
 	@Override
-	public AccountBook selectRecentDate(AccountBook ab) {
-		return mDao.selectRecentDate(ab);
+	public List<AccountBook> selectRecentDate(String un) {
+		return mDao.selectRecentDate(un);
 	}
 
 

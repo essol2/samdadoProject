@@ -288,9 +288,13 @@
         }
 
         .btn {
-            background-color: rgb(70, 115, 85);
-            border: 1px solid rgb(70, 115, 85);
+            background-color: rgb(70, 115, 85) !important;
+            border: 1px solid rgb(70, 115, 85) !important;
             font-family: 'GmarketSansBold' !important;
+        }
+        
+         #report_btn, #jjim_btn{
+        	cursor: pointer;
         }
 
         /* 후기 */

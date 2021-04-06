@@ -25,8 +25,7 @@ import com.kh.samdado.user.model.vo.User;
 @Service
 public class businessServiceImpl implements businessService {
 	
-    @Autowired
-    private businessDao bDao;
+    @Autowired businessDao bDao;
    
 	@Override
 	public int insertAlliance(Alliance a) {
@@ -44,6 +43,25 @@ public class businessServiceImpl implements businessService {
 		return bDao.insertBusiness(b);
 	}
 
+	// 사업장 리스트 카운드
+	@Override
+	public int selectResListCount() {
+		return bDao.selectResListCount();
+	}
+	
+	// 사업장 리스트 가져오기
+	@Override
+	public List<Business> selectList() {
+		return bDao.selectList();
+	}
+	
+	// 음식점 디테일
+	@Override
+	public Business selectRestaurant(int bus_code) {
+		return bDao.selectRestaurant(bus_code);
+	}
+
+	
 	// 렌트카 등록
 	@Override
 	public int insertCar(Car c) {
@@ -104,10 +122,10 @@ public class businessServiceImpl implements businessService {
 	}
 
 
+	// 신고하기
 	@Override
-	public int report(Report report) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertReport(Report r) {			
+		return bDao.insertReport(r);
 	}
 
 
@@ -123,12 +141,28 @@ public class businessServiceImpl implements businessService {
 		// TODO Auto-generated method stub
 		return bDao.countReport();
 	}
-
-	@Override
+	
+  @Override
 	public List<Business> selectMyBusinessCategory(User loginUser) {
 		// TODO Auto-generated method stub
 		return bDao.selectMyBusinessCategory(loginUser);
 	}
+
+	@Override
+	public int insertBannerAd(Alliance a) {
+		// TODO Auto-generated method stub
+		return bDao.insertBannerAd(a);
+	}
+
+  @Override
+	public Report findReportStatus(Report r) {		
+		return bDao.findReportStatus(r);
+	}
+
+	
+	
+
+	
 
 	
 

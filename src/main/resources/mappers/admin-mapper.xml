@@ -54,6 +54,21 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usname" column="US_NAME" />	
 	</resultMap>
 	
+	<resultMap type="Alliance" id="AllianceResultSet">
+		<id property="alno" column="AL_NO" />
+		<result property="alintro" column="AL_INTRO" />
+		<result property="alsubdate" column="AL_SUBDATE" />
+		<result property="startdate" column="START_DATE" />
+		<result property="aimgpath" column="A_IMG_PATH" />
+		<result property="aimgname" column="A_IMG_NAME" />
+		<result property="aimgcname" column="A_IMG_CNAME" />
+		<result property="amassage" column="A_MASSAGE" />
+		<result property="usno" column="US_NO" />
+		<result property="bus_code" column="BUS_CODE" />
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
+	</resultMap>
+	
 	<select id="selectAdminMainQnaSelect" resultMap="qnaResultSet">
 		SELECT *
 		  FROM
@@ -191,16 +206,23 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<select id="adminMainBusinessSelect" resultMap="businessResultSet">
 		SELECT *
 		  FROM
-              (SELECT US_NAME, BUS_NAME, BUS_CODE, BUS_ADDRESS, RES_CATEGORY 
+              (SELECT US_NAME, BUS_NAME, BUS_CODE, BUS_ADDRESS, BUS_CATEGORY 
                FROM BUSINESS, "USER"
                WHERE BUSINESS.US_NO = "USER".US_NO
                ORDER BY BUS_DATE)
 		 WHERE 
 		       ROWNUM <![CDATA[<=]]> 10 <!-- admin 메인 페이지에 10개의 신규사업장만 보이도록 limit절 처리 -->
+	</select>
+	
+	<select id="countAd1" resultType="_int">	
+		SELECT 
+			  COUNT(*)
+		  FROM
+		      ALLIANCE
+		 WHERE
+		      ALSTATUS = 'N'
 	</select>	
 	
-	
-	
-	
-	
+
+
 </mapper>

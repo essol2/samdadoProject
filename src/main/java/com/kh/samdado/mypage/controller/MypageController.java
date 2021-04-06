@@ -1,6 +1,6 @@
 package com.kh.samdado.mypage.controller;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -148,14 +148,13 @@ public class MypageController {
 		 
 		 // u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
 		 List<Point> pList = mService.selectPointList(u.getUsno());
-		 //System.out.println("pList 객체 확인 : " + pList);
+		 System.out.println("pList 객체 확인 : " + pList);
 		 
-		 if(pList != null) {
+		 if(pList.size() > 0) {
 			 mv.addObject("pList", pList);
 			 mv.setViewName("mypage/mp_Point");
 		 }else {
-			 mv.addObject("msg", "포인트 조회 오류입니다.");
-			 mv.setViewName("mypage/mp_bUesrInfo");
+			 mv.setViewName("mypage/mp_Point");
 		 }
 		 return mv;
 	 }
@@ -206,11 +205,11 @@ public class MypageController {
 	 @ResponseBody
 	 public List<SearchPoint> searchPointPeriod(@RequestBody SearchPoint sp) {
 		 
-		 System.out.println("view에서 받아오는 so객체 : " + sp);
+		 //System.out.println("view에서 받아오는 so객체 : " + sp);
 
 		 // List<SearchPoint> 검색
 		 List<SearchPoint> searchPPList = mService.selectSearchList(sp);
-		 System.out.println("searchPPList 확인 : " + searchPPList);
+		 //System.out.println("searchPPList 확인 : " + searchPPList);
 		 
 		 if(searchPPList != null) {
 			 return searchPPList;
@@ -277,7 +276,7 @@ public class MypageController {
 		 
 		 
 		 
-		 System.out.println(u);
+		// System.out.println(u);
 		 
 		 User loginUser = uService.loginUser(u);
 		 
@@ -354,43 +353,107 @@ public class MypageController {
 	 // 일반회원 - 가계부 페이지로 이동
 	 @GetMapping("/wallet")
 	 public ModelAndView walletFirstView(@ModelAttribute AccountBook ab,
+			 							 @RequestParam(name="usno") String un,
 				 					     ModelAndView mv) { 
 		 
-		 // 1. 사용자별 가계부 최근 날짜 가져오기
-		 AccountBook recentDate = mService.selectRecentDate(ab);
-		 //System.out.println(recentDate);
-		 
-		 ab.setSearchDate(recentDate.getAccTripDate());
-		 
-		 List<AccountBook> abList = mService.selectAccountList(ab);
-		 //System.out.println("abList 객체 확인 : " + abList);
-		 
-		 if(abList != null) {
+		 // 1. 사용자별 가계부 최근 날짜 리스트 가져오기
+		 List<AccountBook> recentDateList = mService.selectRecentDate(un);
+		 //System.out.println("recentDateList check : " + recentDateList);
+		 //System.out.println("recentDateList.get(0) check : " + recentDateList.get(0).getAccTripDate());
+	 
+		if(recentDateList.isEmpty()){
+			 List<AccountBook> abList= mService.selectAccountList(ab);
+			 //System.out.println(abList);
 			 mv.addObject("abList", abList);
 			 mv.setViewName("mypage/mp_Wallet");
-		 }else {
-			 mv.addObject("msg", "가계부 조회 오류입니다.");
-			 mv.setViewName("mypage/mp_Wallet");
+		 } else {
+			 ab.setSearchDate(recentDateList.get(0).getAccTripDate());
+
+			 //System.out.println("searchDate check : " + ab.getSearchDate());
+			 List<AccountBook> abList= mService.selectAccountList(ab);
+			 
+			 //System.out.println("abList check : " + abList);
+			 if(abList != null) {
+				 mv.addObject("abList", abList);
+				 mv.addObject("rdList", recentDateList);
+				 mv.addObject("ots" , recentDateList.get(0).getOneTotalSum());
+				 mv.addObject("ts", recentDateList.get(0).getTotalSum());
+				 mv.setViewName("mypage/mp_Wallet");
+			 }else {
+				 mv.addObject("msg", "가계부 조회 오류입니다.");
+				 mv.setViewName("mypage/mp_Wallet");
+			 }
 		 }
+
 		 return mv;
 	}
 	 
 	 // 일반회원 - 새로운 가계부 내역 넣기
 	 @PostMapping("/inputNewAB")
 	 public String inputNewAccBook(@ModelAttribute AccountBook ab,
+			 					   @RequestParam(value="classifyUser") String classifyUser,
+			 					   @RequestParam(value="countDateUser", defaultValue="0") int countDateUser,
 			 					   Model model) {
 		 
 		 System.out.println("넘어오는 ab객체 확인 : " +ab);
+		 System.out.println("classifyUser : " + classifyUser);
+		 System.out.println("countDateUser : " + countDateUser);
+		 
+		 if(ab.getAccClassify().equals("직접입력")) {
+			 String accClassify = ab.getAccClassify() + " - " + classifyUser;
+			 System.out.println(accClassify);
+			 ab.setAccClassify(accClassify);
+		 }
+		 
+		 if(ab.getAccAccompany() != 0) {
+			int oneWon = Math.round(ab.getAccWon() / ab.getAccAccompany());
+			System.out.println(oneWon);
+			ab.setAccOneWon(oneWon);
+		 } else {
+			 ab.setAccOneWon(ab.getAccWon());
+			 //System.out.println(ab.getAccOneWon());
+		 }
+		 
+		 System.out.println("ab ckeck : " + ab);
 		 //DB에 insert
 		 int result = mService.insertNewAcc(ab);
 		 
 		 if(result>0) {
 			model.addAttribute("msg", "등록성공!");
-			return "redirerct:/mypage/wallet";
+			model.addAttribute("usno", ab.getUsno());
+			return "redirect:/mypage/wallet";
 		 } else {
 			 model.addAttribute("msg", "등록에 실패했습니다. 다시 시도해주세요.");
 		     return "/mypage/mp_Wallet";
 		 }
 	 }
-	 					  
+	// 일반회원 - 새로운 가계부 내역 넣기
+	 @GetMapping("/chpage")
+	 public ModelAndView changeOtherPage(@RequestParam(name="atd") int atd,
+			 					   		 @RequestParam(name="usno") String un,
+			 					   		 @ModelAttribute AccountBook ab,
+			 					   		 ModelAndView mv) {
+		 
+		 // 1. group by한 날짜 orderby desc로 가져오기
+		 List<AccountBook> recentDateList = mService.selectRecentDate(un);
+		 
+		 // 해당 인덱스 atd에 해당되는 컬럼의 날짜 가져와서 바로 searchDate에 set
+		 ab.setSearchDate(recentDateList.get(atd).getAccTripDate());
+		 
+		 // SearchDate 값에 해당하는 모든 리트스 뽑아오기
+		 List<AccountBook> abList= mService.selectAccountList(ab);
+		 
+		 //System.out.println("abList check : " + abList);
+		 if(abList != null) {
+			 mv.addObject("abList", abList);
+			 mv.addObject("rdList", recentDateList);
+			 mv.addObject("ots" , recentDateList.get(atd).getOneTotalSum());
+			 mv.addObject("ts", recentDateList.get(atd).getTotalSum());
+			 mv.setViewName("mypage/mp_Wallet");
+		 }else {
+			 mv.addObject("msg", "가계부 조회 오류입니다.");
+			 mv.setViewName("mypage/mp_Wallet");
+		 }
+		 return mv;
+	 }
 }

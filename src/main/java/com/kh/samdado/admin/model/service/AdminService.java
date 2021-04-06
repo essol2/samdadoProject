@@ -35,7 +35,8 @@ public interface AdminService {
 
 	List<Business> adminMainBusinessSelect();
 
-	
+	int countAd1();
+
    
 
 

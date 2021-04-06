@@ -46,4 +46,8 @@ public class AccountBook {
 	private int accFinWon;
 	private String accPstatus;
 	private Date searchDate;
+	private String whopay;
+	private String payMethod;
+	private int totalSum;
+	private int oneTotalSum;
 }
