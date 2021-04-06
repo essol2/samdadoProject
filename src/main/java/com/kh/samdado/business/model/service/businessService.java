@@ -54,19 +54,23 @@ public interface businessService {
 	public int insertReview(Review review);
 	  
 	// 신고하기
-	public int report(Report report);
-	  
+	int insertReport(Report r);
+	
 	// 찜하기
 	public int jjim(Jjim jjim);
 
 	// 신고 카운트
-	int countReport();
+	int countReport();  
+
+	// Report의 rstatus 확인 메소드
+	public Report findReportStatus(Report r);
 
 	// 배너 광고 등록 폼, 본인 사업장 가져오기
 	List<Business> selectMyBusinessCategory(User loginUser);
 
 	// 배너 광고 인서트
 	int insertBannerAd(Alliance a);
+
 
 
 

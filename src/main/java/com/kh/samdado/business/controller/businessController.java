@@ -33,15 +33,21 @@ import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
+
+import com.kh.samdado.common.model.vo.Report;
+
 import com.kh.samdado.user.model.vo.User;
+
 
 @Controller
 @RequestMapping("/business")
 @SessionAttributes({ "loginUser", "msg" })
 public class businessController {
 
+
 	@Autowired
 	businessService bService;
+
 
 	// 호텔
 	@GetMapping("/hotel_list")
@@ -385,5 +391,61 @@ public class businessController {
 
 		return "business/businessFormSubmit";
 	}
+  
+  	// 신고하기	
+	
+			@PostMapping("/report")
+			public String reportInsert(Report r,
+									  @RequestParam(value="uploadFile") MultipartFile file,
+									  HttpServletRequest request, Map map) {
+				
+				// 업로드 파일 서버에 저장
+				// 파일이 첨부 되었다면
+				if(!file.getOriginalFilename().equals("")) {
+					// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+					Map<String, String> files = busSaveFile(file, request);
+					// DB에 저장하기 위한 파일명 세팅
+					if(files != null) {
+						r.setR_img_name(file.getOriginalFilename());						
+						 
+						// 맵에 담겨져있는 값의 키 불러오기
+						r.setR_img_cname((String)files.get("rename"));
+						r.setR_img_path((String)files.get("path"));
+					}
+				}
+				
+				Report findReportStatus = bService.findReportStatus(r);
+				// System.out.println("r : " + r);
+				// System.out.println("frs : " + findReportStatus);
+				
+				// 해당 업체가 신고기록이 없을 때 insert
+				if(findReportStatus == null) {					
+					int result = bService.insertReport(r);					
+										
+					if(result > 0) {						
+						return "redirect:/main";
+					} else {
+						throw new businessException("신고에 실패하였습니다.");
+					}
+					
+				// 신고기록이 있을 때	
+				} else {
+					// Rstatus가 n일 경우
+					if(findReportStatus.getRstatus() == "n") {
+						return "redirect:/main";
+						
+					// Rstatus가 n이 아닐 경우	
+					} else {
+						int result = bService.insertReport(r);						
+											
+						if(result > 0) {							
+							return "redirect:/business/restaurant/restaurant_detail";
+						} else {
+							throw new businessException("신고에 실패하였습니다.");
+						}
+					}
+				}
+			
+			}
 
 }

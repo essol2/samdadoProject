@@ -99,8 +99,8 @@ public class businessDaoImpl implements businessDao {
 	}
 
 	@Override
-	public int report(Report report) {
-		return sqlSession.insert("businessMapper.report", report);
+	public int insertReport(Report r) {		
+		return sqlSession.insert("businessMapper.insertReport", r);
 	}
 	
 	@Override
@@ -121,7 +121,8 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.selectOne("businessMapper.countReport");
 	}
 
-	@Override
+	
+  @Override
 	public List<Business> selectMyBusinessCategory(User loginUser) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.selectMyBusinessCategory", loginUser);
@@ -131,6 +132,11 @@ public class businessDaoImpl implements businessDao {
 	public int insertBannerAd(Alliance a) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("businessMapper.insertBannerAd", a);
+	}
+  
+  @Override
+	public Report findReportStatus(Report r) {		
+		return sqlSession.selectOne("businessMapper.findReportStatus");
 	}
 
 	
