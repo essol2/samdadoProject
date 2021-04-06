@@ -60,7 +60,7 @@ public class UserController {
 		   					Model model,
 		   					RedirectAttributes rd) {
 	   
-	   System.out.println("넘어온 값 : " + u);
+	   // System.out.println("넘어온 값 : " + u);
 	   
 	   if (u.getBusno().equals("")) { // 값이 없으면 일반회원
 		   u.setUspart("일반"); 

@@ -130,6 +130,12 @@ public class businessServiceImpl implements businessService {
 		return bDao.selectMyBusinessCategory(loginUser);
 	}
 
+	@Override
+	public int insertBannerAd(Alliance a) {
+		// TODO Auto-generated method stub
+		return bDao.insertBannerAd(a);
+	}
+
 	
 
 

@@ -127,6 +127,12 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.selectList("businessMapper.selectMyBusinessCategory", loginUser);
 	}
 
+	@Override
+	public int insertBannerAd(Alliance a) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("businessMapper.insertBannerAd", a);
+	}
+
 	
 
 

@@ -83,13 +83,13 @@
                     </div>
                 </div> 
 
-            <form action="${ contextPath }/insert/bannerAd" method="post" enctype="multipart/form-data"> <!-- pom.xml에  multipart/form-data 사용 라이브러리 추가 -->
+            <form action="${ contextPath }/business/insert/bannerAd" method="post" enctype="multipart/form-data"> <!-- pom.xml에  multipart/form-data 사용 라이브러리 추가 -->
                 <div class="inner_content">
                     <h4>1. 신청하실 사업장을 선택하세요.</h4> <br>
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" name="bus_code">
                         <option>--- 선택 ---</option>
                         <c:forEach var="smbc" items="${ selectMyBusinessCategory }">
-							<option value="bus_code">No : ${ smbc.bus_code } | ${ smbc.bus_name } | ${ smbc.bus_address }</option>
+							<option value="${ smbc.bus_code }">No : ${ smbc.bus_code } | 사업장명 : ${ smbc.bus_name } | 주소 : ${ smbc.bus_address }</option>
 						</c:forEach>
                       </select>
                 </div>
@@ -107,12 +107,14 @@
                     </div>
                 </div>
                 <div class="inner_content">
-                    <h4>3. 기업에 대한 간단한 소개를 해주세요.</h4> <br>
+                    <h4>3. 해당 사업장에 대한 간단한 소개를 해주세요.</h4> <br>
                     <div class="form-floating">
-                        <textarea class="form-control" name="intro" placeholder="기업에 대한 간단한 소개를 해주세요." id="floatingTextarea" required></textarea>
+                        <textarea class="form-control" name="alintro" placeholder="해당 사업장에 대한 간단한 소개를 해주세요." id="floatingTextarea" required></textarea>
                     </div>  
                 </div>
               
+              	<input type="hidden" name="usno" value="${ loginUser.usno }">
+              	
                 <div class="inner_content">               
                     <button type="submit" class="btn btn-secondary" id="submit_bannerBtn">신청하기</button> 
                 </div>
