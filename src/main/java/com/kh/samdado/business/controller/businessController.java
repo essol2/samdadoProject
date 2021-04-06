@@ -335,7 +335,7 @@ public class businessController {
 			if(renameFileName != null) {
 				a.setAimgname(file.getOriginalFilename());
 				a.setAimgcname(renameFileName);
-				a.setAimgpath("/busUploadFiles/alliance/" + file.getOriginalFilename());
+				a.setAimgpath("/busUploadFiles/alliance/" + renameFileName);
 			}
 		}
 		

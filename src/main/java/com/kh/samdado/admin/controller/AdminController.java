@@ -65,8 +65,8 @@ public class AdminController {
 		int countUserResult = uService.countUser() - 1; // 관리자 1명 제외
 		//System.out.println("회원 수 countUserResult : " + countUserResult);
 		
-		// 1_4. 관리자 메인 페이지에서 신규 광고 신청 카운트 select
-		// int countAdResult = bService.countAd();
+		// 1_4. 관리자 메인 페이지에서 신규 배너광고 신청 카운트 select
+		int countAd1Result = aService.countAd1();
 		
 		// 1_5. 관리자 메인 페이지에서 신규 신고 신청 카운트 select
 		int countReportResult = bService.countReport();
@@ -90,6 +90,7 @@ public class AdminController {
 		model.addAttribute("countUserResult", countUserResult);
 		model.addAttribute("countReportResult", countReportResult);
 		model.addAttribute("businessList", businessList);
+		model.addAttribute("countAd1Result", countAd1Result);
 		
 		return "admin/adminHome";
 	}

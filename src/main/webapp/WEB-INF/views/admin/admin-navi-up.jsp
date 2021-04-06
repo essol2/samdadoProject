@@ -37,8 +37,8 @@
               </svg>
               <br>
               <div>
-                  <h4>32</h4>
-                  <h6 style="color: gray;">신규 광고신청</h6>
+                  <h4>${ countAd1Result }</h4>
+                  <h6 style="color: gray;">신규 배너 광고</h6>
               </div>
           </div>
       </div>
