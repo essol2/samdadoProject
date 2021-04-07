@@ -48,4 +48,6 @@ public class AccountBook {
 	private Date searchDate;
 	private String whopay;
 	private String payMethod;
+	private int totalSum;
+	private int oneTotalSum;
 }

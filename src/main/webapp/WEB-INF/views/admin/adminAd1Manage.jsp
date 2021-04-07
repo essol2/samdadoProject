@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- fmt 라이브러리 사용 -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -35,6 +38,7 @@
                         <th>No</th>
                         <th>신청자</th>
                         <th>카테고리</th>
+                        <th>사업장코드</th>
                         <th>포인트</th> <!-- income 테이블 조인 -->
                         <th>신청폼</th>
                         <th>신청날짜</th>
@@ -43,48 +47,54 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th>1</th>
-                    <td>김춘추</td>
-                    <td>숙박</td>
-                    <td>500000</td>
-                    <td><a class="btn btn-info">신청폼</a></td>
-                    <td>2021-03-17</td>
-                    <td><button type="submit" class="btn btn-secondary">승인</button></td>
-                    <td>
-                    <div class="banner_ad_reject_choose">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>반려사유</option>
-                            <option value="이미지 불일치" name="이미지 불일치">이미지 불일치</option>
-                            <option value="포인트 미충전" name="포인트 미충전">포인트 미충전</option>
-                        </select>
-                        <button type="submit" class="btn btn-success">반려</button> 
-                    </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>2</th>
-                    <td>강제주</td>
-                    <td>렌트카</td>
-                    <td>0</td>
-                    <td><a class="btn btn-info">신청폼</a></td>
-                    <td>2021-03-17</td>
-                    <td><button type="submit" class="btn btn-secondary">승인</button></td>
-                    <td>
-                        <div class="banner_ad_reject_choose">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>반려사유</option>
-                                <option value="이미지 불일치" name="이미지 불일치">이미지 불일치</option>
-                                <option value="포인트 미충전" name="포인트 미충전">포인트 미충전</option>
-                            </select>
-                            <button type="submit" class="btn btn-success">반려</button>
-                        </div>
-                    </td>
-                  </tr>
+                  <form action="${ contextPath }/admin/update/bannerAd" method="post">
+                	<c:forEach var="bal" items="${ bannerAdList }">
+		                   <tr>
+		                       <th>${ bal.alno }</th>
+		                       <th>${ bal.usname }</th>
+		                       <c:choose>
+				                  <c:when test="${ bal.bus_category eq 'R' }">
+	                            	<td>음식점</td>
+	                              </c:when>
+	                              <c:when test="${ bal.bus_category eq 'H' }">
+	                            	<td>숙박</td>
+	                              </c:when>
+	                              <c:when test="${ bal.bus_category eq 'T' }">
+	                            	<td>관광지</td>
+	                              </c:when>
+	                              <c:otherwise>
+	                              	<td>렌트</td>
+	                              </c:otherwise>
+	                            </c:choose>
+		                       <td>${ bal.bus_code }</td>
+		                       <c:choose>
+				                  <c:when test="${ empty bal.amount }">
+	                            	<td><font style="color: red">0</font></td>
+	                              </c:when>
+	                              <c:otherwise>
+	                              	<td>${ bal.amount }</td>
+	                              </c:otherwise>
+	                            </c:choose>
+		                	   <td><a class="btn btn-info">보기</a></td>
+		                       <td><fmt:formatDate value='${ bal.alsubdate }' type='both' pattern='yyyy-MM-dd' /></td>
+                    		   <td><button type="submit" class="btn btn-secondary">승인</button></td>
+		                	   <td>
+			                    <div class="banner_ad_reject_choose">
+			                        <select class="form-select" aria-label="Default select example" name="amassage">
+			                            <option selected>반려사유</option>
+			                            <option value="이미지 불일치">이미지 불일치</option>
+			                            <option value="포인트 미충전">포인트 미충전</option>
+			                        </select>
+			                        <button type="submit" class="btn btn-success">반려</button> 
+			                    </div>
+                    		   </td>
+		                   </tr>
+		            </c:forEach>
+		          </form>
                 </tbody>
               </table>
 
-             <br> <hr>
+             <br><hr>
 
               <!-- 페이지네이션 -->
               <div class="row-page">

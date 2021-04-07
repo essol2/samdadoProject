@@ -659,13 +659,13 @@
             <div class="modal-body">
             
             <input type="hidden" name="rep_res" value="허위매물">
-            <input type="hidden" name="usno" value="1">
-             <input type="hidden" name="bus_code" value="1">
+            <input type="hidden" name="usno" value="${ loginUser.usno }">
+             <input type="hidden" name="bus_code" value="${ res.bus_code }">
                       
                 <!--신고대상-->
                 <div class="name_div">
                     <label for="id">신고대상</label>                   
-                    <input type="text" id="name" name="bus_name" value="연돈" readonly>
+                    <input type="text" id="name" name="bus_name" value="${ res.bus_name }" readonly>
                 </div>
                 <!--신고사유-->
                 <div class="reason_div">

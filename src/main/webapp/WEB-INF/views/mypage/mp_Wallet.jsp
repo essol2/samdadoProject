@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     
 <!DOCTYPE html>
 <html lang="en">
@@ -167,6 +168,8 @@
         cursor: pointer;
         margin : 0;
         padding: 0;
+        color : white;
+        background-color : #467355;
     }
 
     .clickedPreWallet{
@@ -206,7 +209,7 @@
     }
 
     .walletPayDate{
-        width : 8%;
+        width : 10%;
     }
 
     .walletStatus{
@@ -214,7 +217,7 @@
     }
 
     .walletTouch{
-        width : 6%;
+        width : 8%;
         padding-left : 1%;
     }
 
@@ -225,6 +228,7 @@
     #walletMidTable th{
         background-color: rgb(228, 228, 228);
         color : gray;
+        text-align : center;
     }
 
     #walletMidTable td{
@@ -232,6 +236,15 @@
         padding-bottom: 0.5%;
         background-color: white;
         font-size: small;
+        text-align : center;
+    }
+    
+    .walletAccompany{
+    	width : 5%;
+    }
+    
+    .walletWhoPay{
+    	width : 10%;
     }
 
     /* The switch - the box around the slider */
@@ -348,6 +361,12 @@
     	position : fixed; left:5%;bottom:10%;
     	box-shadow: 0px 0px 0px 5px lightgray;
     }
+    
+    #btnExport{
+    	width : 100%;
+    	height : 100%;
+    	box-shadow: 0px 0px 0px 5px lightgray;
+    }
    
   #modal {
 	  position:relative;
@@ -420,7 +439,7 @@
 		padding-right : 2%;
 	}
 	
-	#classifyUser, #countDateUser, #accAccompany, #whoPay{
+	#classifyUser, #countDateUser, #accAccompany, #whopay{
 		display : none;
 	}
 	
@@ -449,15 +468,19 @@
 
             <div id="mainBox">
                 <table id="walletTopTable" class="mainTable">
-                    <tr>
-                        <th class="thisWalletPage">여행 일자</th>
-                        <td class="clickedPreWallet"><button class="preWalDate" id="clickedDate">21.5.4(1일차)</button></td>
-                        <td class="unclickedPreWallet"><button class="preWalDate" id="unclickedDate">21.5.4(1일차)</button></td>
-                        <td class="unclickedPreWallet"><button class="preWalDate" id="unclickedDate">21.5.4(1일차)</button></td>
-                        <td id="forTopBlank">&nbsp</td>
-                        <!-- <td class="newWalletBtn"><button class="addingNew" id="addNewDetail"><b>새 예산 넣기 +</b></button></td> -->
-                    </tr>
+                <tr>
+                	<c:forEach var="rd" items="${rdList}" varStatus="rdNum">
+                        <td class="clickedPreWallet">
+                        	<button class="preWalDate" onclick="location.href='${contextPath}/mypage/chpage?atd='+ ${rdNum.index} +'&usno=' + ${loginUser.usno}">
+                        		<fmt:formatDate value="${rd.accTripDate}" type="date" pattern="yyyy-MM-dd"/>
+                        	</button>
+                        	</td>
+                	</c:forEach>
+                	<td id="forTopBlank">&nbsp</td>
+                	<td><button class="addingNew" id="btnExport"><b>+엑셀다운</b></button></td>
+                </tr>
                 </table>
+                <div id="forExcelExport">
                 <table id="walletMidTable" class="mainTable">
                     <thead>
                       <tr>
@@ -468,38 +491,56 @@
                         <th class="walletStatus">상태</th>
                         <th class="walletTouch">더치페이</th>
                         <th class="walletPerson">1인 가격</th>
+                        <th class="walletAccompany">인원</th> 
                         <th class="walletWhoPay">결제인</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                     <%-- <c:if test="${ abList } != null"> --%>
-                    <c:forEach var="ab" items="${ abList }">
-                      <tr>
+                    <c:forEach var="ab" items="${ abList }" varStatus="abStatus">
+                      <tr id="forChageAjax${abStatus.index}">
                         <td class="walletName">${ ab.accName }</td>
                         <td class="walletCate"> ${ ab.accClassify }</td>
-                        <td class="walletPrice">${ ab.accWon }</td>
+                        <td class="walletPrice"><fmt:formatNumber value="${ ab.accWon }" pattern="#,###"/></td>
                         <td class="walletPayDate"><fmt:formatDate value="${ ab.accTripDate }" type="date" pattern="yyyy-MM-dd"/></td>
                         <td class="walletStatus">${ab.accPstatus }</td>
                         <td class="walletTouch">
-                            <label class="switch" name="dutchSwitch">
-                                <input type="checkbox" <c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
+                            <label class="switch">
+                                <input type="checkbox" id="slideCheck${abStatus.index}"<c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
                                 <span class="slider round"></span>
                             </label>
+                            <input type="hidden" id="thisDate" value="${ab.accTripDate}">
+                        	<input type="hidden" id="thisColNum" value="${ab.accno}">
                         </td>
-          				<td class="walletStatus">${ab.accOneWon}</td>
-          				<td class="walletWhoPay">${ab.whopay}</td>
+                       <%--  <c:if test="$(slideCheck${abStatus.index}).prop('checked') == true">
+                        	<td class="walletStatus"><fmt:formatNumber value="${ab.accWon/ab.accAccompany}" pattern="#,###"/></td>
+                        </c:if>
+                        <c:if test="$(slideCheck${abStatus.index}).prop('checked') == false">
+                        	<td class="walletStatus"><fmt:formatNumber value="${ab.accWon}" pattern="#,###"/></td>
+                        </c:if> --%>
+                        <td class="walletStatus"></td>
+	          			<c:if test="${ empty ab.whopay }">
+	          				<td class="walletAccompany"> 1인지불 </td>
+	          				<td class="walletWhoPay">${ loginUser.usname }</td>
+	          			</c:if>
+	          			<c:if test="${ !empty ab.whopay}">
+	          				<td class="walletAccompany"> ${ ab.accAccompany } </td>
+	          				<td class="walletWhoPay">${ab.whopay}</td>
+	          			</c:if>
+	          			
                     </c:forEach>
                     </tbody>
                   </table>
+                  </div>
                   <table id="walletBottomTable" class="mainTable">
                       <tr>
-                          <th class="thisWalletPage">일정</th>
-                          <td id="clickedWallet"><button class="preWalDate" id="clickedDate">예산세우기</button></td>
-                          <td id="unClickedWallet"><button class="preWalDate" id="unclickedDate">가계부1</button></td>
-                          <td id="unClickedWallet"><button class="preWalDate" id="unclickedDate">가계부2</button></td>
-                          <td id="forBottomBlank">&nbsp</td>
-                          <td id="numberTd"><input type="number" id="quantityTogether" name="quantity" min="1" max="10" value="3"></td>
-                          <td id="howManyPeople">동행자수</td>
+                         <th style="width : 20%;">금액 계산</th>
+                         <th style="width : 10%">&nbsp</th>
+                         <td style="color : #467355; width : 10%;">총 합계</td>
+                         <td style="width : 20%;"><fmt:formatNumber value="${ts}" pattern="#,###"/></td>
+                         <td style="color : #467355; width : 10%;">1인당 금액</td>
+                         <td style="width : 20%;"><fmt:formatNumber value="${ots}" pattern="#,###"/></td>
+                         
                       </tr>
                   </table>
             </div>
@@ -570,7 +611,7 @@
                 			<tr>
                 				<td><label for="_id" class="inputeda" style="float:right;">더치페이 </label></td>
                 				<td class="inputTd"> 
-	                				<label class="switch" name="dutchSwitch">
+	                				<label class="switch">
 	                                	<input type="checkbox" id="accDutch" name="accDutch">
 	                                	<span class="slider round"></span>
 	                            	</label>
@@ -579,7 +620,7 @@
                             		<input type="number" class="inputeda" id="accAccompany" name="accAccompany" style="width:100%;" placeholder="동행인은 몇명인가요?" value="0">
                             	</td>
                 				<td class="inputTd" colspan="2">
-                					<input type="text" class="inputeda" id="whoPay" name="whoPay" style="width:83%;" placeholder="누가계산했나요?">
+                					<input type="text" class="inputeda" id="whopay" name="whopay" style="width:83%;" placeholder="누가계산했나요?">
                 				</td>
                 			</tr>
                 		</table>
@@ -615,7 +656,7 @@
 		$(document).ready(function() {
 		  $('#accClassify').change(function() {
 		    var result = $('#accClassify option:selected').val();
-		    if (result == "byuser") {
+		    if (result == "직접입력") {
 		      $("#classifyUser").show();
 		    } else {
 		      $("#classifyUser").hide();
@@ -626,7 +667,7 @@
 		$(document).ready(function() {
 			$('#accClassify').change(function() {
 			    var result = $('#accClassify option:selected').val();
-			    if (result == "hotel") {
+			    if (result == "숙박") {
 			      $("#countDateUser").show();
 			    } else {
 			      $("#countDateUser").hide();
@@ -647,13 +688,97 @@
 		$(document).ready(function() {
 			$('#accDutch').change(function() {
 			    if ($(this).prop('checked')) {
-			      $("#whoPay").show();
+			      $("#whopay").show();
 			    } else {
-			      $("#whoPay").hide();
+			      $("#whopay").hide();
 			    }
 			}); 
 		}); 
 	</script>
- 
+	<script>
+		$("#btnExport").click(function (e) {
+			window.open('data:application/vnd.ms-excel,' + encodeURIComponent($("#forExcelExport").html()))
+			 e.preventDefault();
+		});
+	</script>
+	<!-- on/off Button Toggle -->
+	<script>
+	for (var i=0; i<=${fn:length(abList)}; i++){
+			$("#slideCheck"+i).click(function() {
+			
+			var usno = ${loginUser.usno};
+			var thisDate = $('#thisDate').val();
+			var thisColNum = $('#thisColNum').val();
+			
+			var infoThisCol = new Object();
+			infoThisCol.usno = usno;
+			infoThisCol.thisDate = thisDate;
+			infoThisCol.thisColNum = thisColNum;
+			
+			console.log(infoThisCol);
+			
+			if($(this).prop("checked") == true){
+				console.log("on임");
+				// off상태로 만들어줘야함.
+				$.ajax({
+					url : "makeOff",
+					data : JSON.stringfy(searchPo),
+					type : "POST",
+					contentType : "application/json; charset=utf-8",
+					success : functionn(data){
+						tr = $("forChangeAjax"+i);
+						tr.html("");
+						
+						for(var j in data){
+							var wdateFormat = new Date(data[i].wdate);
+							wdateFormat = getFormatDate(wdateFormat);
+							
+							var td= $("<td>");
+							var wname = $("<td>").text(data[j].wname);
+							var wclassify = $("<td>").text(data[j].wclassify);
+							var wprice = $("<td>").text(data[j].wprice);
+							var wdate = $("<td>").text(wdateFormat);
+							var wstatus = $("<td>").text(data[j].wstatus);
+							var wDutch = $("<td>").text(data[j].d)
+						}
+						
+					},
+					error : function(e){
+						alert("error code : " + e.status + "\n"
+								+ "message : " + e.responseText)
+					}
+				});
+				
+				
+			} else{
+				console.log("off임");
+				// on상태로 만들어줘야함
+				$.ajax({
+					url : "makeOn",
+					data : JSON.stringfy(searchPo),
+					type : "POST",
+					contentType : "application/json; charset=utf-8",
+					success : functionn(data){
+						
+						
+					},
+					error : function(e){
+						alert("error code : " + e.status + "\n"
+								+ "message : " + e.responseText)
+					}
+				});
+			}
+		});
+	}
+	
+	function getFormatDate(date){
+		var year = date.getFullYear();
+        var month = (1 + date.getMonth());
+        month = month >= 10 ? month : '0' + month;
+        var day = date.getDate();
+        day = day >= 10 ? day : '0' + day;
+        return year + '-' + month + '-' + day;
+	}
+	</script>
 </body>
 </html>

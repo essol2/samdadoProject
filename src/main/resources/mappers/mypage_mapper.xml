@@ -44,6 +44,23 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<result property="payMethod" column="PAYMETHOD"/>
 	</resultMap>
 	
+	<resultMap type="AccountBook" id="countResultSet">
+	<id property="accno" column="ACC_NO"/>
+	<result property="usno" column="US_NO"/>
+	<result property="accTripDate" column="ACC_TRIPD"/>
+	<result property="accName" column="ACC_NAME"/>
+	<result property="accClassify" column="ACC_CLASSIFY"/>
+	<result property="accWon" column="ACC_WON"/>
+	<result property="accWrited" column="ACC_WRITED"/>
+	<result property="accDutch" column="ACC_DUTCH"/>
+	<result property="accOneWon" column="ACC_ONEWON"/>
+	<result property="accAccompany" column="ACC_ACCOMPANY"/>
+	<result property="accFinWon" column="ACC_FINWON"/>
+	<result property="accPstatus" column="ACC_PSTATUS"/>
+	<result property="whopay" column="WHOPAY"/>
+	<result property="payMethod" column="PAYMETHOD"/>
+	</resultMap>
+	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
 	<!-- 1. 이메일, 전화번호 변경 메소드 -->
 	<update id="updateUserInfo" parameterType="User">
@@ -138,23 +155,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<!-- 제휴회원 - point 테이블에 검색결과 조회하러 가기 -->
 	<select id="selectSearchList" resultMap="pointResultSet">
 		SELECT *
-		FROM POINT
-		WHERE US_NO = #{usno}
+		FROM 
+				POINT
+		WHERE 	
+				US_NO = #{usno}
 		<choose>
 			<when test="selector == '1개월'">
-				AND PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
-			          AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),1), 'YY-MM-DD')
+				AND 
+					PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
+			          	  AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),1), 'YY-MM-DD')
 			</when>
 			<when test="selector == '3개월'">
-				AND PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
-			          AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),3), 'YY-MM-DD')
+				AND 
+					PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
+			          	  AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),3), 'YY-MM-DD')
 			</when>
 			<otherwise>
-				AND PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
-			          AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),6), 'YY-MM-DD')
+				AND 
+					PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
+			          	  AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),6), 'YY-MM-DD')
 			</otherwise>      
 		</choose>
-		ORDER BY PNO DESC
+		ORDER BY 
+				PNO DESC
 	</select>
 	
 	
@@ -210,7 +233,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , SYSDATE
 		  , #{accDutch}
 		  , #{accPstatus}
-		  , DEFAULT
+		  , #{accAccompany}
 		  , #{accOneWon}
 		  , #{whopay}
 		  , #{usno}
@@ -231,12 +254,27 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<!-- 일반회원 - 가계부 가장 최근 날짜 가져오기 -->
-	<select id="selectRecentDate" resultMap="accountResultSet" parameterType="AccountBook">
+<!-- 	<select id="selectRecentDate" resultMap="accountResultSet" parameterType="AccountBook">
 		SELECT ACC_TRIPD, US_NO
 		FROM (  SELECT *
 		        FROM ACCOUNT
 		        WHERE US_NO=#{usno}
 		        ORDER BY ACC_TRIPD DESC )
 		WHERE ROWNUM = 1
+	</select> -->
+	
+	<select id="selectRecentDate" resultMap="accountResultSet" parameterType="AccountBook">
+		SELECT 
+				ACC_TRIPD
+			  , SUM(ACC_WON) AS totalSum
+			  , SUM(ACC_ONEWON) AS oneTotalSum
+		FROM 
+				ACCOUNT
+		WHERE 
+				US_NO = #{usno}
+		GROUP BY 
+				ACC_TRIPD
+		ORDER BY 
+				ACC_TRIPD DESC
 	</select>
 </mapper>

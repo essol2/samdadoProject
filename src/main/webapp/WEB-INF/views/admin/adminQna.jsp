@@ -119,22 +119,21 @@
                <div class="find_qna">
                 <h3>Q&A<span style="color: seagreen;"> 내역조회 </span>하기</h3>
                 <br>
-                
-             
-			<form id="search_qna_form">
-               <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
-                   <option>--------</option>
-                   <option value="qnano" <c:if test="${ param.searchCondition == 'qnano' }">selected</c:if>>Q&A번호</option>
-                   <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원명</option>
-                   <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
-                   <option value="qcont" <c:if test="${ param.searchCondition == 'qcont' }">selected</c:if>>문의내용</option> <!-- like 조회 -->
-                   <option value="qdate" <c:if test="${ param.searchCondition == 'qdoate' }">selected</c:if>>문의날짜</option>
-                   <option value="qreply" <c:if test="${ param.searchCondition == 'qreply' }">selected</c:if>>답변내용</option>
-                   <option value="qstatus" <c:if test="${ param.searchCondition == 'qstatus' }">selected</c:if>>답변 상태(Y/N)</option>
-               </select>
-               <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
-               <button class="btn btn-secondary" type="button">검색하기</button>
-			</form>
+ 
+				<form id="search_qna_form">
+	               <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
+	                   <option>--------</option>
+	                   <option value="qnano" <c:if test="${ param.searchCondition == 'qnano' }">selected</c:if>>Q&A번호</option>
+	                   <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원명</option>
+	                   <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
+	                   <option value="qcont" <c:if test="${ param.searchCondition == 'qcont' }">selected</c:if>>문의내용</option> <!-- like 조회 -->
+	                   <option value="qdate" <c:if test="${ param.searchCondition == 'qdoate' }">selected</c:if>>문의날짜</option>
+	                   <option value="qreply" <c:if test="${ param.searchCondition == 'qreply' }">selected</c:if>>답변내용</option>
+	                   <option value="qstatus" <c:if test="${ param.searchCondition == 'qstatus' }">selected</c:if>>답변 상태(Y/N)</option>
+	               </select>
+	               <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
+	               <button class="btn btn-secondary" type="button">검색하기</button>
+				</form>
             
                 
                 <!-- 
@@ -186,6 +185,8 @@
 			         		search.searchCondition =  $("#searchCondition").val();
 			         		search.searchValue =  $("#searchValue").val();
 			         		
+			         		alert(search.searchCondition);
+			         		alert(search.searchValue);
 
 							$.ajax({
 								url : "admin/searchQna",
