@@ -47,14 +47,35 @@
                     </tr>
                 </thead>
                 <tbody>
+                  <form action="${ contextPath }/admin/update/bannerAd" method="post">
                 	<c:forEach var="bal" items="${ bannerAdList }">
 		                   <tr>
 		                       <th>${ bal.alno }</th>
 		                       <th>${ bal.usname }</th>
-		                       <td>${ bal.bus_category }</td>
+		                       <c:choose>
+				                  <c:when test="${ bal.bus_category eq 'R' }">
+	                            	<td>음식점</td>
+	                              </c:when>
+	                              <c:when test="${ bal.bus_category eq 'H' }">
+	                            	<td>숙박</td>
+	                              </c:when>
+	                              <c:when test="${ bal.bus_category eq 'T' }">
+	                            	<td>관광지</td>
+	                              </c:when>
+	                              <c:otherwise>
+	                              	<td>렌트</td>
+	                              </c:otherwise>
+	                            </c:choose>
 		                       <td>${ bal.bus_code }</td>
-		                       <td>${ bal.amount }</td>
-		                	   <td><a class="btn btn-info">신청폼</a></td>
+		                       <c:choose>
+				                  <c:when test="${ empty bal.amount }">
+	                            	<td><font style="color: red">0</font></td>
+	                              </c:when>
+	                              <c:otherwise>
+	                              	<td>${ bal.amount }</td>
+	                              </c:otherwise>
+	                            </c:choose>
+		                	   <td><a class="btn btn-info">보기</a></td>
 		                       <td><fmt:formatDate value='${ bal.alsubdate }' type='both' pattern='yyyy-MM-dd' /></td>
                     		   <td><button type="submit" class="btn btn-secondary">승인</button></td>
 		                	   <td>
@@ -69,10 +90,11 @@
                     		   </td>
 		                   </tr>
 		            </c:forEach>
+		          </form>
                 </tbody>
               </table>
 
-             <br> <hr>
+             <br><hr>
 
               <!-- 페이지네이션 -->
               <div class="row-page">
