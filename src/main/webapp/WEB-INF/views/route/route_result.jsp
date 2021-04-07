@@ -13,154 +13,10 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+	
 	<jsp:include page="../common/navi.jsp"/>
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_modal.css" type="text/css">
-<style>
-		.route_title {
-            max-width: 48%;
-            max-height: 800px;
-            margin-left : 10%;
-        }
-
-        #content-logo {
-            /* display: inline-block; */
-            position: relative;
-            margin-left: 100px;
-        }
-
-        .content-title {
-            font-size: 30px;
-            color: black;
-            display: inline-block;
-            position: relative;
-        }
-
-        #route_select {
-            border: 2px solid black;
-            width: 80%;
-            position: relative;
-            margin: auto;
-        }
-
-        #select td {
-            padding-left: 10px;
-            padding-right: 10px;
-            text-align: center;
-            width: 80px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-        }
-
-        .bold {
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .tabletr {
-            padding-top: 10px;
-            padding-bottom: 5px;
-        }
-
-        #map {
-            width: 100%;
-            position: relative;
-            margin-left: 12%;
-        }
-
-        .c_border {
-            border: 1px solid black;
-            width: 75%;
-            margin-left: 20%;
-        }
-
-        .c1_border {
-            border: 1px solid black;
-            width: 60%;
-            margin-left: 20%;
-        }
-
-        #title1, #title2,  #title3,  #title4 {
-            margin-left: 20%;
-            margin-bottom: -10px;
-        }
-        
-        #morebtn {
-            width: 25%;
-            margin-left: 37.5%;
-            margin-left: 37.5%;
-        }
-
-        #left-border {
-            /* height: 1650px; */
-            height: auto;
-            width: 90%;
-        }
-
-        .spot_border {
-            height: 225px;
-            width: 150px;
-            border: rgb(70, 115, 85) 3px solid;
-        }
-        
-        ._btn {
-            background-color: rgb(70, 115, 85);
-            border: rgb(70, 115, 85);
-            color: white;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            font-weight: 700;
-            height: 45px;
-        }
-
-        .spot_title {
-            margin-top: 10%;
-            text-align: center;
-            font-weight: bolder;
-            font-size: 25px;
-            cursor: default;
-        }
-
-        .spot_btn {
-            background-color: rgb(255,255,255);
-            border: 0px;
-            width: 100%;
-            margin-top:80%;
-        }
-
-        #ch_btn {
-            width: 40%;
-            margin-left: 8%;
-            margin-right: 1%;
-        }
-
-        #add_btn {
-            width: 40%;
-            margin-right: 8%;
-            margin-left: 1%;
-        }
-
-        #arrow {
-            margin-left: 40%;
-            margin-top: 2%;
-            margin-bottom: 2%;
-        }
-
-        .detail {
-            font-size: 15px;
-            font-weight: 100;
-        }
-        
-       #searchbtn {
-            font-weight: 300;
-            margin-bottom: 10px;
-            margin-left: 88%;
-            width: 100px;
-            height: 35px;
-        }
-	
-</style>
+	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css">
 </head>
 <body>
 		<div id="bottom">
@@ -169,7 +25,7 @@
                 <div class="route_title">
                     <image id="content_logo" width="70px" height="70px" src="../resources/images/image_main/logo_g.png"></image>
                     &nbsp;
-                    <label class="content-title">길 만들기</label>
+                    <label class="content-title">찾은 길</label>
                 </div>
 
                 <div id="route_select">
@@ -196,7 +52,7 @@
                 	<c:if test="${ param.thema == 'beach' }">
                 		<c:set var="check7" value="checked"/>
                 	</c:if>
-                 	
+                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get" onsubmint="return searchForm();">
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 		<input type="radio" name="area" id="east" value="east" ${ check1 }>
                 		<label for="east">  동부</label>
@@ -223,7 +79,7 @@
                 		<input type="date" name="routeDate" id="routeDate" value="${routeDate}">
                 		
                 		<button class="_btn" id="searchbtn">검색하기</button>
-                	
+                	</form>
                 </div>
                 <br>
                 
@@ -241,7 +97,7 @@
 							<label class="content-title" id="title1" >추천 길</label>
 							<div class="c_border" id="left-border">
 								<table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
-									<c:forEach var="r" items="${ list }">
+									<c:forEach var="r" items="${ list }" varStatus="index">
 										<tr>
 											<td>
 												<img src="${ r.spot_path }${ r.spot_oname }">
@@ -253,25 +109,23 @@
 												</div>
 											</td>
 										</tr>
-
-	                                    <tr>
-	                                       <td colspan="2">
-	                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
-	                                           <span class="detail">26.8km</span>
-	                                           <span class="detail">59분</span>
-	                                        </td>
-	                                    </tr>
+										<c:if test="${ !index.last }">
+		                                    <tr>
+		                                       <td colspan="2">
+		                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
+		                                           <span class="detail">26.8km</span>
+		                                           <span class="detail">59분</span>
+		                                        </td>
+		                                    </tr>
+	                                    </c:if>
                                </c:forEach>
-                                   
-
-                                    
-
+                                 
                                    <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: 10%; font-size: 16px;">총 이동 거리 40.1km </p></td></tr>
                                    <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: -5%; font-size: 16px; margin-bottom: 10%;">예상 이동 시간 83분</p></td></tr>
                                    
                                    <tr>
                                         <td colspan="2"> 
-                                            <button class="_btn" id="ch_btn">순서 바꾸기</button>
+                                            <button class="_btn" id="ch_btn" onclick="location.href='${ contextPath }/route/changeRoute'">순서 바꾸기</button>
                                             <button class="_btn" id="add_btn">추가하기</button>
                                         </td>
                                    </tr>
@@ -283,12 +137,12 @@
                             <div id="content_right" style="width: 100%;">
                                 <label class="content-title" id="title2">예상 예산</label>
                                 <div class="c1_border" id="right-top-border">
-                                    <table style="width=100%">
+                                    <table id="costTable">
                                         <tr>
-                                            <td id="navi-content" style="padding: 10px;">&nbsp;만장굴 입장료 (성인) 4,000원</td>
+                                            <td id="cost-content">&nbsp;만장굴 입장료 (성인) 4,000원</td>
                                         </tr>
                                         <tr> 
-                                            <td id="navi-content" style="text-align: right; padding: 10px;" >총 4,000원&nbsp;</td>
+                                            <td id="cost-content" style="text-align: right;" >총 4,000원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -323,7 +177,7 @@
                                 </div>
                                 <br>
 
-                                <button class="_btn" id="morebtn">숙박 더 보러 가기</button>
+                                <button class="_btn" id="morebtn" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 더 보러 가기</button>
                                 
                                 <br><br>
                                 <label class="content-title" id="title4">삼다수 님이 찜하신 숙박</label>
@@ -416,7 +270,8 @@
                 </div>
             </div>
         </div>
-         <script>
+    
+    <script>
 		var container = document.getElementById('map');
 		var options = {
 			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
