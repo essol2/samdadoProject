@@ -67,6 +67,21 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="bus_code" column="BUS_CODE" />
 		<!-- USER 테이블 조인을 위한 필드 -->
 		<result property="usname" column="US_NAME" />	
+		<!-- INCOME 테이블 조인을 위한 필드 -->
+		<result property="amount" column="amount" />	
+		<!-- BUSINESS 테이블 조인을 위한 필드 -->
+		<result property="bus_category" column="BUS_CATEGORY" />	
+	</resultMap>
+	
+	<resultMap type="Income" id="IncomeResultSet">
+		<id property="payno" column="PAY_NO" />
+		<result property="item" column="ITEM" />
+		<result property="amount" column="AMOUNT" />
+		<result property="pdate" column="PDATE" />
+		<result property="exdate" column="EXDATE" />
+		<result property="usno" column="US_NO" />
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
 	</resultMap>
 	
 	<select id="selectAdminMainQnaSelect" resultMap="qnaResultSet">
@@ -222,6 +237,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE
 		      ALSTATUS = 'N'
 	</select>	
+
+	<select id="adminbannerAdSelect" resultMap="AllianceResultSet">
+		SELECT
+				ALLIANCE.AL_NO,
+				"USER".US_NAME,
+				AMOUNT,
+				AL_INTRO,
+				AL_SUBDATE,
+				ALSTATUS,
+				START_DATE,
+				A_IMG_PATH,
+				A_IMG_NAME,
+				A_IMG_CNAME,
+				A_MASSAGE,
+				ALLIANCE.US_NO,
+				ALLIANCE.BUS_CODE,
+                BUS_CATEGORY
+		FROM    ALLIANCE, "USER", INCOME, BUSINESS
+		WHERE   ALLIANCE.US_NO = "USER".US_NO
+		AND     "USER".US_NO = INCOME.US_NO
+        AND     ALLIANCE.BUS_CODE = BUSINESS.BUS_CODE
+		AND     ALSTATUS = 'N'
+	</select>
 	
 
 
