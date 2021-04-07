@@ -39,9 +39,29 @@ public class businessDaoImpl implements businessDao {
 	public int insertBusAtt(BusinessAtt ba) {
 		return sqlSession.insert("businessMapper.insertBusAtt", ba);
 	}
+	
+	// 사업장 등록
 	@Override
 	public int insertBusiness(Business b) {
 		return sqlSession.insert("businessMapper.insertBusiness", b);
+	}
+	
+	// 사업장 리스트 카운트
+	@Override
+	public int selectResListCount() {
+		return sqlSession.selectOne("businessMapper.selectResListCount");
+	}
+	
+	// 사업장 리스트 가져오기
+	@Override
+	public List<Business> selectList() {
+		return sqlSession.selectList("businessMapper.selectList");
+	}
+	
+	// 음식점 디테일
+	@Override
+	public Business selectRestaurant(int bus_code) {
+		return sqlSession.selectOne("businessMapper.selectRestaurant", bus_code);
 	}
 	
 	// 렌트카 등록
@@ -136,8 +156,14 @@ public class businessDaoImpl implements businessDao {
   
   @Override
 	public Report findReportStatus(Report r) {		
-		return sqlSession.selectOne("businessMapper.findReportStatus");
+		return sqlSession.selectOne("businessMapper.findReportStatus", r);
 	}
+
+	
+
+	
+
+	
 
 	
 

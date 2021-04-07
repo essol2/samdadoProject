@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
+
 
 import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
@@ -176,16 +179,42 @@ public class businessController {
 
 	// 음식점
 	@GetMapping("/restaurant_list")
-	public String restaurantList() {
-		return "business/restaurant/restaurant_list";
-
+	public ModelAndView restaurantList(ModelAndView mv) {
+		
+		int listCount = bService.selectResListCount();
+		
+		// System.out.println("listCount : " + listCount);
+		
+		List<Business> resList = bService.selectList();
+		
+		
+		if(resList != null) {
+			// System.out.println("RE : " + resList);
+			
+			mv.addObject("resList", resList);
+			mv.setViewName("business/restaurant/restaurant_list");
+		}
+		
+		return mv;
+		
 	}
 
 	@GetMapping("/restaurant_detail")
-	public String restaurantDetail() {
-		return "business/restaurant/restaurant_detail";
-
-	}
+	public String restaurantDetail(@RequestParam int bus_code,
+			   					   Model model) {
+		
+		
+		Business b = bService.selectRestaurant(bus_code);
+		
+		if(b != null) {
+			System.out.println("디테일 : " + b);
+			model.addAttribute("res", b);
+			return "business/restaurant/restaurant_detail";
+		} else {
+			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
+			return "business/restaurant/restaurant_list";
+		}
+	  }
 
 	@GetMapping("/restaurant_write")
 	public String restaurantWrite() {
@@ -193,73 +222,74 @@ public class businessController {
 	}
 
 	// 음식점 등록 - 파일첨부(리네임)
-	@PostMapping("/restaurant_insert")
-	public String restaurantInsert(Business b, BusinessAtt ba, @RequestParam(value = "uploadFile") MultipartFile file,
-			HttpServletRequest request, Map map) {
-
-		// System.out.println("b : " + b);
-		// System.out.println("file : " + file.getOriginalFilename());
-
-		// 업로드 파일 서버에 저장
-		// 파일이 첨부 되었다면
-		if (!file.getOriginalFilename().equals("")) {
-			// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
-			Map<String, String> files = busSaveFile(file, request);
-			// DB에 저장하기 위한 파일명 세팅
-			if (files != null) {
-				ba.setFile_name(file.getOriginalFilename());
-
-				// 맵에 담겨져있는 값의 키 불러오기
-				ba.setFile_rename((String) files.get("rename"));
-				ba.setFile_root((String) files.get("path"));
+		@PostMapping("/restaurant_insert")
+		public String restaurantInsert(Business b, BusinessAtt ba,
+								  @RequestParam(value="uploadFile") MultipartFile file,
+								  HttpServletRequest request, Map map) {
+			
+			// System.out.println("b : " + b);
+			// System.out.println("file : " + file.getOriginalFilename());
+			
+			// 업로드 파일 서버에 저장
+			// 파일이 첨부 되었다면
+			if(!file.getOriginalFilename().equals("")) {
+				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+				Map<String, String> files = busSaveFile(file, request);
+				
+				// DB에 저장하기 위한 파일명 세팅
+				if(files != null) {
+					ba.setFile_name(file.getOriginalFilename());
+					
+					// 맵에 담겨져있는 값의 키 불러오기
+					ba.setFile_rename((String)files.get("rename"));
+					ba.setFile_root((String)files.get("path"));
+				}
+			}
+			
+			int result = bService.insertBusiness(b);
+			int result2 = bService.insertBusAtt(ba);
+			
+			if(result > 0 && result2 > 0) {
+				return "redirect:/business/restaurant/restaurant_list";
+			} else {
+				throw new businessException("사업 등록에 실패하였습니다.");
 			}
 		}
+		
+		// 첨부파일 리네임 메소드 (공용)
+		public Map<String, String> busSaveFile(MultipartFile file, HttpServletRequest request) {
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "\\busUploadFiles";
+			File folder = new File(savePath);
+			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
+			
+			// System.out.println("Root " + root);
+			// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String originalFileName = file.getOriginalFilename();
+			String renameFileName = sdf.format(new Date()) + "_"
+								+ (int)(Math.random() * 100000) 
+								+ originalFileName.substring(originalFileName.lastIndexOf("."));
+			
+			String renamePath = folder + "\\" + renameFileName; // 저장하고자하는 경로 + 파일명
+		
+			Map<String, String> map = new HashMap<>();
+			map.put("rename", renameFileName);
+			map.put("path", renamePath);
+			
+			// System.out.println("map : " + map);
+			
+			try {
+				file.transferTo(new File(renamePath));
+				// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
+			} catch (IllegalStateException | IOException e) {
+				System.out.println("파일 업로드 에러 : " + e.getMessage());
+			} 
+			
+			return map;
 
-		int result = bService.insertBusiness(b);
-		int result2 = bService.insertBusAtt(ba);
+	  }
 
-		if (result > 0 && result2 > 0) {
-			return "redirect:/business/restaurant/restaurant_list";
-		} else {
-			throw new businessException("사업 등록에 실패하였습니다.");
-		}
-	}
-
-	// 첨부파일 리네임 메소드 (공용)
-	public Map<String, String> busSaveFile(MultipartFile file, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\busUploadFiles";
-
-		System.out.println("root : " + root);
-
-		File folder = new File(savePath);
-		if (!folder.exists())
-			folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
-
-		// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String originalFileName = file.getOriginalFilename();
-		String renameFileName = sdf.format(new Date()) + "_" + (int) (Math.random() * 100000)
-				+ originalFileName.substring(originalFileName.lastIndexOf("."));
-
-		String renamePath = folder + "\\" + renameFileName; // 저장하고자하는 경로 + 파일명
-
-		Map<String, String> map = new HashMap<>();
-
-		map.put("rename", renameFileName);
-		map.put("path", renamePath);
-
-		System.out.println("map : " + map);
-
-		try {
-			file.transferTo(new File(renamePath));
-			// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
-		} catch (IllegalStateException | IOException e) {
-			System.out.println("파일 업로드 에러 : " + e.getMessage());
-		}
-
-		return map;
-	}
 
 	// 렌트카
 	@GetMapping("/car_list")
@@ -431,7 +461,7 @@ public class businessController {
 				// 신고기록이 있을 때	
 				} else {
 					// Rstatus가 n일 경우
-					if(findReportStatus.getRstatus() == "n") {
+					if(findReportStatus.getRstatus().equals("N")) {
 						return "redirect:/main";
 						
 					// Rstatus가 n이 아닐 경우	

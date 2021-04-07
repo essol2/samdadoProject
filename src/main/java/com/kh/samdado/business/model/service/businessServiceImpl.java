@@ -43,6 +43,25 @@ public class businessServiceImpl implements businessService {
 		return bDao.insertBusiness(b);
 	}
 
+	// 사업장 리스트 카운드
+	@Override
+	public int selectResListCount() {
+		return bDao.selectResListCount();
+	}
+	
+	// 사업장 리스트 가져오기
+	@Override
+	public List<Business> selectList() {
+		return bDao.selectList();
+	}
+	
+	// 음식점 디테일
+	@Override
+	public Business selectRestaurant(int bus_code) {
+		return bDao.selectRestaurant(bus_code);
+	}
+
+	
 	// 렌트카 등록
 	@Override
 	public int insertCar(Car c) {
@@ -139,6 +158,11 @@ public class businessServiceImpl implements businessService {
 	public Report findReportStatus(Report r) {		
 		return bDao.findReportStatus(r);
 	}
+
+	
+	
+
+	
 
 	
 

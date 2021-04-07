@@ -26,6 +26,15 @@ public interface businessService {
 	// 사업장 등록
 	int insertBusAtt(BusinessAtt ba); 
 	int insertBusiness(Business b);
+	// 음식점 디테일
+	Business selectRestaurant(int bus_code);
+	
+	// 음식점 리스트카운트
+	int selectResListCount();
+	
+	// 사업장 리스트 가져오기
+	List<Business> selectList();
+	
 	
 	// 렌트카등록
 	int insertCar(Car c);
@@ -71,6 +80,12 @@ public interface businessService {
 	// 배너 광고 인서트
 	int insertBannerAd(Alliance a);
 
+
+	
+
+	
+
+	
 
 
 

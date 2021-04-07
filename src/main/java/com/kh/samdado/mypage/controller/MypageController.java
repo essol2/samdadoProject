@@ -1,6 +1,6 @@
 package com.kh.samdado.mypage.controller;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -356,28 +356,33 @@ public class MypageController {
 			 							 @RequestParam(name="usno") String un,
 				 					     ModelAndView mv) { 
 		 
-		 // 1. 사용자별 가계부 최근 날짜 가져오기
-		 AccountBook recentDate = mService.selectRecentDate(un);
-		 //System.out.println("recentDate check : " + recentDate);
-		 
-		 if(recentDate != null) {
-			 ab.setSearchDate(recentDate.getAccTripDate());
+		 // 1. 사용자별 가계부 최근 날짜 리스트 가져오기
+		 List<AccountBook> recentDateList = mService.selectRecentDate(un);
+		 //System.out.println("recentDateList check : " + recentDateList);
+		 //System.out.println("recentDateList.get(0) check : " + recentDateList.get(0).getAccTripDate());
+	 
+		if(recentDateList.isEmpty()){
+			 List<AccountBook> abList= mService.selectAccountList(ab);
+			 //System.out.println(abList);
+			 mv.addObject("abList", abList);
+			 mv.setViewName("mypage/mp_Wallet");
+		 } else {
+			 ab.setSearchDate(recentDateList.get(0).getAccTripDate());
+
 			 //System.out.println("searchDate check : " + ab.getSearchDate());
 			 List<AccountBook> abList= mService.selectAccountList(ab);
+			 
 			 //System.out.println("abList check : " + abList);
 			 if(abList != null) {
 				 mv.addObject("abList", abList);
+				 mv.addObject("rdList", recentDateList);
+				 mv.addObject("ots" , recentDateList.get(0).getOneTotalSum());
+				 mv.addObject("ts", recentDateList.get(0).getTotalSum());
 				 mv.setViewName("mypage/mp_Wallet");
 			 }else {
 				 mv.addObject("msg", "가계부 조회 오류입니다.");
 				 mv.setViewName("mypage/mp_Wallet");
 			 }
-		 } else{
-			 
-			 List<AccountBook> abList= mService.selectAccountList(ab);
-			 //System.out.println(abList);
-			 mv.addObject("abList", abList);
-			 mv.setViewName("mypage/mp_Wallet");
 		 }
 
 		 return mv;
@@ -390,25 +395,26 @@ public class MypageController {
 			 					   @RequestParam(value="countDateUser", defaultValue="0") int countDateUser,
 			 					   Model model) {
 		 
-		 //System.out.println("넘어오는 ab객체 확인 : " +ab);
-		 //System.out.println("classifyUser : " + classifyUser);
-		 //System.out.println("countDateUser : " + countDateUser);
+		 System.out.println("넘어오는 ab객체 확인 : " +ab);
+		 System.out.println("classifyUser : " + classifyUser);
+		 System.out.println("countDateUser : " + countDateUser);
 		 
-		 if(classifyUser != null) {
-			 String accClassify = ab.getAccClassify() + classifyUser;
+		 if(ab.getAccClassify().equals("직접입력")) {
+			 String accClassify = ab.getAccClassify() + " - " + classifyUser;
+			 System.out.println(accClassify);
 			 ab.setAccClassify(accClassify);
 		 }
 		 
 		 if(ab.getAccAccompany() != 0) {
 			int oneWon = Math.round(ab.getAccWon() / ab.getAccAccompany());
-			//System.out.println(oneWon);
+			System.out.println(oneWon);
 			ab.setAccOneWon(oneWon);
 		 } else {
 			 ab.setAccOneWon(ab.getAccWon());
 			 //System.out.println(ab.getAccOneWon());
 		 }
 		 
-		 //System.out.println("ab ckeck : " + ab);
+		 System.out.println("ab ckeck : " + ab);
 		 //DB에 insert
 		 int result = mService.insertNewAcc(ab);
 		 
@@ -421,5 +427,33 @@ public class MypageController {
 		     return "/mypage/mp_Wallet";
 		 }
 	 }
-	 					  
+	// 일반회원 - 새로운 가계부 내역 넣기
+	 @GetMapping("/chpage")
+	 public ModelAndView changeOtherPage(@RequestParam(name="atd") int atd,
+			 					   		 @RequestParam(name="usno") String un,
+			 					   		 @ModelAttribute AccountBook ab,
+			 					   		 ModelAndView mv) {
+		 
+		 // 1. group by한 날짜 orderby desc로 가져오기
+		 List<AccountBook> recentDateList = mService.selectRecentDate(un);
+		 
+		 // 해당 인덱스 atd에 해당되는 컬럼의 날짜 가져와서 바로 searchDate에 set
+		 ab.setSearchDate(recentDateList.get(atd).getAccTripDate());
+		 
+		 // SearchDate 값에 해당하는 모든 리트스 뽑아오기
+		 List<AccountBook> abList= mService.selectAccountList(ab);
+		 
+		 //System.out.println("abList check : " + abList);
+		 if(abList != null) {
+			 mv.addObject("abList", abList);
+			 mv.addObject("rdList", recentDateList);
+			 mv.addObject("ots" , recentDateList.get(atd).getOneTotalSum());
+			 mv.addObject("ts", recentDateList.get(atd).getTotalSum());
+			 mv.setViewName("mypage/mp_Wallet");
+		 }else {
+			 mv.addObject("msg", "가계부 조회 오류입니다.");
+			 mv.setViewName("mypage/mp_Wallet");
+		 }
+		 return mv;
+	 }
 }
