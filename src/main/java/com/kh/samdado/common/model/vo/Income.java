@@ -20,13 +20,14 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class Income {
-//	PAY_NO	NUMBER
-//	ITEM	VARCHAR2(30 BYTE)
-//	AMOUNT	VARCHAR2(30 BYTE)
-//	PDATE	DATE
-//	EXDATE	DATE
-//	US_NO	VARCHAR2(15 BYTE)
-
+	
+//	PAY_NO	NUMBER              결제번호
+//	ITEM	VARCHAR2(30 BYTE)   결제 아이템
+//	AMOUNT	NUMBER              결제 OR 포인트 금액
+//	PDATE	DATE                결제 날짜
+//	EXDATE	DATE			        배너 제외 프리미엄 광고 만기일
+//	US_NO	VARCHAR2(15 BYTE)   회원번호
+	
 	private int payno;
 	private String item;
 	private int amount;
@@ -35,4 +36,6 @@ public class Income {
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date exdate;
 	private String usno;
+	
+	private String usname; // user 테이블 조인 후 추가 컬럼
 }
