@@ -63,7 +63,7 @@ public interface MypageDao {
 	public List<AccountBook> selectRecentDate(String un);
 
 	// 일반회원 - 가계부 on.off 버튼 클릭시 db 내용 바꾸기
-	public int updateOnOffBtn(AccountBook ab);
+	public int updateOnOffBtn(int an);
 
 
 
