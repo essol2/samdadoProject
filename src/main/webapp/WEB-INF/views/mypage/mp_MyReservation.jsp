@@ -15,17 +15,15 @@
          font-family: 'Jeju Myeongjo', serif;
     }
 /* 마이페이지 css */
-    #back {
+     #back {
         width: 1440px;
         height: 100%;
         /* margin: auto; */
         top: 0;
     }
-
     
     body{
         background-image: url('${contextPath}/resources/images/image_mp/backgroundImg.png');
-        background-repeat: no-repeat;
         background-size: 100%;
     }
     #topMenu{
@@ -45,33 +43,33 @@
         color : white;
         text-align : center;
         font-size: 30px;
-        margin-left : 3%;
+        margin-left : 4%;
+        margin-top : 5%;
     }
     .menuBox{
         width : 55%;
         height : 150px;
-        /* border : 1px solid blue; */
+       /*  border : 1px solid blue; */
         display : inline-block;
         position:relative;
         top : -60%;
         left : 3%;
         margin-left : 3%;
+        /* margin-top : 1.5%; */
         align-items: center;
     }
     .menuButton{
-        width : 150px;
-        height : 110px;
+        width : 155px;
+        height : 140px;
         border : 1px solid white;
         background-color: white;
         color : #bfbfbf;
         text-align : center;
         display : inline-block;
         margin-top : 2%;
-        margin-left : 5%;
+        margin-left : 2%;
         border-radius: 2px;
         align-items: center;
-        /* -webkit-transition-duration : 0.4s;
-        transition-duration: 0.4s; */
     }
 
     .menuButton:hover{
@@ -84,44 +82,45 @@
         width : 110px;
         height : 110px;
         text-align: center;
-        margin-left : 6%;
+        margin-left : 11%;
+        padding : 0;
     }
 
     .btnImg{
         width: 60px;
         height : 60px;
-        /* border : 1px solid yellow; */
+      /*  border : 1px solid yellow; */
     }
 
     .clickedBtn{
         box-shadow: 3px 3px gray;
-        width : 150px;
-        height : 110px;
+        width : 155px;
+        height : 140px;
         border : 1px solid #467355;
         background-color:#467355;
         color : white;
         text-align : center;
         display : inline-block;
         margin-top : 2%;
-        margin-left : 1%;
+        margin-left : 2%;
         border-radius: 2px;
         align-items: center;
+       	
     }
 
     .clickedBtn:hover{
         box-shadow: 6px 6px gray;
         cursor: pointer;
     }
-    /* 마이페이지 - mainBox */
+    /* mainBox */
     #mainBox{
         position : absolute;
-        top : 25%;
+        top : 30%;
         left : 3%;
         background-color:rgba( 255, 255, 255, 0.8 );
         border : 5px solid white;
         width : 77%;
-        height : fit-content;
-        position : absolute;
+        height : 500px;
     }
 
     .reservBox{
@@ -275,11 +274,11 @@
                 <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
                 <div class="menuBox" id="menuBox">
 
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
+                    <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록</div></button>
-                    <button class="clickedBtn" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingW.png" class="btnImg"> <br> 내 예약</div></button>
+                    <button class="clickedBtn" id="myInfo" onclick="location.href='${contextPath}/mypage/booking'"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingW.png" class="btnImg"> <br> 내 예약</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑</div></button>
+                    <button class="menuButton" id="myInfo"  onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑</div></button>
 
                 </div>
             </div>
@@ -353,6 +352,11 @@
             </div>
         </section>
     </div>
- 
+ <script>
+    function goToWallet(){
+		/* console.log("jsp안에서 usno확인 : " + usno); */
+		location.href='${contextPath}/mypage/wallet?usno='+${loginUser.usno};
+	};
+    </script>
 </body>
 </html>
