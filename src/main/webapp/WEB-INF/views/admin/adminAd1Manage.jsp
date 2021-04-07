@@ -15,6 +15,11 @@
 	<link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminAd1Manage.css" type="text/css">
 	<link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminHome.css" type="text/css">
 
+	<!--jQuery-->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	
      <!--차트 api cdn-->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
   </head>
@@ -42,15 +47,15 @@
                         <th>포인트</th> <!-- income 테이블 조인 -->
                         <th>신청폼</th>
                         <th>신청날짜</th>
-                        <th>승인처리</th>
-                        <th>반려처리</th>
+                        <th>승인</th>
+                        <th>반려</th>
                     </tr>
                 </thead>
                 <tbody>
-                  <form action="${ contextPath }/admin/update/bannerAd" method="post">
-                	<c:forEach var="bal" items="${ bannerAdList }">
+       
+                	<c:forEach var="bal" items="${ bannerAdList }" varStatus="status">
 		                   <tr>
-		                       <th>${ bal.alno }</th>
+		                       <th id="al_no">${ bal.alno }</th>
 		                       <th>${ bal.usname }</th>
 		                       <c:choose>
 				                  <c:when test="${ bal.bus_category eq 'R' }">
@@ -66,33 +71,90 @@
 	                              	<td>렌트</td>
 	                              </c:otherwise>
 	                            </c:choose>
-		                       <td>${ bal.bus_code }</td>
+		                       <td id="bus_code">${ bal.bus_code }</td>
 		                       <c:choose>
 				                  <c:when test="${ empty bal.amount }">
-	                            	<td><font style="color: red">0</font></td>
+	                            	<td><font color="red">0</font></td>
 	                              </c:when>
 	                              <c:otherwise>
-	                              	<td>${ bal.amount }</td>
+	                              	<td><font color="blue">${ bal.amount }</font></td>
 	                              </c:otherwise>
 	                            </c:choose>
-		                	   <td><a class="btn btn-info">보기</a></td>
+		                	   <td>
+		                       <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal${ status.count }">
+					  				보기
+							   </button>
+		                       </td>
 		                       <td><fmt:formatDate value='${ bal.alsubdate }' type='both' pattern='yyyy-MM-dd' /></td>
-                    		   <td><button type="submit" class="btn btn-secondary">승인</button></td>
+                    		   <td><button type="submit" class="btn btn-secondary" id="admitBannerAdBtn">승인</button></td>
 		                	   <td>
 			                    <div class="banner_ad_reject_choose">
-			                        <select class="form-select" aria-label="Default select example" name="amassage">
-			                            <option selected>반려사유</option>
+			                        <select class="form-select" aria-label="Default select example" name="amassage" id="amassage">
+			                            <option selected>--- 반려사유 ---</option>
 			                            <option value="이미지 불일치">이미지 불일치</option>
 			                            <option value="포인트 미충전">포인트 미충전</option>
 			                        </select>
-			                        <button type="submit" class="btn btn-success">반려</button> 
+			                        <button type="submit" class="btn btn-success" id="rejectBannerAdBtn">반려</button> 
 			                    </div>
                     		   </td>
 		                   </tr>
+		                   
+		                   <!-- 모달 -->
+		                   <div class="modal fade" id="exampleModal${ status.count }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">제출 첨부내역</h5>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							     	No : ${ status.current.alno } <br>
+							     	신청자 : ${ status.current.usname } <br>
+							     	카테고리 : ${ status.current.bus_category } <br>
+							     	기업 소개 : ${ status.current.alintro } <br>
+							     	사업장 코드 : ${ status.current.bus_code } <br>
+							     	신청 날짜 : <fmt:formatDate value='${ status.current.alsubdate }' type='both' pattern='yyyy-MM-dd' /> <br>
+							     	첨부파일 : <img src="${ contextPath }/resources/busUploadFiles/alliance/${ status.current.aimgcname }"> <br>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							
 		            </c:forEach>
-		          </form>
+		   
                 </tbody>
               </table>
+              
+             <script>
+             $("#admitBannerAdBtn").click(function(){
+
+	         		var al_no = $("#al_no").text();
+	         		var bus_code = $("#bus_code").text();
+	         		
+	         		alert(al_no);
+	         		alert(bus_code);
+	         		
+	         		location.href="${contextPath}/admin/admitBannerAd?al_no=" + al_no + "&bus_code=" + bus_code;
+             });
+         	</script>
+         	
+         	<script>
+         	 $("#rejectBannerAdBtn").click(function(){
+
+	         		var al_no = $("#al_no").text();
+	         		var bus_code = $("#bus_code").text();
+	         		var amassage = $("#amassage").val();
+	         		
+	         		alert(al_no);
+	         		alert(bus_code);
+	         		alert(amassage);
+	         		
+	         		location.href="${contextPath}/admin/rejectBannerAd?al_no=" + al_no + "&bus_code=" + "&amassage=" + amassage;
+         	 });
+         	</script>
 
              <br><hr>
 
@@ -182,7 +244,7 @@
               </div>
 
                <div class="find_banner_ad">
-                <h3>배너<span style="color: seagreen;">내역조회</span>하기</h3>
+                <h3>배너 광고<span style="color: seagreen;"> 내역조회</span></h3>
                 <br>
                 
                 <div class="search_banner_ad_div">

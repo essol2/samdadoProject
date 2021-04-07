@@ -41,5 +41,4 @@ public interface AdminService {
 	List<Alliance> adminbannerAdSelect(PageInfo pi);
 
 
-
 }
