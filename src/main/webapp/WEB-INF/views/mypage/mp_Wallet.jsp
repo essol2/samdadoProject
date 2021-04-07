@@ -748,24 +748,34 @@
 	for (var i=0; i<=${fn:length(abList)}; i++){
 			$("#slideCheck"+i).click(function() {
 			
-			var usno = ${loginUser.usno};
-			var accTripDate = $('#thisDate').val();
-			var accno = $('#thisColNum').val();
-			var accDutch = $(this).val();
-			console.log(infoThisCol);
+			var usno = ${loginUser.usno}; // 로그인 되어있는 유저
 			
-			location.href="${contextPath}/mypage/makeoff?usno="+usno + "&accTripDate=" + accTripDate + "&accno=" + accno + "&accDutch=" + accDutch;
-
+			//var acNo = $('#thisColNum').val();
+			var accDutch = $(this).val();
+			
+			//console.log(usno);
+			//console.log(acNo);
+			console.log(accDutch);
+			
+			//location.href="${contextPath}/mypage/onoff?usno="+usno + "&accTripDate=" + accTripDate + "&accno=" + accno + "&accDutch=" + accDutch;
+			$.ajax({
+				url : "onoff",
+				data : {accno : $('#thisColNum').val()},
+				type : "POST",
+				success : function(data){
+					if(data > 0){
+						alert("통신성공!");
+					} else{
+						alert("전송 값과 일치하지 않습니다.");
+						console.log(data);
+					}
+				},
+				errorr:function(e){
+					alert("error code : " + e.status + "\n"
+							+ "message : " + e.responseText);
+				}
+			})
 		});
-	}
-	
-	function getFormatDate(date){
-		var year = date.getFullYear();
-        var month = (1 + date.getMonth());
-        month = month >= 10 ? month : '0' + month;
-        var day = date.getDate();
-        day = day >= 10 ? day : '0' + day;
-        return year + '-' + month + '-' + day;
 	}
 	</script>
 </body>

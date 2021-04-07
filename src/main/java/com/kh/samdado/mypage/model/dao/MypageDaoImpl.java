@@ -115,8 +115,8 @@ public class MypageDaoImpl implements MypageDao{
 
 	// 일반회원 - 가계부 on.off 버튼 클릭시 db 내용 바꾸기
 	@Override
-	public int updateOnOffBtn(AccountBook ab) {
-		return sqlSession.update("mypageMapper.updateOnOffBtn", ab);
+	public int updateOnOffBtn(int an) {
+		return sqlSession.update("mypageMapper.updateOnOffBtn", an);
 	}
 
 

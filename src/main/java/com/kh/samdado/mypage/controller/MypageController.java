@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -177,8 +178,13 @@ public class MypageController {
 		 Point prePoint = mService.prePoint(po);
 		 //System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
 		 
-		 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
-		 po.setPbalance(prePoint.getPbalance()+ic.getAmount());
+		 if(prePoint != null) {
+			 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
+			 po.setPbalance(prePoint.getPbalance()+ic.getAmount());
+		 } else {
+			 // 2. prePoint가 null이라면 그냥 Amount를 넣어주기
+			 po.setPbalance(ic.getAmount());
+		 }
 		 
 		 //System.out.println("Point객체 확인 : " + po);
 		 
@@ -463,11 +469,12 @@ public class MypageController {
 	 }
 	 
 	 // 일반회원 - 가계부 on/off 클릭 - off상태로 만들어주기
-	 @GetMapping("/makeoff")
+	 @GetMapping("/onofftest")
 	 public ModelAndView accountMakeOff(@ModelAttribute AccountBook ab,
-			 							ModelAndView mv) {
+			 							ModelAndView mv,
+			 							@RequestParam(name= "acNo") int an) {
 		 
-		 System.out.println("view에서 받아오는 so객체 : " + ab);
+		 System.out.println("view에서 확인하는 accno");
 
 		 if(ab.getAccDutch() == "on") {
 			 ab.setAccDutch(null);
@@ -476,7 +483,7 @@ public class MypageController {
 		 }
 		 
 		 // off, on 컬럼값 바꾸기
-		 int result = mService.updateOnOffBtn(ab);
+		 int result = mService.updateOnOffBtn(an);
 		 
 		 // 해당 리스트 다시 불러오기
 		 List<AccountBook> recentDateList = mService.selectRecentDate(ab.getUsno());
@@ -492,5 +499,22 @@ public class MypageController {
 		 }
 		 return mv;
 	 }
+	 
+	// 일반회원 - 가계부 on/off 클릭 - off상태로 만들어주기
+		 @RequestMapping(value="/onoff", method=RequestMethod.POST)
+		 public int onOffChange(int accno) {
+			 
+			// off, on 컬럼값 바꾸기
+			 int result = mService.updateOnOffBtn(accno);
+
+			 if(result > 0) {
+				 return result;
+			 }else {
+				 System.out.println("List 못가져옴");
+				 return result;
+			 }
+			  
+			 //return null;
+		 }
 
 }
