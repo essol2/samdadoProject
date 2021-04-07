@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     
 <!DOCTYPE html>
 <html lang="en">
@@ -494,22 +495,30 @@
                         <th class="walletWhoPay">결제인</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                     <%-- <c:if test="${ abList } != null"> --%>
-                    <c:forEach var="ab" items="${ abList }">
-                      <tr>
+                    <c:forEach var="ab" items="${ abList }" varStatus="abStatus">
+                      <tr id="forChageAjax${abStatus.index}">
                         <td class="walletName">${ ab.accName }</td>
                         <td class="walletCate"> ${ ab.accClassify }</td>
-                        <td class="walletPrice">${ ab.accWon }</td>
+                        <td class="walletPrice"><fmt:formatNumber value="${ ab.accWon }" pattern="#,###"/></td>
                         <td class="walletPayDate"><fmt:formatDate value="${ ab.accTripDate }" type="date" pattern="yyyy-MM-dd"/></td>
                         <td class="walletStatus">${ab.accPstatus }</td>
                         <td class="walletTouch">
                             <label class="switch">
-                                <input type="checkbox" <c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
+                                <input type="checkbox" id="slideCheck${abStatus.index}"<c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
                                 <span class="slider round"></span>
                             </label>
+                            <input type="hidden" id="thisDate" value="${ab.accTripDate}">
+                        	<input type="hidden" id="thisColNum" value="${ab.accno}">
                         </td>
-          				<td class="walletStatus">${ab.accOneWon}</td>
+                       <%--  <c:if test="$(slideCheck${abStatus.index}).prop('checked') == true">
+                        	<td class="walletStatus"><fmt:formatNumber value="${ab.accWon/ab.accAccompany}" pattern="#,###"/></td>
+                        </c:if>
+                        <c:if test="$(slideCheck${abStatus.index}).prop('checked') == false">
+                        	<td class="walletStatus"><fmt:formatNumber value="${ab.accWon}" pattern="#,###"/></td>
+                        </c:if> --%>
+                        <td class="walletStatus"></td>
 	          			<c:if test="${ empty ab.whopay }">
 	          				<td class="walletAccompany"> 1인지불 </td>
 	          				<td class="walletWhoPay">${ loginUser.usname }</td>
@@ -518,6 +527,7 @@
 	          				<td class="walletAccompany"> ${ ab.accAccompany } </td>
 	          				<td class="walletWhoPay">${ab.whopay}</td>
 	          			</c:if>
+	          			
                     </c:forEach>
                     </tbody>
                   </table>
@@ -690,6 +700,85 @@
 			window.open('data:application/vnd.ms-excel,' + encodeURIComponent($("#forExcelExport").html()))
 			 e.preventDefault();
 		});
+	</script>
+	<!-- on/off Button Toggle -->
+	<script>
+	for (var i=0; i<=${fn:length(abList)}; i++){
+			$("#slideCheck"+i).click(function() {
+			
+			var usno = ${loginUser.usno};
+			var thisDate = $('#thisDate').val();
+			var thisColNum = $('#thisColNum').val();
+			
+			var infoThisCol = new Object();
+			infoThisCol.usno = usno;
+			infoThisCol.thisDate = thisDate;
+			infoThisCol.thisColNum = thisColNum;
+			
+			console.log(infoThisCol);
+			
+			if($(this).prop("checked") == true){
+				console.log("on임");
+				// off상태로 만들어줘야함.
+				$.ajax({
+					url : "makeOff",
+					data : JSON.stringfy(searchPo),
+					type : "POST",
+					contentType : "application/json; charset=utf-8",
+					success : functionn(data){
+						tr = $("forChangeAjax"+i);
+						tr.html("");
+						
+						for(var j in data){
+							var wdateFormat = new Date(data[i].wdate);
+							wdateFormat = getFormatDate(wdateFormat);
+							
+							var td= $("<td>");
+							var wname = $("<td>").text(data[j].wname);
+							var wclassify = $("<td>").text(data[j].wclassify);
+							var wprice = $("<td>").text(data[j].wprice);
+							var wdate = $("<td>").text(wdateFormat);
+							var wstatus = $("<td>").text(data[j].wstatus);
+							var wDutch = $("<td>").text(data[j].d)
+						}
+						
+					},
+					error : function(e){
+						alert("error code : " + e.status + "\n"
+								+ "message : " + e.responseText)
+					}
+				});
+				
+				
+			} else{
+				console.log("off임");
+				// on상태로 만들어줘야함
+				$.ajax({
+					url : "makeOn",
+					data : JSON.stringfy(searchPo),
+					type : "POST",
+					contentType : "application/json; charset=utf-8",
+					success : functionn(data){
+						
+						
+					},
+					error : function(e){
+						alert("error code : " + e.status + "\n"
+								+ "message : " + e.responseText)
+					}
+				});
+			}
+		});
+	}
+	
+	function getFormatDate(date){
+		var year = date.getFullYear();
+        var month = (1 + date.getMonth());
+        month = month >= 10 ? month : '0' + month;
+        var day = date.getDate();
+        day = day >= 10 ? day : '0' + day;
+        return year + '-' + month + '-' + day;
+	}
 	</script>
 </body>
 </html>

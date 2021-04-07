@@ -372,7 +372,7 @@ public class MypageController {
 			 //System.out.println("searchDate check : " + ab.getSearchDate());
 			 List<AccountBook> abList= mService.selectAccountList(ab);
 			 
-			 //System.out.println("abList check : " + abList);
+			 System.out.println("abList check : " + abList);
 			 if(abList != null) {
 				 mv.addObject("abList", abList);
 				 mv.addObject("rdList", recentDateList);

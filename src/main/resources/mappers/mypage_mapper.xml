@@ -155,23 +155,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<!-- 제휴회원 - point 테이블에 검색결과 조회하러 가기 -->
 	<select id="selectSearchList" resultMap="pointResultSet">
 		SELECT *
-		FROM POINT
-		WHERE US_NO = #{usno}
+		FROM 
+				POINT
+		WHERE 	
+				US_NO = #{usno}
 		<choose>
 			<when test="selector == '1개월'">
-				AND PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
-			          AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),1), 'YY-MM-DD')
+				AND 
+					PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
+			          	  AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),1), 'YY-MM-DD')
 			</when>
 			<when test="selector == '3개월'">
-				AND PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
-			          AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),3), 'YY-MM-DD')
+				AND 
+					PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
+			          	  AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),3), 'YY-MM-DD')
 			</when>
 			<otherwise>
-				AND PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
-			          AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),6), 'YY-MM-DD')
+				AND 
+					PDATE BETWEEN TO_DATE(#{startdate}, 'YY-MM-DD')
+			          	  AND TO_DATE(ADD_MONTHS(TO_DATE(#{startdate}, 'YY-MM-DD'),6), 'YY-MM-DD')
 			</otherwise>      
 		</choose>
-		ORDER BY PNO DESC
+		ORDER BY 
+				PNO DESC
 	</select>
 	
 	
@@ -258,10 +264,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select> -->
 	
 	<select id="selectRecentDate" resultMap="accountResultSet" parameterType="AccountBook">
-		SELECT ACC_TRIPD, SUM(ACC_WON) AS totalSum, SUM(ACC_ONEWON) AS oneTotalSum
-		FROM ACCOUNT
-		WHERE US_NO = #{usno}
-		GROUP BY ACC_TRIPD
-		ORDER BY ACC_TRIPD DESC
+		SELECT 
+				ACC_TRIPD
+			  , SUM(ACC_WON) AS totalSum
+			  , SUM(ACC_ONEWON) AS oneTotalSum
+		FROM 
+				ACCOUNT
+		WHERE 
+				US_NO = #{usno}
+		GROUP BY 
+				ACC_TRIPD
+		ORDER BY 
+				ACC_TRIPD DESC
 	</select>
 </mapper>

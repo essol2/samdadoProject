@@ -596,7 +596,7 @@
   			amount = 100;
   		}
   		
-  		console.log(name);
+  		//console.log(name);
   		
 	    var IMP = window.IMP;
 	    IMP.init('imp34313892');
