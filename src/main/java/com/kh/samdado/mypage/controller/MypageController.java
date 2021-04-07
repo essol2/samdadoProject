@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -177,8 +178,13 @@ public class MypageController {
 		 Point prePoint = mService.prePoint(po);
 		 //System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
 		 
-		 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
-		 po.setPbalance(prePoint.getPbalance()+ic.getAmount());
+		 if(prePoint != null) {
+			 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
+			 po.setPbalance(prePoint.getPbalance()+ic.getAmount());
+		 } else {
+			 // 2. prePoint가 null이라면 그냥 Amount를 넣어주기
+			 po.setPbalance(ic.getAmount());
+		 }
 		 
 		 //System.out.println("Point객체 확인 : " + po);
 		 
@@ -349,6 +355,12 @@ public class MypageController {
 		 
 
 	 }
+	 
+	 // 일반회원 - 내예약목록 페이지 이동
+	 @GetMapping("/booking")
+	 public String goToBooking() {
+		 return "/mypage/mp_MyReservation";
+	 }
 
 	 // 일반회원 - 가계부 페이지로 이동
 	 @GetMapping("/wallet")
@@ -427,13 +439,12 @@ public class MypageController {
 		     return "/mypage/mp_Wallet";
 		 }
 	 }
-	// 일반회원 - 새로운 가계부 내역 넣기
+	// 일반회원 - 다른날 가계부 테이블 조회
 	 @GetMapping("/chpage")
-	 public ModelAndView changeOtherPage(@RequestParam(name="atd") int atd,
+	 public ModelAndView changeOtherPage(@RequestParam(name="atd", defaultValue="null") int atd,
 			 					   		 @RequestParam(name="usno") String un,
 			 					   		 @ModelAttribute AccountBook ab,
 			 					   		 ModelAndView mv) {
-		 
 		 // 1. group by한 날짜 orderby desc로 가져오기
 		 List<AccountBook> recentDateList = mService.selectRecentDate(un);
 		 
@@ -456,4 +467,54 @@ public class MypageController {
 		 }
 		 return mv;
 	 }
+	 
+	 // 일반회원 - 가계부 on/off 클릭 - off상태로 만들어주기
+	 @GetMapping("/onofftest")
+	 public ModelAndView accountMakeOff(@ModelAttribute AccountBook ab,
+			 							ModelAndView mv,
+			 							@RequestParam(name= "acNo") int an) {
+		 
+		 System.out.println("view에서 확인하는 accno");
+
+		 if(ab.getAccDutch() == "on") {
+			 ab.setAccDutch(null);
+		 } else {
+			 ab.setAccDutch("on");
+		 }
+		 
+		 // off, on 컬럼값 바꾸기
+		 int result = mService.updateOnOffBtn(an);
+		 
+		 // 해당 리스트 다시 불러오기
+		 List<AccountBook> recentDateList = mService.selectRecentDate(ab.getUsno());
+		 List<AccountBook> abList = mService.selectAccountList(ab);
+		 
+		 if(abList != null) {
+			 mv.addObject("rdList", recentDateList);
+			 mv.addObject("abList", abList);
+			 mv.setViewName("mypage/mp_Wallet");
+		 }else {
+			 mv.addObject("msg", "가계부 조회 오류입니다.");
+			 mv.setViewName("mypage/mp_Wallet");
+		 }
+		 return mv;
+	 }
+	 
+	// 일반회원 - 가계부 on/off 클릭 - off상태로 만들어주기
+		 @RequestMapping(value="/onoff", method=RequestMethod.POST)
+		 public int onOffChange(int accno) {
+			 
+			// off, on 컬럼값 바꾸기
+			 int result = mService.updateOnOffBtn(accno);
+
+			 if(result > 0) {
+				 return result;
+			 }else {
+				 System.out.println("List 못가져옴");
+				 return result;
+			 }
+			  
+			 //return null;
+		 }
+
 }

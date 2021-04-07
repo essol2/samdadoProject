@@ -61,6 +61,9 @@ public interface MypageService {
 	// 일반회원 - 가계부 가장 최근 날짜 가져오기
 	public List<AccountBook> selectRecentDate(String un);
 
+	// 일반회원 - 가계부 on.off 버튼 클릭시 db 내용 바꾸기
+	public int updateOnOffBtn(int an);
+
 	
 
 

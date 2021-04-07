@@ -115,5 +115,11 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectRecentDate(un);
 	}
 
+	// 일반회원 - 가계부 on.off 버튼 클릭시 db 내용 바꾸기
+	@Override
+	public int updateOnOffBtn(int an) {
+		return mDao.updateOnOffBtn(an);
+	}
+
 
 }
