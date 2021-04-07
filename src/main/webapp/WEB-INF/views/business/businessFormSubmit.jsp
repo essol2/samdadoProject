@@ -83,7 +83,7 @@
                     </div>
                 </div> 
 
-            <form action="${ contextPath }/business/insert/bannerAd" method="post" enctype="multipart/form-data"> <!-- pom.xml에  multipart/form-data 사용 라이브러리 추가 -->
+            <form action="${ contextPath }/business/insert/bannerAd" method="post" enctype="multipart/form-data">
 			<c:choose>
 				<c:when test="${ !empty selectMyBusinessCategory }">
 	                <div class="inner_content">
@@ -98,7 +98,7 @@
 	            </c:when>
 	            <c:otherwise>
 	            <div class="nonSelectCategory" style="text-align: center; padding: 20%;">
-	            	<h3>--- ${ loginUser.usname }님이 등록하신 사업장이 없습니다. ---</h3>
+	            	<h3>--- ${ loginUser.usname }님께서 등록하신 사업장이 없습니다. ---</h3>
 	            	<br>
 	            	<h5>[사업장 등록하러 가기]</h5>
 	                <br>

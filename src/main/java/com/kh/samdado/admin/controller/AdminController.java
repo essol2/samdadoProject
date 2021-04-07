@@ -26,6 +26,7 @@ import com.kh.samdado.admin.model.vo.Pagination;
 import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
@@ -54,7 +55,6 @@ public class AdminController {
 		
 		// 1_1. 관리자 메인 페이지에서 미답변 qna 5개만 보이는 limit절 select
 		List<QnA> qnaList = aService.adminMainQnaSelect();	
-		//System.out.println("qnaList : " + qnaList);
 		
 		// 1_2. 관리자 메인 페이지에서 신규 사업장 limit절 select
 		List<Business> businessList = aService.adminMainBusinessSelect();	
@@ -63,7 +63,6 @@ public class AdminController {
 		
 		// 1_3. 관리자 메인 페이지에서 총 회원수 카운트 select
 		int countUserResult = uService.countUser() - 1; // 관리자 1명 제외
-		//System.out.println("회원 수 countUserResult : " + countUserResult);
 		
 		// 1_4. 관리자 메인 페이지에서 신규 배너광고 신청 카운트 select
 		int countAd1Result = aService.countAd1();
@@ -73,7 +72,6 @@ public class AdminController {
 		
 		// 1_6. 관리자 메인 페이지에서 신규 QnA 신청 카운트 select
 		int countQnAResult = aService.countQnA();
-		// System.out.println("QnA result : " + countQnAResult);
 		
 		// -----------------------------------------------------
 		
@@ -84,6 +82,8 @@ public class AdminController {
 		// -----------------------------------------------------
 		
 		// 1_9. 상단바 오른쪽 달력 파트
+		
+		// -----------------------------------------------------
 
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("countQnAResult", countQnAResult);
@@ -98,7 +98,19 @@ public class AdminController {
 
 	// 2_1. 관리자 홈 배너 광고관리 페이지로
 	@GetMapping("/advertise1")
-	public String adminAdvertise1View() {
+	public String adminAdvertise1View(Model model,
+								@RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
+		
+		// 페이징 처리 로직
+		// 1. 게시글 갯수 구하기
+		int listCount = aService.countAd1();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		List<Alliance> bannerAdList = aService.adminbannerAdSelect(pi);
+
+		model.addAttribute("bannerAdList", bannerAdList);
+		model.addAttribute("pi", pi);
+		
 		return "admin/adminAd1Manage";
 	}
 	
@@ -120,14 +132,9 @@ public class AdminController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		List<Report> reportList = aService.adminReportSelect(pi);
 		
-		if (reportList != null) {
-			model.addAttribute("reportList", reportList);
-			model.addAttribute("pi", pi);
-		} else {
-			model.addAttribute("msg", "신고 리스트 조회에 실패하였습니다.");
-		}
-				
-		
+		model.addAttribute("reportList", reportList);
+		model.addAttribute("pi", pi);
+	
 		return "admin/adminReportManage";
 	}
 	
@@ -143,13 +150,9 @@ public class AdminController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		List<QnA> qnaList = aService.adminQnaSelect(pi);
 		
-		if (qnaList != null) {
-			model.addAttribute("qnaList", qnaList);
-			model.addAttribute("pi", pi);
-		} else {
-			model.addAttribute("msg", "QnA 리스트 조회에 실패하였습니다.");
-		}
-		
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("pi", pi);
+
 		return "admin/adminQna";
 	}
 	

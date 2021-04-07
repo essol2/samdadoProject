@@ -437,7 +437,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         , #{bus_code}
         )
    </insert>
-   
    <select id="findReportStatus" parameterType="Report" resultMap="ReportResultSet">
       SELECT 
               REPORT_NO
@@ -457,4 +456,3 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
        WHERE 
              REF_BUS_CODE = #{bus_code}
    </select>
-</mapper>

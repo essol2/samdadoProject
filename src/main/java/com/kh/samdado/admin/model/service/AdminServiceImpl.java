@@ -9,6 +9,7 @@ import com.kh.samdado.admin.model.dao.AdminDao;
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.QnA;
 
@@ -82,6 +83,12 @@ public class AdminServiceImpl implements AdminService {
 	public int countAd1() {
 		// TODO Auto-generated method stub
 		return aDao.countAd1();
+	}
+
+	@Override
+	public List<Alliance> adminbannerAdSelect(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return aDao.adminbannerAdSelect(pi);
 	}
 
 
