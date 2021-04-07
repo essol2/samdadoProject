@@ -408,7 +408,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
       INSERT
         INTO Report
         (
-           REPORT_NO
+          REPORT_NO
         , REP_RES
         , REP_CONT
         , RDATE
@@ -437,7 +437,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         )
    </insert>
    
-   <select id="findReportStatus" parameterType="Report" resultType="ReportResultSet">
+   <select id="findReportStatus" parameterType="Report" resultMap="ReportResultSet">
          SELECT 
                 *
         FROM 

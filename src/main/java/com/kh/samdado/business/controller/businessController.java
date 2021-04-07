@@ -250,7 +250,7 @@ public class businessController {
 			int result2 = bService.insertBusAtt(ba);
 			
 			if(result > 0 && result2 > 0) {
-				return "redirect:/business/restaurant/restaurant_list";
+				return "redirect:/business/restaurant_list";
 			} else {
 				throw new businessException("사업 등록에 실패하였습니다.");
 			}
