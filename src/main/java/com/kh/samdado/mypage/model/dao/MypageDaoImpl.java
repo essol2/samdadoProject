@@ -113,5 +113,11 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.selectList("mypageMapper.selectRecentDate", un);
 	}
 
+	// 일반회원 - 가계부 on.off 버튼 클릭시 db 내용 바꾸기
+	@Override
+	public int updateOnOffBtn(AccountBook ab) {
+		return sqlSession.update("mypageMapper.updateOnOffBtn", ab);
+	}
+
 
 }

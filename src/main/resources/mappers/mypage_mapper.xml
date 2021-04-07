@@ -277,4 +277,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		ORDER BY 
 				ACC_TRIPD DESC
 	</select>
+	
+	<update id="updateOnOffBtn" parameterType="AccountBook">
+		UPDATE
+				ACCOUNT
+		   SET
+		   		ACC_DUTCH = #{accDutch}
+		 WHERE
+				US_ID = #{usid}
+		   AND  ACC_TRIPD = #{accTripDate}
+	</update>
 </mapper>

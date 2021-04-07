@@ -14,6 +14,9 @@
     <!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    
+    <!-- chart.js library -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> 
 </head>
 <style>
 
@@ -138,6 +141,10 @@
     .mainTable, .mainTable tr,.mainTable td, .mainTable th{
         border : 1px solid lightgray;
         border-collapse: collapse;
+    }
+    
+    #forExcelExport{
+    	height : 500px;
     }
 
     .thisWalletPage{
@@ -446,6 +453,13 @@
 	#accompanyTd{
 		width : 230px;
 	}
+	
+	.chartBtns{
+		background-color : #467355;
+		color : white;
+		padding : 5px;
+		border-style : none;
+	}
 </style>
 <body>
     <div id="back">
@@ -459,7 +473,7 @@
 
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
+                    <button class="menuButton" id="myInfo" onclick="location.href='${contextPath}/mypage/booking'"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행</div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/walletW.png" class="btnImg"> <br> 내 지갑</div></button>
 
@@ -480,6 +494,33 @@
                 	<td><button class="addingNew" id="btnExport"><b>+엑셀다운</b></button></td>
                 </tr>
                 </table>
+                
+                <div class="container" style="width : 550px;">
+                	<canvas id="myChart"></canvas>
+                	<div id="btnsArea">
+			    	<button class="chartBtns" id="byClassify">구분별</button>
+			    	<button class="chartBtns" id="byWhopay">결제인별</button>
+			    </div>
+                </div>
+                <script> 
+			    	data = { 
+			    		datasets: [{ 
+			    			backgroundColor: ['#467355','#689978','#88b897'], 
+			    			data: [10, 20, 30]
+			    		}], 
+			    		labels: ['red','yellow','blue'] 
+			    	};
+			    	
+			    	var ctx2 = document.getElementById("myChart"); 
+			    	var myDoughnutChart = new Chart(ctx2, { 
+			    		type: 'doughnut', 
+			    		data: data, 
+			    		options: {
+			    			cutoutPercentage: 30
+			    		} 
+			    	}); 
+			    
+			    </script>
                 <div id="forExcelExport">
                 <table id="walletMidTable" class="mainTable">
                     <thead>
@@ -496,7 +537,6 @@
                       </tr>
                     </thead>
                     <tbody >
-                    <%-- <c:if test="${ abList } != null"> --%>
                     <c:forEach var="ab" items="${ abList }" varStatus="abStatus">
                       <tr id="forChageAjax${abStatus.index}">
                         <td class="walletName">${ ab.accName }</td>
@@ -512,13 +552,7 @@
                             <input type="hidden" id="thisDate" value="${ab.accTripDate}">
                         	<input type="hidden" id="thisColNum" value="${ab.accno}">
                         </td>
-                       <%--  <c:if test="$(slideCheck${abStatus.index}).prop('checked') == true">
-                        	<td class="walletStatus"><fmt:formatNumber value="${ab.accWon/ab.accAccompany}" pattern="#,###"/></td>
-                        </c:if>
-                        <c:if test="$(slideCheck${abStatus.index}).prop('checked') == false">
-                        	<td class="walletStatus"><fmt:formatNumber value="${ab.accWon}" pattern="#,###"/></td>
-                        </c:if> --%>
-                        <td class="walletStatus"></td>
+                        <td class="walletPerson">${ ab.accOneWon }</td>
 	          			<c:if test="${ empty ab.whopay }">
 	          				<td class="walletAccompany"> 1인지불 </td>
 	          				<td class="walletWhoPay">${ loginUser.usname }</td>
@@ -637,13 +671,20 @@
 		<div class="modal_layer"></div>
 	</div>
     
+    <!-- 부트스트랩 --> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    
     <script>
     function goToWallet(){
 		/* console.log("jsp안에서 usno확인 : " + usno); */
 		location.href='${contextPath}/mypage/wallet?usno='+${loginUser.usno};
 	};
     </script>
-    <script>
+	
+	<script>
+
 		$("#addNewDetail").click(function(){
 		   $("#modal").fadeIn();
 		});
@@ -652,6 +693,7 @@
 		   $("#modal").fadeOut();
 		});      
 	</script>
+	
 	<script>
 		$(document).ready(function() {
 		  $('#accClassify').change(function() {
@@ -707,67 +749,13 @@
 			$("#slideCheck"+i).click(function() {
 			
 			var usno = ${loginUser.usno};
-			var thisDate = $('#thisDate').val();
-			var thisColNum = $('#thisColNum').val();
-			
-			var infoThisCol = new Object();
-			infoThisCol.usno = usno;
-			infoThisCol.thisDate = thisDate;
-			infoThisCol.thisColNum = thisColNum;
-			
+			var accTripDate = $('#thisDate').val();
+			var accno = $('#thisColNum').val();
+			var accDutch = $(this).val();
 			console.log(infoThisCol);
 			
-			if($(this).prop("checked") == true){
-				console.log("on임");
-				// off상태로 만들어줘야함.
-				$.ajax({
-					url : "makeOff",
-					data : JSON.stringfy(searchPo),
-					type : "POST",
-					contentType : "application/json; charset=utf-8",
-					success : functionn(data){
-						tr = $("forChangeAjax"+i);
-						tr.html("");
-						
-						for(var j in data){
-							var wdateFormat = new Date(data[i].wdate);
-							wdateFormat = getFormatDate(wdateFormat);
-							
-							var td= $("<td>");
-							var wname = $("<td>").text(data[j].wname);
-							var wclassify = $("<td>").text(data[j].wclassify);
-							var wprice = $("<td>").text(data[j].wprice);
-							var wdate = $("<td>").text(wdateFormat);
-							var wstatus = $("<td>").text(data[j].wstatus);
-							var wDutch = $("<td>").text(data[j].d)
-						}
-						
-					},
-					error : function(e){
-						alert("error code : " + e.status + "\n"
-								+ "message : " + e.responseText)
-					}
-				});
-				
-				
-			} else{
-				console.log("off임");
-				// on상태로 만들어줘야함
-				$.ajax({
-					url : "makeOn",
-					data : JSON.stringfy(searchPo),
-					type : "POST",
-					contentType : "application/json; charset=utf-8",
-					success : functionn(data){
-						
-						
-					},
-					error : function(e){
-						alert("error code : " + e.status + "\n"
-								+ "message : " + e.responseText)
-					}
-				});
-			}
+			location.href="${contextPath}/mypage/makeoff?usno="+usno + "&accTripDate=" + accTripDate + "&accno=" + accno + "&accDutch=" + accDutch;
+
 		});
 	}
 	
