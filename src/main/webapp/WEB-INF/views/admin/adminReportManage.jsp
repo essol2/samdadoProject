@@ -47,35 +47,57 @@
                 <thead>
                     <tr>
                         <th>신고 번호</th>
-                        <th>신고 사유</th>
+                        <th>신고자</th>
                         <th>신고 내용</th>
-                        <th>신고 날짜</th>
                         <th>첨부 파일</th>
-                        <th>처리 상태</th>
-                        <th>회원 이름</th> <!-- 회원 이름으로 바꾸기 -->
                         <th>사업장 코드</th>
-                        <th>승인 버튼</th>
-                        <th>반려 버튼</th>
+                        <th>신고 날짜</th>
+                        <th>승인</th>
+                        <th>반려</th>
                     </tr>
                 </thead>
                 
                 <tbody>        
-                <c:forEach var="rpl" items="${ reportList }">
+                <c:forEach var="rpl" items="${ reportList }" varStatus="status"> 
                    <tr>
                        <th id="report_no">${ rpl.report_no }</th>
-                       <td>${ rpl.rep_res }</td>
-                       <td>${ rpl.rep_cont }</td>                       
-                       <td><fmt:formatDate value='${ rpl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
-                       <td><a class="btn btn-info" href="#">보기</a></td>
-                       <c:if test="${ rpl.rstatus eq 'N' }">
-                       <td>미처리</td>
-                       </c:if>
                        <td>${ rpl.usname }</td>
+                       <td><b>${ rpl.rep_cont }</b></td>                       
+                       <td>
+                       <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal${ status.count }">
+			  				보기
+					   </button>
+                       </td>
                        <td id="bus_code">${ rpl.bus_code }</td>
+                       <td><fmt:formatDate value='${ rpl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
                        <td><button class="btn btn-secondary" id="admitReportBtn">승인</button></td> <!-- db 상태 y -->
                        <td><button class="btn btn-success" id="rejectReport">반려</button></td> <!-- db 상태 r -->
                    </tr>
-                  </c:forEach>   
+                   
+                   <!-- 모달 -->
+                   <div class="modal fade" id="exampleModal${ status.count }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">신고 첨부내역</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+					     	신고번호 : ${ status.current.report_no } <br>
+					     	신고자 : ${ status.current.usname } <br>
+					     	신고 내용 : ${ status.current.rep_cont } <br>
+					     	첨부파일 : <img src="${ contextPath }/resources/busUploadFiles/${ status.current.r_img_cname }"> <br>
+					     	사업장 코드 : ${ status.current.bus_code } <br>
+					     	신고 날짜 : <fmt:formatDate value='${ status.current.rdate }' type='both' pattern='yyyy-MM-dd' />
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					
+                </c:forEach>   
                 </tbody>
               </table>
               
@@ -99,6 +121,8 @@
 	         		location.href="${contextPath}/admin/rejectReport?report_no=" + report_no + "&bus_code=" + bus_code;
          	 });
          	</script>
+
+			
                  
 
               <br><hr> 
