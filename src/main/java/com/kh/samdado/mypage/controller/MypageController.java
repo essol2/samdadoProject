@@ -142,15 +142,23 @@ public class MypageController {
 	 // 제휴회원 포인트 페이지로 이동
 	 @GetMapping("/point")
 	 public ModelAndView goToPoint(ModelAndView mv,
-				 				 @ModelAttribute User u,
-				 				 @ModelAttribute Point po) {
+				 				   @ModelAttribute User u,
+				 				   @ModelAttribute Point po,
+				 				   @RequestParam(name="usno") String usno ) {
 		 
-		  //System.out.println("user 객체 확인 : " +u);
+		  System.out.println("user 객체 확인 : " +usno);
+		 List<Point> pList = null;
 		 
-		 // u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
-		 List<Point> pList = mService.selectPointList(u.getUsno());
-		 System.out.println("pList 객체 확인 : " + pList);
-		 
+		 if(usno.isEmpty()) {
+			// u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
+			 pList = mService.selectPointList(u.getUsno());
+			 System.out.println("pList 객체 확인 : " + pList);
+		 } else {
+			// u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
+			 pList = mService.selectPointList(usno);
+			 System.out.println("pList 객체 확인 : " + pList);
+		 }
+		 	 
 		 if(pList.size() > 0) {
 			 mv.addObject("pList", pList);
 			 mv.setViewName("mypage/mp_Point");
@@ -192,8 +200,8 @@ public class MypageController {
 		 int result2 = mService.insertNewPoint(po);
 		 
 		 if(result>0 || result2>0) {
-			 model.addAttribute("msg", "포인트 적립 끝.");
-			return "mypage/mp_Point";
+			 model.addAttribute("usno", po.getUsno());
+			return "redirect:point";
 		 } else if(result>0 || result2<=0){
 			 model.addAttribute("msg", "포인트 적립 오류입니다. 관리자에게 문의주세요.");
 			 return "mypage/mp_Point";

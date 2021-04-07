@@ -527,7 +527,6 @@
 		                            </tr>
 	                            </thead>
 	                            <tbody>
-	                            <c:if test="${ pList }.size() > 0">
 		                            <c:forEach var="p" items="${ pList }">
 			                            <tr>
 			                                <td>${ p.pdate }</td>
@@ -535,12 +534,11 @@
 			                                <td style="color : #467355">${ p.pamount }</td>
 			                            </tr>
 		                            </c:forEach>
-		                         </c:if>
-		                         <c:if test=" ${pList }.size() <= 0">
+		                         <%-- <c:if test=" ${pList }.size() <= 0">
 		                         	<tr>
 		                         		<td colspan="3">조회된 정보가 없습니다.</td>
 		                         	</tr>
-		                         </c:if>
+		                         </c:if> --%>
 								</tbody>
 	                        </table> 
                         </div>
