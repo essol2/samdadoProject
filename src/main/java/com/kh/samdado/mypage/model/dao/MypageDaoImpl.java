@@ -125,5 +125,11 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.selectOne("mypageMapper.selectOrigin", ab);
 	}
 
+	// 일반회원 - 가계부 삭제
+	@Override
+	public int deleteAcc(int accno) {
+		return sqlSession.delete("mypageMapper.deleteAcc", accno);
+	}
+
 
 }

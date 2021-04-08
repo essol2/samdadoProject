@@ -296,4 +296,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE 
 				ACC_NO = #{accno}
 	</select>
+	<delete id="deleteAcc" parameterType="AccountBook">
+		DELETE
+		FROM ACCOUNT
+		WHERE ACC_NO = #{accno}
+	</delete>
 </mapper>
