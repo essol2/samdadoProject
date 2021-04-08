@@ -382,9 +382,9 @@ public class MypageController {
 		 //System.out.println("recentDateList.get(0) check : " + recentDateList.get(0).getAccTripDate());
 	 
 		if(recentDateList.isEmpty()){
-			 List<AccountBook> abList= mService.selectAccountList(ab);
-			 //System.out.println(abList);
-			 mv.addObject("abList", abList);
+			 //List<AccountBook> abList= mService.selectAccountList(ab);
+			 // System.out.println("여기는 recentDateList.isEmpty() 구역");
+			 mv.addObject("msg", "아직 아무런 값이 없어요! +를 눌러 추가해주세요!");
 			 mv.setViewName("mypage/mp_Wallet");
 		 } else {
 			 ab.setSearchDate(recentDateList.get(0).getAccTripDate());
@@ -415,26 +415,32 @@ public class MypageController {
 			 					   @RequestParam(value="countDateUser", defaultValue="0") int countDateUser,
 			 					   Model model) {
 		 
-		 System.out.println("넘어오는 ab객체 확인 : " +ab);
-		 System.out.println("classifyUser : " + classifyUser);
-		 System.out.println("countDateUser : " + countDateUser);
+		 //System.out.println("넘어오는 ab객체 확인 : " +ab);
+		 //System.out.println("classifyUser : " + classifyUser);
+		 //System.out.println("countDateUser : " + countDateUser);
 		 
+		 // 더치페이 off 셋해주기
+		 if(ab.getAccDutch() == null) {
+			 ab.setAccDutch("off");
+		 }
+		 
+		 // 구분 조합해 set해주기
 		 if(ab.getAccClassify().equals("직접입력")) {
 			 String accClassify = ab.getAccClassify() + " - " + classifyUser;
-			 System.out.println(accClassify);
+			 //System.out.println(accClassify);
 			 ab.setAccClassify(accClassify);
 		 }
 		 
-		 if(ab.getAccAccompany() != 0) {
+		 if(ab.getAccAccompany() != 1) {
 			int oneWon = Math.round(ab.getAccWon() / ab.getAccAccompany());
-			System.out.println(oneWon);
+			//System.out.println(oneWon);			
 			ab.setAccOneWon(oneWon);
 		 } else {
 			 ab.setAccOneWon(ab.getAccWon());
 			 //System.out.println(ab.getAccOneWon());
 		 }
 		 
-		 System.out.println("ab ckeck : " + ab);
+		 //System.out.println("ab ckeck : " + ab);
 		 //DB에 insert
 		 int result = mService.insertNewAcc(ab);
 		 
@@ -476,53 +482,50 @@ public class MypageController {
 		 return mv;
 	 }
 	 
-	 // 일반회원 - 가계부 on/off 클릭 - off상태로 만들어주기
-	 @GetMapping("/onofftest")
-	 public ModelAndView accountMakeOff(@ModelAttribute AccountBook ab,
-			 							ModelAndView mv,
-			 							@RequestParam(name= "acNo") int an) {
-		 
-		 System.out.println("view에서 확인하는 accno");
-
-		 if(ab.getAccDutch() == "on") {
-			 ab.setAccDutch(null);
-		 } else {
-			 ab.setAccDutch("on");
-		 }
-		 
-		 // off, on 컬럼값 바꾸기
-		 int result = mService.updateOnOffBtn(an);
-		 
-		 // 해당 리스트 다시 불러오기
-		 List<AccountBook> recentDateList = mService.selectRecentDate(ab.getUsno());
-		 List<AccountBook> abList = mService.selectAccountList(ab);
-		 
-		 if(abList != null) {
-			 mv.addObject("rdList", recentDateList);
-			 mv.addObject("abList", abList);
-			 mv.setViewName("mypage/mp_Wallet");
-		 }else {
-			 mv.addObject("msg", "가계부 조회 오류입니다.");
-			 mv.setViewName("mypage/mp_Wallet");
-		 }
-		 return mv;
-	 }
-	 
 	// 일반회원 - 가계부 on/off 클릭 - off상태로 만들어주기
-		 @RequestMapping(value="/onoff", method=RequestMethod.POST)
-		 public int onOffChange(int accno) {
+		 @RequestMapping("onoff")
+		 @ResponseBody
+		 public AccountBook onOffChange(@RequestBody AccountBook ab) {
+			 //System.out.println("accno : " + accno);
+			 //System.out.println("accDutch :  " +  accDutch);
+			 //System.out.println("accno의 타입 : " + accno.getClass().getName());
+			 System.out.println("view에서 받아온 ab객체 : " + ab);
 			 
-			// off, on 컬럼값 바꾸기
-			 int result = mService.updateOnOffBtn(accno);
+			 // 기존 해당 컬럼 값 가져오기
+			 AccountBook abObject = mService.selectOrigin(ab);
+			 System.out.println("가져온 abObject 값 : " + abObject);
+			 
+			 // 기존 컬럼값에 dutch값, oneWon, Total 변경해주기
+			 if(ab.getAccDutch().equals("on")) {
+				 abObject.setAccDutch("off");
+				 abObject.setAccAccompany(1);
+				 abObject.setAccOneWon(abObject.getAccWon());
+				 abObject.setWhopay(null);
+				 
+			 } else {
+				 abObject.setAccDutch("on");
+				 abObject.setAccAccompany(ab.getAccAccompany());
+				 abObject.setAccOneWon( Math.round(abObject.getAccWon() / ab.getAccAccompany()));
+				 abObject.setWhopay(ab.getWhopay());
+			 }
+			 
+			 System.out.println("setAccDutch한 후의 ab객체 : " + abObject);
 
-			 if(result > 0) {
-				 return result;
+			// off, on 컬럼값 바꾸기
+			 int result = mService.updateOnOffBtn(abObject);
+			 System.out.println("onOffChange안에서 : " + result);
+			 
+			 AccountBook findAbObject = mService.selectOrigin(ab);
+			 System.out.println("update한 후의 object 값 : " + findAbObject);
+
+			 if(findAbObject != null) {
+				 return findAbObject;
 			 }else {
 				 System.out.println("List 못가져옴");
-				 return result;
+				 return null;
 			 }
 			  
-			 //return null;
+			 //return 0;
 		 }
 
 }

@@ -62,7 +62,10 @@ public interface MypageService {
 	public List<AccountBook> selectRecentDate(String un);
 
 	// 일반회원 - 가계부 on.off 버튼 클릭시 db 내용 바꾸기
-	public int updateOnOffBtn(int an);
+	public int updateOnOffBtn(AccountBook abObject);
+
+	// 일반회원 - 가계부 기존 해당 컬럼 객체 값 가져오기
+	public AccountBook selectOrigin(AccountBook ab);
 
 	
 
