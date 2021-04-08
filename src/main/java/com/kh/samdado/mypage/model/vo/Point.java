@@ -33,4 +33,6 @@ public class Point {
 	private int pbalance;
 	private int pamount;
 	private String usno;
+	
+	private String usname;	// user 테이블 조인
 }

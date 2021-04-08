@@ -11,8 +11,10 @@ import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.user.model.vo.User;
 
 @Repository 
 public class AdminDaoImpl implements AdminDao {
@@ -98,5 +100,60 @@ public class AdminDaoImpl implements AdminDao {
 		return sqlSession.selectList("adminMapper.adminbannerAdSelect", null, rowBounds);
 	}
 
+	@Override
+	public int updateAdmitBannerAdStatus(Alliance alliance) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateAdmitBannerAdStatus", alliance);
+	}
+
+	@Override
+	public int updateRejectBannerAdStatusRI(Alliance alliance) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateRejectBannerAdStatusRI", alliance);
+	}
+
+	@Override
+	public int updateRejectBannerAdStatusRP(Alliance alliance) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateRejectBannerAdStatusRP", alliance);
+	}
+
+	@Override
+	public List<Report> searchReportList(aSearch search) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("adminMapper.searchReportList", search);
+	}
+
+	@Override
+	public List<Alliance> searchAllianceList(aSearch search) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("adminMapper.searchAllianceList", search);
+	}
+
+	@Override
+	public List<Alliance> admitbannerAdListSelect() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("adminMapper.admitbannerAdListSelect");
+	}
+
+	@Override
+	public int countAd2() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminMapper.countAd2");
+	}
+
+	@Override
+	public List<Income> adminPremiumAdSelect(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("adminMapper.adminPremiumAdSelect", pi);
+	}
+
+	@Override
+	public List<Income> searchPreAdList(aSearch search) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("adminMapper.searchPreAdList", search);
+	}
+
+	
 
 }

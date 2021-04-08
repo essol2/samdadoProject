@@ -86,35 +86,55 @@
                     <ul class="pagination">
                     <!-- [이전] -->
 	               <c:if test="${ pi.currentPage <= 1 }">
-	                  [이전] &nbsp;
+	                  <li class="page-item disabled">
+                          <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
 	               <c:if test="${ pi.currentPage > 1 }">
 	                  <c:url var="before" value="/admin/userList">
 	                     <c:param name="page" value="${ pi.currentPage - 1 }"/>
 	                  </c:url>
-	                  <a href="${ before }">[이전]</a> &nbsp;
+	                  <li class="page-item">
+                          <a class="page-link" href="${ before }" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
+	               
 	               <!-- 페이지 숫자 -->
 	               <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	          	      
 	                  <c:if test="${ p eq pi.currentPage }">
-	                     <font color="red" size="4"><b>[${ p }]</b></font>
+	                     <li class="page-item active"><a class="page-link" href="#">${ p }</a></li>
 	                  </c:if>
 	                  <c:if test="${ p ne pi.currentPage }">
 	                     <c:url var="pagination" value="/admin/userList">
 	                        <c:param name="page" value="${ p }"/>
 	                     </c:url>
-	                     <a href="${ pagination }">${ p }</a> &nbsp;
+	                     <li class="page-item"><a class="page-link" href="${ pagination }">${ p }</a></li>
 	                  </c:if>
+	                  
 	               </c:forEach>
+	               
 	               <!-- [다음] -->
 	               <c:if test="${ pi.currentPage >= pi.maxPage }">
-	                  [다음]
+	                  <li class="page-item disabled">
+                          <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
 	               <c:if test="${ pi.currentPage < pi.maxPage }">
 	                  <c:url var="after" value="/admin/userList">
 	                     <c:param name="page" value="${ pi.currentPage + 1 }" />
 	                  </c:url>
-	                  <a href="${ after }">[다음]</a>
+	                  <li class="page-item">
+                          <a class="page-link" href="${ after }" aria-label="Previous">
+                          <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
 	              </ul>
                 </nav>
@@ -128,22 +148,24 @@
                 <h3>회원<span style="color: seagreen;"> 조회 </span>하기</h3>
                 <br>
                 
-                <div class="search_user_div">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>-------</option>
-                        <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
-	                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원 이름</option>
-	                    <option value="usid" <c:if test="${ param.searchCondition == 'usid' }">selected</c:if>>회원 아이디</option> 
-	                    <option value="usbirth" <c:if test="${ param.searchCondition == 'usbirth' }">selected</c:if>>생년 월일</option>
-	                    <option value="usemail" <c:if test="${ param.searchCondition == 'usemail' }">selected</c:if>>이메일</option>
-	                    <option value="usphone" <c:if test="${ param.searchCondition == 'usphone' }">selected</c:if>>휴대전화</option>
-	                    <option value="uspart" <c:if test="${ param.searchCondition == 'uspart' }">selected</c:if>>회원 구분</option>
-	                    <option value="busno" <c:if test="${ param.searchCondition == 'busno' }">selected</c:if>>사업자등록번호</option>
-	                    <option value="usstatus" <c:if test="${ param.searchCondition == 'usstatus' }">selected</c:if>>회원 상태</option>	                  
-                    </select>
-                    <input type="text" id="searchValue" class="form-control">
-                    <button class="btn btn-secondary" onclick="searchUser();">검색하기</button>
-                </div>
+                <form id="search_user_form">
+	                <div class="search_user_div">
+	                    <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
+	                        <option selected>-------</option>
+	                        <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
+		                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원 이름</option>
+		                    <option value="usid" <c:if test="${ param.searchCondition == 'usid' }">selected</c:if>>회원 아이디</option> 
+		                    <option value="usbirth" <c:if test="${ param.searchCondition == 'usbirth' }">selected</c:if>>생년 월일</option>
+		                    <option value="usemail" <c:if test="${ param.searchCondition == 'usemail' }">selected</c:if>>이메일</option>
+		                    <option value="usphone" <c:if test="${ param.searchCondition == 'usphone' }">selected</c:if>>휴대전화</option>
+		                    <option value="uspart" <c:if test="${ param.searchCondition == 'uspart' }">selected</c:if>>회원 구분</option>
+		                    <option value="busno" <c:if test="${ param.searchCondition == 'busno' }">selected</c:if>>사업자등록번호</option>
+		                    <option value="usstatus" <c:if test="${ param.searchCondition == 'usstatus' }">selected</c:if>>회원 상태</option>	                  
+	                    </select>
+	                    <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
+		                <button class="btn btn-secondary" type="button">검색하기</button>
+	                </div>
+                </form>
                 
                 <br>
 
@@ -162,46 +184,61 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="aul" items="${ searchUserList }">
-		        		  <c:if test="${ sul.uspart ne '관리자' }">
-			                 <tr>
-			                     <th>${ sul.usno }</th>
-			                     <td>${ sul.usname }</td>
-			                     <td>${ sul.usid }</td>           
-			                     <td><fmt:formatDate value='${ sul.usbirth }' type='both' pattern='yyyy-MM-dd' /></td>
-			                     <td>${ sul.usemail }</td>
-			                     <td>${ sul.usphone }</td>
-			                     <td>${ sul.uspart }</td>
-			                     <td>${ sul.busno }</td>
-			                     <td>${ sul.usstatus }</td>
-			                 </tr>
-			               </c:if>
-	               		</c:forEach>  
+                        
 	              </tbody>
                   </table>
                </div>
+               
+               <script>
+					$(function() {
+						$("#search_user_form button[type=button]").on("click", function() {
+			         		
+			         		var search = {};
+			         		search.searchCondition =  $("#searchCondition").val();
+			         		search.searchValue =  $("#searchValue").val();
+
+							$.ajax({
+								url : "${contextPath}/admin/searchUser",
+								data : JSON.stringify(search),
+								type : "post", 
+								contentType : "application/json; charset=utf-8",
+								dataType : "json",
+								success : function(data) {
+
+									tableBody = $("#resultSearchUserTable tbody");
+									tableBody.html("");
+									
+									for (var i in data) {
+										var tr = $("<tr>");
+										
+										var usno = $("<th>").text(data[i].usno);
+										var usname = $("<td>").text(data[i].usname);
+										var usid = $("<td>").text(data[i].usid);
+										var usbirth = $("<td>").text(data[i].usbirth);
+										var usemail = $("<td>").text(data[i].usemail);
+										var usphone = $("<td>").text(data[i].usphone);
+										var uspart = $("<td>").text(data[i].uspart);
+										var busno = $("<td>").text(data[i].busno);
+										var usstatus = $("<td>").text(data[i].usstatus);
+										
+										tr.append(usno, usname, usid, usbirth, usemail, usphone, uspart, busno, usstatus); // 테이블 행에 추가
+										tableBody.append(tr); // 테이블에 추가
+									}
+									
+									
+								},
+								error : function(e) {
+									alert("error code : " + e.status + "\n"
+											+ "message : " + e.responseText);
+								}
+							});
+						});
+					});
+				</script>
+               
+               
+               
                <br><hr>
-               
-                <!-- 검색 페이지네이션 -->
-                <div class="row-page">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>                       
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                        </ul>
-                    </nav>
-                </div>
-               
-               <br><br>
 
         </div>
    

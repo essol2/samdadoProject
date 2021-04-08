@@ -24,6 +24,13 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
   </head>
   <body>
+  
+  <!-- 메세지가 있다면 출력하고 지우기 -->
+   <c:if test="${ !empty msg }">
+   		<script>alert('${ msg }')</script>
+   		<c:remove var="msg" />
+   </c:if>
+   
     <div class="container-fluid">
       <div class="row">
         
@@ -44,7 +51,7 @@
                         <th>신청자</th>
                         <th>카테고리</th>
                         <th>사업장코드</th>
-                        <th>포인트</th> <!-- income 테이블 조인 -->
+                        <th>포인트</th> <!-- point 테이블 조인 -->
                         <th>신청폼</th>
                         <th>신청날짜</th>
                         <th>승인</th>
@@ -72,14 +79,7 @@
 	                              </c:otherwise>
 	                            </c:choose>
 		                       <td id="bus_code">${ bal.bus_code }</td>
-		                       <c:choose>
-				                  <c:when test="${ empty bal.amount }">
-	                            	<td><font color="red">0</font></td>
-	                              </c:when>
-	                              <c:otherwise>
-	                              	<td><font color="blue">${ bal.amount }</font></td>
-	                              </c:otherwise>
-	                            </c:choose>
+		                       <td>${ bal.pbalance }</td>
 		                	   <td>
 		                       <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal${ status.count }">
 					  				보기
@@ -92,7 +92,7 @@
 			                        <select class="form-select" aria-label="Default select example" name="amassage" id="amassage">
 			                            <option selected>--- 반려사유 ---</option>
 			                            <option value="이미지 불일치">이미지 불일치</option>
-			                            <option value="포인트 미충전">포인트 미충전</option>
+			                            <option value="포인트 미충전">포인트 부족</option>
 			                        </select>
 			                        <button type="submit" class="btn btn-success" id="rejectBannerAdBtn">반려</button> 
 			                    </div>
@@ -108,13 +108,26 @@
 							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							      </div>
 							      <div class="modal-body">
-							     	No : ${ status.current.alno } <br>
-							     	신청자 : ${ status.current.usname } <br>
-							     	카테고리 : ${ status.current.bus_category } <br>
-							     	기업 소개 : ${ status.current.alintro } <br>
-							     	사업장 코드 : ${ status.current.bus_code } <br>
-							     	신청 날짜 : <fmt:formatDate value='${ status.current.alsubdate }' type='both' pattern='yyyy-MM-dd' /> <br>
-							     	첨부파일 : <img src="${ contextPath }/resources/busUploadFiles/alliance/${ status.current.aimgcname }"> <br>
+							      	
+									  <div class="row">
+					                    <div class="col">
+					                         <img src="${ contextPath }/resources/images/image_admin/logo_g.png" class="card-img-top" alt="...">
+					                    </div>
+					                    <div class="col">
+					                        <h3 id="page_title">삼다도</h3>
+					                    </div>
+					                  </div>
+					                  
+					                  <div>
+					                  	No : ${ status.current.alno } <br>
+								     	신청자 : ${ status.current.usname } <br>
+								     	카테고리 : ${ status.current.bus_category } <br>
+								     	기업 소개 : ${ status.current.alintro } <br>
+								     	사업장 코드 : ${ status.current.bus_code } <br>
+								     	신청 날짜 : <fmt:formatDate value='${ status.current.alsubdate }' type='both' pattern='yyyy-MM-dd' /> <br>
+								     	첨부파일 : <img src="${ contextPath }/resources/busUploadFiles/alliance/${ status.current.aimgcname }"> <br>
+					                  </div>
+							     	
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -131,28 +144,22 @@
              <script>
              $("#admitBannerAdBtn").click(function(){
 
-	         		var al_no = $("#al_no").text();
+	         		var alno = $("#al_no").text();
 	         		var bus_code = $("#bus_code").text();
+	         
 	         		
-	         		alert(al_no);
-	         		alert(bus_code);
-	         		
-	         		location.href="${contextPath}/admin/admitBannerAd?al_no=" + al_no + "&bus_code=" + bus_code;
+	         		location.href="${contextPath}/admin/admitBannerAd?alno=" + alno + "&bus_code=" + bus_code;
              });
          	</script>
          	
          	<script>
          	 $("#rejectBannerAdBtn").click(function(){
 
-	         		var al_no = $("#al_no").text();
+	         		var alno = $("#al_no").text();
 	         		var bus_code = $("#bus_code").text();
 	         		var amassage = $("#amassage").val();
 	         		
-	         		alert(al_no);
-	         		alert(bus_code);
-	         		alert(amassage);
-	         		
-	         		location.href="${contextPath}/admin/rejectBannerAd?al_no=" + al_no + "&bus_code=" + "&amassage=" + amassage;
+	         		location.href="${contextPath}/admin/rejectBannerAd?alno=" + alno + "&bus_code=" + bus_code + "&amassage=" + amassage;
          	 });
          	</script>
 
@@ -162,24 +169,63 @@
               <div class="row-page">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    </ul>
+                    <!-- [이전] -->
+	               <c:if test="${ pi.currentPage <= 1 }">
+	                  <li class="page-item disabled">
+                          <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
+	               </c:if>
+	               <c:if test="${ pi.currentPage > 1 }">
+	                  <c:url var="before" value="/admin/advertise1">
+	                     <c:param name="page" value="${ pi.currentPage - 1 }"/>
+	                  </c:url>
+	                  <li class="page-item">
+                          <a class="page-link" href="${ before }" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
+	               </c:if>
+	               
+	               <!-- 페이지 숫자 -->
+	               <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	          	      
+	                  <c:if test="${ p eq pi.currentPage }">
+	                     <li class="page-item active"><a class="page-link" href="#">${ p }</a></li>
+	                  </c:if>
+	                  <c:if test="${ p ne pi.currentPage }">
+	                     <c:url var="pagination" value="/admin/advertise1">
+	                        <c:param name="page" value="${ p }"/>
+	                     </c:url>
+	                     <li class="page-item"><a class="page-link" href="${ pagination }">${ p }</a></li>
+	                  </c:if>
+	                  
+	               </c:forEach>
+	               
+	               <!-- [다음] -->
+	               <c:if test="${ pi.currentPage >= pi.maxPage }">
+	                  <li class="page-item disabled">
+                          <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
+	               </c:if>
+	               <c:if test="${ pi.currentPage < pi.maxPage }">
+	                  <c:url var="after" value="/admin/advertise1">
+	                     <c:param name="page" value="${ pi.currentPage + 1 }" />
+	                  </c:url>
+	                  <li class="page-item">
+                          <a class="page-link" href="${ after }" aria-label="Previous">
+                          <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
+	               </c:if>
+	              </ul>
                 </nav>
             </div>
 
-            <br>
+            <br><br>
 
              <!--배너 승인 및 광고 진행 내역 -->
              <h3>배너 <span style="color: red;">승인 & 광고 진행</span> 내역</h3>
@@ -190,131 +236,164 @@
                         <th>No</th>
                         <th>신청자</th>
                         <th>카테고리</th>
-                        <th>포인트</th>
+                        <th>사업장코드</th>
+                        <th>포인트</th> <!-- point 테이블 조인 -->
                         <th>신청폼</th>
                         <th>신청날짜</th>
-                        <th>잔여 포인트</th>
                      </tr>
                  </thead>
                  <tbody>
-                     <tr>
-                     <!--반복문 -->
-                   <tr>
-                    <th>1</th>
-                    <td>김춘추</td>
-                    <td>숙박</td>
-                    <td>500000</td>
-                    <td><a class="btn btn-info">신청폼</a></td>
-                    <td>2021-03-17</td>
-                    <td style="color: blue;">399000</td>
-                   </tr>
-                   <tr>
-                    <th>2</th>
-                    <td>강제주</td>
-                    <td>렌트카</td>
-                    <td>1000000</td>
-                    <td><a class="btn btn-info">신청폼</a></td>
-                    <td>2021-03-17</td>
-                    <td style="color: blue;">787900</td>
-                   </tr>
+                 
+                 	<c:forEach var="abal" items="${ admitbannerAdList }" varStatus="Astatus">
+		                   <tr>
+		                       <th>${ abal.alno }</th>
+		                       <th>${ abal.usname }</th>
+		                       <c:choose>
+				                  <c:when test="${ abal.bus_category eq 'R' }">
+	                            	<td>음식점</td>
+	                              </c:when>
+	                              <c:when test="${ abal.bus_category eq 'H' }">
+	                            	<td>숙박</td>
+	                              </c:when>
+	                              <c:when test="${ abal.bus_category eq 'T' }">
+	                            	<td>관광지</td>
+	                              </c:when>
+	                              <c:otherwise>
+	                              	<td>렌트</td>
+	                              </c:otherwise>
+	                            </c:choose>
+		                       <td>${ abal.bus_code }</td>
+		                       <td>${ abal.pbalance }</td>
+		                	   <td>
+		                       <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#abalexampleModal${ Astatus.count }">
+					  				보기
+							   </button>
+		                       </td>
+		                       <td><fmt:formatDate value='${ abal.alsubdate }' type='both' pattern='yyyy-MM-dd' /></td>
+		                   </tr>
+		                   
+		                   <!-- 모달 -->
+		                   <div class="modal fade" id="abalexampleModal${ Astatus.count }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">제출 첨부내역</h5>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							     	No : ${ Astatus.current.alno } <br>
+							     	신청자 : ${ Astatus.current.usname } <br>
+							     	기업 소개 : ${ Astatus.current.alintro } <br>
+							     	사업장 코드 : ${ Astatus.current.bus_code } <br>
+							     	신청 날짜 : <fmt:formatDate value='${ Astatus.current.alsubdate }' type='both' pattern='yyyy-MM-dd' /> <br>
+							     	첨부파일 : <img src="${ contextPath }/resources/busUploadFiles/alliance/${ Astatus.current.aimgcname }"> <br>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							
+		            </c:forEach>
+                   
                  </tbody>
                </table>
 
               <br><hr>
 
-                <!-- 페이지네이션 -->
-                <div class="row-page">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    </ul>
-                </nav>
-              </div>
+              <!-- 페이지네이션 추가 -->
 
-               <div class="find_banner_ad">
-                <h3>배너 광고<span style="color: seagreen;"> 내역조회</span></h3>
+              <br><br>
+              
+                <div class="find_banner">
+                <h3>배너<span style="color: seagreen;"> 내역조회 </span>하기</h3>
                 <br>
-                
-                <div class="search_banner_ad_div">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>-------</option>
-                        <option value="1" name="no">번호</option>
-                        <option value="2" name="name">신청자</option>
-                        <option value="3" name="category">카테고리</option>
-                        <option value="4" name="point">포인트</option>
-                        <option value="5" name="date" >신청날짜</option>
-                        <option value="6" name="reseon">반려사유</option>
-                    </select>
-                    <input type="text" id="searchValue" class="form-control">
-                    <button class="btn btn-secondary" onclick="searchBannerAd();">검색하기</button>
-                </div>
-                
+ 
+				<form id="search_bannerAd_form">
+					<div class="search_bannerAd_div">
+		               <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
+		                   <option>--------</option>
+		                   <option value="alno" <c:if test="${ param.searchCondition == 'alno' }">selected</c:if>>No</option>
+		                   <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>신청자 회원명</option>
+		                   <option value="bus_category" <c:if test="${ param.searchCondition == 'bus_category' }">selected</c:if>>카테고리</option> 
+		                   <option value="bus_code" <c:if test="${ param.searchCondition == 'bus_code' }">selected</c:if>>사업장 코드</option> 
+		                   <option value="pbalance" <c:if test="${ param.searchCondition == 'pbalance' }">selected</c:if>>포인트</option>
+		                   <option value="alsubdate" <c:if test="${ param.searchCondition == 'alsubdate' }">selected</c:if>>신청날짜</option>
+		                   <option value="alstatus" <c:if test="${ param.searchCondition == 'alstatus' }">selected</c:if>>처리 상태</option>
+		                   
+		               </select>
+		               <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
+		               <button class="btn btn-secondary" type="button">검색하기</button>
+					</div>
+				</form>
+            
                 <br>
 
-                <table class="table table-borderless">
+                <table class="table table-borderless" id="resultSearchbannerAdTable">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>신청자</th>
-                            <th>카테고리</th>
-                            <th>포인트</th>
-                            <th>신청폼</th>
-                            <th>신청날짜</th>
-                            <th>반려사유</th>
-                            <th>처리</th>
+	                        <th>신청자</th>
+	                        <th>카테고리</th>
+	                        <th>사업장코드</th>
+	                        <th>포인트</th> 
+	                        <th>신청날짜</th>
+	                        <th>처리 상태</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>1</th>
-                            <td>김춘추</td>
-                            <td>숙박</td>
-                            <td>0</td>
-                            <td><a class="btn btn-info">신청폼</a></td>
-                            <td>2021-03-17</td>
-                            <th style="color: crimson;">포인트 미충전</th>
-                            <td>반려</td>
-                          </tr>
+                    	
                     </tbody>
                   </table>
                </div>
+               
+               <script>
+					$(function() {
+						$("#search_bannerAd_form button[type=button]").on("click", function() {
+			         		
+			         		var search = {};
+			         		search.searchCondition =  $("#searchCondition").val();
+			         		search.searchValue =  $("#searchValue").val();
 
-               <br> <hr>
+							$.ajax({
+								url : "${contextPath}/admin/searchbannerAd",
+								data : JSON.stringify(search),
+								type : "post", 
+								contentType : "application/json; charset=utf-8",
+								dataType : "json",
+								success : function(data) {
 
-                <!-- 페이지네이션 -->
-                <div class="row-page">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    </ul>
-                </nav>
-              </div>
+									tableBody = $("#resultSearchbannerAdTable tbody");
+									tableBody.html("");
+									
+									for (var i in data) {
+										var tr = $("<tr>");
+										
+										var alno = $("<th>").text(data[i].alno);
+										var usname = $("<td>").text(data[i].usname);
+										var bus_category = $("<td>").text(data[i].bus_category);
+										var bus_code = $("<td>").text(data[i].bus_code);
+										var pbalance = $("<td>").text(data[i].pbalance);
+										var alsubdate = $("<td>").text(data[i].alsubdate);
+										var alstatus = $("<td>").text(data[i].alstatus);
+										
+										tr.append(alno, usname, bus_category, bus_code, pbalance, alsubdate, alstatus); // 테이블 행에 추가
+										tableBody.append(tr); // 테이블에 추가
+									}
+									
+									
+								},
+								error : function(e) {
+									alert("error code : " + e.status + "\n"
+											+ "message : " + e.responseText);
+								}
+							});
+						});
+					});
+				</script>
 
-               <br><br><br><br><br><br><br><br><br><br><br><br>
+               <br><hr>
         </div>
    
     </div>

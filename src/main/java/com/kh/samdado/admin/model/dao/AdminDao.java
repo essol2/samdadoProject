@@ -6,8 +6,10 @@ import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.user.model.vo.User;
 
 public interface AdminDao {
 
@@ -34,6 +36,25 @@ public interface AdminDao {
 	int countAd1();
 
 	List<Alliance> adminbannerAdSelect(PageInfo pi);
+
+	int updateAdmitBannerAdStatus(Alliance alliance);
+
+	int updateRejectBannerAdStatusRI(Alliance alliance);
+
+	int updateRejectBannerAdStatusRP(Alliance alliance);
+
+	List<Report> searchReportList(aSearch search);
+
+	List<Alliance> searchAllianceList(aSearch search);
+
+	List<Alliance> admitbannerAdListSelect();
+
+	int countAd2();
+
+	List<Income> adminPremiumAdSelect(PageInfo pi);
+
+	List<Income> searchPreAdList(aSearch search);
+
 
 
 }
