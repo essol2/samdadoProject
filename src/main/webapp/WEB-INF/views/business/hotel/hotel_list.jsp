@@ -56,6 +56,137 @@
         }
 
 
+        /* 네비 css */
+        #back {
+            width: 100%;
+            height: auto;
+            margin: auto;
+            top: 0;
+        }
+
+        header {
+            position: fixed;
+            width: 240px;
+            top: 0;
+            left: 1200px;
+            height: 100%;
+            -webkit-transition-duration: 0.2s;
+            -webkit-transition-timing-function: ease;
+            transition-duration: 0.2s;
+            transition-timing-function: ease;
+            color: black;
+            border-left: 3px solid black;
+            z-index: 1;
+        }
+
+        .down {
+            -webkit-transition-duration: 0.2s;
+            -webkit-transition-timing-function: ease;
+            transition-duration: 0.2s;
+            transition-timing-function: ease;
+        }
+
+        .down #navi {
+            -webkit-transition-duration: 0.4s;
+            -webkit-transition-timing-function: ease;
+            transition-duration: 0.4s;
+            transition-timing-function: ease;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .right {
+            text-align: right;
+            position: relative;
+            right: 10%;
+            margin: auto;
+        }
+
+        #navi-title {
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        #navi-menu {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .navi {
+            height: 600px;
+            /* border : 1px solid pink; */
+            margin-left: 2%;
+            width: 100%;
+        }
+
+        .img {
+            position: relative;
+            left: 70%;
+        }
+
+        /* 반응형 */
+        @media (max-width:1920px) {
+            header {
+                position: fixed;
+                width: 240px;
+                top: 0;
+                left: 87%;
+                height: 100%;
+                -webkit-transition-duration: 0.2s;
+                -webkit-transition-timing-function: ease;
+                transition-duration: 0.2s;
+                transition-timing-function: ease;
+                color: black;
+                border-left: 3px solid black;
+                z-index: 1;
+            }
+        }
+
+        @media (max-width:1650px) {
+            header {
+                position: fixed;
+                width: 240px;
+                top: 0;
+                left: 85%;
+                height: 100%;
+                -webkit-transition-duration: 0.2s;
+                -webkit-transition-timing-function: ease;
+                transition-duration: 0.2s;
+                transition-timing-function: ease;
+                color: black;
+                border-left: 3px solid black;
+                z-index: 1;
+            }
+        }
+
+        @media (max-width:1440px) {
+            header {
+                position: fixed;
+                width: 240px;
+                top: 0;
+                left: 83%;
+                height: 100%;
+                -webkit-transition-duration: 0.2s;
+                -webkit-transition-timing-function: ease;
+                transition-duration: 0.2s;
+                transition-timing-function: ease;
+                color: black;
+                border-left: 3px solid black;
+                z-index: 1;
+            }
+
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: auto;
+            box-sizing: border-box;
+            background: white;
+            color: black;
+        }
 
         /* 컨테이너 */
 
@@ -95,31 +226,6 @@
         }
 
         /* 검색필터끝 */
-       
-
-        /* 사업장종류선택 */
-
-        #choise-nav {
-            list-style-type: none;
-            text-align: center;
-            margin: 0;
-            padding: 1.3rem;
-            display: flex;
-            justify-content: flex-end;
-            align-items: flex-end;            
-        }
-
-        #choise-nav ul {
-            display: flex;
-        }
-
-        #choise-nav li {
-            display: flex;
-            font-size: 20px;
-            padding: 10px;
-        }
-
-        /* 사업장종류선택끝 */
 
         /* 정렬필터 */
 
@@ -145,14 +251,19 @@
         /* 정렬필터끝 */
 
         /* 리스트 */
-
+		
+		.list{
+			flex-direction: column;
+		}
+		
         #firstlist {            
             margin-left: 1%;
             /* flex: 5; */
             display: flex;
-            justify-content: center;
+            /* justify-content: center; */
             align-items: center;
-
+			max-width: 1600px;
+    		flex-wrap: wrap;
         }
 
         .premium {
@@ -200,12 +311,15 @@
 
         #secondlist {            
             margin-left: 1%;
-            /* flex: 5; */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+		    /* flex: 5; */
+		    display: flex;
+		    /* justify-content: center; */
+		    align-items: center;
+		    /* max-width: 1600px; */
+		    flex-wrap: wrap;
 
         }
+        
         #thirdlist {
            
             margin-left: 1%;
@@ -213,6 +327,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            
 
         }
 
@@ -231,10 +346,11 @@
         }
 
         .image {
-
             object-fit: cover;
             width: 400px;
             height: 300px;
+            border: 1px solid gray;
+            border-radius: 3%; 
         }
 
         /* 리스트끝 */
@@ -260,7 +376,7 @@
             width: 70px;
             height: 33px;
             border: 1px solid black;
-            border-radius: 20%;                
+            border-radius: 20%;            
         }
 
         .cover a, .cover label {
@@ -284,6 +400,30 @@
             margin-bottom: 50px;
             font-family: 'GmarketSansBold' !important;
         }
+        
+        /* 사업장종류선택 */
+
+        #choise-nav {
+            list-style-type: none;
+            text-align: center;
+            margin: 0;
+            padding: 1.3rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;            
+        }
+
+        #choise-nav ul {
+            display: flex;
+        }
+
+        #choise-nav li {
+            display: flex;
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        /* 사업장종류선택끝 */
     </style>
 </head>
 
@@ -293,11 +433,11 @@
 
         <!-- 전체 section-->
         <section id="main-container">
+            <!-- 페이지 이동 nav -->
             <nav id="choise-nav">
                 <ul id="choise">
                     <li>
-                        <div class="cover" style="background-color: rgb(70, 115, 85);"><label
-                                style="color: white;">숙박</label></div>
+                        <div class="cover" style="background-color: rgb(70, 115, 85);"><label  style="color: white;">숙박</label></div>
                     </li>
                     <li>
                         <div class="cover"><a href='${ contextPath }/business/tour_list'>관광지</a></div>
@@ -306,10 +446,9 @@
                         <div class="cover"><a href='${ contextPath }/business/restaurant_list'>음식점</a></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/car_list'>렌트카</a></div>
+                        <div class="cover"><a href='${ contextPath }/business/rentcar_list'>렌트카</a></div>
                     </li>
                 </ul>
-
             </nav>
 
             <nav id="filter-nav">
@@ -406,50 +545,44 @@
                 </div>
 
                 <div id="secondlist">
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/hotel4.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>제주도 좋은 호텔</b>
-                        <b>38,000 ~ 40,000 / 박</b>
-                        <b>총액 80,000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/hotel5.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>제주도 좋은 호텔</b>
-                        <b>38,000 ~ 40,000 / 박</b>
-                        <b>총액 80,000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/hotel6.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>제주도 좋은 호텔</b>
-                        <b>38,000 ~ 40,000 / 박</b>
-                        <b>총액 80,000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
+                	<c:forEach var="h" items="${ hotelList }">
+	                    <div class='profile'>
+	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/ ${ h.file_rename }" onclick="selectRes(${h.bus_code})">
+	                        <b>★4.90(후기 99+개)</b>
+	                        <b>${ h.bus_name }</b>
+	                        <b>38,000 ~ 40,000 / 박</b>
+	                        <b>총액 80,000</b>
+	                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
+	                    </div>
+                    </c:forEach>
                 </div>
-
+			</div>
+			
+			<!-- 디테일 이동 -->
+			<script>
+				function selectRes(bus_code){
+					location.href='${contextPath}/business/hotel_detail?bus_code=' + bus_code;
+				}
+			</script>
+			
                 <div class="btnarea">
                     <button class="moreBtn" onclick='moreDiv()'>더보기</button>
                 </div>
 
                 <script>
                     function moreDiv() {
-   // 1. <div> element 만들기
-   const newDiv = document.createElement('div');
-   
-   // 2. <div>에 들어갈 text node 만들기
-   const newText = document.createTextNode('안녕하세요');
-   
-   // 3. <div>에 text node 붙이기
-   newDiv.appendChild(newText);
-   
-   // 4. <body>에 1에서 만든 <div> element 붙이기
-   document.body.appendChild(newDiv);
- } 
+						   // 1. <div> element 만들기
+						   const newDiv = document.createElement('div');
+						   
+						   // 2. <div>에 들어갈 text node 만들기
+						   const newText = document.createTextNode('안녕하세요');
+						   
+						   // 3. <div>에 text node 붙이기
+						   newDiv.appendChild(newText);
+						   
+						   // 4. <body>에 1에서 만든 <div> element 붙이기
+						   document.body.appendChild(newDiv);
+						 } 
                 </script>
 
         </section>

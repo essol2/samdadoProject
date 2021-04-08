@@ -150,8 +150,9 @@
             max-width: 90%;
         }
 
-        .small_view_morebtn {
+        #small_view_morebtn {
             float: right;
+            color:black;
             margin-right: 3%;
             border: 0;
             outline: 0;
@@ -407,7 +408,75 @@
             color: red;
         }
 
+	/* 작은 리뷰박스 클릭 */
+    .review-main{
+        width: 100%;
+        
+    }
 
+    .modal-dialog {
+        max-width: 60%;
+    }
+
+    .review-title{
+        justify-content:space-between;
+        display: flex;
+    }
+
+    .reivew-name{
+        margin-top: 25px;
+    }
+
+    .review-avg{
+        width: 25%;
+    }
+
+    .avg-con{
+        display: flex;
+        float: right;
+        width: 100%;
+        
+    }
+
+    .avg-img{
+        position: relative;
+    }
+
+    .avg-text{
+        position: relative;
+        width: 70%;
+    }
+
+    .avg-con p{
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+
+    .review-box{
+        display: flex;
+        border: 1px solid gray;
+        border-radius: 8px;
+        padding: 10px 0px;
+        margin: 10px 0 10px 0;
+    }
+
+    .review-user{
+        width: 10%;
+        text-align: center;
+        margin: auto;
+        margin-left: 3%;
+    }
+
+    .review-con{
+        width: 90%;
+        padding-left: 10px;
+        margin-left: 5%;
+        margin-bottom: 5px;
+    }
+
+    p {
+        margin: 1rem 0 0 0;
+    }
     </style>
 
 </head>
@@ -426,16 +495,14 @@
                     <br>
                 </div>
                 <label id="ho_address">${ res.bus_address.substring(6) }</label><br>
-                <label>영업시간 : ${ res.bus_opening }</label>&nbsp;
+                <label>영업시간 : ${ res.bus_opening.substring(0, 5) } ~ ${ res.bus_opening.substring(6) }</label>&nbsp;
             </div>
 
             <div id="ho_info">
                 <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
-
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">${ res.bus_phone }</label>
-
             </div>
         </div>
 
@@ -451,7 +518,7 @@
                     <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/restaurant2_4.png">                   
                 </div>
             </div>
-            
+         	   
             <!-- 매장 사진 클릭 시 변경 스크립트 -->
 			<script>
                 var bigPic = document.querySelector("#bigPic");
@@ -474,26 +541,6 @@
                     <div id="map" style="width: 555px; height:330px;">
                     <button type="button" id="mapBtn" 
                     onclick="window.open('https://map.kakao.com/link/search/${res.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
-					
-					<%-- <!-- Modal -->
-					class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog modal-dialog-centered">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title" id="exampleModalLabel">${ res.bus_name } 찾아가기</h5>
-					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					      </div>
-					      <div class="modal-body">
-					        ...
-					      </div>
-					      <div class="modal-footer">
-					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">돌아가기</button>
-					        <button type="button" class="btn btn-primary">길찾기</button>
-					      </div>
-					    </div>
-					  </div>
-					</div> --%>
                     </div>
                 </div>
                 
@@ -555,13 +602,87 @@
                             최고의 숙소 상태와 너무너무 친절하신 호스트분까지
 
                         </p>
-                        <button class="small_view_morebtn">more...</button>
-                    </div>
-                </div>
+                		<button type="button" id="small_view_morebtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">more...</button>
+                	</div>
+				    <!-- Modal -->
+				    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+					    <div class="modal-dialog modal-dialog-centered" style="max-width:60%;">
+					        <div class="modal-content" style="width:100%;">
+						        <div class="modal-header">
+						            <h5 class="modal-title" id="staticBackdropLabel">다녀온 고객 후기</h5>
+						            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						        </div>
+						        <div class="modal-body">
+						            <div class="review-main">
+						
+						            <!-- 리뷰 상단 -->
+						            <div class="review-title">
+						                <div class="reivew-name">
+						                    <h3>제주호텔 ★★★★</h3>
+						                </div>
+						                <div class="review-avg">
+						                    <div class="avg-con">
+						                        <div class="avg-img"></div>
+						                        <img src="image/평점.png">
+						                        <div class="avg-text">
+						                            <p style="font-size: 25px; color: blue;">최고</p>
+						                            <p>n개의 후기</p>
+						                        </div>
+						                    </div>
+						                </div>
+						            </div>
+						
+						            <!-- 리뷰 바디 -->
+						            <div class="review-body">
+						                <div class="review-box">
+						                    <div class="review-user"> 
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						                <div class="review-box">
+						                    <div class="review-user">
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						                <div class="review-box">
+						                    <div class="review-user">
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						            </div>
+						            </div>
+						        </div>
+						        <div class="modal-footer">
+						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						            <button type="button" class="btn btn-primary">Understood</button>
+						        </div>
+					        </div>
+					    </div>
+				    </div>
+            	</div>
             </div>
         </div>
             <hr class="boundary">
 
+			<!-- 매장소개 -->
             <div class="introduce">
                 <h2>소개</h2><br>
                 <p>${ res.bus_intro }</p>

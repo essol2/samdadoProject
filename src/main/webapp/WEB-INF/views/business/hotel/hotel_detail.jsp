@@ -164,7 +164,7 @@
             max-width: 90%;
         }
 
-        .small_view_morebtn {
+        #small_view_morebtn {
             float: right;
             margin-right: 3%;
             border: 0;
@@ -500,23 +500,65 @@
             </div>
         </div>
 
+        <!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-                <img class="mainimage" src="../resources/images/image_listpage/hotel1.png">
+                <img id="bigPic" class="mainimage" src="../resources/busUploadFiles/">
                 <div class="other">
-                    <img class="otherimage" src="../resources/images/image_listpage/hotel1_1.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/hotel1_2.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/hotel1_3.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/hotel1_4.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/hotel1_5.png">
-
+                	<img id="smallPic" class="otherimage" src="../resources/busUploadFiles/">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour1.png">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour3.png">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/list9.png">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/restaurant2_4.png">                   
                 </div>
             </div>
+         	   
+            <!-- 매장 사진 클릭 시 변경 스크립트 -->
+			<script>
+                var bigPic = document.querySelector("#bigPic");
+                var smallPic = document.querySelectorAll("#smallPic")
+
+                for(var i = 0; i < smallPic.length; i++){
+                    smallPic[i].addEventListener("click", changepic);
+                    
+                }
+                function changepic(){
+                    var smallPicAttribute = this.getAttribute("src");
+                    bigPic.setAttribute("src", smallPicAttribute);
+
+                }
+            </script>
 
             <div class="col3">
+                <!-- 구글지도 -->
                 <div class="col2">
-                    <button class="mapBtn">지도에서 보기</button>
-                    <img src="../resources/images/image_listpage/map.png" class="map">
+                    <div id="map" style="width: 555px; height:330px;">
+                    <button type="button" id="mapBtn" 
+                    onclick="window.open('https://map.kakao.com/link/search/한식','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
+                    </div>
+                    
+                    <!-- 구글지도 api -->
+	                <script>
+		             // 이미지 지도에 표시할 마커입니다
+		             // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+		             var markers = [
+		                 {
+		                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
+		                     text: '${res.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+		                 }
+		             ];
+		
+		             var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div  
+		                 staticMapOption = { 
+		                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
+		                     level: 3, // 이미지 지도의 확대 레벨
+		                     marker: markers // 이미지 지도에 표시할 마커 
+		                 };    
+		
+		             // 이미지 지도를 생성합니다
+		             var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+					</script>
+                    
                 </div>
                 <!-- 작은 리뷰 -->
                 <div class="col2" id="small_view_area">
@@ -554,12 +596,85 @@
                             최고의 숙소 상태와 너무너무 친절하신 호스트분까지
 
                         </p>
-                        <button class="small_view_morebtn">more...</button>
+                        <button type="button" id="small_view_morebtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">more...</button>
                     </div>
+                    <!-- Modal -->
+				    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+					    <div class="modal-dialog modal-dialog-centered" style="max-width:60%;">
+					        <div class="modal-content" style="width:100%;">
+						        <div class="modal-header">
+						            <h5 class="modal-title" id="staticBackdropLabel">다녀온 고객 후기</h5>
+						            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						        </div>
+						        <div class="modal-body">
+						            <div class="review-main">
+						
+						            <!-- 리뷰 상단 -->
+						            <div class="review-title">
+						                <div class="reivew-name">
+						                    <h3>제주호텔 ★★★★</h3>
+						                </div>
+						                <div class="review-avg">
+						                    <div class="avg-con">
+						                        <div class="avg-img"></div>
+						                        <img src="image/평점.png">
+						                        <div class="avg-text">
+						                            <p style="font-size: 25px; color: blue;">최고</p>
+						                            <p>n개의 후기</p>
+						                        </div>
+						                    </div>
+						                </div>
+						            </div>
+						
+						            <!-- 리뷰 바디 -->
+						            <div class="review-body">
+						                <div class="review-box">
+						                    <div class="review-user"> 
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						                <div class="review-box">
+						                    <div class="review-user">
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						                <div class="review-box">
+						                    <div class="review-user">
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						            </div>
+						            </div>
+						        </div>
+						        <div class="modal-footer">
+						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						            <button type="button" class="btn btn-primary">Understood</button>
+						        </div>
+					        </div>
+					    </div>
+				    </div>
                 </div>
-
             </div>
         </div>
+        <!-- 편의시설 -->
         <div class="checktable">
             <h2>주요 편의 시설</h2><br>
             <label><img src="../resources/images/image_listpage/check.png">무료 인터넷</label>
@@ -573,6 +688,7 @@
 
         <hr class="boundary">
 
+		<!-- 매장소개 -->
         <div class="introduce">
             <h2>소개</h2><br>
             <p>

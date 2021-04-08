@@ -24,7 +24,24 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="bus_opening" column="BUS_OPENING" />
 		<result property="file_rename" column="FILE_RENAME" />	<!-- 비즈니스ATT 대한 JOIN -->
 		<!-- USER 테이블 조인을 위한 필드 -->
-		<result property="usname" column="US_NAME" />	
+		<result property="usname" column="US_NAME" />
+		<!-- 관광지프로덕트 조인 -->	
+		<result property="pro_name" column="PRO_NAME" />
+		<result property="pro_price" column="PRO_PRICE" />
+		<result property="pro_adult" column="PRO_ADULT" />
+		<result property="pro_youth" column="PRO_YOUTH" />
+		<result property="pro_child" column="PRO_CHILD" />
+		<!-- 차조인 -->
+		<result property="car_name" column="CAR_NAME" />
+		<result property="car_type" column="CAR_TYPE" />
+		<result property="car_producer" column="CAR_PRODUCER" />
+		<result property="car_fuel" column="CAR_FUEL" />
+		<result property="car_price" column="CAR_PRICE" />
+		<!-- 방 조인 -->
+		<result property="room_name" column="ROOM_NAME" />
+		<result property="room_price" column="ROOM_PRICE" />
+		<result property="room_people" column="ROOM_PEOPLE" />
+		<result property="room_amenity" column="ROOM_AMENITY" />
 	</resultMap>
 	
 	<resultMap type="BusinessAtt" id="BusinessAttResultSet">
@@ -286,8 +303,184 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		   AND BUS_CATEGORY = 'R'
 		   AND BUS_CLASSIFY = 'G'
 	</select>
+	<!-- 음식점 디테일 -->
+	<select id="selectRestaurant" resultMap="BusinessResultSet">
+		SELECT
+			   B.BUS_CODE
+			 , US_NO
+			 , BUS_NAME
+			 , BUS_ADDRESS
+			 , BUS_INTRO
+			 , BUS_DATE
+			 , BUS_MODIFY
+			 , AD_COUNT
+			 , BUS_CLASSIFY
+			 , BUS_CATEGORY
+			 , BUS_STATUS
+			 , BUS_PHONE
+			 , RES_CATEGORY
+			 , BUS_OPENING
+			 , BT.FILE_RENAME
+		  FROM 
+  		       BUSINESS B
+  		  JOIN 
+  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE 
+		 WHERE 
+		 	   BUS_STATUS = 'Y'
+       	   AND B.BUS_CODE = #{bus_code}
+	</select>
 	
-	<select id="selectList" resultMap="BusinessResultSet">
+	<!-- 관광지디테일 -->
+	<select id="selectTour" resultMap="BusinessResultSet">
+		SELECT 
+		       B.BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , TP.PRO_NAME
+		     , TP.PRO_PRICE
+		     , TP.PRO_ADULT
+		     , TP.PRO_YOUTH
+		     , TP.PRO_CHILD
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
+		   AND B.BUS_CODE = #{bus_code}
+		   AND BUS_STATUS = 'Y'
+	</select>
+	<!-- 렌트카디테일 -->
+	<select id="selectCar" resultMap="BusinessResultSet">
+		SELECT 
+		       B.BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , C.CAR_NAME
+             , C.CAR_TYPE
+             , C.CAR_PRODUCER
+             , C.CAR_FUEL
+             , C.CAR_PRICE
+             , CA.FILE_RENAME
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT, CAR C, CAR_ATT CA
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE 
+           AND B.BUS_CODE = C.BUS_CODE
+           AND C.CAR_NO = CA.CAR_NO
+           AND B.BUS_CODE = #{bus_code}
+		   AND BUS_CATEGORY = 'C'
+		   AND BUS_STATUS = 'Y'
+	  ORDER BY C.CAR_NO DESC
+	</select>
+	<!-- 호텔 디테일 -->
+	<select id="selectHotel" resultMap="BusinessResultSet">
+		SELECT 
+		       B.BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , ROOM_NAME
+             , ROOM_PRICE
+             , ROOM_PEOPLE
+             , ROOM_AMENITY
+             , RT.FILE_RENAME
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT, ROOM R, ROOM_ATT RT
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE 
+           AND B.BUS_CODE = R.BUS_CODE
+           AND R.ROOM_NO = RT.ROOM_NO
+           AND B.BUS_CODE = #{bus_code}
+		   AND BUS_CATEGORY = 'H'
+		   AND BUS_STATUS = 'Y'
+	  ORDER BY R.ROOM_NO DESC		
+	</select>
+	<!-- 관광지리스트 -->
+	<select id="selectTourList" resultMap="BusinessResultSet">
+		SELECT 
+		       B.BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , PRO_PRICE
+		     , PRO_ADULT
+		     , PRO_YOUTH
+		     , PRO_CHILD
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
+		   AND BUS_CATEGORY = 'T'
+		   AND BUS_STATUS = 'Y'
+	  ORDER BY B.BUS_CODE DESC
+	</select>
+	<!-- 호텔리스트 -->
+	<select id="selectHotelList" resultMap="BusinessResultSet">
+		SELECT 
+       		   B.BUS_CODE
+       		 , US_NO
+             , BUS_NAME
+     		 , BUS_ADDRESS
+     		 , BUS_INTRO
+     		 , BUS_CATEGORY
+     		 , BUS_PHONE
+     		 , BUS_OPENING
+     		 , HOTEL_CATEGORY
+     		 , BT.FILE_RENAME
+  		  FROM 
+  		       BUSINESS B
+  		  JOIN 
+  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE
+ 		 WHERE   
+       		   BUS_STATUS = 'Y'
+       	   AND BUS_CATEGORY = 'H'
+	  ORDER BY B.BUS_CODE DESC
+	</select>
+	<!-- 음식점리스트 -->
+	<select id="selectResList" resultMap="BusinessResultSet">
 		SELECT 
        		   B.BUS_CODE
        		 , US_NO
@@ -310,7 +503,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	  ORDER BY B.BUS_CODE DESC
 	</select>
 	
-	<select id="selectRestaurant" resultType="_int" resultMap="BusinessResultSet">
+	<!-- 렌트카리스트 -->
+	<select id="selectCarList" resultMap="BusinessResultSet">
 		SELECT
 			   B.BUS_CODE
 			 , US_NO
@@ -324,7 +518,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			 , BUS_CATEGORY
 			 , BUS_STATUS
 			 , BUS_PHONE
-			 , RES_CATEGORY
 			 , BUS_OPENING
 			 , BT.FILE_RENAME
 		  FROM 
@@ -332,9 +525,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
   		  JOIN 
   		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE 
 		 WHERE 
-		 	   B.BUS_CODE = #{bus_code}
+		 	   BUS_STATUS = 'Y'
+       	   AND BUS_CATEGORY = 'C'
+	  ORDER BY B.BUS_CODE DESC
 	</select>
-
 	<!--지혜 -->
 
 	<select id="countReport" resultType="_int">

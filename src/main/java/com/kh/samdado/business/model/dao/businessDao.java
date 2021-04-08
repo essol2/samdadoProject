@@ -28,24 +28,35 @@ public interface businessDao {
 
 	// 사업장 리스트 카운트
 	int selectResListCount();
-
-	// 사업장 리스트 가져오기
-	List<Business> selectList();
 	
 	// 음식점 디테일
 	Business selectRestaurant(int bus_code);
+	// 사업장 리스트 가져오기
+	List<Business> selectResList();
 	
 	// 렌트카등록
 	int insertCar(Car c);
 	int insertCarAtt(CarAtt ca);
-
+	// 렌트카 디테일
+	Business selectCar(int bus_code);
+	// 렌트카 리스트
+	List<Business> selectCarList();
+	
 	// 호텔등록
 	int insertRoomAtt(RoomAtt ra);
 	int insertRoom(Room r);
-
+	// 호텔리스트
+	List<Business> selectHotelList();
+	// 호텔디테일
+	Business selectHotel(int bus_code);
+	
 	// 관광지등록
 	int insertTour(TourProduct tp);
-  
+	// 관광지페이지
+	List<Business> selectTourList();
+	// 관광지디테일
+	Business selectTour(int bus_code);
+	
 	// 관광지 예약
 	public int bookingTour(TourBooking tourbooking);
 
@@ -81,6 +92,20 @@ public interface businessDao {
 
 	//배너 광고 인서트
 	int insertBannerAd(Alliance a);
+
+	
+
+	
+
+
+
+
+
+
+
+	
+
+	
 
 	
 	
