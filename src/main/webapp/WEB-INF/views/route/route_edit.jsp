@@ -209,7 +209,13 @@
                                
                                 <br>
                                 
-                                <label class="content-title" id="title3">삼다수 님을 위한 <br> 삼다도의 추천 숙박</label>
+                               <c:if test="${ !empty loginUser }">
+                                	<label class="content-title" id="title3">${ loginUser.usname } 님을 위한 <br> 삼다도의 추천 숙박</label>
+                                </c:if>
+                                
+                                <c:if test="${ empty loginUser }">
+                                	<label class="content-title" id="title3">삼다도의 추천 숙박</label>
+                                </c:if>
                                 <div class="c1_border" id="right-middle-border">
                                     <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                         <tr>
@@ -239,7 +245,8 @@
                                 <button class="_btn" id="morebtn" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 더 보러 가기</button>
                                 
                                 <br><br>
-                                <label class="content-title" id="title4">삼다수 님이 찜하신 숙박</label>
+                                <c:if test="${ !empty loginUser }">
+                                <label class="content-title" id="title4">${ loginUser.usname } 님이 찜하신 숙박</label>
                                 <div class="c1_border" id="right-bottom-border">
                                     <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                         <tr>
@@ -264,6 +271,7 @@
                                         </tr>
                                     </table>
                                 </div>
+                                </c:if>
                                 <br>
                         </th>
                     </table>

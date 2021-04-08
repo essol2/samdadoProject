@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +12,7 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 	
@@ -138,23 +140,35 @@
                                 <label class="content-title" id="title2">예상 예산</label>
                                 <div class="c1_border" id="right-top-border">
                                     <table id="costTable">
-                                        <tr>
-                                            <td id="cost-content">&nbsp;만장굴 입장료 (성인) 4,000원</td>
-                                        </tr>
+                                    	<c:set var="totalPrice" value="0"/>
+                                		<c:forEach var="r" items="${ list }">
+											<tr>
+		                                    	<td id="cost-content">&nbsp;${ r.spot_title } <fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+		                                        <c:set var="totalPrice" value="${ totalPrice + r.spot_price }"/>
+		                                    </tr>
+                                      	</c:forEach>
+                                    	
                                         <tr> 
-                                            <td id="cost-content" style="text-align: right;" >총 4,000원&nbsp;</td>
+                                            <td id="cost-content" style="text-align: right;" >총 <fmt:formatNumber value="${ totalPrice }" pattern="#,###"/>원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>
 							</div>
-                               
+                            
                                 <br>
                                 
-                                <label class="content-title" id="title3">삼다수 님을 위한 <br> 삼다도의 추천 숙박</label>
+                                <c:if test="${ !empty loginUser }">
+                                	<label class="content-title" id="title3">${ loginUser.usname } 님을 위한 <br> 삼다도의 추천 숙박</label>
+                                </c:if>
+                                
+                                <c:if test="${ empty loginUser }">
+                                	<label class="content-title" id="title3">삼다도의 추천 숙박</label>
+                                </c:if>
+                                
                                 <div class="c1_border" id="right-middle-border">
                                     <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                         <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
+                                            <td><img src="${contextPath}/resources/images/image_route/호텔이미지.png"></td>
                                         </tr>
                                         <tr>
                                             <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
@@ -180,7 +194,8 @@
                                 <button class="_btn" id="morebtn" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 더 보러 가기</button>
                                 
                                 <br><br>
-                                <label class="content-title" id="title4">삼다수 님이 찜하신 숙박</label>
+                                <c:if test="${ !empty loginUser }">
+                                <label class="content-title" id="title4">${ loginUser.usname } 님이 찜하신 숙박</label>
                                 <div class="c1_border" id="right-bottom-border">
                                     <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                         <tr>
@@ -205,6 +220,7 @@
                                         </tr>
                                     </table>
                                 </div>
+                                </c:if>
                                 <br>
                         </th>
                     </table>
@@ -275,10 +291,59 @@
 		var container = document.getElementById('map');
 		var options = {
 			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
-			level: 9
+			level: 4
 		};
 
 		var map = new kakao.maps.Map(container, options);
+		var geocoder = new kakao.maps.services.Geocoder();
+		
+		var imageSrc = "${ contextPath }/resources/images/image_route/marker.png";
+		var imageSize = new kakao.maps.Size(33, 54);
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		
+		<c:forEach var="list" items="${list}">
+			// 주소로 좌표를 검색합니다
+			geocoder.addressSearch('${list.spot_address}', function(result, status) {
+	
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
+	
+			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+			        // 결과값으로 받은 위치를 마커로 표시합니다
+			        var marker = new kakao.maps.Marker({
+			            map: map,
+			            position: coords,
+			            image : markerImage
+			        });
+	
+			        // 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new kakao.maps.InfoWindow({
+			            content: '<div style="width:150px;text-align:center;padding:6px 0;">${list.spot_title}</div>'
+			        });
+			       
+			       kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+			       kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+	
+			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			        map.setCenter(coords);
+			    } 
+			    
+			     function makeOverListener(map, marker, infowindow) {
+			    	    return function() {
+			    	        infowindow.open(map, marker);
+			    	    };
+			    	}
+
+			    	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			    	function makeOutListener(infowindow) {
+			    	    return function() {
+			    	        infowindow.close();
+			    	    };
+			    	}
+			});    
+		</c:forEach>
+
 	</script>
 </body>
 		<footer>

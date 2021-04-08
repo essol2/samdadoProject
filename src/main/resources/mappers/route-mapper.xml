@@ -25,7 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		    , T.SPOT_TITLE
 		    , T.SPOT_PATH
 		    , T.SPOT_ONAME
-		    , T.SPOT_CONTENT 
+		    , T.SPOT_CONTENT
+		    , T.SPOT_PRICE
+		    , T.SPOT_ADDRESS
 		FROM
 		    ROUTE R, TOUR_SPOT T
 		WHERE
