@@ -226,30 +226,6 @@
 
         /* 검색필터끝 */
 
-        /* 사업장종류선택 */
-
-        #choise-nav {
-            list-style-type: none;
-            text-align: center;
-            margin: 0;
-            padding: 1.3rem;
-            display: flex;
-            justify-content: flex-end;
-            align-items: flex-end;            
-        }
-
-        #choise-nav ul {
-            display: flex;
-        }
-
-        #choise-nav li {
-            display: flex;
-            font-size: 20px;
-            padding: 10px;
-        }
-
-        /* 사업장종류선택끝 */
-
         /* 정렬필터 */
 
         #choise2-nav {
@@ -423,6 +399,30 @@
             margin-bottom: 50px;
             font-family: 'GmarketSansBold' !important;
         }
+        
+        /* 사업장종류선택 */
+
+        #choise-nav {
+            list-style-type: none;
+            text-align: center;
+            margin: 0;
+            padding: 1.3rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;            
+        }
+
+        #choise-nav ul {
+            display: flex;
+        }
+
+        #choise-nav li {
+            display: flex;
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        /* 사업장종류선택끝 */
     </style>
 </head>
 
@@ -433,7 +433,7 @@
         <!-- 전체 section-->
         <section id="main-container">
             <nav id="choise-nav">
-                <ul id="choise">
+               <ul id="choise">
                     <li>
                         <div class="cover"><a href='${ contextPath }/business/hotel_list'>숙박</a></div>
                     </li>
@@ -444,10 +444,9 @@
                         <div class="cover" style="background-color: rgb(70, 115, 85);"><label style="color: white;">음식점</label></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/car_list'>렌트카</a></div>
+                        <div class="cover"><a href='${ contextPath }/business/rentcar_list'>렌트카</a></div>
                     </li>
                 </ul>
-
             </nav>
 
             <nav id="filter-nav">
@@ -552,6 +551,8 @@
 	                </c:forEach>
                 </div>        
 			</div>
+			
+			<!-- 디테일 이동 -->
 			<script>
 				function selectRes(bus_code){
 					location.href='${contextPath}/business/restaurant_detail?bus_code=' + bus_code;

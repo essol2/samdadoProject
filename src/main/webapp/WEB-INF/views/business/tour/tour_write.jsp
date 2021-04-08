@@ -160,7 +160,7 @@
 		         	<div class="join-wrap">
 	                    <h3><label>사업장명</label></h3>
 	                    <span  class="box">
-	                        <input type="text" class="content" name="bus_name">
+	                        <input type="text" class="content" name="bus_name" required>
 	                    </span>
 	                </div>
 
@@ -168,7 +168,7 @@
 	            	<div class="join-wrap">
 		                <h3><label>우편주소</label></h3>
 						<span  class="box">
-		                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" readonly>
+		                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" style="width:80%;" readonly>
 			                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;">검색</button>
 		                </span>
 	            	</div>
@@ -202,7 +202,7 @@
 		            <div class="join-wrap">
 		                <h3><label>상품명</label></h3>
 		                <span class="box">
-		                    <input type="text" id="bus_phone" name="pro_name" class="content" >
+		                    <input type="text" id="bus_phone" name="pro_name" class="content" required>
 		                </span>
 		            </div>
 		            
@@ -236,7 +236,7 @@
 		            <div class="join-wrap">
 		            	<h3><label>입장료(가격)</label></h3>
 		                <span class="box">
-		                    <input type="text" id="bus_phone" name="pro_price" class="content" >
+		                    <input type="text" id="bus_phone" name="pro_price" class="content" required>
 		                </span>
 		                <h3><label>어른</label></h3>
 		                <span class="box">
@@ -281,7 +281,7 @@
 					<div class="join-wrap">
 					    <h3><label>매장사진</label></h3>
 					    <span class="box">
-					        <input type="file" name="uploadFile" class="content">
+					        <input type="file" name="uploadFile" class="content" required>
 					    </span>   
 					</div>
 	                

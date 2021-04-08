@@ -154,7 +154,7 @@
 	         	<div class="join-wrap">
                     <h3><label>사업장명</label></h3>
                     <span  class="box">
-                        <input type="text" class="content" name="bus_name">
+                        <input type="text" class="content" name="bus_name" required>
                     </span>
                 </div>
 			
@@ -162,7 +162,7 @@
             	<div class="join-wrap">
 	                <h3><label>우편주소</label></h3>
 					<span  class="box">
-	                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" readonly>
+	                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" style="width:80%;" readonly>
 		                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;">검색</button>
 	                </span>
             	</div>
@@ -196,7 +196,7 @@
 				<div class="join-wrap">
 				    <h3><label>전화번호</label></h3>
 				    <span class="box">
-				        <input type="text" id="address" class="content" name="bus_phone">
+				        <input type="text" id="address" class="content" name="bus_phone" required>
 				    </span>
 				</div>    
 			
@@ -204,7 +204,7 @@
 				<div class="join-wrap">
 				    <h3><label>매장사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="uploadFile" class="content">
+				        <input type="file" name="uploadFile" class="content" required>
 				    </span>   
 				</div>
 			
@@ -247,7 +247,7 @@
 				<div class="join-wrap">
 				    <h3><label>가격</label></h3>
 				    <span class="box">
-				        <input type="text" id="mobile" class="content" name="car_price">
+				        <input type="text" id="mobile" class="content" name="car_price" required>
 				    </span>
 				</div>
 				
@@ -281,7 +281,7 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="car" class="content">
+				        <input type="file" name="car" class="content" required>
 				    </span>
 				</div>
 			</div>

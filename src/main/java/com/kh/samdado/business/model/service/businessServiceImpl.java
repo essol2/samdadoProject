@@ -42,23 +42,21 @@ public class businessServiceImpl implements businessService {
 	public int insertBusiness(Business b) {
 		return bDao.insertBusiness(b);
 	}
-
 	// 사업장 리스트 카운드
 	@Override
 	public int selectResListCount() {
 		return bDao.selectResListCount();
 	}
 	
-	// 사업장 리스트 가져오기
-	@Override
-	public List<Business> selectList() {
-		return bDao.selectList();
-	}
-	
 	// 음식점 디테일
 	@Override
 	public Business selectRestaurant(int bus_code) {
 		return bDao.selectRestaurant(bus_code);
+	}
+	// 음식점 리스트 가져오기
+	@Override
+	public List<Business> selectResList() {
+		return bDao.selectResList();
 	}
 
 	
@@ -71,7 +69,17 @@ public class businessServiceImpl implements businessService {
 	public int insertCarAtt(CarAtt ca) {
 		return bDao.insertCarAtt(ca);
 	}
-	
+	// 렌트카 디테일
+	@Override
+	public Business selectCar(int bus_code) {
+		return bDao.selectCar(bus_code);
+	}
+	// 렌트카리스트
+	@Override
+	public List<Business> selectCarList() {
+		return bDao.selectCarList();
+	}
+
 	// 호텔 등록
 	@Override
 	public int insertRoomAtt(RoomAtt ra) {
@@ -81,13 +89,33 @@ public class businessServiceImpl implements businessService {
 	public int insertRoom(Room r) {
 		return bDao.insertRoom(r);
 	}
+	// 호텔리스트
+	@Override
+	public List<Business> selectHotelList() {
+		return bDao.selectHotelList();
+	}
+	// 호텔디테일
+	@Override
+	public Business selectHotel(int bus_code) {
+		return bDao.selectHotel(bus_code);
+	}
 	
-	// 투어 등록
+	// 관광지 등록
 	@Override
 	public int insertTour(TourProduct tp) {
 		return bDao.insertTour(tp);
 	}
-	
+	// 관광지리스트
+	@Override
+	public List<Business> selectTourList() {
+		return bDao.selectTourList();
+	}
+	// 관광지 디테일
+	@Override
+	public Business selectTour(int bus_code) {
+		return bDao.selectTour(bus_code);
+	}
+
 	@Override
 	public int bookingTour(TourBooking tourbooking) {
 		// TODO Auto-generated method stub
@@ -158,6 +186,17 @@ public class businessServiceImpl implements businessService {
 	public Report findReportStatus(Report r) {		
 		return bDao.findReportStatus(r);
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	
 	
