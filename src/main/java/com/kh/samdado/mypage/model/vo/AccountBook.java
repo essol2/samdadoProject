@@ -31,7 +31,7 @@ public class AccountBook {
 //	ACC_FINWON	NUMBER
 //  ACC_PSTATUS	VARCHAR2(5 BYTE)
 	
-	private int accno;
+	private Integer accno;
 	private String usno;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date accTripDate;

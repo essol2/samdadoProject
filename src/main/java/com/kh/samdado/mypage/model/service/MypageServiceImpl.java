@@ -117,8 +117,14 @@ public class MypageServiceImpl implements MypageService{
 
 	// 일반회원 - 가계부 on.off 버튼 클릭시 db 내용 바꾸기
 	@Override
-	public int updateOnOffBtn(int an) {
-		return mDao.updateOnOffBtn(an);
+	public int updateOnOffBtn(AccountBook abObject) {
+		return mDao.updateOnOffBtn(abObject);
+	}
+
+	// 일반회원 - 가계부 기존 해당 컬럼 객체 값 가져오기
+	@Override
+	public AccountBook selectOrigin(AccountBook ab) {
+		return mDao.selectOrigin(ab);
 	}
 
 

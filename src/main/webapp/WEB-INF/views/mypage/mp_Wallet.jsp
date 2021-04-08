@@ -17,6 +17,9 @@
     
     <!-- chart.js library -->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> 
+	
+	<meta name=“_csrf” th:content=“${_csrf.token}”/>
+	<meta name=“_csrf_header” th:content=“${_csrf.headerrName}”/>
 </head>
 <style>
 
@@ -483,6 +486,9 @@
             <div id="mainBox">
                 <table id="walletTopTable" class="mainTable">
                 <tr>
+                 <%-- <c:if test="${emptyM}.equals('empty">
+                    <td>아직 아무런 값이 없어요! +를 눌러 추가해주세요!</td>
+                 </c:if> --%>
                 	<c:forEach var="rd" items="${rdList}" varStatus="rdNum">
                         <td class="clickedPreWallet">
                         	<button class="preWalDate" onclick="location.href='${contextPath}/mypage/chpage?atd='+ ${rdNum.index} +'&usno=' + ${loginUser.usno}">
@@ -537,6 +543,7 @@
                       </tr>
                     </thead>
                     <tbody >
+                   
                     <c:forEach var="ab" items="${ abList }" varStatus="abStatus">
                       <tr id="forChageAjax${abStatus.index}">
                         <td class="walletName">${ ab.accName }</td>
@@ -546,22 +553,25 @@
                         <td class="walletStatus">${ab.accPstatus }</td>
                         <td class="walletTouch">
                             <label class="switch">
-                                <input type="checkbox" id="slideCheck${abStatus.index}"<c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
+                                <input type="checkbox" class="slideCheck" onclick="javascript:setOnBtnClick(${abStatus.index});" 
+                                		id="slideCheck${abStatus.index}"<c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
                                 <span class="slider round"></span>
                             </label>
-                            <input type="hidden" id="thisDate" value="${ab.accTripDate}">
-                        	<input type="hidden" id="thisColNum" value="${ab.accno}">
+                            <input type="hidden" id="thisDate${abStatus.index}" value="${ab.accTripDate}">
+                        	<input type="hidden" id="thisColNum${abStatus.index}" value="${ab.accno}">
                         </td>
-                        <td class="walletPerson">${ ab.accOneWon }</td>
-	          			<c:if test="${ empty ab.whopay }">
-	          				<td class="walletAccompany"> 1인지불 </td>
-	          				<td class="walletWhoPay">${ loginUser.usname }</td>
-	          			</c:if>
-	          			<c:if test="${ !empty ab.whopay}">
-	          				<td class="walletAccompany"> ${ ab.accAccompany } </td>
-	          				<td class="walletWhoPay">${ab.whopay}</td>
-	          			</c:if>
-	          			
+                        <td class="walletPerson" id="wpId">
+	                 	<fmt:formatNumber value="${ ab.accWon/ab.accAccompany }" pattern="#,###"/>
+                        </td>
+                        <td class="walletAccompany" id="together"> ${ ab.accAccompany } </td>
+                        <c:choose>
+		          			<c:when test="${ empty ab.whopay }">
+		          				<td class="walletWhoPay" id="payPerson">${ loginUser.usname }</td>
+		          			</c:when>
+		          			<c:when test="${ !empty ab.whopay}">
+		          				<td class="walletWhoPay" id="payPerson">${ab.whopay}</td>
+		          			</c:when>
+	          			</c:choose>
                     </c:forEach>
                     </tbody>
                   </table>
@@ -651,7 +661,7 @@
 	                            	</label>
                             	</td>
                             	<td class="inputTd" id="accompanyTd">
-                            		<input type="number" class="inputeda" id="accAccompany" name="accAccompany" style="width:100%;" placeholder="동행인은 몇명인가요?" value="0">
+                            		<input type="number" class="inputeda" id="accAccompany" name="accAccompany" min="1" max="20" style="width:100%;" placeholder="동행인은 몇명인가요?" value="1">
                             	</td>
                 				<td class="inputTd" colspan="2">
                 					<input type="text" class="inputeda" id="whopay" name="whopay" style="width:83%;" placeholder="누가계산했나요?">
@@ -675,7 +685,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    
+    <!-- 가계부 메뉴 들어가기 -->
     <script>
     function goToWallet(){
 		/* console.log("jsp안에서 usno확인 : " + usno); */
@@ -683,6 +693,7 @@
 	};
     </script>
 	
+	<!-- 새로운 가계부 내역 입력하는 모달 띄우기 -->
 	<script>
 
 		$("#addNewDetail").click(function(){
@@ -694,6 +705,7 @@
 		});      
 	</script>
 	
+	<!-- 모달창 안에 사용자가 입력하는 값에 따라 hide, show되는 input들 -->
 	<script>
 		$(document).ready(function() {
 		  $('#accClassify').change(function() {
@@ -737,46 +749,72 @@
 			}); 
 		}); 
 	</script>
+	
+	<!-- 엑셀로 내려받기 -->
 	<script>
 		$("#btnExport").click(function (e) {
 			window.open('data:application/vnd.ms-excel,' + encodeURIComponent($("#forExcelExport").html()))
 			 e.preventDefault();
 		});
 	</script>
+	
 	<!-- on/off Button Toggle -->
 	<script>
-	for (var i=0; i<=${fn:length(abList)}; i++){
-			$("#slideCheck"+i).click(function() {
+	$('input:checkbox').prop('click');
+
+	function setOnBtnClick(i) {
 			
-			var usno = ${loginUser.usno}; // 로그인 되어있는 유저
-			
-			//var acNo = $('#thisColNum').val();
-			var accDutch = $(this).val();
-			
-			//console.log(usno);
-			//console.log(acNo);
-			console.log(accDutch);
-			
-			//location.href="${contextPath}/mypage/onoff?usno="+usno + "&accTripDate=" + accTripDate + "&accno=" + accno + "&accDutch=" + accDutch;
-			$.ajax({
-				url : "onoff",
-				data : {accno : $('#thisColNum').val()},
-				type : "POST",
-				success : function(data){
-					if(data > 0){
-						alert("통신성공!");
-					} else{
-						alert("전송 값과 일치하지 않습니다.");
-						console.log(data);
-					}
-				},
-				errorr:function(e){
-					alert("error code : " + e.status + "\n"
-							+ "message : " + e.responseText);
-				}
-			})
+		var accDutch = $("#slideCheck"+i).prop("checked");
+		var accAccomString = "";
+		var accAccompany = 1;
+		
+		var whopay = "";
+		
+		console.log("#slideCheck"+i);
+		console.log("accDutch = " + accDutch);
+		
+		if(accDutch == true){
+			accAccompany = prompt("몇명이서 더치페이 할까요?", "숫자만 입력해 주세요.");
+			//accAccompany = Integer.parseInt(accAccomString);
+			whopay = prompt("누가 결제했나요?", "");
+			accDutch = 'off';
+		} else{
+			accDutch = 'on'
+			whopay = "${loginUser.usname}";
+		}
+		var accno = $("#thisColNum"+i).val();
+		console.log("accDutch = " + accDutch);
+		console.log("accno = " + accno);
+		console.log("whopay = " + whopay);
+		
+		var searchOb = new Object();
+		searchOb.accno = accno;
+		searchOb.accDutch = accDutch;
+		searchOb.accAccompany = accAccompany;
+		searchOb.whopay = whopay;
+				
+		$.ajax({
+			url : "onoff",
+			data : JSON.stringify(searchOb),
+			type : "POST",
+			contentType : "application/json; charset=utf-8",
+			success : function(data){
+				var wpId = $("#wpId").text(data.accOneWon);
+				var together = $("#together").text(data.accAccompany);
+				var payPerson = $("#payPerson").text(data.whopay);
+			},
+			errorr:function(e){
+				alert("error code : " + e.status + "\n" + "message : " + e.responseText);
+			}
 		});
 	}
 	</script>
+	
+	<!-- 1인당 가격 계산하는 스크립트 -->
+<!-- 	<script>
+		$(document).ready(function(){
+			
+		});
+	</script> -->
 </body>
 </html>

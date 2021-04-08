@@ -263,7 +263,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE ROWNUM = 1
 	</select> -->
 	
-	<select id="selectRecentDate" resultMap="accountResultSet" parameterType="AccountBook">
+	<select id="selectRecentDate" resultMap="accountResultSet">
 		SELECT 
 				ACC_TRIPD
 			  , SUM(ACC_WON) AS totalSum
@@ -282,9 +282,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		UPDATE
 				ACCOUNT
 		   SET
-		   		ACC_DUTCH = #{accDutch}
+		   		ACC_DUTCH = #{accDutch},
+		   		ACC_ACCOMPANY = #{accAccompany},
+		   		ACC_ONEWON = #{accOneWon},
+		   		WHOPAY = #{whopay}
 		 WHERE
-				US_ID = #{usid}
-		   AND  ACC_TRIPD = #{accTripDate}
+				ACC_NO = #{accno}
 	</update>
+	<select id="selectOrigin" resultMap="accountResultSet">
+		SELECT  * 
+		FROM 
+				ACCOUNT
+		WHERE 
+				ACC_NO = #{accno}
+	</select>
 </mapper>
