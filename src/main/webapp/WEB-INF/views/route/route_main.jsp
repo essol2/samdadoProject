@@ -30,7 +30,7 @@
 
                 <div id="route_select">
                 	<br>
-                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get" onsubmint="return searchForm();">
+                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get" onsubmit="return searchForm();">
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 		<input type="radio" name="area" id="east" value="east" required>
                 		<label for="east">  동부</label>
@@ -57,6 +57,7 @@
                 		<input type="date" name="routeDate" id="routeDate" value="routeDate" required>
                 		
                 		<button class="btn" id="searchbtn">검색하기</button>
+                		
                 	</form>
                 </div>
                 <br>
@@ -84,7 +85,6 @@
     	
     	today = yyyy + '-' + mm + '-' + dd;
     	document.getElementById("routeDate").setAttribute("min", today);
-    	
     </script>
    <script>
 		var container = document.getElementById('map');

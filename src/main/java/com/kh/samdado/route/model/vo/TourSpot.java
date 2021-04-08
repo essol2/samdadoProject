@@ -22,7 +22,8 @@ public class TourSpot {
 	private String spot_title;		// 여행지 이름
 	private String spot_path;		// 여행지 이미지 저장 경로
 	private String spot_oname;		// 여행지 이미지 원본 파일 이름
-	private String spot_rename;		// 여행지 이미지 rename 파일 이름
 	private String spot_content;	// 여행지 소개글
+	private int spot_price;
+	private String spot_address;
 	
 }
