@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,10 +15,22 @@
 	<link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminAd2Manage.css" type="text/css">
 	<link rel="stylesheet" href="${ contextPath }/resources/css/admin/adminHome.css" type="text/css">
 
+	<!--jQuery-->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
      <!--차트 api cdn-->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
   </head>
   <body>
+  
+   <!-- 메세지가 있다면 출력하고 지우기 -->
+   <c:if test="${ !empty msg }">
+   		<script>alert('${ msg }')</script>
+   		<c:remove var="msg" />
+   </c:if>
+  
     <div class="container-fluid">
       <div class="row">
 
@@ -23,7 +38,6 @@
          <jsp:include page="admin-navi.jsp"/>
          
         <!-- B영역 -->
-
         <div class="col-10" id="B">
             <br>
             <!--신규 프리미엄 내역 -->
@@ -33,96 +47,41 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>신청자</th>
+                        <th>회원번호</th>
+                        <th>회원명</th>
+                        <th>사업장 코드</th>
                         <th>카테고리</th>
                         <th>신청날짜</th>
+                        <th>만기날짜</th>
                         <th>상세보기</th>
-                        <th>처리</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <!--반복문 -->
-                  <tr>
-                    <th>1</th>
-                    <td>김춘추</td>
-                    <td>관광지</td>
-                    <td>2021-01-02</td>
-                    <td><a class="btn btn-info" href="#">보러가기</a></td>
-                    <td><button type="submit" class="btn btn-success">삭제</button></td>
-                  </tr>
-                  <tr>
-                    <th>2</th>
-                    <td>김춘추</td>
-                    <td>관광지</td>
-                    <td>2021-01-02</td>
-                    <td><a class="btn btn-info" href="#">보러가기</a></td>
-                    <td><button type="submit" class="btn btn-success">삭제</button></td>
-                  </tr>
-                  <tr>
-                    <th>3</th>
-                    <td>김춘추</td>
-                    <td>관광지</td>
-                    <td>2021-01-02</td>
-                    <td><a class="btn btn-info" href="#">보러가기</a></td>
-                    <td><button type="submit" class="btn btn-success">삭제</button></td>
-                  </tr>
-                  <tr>
-                    <th>4</th>
-                    <td>김춘추</td>
-                    <td>관광지</td>
-                    <td>2021-01-02</td>
-                    <td><a class="btn btn-info" href="#">보러가기</a></td>
-                    <td><button type="submit" class="btn btn-success">삭제</button></td>
-                  </tr>
-                  <tr>
-                    <th>5</th>
-                    <td>김춘추</td>
-                    <td>관광지</td>
-                    <td>2021-01-02</td>
-                    <td><a class="btn btn-info" href="#">보러가기</a></td>
-                    <td><button type="submit" class="btn btn-success">삭제</button></td>
-                  </tr>
-                  <tr>
-                    <th>6</th>
-                    <td>김춘추</td>
-                    <td>관광지</td>
-                    <td>2021-01-02</td>
-                    <td><a class="btn btn-info" href="#">보러가기</a></td>
-                    <td><button type="submit" class="btn btn-success">삭제</button></td>
-                  </tr>
-                  <tr>
-                    <th>7</th>
-                    <td>김춘추</td>
-                    <td>관광지</td>
-                    <td>2021-01-02</td>
-                    <td><a class="btn btn-info" href="#">보러가기</a></td>
-                    <td><button type="submit" class="btn btn-success">삭제</button></td>
-                  </tr>
-                  <tr>
-                    <th>8</th>
-                    <td>김춘추</td>
-                    <td>관광지</td>
-                    <td>2021-01-02</td>
-                    <td><a class="btn btn-info" href="#">보러가기</a></td>
-                    <td><button type="submit" class="btn btn-success">삭제</button></td>
-                  </tr>
-                  <tr>
-                    <th>9</th>
-                    <td>김춘추</td>
-                    <td>관광지</td>
-                    <td>2021-01-02</td>
-                    <td><a class="btn btn-info" href="#">보러가기</a></td>
-                    <td><button type="submit" class="btn btn-success">삭제</button></td>
-                  </tr>
-                  <tr>
-                    <th>10</th>
-                    <td>김춘추</td>
-                    <td>관광지</td>
-                    <td>2021-01-02</td>
-                    <td><a class="btn btn-info" href="#">보러가기</a></td>
-                    <td><button type="submit" class="btn btn-success">삭제</button></td>
-                  </tr>
+	                <c:forEach var="apa" items="${ adminPremiumAd }">
+	                   <tr>
+	                       <th>${ apa.payno }</th>
+	                       <td>${ apa.usno }</td>
+	                       <td>${ apa.usname }</td>
+	                       <td>${ apa.bus_code }</td>
+	                       <c:choose>
+				                  <c:when test="${ apa.bus_category eq 'R' }">
+	                            	<td>음식점</td>
+	                              </c:when>
+	                              <c:when test="${ apa.bus_category eq 'H' }">
+	                            	<td>숙박</td>
+	                              </c:when>
+	                              <c:when test="${ apa.bus_category eq 'T' }">
+	                            	<td>관광지</td>
+	                              </c:when>
+	                              <c:otherwise>
+	                              	<td>렌트</td>
+	                              </c:otherwise>
+	                            </c:choose>
+	                       <td>${ apa.pdate }</td>
+	                       <td>${ apa.exdate }</td>
+	                       <td><a class="btn btn-info" href="#">보러가기</a></td>
+	                   </tr>
+	                 </c:forEach>                      
                 </tbody>
               </table>
 
@@ -130,91 +89,153 @@
 
               <!-- 페이지네이션 -->
               <div class="row-page">
-              <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                  <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                  <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      </a>
-                  </li>
-                  </ul>
-              </nav>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                    <!-- [이전] -->
+	               <c:if test="${ pi.currentPage <= 1 }">
+	                  <li class="page-item disabled">
+                          <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
+	               </c:if>
+	               <c:if test="${ pi.currentPage > 1 }">
+	                  <c:url var="before" value="/admin/advertise2">
+	                     <c:param name="page" value="${ pi.currentPage - 1 }"/>
+	                  </c:url>
+	                  <li class="page-item">
+                          <a class="page-link" href="${ before }" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
+	               </c:if>
+	               
+	               <!-- 페이지 숫자 -->
+	               <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	          	      
+	                  <c:if test="${ p eq pi.currentPage }">
+	                     <li class="page-item active"><a class="page-link" href="#">${ p }</a></li>
+	                  </c:if>
+	                  <c:if test="${ p ne pi.currentPage }">
+	                     <c:url var="pagination" value="/admin/advertise2">
+	                        <c:param name="page" value="${ p }"/>
+	                     </c:url>
+	                     <li class="page-item"><a class="page-link" href="${ pagination }">${ p }</a></li>
+	                  </c:if>
+	                  
+	               </c:forEach>
+	               
+	               <!-- [다음] -->
+	               <c:if test="${ pi.currentPage >= pi.maxPage }">
+	                  <li class="page-item disabled">
+                          <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
+	               </c:if>
+	               <c:if test="${ pi.currentPage < pi.maxPage }">
+	                  <c:url var="after" value="/admin/advertise2">
+	                     <c:param name="page" value="${ pi.currentPage + 1 }" />
+	                  </c:url>
+	                  <li class="page-item">
+                          <a class="page-link" href="${ after }" aria-label="Previous">
+                          <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
+	               </c:if>
+	              </ul>
+                </nav>
             </div>
 
+			<br><br>
 
                <div class="find_preAd">
                 <h3>프리미엄<span style="color: red;"> 내역조회</span> 하기</h3>
                 <br>
                 
-                <div class="search_preAd_div">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>-------</option>
-                        <option value="qna_no" name="qna_no">프리미엄 번호</option>
-                        <option value="name" name="name">회원명</option>
-                        <option value="qtype" name="qtype">카테고리</option>
-                        <option value="qtitle" name="qtitle">신청날짜</option>
-                    </select>
-                    <input type="text" id="searchValue" class="form-control">
-                    <button class="btn btn-secondary" onclick="searchQna();">검색하기</button>
-                </div>
+                <form id="search_preAd_form">
+	                <div class="search_preAd_div">
+	                    <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
+	                        <option selected>-------</option>
+	                        <option value="payno" <c:if test="${ param.searchCondition == 'payno' }">selected</c:if>>No</option>
+		                    <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
+		                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원명</option> 
+		                    <option value="bus_code" <c:if test="${ param.searchCondition == 'bus_code' }">selected</c:if>>사업장 코드</option> 
+		                    <option value="bus_category" <c:if test="${ param.searchCondition == 'bus_category' }">selected</c:if>>카테고리</option>
+		                    <option value="pdate" <c:if test="${ param.searchCondition == 'pdate' }">selected</c:if>>신청날짜</option>
+		                    <option value="exdate" <c:if test="${ param.searchCondition == 'exdate' }">selected</c:if>>만기날짜</option>
+	                    </select>
+	                    <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
+		                <button class="btn btn-secondary" type="button">검색하기</button>
+	                </div>
+                </form>
                 
                 <br>
 
-                <table class="table table-borderless">
+                <table class="table table-borderless" id="resultSearchpreAdTable">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>신청자</th>
-                            <th>카테고리</th>
-                            <th>신청날짜</th>
-                            <th>상세보기</th>
+	                        <th>회원번호</th>
+	                        <th>회원명</th>
+	                        <th>사업장 코드</th>
+	                        <th>카테고리</th>
+	                        <th>신청날짜</th>
+	                        <th>만기날짜</th>
+	                        <th>상세보기</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>10</th>
-                            <td>김춘추</td>
-                            <td>관광지</td>
-                            <td>2021-01-02</td>
-                            <td><a class="btn btn-info" href="#">보러가기</a></td>
-                          </tr>
+                        
                     </tbody>
                   </table>
                </div>
 
                <br><hr>
 
-                <!-- 페이지네이션 -->
-                <div class="row-page">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    </ul>
-                </nav>
-              </div>
+               <script>
+					$(function() {
+						$("#search_preAd_form button[type=button]").on("click", function() {
+			         		
+			         		var search = {};
+			         		search.searchCondition =  $("#searchCondition").val();
+			         		search.searchValue =  $("#searchValue").val();
 
+							$.ajax({
+								url : "${contextPath}/admin/searchpreAd",
+								data : JSON.stringify(search),
+								type : "post", 
+								contentType : "application/json; charset=utf-8",
+								dataType : "json",
+								success : function(data) {
 
-               <br><br><br><br><br><br><br><br><br><br><br><br>
+									tableBody = $("#resultSearchpreAdTable tbody");
+									tableBody.html("");
+									
+									for (var i in data) {
+										var tr = $("<tr>");
+										
+										var payno = $("<th>").text(data[i].payno);
+										var usno = $("<td>").text(data[i].usno);
+										var usname = $("<td>").text(data[i].usname);
+										var bus_code = $("<td>").text(data[i].bus_code);
+										var bus_category = $("<td>").text(data[i].bus_category);
+										var pdate = $("<td>").text(data[i].pdate);
+										var exdate = $("<td>").text(data[i].exdate);
+										
+										tr.append(payno, usno, usname, bus_code, bus_category, pdate, exdate); // 테이블 행에 추가
+										tableBody.append(tr); // 테이블에 추가
+									}
+									
+									
+								},
+								error : function(e) {
+									alert("일치하는 회원이 없습니다.");
+								}
+							});
+						});
+					});
+				</script>
         </div>
    
     </div>

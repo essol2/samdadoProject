@@ -240,12 +240,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
    </update>
    
    <select id="countUser" resultType="_int">
-   		SELECT 
+   		 SELECT 
    		       COUNT(*)
 		  FROM 
 		  	   "USER"
 		 WHERE 
 		 	   US_STOP IS NULL
+		 AND   US_PART <![CDATA[<>]]> '관리자'
    </select>
    
    <select id="selectAllUserList" resultMap="userResultSet">
@@ -264,8 +265,57 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			  , AUTH_KEY
 		   FROM
 		   		"USER"
-		  WHERE US_STOP IS NULL	  
+		  WHERE US_STOP IS NULL	
+		 AND US_PART <![CDATA[<>]]> '관리자' 
    </select>
+   
+   <select id="searchUserList" parameterType="aSearch" resultMap="userResultSet">
+	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
+		SELECT
+		       *
+		  FROM
+		       "USER"	
+		<where>
+			<choose>
+				<when test="searchCondition == 'usno'">
+					US_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usid'">
+					AND US_ID LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usname'">
+					AND US_NAME LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usbirth'">
+					AND US_BIRTH LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usemail'">
+					AND US_EMAIL LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usphone'">
+					AND US_PHONE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'busno'">
+					AND BUS_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usstatus'">
+					AND US_STATUS LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (US_NO LIKE #{sv}
+						 OR US_ID LIKE #{sv}
+						 OR US_NAME LIKE #{sv}
+						 OR US_BIRTH LIKE #{sv}
+						 OR US_EMAIL LIKE #{sv}
+						 OR US_PHONE LIKE #{sv}
+						 OR BUS_NO LIKE #{sv}
+						 OR US_STATUS LIKE #{sv})
+				</otherwise>	
+			</choose>
+		</where>
+		AND US_PART <![CDATA[<>]]> '관리자' 
+			  ORDER BY US_NO
+	</select>
 	
 	
 
