@@ -67,6 +67,9 @@ public interface MypageService {
 	// 일반회원 - 가계부 기존 해당 컬럼 객체 값 가져오기
 	public AccountBook selectOrigin(AccountBook ab);
 
+	// 일반회원 - 가계부 삭제
+	public int deleteAcc(int accno);
+
 	
 
 

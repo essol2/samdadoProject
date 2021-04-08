@@ -431,14 +431,20 @@ public class MypageController {
 			 ab.setAccClassify(accClassify);
 		 }
 		 
-		 if(ab.getAccAccompany() != 1) {
-			int oneWon = Math.round(ab.getAccWon() / ab.getAccAccompany());
-			//System.out.println(oneWon);			
-			ab.setAccOneWon(oneWon);
-		 } else {
-			 ab.setAccOneWon(ab.getAccWon());
-			 //System.out.println(ab.getAccOneWon());
-		 }
+//		 // 동행인 수로 oneWon 구해서 set하기
+//		 if(ab.getAccAccompany() > 1) {
+//			int oneWon = Math.round(ab.getAccWon() / ab.getAccAccompany());
+//			//System.out.println(oneWon);			
+//			ab.setAccOneWon(oneWon);
+//		 } else {
+//			 ab.setAccOneWon(ab.getAccWon());
+//			 //System.out.println(ab.getAccOneWon());
+//		 }
+//		 
+		 // 동행인 수로 oneWon 구해서 set하기
+		 int oneWon = Math.round(ab.getAccWon() / ab.getAccAccompany());
+		 //System.out.println(oneWon);			
+		 ab.setAccOneWon(oneWon);
 		 
 		 //System.out.println("ab ckeck : " + ab);
 		 //DB에 insert
@@ -483,49 +489,69 @@ public class MypageController {
 	 }
 	 
 	// 일반회원 - 가계부 on/off 클릭 - off상태로 만들어주기
-		 @RequestMapping("onoff")
-		 @ResponseBody
-		 public AccountBook onOffChange(@RequestBody AccountBook ab) {
-			 //System.out.println("accno : " + accno);
-			 //System.out.println("accDutch :  " +  accDutch);
-			 //System.out.println("accno의 타입 : " + accno.getClass().getName());
-			 System.out.println("view에서 받아온 ab객체 : " + ab);
+	 @RequestMapping("onoff")
+	 @ResponseBody
+	 public AccountBook onOffChange(@RequestBody AccountBook ab) {
+		 //System.out.println("accno : " + accno);
+		 //System.out.println("accDutch :  " +  accDutch);
+		 //System.out.println("accno의 타입 : " + accno.getClass().getName());
+		//System.out.println("view에서 받아온 ab객체 : " + ab);
 			 
-			 // 기존 해당 컬럼 값 가져오기
-			 AccountBook abObject = mService.selectOrigin(ab);
-			 System.out.println("가져온 abObject 값 : " + abObject);
+		// 기존 해당 컬럼 값 가져오기
+		AccountBook abObject = mService.selectOrigin(ab);
+		//System.out.println("가져온 abObject 값 : " + abObject);
 			 
-			 // 기존 컬럼값에 dutch값, oneWon, Total 변경해주기
-			 if(ab.getAccDutch().equals("on")) {
-				 abObject.setAccDutch("off");
-				 abObject.setAccAccompany(1);
-				 abObject.setAccOneWon(abObject.getAccWon());
-				 abObject.setWhopay(null);
+		// 기존 컬럼값에 dutch값, oneWon, Total 변경해주기
+		if(ab.getAccDutch().equals("on")) {
+			abObject.setAccDutch("off");
+			abObject.setAccAccompany(1);
+			abObject.setAccOneWon(abObject.getAccWon());
+			abObject.setWhopay(ab.getWhopay());
 				 
-			 } else {
-				 abObject.setAccDutch("on");
-				 abObject.setAccAccompany(ab.getAccAccompany());
-				 abObject.setAccOneWon( Math.round(abObject.getAccWon() / ab.getAccAccompany()));
-				 abObject.setWhopay(ab.getWhopay());
-			 }
-			 
-			 System.out.println("setAccDutch한 후의 ab객체 : " + abObject);
+		} else {
+			abObject.setAccDutch("on");
+			abObject.setAccAccompany(ab.getAccAccompany());
+			abObject.setAccOneWon( Math.round(abObject.getAccWon() / ab.getAccAccompany()));
+			abObject.setWhopay(ab.getWhopay());
+		}
+		
+		//System.out.println("setAccDutch한 후의 ab객체 : " + abObject);
 
-			// off, on 컬럼값 바꾸기
-			 int result = mService.updateOnOffBtn(abObject);
-			 System.out.println("onOffChange안에서 : " + result);
+		// off, on 컬럼값 바꾸기
+		int result = mService.updateOnOffBtn(abObject);
+		//System.out.println("onOffChange안에서 : " + result);
 			 
-			 AccountBook findAbObject = mService.selectOrigin(ab);
-			 System.out.println("update한 후의 object 값 : " + findAbObject);
+		AccountBook findAbObject = mService.selectOrigin(ab);
+		//System.out.println("update한 후의 object 값 : " + findAbObject);
 
-			 if(findAbObject != null) {
-				 return findAbObject;
-			 }else {
-				 System.out.println("List 못가져옴");
-				 return null;
-			 }
+		if(findAbObject != null) {
+			return findAbObject;
+		}else {
+			//System.out.println("List 못가져옴");
+			return null;
+		}
 			  
 			 //return 0;
+	}
+
+	 // 선택 행 삭제하는 메소드
+	 @GetMapping("/deleteacc")
+	 public String deleteAcc(@RequestParam(name="accno") int accno,
+			 				 @RequestParam(name="usno") String usno,
+			 				 Model model) {
+		 
+		 //DB에서 삭제학고 오기
+		 int result = mService.deleteAcc(accno);
+		 
+		 if(result>0) {
+			 model.addAttribute("usno", usno);
+			 model.addAttribute("msg", "삭제가 성공적!");
+			 return "redirect:/mypage/wallet";
+		 }else{
+			 model.addAttribute("msg", "삭제 실패!");
+			 return "redirect:/mypage/wallet";
 		 }
 
+	 }
+	 
 }

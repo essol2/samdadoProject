@@ -127,5 +127,11 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectOrigin(ab);
 	}
 
+	// 일반회원 - 가계부 삭제
+	@Override
+	public int deleteAcc(int accno) {
+		return mDao.deleteAcc(accno);
+	}
+
 
 }

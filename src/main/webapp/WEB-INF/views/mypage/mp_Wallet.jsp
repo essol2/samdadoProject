@@ -147,7 +147,8 @@
     }
     
     #forExcelExport{
-    	height : 500px;
+    	height : 550px;
+    	/* border: 1px solid red; */
     }
 
     .thisWalletPage{
@@ -234,6 +235,12 @@
     .walletPerson{
         width : 10%;
     }
+    
+    /* #walletMidTable{
+    	height : 500px;
+    } */
+    
+    
 
     #walletMidTable th{
         background-color: rgb(228, 228, 228);
@@ -351,7 +358,7 @@
     }
 
     #walletBottomTable{
-        margin-top : 10%;
+        margin-top : 2%;
         text-align: center;
         background-color: white;
         height: 40px;
@@ -486,9 +493,6 @@
             <div id="mainBox">
                 <table id="walletTopTable" class="mainTable">
                 <tr>
-                 <%-- <c:if test="${emptyM}.equals('empty">
-                    <td>아직 아무런 값이 없어요! +를 눌러 추가해주세요!</td>
-                 </c:if> --%>
                 	<c:forEach var="rd" items="${rdList}" varStatus="rdNum">
                         <td class="clickedPreWallet">
                         	<button class="preWalDate" onclick="location.href='${contextPath}/mypage/chpage?atd='+ ${rdNum.index} +'&usno=' + ${loginUser.usno}">
@@ -546,7 +550,7 @@
                    
                     <c:forEach var="ab" items="${ abList }" varStatus="abStatus">
                       <tr id="forChageAjax${abStatus.index}">
-                        <td class="walletName">${ ab.accName }</td>
+                        <td class="walletName" id='deleteClick' onclick="deleteClick(${abStatus.index})">${ ab.accName }</td>
                         <td class="walletCate"> ${ ab.accClassify }</td>
                         <td class="walletPrice"><fmt:formatNumber value="${ ab.accWon }" pattern="#,###"/></td>
                         <td class="walletPayDate"><fmt:formatDate value="${ ab.accTripDate }" type="date" pattern="yyyy-MM-dd"/></td>
@@ -560,16 +564,16 @@
                             <input type="hidden" id="thisDate${abStatus.index}" value="${ab.accTripDate}">
                         	<input type="hidden" id="thisColNum${abStatus.index}" value="${ab.accno}">
                         </td>
-                        <td class="walletPerson" id="wpId">
+                        <td class="walletPerson" id="wpId${abStatus.index}">
 	                 	<fmt:formatNumber value="${ ab.accWon/ab.accAccompany }" pattern="#,###"/>
                         </td>
-                        <td class="walletAccompany" id="together"> ${ ab.accAccompany } </td>
+                        <td class="walletAccompany" id="together${abStatus.index}"> ${ ab.accAccompany } </td>
                         <c:choose>
 		          			<c:when test="${ empty ab.whopay }">
-		          				<td class="walletWhoPay" id="payPerson">${ loginUser.usname }</td>
+		          				<td class="walletWhoPay" id="payPersonNull${abStatus.index}">${ loginUser.usname }</td>
 		          			</c:when>
 		          			<c:when test="${ !empty ab.whopay}">
-		          				<td class="walletWhoPay" id="payPerson">${ab.whopay}</td>
+		          				<td class="walletWhoPay" id="payPerson${abStatus.index}">${ab.whopay}</td>
 		          			</c:when>
 	          			</c:choose>
                     </c:forEach>
@@ -799,9 +803,13 @@
 			type : "POST",
 			contentType : "application/json; charset=utf-8",
 			success : function(data){
-				var wpId = $("#wpId").text(data.accOneWon);
-				var together = $("#together").text(data.accAccompany);
-				var payPerson = $("#payPerson").text(data.whopay);
+				var wpId = $("#wpId"+i).text(data.accOneWon);
+				var together = $("#together"+i).text(data.accAccompany);
+				
+				if(data.whopay == null)
+					var payPerson = $("#payPersonNull"+i).text(data.whopay);
+				else
+					var payPerson = $("#payPerson"+i).text(data.whopay);
 			},
 			errorr:function(e){
 				alert("error code : " + e.status + "\n" + "message : " + e.responseText);
@@ -811,10 +819,24 @@
 	</script>
 	
 	<!-- 1인당 가격 계산하는 스크립트 -->
-<!-- 	<script>
+	<script>
 		$(document).ready(function(){
 			
 		});
-	</script> -->
+	</script> 
+	
+	<!-- 선택 행 삭제하는 스크립트 -->
+	<script>
+		function deleteClick(i){
+			var accno = $("#thisColNum"+i).val();
+			var usno = ${loginUser.usno};
+			console.log(accno);
+			console.log(usno);
+			
+			alert("해당 내역을 삭제하시겠습니까?");
+			
+			location.href="${contextPath}/mypage/deleteacc?accno=" + accno + "&usno=" + usno;
+		}
+	</script>
 </body>
 </html>
