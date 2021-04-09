@@ -720,10 +720,37 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			PON_SEQ_NO.NEXTVAL
 		  , SYSDATE
 		  , '배너광고 포인트 차감'
+		  , (SELECT *
+                FROM(SELECT POINT.PBALANCE
+                     FROM "POINT"
+                     WHERE US_NO = #{us_no})
+                     WHERE ROWNUM <![CDATA[<=]]> 1) - 100
+		  , 100
+		  , #{us_no}
+		)
+
+	<!--  
+		INSERT
+		INTO 
+		POINT
+		(
+			PNO
+		  , PDATE
+		  , PDETAIL
+		  , PBALANCE
+		  , PAMOUNT
+		  , US_NO
+		)
+		VALUES
+		(
+			PON_SEQ_NO.NEXTVAL
+		  , SYSDATE
+		  , '배너광고 포인트 차감'
 		  , (SELECT POINT.PBALANCE FROM "POINT" WHERE US_NO = #{us_no}) - 100
 		  , 100
 		  , #{us_no}
 		)
+		-->
 	</insert>
 	
 	<select id="selectBusCodeUser" parameterType="Business" resultMap="BusinessResultSet">
