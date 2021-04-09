@@ -20,6 +20,7 @@ import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.vo.User;
 
 @Service
@@ -187,29 +188,33 @@ public class businessServiceImpl implements businessService {
 		return bDao.findReportStatus(r);
 	}
 
+	@Override
+	public List<Alliance> selectBannerAdImgList() {
+		// TODO Auto-generated method stub
+		return bDao.selectBannerAdImgList();
+	}
+
+	@Override
+	public Business selectBannerAdDetail(Business selectBusCodeUser, boolean flag) {
+			if(flag) {
+				bDao.updateReadCount(selectBusCodeUser);		// 배너 조회수 카운트 업데이트
+				bDao.insertPointDeduction(selectBusCodeUser);	// 포인트 컬럽 인서트
+			}
+			
+		return bDao.selectBannerAdDetail(selectBusCodeUser);
+	}
 
 
+	@Override
+	public Business selectBusCodeUser(int bus_code) {
+		// TODO Auto-generated method stub
+		return bDao.selectBusCodeUser(bus_code);
+	}
 
-
-
-
-
-
-
-
-
-	
-	
-
-	
-
-	
-
-
-	
-  
-
-
-	
+	@Override
+	public Business getBusDetail(int bus_code) {
+		// TODO Auto-generated method stub
+		return bDao.getBusDetail(bus_code);
+	}
    
 }

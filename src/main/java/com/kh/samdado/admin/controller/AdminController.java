@@ -219,10 +219,6 @@ public class AdminController {
 	public List<QnA> searchQna(HttpServletResponse response, @RequestBody aSearch search) {
 
 		List<QnA> searchQnaList = aService.searchQnaList(search);
-		
-//		for (QnA q : searchQnaList) {
-//			System.out.println(q.toString());
-//		}
 
 		return searchQnaList;
 	}
@@ -233,10 +229,6 @@ public class AdminController {
 	public List<Report> searchReport(HttpServletResponse response, @RequestBody aSearch search) {
 
 		List<Report> searchReportList = aService.searchReportList(search);
-		
-//		for (Report r : searchReportList) {
-//			System.out.println(r.toString());
-//		}
 
 		return searchReportList;
 	}
@@ -246,10 +238,6 @@ public class AdminController {
 	public List<Alliance> searchbannerAd(HttpServletResponse response, @RequestBody aSearch search) {
 
 		List<Alliance> searchAllianceList = aService.searchAllianceList(search);
-		
-//		for (Alliance a : searchAllianceList) {
-//			System.out.println(a.toString());
-//		}
 
 		return searchAllianceList;
 	}
@@ -311,6 +299,7 @@ public class AdminController {
 		} else {
 			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가
 			result = aService.updateRstatusToYAndRexdate(report);
+			System.out.println("신고 else result : " + result);
 		}	
 
 		if (result > 0) model.addAttribute("msg", "신고 승인 처리가 완료되었습니다.");	

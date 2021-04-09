@@ -93,9 +93,20 @@ public interface businessDao {
 	//배너 광고 인서트
 	int insertBannerAd(Alliance a);
 
-	
+	List<Alliance> selectBannerAdImgList();
 
-	
+	Business selectBannerAdDetail(Business selectBusCodeUser);
+
+	Business selectBusCodeUser(int bus_code);
+
+	int insertPointDeduction(Business selectBusCodeUser);
+
+	int updateReadCount(Business selectBusCodeUser);
+
+	Business getBusDetail(int bus_code);
+
+
+
 
 
 
