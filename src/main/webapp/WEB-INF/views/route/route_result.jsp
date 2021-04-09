@@ -291,7 +291,7 @@
 		var container = document.getElementById('map');
 		var options = {
 			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
-			level: 4
+			level: 9
 		};
 
 		var map = new kakao.maps.Map(container, options);
@@ -301,15 +301,15 @@
 		var imageSize = new kakao.maps.Size(33, 54);
 		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 		
-		<c:forEach var="list" items="${list}">
+		<c:forEach var="list" items="${list}" varStatus="listStatus">
 			// 주소로 좌표를 검색합니다
 			geocoder.addressSearch('${list.spot_address}', function(result, status) {
 	
 			    // 정상적으로 검색이 완료됐으면 
 			     if (status === kakao.maps.services.Status.OK) {
-	
-			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	
+					
+			         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
 			        // 결과값으로 받은 위치를 마커로 표시합니다
 			        var marker = new kakao.maps.Marker({
 			            map: map,
@@ -325,9 +325,10 @@
 			       kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
 			       kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 	
-			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			        map.setCenter(coords);
+			         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			      map.setCenter(coords);
 			    } 
+			    
 			    
 			     function makeOverListener(map, marker, infowindow) {
 			    	    return function() {
@@ -342,6 +343,7 @@
 			    	    };
 			    	}
 			});    
+			
 		</c:forEach>
 
 	</script>
