@@ -172,13 +172,14 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.selectOne("businessMapper.countReport");
 	}
 
-	
-  @Override
+	// 지혜
+    @Override
 	public List<Business> selectMyBusinessCategory(User loginUser) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.selectMyBusinessCategory", loginUser);
 	}
 
+    // 지혜
 	@Override
 	public int insertBannerAd(Alliance a) {
 		// TODO Auto-generated method stub
@@ -190,34 +191,43 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.selectOne("businessMapper.findReportStatus", r);
 	}
 
+    // 지혜
+	@Override
+	public List<Alliance> selectBannerAdImgList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectBannerAdImgList");
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-	
+	@Override
+	public Business selectBannerAdDetail(Business selectBusCodeUser) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("businessMapper.selectBannerAdDetail", selectBusCodeUser);
+	}
 
 	
+	@Override
+	public Business selectBusCodeUser(int bus_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("businessMapper.selectBusCodeUser", bus_code);
+	}
 
+	@Override
+	public int insertPointDeduction(Business selectBusCodeUser) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("businessMapper.insertPointDeduction", selectBusCodeUser);
+	}
+
+	@Override
+	public int updateReadCount(Business selectBusCodeUser) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("businessMapper.updateReadCount", selectBusCodeUser);
+	}
+
+	@Override
+	public Business getBusDetail(int bus_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("businessMapper.getBusDetail", bus_code);
+
+	}
 	
-
-	
-
-
-
-	
-
-
-
-
-	
-
 }

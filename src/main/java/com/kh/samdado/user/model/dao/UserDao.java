@@ -3,6 +3,7 @@ package com.kh.samdado.user.model.dao;
 import java.util.List;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
+import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.user.model.vo.User;
 
 public interface UserDao {
@@ -32,6 +33,8 @@ public interface UserDao {
 	public int countUser();
 
 	public List<User> selectAllUserList(PageInfo pi);
+
+	public List<User> searchUserList(aSearch search);
 
 
 

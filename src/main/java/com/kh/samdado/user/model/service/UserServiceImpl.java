@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
+import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.user.model.dao.UserDao;
 import com.kh.samdado.user.model.vo.User;
 
@@ -85,6 +86,12 @@ public class UserServiceImpl implements UserService {
 	public List<User> selectAllUserList(PageInfo pi) {
 		// TODO Auto-generated method stub
 		return uDao.selectAllUserList(pi);
+	}
+
+	@Override
+	public List<User> searchUserList(aSearch search) {
+		// TODO Auto-generated method stub
+		return uDao.searchUserList(search);
 	}
 
 

@@ -91,7 +91,15 @@ public interface businessService {
 
 	// 배너 광고 인서트
 	int insertBannerAd(Alliance a);
-	
+
+	List<Alliance> selectBannerAdImgList();
+
+	Business selectBusCodeUser(int bus_code);
+
+	Business selectBannerAdDetail(Business selectBusCodeUser, boolean flag);
+
+	Business getBusDetail(int bus_code);
+
 	
 
 	

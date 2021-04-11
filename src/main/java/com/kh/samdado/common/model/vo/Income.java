@@ -37,5 +37,7 @@ public class Income {
 	private Date exdate;
 	private String usno;
 	
-	private String usname; // user 테이블 조인 후 추가 컬럼
+	private String usname; 			// user 테이블 조인 후 추가 컬럼
+	private String bus_category;    // business 테이블 조인 후 추가 컬럼
+	private int bus_code;           // business 테이블 조인 후 추가 컬럼
 }

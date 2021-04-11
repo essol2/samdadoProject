@@ -80,32 +80,66 @@
                     </div>
                   </div>
             
-                <!-- Optional JavaScript; choose one of the two! -->
-            
-                <!-- Option 1: Bootstrap Bundle with Popper -->
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-            
                 <br><br><br><br><br><br>
             
                 <!-- 은솔 : 배너광고 구간 -->
                 <h3 style="margin-left : 3%;"> 이제, 여행은 가까운 곳에서.</h3>
-                <div id="bannerBoxLeft">
-                    <img src="resources/images/image_main/jeju-island-seogwipo-winter-travel 1.png" class="banner" alt="...">
-                    <img src="resources/images/image_main/IMG_9128-Jeju-Island-heading-1 1.png" class="banner" alt="...">
-                    <img src="resources/images/image_main/a3419258ade04275fe0e69ba9c0247e0 1.png" class="banner" alt="...">
-                    <img src="resources/images/image_main/travel-945006_1920 1.png" class="banner" alt="...">
-                    <img src="resources/images/image_main/image 45.png" class="banner" alt="...">
-                </div>
-                <div id="bannerBoxRight">
-                    <img src="resources/images/image_main/image 40.png" class="banner" alt="...">
-                    <img src="resources/images/image_main/image 36.png" class="banner" alt="...">
-                    <img src="resources/images/image_main/image 43.png" class="banner" alt="...">
-                    <img src="resources/images/image_main/image 44.png" class="banner" alt="...">
-                </div>
-            
+                <div class="tableArea">
+					<table id="bannerAdImglistTable">
+						<tbody></tbody>
+					</table>
+				</div>
+                
             </div>
         </div>
         </section>
+        
+        
+     <!-- ajax -->
+	<script>
+		$(function() {
+			selectBannerAdImgList();
+			setInterval(selectBannerAdImgList, 5000);
+		});
+		
+		function selectBannerAdImgList() {
+			$.ajax({
+				url : "${ contextPath }/business/selectBannerAdImgList",
+				dataType : "json",
+				success : function(data) {
+					console.log(data);
+					
+					tableBody = $("#bannerAdImglistTable tbody");
+					tableBody.html("");
+					
+					for (var i in data) {
+						var td = $("<td onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
+						
+						var alno = $("<td>").text(data[i].alno); 
+						var bus_code = $("<td>").text(data[i].bus_code); 
+						var aimgcname = $("<td><img src='${ contextPath }/resources/busUploadFiles/alliance/'")+(data[i].aimgcname);
+						
+						td.append(alno, bus_code, aimgcname);
+						tableBody.append(td);
+					}
+				},
+				error : function(e) {
+					alert("code : " + e.status + "\n"
+							+ "message : " + e.responseText);
+				}
+			});
+		}
+		
+		// 해당 게시글 하나를 누르면 상세페이지가 보여지게 하는 컨트롤러 호출
+		function selectBannerAdDetail(bus_code) {
+			location.href='${ contextPath }/business/detail?bus_code=' + bus_code;
+		}
+	</script>
+	
+	
+	<!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
         
 </body>
 </html>
