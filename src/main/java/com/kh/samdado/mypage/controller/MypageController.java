@@ -61,7 +61,7 @@ public class MypageController {
 				 
 				 
 				 
-		System.out.println(u);
+		//System.out.println(u);
 		User loginUser = uService.loginUser(u);
 				 
 				 
@@ -146,17 +146,17 @@ public class MypageController {
 				 				   @ModelAttribute Point po,
 				 				   @RequestParam(name="usno") String usno ) {
 		 
-		  System.out.println("user 객체 확인 : " +usno);
+		 //System.out.println("user 객체 확인 : " +usno);
 		 List<Point> pList = null;
 		 
 		 if(usno.isEmpty()) {
 			// u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
 			 pList = mService.selectPointList(u.getUsno());
-			 System.out.println("pList 객체 확인 : " + pList);
+			 //System.out.println("pList 객체 확인 : " + pList);
 		 } else {
 			// u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
 			 pList = mService.selectPointList(usno);
-			 System.out.println("pList 객체 확인 : " + pList);
+			 //System.out.println("pList 객체 확인 : " + pList);
 		 }
 		 	 
 		 if(pList.size() > 0) {
@@ -254,7 +254,7 @@ public class MypageController {
 	 public String sendQnA(Model model,
 				 		   @ModelAttribute QnA qna) {
 
-		 System.out.println("qna객체에 어떻게 들어왔는지 확인 : " + qna);
+		 //System.out.println("qna객체에 어떻게 들어왔는지 확인 : " + qna);
 		 
 		 // DB에 insert
 		 int result = mService.insertNewQnA(qna);
@@ -392,10 +392,14 @@ public class MypageController {
 			 //System.out.println("searchDate check : " + ab.getSearchDate());
 			 List<AccountBook> abList= mService.selectAccountList(ab);
 			 
-			 System.out.println("abList check : " + abList);
+			 List<AccountBook> chartList = mService.selectChartList(ab);
+			 //System.out.println("charList 확인 : " + chartList);
+			 
+			 //System.out.println("abList check : " + abList);
 			 if(abList != null) {
 				 mv.addObject("abList", abList);
 				 mv.addObject("rdList", recentDateList);
+				 mv.addObject("chaList", chartList);
 				 mv.addObject("ots" , recentDateList.get(0).getOneTotalSum());
 				 mv.addObject("ts", recentDateList.get(0).getTotalSum());
 				 mv.setViewName("mypage/mp_Wallet");
@@ -474,12 +478,16 @@ public class MypageController {
 		 // SearchDate 값에 해당하는 모든 리트스 뽑아오기
 		 List<AccountBook> abList= mService.selectAccountList(ab);
 		 
+		 // 해달 날짜에 해당하는 차트 리스트 불러오기
+		 List<AccountBook> chartList = mService.selectChartList(ab);
+		 
 		 //System.out.println("abList check : " + abList);
 		 if(abList != null) {
 			 mv.addObject("abList", abList);
 			 mv.addObject("rdList", recentDateList);
 			 mv.addObject("ots" , recentDateList.get(atd).getOneTotalSum());
 			 mv.addObject("ts", recentDateList.get(atd).getTotalSum());
+			 mv.addObject("chaList", chartList);
 			 mv.setViewName("mypage/mp_Wallet");
 		 }else {
 			 mv.addObject("msg", "가계부 조회 오류입니다.");

@@ -301,4 +301,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM ACCOUNT
 		WHERE ACC_NO = #{accno}
 	</delete>
+	<select id="selectChartList" resultMap="accountResultSet">
+		SELECT 
+				ACC_CLASSIFY
+			  , SUM(ACC_WON) AS totalSum
+			  , SUM(ACC_ONEWON) AS oneTotalSum
+		FROM 
+				ACCOUNT
+		WHERE 
+				US_NO = #{usno}
+		GROUP BY 
+				ACC_CLASSIFY
+	</select> 
 </mapper>

@@ -133,5 +133,11 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.deleteAcc(accno);
 	}
 
+	// 일반회원 - 가계부 차트 조회 메소드
+	@Override
+	public List<AccountBook> selectChartList(AccountBook ab) {
+		return mDao.selectChartList(ab);
+	}
+
 
 }

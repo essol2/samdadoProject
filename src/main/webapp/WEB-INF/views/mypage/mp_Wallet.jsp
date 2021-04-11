@@ -20,6 +20,7 @@
 	
 	<meta name=“_csrf” th:content=“${_csrf.token}”/>
 	<meta name=“_csrf_header” th:content=“${_csrf.headerrName}”/>
+	
 </head>
 <style>
 
@@ -470,6 +471,11 @@
 		padding : 5px;
 		border-style : none;
 	}
+	
+	.listTableTr:hover{
+		cursor : pointer;
+		color : #467355;
+	}
 </style>
 <body>
     <div id="back">
@@ -512,13 +518,49 @@
 			    	<button class="chartBtns" id="byWhopay">결제인별</button>
 			    </div>
                 </div>
-                <script> 
+                
+                <script	language=JavaScript>
+                	var arr = new Array();
+                	
+                	<c:forEach items="${chaList}" var="item">
+                		arr.push({accClassify:"${item.accClassify}"
+                				, oneTotalSum : "${item.oneTotalSum}"});
+                	</c:forEach>
+                	
+                	if(arr.length == 1){
+                		for(var j=0; j<5; j++){
+                			arr.push({accClassify : '', oneTotalSum : 0});
+                		}
+                	} else if(arr.length == 2){
+                		for(var j=0; j<4; j++){
+                			arr.push({accClassify : '', oneTotalSum : 0});
+                		}
+                	} else if(arr.length == 3){
+                		for(var j=0; j<3; j++){
+                			arr.push({accClassify : '', oneTotalSum : 0});
+                		}
+                	} else if(arr.length == 4){
+                		for(var j=0; j<2; j++){
+                			arr.push({accClassify : '', oneTotalSum : 0});
+                		}
+                	} else if(arr.length == 5){
+                		for(var j=0; j<1; j++){
+                			arr.push({accClassify : '', oneTotalSum : 0});
+                		}
+                	} else{
+                		console.log(arr);
+                	}
+                	
+                	//console.log(arr);
+                	
+    		
 			    	data = { 
 			    		datasets: [{ 
-			    			backgroundColor: ['#467355','#689978','#88b897'], 
-			    			data: [10, 20, 30]
+			    			backgroundColor: ['#40634c', '#467355', '#689978','#88b897','#badbc5', '#c9f5d7'], 
+ 			    			data: [arr[0].oneTotalSum, arr[1].oneTotalSum, arr[2].oneTotalSum, arr[3].oneTotalSum,arr[4].oneTotalSum, arr[5].oneTotalSum],
+ 							
 			    		}], 
-			    		labels: ['red','yellow','blue'] 
+			    		labels: [arr[0].accClassify,arr[1].accClassify,arr[2].accClassify,arr[3].accClassify,arr[4].accClassify,arr[5].accClassify] 
 			    	};
 			    	
 			    	var ctx2 = document.getElementById("myChart"); 
@@ -529,6 +571,7 @@
 			    			cutoutPercentage: 30
 			    		} 
 			    	}); 
+                /* }); */
 			    
 			    </script>
                 <div id="forExcelExport">
@@ -549,8 +592,8 @@
                     <tbody >
                    
                     <c:forEach var="ab" items="${ abList }" varStatus="abStatus">
-                      <tr id="forChageAjax${abStatus.index}">
-                        <td class="walletName" id='deleteClick' onclick="deleteClick(${abStatus.index})">${ ab.accName }</td>
+                      <tr id="forChageAjax${abStatus.index}" class="listTableTr" onclick="deleteClick(${abStatus.index})">
+                        <td class="walletName" id='deleteClick' >${ ab.accName }</td>
                         <td class="walletCate"> ${ ab.accClassify }</td>
                         <td class="walletPrice"><fmt:formatNumber value="${ ab.accWon }" pattern="#,###"/></td>
                         <td class="walletPayDate"><fmt:formatDate value="${ ab.accTripDate }" type="date" pattern="yyyy-MM-dd"/></td>
@@ -616,11 +659,11 @@
                 				<td><label for="_pwd" class="inputeda" id="forMargin" style="float:right;">구분</label></td>
                 				<td class="inputTd" colspan="2">
                 					<select class="inputeda" id="accClassify" name="accClassify" style="width:90%;">
-                					 	<option value="구분" selected> 구분 </option>
+                					 	<option value="구분" selected disabled> 구분 </option>
 		                				<option value="숙박">숙박</option>
 		                				<option value="교통">교통</option>
 		                				<option value="식비">식비</option>
-		                				<option value="관광지 입장권">관광지 입장권</option>
+		                				<option value="입장권">입장권</option>
 		                				<option value="체험권">체험권</option>
 		                				<option value="직접입력">직접입력</option>
 	                				</select>
@@ -638,17 +681,17 @@
                 				<td class="inputTd"><input type="date" class="inputeda" id="accTripDate" name="accTripDate" style="width:75%;" required></td>
                 			</tr>
                 			<tr>
-                				<td><label for="_id" class="inputeda" style="float:right;">결제상태 </label></td>
+                				<td><label for="_id" class="inputeda" style="float:right;" disabled>결제상태 </label></td>
                 				<td class="inputTd" colspan="2">
 	                				<select class="inputeda" id="accPstatus" name="accPstatus" style="width:90%;">
-		                				<option value="결제완료">결제완료</option>
+		                				<option value="결제완료">미리예약</option>
 		                				<option value="현장결제">현장결제</option>
 	                				</select>
                 				</td>
                 				<td><label for="_id" class="form-label" style="float:right;"> 결제수단 </label></td>
                 				<td class="inputTd">
                 					<select class="inputeda" id="payMethod" name="payMethod" style="width:75%;">
-                					 	<option value="구분" selected> 결제수단 </option>
+                					 	<option value="구분" selected disabled> 결제수단 </option>
 		                				<option value="checkCard">체크카드</option>
 		                				<option value="creditCard">신용카드</option>
 		                				<option value="account">계좌이체</option>
@@ -818,24 +861,31 @@
 	}
 	</script>
 	
-	<!-- 1인당 가격 계산하는 스크립트 -->
-	<script>
-		$(document).ready(function(){
-			
-		});
-	</script> 
+	<!-- <script>
+	$(document).ready(function (){
+		  $('.listTableTr').hover(function(){
+			  $(this).css("background-color", "lightgray");
+		  });
+		  $('.listTableTre').mouseleave(function(){
+			  $(this).css("background-color", "white");
+		  });
+	});
+	</script> -->
 	
 	<!-- 선택 행 삭제하는 스크립트 -->
 	<script>
 		function deleteClick(i){
 			var accno = $("#thisColNum"+i).val();
 			var usno = ${loginUser.usno};
-			console.log(accno);
-			console.log(usno);
+			//console.log(accno);
+			//console.log(usno);
 			
-			alert("해당 내역을 삭제하시겠습니까?");
+			var confirmflag = confirm("해당 내역을 삭제하시겠습니까?");
 			
-			location.href="${contextPath}/mypage/deleteacc?accno=" + accno + "&usno=" + usno;
+			if(confirmflag){
+				location.href="${contextPath}/mypage/deleteacc?accno=" + accno + "&usno=" + usno;
+	        }
+			
 		}
 	</script>
 </body>
