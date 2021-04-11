@@ -764,7 +764,7 @@
                 </div>
             </div>
         </div>
-        </div>
+        
     </section>
     
     <!-- 신고Modal -->

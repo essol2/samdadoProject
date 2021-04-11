@@ -515,7 +515,7 @@
 
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                    <div class='profile' onclick="location.href='${ contextPath }/business/hotel_detail'">
+                    <div class='profile'>
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
                         <img class="image" src="../resources/images/image_listpage/hotel1.png">
                         <b>★4.90(후기 99+개)</b>
@@ -568,23 +568,7 @@
                 <div class="btnarea">
                     <button class="moreBtn" onclick='moreDiv()'>더보기</button>
                 </div>
-
-                <script>
-                    function moreDiv() {
-						   // 1. <div> element 만들기
-						   const newDiv = document.createElement('div');
-						   
-						   // 2. <div>에 들어갈 text node 만들기
-						   const newText = document.createTextNode('안녕하세요');
-						   
-						   // 3. <div>에 text node 붙이기
-						   newDiv.appendChild(newText);
-						   
-						   // 4. <body>에 1에서 만든 <div> element 붙이기
-						   document.body.appendChild(newDiv);
-						 } 
-                </script>
-
+                
         </section>
 
         <footer>
