@@ -384,15 +384,17 @@ public class businessController {
 	}
 	
 	// 결제 성공 시 insert
-	/*
-	@PostMapping("/pay")
+	
+	@GetMapping("/pay")
 	public String payInsert(Income i, Booking b, Point p) {
 		
-		Income income = bService.insertIncome(i);
-		Booking booking = bService.insertBooking(b);
-		Point point = bService.insertPoint(p);
+		int income = bService.insertIncome(i);
+		int booking = bService.insertBooking(b);
+		int point = bService.insertPoint(p);
 		
-	}*/
+		return null;
+		
+	}
 
 	// ************* 지혜 *************
 

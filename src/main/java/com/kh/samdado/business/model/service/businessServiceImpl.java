@@ -19,7 +19,9 @@ import com.kh.samdado.business.model.vo.rentcar.CarBooking;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.vo.User;
 
@@ -163,6 +165,25 @@ public class businessServiceImpl implements businessService {
   // TODO Auto-generated method stub
 		return 0;
   }
+	
+	// 일반결제 메소드 3개
+	@Override
+	public int insertIncome(Income i) {
+		// TODO Auto-generated method stub
+		return bDao.insertIncome(i);
+	}
+
+	@Override
+	public int insertBooking(Booking b) {
+		// TODO Auto-generated method stub
+		return bDao.insertBooking(b);
+	}
+
+	@Override
+	public int insertPoint(Point p) {
+		// TODO Auto-generated method stub
+		return bDao.insertPoint(p);
+	}
 
 	// 지혜
 	@Override
@@ -216,5 +237,7 @@ public class businessServiceImpl implements businessService {
 		// TODO Auto-generated method stub
 		return bDao.getBusDetail(bus_code);
 	}
+
+	
    
 }
