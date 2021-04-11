@@ -71,6 +71,7 @@ public interface MypageDao {
 	// 일반회원 - 가계부 삭제
 	public int deleteAcc(int accno);
 
-
+	// 일반회원 - 차트 조회 메소드
+	public List<AccountBook> selectChartList(AccountBook ab);
 
 }
