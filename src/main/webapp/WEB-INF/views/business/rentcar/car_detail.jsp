@@ -500,7 +500,7 @@
 
             <div id="ho_info">
                 <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
-                <label id="report_btn"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
+                <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="report_btn"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">064-738-7060</label>
             </div>
@@ -782,6 +782,48 @@
                     <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <!-- 신고Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <img src="../resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
+            <h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2>
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <form action="${ contextPath }/business/report" id="writeForm" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+            
+            <input type="hidden" name="rep_res" value="허위매물">
+            <input type="hidden" name="usno" value="${ loginUser.usno }">
+             <input type="hidden" name="bus_code" value="${ c.bus_code }">
+                      
+                <!--신고대상-->
+                <div class="name_div">
+                    <label for="id">신고대상</label>                   
+                    <input type="text" id="name" name="bus_name" value="${ c.bus_name }" readonly>
+                </div>
+                <!--신고사유-->
+                <div class="reason_div">
+                    <label for="reason">신고사유</label>                    
+                    <input type="text" id="reason" name="rep_cont" placeholder="50자 이내로 작성해주세요" required>
+                </div>
+                <!--파일첨부-->
+                <div class="reportimg_div">
+                    <label for="reportimg">파일첨부</label>                    
+                    <input type="file" id="reportimg" name="uploadFile">
+                </div>
+                
+            </div>
+            <div class="modal-footer">                
+                <button type="submit" id="reportBtn">신고하기</button>
+                <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
+            </div>
+            </form>
+        </div>
         </div>
     </div>
 
