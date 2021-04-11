@@ -658,6 +658,50 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
              REF_BUS_CODE = #{bus_code}
    </select>
    
+   <insert id="insertIncome" parameterType="Income">
+		INSERT
+		INTO Income
+		(
+			PAY_NO
+		  , ITEM
+		  , AMOUNT
+		  , PDATE
+		  , EXDATE
+		  , US_NO
+		)
+		VALUES
+		(
+			INC_SEQ_NO.NEXTVAL
+		  , #{item}
+		  , #{amount}
+		  , SYSDATE
+		  , NULL
+		  , #{usno}
+		)
+	</insert>
+		
+	<insert id="insertPoint" parameterType="Point">
+		INSERT
+		INTO POINT
+		(
+			PNO
+		  , PDATE
+		  , PDETAIL
+		  , PBALANCE
+		  , PAMOUNT
+		  , US_NO
+		)
+		VALUES
+		(
+			PON_SEQ_NO.NEXTVAL
+		  , SYSDATE
+		  , '포인트 충전'
+		  , #{pbalance}
+		  , #{pamount}
+		  , #{usno}
+		)
+	</insert>
+   
    <!-- 지혜 -->
    <select id="selectBannerAdImgList" resultMap="AllianceResultSet">
    	   SELECT

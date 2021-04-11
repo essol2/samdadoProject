@@ -16,6 +16,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     
     <style>
@@ -472,7 +473,7 @@
 <body>
 
    <!-- navi.jsp include -->
-   
+   <jsp:include page="../../common/navi.jsp"/>
     
     
     <section id="main-container">
@@ -881,7 +882,7 @@
                 </div>
             </div>
         </div>
-        </div>
+        
     </section>
     <script>
 	    $.datepicker.setDefaults({
@@ -957,10 +958,10 @@
                         </div>
                     </div>
                     <label>80,000원 * </label>
-                    <label><input type="text" id="days"></label>
+                    <label><input type="text" id="days" style="border:none;width:20px;" readonly></label>
                     <br>
                     <b>총 합계 : </b>
-                    <b><input type="text" id="payResult" readonly></b>
+                    <b><input type="text" id="payResult" style="border:none;width:80px" readonly></b>
                     <button class="payBtn">결제하기</button>
                 </div>
                 <div class="modal-footer">
