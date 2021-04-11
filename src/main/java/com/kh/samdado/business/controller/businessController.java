@@ -32,13 +32,15 @@ import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
 import com.kh.samdado.business.model.vo.hotel.Room;
 import com.kh.samdado.business.model.vo.hotel.RoomAtt;
+import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
-
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
-
+import com.kh.samdado.mypage.model.vo.Booking;
+import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.vo.User;
 
 
@@ -372,6 +374,17 @@ public class businessController {
 		}
 		return mv;
 	}
+	
+	// 결제 성공 시 insert
+	/*
+	@PostMapping("/pay")
+	public String payInsert(Income i, Booking b, Point p) {
+		
+		Income income = bService.insertIncome(i);
+		Booking booking = bService.insertBooking(b);
+		Point point = bService.insertPoint(p);
+		
+	}*/
 
 	// ************* 지혜 *************
 

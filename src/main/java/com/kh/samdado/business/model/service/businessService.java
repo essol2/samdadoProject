@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.user.model.vo.User;
 import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -90,7 +91,7 @@ public interface businessService {
 
 	// 배너 광고 인서트
 	int insertBannerAd(Alliance a);
-
+	
 	
 
 	
