@@ -14,27 +14,10 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <title>samdado</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
-    <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-	    $.datepicker.setDefaults({
-	        dateFormat: 'yy-mm-dd',
-	        prevText: '이전 달',
-	        nextText: '다음 달',
-	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-	        showMonthAfterYear: true,
-	        yearSuffix: '년'
-	    });
+    <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     
-        $( function() {
-          $( ".datepicker" ).datepicker();
-        } );
-    </script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -487,8 +470,9 @@
 </head>
 
 <body>
+
    <!-- navi.jsp include -->
-   <p>Date: <input type="text" id="datepicker" class="datepicker"></p>
+   
     
     
     <section id="main-container">
@@ -899,6 +883,24 @@
         </div>
         </div>
     </section>
+    <script>
+	    $.datepicker.setDefaults({
+	        dateFormat: 'yy-mm-dd',
+	        prevText: '이전 달',
+	        nextText: '다음 달',
+	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	        showMonthAfterYear: true,
+	        yearSuffix: '년'
+	    });
+    
+        $( function() {
+          $( ".datepicker" ).datepicker();
+        } );
+    </script>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -913,20 +915,20 @@
                     <!--체크인날짜-->
                     <div class="start-div">
                         <label for="startDate">체크인</label>
-                        <input type="date" id="startDate" name="startDate" onchange="startDate(this)">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
                     </div>
 
                     <!--체크아웃날짜-->
                     <div class="end-div">
                         <label for="endDate">체크아웃</label>
                         <label id="error" class="error">체크아웃날짜는 체크인날짜 이전 일 수 없습니다.</label>
-                        <input type="date" id="endDate" name="endDate" onchange="endDate(this)">
+                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)">
                     </div>
                 </div>
 
                 <div class="modal-body2">
                     <label>80,000원 / 박</label><br>
-                    <input type="hidden" name="cAmount" value="80000">
+                    <input type="hidden" id="cAmount" name="cAmount" value="80000">
                     <div class="modal-book">
                         <div class="checkin">
                             <label>체크인</label><br>
@@ -955,10 +957,10 @@
                         </div>
                     </div>
                     <label>80,000원 * </label>
-                    <label id="travleResult"></label>
+                    <label><input type="text" id="days"></label>
                     <br>
                     <b>총 합계 : </b>
-                    <b id="payResult"></b>
+                    <b><input type="text" id="payResult" readonly></b>
                     <button class="payBtn">결제하기</button>
                 </div>
                 <div class="modal-footer">
@@ -972,18 +974,9 @@
 
   	$(".payBtn").click(function() {
   		
-  		var name = $('input[name="cAmount"]:checked').val();
-  		
-  		var amount = 0;
-  		if(name == '80000'){
-  			amount = 100;
-  		} else if(name == '90000'){
-  			amount = 200;
-  		} else{
-  			amount = 300;
-  		}
-  		
-  		console.log(name);
+  		var name = document.getElementById('cAmount').value;
+  		var payResult = document.getElementById('payResult').value;
+  		var amount = payResult;
   		
 	    var IMP = window.IMP;
 	    IMP.init('imp34313892');
@@ -1017,6 +1010,20 @@
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('startDateResult').innerText
 	  	    = value;
+	  	  
+		  	var sdd = document.getElementById("startDate").value;
+		    var edd = document.getElementById("endDate").value;
+		    var amount = document.getElementById("cAmount").value;
+		    var ar1 = sdd.split('-');
+		    var ar2 = edd.split('-');
+		    var da1 = new Date(ar1[0], ar1[1], ar1[2]);
+		    var da2 = new Date(ar2[0], ar2[1], ar2[2]);
+		    var dif = da2 - da1;
+		    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+		    if(sdd && edd){		        
+		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
+		        document.getElementById('payResult').value = amount * days
+		     }
 	  	}
 	    
 	    function endDate(e) {
@@ -1024,6 +1031,20 @@
 		  	  document.getElementById('endDateResult').innerText
 		  	    = value;
 		  	  
+			  	var sdd = document.getElementById("startDate").value;
+			    var edd = document.getElementById("endDate").value;
+			    var amount = document.getElementById("cAmount").value;
+			    var ar1 = sdd.split('-');
+			    var ar2 = edd.split('-');
+			    var da1 = new Date(ar1[0], ar1[1], ar1[2]);
+			    var da2 = new Date(ar2[0], ar2[1], ar2[2]);
+			    var dif = da2 - da1;			    
+			    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			    
+			    if(sdd && edd){		        
+			        var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
+			        document.getElementById('payResult').value = amount * days
+			     }
 		  	}
 
 	    function handleOnChange(e) {
