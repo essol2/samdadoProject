@@ -86,10 +86,13 @@
                 <h3 style="margin-left : 3%;"> 이제, 여행은 가까운 곳에서.</h3>
                 <div class="tableArea">
 					<table id="bannerAdImglistTable">
+						<thead>
+							<tr>
+							</tr>
+					    </thead>
 						<tbody></tbody>
 					</table>
 				</div>
-                
             </div>
         </div>
         </section>
@@ -99,7 +102,7 @@
 	<script>
 		$(function() {
 			selectBannerAdImgList();
-			setInterval(selectBannerAdImgList, 5000);
+			setInterval(selectBannerAdImgList, 10000);
 		});
 		
 		function selectBannerAdImgList() {
@@ -113,14 +116,15 @@
 					tableBody.html("");
 					
 					for (var i in data) {
-						var td = $("<td onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
+						var tr = $("<tr onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
 						
 						var alno = $("<td>").text(data[i].alno); 
 						var bus_code = $("<td>").text(data[i].bus_code); 
-						var aimgcname = $("<td><img src='${ contextPath }/resources/busUploadFiles/alliance/'")+(data[i].aimgcname);
+						var aimgcname = $("<td>");
+						aimgcname.html("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + ">'");
 						
-						td.append(alno, bus_code, aimgcname);
-						tableBody.append(td);
+						tr.append(alno, bus_code, aimgcname);
+						tableBody.append(tr);
 					}
 				},
 				error : function(e) {
