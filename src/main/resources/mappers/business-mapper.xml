@@ -547,6 +547,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="selectMyBusinessCategory" parameterType="User" resultType="Business">
+		<!--  
 		SELECT
 				BUS_CODE,
 				US_NO,
@@ -574,7 +575,40 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 							     		ALLIANCE
 							     WHERE  US_NO = #{usno})
 		  AND	US_NO = #{usno}
-	</select>
+		 -->
+		 
+		  SELECT
+				BUS_CODE,
+				US_NO,
+				BUS_NAME,
+				BUS_ADDRESS,
+				BUS_INTRO,
+				BUS_DATE,
+				BUS_MODIFY,
+				AD_COUNT,
+				BUS_CLASSIFY,
+				BUS_CATEGORY,
+				BUS_STATUS,
+				BUS_PHONE,
+				HOTEL_CATEGORY,
+				TOUR_CATEGORY,
+				TOUR_TEMA,
+				AL_NO,
+				BUS_OPENING,
+				RES_CATEGORY
+		FROM    
+				SMBCVIEW
+		WHERE   BUS_CODE NOT IN (SELECT 
+										BUS_CODE
+							     FROM   
+							     		ALLIANCE, POINT
+							     WHERE
+                                 ALLIANCE.US_NO = POINT.US_NO
+                                 AND ALLIANCE.US_NO = #{usno}
+                                 AND POINT.PBALANCE <![CDATA[<>]]> 0)
+		  AND	US_NO = #{usno}
+		  
+	</select>  
 	
 	<insert id="insertBannerAd" parameterType="Alliance">
 		INSERT
@@ -704,6 +738,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
    
    <!-- 지혜 -->
    <select id="selectBannerAdImgList" resultMap="AllianceResultSet">
+   	   <!--  
    	   SELECT
                  ALLIANCE.AL_NO,
                  BUSINESS.BUS_CATEGORY,
@@ -714,6 +749,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         WHERE 	 
         		 BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
 		AND      ALSTATUS = 'Y'
+		-->
+		SELECT
+                 AL_NO, ALSTATUS, BUS_CODE
+		FROM    
+		                 ALLIANCE, POINT
+		WHERE 	 
+		                "POINT".US_NO = ALLIANCE.US_NO
+		AND      ALSTATUS = 'Y'
+		AND      POINT.PBALANCE <![CDATA[<>]]> 0
+		GROUP BY AL_NO, ALSTATUS, BUS_CODE
    </select>
    
    <select id="selectBannerAdDetail" parameterType="_int" resultMap="BusinessResultSet">
