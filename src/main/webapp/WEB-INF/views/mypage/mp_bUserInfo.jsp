@@ -232,7 +232,7 @@
 
                     <button class="clickedBtn" id="myInfo" onclick="location.href='${ contextPath }/mypage/buserinfo'"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/mp_userW.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToBuss();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/adverB.png" class="btnImg"> <br> 광고관리</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToPoint();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 포인트</div></button>
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/gotoqna'"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/qnaB.png" class="btnImg"> <br> 문의하기</div></button>
@@ -375,6 +375,10 @@
 		/* console.log("jsp안에서 usno확인 : " + usno); */
 		location.href='${contextPath}/mypage/point?usno='+${loginUser.usno};
 	};
+	
+	function goToBuss(){
+		location.href='${contextPath}/mypage/buss?usno='+${loginUser.usno};
+	}
 	</script>
  <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

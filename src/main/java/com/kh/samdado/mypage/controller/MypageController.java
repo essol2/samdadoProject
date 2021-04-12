@@ -1,6 +1,5 @@
 package com.kh.samdado.mypage.controller;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,13 +13,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.business.model.vo.business.BusinessAtt;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.mypage.model.vo.AccountBook;
@@ -269,7 +269,20 @@ public class MypageController {
 			}
 	 }
 	 
-
+	 // 제휴회원 - 내 사업장 조회 메소드
+	 @GetMapping("/buss")
+	 public ModelAndView selectBussList(@RequestParam(name="usno") String usno,
+			 							ModelAndView mv) {
+		 
+		 // 해당 사용자가 등록한 사업장 리스트 알아오기
+		 List<Business> bussList = mService.selectBussList(usno);
+		 
+		 System.out.println("bussList확인 : " + bussList);
+		 
+		 mv.addObject("bussList", bussList);
+		 mv.setViewName("mypage/mp_StoreList");
+		 return mv;
+	 }
 	 
 /*=====================================================================================================*/
 	 
@@ -542,7 +555,7 @@ public class MypageController {
 			 //return 0;
 	}
 
-	 // 선택 행 삭제하는 메소드
+	 // 가계부 - 선택 행 삭제하는 메소드
 	 @GetMapping("/deleteacc")
 	 public String deleteAcc(@RequestParam(name="accno") int accno,
 			 				 @RequestParam(name="usno") String usno,

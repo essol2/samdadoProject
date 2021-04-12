@@ -44,21 +44,45 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<result property="payMethod" column="PAYMETHOD"/>
 	</resultMap>
 	
-	<resultMap type="AccountBook" id="countResultSet">
-	<id property="accno" column="ACC_NO"/>
-	<result property="usno" column="US_NO"/>
-	<result property="accTripDate" column="ACC_TRIPD"/>
-	<result property="accName" column="ACC_NAME"/>
-	<result property="accClassify" column="ACC_CLASSIFY"/>
-	<result property="accWon" column="ACC_WON"/>
-	<result property="accWrited" column="ACC_WRITED"/>
-	<result property="accDutch" column="ACC_DUTCH"/>
-	<result property="accOneWon" column="ACC_ONEWON"/>
-	<result property="accAccompany" column="ACC_ACCOMPANY"/>
-	<result property="accFinWon" column="ACC_FINWON"/>
-	<result property="accPstatus" column="ACC_PSTATUS"/>
-	<result property="whopay" column="WHOPAY"/>
-	<result property="payMethod" column="PAYMETHOD"/>
+	<resultMap type="Business" id="bussResultSet">
+		<id property="bus_code" column="BUS_CODE" />
+		<result property="us_no" column="US_NO" />
+		<result property="bus_name" column="BUS_NAME" />
+		<result property="bus_address" column="BUS_ADDRESS" />
+		<result property="bus_intro" column="BUS_INTRO" />
+		<result property="bus_date" column="BUS_DATE" />
+		<result property="bus_modify" column="BUS_MODIFY" />
+		<result property="ad_count" column="AD_COUNT" />
+		<result property="bus_classify" column="BUS_CLASSIFY" />
+		<result property="bus_category" column="BUS_CATEGORY" />
+		<result property="bus_status" column="BUS_STATUS" />
+		<result property="bus_phone" column="BUS_PHONE" />
+		<result property="res_category" column="RES_CATEGORY"/>
+		<result property="hotel_category" column="HOTEL_CATEGORY" />
+		<result property="tour_category" column="TOUR_CATEGORY" />
+		<result property="tour_tema" column="TOUR_TEMA" />
+		<result property="al_no" column="AL_NO" />
+		<result property="bus_opening" column="BUS_OPENING" />
+		<result property="file_rename" column="FILE_RENAME" />	<!-- 비즈니스ATT 대한 JOIN -->
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />
+		<!-- 관광지프로덕트 조인 -->	
+		<result property="pro_name" column="PRO_NAME" />
+		<result property="pro_price" column="PRO_PRICE" />
+		<result property="pro_adult" column="PRO_ADULT" />
+		<result property="pro_youth" column="PRO_YOUTH" />
+		<result property="pro_child" column="PRO_CHILD" />
+		<!-- 차조인 -->
+		<result property="car_name" column="CAR_NAME" />
+		<result property="car_type" column="CAR_TYPE" />
+		<result property="car_producer" column="CAR_PRODUCER" />
+		<result property="car_fuel" column="CAR_FUEL" />
+		<result property="car_price" column="CAR_PRICE" />
+		<!-- 방 조인 -->
+		<result property="room_name" column="ROOM_NAME" />
+		<result property="room_price" column="ROOM_PRICE" />
+		<result property="room_people" column="ROOM_PEOPLE" />
+		<result property="room_amenity" column="ROOM_AMENITY" />
 	</resultMap>
 	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
@@ -278,6 +302,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				ACC_TRIPD DESC
 	</select>
 	
+	<!-- on/off버튼 누를 때 update -->
 	<update id="updateOnOffBtn" parameterType="AccountBook">
 		UPDATE
 				ACCOUNT
@@ -289,6 +314,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE
 				ACC_NO = #{accno}
 	</update>
+	
+	<!-- on/off전 원래 데이터 가져가기 -->
 	<select id="selectOrigin" resultMap="accountResultSet">
 		SELECT  * 
 		FROM 
@@ -296,11 +323,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE 
 				ACC_NO = #{accno}
 	</select>
+	
+	<!-- 가계부 선택 행 삭제 -->
 	<delete id="deleteAcc" parameterType="AccountBook">
 		DELETE
 		FROM ACCOUNT
 		WHERE ACC_NO = #{accno}
 	</delete>
+	
+	<!-- 가계부 차트 데이터 리스트 -->
 	<select id="selectChartList" resultMap="accountResultSet">
 		SELECT 
 				ACC_CLASSIFY
@@ -313,4 +344,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		GROUP BY 
 				ACC_CLASSIFY
 	</select> 
+	
+	<!-- 제휴회원 - 내 사업장 조회 리스트 -->
+	<select id="selectBussList" resultMap="bussResultSet">
+		SELECT *
+		FROM BUSINESS B, BUSINESS_ATT BA 
+		WHERE B.BUS_CODE = BA.BUS_CODE
+		AND B.US_NO = #{bus_code}
+	</select>
 </mapper>
