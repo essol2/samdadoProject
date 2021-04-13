@@ -5,6 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>투어 등록</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- 결제 API -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 <style>
 	/* 공통 - 폰트 */
   	* {
@@ -79,7 +85,22 @@
         text-align: center;
     }
 
-    #joinBtn{
+    .joinBtn{
+        width: 20%;
+        background-color:#467355;
+        border-radius:6px;
+        border:1px solid #467355;
+        cursor:pointer;
+        color:#ffffff;
+        font-family:Arial;
+        font-size:18px;
+        font-weight:bold;
+        padding:10px 79px;
+        text-decoration:none;
+        font-family: 'Nanum Gothic', sans-serif;
+    }
+    
+    .joinBtn1{
         width: 20%;
         background-color:#467355;
         border-radius:6px;
@@ -131,6 +152,14 @@
 	    width: 108%;
 	    padding: 10px;
     }
+    
+    h3 label{
+    	margin-top: 5px;
+    }
+    
+    .guideBox{
+    	margin-top: 20px;
+    }
 </style>
 </head>
 <body>
@@ -150,155 +179,300 @@
             </div>        
         </div>
 			
-			<form action="${ contextPath }/business/tour_insert" id="writeForm" method="post" enctype="multipart/form-data">
-            
-            <input type="hidden" name="us_no" value="${ loginUser.usno }">
-        	<input type="hidden" name="bus_category" value="T">
-			
-            <div class="join-main">
-			 	<div class="join-content">
-		         	<div class="join-wrap">
-	                    <h3><label>사업장명</label></h3>
-	                    <span  class="box">
-	                        <input type="text" class="content" name="bus_name" required>
-	                    </span>
-	                </div>
+		<form action="${ contextPath }/business/tour_insert" id="writeForm" method="post" enctype="multipart/form-data">
+           
+           <input type="hidden" name="us_no" value="${ loginUser.usno }">
+       	<input type="hidden" name="bus_category" value="T">
+		
+           <div class="join-main">
+		 	<div class="join-content">
+		 		
+		 		<div class="join-wrap">
+                    <h3><label>함께하기</label></h3>
+                    <span  class="box">
+                        <input type="radio" id="gen" name="bus_classify" value="G">
+		                <label for = "일반">일반</label>&nbsp;&nbsp;&nbsp;
+		                <input type="radio" id="pri" name="bus_classify" value="P">
+		                <label for = "프리미엄">프리미엄</label>&nbsp;
+                    </span>
+                </div>
+                
+                <div id="hidenDiv">
+                <div class="join-wrap" id="dateBox">
+                    <h3><label>개월</label></h3>
+                    <span  class="box">
+                        <select class="content" id="payCategory" name="primonth">
+	                    <option value="0" selected>선택</option>
+	                    <option value="30">1개월 : 10억</option>
+	                    <option value="90">3개월 : 27억</option>
+	                    <option value="180">6개월 : 58억</option>
+	                </select>
+                    </span>
+                </div>
 
-	                <!-- 도로명주소 api -->
-	            	<div class="join-wrap">
-		                <h3><label>우편주소</label></h3>
-						<span  class="box">
-		                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" style="width:80%;" readonly>
-			                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;">검색</button>
-		                </span>
-	            	</div>
-		            <div class="join-wrap">
-		                <h3><label>도로명주소</label></h3>
-						<span  class="box">
-		                    <input type="text" id="address2" name="bus_address" class="postcodify_address" readonly>                    
-		                </span>
-		            </div>
-		            <div class="join-wrap">
-						<h3><label>상세주소</label></h3>
-						<span  class="box">
-		                	<input type="text" id="address3" name="bus_address" class="postcodify_details">
-		                </span>
-		            </div>
-		            
-		            <!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
-					<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-					<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
-					<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
-		            
-		            <!-- 전화번호 -->
-					<div class="join-wrap">
-					    <h3><label>전화번호</label></h3>
-					    <span class="box">
-					        <input type="text" id="address" class="content" name="bus_phone">
-					    </span>
-					</div> 
-		            
-		            <!-- 상품명 -->
-		            <div class="join-wrap">
-		                <h3><label>상품명</label></h3>
-		                <span class="box">
-		                    <input type="text" id="bus_phone" name="pro_name" class="content" required>
-		                </span>
-		            </div>
-		            
-	                <!-- 테마 -->
-	                <div class="join-wrap">
-	                    <h3><label>테마</label></h3>
-	                    <span class="box">
-	                    <select class="content" name="tour_tema">
-	                        <option value="select" selected>선택</option>
-	                        <option value="신혼">신혼</option>
-	                        <option value="졸업">졸업</option>
-	                        <option value="일상">일상</option>
-	                        <option value="기타">기타</option>
-	                    </select>
-	                    </span>
+                
+                
+                <div class="guideBox">
+			        <h3>프리미엄 약관&nbsp;&nbsp;<span class="textbtn" style="font-size:20px">[열기]</span></h3>
+			        <div style="display:none">
+			            <div class="join-wrap">
+			                <div id="pricont" class="box" style="height:300px">
+			                   <textarea style="width: 100%; height:100%; text-align:left;">① “공급사업자”라 함은 본 서비스를 제공하는 사업자를 말한다.
+			                   ② “이용사업자”라 함은 본 서비스를 무료로 이용하는 자 및 공급사업자와 본 서비스 이용계약을 체결한 자로서 본 서비스를 이용하는 개인, 법인 또는 개인사업자 혹은 개인을 말한다.
+			                   ③ “신청사업자"라 함은 본 서비스를 유료로 이용하기 위해 이용신청을 하는 자를 말한다.
+							④ "이용계약"이라 함은 이용사업자가 본 서비스 이용을 개시하며 공급사업자와 상호 동의한 요금제 및 개별 계약을 말한다.
+							⑤ “최종이용자”라 함은 클라우드 컴퓨팅서비스를 통해 이용사업자가 제공하는 서비스를 이용하는 자를 말한다.
+							⑥ “이용사업자 데이터”라 함은 이용사업자 및 최종이용자가 공급사업자의 정보통신자원에 제출, 기록, 업로드 등의 형식으로 저장하는 정보로서 이용사업자가 소유 또는 관리하는 정보를 말한다.
+			                   </textarea>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+				</div>
+		 	
+	         	<div class="join-wrap">
+                    <h3><label>사업장명</label></h3>
+                    <span  class="box">
+                        <input type="text" class="content" name="bus_name" required>
+                    </span>
+                </div>
+
+                <!-- 도로명주소 api -->
+            	<div class="join-wrap">
+	                <h3><label>우편주소</label></h3>
+					<span  class="box">
+	                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" style="width:80%;" readonly>
+		                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;">검색</button>
+	                </span>
+            	</div>
+	            <div class="join-wrap">
+	                <h3><label>도로명주소</label></h3>
+					<span  class="box">
+	                    <input type="text" id="address2" name="bus_address" class="postcodify_address" readonly>                    
+	                </span>
+	            </div>
+	            <div class="join-wrap">
+					<h3><label>상세주소</label></h3>
+					<span  class="box">
+	                	<input type="text" id="address3" name="bus_address" class="postcodify_details">
+	                </span>
+	            </div>
+	            
+	            <!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
+				<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+				<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
+				<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+	            
+	            <!-- 전화번호 -->
+				<div class="join-wrap">
+				    <h3><label>전화번호</label></h3>
+				    <span class="box">
+				        <input type="text" id="address" class="content" name="bus_phone">
+				    </span>
+				</div> 
+	            
+	            <!-- 상품명 -->
+	            <div class="join-wrap">
+	                <h3><label>상품명</label></h3>
+	                <span class="box">
+	                    <input type="text" id="bus_phone" name="pro_name" class="content" required>
+	                </span>
+	            </div>
+	            
+                <!-- 테마 -->
+                <div class="join-wrap">
+                    <h3><label>테마</label></h3>
+                    <span class="box">
+                    <select class="content" name="tour_tema">
+                        <option value="select" selected>선택</option>
+                        <option value="신혼">신혼</option>
+                        <option value="졸업">졸업</option>
+                        <option value="일상">일상</option>
+                        <option value="기타">기타</option>
+                    </select>
+                    </span>
+                </div>
+
+                <!-- 유형 -->
+                <div class="join-wrap">
+                    <h3><label>유형</label></h3>
+                    <span class="box">
+                    <select class="content" name="tour_category">
+                        <option value="select" selected>선택</option>
+                        <option value="체험">체험</option>
+                        <option value="전시회">전시회</option>
+                    </select>
+                    </span>
+                </div>
+                
+                <!-- 가격 -->
+	            <div class="join-wrap">
+	            <br>
+	            	<h3><label>입장료(가격)</label></h3>
+	                <h3><label>어른</label></h3>
+	                <span class="box">
+	                    <input type="text" id="bus_phone" name="pro_adult" class="content">
+	                </span>
+	                <h3><label>청소년</label></h3>
+	                <span class="box">
+	                    <input type="text" id="bus_phone" name="pro_youth" class="content" >
+	                </span>
+	                <h3><label>어린이</label></h3>
+	                <span class="box">
+	                    <input type="text" id="bus_phone" name="pro_child" class="content" >
+	                </span>
+	            </div>
+	            
+                <!-- 인원 -->
+                <div class="join-wrap">
+                    <h3><label>인원</label></h3>
+                    <span class="box">
+                    <select class="content" id="category" name="res_category">
+	                    <option value="select" selected>명</option>
+	                    <option value="1">1</option>
+	                    <option value="2">2</option>
+	                    <option value="3">3</option>
+	                    <option value="4">4</option>
+	                    <option value="etc">5</option>
+                	</select>
+                	</span>
+                </div>
+                
+                <!-- 영업시간 -->
+	            <div class="join-wrap">
+	                <h3><label for="opening">영업시간</label></h3>
+	                <div class="opening-div"> 
+	                    <input type="time" id="opening" name="bus_opening" class="content">
+	                    ~
+	                    <input type="time" id="opening" name="bus_opening" class="content">
 	                </div>
-	
-	                <!-- 유형 -->
-	                <div class="join-wrap">
-	                    <h3><label>유형</label></h3>
-	                    <span class="box">
-	                    <select class="content" name="tour_category">
-	                        <option value="select" selected>선택</option>
-	                        <option value="체험">체험</option>
-	                        <option value="전시회">전시회</option>
-	                    </select>
-	                    </span>
-	                </div>
-	                
-	                <!-- 가격 -->
-		            <div class="join-wrap">
-		            	<h3><label>입장료(가격)</label></h3>
-		                <span class="box">
-		                    <input type="text" id="bus_phone" name="pro_price" class="content" required>
-		                </span>
-		                <h3><label>어른</label></h3>
-		                <span class="box">
-		                    <input type="text" id="bus_phone" name="pro_adult" class="content">
-		                </span>
-		                <h3><label>청소년</label></h3>
-		                <span class="box">
-		                    <input type="text" id="bus_phone" name="pro_youth" class="content" >
-		                </span>
-		                <h3><label>어린이</label></h3>
-		                <span class="box">
-		                    <input type="text" id="bus_phone" name="pro_child" class="content" >
-		                </span>
-		            </div>
-		            
-	                <!-- 인원 -->
-	                <div class="join-wrap">
-	                    <h3><label>인원</label></h3>
-	                    <span class="box">
-	                    <select class="content" id="category" name="res_category">
-		                    <option value="select" selected>명</option>
-		                    <option value="1">1</option>
-		                    <option value="2">2</option>
-		                    <option value="3">3</option>
-		                    <option value="4">4</option>
-		                    <option value="etc">5</option>
-	                	</select>
-	                	</span>
-	                </div>
-	                
-	                <!-- 영업시간 -->
-		            <div class="join-wrap">
-		                <h3><label for="opening">영업시간</label></h3>
-		                <div class="opening-div"> 
-		                    <input type="time" id="opening" name="bus_opening" class="content">
-		                    ~
-		                    <input type="time" id="opening" name="bus_opening" class="content">
-		                </div>
-		            </div>   
-	
-	                <!-- 매장사진 -->
-					<div class="join-wrap">
-					    <h3><label>매장사진</label></h3>
-					    <span class="box">
-					        <input type="file" name="uploadFile" class="content" required>
-					    </span>   
-					</div>
-	                
-	                <!-- 소개글 -->
-					<div class="join-wrap">
-					    <h3><label>소개글</label></h3>
-					    <textarea id="intArea" class="textArea-con" name="bus_intro" rows="10" cols="64" style="resize:none;"></textarea>
-					</div>
+	            </div>   
+
+                <!-- 매장사진 -->
+				<div class="join-wrap">
+				    <h3><label>매장사진</label></h3>
+				    <span class="box">
+				        <input multiple="multiple" type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 매장사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 매장사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 매장사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+                
+                <!-- 소개글 -->
+				<div class="join-wrap">
+				    <h3><label>소개글</label></h3>
+				    <textarea id="intArea" class="textArea-con" name="bus_intro" rows="10" cols="64" style="resize:none;"></textarea>
 				</div>
 			</div>
-			<div class="btnArea">
-	            <button id="joinBtn">등록하기</button>
-	            <button type="button" id="joinBtn" onclick="javascript.historyback()">돌아가기</button>
-	        </div>
-			</form>
 		</div>
+		<div class="btnArea">
+	            	<button type="submit" class="joinBtn1" id="submitBtn" style="display:none;"><a>등록하기</a></button>
+	            	
+		            <button class="joinBtn1" id="payBtn" type="button"><a>결제하기</a></button>
+		            <button type="button" class="joinBtn" onclick="javascript.historyback()">돌아가기</button>
+		        </div>
+		</form>
+	</div>
+<script>	
+$("#gen").change(function() {
+    $("#hidenDiv").hide();
+});
+
+$("#pri").change(function(){
+	$("#hidenDiv").show();
+});
+
+$(document).on("click",".guideBox > h3",function(){
+    if($(this).next().css("display")=="none"){
+        $(this).next().show();
+        $(this).children("span").text("[닫기]");
+    }else{
+        $(this).next().hide();
+        $(this).children("span").text("[열기]");
+    }
+});
+
+$("#pri").change(function() {
+    if(this.checked) {
+        $("#payBtn").show();
+        $("#submitBtn").hide();
+    }
+});
+
+$("#gen").change(function(){
+	if(this.checked){
+		$("#submitBtn").show();
+		$("#payBtn").hide();
+	}
+});
+
+
+
+$("#payBtn").on("click",function() {
+	
+var name = $("#payCategory option:selected").val();
+
+console.log(name);
+var amount = 0;
+if(name == '30'){
+	amount = 100;
+} else if(name == '90'){
+	amount = 200;
+} else{
+	amount = 300;
+}
+console.log(name);
+
+    var IMP = window.IMP;
+    IMP.init('imp34313892');
+    IMP.request_pay({
+        pg : 'html5_inicis',
+        pay_method : 'card',
+        merchant_uid : 'merchant_' + new Date().getTime(),
+        name : name,
+        amount : amount,
+        buyer_email : "${loginUser.usemail}",
+        buyer_name : "${loginUser.usname}",
+        buyer_tel : "${loginUser.usphone}",
+        buyer_addr : '',
+        buyer_postcode : ''
+    }, function(rsp) {
+        if ( rsp.success ) {
+            var msg = '결제가 완료되었습니다!';
+           	$("#payBtn").hide();
+           	$("#submitBtn").show();
+            msg += '결제 금액 : ' + rsp.paid_amount;
+        } else {
+            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
+        }
     
+        alert(msg);
+    });
+});
+
+</script>    
     
     
     

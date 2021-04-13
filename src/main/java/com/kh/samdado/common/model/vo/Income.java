@@ -38,4 +38,6 @@ public class Income {
 	private String usno;
 	
 	private String usname; // user 테이블 조인 후 추가 컬럼
+	
+	private int primonth;
 }

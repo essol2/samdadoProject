@@ -125,6 +125,19 @@
         width: 100%;
 
     }
+    
+    h3 label{
+    	margin-top: 5px;
+    }
+    
+    .guideBox{
+    	margin-top: 20px;
+    }
+    
+    .textbtn{
+    	font-size:20px; 
+    	cursor:pointer;
+    }
 </style>
 </head>
 <body>
@@ -133,6 +146,7 @@
 	
 	<!-- 메인 -->
 	<div class="main-container">
+	
 		<!-- 로고헤더 -->
         <div class="logo-div">
             <div class="logo-wrap">
@@ -147,10 +161,51 @@
 		
 		<input type="hidden" name="us_no" value="${ loginUser.usno }">
 		<input type="hidden" name="bus_category" value="C">
-		<input type="hidden" name="res_category" value="">
 		
-		 <div class="join-main">
-			 <div class="join-content">
+		<div class="join-main">
+			<div class="join-content">
+			 
+			 	<div class="join-wrap">
+                    <h3><label>함께하기</label></h3>
+                    <span  class="box">
+                        <input type="radio" id="gen" name="bus_classify" value="G">
+		                <label for = "일반">일반</label>&nbsp;&nbsp;&nbsp;
+		                <input type="radio" id="pri" name="bus_classify" value="P">
+		                <label for = "프리미엄">프리미엄</label>&nbsp;
+                    </span>
+                </div>
+                
+				<div id="hidenDiv">
+                <div class="join-wrap" id="dateBox">
+                    <h3><label>개월</label></h3>
+                    <span  class="box">
+                        <select class="content" id="payCategory" name="primonth">
+	                    <option value="0" selected>선택</option>
+	                    <option value="30">1개월 : 10억</option>
+	                    <option value="90">3개월 : 27억</option>
+	                    <option value="180">6개월 : 58억</option>
+	                </select>
+                    </span>
+                </div>
+                
+                <div class="guideBox">
+			        <h3>프리미엄 약관&nbsp;&nbsp;<span class="textbtn" >[열기]</span></h3>
+			        <div style="display:none">
+			            <div class="join-wrap">
+			                <div id="pricont" class="box" style="height:300px">
+			                   <textarea style="width: 100%; height:100%; text-align:left;">① “공급사업자”라 함은 본 서비스를 제공하는 사업자를 말한다.
+			                   ② “이용사업자”라 함은 본 서비스를 무료로 이용하는 자 및 공급사업자와 본 서비스 이용계약을 체결한 자로서 본 서비스를 이용하는 개인, 법인 또는 개인사업자 혹은 개인을 말한다.
+			                   ③ “신청사업자"라 함은 본 서비스를 유료로 이용하기 위해 이용신청을 하는 자를 말한다.
+							④ "이용계약"이라 함은 이용사업자가 본 서비스 이용을 개시하며 공급사업자와 상호 동의한 요금제 및 개별 계약을 말한다.
+							⑤ “최종이용자”라 함은 클라우드 컴퓨팅서비스를 통해 이용사업자가 제공하는 서비스를 이용하는 자를 말한다.
+							⑥ “이용사업자 데이터”라 함은 이용사업자 및 최종이용자가 공급사업자의 정보통신자원에 제출, 기록, 업로드 등의 형식으로 저장하는 정보로서 이용사업자가 소유 또는 관리하는 정보를 말한다.
+			                   </textarea>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+                </div>
+			 	
 	         	<div class="join-wrap">
                     <h3><label>사업장명</label></h3>
                     <span  class="box">
@@ -212,10 +267,9 @@
 				<div class="join-wrap">
 				    <h3><label>소개글</label></h3>
 				    <textarea id="intArea" class="textArea-con" name="bus_intro" rows="10" cols="64" style="resize:none;"></textarea>
-				</div>
+				</div>	
 			</div>
 		</div>
-		
 		<!-- 라인 -->
         <hr style="margin-top:5%;">
 			
@@ -228,10 +282,10 @@
         <div class="car-main" id="car-main">
 			<div class="join-content" id="join-content">
 			
-				<div class="join-wrap">
+				<div class="join-wrap"> 
 					<h3><label>제작사</label></h3>
 				    <span class="box">
-				        <input type="text" id="address" class="content" name="car_producer">
+				        <input multiple="multiple" type="text" id="address" class="content" name="carList[0].car_producer">
 				    </span>
 				</div> 
 				
@@ -239,7 +293,7 @@
 				<div class="join-wrap">
 				    <h3><label>차량</label></h3>
 				    <span class="box">
-				        <input type="text" id="address" class="content" name="car_name">
+				        <input multiple="multiple" type="text" id="address" class="content" name="carList[0].car_name">
 				    </span>
 				</div> 
 				
@@ -247,15 +301,37 @@
 				<div class="join-wrap">
 				    <h3><label>가격</label></h3>
 				    <span class="box">
-				        <input type="text" id="mobile" class="content" name="car_price" required>
+				        <input multiple="multiple" type="text" id="mobile" class="content" name="carList[0].car_price" required>
 				    </span>
 				</div>
 				
 				<!-- 차종 -->
-				<div class="join-wrap">
+		        <div class="join-wrap" >
+		            <h3><label>차종</label></h3>           
+	                <input multiple="multiple" type="radio" name="carList[0].car_type" value="소형">
+	                <label for = "소형">소형</label>&nbsp;
+	                <input type="radio" name="carList[0].car_type" value="중형">
+	                <label for = "중형">중형</label>&nbsp;
+	                <input type="radio" name="carList[0].car_type" value="대형">
+	                <label for = "대형">대형</label>&nbsp;
+	                <input type="radio" name="carList[0].car_type" value="스포츠">
+	                <label for = "스포츠">스포츠</label>&nbsp;
+		        </div>
+		        
+		        <!-- 연료 -->
+		        <div class="join-wrap" >
+		            <h3><label>연료</label></h3>           
+	                <input multiple="multiple" type="radio" name="carList[0].car_fuel" value="디젤">
+	                <label for = "디젤">디젤</label>&nbsp;
+	                <input type="radio" name="carList[0].car_fuel" value="가솔린">
+	                <label for ="가솔린">가솔린</label>&nbsp;
+		        </div>
+				
+				 <!-- 차종 -->
+				<!--<div class="join-wrap">
 				    <h3><label>차종</label></h3>
 				    <span class="box">
-			        <select class="content" name="car_type">
+			        <select class="content" multiple="multiple" name="car_type">
 			            <option value="select" selected>선택</option>
 			            <option value="소형">소형</option>
 			            <option value="중형">중형</option>
@@ -265,45 +341,155 @@
 			        </span> 
 				</div>
 				
-				<!-- 연료 -->
+				연료
 				<div class="join-wrap">
 				    <h3><label>연료</label></h3>
 				    <span class="box">
-			        <select class="content" name="car_fuel">
+			        <select class="content" multiple="multiple" name="car_fuel">
 			            <option value="select" selected>선택</option>
 			            <option value="디젤">디젤</option>
 			            <option value="가솔린">가솔린</option>
 			        </select>
 			        </span>                
-				</div>
+				</div> -->
 				
+				
+				
+				<!-- 차량사진 -->
+				<div class="join-wrap">
+				    <h3><label>차량사진</label></h3>
+				    <span class="box">
+				        <input multiple="multiple" type="file" name="car" class="content" required>
+				    </span>
+				</div>
 				<!-- 차량사진 -->
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="car" class="content" required>
+				        <input type="file" name="car" class="content">
+				    </span>
+				</div>
+				<!-- 차량사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="car" class="content">
+				    </span>
+				</div>
+				<!-- 차량사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="car" class="content">
+				    </span>
+				</div>
+				<!-- 차량사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="car" class="content">
 				    </span>
 				</div>
 			</div>
 		</div>
-		<div class="btnArea">
-            <button id="joinBtn">등록하기</button>
-            <button type="button" id="joinBtn" onclick="javascript.historyback()">돌아가기</button>
-        </div>
+		
+			<div class="btnArea">
+            	<button type="submit" class="joinBtn1" id="submitBtn" style="display:none;"><a>등록하기</a></button>
+            	
+	            <button class="joinBtn1" id="payBtn" type="button"><a>결제하기</a></button>
+	            <button type="button" class="joinBtn" onclick="javascript.historyback()">돌아가기</button>
+	        </div>
 		</form>
 	</div>
-	<script>
-        function addCar(){
-            var div = document.createElement('div');
+	
+<script>
+       function addCar(){
+           var div = document.createElement('div');
 
-            $(div).attr('class', 'join-content');
+           $(div).attr('class', 'join-content');
 
-            div.innerHTML = document.getElementById('join-content').innerHTML;
+           div.innerHTML = document.getElementById('join-content').innerHTML;
 
-            document.getElementById('car-main').appendChild(div);
+           document.getElementById('car-main').appendChild(div);
 
-        }
-	</script>
+       }
+       
+       $("#gen").change(function() {
+    	    $("#hidenDiv").hide();
+    	});
+
+    	$("#pri").change(function(){
+    		$("#hidenDiv").show();
+    	});
+
+    	$(document).on("click",".guideBox > h3",function(){
+    	    if($(this).next().css("display")=="none"){
+    	        $(this).next().show();
+    	        $(this).children("span").text("[닫기]");
+    	    }else{
+    	        $(this).next().hide();
+    	        $(this).children("span").text("[열기]");
+    	    }
+    	});
+
+    	$("#pri").change(function() {
+    	    if(this.checked) {
+    	        $("#payBtn").show();
+    	        $("#submitBtn").hide();
+    	    }
+    	});
+
+    	$("#gen").change(function(){
+    		if(this.checked){
+    			$("#submitBtn").show();
+    			$("#payBtn").hide();
+    		}
+    	});
+
+
+
+    	$("#payBtn").on("click",function() {
+    		
+    	var name = $("#payCategory option:selected").val();
+
+    	console.log(name);
+    	var amount = 0;
+    	if(name == '30'){
+    		amount = 100;
+    	} else if(name == '90'){
+    		amount = 200;
+    	} else{
+    		amount = 300;
+    	}
+    	console.log(name);
+
+    	    var IMP = window.IMP;
+    	    IMP.init('imp34313892');
+    	    IMP.request_pay({
+    	        pg : 'html5_inicis',
+    	        pay_method : 'card',
+    	        merchant_uid : 'merchant_' + new Date().getTime(),
+    	        name : name,
+    	        amount : amount,
+    	        buyer_email : "${loginUser.usemail}",
+    	        buyer_name : "${loginUser.usname}",
+    	        buyer_tel : "${loginUser.usphone}",
+    	        buyer_addr : '',
+    	        buyer_postcode : ''
+    	    }, function(rsp) {
+    	        if ( rsp.success ) {
+    	            var msg = '결제가 완료되었습니다!';
+    	           	$("#payBtn").hide();
+    	           	$("#submitBtn").show();
+    	            msg += '결제 금액 : ' + rsp.paid_amount;
+    	        } else {
+    	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
+    	        }
+    	    
+    	        alert(msg);
+    	    });
+    	});       
+</script>
     
     
 	<footer>
