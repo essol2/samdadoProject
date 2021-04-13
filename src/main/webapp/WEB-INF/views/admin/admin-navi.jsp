@@ -14,8 +14,9 @@
    <div class="col-2" id="A"> 
      <div>
        <!-- 프로필사진 -------------------------------------------------------------------------------------------------------------------------------->
-       <div class="card" style="width: 99%; height: 180px; border-style: none;">  		           
-           <img src="${ contextPath }/resources/images/image_admin/samdado_font_main.png" class="card-img-top" alt="...">
+       <div class="card" style="width: 99%; height: 180px; border-style: none;">
+       	   <br>  		           
+           <img src="${ contextPath }/resources/images/image_admin/font_img.png" class="card-img-top" alt="...">
            <div style="padding-top: 4%; padding-bottom: 2%; padding-right: 2%;">
              <h5 style="text-align: center;"><b>${ loginUser.usname }</b></h5>
            </div>

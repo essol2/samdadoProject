@@ -287,11 +287,168 @@
             </div>
         </div>
     
-    <script>
+    <script language=JavaScript>
+    	var arr = new Array();
+    	<c:forEach items="${list}" var="list">
+    		arr.push({
+    			title: "${list.spot_title}",
+    			address: "${list.spot_address}"
+    			});
+    	</c:forEach>
+    	
+    	var positions = arr;
+    	
+    	var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
+			level: 8
+		};
+
+		var map = new kakao.maps.Map(container, options);
+		
+		var geocoder = new kakao.maps.services.Geocoder();
+		var imageSrc = "${ contextPath }/resources/images/image_route/marker.png";
+		var imageSize = new kakao.maps.Size(33, 54);
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		var bounds = new kakao.maps.LatLngBounds();
+		var linePath = new Array();
+		
+		var linePath = [];
+
+		var polyline = new kakao.maps.Polyline({
+		    path: linePath,
+		    strokeWeight: 3,
+		    strokeOpacity: 1,
+		    strokeColor: 'red',
+		    strokeStyle: 'solid'
+		});
+
+		const addressSearch = address => {
+		    return new Promise((resolve, reject) => {
+		        geocoder.addressSearch(address.address, function(result, status) {
+		            if (status === kakao.maps.services.Status.OK) {
+		            	
+		            	  var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					        
+					        console.log(result[0]);
+						       
+						       // 결과값으로 받은 위치를 마커로 표시합니다
+						        var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords,
+						            image: markerImage
+						        });
+						       
+						       marker.setMap(map);
+							
+					        // 인포윈도우로 장소에 대한 설명을 표시합니다
+					        var infowindow = new kakao.maps.InfoWindow({
+					            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address.title + '</div>'
+					        });
+					        
+					        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+						    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+					    	
+					    	bounds.extend(new kakao.maps.LatLng(coords.Ma, coords.La));
+					    	map.setBounds(bounds);
+		            	
+		                resolve(result);
+		            } else {
+		                reject(status);
+		            }
+		        });
+		    });
+		};
+
+		(async () => {
+		    try {
+		        for(let address of positions) {
+		            const result = await addressSearch(address);
+		            setPolyLine(result);
+		        }
+		    } catch (e) {
+		        console.log(e);
+		    }
+		})();
+
+		function setPolyLine(result) {
+		    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		    linePath.push(coords);
+		    polyline.setPath(linePath);
+
+		    if(!polyline.getMap()) {
+		        polyline.setMap(map);
+		    }
+		}
+		
+		/* positions.forEach(function(addr, index){
+			geocoder.addressSearch(addr.address, function(result, status) {
+				
+				 if (status === kakao.maps.services.Status.OK) {
+					 
+				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+				        
+				        console.log(result[0]);
+					       
+					       // 결과값으로 받은 위치를 마커로 표시합니다
+					        var marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords,
+					            image: markerImage
+					        });
+					       
+					       marker.setMap(map);
+						
+				        // 인포윈도우로 장소에 대한 설명을 표시합니다
+				        var infowindow = new kakao.maps.InfoWindow({
+				            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + positions[index].title + '</div>'
+				        });
+				        
+				        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+				    	
+				    	bounds.extend(new kakao.maps.LatLng(coords.Ma, coords.La));
+				    	map.setBounds(bounds);
+				    	
+						linePath.push(new kakao.maps.LatLng(coords.Ma, coords.La)); 
+						console.log(linePath);
+						
+						var polyline = new kakao.maps.Polyline({
+									path: linePath, 
+									strokeWeight: 3, 
+									strokeOpacity: 1,
+									strokeColor: 'red', 
+									strokeStyle: 'solid' 
+						});
+						
+						/* polyline.setMap(map);
+						
+						console.log("길이: " + polyline.getLength());
+
+				 }
+				
+				 });
+			}); */
+		
+		function makeOverListener(map, marker, infowindow) {
+			return function() {
+				infowindow.open(map, marker);
+				};
+			}
+
+			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			function makeOutListener(infowindow) {
+				return function() {
+					infowindow.close();
+				};
+			}
+    </script>
+    
+    <!-- <script>
 		var container = document.getElementById('map');
 		var options = {
 			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
-			level: 4
+			level: 9
 		};
 
 		var map = new kakao.maps.Map(container, options);
@@ -301,15 +458,15 @@
 		var imageSize = new kakao.maps.Size(33, 54);
 		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 		
-		<c:forEach var="list" items="${list}">
+		<c:forEach var="list" items="${list}" varStatus="listStatus">
 			// 주소로 좌표를 검색합니다
 			geocoder.addressSearch('${list.spot_address}', function(result, status) {
 	
 			    // 정상적으로 검색이 완료됐으면 
 			     if (status === kakao.maps.services.Status.OK) {
-	
-			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	
+					
+			         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
 			        // 결과값으로 받은 위치를 마커로 표시합니다
 			        var marker = new kakao.maps.Marker({
 			            map: map,
@@ -325,10 +482,23 @@
 			       kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
 			       kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 	
-			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			        map.setCenter(coords);
+			         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			      map.setCenter(coords);
+			         
+			      var first_polyline = new kakao.maps.LatLng(coords.La, coords.Ma);
+			      
+			      console.log(first_polyline);
+			      
+			      var first_linePath = new kakao.maps.Polyline({
+			    	 path: first_polyline,
+			    	 strokeWeight: 3,
+			    	 strokeColor: 'red',
+			    	 strokeStyle: 'solid'
+			      });first_linePath.setMap(map);
 			    } 
 			    
+			      
+			      
 			     function makeOverListener(map, marker, infowindow) {
 			    	    return function() {
 			    	        infowindow.open(map, marker);
@@ -342,9 +512,10 @@
 			    	    };
 			    	}
 			});    
+			
 		</c:forEach>
 
-	</script>
+	</script> -->
 </body>
 		<footer>
            <jsp:include page="../common/footer.jsp"/>

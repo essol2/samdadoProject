@@ -17,6 +17,8 @@ import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.vo.Booking;
+import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.vo.User;
 
 public interface businessDao {
@@ -86,7 +88,12 @@ public interface businessDao {
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
 
-	
+	// 일반결제 메소드3개
+	int insertIncome(Income i);
+
+	int insertBooking(Booking b);
+
+	int insertPoint(Point p);
 
 	// 비즈니스 등록 폼, 본인이 등록한 사업장 셀렉
 	List<Business> selectMyBusinessCategory(User loginUser);
@@ -94,12 +101,27 @@ public interface businessDao {
 	//배너 광고 인서트
 	int insertBannerAd(Alliance a);
 
+
 	// 프리미엄 등록 시 
 	int insertIncome(Income i);
 
-	
+	List<Alliance> selectBannerAdImgList();
+
+	Business selectBannerAdDetail(Business selectBusCodeUser);
+
+	Business selectBusCodeUser(int bus_code);
+
+	int insertPointDeduction(Business selectBusCodeUser);
+
+	int updateReadCount(Business selectBusCodeUser);
+
+	Business getBusDetail(int bus_code);
+
 
 	
+
+
+
 
 
 

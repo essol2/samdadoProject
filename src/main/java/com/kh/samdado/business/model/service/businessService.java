@@ -3,6 +3,8 @@ package com.kh.samdado.business.model.service;
 import java.util.List;
 
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.vo.Booking;
+import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.vo.User;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
@@ -84,6 +86,13 @@ public interface businessService {
 
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
+	
+	// 일반결제 메소드 3개
+	public int insertIncome(Income i);
+
+	int insertBooking(Booking b);
+
+	int insertPoint(Point p);
 
 	// 배너 광고 등록 폼, 본인 사업장 가져오기
 	List<Business> selectMyBusinessCategory(User loginUser);
@@ -93,6 +102,16 @@ public interface businessService {
 	
 	// 프리미엄 등록 시 만료일
 	int insertIncome(Income i);
+
+	List<Alliance> selectBannerAdImgList();
+
+	Business selectBusCodeUser(int bus_code);
+
+	Business selectBannerAdDetail(Business selectBusCodeUser, boolean flag);
+
+	Business getBusDetail(int bus_code);
+
+	
 
 	
 

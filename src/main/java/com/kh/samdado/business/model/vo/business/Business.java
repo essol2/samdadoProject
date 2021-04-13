@@ -71,4 +71,9 @@ public class Business {
 	private int room_price;
 	private String room_people;
 	private String room_amenity;
+	
+	// 파일 한번에 리스트로 담기위한 객체속성!
+	private String file_root;	// 파일경로
+	private String file_name;	// 파일명
+
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
+import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.user.model.vo.User;
 
 @Repository 
@@ -88,6 +89,12 @@ public class UserDaoImpl implements UserDao {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return sqlSession.selectList("userMapper.selectAllUserList", null, rowBounds);
+	}
+
+	@Override
+	public List<User> searchUserList(aSearch search) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("userMapper.searchUserList", search);
 	}
 
 

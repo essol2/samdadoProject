@@ -59,6 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="alintro" column="AL_INTRO" />
 		<result property="alsubdate" column="AL_SUBDATE" />
 		<result property="startdate" column="START_DATE" />
+		<result property="alstatus" column="ALSTATUS" />
 		<result property="aimgpath" column="A_IMG_PATH" />
 		<result property="aimgname" column="A_IMG_NAME" />
 		<result property="aimgcname" column="A_IMG_CNAME" />
@@ -71,6 +72,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="amount" column="amount" />	
 		<!-- BUSINESS 테이블 조인을 위한 필드 -->
 		<result property="bus_category" column="BUS_CATEGORY" />	
+		<!-- POINT 테이블 조인을 위한 필드 -->
+		<result property="pbalance" column="PBALANCE" />
 	</resultMap>
 	
 	<resultMap type="Income" id="IncomeResultSet">
@@ -81,7 +84,22 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="exdate" column="EXDATE" />
 		<result property="usno" column="US_NO" />
 		<!-- USER 테이블 조인을 위한 필드 -->
-		<result property="usname" column="US_NAME" />	
+		<result property="usname" column="US_NAME" />
+		<!-- BUSINESS 테이블 조인을 위한 필드 -->
+		<result property="bus_code" column="BUS_CODE" />
+	</resultMap>
+	
+	<resultMap type="Point" id="pointResultSet">
+		<id property="pno" column="PNO" />
+		<result property="pdate" column="PDATE" />
+		<result property="pdetail" column="PDETAIL" />
+		<result property="pbalance" column="PBALANCE" />
+		<result property="pamount" column="PAMOUNT" />
+		<result property="usno" column="US_NO" />
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />
+		<!-- BUSINESS 테이블 조인을 위한 필드 -->
+		<result property="bus_category" column="BUS_CATEGORY" />	
 	</resultMap>
 	
 	<select id="selectAdminMainQnaSelect" resultMap="qnaResultSet">
@@ -231,7 +249,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<select id="countAd1" resultType="_int">	
 		SELECT 
-			  COUNT(*)
+			  COUNT(*)	
 		  FROM
 		      ALLIANCE
 		 WHERE
@@ -239,7 +257,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>	
 
 	<select id="adminbannerAdSelect" resultMap="AllianceResultSet">
-		SELECT
+	<!--  	SELECT
 				ALLIANCE.AL_NO,
                 "USER".US_NAME,
                 BUSINESS.BUS_CATEGORY,
@@ -261,9 +279,321 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         AND     ALLIANCE.US_NO = "USER".US_NO
         AND     BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
 		AND     ALSTATUS = 'N'
+	-->
+	
+		 SELECT
+                 ALLIANCE.AL_NO,
+                 "USER".US_NAME,
+                 "POINT".PBALANCE,
+                 BUSINESS.BUS_CATEGORY,
+                 BUSINESS.BUS_CODE,
+                 AL_INTRO,
+                 AL_SUBDATE,
+                 ALSTATUS,
+                 START_DATE,
+                 A_IMG_PATH,
+                 A_IMG_NAME,
+                 A_IMG_CNAME,
+                 A_MASSAGE,
+                 ALLIANCE.US_NO
+		FROM    
+                 ALLIANCE,  "USER", BUSINESS, "POINT"
+        WHERE 	 ALLIANCE.US_NO = "USER".US_NO
+        AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
+        AND      "POINT".US_NO(+) = ALLIANCE.US_NO
+		AND      ALSTATUS = 'N'
 	</select>
 	
+	<update id="updateAdmitBannerAdStatus" parameterType="Alliance">
+		UPDATE 
+			   ALLIANCE
+		   SET
+			   ALSTATUS = 'Y',
+			   START_DATE = SYSDATE + 3
+	     WHERE
+	     	   AL_NO = #{ alno }
+	       AND BUS_CODE = #{ bus_code }
+	</update>
+	
+	<update id="updateRejectBannerAdStatusRI" parameterType="Alliance">
+		UPDATE 
+			   ALLIANCE
+		   SET
+			   ALSTATUS = 'RI',
+			   A_MASSAGE = #{ amassage }
+	     WHERE
+	     	   AL_NO = #{ alno }
+	       AND BUS_CODE = #{ bus_code }
+	</update>
+	
+	<update id="updateRejectBannerAdStatusRP" parameterType="Alliance">
+		UPDATE 
+			   ALLIANCE
+		   SET
+			   ALSTATUS = 'RP',
+			   A_MASSAGE = #{ amassage }
+	     WHERE
+	     	   AL_NO = #{ alno }
+	       AND BUS_CODE = #{ bus_code }
+	</update>
+	
+	<select id="searchReportList" parameterType="aSearch" resultMap="reportResultSet">
+	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
+		SELECT
+		       *
+		  FROM
+		       REPORT, "USER"	
+		<where>
+			REPORT.US_NO = "USER".US_NO <!-- 테이블 조인 -->
+			<choose>
+				<when test="searchCondition == 'report_no'">
+					AND REPORT_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usno'">
+					AND US_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'rep_cont'">
+					AND REP_CONT LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'rdate'">
+					AND RDATE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'rstatus'">
+					AND RSTATUS LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'rexdate'">
+					AND REXDATE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'bus_code'">
+					AND REF_BUS_CODE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usname'">
+					AND US_NAME LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (REPORT_NO LIKE #{sv}
+						 OR US_NO LIKE #{sv}
+						 OR REP_CONT LIKE #{sv}
+						 OR RDATE LIKE #{sv}
+						 OR RSTATUS LIKE #{sv}
+						 OR REXDATE LIKE #{sv}
+						 OR US_NAME LIKE #{sv}
+						 OR REF_BUS_CODE LIKE #{sv})
+				</otherwise>	
+			</choose>
+		</where>
+			  ORDER BY REPORT_NO
+	</select>
+	
+	
+	<select id="searchAllianceList" parameterType="aSearch" resultMap="AllianceResultSet">
+	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
+		SELECT
+		       ALLIANCE.AL_NO, US_NAME, BUS_CATEGORY, ALLIANCE.BUS_CODE, PBALANCE, AL_SUBDATE, ALSTATUS
+		  FROM
+		       "USER", BUSINESS, ALLIANCE, "POINT"
+		<where>
+			ALLIANCE.US_NO = "USER".US_NO
+		AND BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
+		AND "POINT".US_NO(+) = ALLIANCE.US_NO
+			<choose>
+				<when test="searchCondition == 'alno'">
+					AND ALLIANCE.AL_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usname'">
+					AND US_NAME LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'bus_category'">
+					AND BUS_CATEGORY LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'bus_code'">
+					AND ALLIANCE.BUS_CODE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'pbalance'">
+					AND PBALANCE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'alsubdate'">
+					AND AL_SUBDATE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'alstatus'">
+					AND ALSTATUS LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (ALLIANCE.AL_NO LIKE #{sv}
+						 OR US_NAME LIKE #{sv}
+						 OR BUS_CATEGORY LIKE #{sv}
+						 OR ALLIANCE.BUS_CODE LIKE #{sv}
+						 OR PBALANCE LIKE #{sv}
+						 OR AL_SUBDATE LIKE #{sv}
+						 OR ALSTATUS LIKE #{sv})
+				</otherwise>	
+			</choose>
+		</where>
+			  ORDER BY AL_NO
+	</select>
+	
+	<select id="admitbannerAdListSelect" resultMap="AllianceResultSet">
+		<!--  
+		SELECT
+                 ALLIANCE.AL_NO,
+                 "USER".US_NAME,
+                 "POINT".PBALANCE,
+                 BUSINESS.BUS_CATEGORY,
+                 BUSINESS.BUS_CODE,
+                 AL_INTRO,
+                 AL_SUBDATE,
+                 ALSTATUS,
+                 START_DATE,
+                 A_IMG_PATH,
+                 A_IMG_NAME,
+                 A_IMG_CNAME,
+                 A_MASSAGE,
+                 ALLIANCE.US_NO
+		FROM    
+                 ALLIANCE,  "USER", BUSINESS, "POINT"
+        WHERE 	 
+        		 ALLIANCE.US_NO = "USER".US_NO
+        AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
+        AND      "POINT".US_NO(+) = ALLIANCE.US_NO
+		AND      ALSTATUS = 'Y'
+		-->
+		
+		SELECT
+                 ALLIANCE.AL_NO,
+                 "USER".US_NAME,
+                 "POINT".PBALANCE,
+                 BUSINESS.BUS_CATEGORY,
+                 BUSINESS.BUS_CODE,
+                 AL_INTRO,
+                 AL_SUBDATE,
+                 ALSTATUS,
+                 START_DATE,
+                 A_IMG_PATH,
+                 A_IMG_NAME,
+                 A_IMG_CNAME,
+                 A_MASSAGE,
+                 ALLIANCE.US_NO
+		FROM    
+                 ALLIANCE,  "USER", BUSINESS, "POINT" 
+        WHERE 	 
+        		 ALLIANCE.US_NO = "USER".US_NO
+        AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
+        AND      "POINT".US_NO(+) = ALLIANCE.US_NO
+		AND      ALSTATUS = 'Y'
+        AND      "POINT".PBALANCE <![CDATA[<>]]> 0
 
+        
+        <!--
+        SELECT * 
+			FROM (SELECT
+                        ALLIANCE.AL_NO,
+                        "USER".US_NAME,
+                        "POINT".PBALANCE,
+                        BUSINESS.BUS_CATEGORY,
+                        BUSINESS.BUS_CODE,
+                        AL_INTRO,
+                        AL_SUBDATE,
+                        ALSTATUS,
+                        START_DATE,
+                        A_IMG_PATH,
+                        A_IMG_NAME,
+                        A_IMG_CNAME,
+                        A_MASSAGE,
+                        ALLIANCE.US_NO
+           FROM    
+                        ALLIANCE,  "USER", BUSINESS, "POINT"  
+           WHERE 	 
+                           ALLIANCE.US_NO = "USER".US_NO
+           AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
+           AND      "POINT".US_NO = ALLIANCE.US_NO
+           AND      ALSTATUS = 'Y'
+           AND      "POINT".PBALANCE <![CDATA[<>]]> 0
+           AND      "POINT".US_NO = #{usno}
+           ORDER BY PBALANCE)
+	 WHERE ROWNUM <![CDATA[<=]]> 1
+	 -->
+	 
+	</select>
+	
+	<select id="countAd2" resultType="_int">	
+		SELECT 
+			  COUNT(*)	
+		  FROM
+		      INCOME
+		 WHERE
+		      ITEM = '프리미엄'
+	</select>	
+	
+	<select id="adminPremiumAdSelect" resultMap="IncomeResultSet">
+		 SELECT
+				PAY_NO,
+				ITEM,
+				AMOUNT,
+				PDATE,
+				EXDATE,
+				INCOME.US_NO,
+				US_NAME,
+				BUSINESS.BUS_CATEGORY,
+				BUSINESS.BUS_CODE
+		   FROM
+				INCOME, "USER", BUSINESS
+		  WHERE 
+		  		INCOME.US_NO ="USER".US_NO
+		  	AND INCOME.US_NO = BUSINESS.US_NO
+			AND ITEM = '프리미엄'
+	</select>
+	
+	
+	<select id="searchPreAdList" parameterType="aSearch" resultMap="IncomeResultSet">
+	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
+		SELECT
+				  PAY_NO
+				, PDATE
+				, EXDATE
+				, INCOME.US_NO
+				, US_NAME
+				, BUSINESS.BUS_CATEGORY
+				, BUSINESS.BUS_CODE
+		  FROM
+			    INCOME, "USER", BUSINESS
+	   <where>  
+	   			INCOME.US_NO ="USER".US_NO
+		   AND  INCOME.US_NO = BUSINESS.US_NO
+			<choose>
+				<when test="searchCondition == 'payno'">
+					AND PAY_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'pdate'">
+					AND PDATE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'exdate'">
+					AND EXDATE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usno'">
+					AND INCOME.US_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usname'">
+					AND US_NAME LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'bus_category'">
+					AND BUSINESS.BUS_CATEGORY LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'bus_code'">
+					AND BUSINESS.BUS_CODE LIKE #{sv}
+				</when>
+			    <otherwise>
+					AND (PAY_NO LIKE #{sv}
+						 OR PDATE LIKE #{sv}
+						 OR EXDATE LIKE #{sv}
+						 OR INCOME.US_NO LIKE #{sv}
+						 OR US_NAME LIKE #{sv}
+						 OR BUSINESS.BUS_CATEGORY LIKE #{sv}
+						 OR BUSINESS.BUS_CODE LIKE #{sv})
+				</otherwise>	
+			</choose>
+		</where>
+			  ORDER BY PAY_NO
+	</select>
 
 
 </mapper>

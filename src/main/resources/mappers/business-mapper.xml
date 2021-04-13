@@ -104,6 +104,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="bus_code" column="BUS_CODE" />
 		<!-- USER 테이블 조인을 위한 필드 -->
 		<result property="usname" column="US_NAME" />	
+		<!-- INCOME 테이블 조인을 위한 필드 -->
+		<result property="amount" column="amount" />	
+		<!-- BUSINESS 테이블 조인을 위한 필드 -->
+		<result property="bus_category" column="BUS_CATEGORY" />	
+		<!-- POINT 테이블 조인을 위한 필드 -->
+		<result property="pbalance" column="PBALANCE" />
 	</resultMap>
 	
 	<insert id="insertBusiness" parameterType="Business">
@@ -545,6 +551,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="selectMyBusinessCategory" parameterType="User" resultType="Business">
+		<!--  
 		SELECT
 				BUS_CODE,
 				US_NO,
@@ -572,7 +579,40 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 							     		ALLIANCE
 							     WHERE  US_NO = #{usno})
 		  AND	US_NO = #{usno}
-	</select>
+		 -->
+		 
+		  SELECT
+				BUS_CODE,
+				US_NO,
+				BUS_NAME,
+				BUS_ADDRESS,
+				BUS_INTRO,
+				BUS_DATE,
+				BUS_MODIFY,
+				AD_COUNT,
+				BUS_CLASSIFY,
+				BUS_CATEGORY,
+				BUS_STATUS,
+				BUS_PHONE,
+				HOTEL_CATEGORY,
+				TOUR_CATEGORY,
+				TOUR_TEMA,
+				AL_NO,
+				BUS_OPENING,
+				RES_CATEGORY
+		FROM    
+				SMBCVIEW
+		WHERE   BUS_CODE NOT IN (SELECT 
+										BUS_CODE
+							     FROM   
+							     		ALLIANCE, POINT
+							     WHERE
+                                 ALLIANCE.US_NO = POINT.US_NO
+                                 AND ALLIANCE.US_NO = #{usno}
+                                 AND POINT.PBALANCE <![CDATA[<>]]> 0)
+		  AND	US_NO = #{usno}
+		  
+	</select>  
 	
 	<insert id="insertBannerAd" parameterType="Alliance">
 		INSERT
@@ -655,7 +695,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
        WHERE 
              REF_BUS_CODE = #{bus_code}
    </select>
-	
+
 	<insert id="insertIncome" parameterType="Income">
 		INSERT
 		  INTO INCOME
@@ -663,7 +703,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  	PAY_NO
 		  , ITEM
 		  , AMOUNT
-	      , PDATE
+	    , PDATE
 		  , EXDATE
 		  , US_NO
 		  )
@@ -677,4 +717,177 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usno}
 		  )
 	</insert>
+
+   <insert id="insertIncome" parameterType="Income">
+		INSERT
+		INTO Income
+		(
+			PAY_NO
+		  , ITEM
+		  , AMOUNT
+		  , PDATE
+		  , EXDATE
+		  , US_NO
+		)
+		VALUES
+		(
+			INC_SEQ_NO.NEXTVAL
+		  , #{item}
+		  , #{amount}
+		  , SYSDATE
+		  , NULL
+		  , #{usno}
+		)
+	</insert>
+		
+	<insert id="insertPoint" parameterType="Point">
+		INSERT
+		INTO POINT
+		(
+			PNO
+		  , PDATE
+		  , PDETAIL
+		  , PBALANCE
+		  , PAMOUNT
+		  , US_NO
+		)
+		VALUES
+		(
+			PON_SEQ_NO.NEXTVAL
+		  , SYSDATE
+		  , '포인트 충전'
+		  , #{pbalance}
+		  , #{pamount}
+		  , #{usno}
+		)
+	</insert>
+   
+   <!-- 지혜 -->
+   <select id="selectBannerAdImgList" resultMap="AllianceResultSet">
+   	   <!--  
+   	   SELECT
+                 ALLIANCE.AL_NO,
+                 BUSINESS.BUS_CATEGORY,
+                 BUSINESS.BUS_CODE,
+                 A_IMG_CNAME
+		FROM    
+                 ALLIANCE, BUSINESS
+        WHERE 	 
+        		 BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
+		AND      ALSTATUS = 'Y'
+		-->
+		SELECT
+                 AL_NO, ALSTATUS, BUS_CODE
+		FROM    
+		                 ALLIANCE, POINT
+		WHERE 	 
+		                "POINT".US_NO = ALLIANCE.US_NO
+		AND      ALSTATUS = 'Y'
+		AND      POINT.PBALANCE <![CDATA[<>]]> 0
+		GROUP BY AL_NO, ALSTATUS, BUS_CODE
+   </select>
+   
+   <select id="selectBannerAdDetail" parameterType="_int" resultMap="BusinessResultSet">
+		SELECT
+			    BUS_CODE
+			  , US_NO
+			  , BUS_NAME
+			  , BUS_ADDRESS
+			  , BUS_INTRO
+			  , BUS_DATE
+			  , BUS_MODIFY
+			  , AD_COUNT
+			  , BUS_CLASSIFY
+			  , BUS_CATEGORY
+			  , BUS_STATUS
+			  , BUS_PHONE
+			  , RES_CATEGORY
+			  , BUS_OPENING
+		  FROM
+			   BUSINESS
+	     WHERE
+	     	   BUS_CODE = #{bus_code}
+	</select>
+	
+	<update id="updateReadCount" parameterType="_int">
+		UPDATE
+				BUSINESS
+			SET
+				AD_COUNT = AD_COUNT + 1
+		  WHERE
+		  		BUS_CODE = #{bus_code}
+	</update>
+	
+	<insert id="insertPointDeduction" parameterType="Business">
+		INSERT
+			INTO 
+			POINT
+		(
+			PNO
+		  , PDATE
+		  , PDETAIL
+		  , PBALANCE
+		  , PAMOUNT
+		  , US_NO
+		)
+		VALUES
+		(
+			PON_SEQ_NO.NEXTVAL
+		  , SYSDATE
+		  , '배너광고 포인트 차감'
+		  , (SELECT *
+                FROM(SELECT POINT.PBALANCE
+                       FROM "POINT"
+                       WHERE US_NO = #{us_no}
+                       ORDER BY PBALANCE)
+                       WHERE ROWNUM <![CDATA[<=]]> 1) - 100
+		  , 100
+		  , #{us_no}
+		)
+	</insert>
+	
+	<select id="selectBusCodeUser" parameterType="Business" resultMap="BusinessResultSet">
+		SELECT
+			    BUS_CODE
+			  , US_NO
+			  , BUS_NAME
+			  , BUS_ADDRESS
+			  , BUS_INTRO
+			  , BUS_DATE
+			  , BUS_MODIFY
+			  , AD_COUNT
+			  , BUS_CLASSIFY
+			  , BUS_CATEGORY
+			  , BUS_STATUS
+			  , BUS_PHONE
+			  , RES_CATEGORY
+			  , BUS_OPENING
+		  FROM
+			   BUSINESS
+	     WHERE
+	     	   BUS_CODE = #{bus_code}
+	</select>
+	
+	<select id="getBusDetail" parameterType="Business" resultMap="BusinessResultSet">
+		SELECT
+			    BUS_CODE
+			  , US_NO
+			  , BUS_NAME
+			  , BUS_ADDRESS
+			  , BUS_INTRO
+			  , BUS_DATE
+			  , BUS_MODIFY
+			  , AD_COUNT
+			  , BUS_CLASSIFY
+			  , BUS_CATEGORY
+			  , BUS_STATUS
+			  , BUS_PHONE
+			  , RES_CATEGORY
+			  , BUS_OPENING
+		  FROM
+			   BUSINESS
+	     WHERE
+	     	   BUS_CODE = #{bus_code}
+	</select>
+	
 </mapper>

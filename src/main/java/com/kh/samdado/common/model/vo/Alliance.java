@@ -44,6 +44,7 @@ public class Alliance {
 	private String bus_category;	// business 테이블 컬럼 사용
 	private int amount;				// income 테이블 컬럼 사용
 	private String usname;			// user 테이블 컬럼 사용
+	private int pbalance;			// point 테이블 컬럼 사용
 	
 
 }

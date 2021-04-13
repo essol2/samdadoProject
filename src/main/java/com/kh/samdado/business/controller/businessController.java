@@ -2,6 +2,9 @@ package com.kh.samdado.business.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +24,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
+
+import com.kh.samdado.business.model.vo.hotel.Room;
+import com.kh.samdado.business.model.vo.hotel.RoomAtt;
+import com.kh.samdado.business.model.vo.hotel.RoomBooking;
+
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
+
 import com.kh.samdado.common.model.vo.Income;
+import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.vo.Booking;
+import com.kh.samdado.mypage.model.vo.Point;
+
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.user.model.vo.User;
 
@@ -466,6 +484,19 @@ public class businessController {
 		}
 		return mv;
 	}
+	
+	// 결제 성공 시 insert
+	
+	@GetMapping("/pay")
+	public String payInsert(Income i, Booking b, Point p) {
+		
+		int income = bService.insertIncome(i);
+		int booking = bService.insertBooking(b);
+		int point = bService.insertPoint(p);
+		
+		return null;
+		
+	}
 
 	// ************* 지혜 *************
 
@@ -504,9 +535,8 @@ public class businessController {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\busUploadFiles\\alliance";
 		File folder = new File(savePath);
-		if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
-		
-		// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
+		if(!folder.exists()) folder.mkdirs();
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originalFileName = file.getOriginalFilename();
 		String renameFileName = sdf.format(new Date()) + "_"
@@ -517,7 +547,6 @@ public class businessController {
 		
 		try {
 			file.transferTo(new File(renamePath));
-			// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
 		} catch (IllegalStateException | IOException e) {
 			System.out.println("파일 업로드 에러 : " + e.getMessage());
 		} 
@@ -536,6 +565,105 @@ public class businessController {
 
 		return "business/businessFormSubmit";
 	}
+	
+	@RequestMapping(value="/selectBannerAdImgList", produces="application/json; charset=utf-8")
+	public @ResponseBody String selectBannerAdImgList() {
+		
+		List<Alliance> bannerImglist = bService.selectBannerAdImgList();
+
+		Gson gson = new GsonBuilder()
+				        .setDateFormat("yyyy-MM-dd")
+				        .create();
+		
+		return gson.toJson(bannerImglist);
+	}
+	
+	
+	// 게시글 상세 페이지
+	@GetMapping("/detail")
+	public String bannerAdBusinessDetail(int bus_code,
+							  HttpServletRequest request,
+							  HttpServletResponse response,
+							  Model model) {
+		
+		boolean flagbannerlist = false;	// bus_code 라는 이름의 쿠키가 있는지 확인
+		boolean flagbuscode = false;	// 해당 bus_code가 포함 되어 있는지 확인
+		
+		Cookie[] cookies = request.getCookies();
+		try {
+			if (cookies != null) {
+				for (Cookie c : cookies) {
+					if (c.getName().equals("bannerlist")) {
+						flagbannerlist = true;
+						String bannerlist = URLDecoder.decode(c.getValue(), "UTF-8");
+
+						String[] list = bannerlist.split(",");
+						for (String st : list) {
+							if (st.equals(String.valueOf(bus_code))) flagbuscode = true;
+						}
+						if (!flagbuscode) {
+							c.setValue(URLEncoder.encode(bannerlist + "," + bus_code, "UTF-8"));
+							response.addCookie(c);
+						}
+					}
+				}
+				if (!flagbannerlist) {
+					Cookie c1 = new Cookie("bannerlist", URLEncoder.encode(String.valueOf(bus_code), "UTF-8"));
+					response.addCookie(c1);
+				}
+			}
+
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		Business selectBusCodeUser = bService.selectBusCodeUser(bus_code);
+		//System.out.println("selectBusCodeUser : " + selectBusCodeUser);
+		
+		Business sbd = bService.selectBannerAdDetail(selectBusCodeUser, !flagbuscode);
+		//System.out.println("sbd : " + sbd);
+		
+		
+		if (sbd != null) {
+			if (sbd.getBus_category().equals("R")) { // 음식점
+				return "redirect:/business/restaurant_detail?bus_code=" + sbd.getBus_code();
+			} else if (sbd.getBus_category().equals("T")) { // 관광지
+				return "redirect:/business/tour_detail?bus_code=" + sbd.getBus_code();
+			} else if (sbd.getBus_category().equals("H")) { // 숙박
+				return "redirect:/business/hotel_detail?bus_code=" + sbd.getBus_code();
+			} else { // 렌트카
+				return "redirect:/business/car_detail?bus_code=" + sbd.getBus_code();
+			}
+		} else {
+			model.addAttribute("msg", "사업장 상세보기에 실패했습니다.");
+			return "redirect:/main";
+		}
+	}
+	
+	@GetMapping("/adminToDetail")
+	public String adminToDetail(int bus_code, Model model) {
+		
+		Business selectBusCodeUser = bService.selectBusCodeUser(bus_code);
+		//System.out.println("프리미엄 광고 디테일 보러가기 selectBusCodeUser : " + selectBusCodeUser);
+		
+		if (selectBusCodeUser != null) {
+			if (selectBusCodeUser.getBus_category().equals("R")) { // 음식점
+				return "redirect:/business/restaurant_detail?bus_code=" + selectBusCodeUser.getBus_code();
+			} else if (selectBusCodeUser.getBus_category().equals("T")) { // 관광지
+				return "redirect:/business/tour_detail?bus_code=" + selectBusCodeUser.getBus_code();
+			} else if (selectBusCodeUser.getBus_category().equals("H")) { // 숙박
+				return "redirect:/business/hotel_detail?bus_code=" + selectBusCodeUser.getBus_code();
+			} else { // 렌트카
+				return "redirect:/business/car_detail?bus_code=" + selectBusCodeUser.getBus_code();
+			}
+		} else {
+			model.addAttribute("msg", "사업장 상세보기에 실패했습니다.");
+			return "redirect:/admin/adminAd2Manage";
+		}
+		
+	}
+	
+	// ************************************************************************************************
   
   	// 신고하기	
 	@PostMapping("/report")

@@ -131,5 +131,11 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.delete("mypageMapper.deleteAcc", accno);
 	}
 
+	// 일반회원 - 차트 리스트 조회 메소드
+	@Override
+	public List<AccountBook> selectChartList(AccountBook ab) {
+		return sqlSession.selectList("mypageMapper.selectChartList", ab);
+	}
+
 
 }

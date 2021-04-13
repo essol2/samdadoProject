@@ -1,6 +1,5 @@
 package com.kh.samdado.mypage.controller;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,13 +13,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.business.model.vo.business.BusinessAtt;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.mypage.model.vo.AccountBook;
@@ -61,7 +61,7 @@ public class MypageController {
 				 
 				 
 				 
-		System.out.println(u);
+		//System.out.println(u);
 		User loginUser = uService.loginUser(u);
 				 
 				 
@@ -146,17 +146,17 @@ public class MypageController {
 				 				   @ModelAttribute Point po,
 				 				   @RequestParam(name="usno") String usno ) {
 		 
-		  System.out.println("user 객체 확인 : " +usno);
+		 //System.out.println("user 객체 확인 : " +usno);
 		 List<Point> pList = null;
 		 
 		 if(usno.isEmpty()) {
 			// u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
 			 pList = mService.selectPointList(u.getUsno());
-			 System.out.println("pList 객체 확인 : " + pList);
+			 //System.out.println("pList 객체 확인 : " + pList);
 		 } else {
 			// u객체 이용해서 income 테이블에서 usno 회원의 point 사용내역, 남은 포인트 불러오기
 			 pList = mService.selectPointList(usno);
-			 System.out.println("pList 객체 확인 : " + pList);
+			 //System.out.println("pList 객체 확인 : " + pList);
 		 }
 		 	 
 		 if(pList.size() > 0) {
@@ -254,7 +254,7 @@ public class MypageController {
 	 public String sendQnA(Model model,
 				 		   @ModelAttribute QnA qna) {
 
-		 System.out.println("qna객체에 어떻게 들어왔는지 확인 : " + qna);
+		 //System.out.println("qna객체에 어떻게 들어왔는지 확인 : " + qna);
 		 
 		 // DB에 insert
 		 int result = mService.insertNewQnA(qna);
@@ -269,7 +269,20 @@ public class MypageController {
 			}
 	 }
 	 
-
+	 // 제휴회원 - 내 사업장 조회 메소드
+	 @GetMapping("/buss")
+	 public ModelAndView selectBussList(@RequestParam(name="usno") String usno,
+			 							ModelAndView mv) {
+		 
+		 // 해당 사용자가 등록한 사업장 리스트 알아오기
+		 List<Business> bussList = mService.selectBussList(usno);
+		 
+		 System.out.println("bussList확인 : " + bussList);
+		 
+		 mv.addObject("bussList", bussList);
+		 mv.setViewName("mypage/mp_StoreList");
+		 return mv;
+	 }
 	 
 /*=====================================================================================================*/
 	 
@@ -392,10 +405,14 @@ public class MypageController {
 			 //System.out.println("searchDate check : " + ab.getSearchDate());
 			 List<AccountBook> abList= mService.selectAccountList(ab);
 			 
-			 System.out.println("abList check : " + abList);
+			 List<AccountBook> chartList = mService.selectChartList(ab);
+			 //System.out.println("charList 확인 : " + chartList);
+			 
+			 //System.out.println("abList check : " + abList);
 			 if(abList != null) {
 				 mv.addObject("abList", abList);
 				 mv.addObject("rdList", recentDateList);
+				 mv.addObject("chaList", chartList);
 				 mv.addObject("ots" , recentDateList.get(0).getOneTotalSum());
 				 mv.addObject("ts", recentDateList.get(0).getTotalSum());
 				 mv.setViewName("mypage/mp_Wallet");
@@ -474,12 +491,16 @@ public class MypageController {
 		 // SearchDate 값에 해당하는 모든 리트스 뽑아오기
 		 List<AccountBook> abList= mService.selectAccountList(ab);
 		 
+		 // 해달 날짜에 해당하는 차트 리스트 불러오기
+		 List<AccountBook> chartList = mService.selectChartList(ab);
+		 
 		 //System.out.println("abList check : " + abList);
 		 if(abList != null) {
 			 mv.addObject("abList", abList);
 			 mv.addObject("rdList", recentDateList);
 			 mv.addObject("ots" , recentDateList.get(atd).getOneTotalSum());
 			 mv.addObject("ts", recentDateList.get(atd).getTotalSum());
+			 mv.addObject("chaList", chartList);
 			 mv.setViewName("mypage/mp_Wallet");
 		 }else {
 			 mv.addObject("msg", "가계부 조회 오류입니다.");
@@ -534,7 +555,7 @@ public class MypageController {
 			 //return 0;
 	}
 
-	 // 선택 행 삭제하는 메소드
+	 // 가계부 - 선택 행 삭제하는 메소드
 	 @GetMapping("/deleteacc")
 	 public String deleteAcc(@RequestParam(name="accno") int accno,
 			 				 @RequestParam(name="usno") String usno,
