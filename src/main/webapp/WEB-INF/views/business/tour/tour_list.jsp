@@ -332,6 +332,20 @@
 
         .profile {
 
+            display: none;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
+        .moreProfile {
+
             display: flex;
             flex-direction: column;
             /* align-items: center; */
@@ -343,7 +357,7 @@
             height: 500px;
             box-sizing: border-box;
         }
-
+        
         .image {
             object-fit: cover;
             width: 400px;
@@ -545,7 +559,7 @@
                     <div class='profile'>
                         <img class="image" src="../resources/images/image_listpage/tour4.png" onclick="selectRes(${t.bus_code})">
                         <b>★4.90(후기 99+개)</b>
-                        <b>${ t.pro_name }</b>
+                        <b>${ t.bus_name }</b>
                         <b>입장료 : ${ t.pro_price }</b>
                         <p><img src="../resources/images/image_listpage/noheart.png"></p>
                     </div>
@@ -564,6 +578,20 @@
                 <div class="btnarea">
                     <button class="moreBtn">더보기</button>
                 </div>
+                
+            <!-- 더보기 -->
+			<script>				
+						$(document).ready(function(){
+							size_div = $('.profile').length;
+							
+							x = 9;
+							$('.profile:lt('+x+')').addClass('moreProfile');
+							$('.moreBtn').click(function(){
+								x= (x+9 <= size_div)? x+9 : size_div;
+								$('.profile:lt('+x+')').addClass('moreProfile');	
+							});
+						});
+			</script>
 
         </section>
 

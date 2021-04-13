@@ -553,6 +553,20 @@
                 <div class="btnarea">
                     <button class="moreBtn">더보기</button>
                 </div>
+                
+            <!-- 더보기 -->
+			<script>				
+						$(document).ready(function(){
+							size_div = $('.profile').length;
+							
+							x = 9;
+							$('.profile:lt('+x+')').addClass('moreProfile');
+							$('.moreBtn').click(function(){
+								x= (x+9 <= size_div)? x+9 : size_div;
+								$('.profile:lt('+x+')').addClass('moreProfile');	
+							});
+						});
+			</script>
 
         </section>
 
