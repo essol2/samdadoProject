@@ -232,7 +232,7 @@ public class businessController {
 			} else {
 				i.setAmount(180);
 			}
-			int result3 = bService.insertIncome(i);
+			int result3 = bService.insertIncome1(i);
 		}
 		
 		int result = bService.insertBusiness(b, list);
@@ -329,7 +329,7 @@ public class businessController {
 			} else {
 				i.setAmount(180);
 			}
-			int result3 = bService.insertIncome(i);
+			int result3 = bService.insertIncome1(i);
 		}
 		int result = bService.insertBusiness(b, list);
 		
@@ -459,7 +459,7 @@ public class businessController {
 			} else {
 				i.setAmount(180);
 			}
-			int result3 = bService.insertIncome(i);
+			int result3 = bService.insertIncome1(i);
 		}
 		
 		int result = bService.insertBusiness(b, list);

@@ -696,7 +696,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
              REF_BUS_CODE = #{bus_code}
    </select>
 
-	<insert id="insertIncome" parameterType="Income">
+	<insert id="insertIncome1" parameterType="Income">
 		INSERT
 		  INTO INCOME
 		  (

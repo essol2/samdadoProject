@@ -103,7 +103,7 @@ public interface businessDao {
 
 
 	// 프리미엄 등록 시 
-	int insertIncome(Income i);
+	int insertIncome1(Income i);
 
 	List<Alliance> selectBannerAdImgList();
 

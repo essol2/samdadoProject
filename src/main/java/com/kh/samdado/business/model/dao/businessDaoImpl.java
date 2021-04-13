@@ -212,8 +212,8 @@ public class businessDaoImpl implements businessDao {
   	
   	// 프리미엄 등록 시 만료일
 	@Override
-	public int insertIncome(Income i) {
-		return sqlSession.insert("businessMapper.insertIncome", i);
+	public int insertIncome1(Income i) {
+		return sqlSession.insert("businessMapper.insertIncome1", i);
 	}
 
     // 지혜

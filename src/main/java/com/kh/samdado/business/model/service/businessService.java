@@ -101,7 +101,7 @@ public interface businessService {
 	int insertBannerAd(Alliance a);
 	
 	// 프리미엄 등록 시 만료일
-	int insertIncome(Income i);
+	int insertIncome1(Income i);
 
 	List<Alliance> selectBannerAdImgList();
 
