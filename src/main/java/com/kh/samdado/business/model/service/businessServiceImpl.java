@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.samdado.business.model.dao.businessDao;
 import com.kh.samdado.business.model.vo.Jjim;
@@ -38,12 +39,9 @@ public class businessServiceImpl implements businessService {
 
 	// 사업장 등록
 	@Override
-	public int insertBusAtt(BusinessAtt ba) {
-		return bDao.insertBusAtt(ba);
-	}
-	@Override
-	public int insertBusiness(Business b) {
-		return bDao.insertBusiness(b);
+	public int insertBusiness(Business b, List<BusinessAtt> list) {
+		bDao.insertBusiness(b);
+		return bDao.insertBusAtt(list);
 	}
 	// 사업장 리스트 카운드
 	@Override
@@ -65,13 +63,11 @@ public class businessServiceImpl implements businessService {
 	
 	// 렌트카 등록
 	@Override
-	public int insertCar(Car c) {
-		return bDao.insertCar(c);
+	public int insertCar(Car c, List<CarAtt> carList) {
+		bDao.insertCar(c);
+		return bDao.insertCarAtt(carList);
 	}
-	@Override
-	public int insertCarAtt(CarAtt ca) {
-		return bDao.insertCarAtt(ca);
-	}
+
 	// 렌트카 디테일
 	@Override
 	public Business selectCar(int bus_code) {
@@ -207,6 +203,12 @@ public class businessServiceImpl implements businessService {
   @Override
 	public Report findReportStatus(Report r) {		
 		return bDao.findReportStatus(r);
+	}
+
+  	// 프리미엄 등록 시 만료일
+	@Override
+	public int insertIncome(Income i) {
+		return bDao.insertIncome(i);
 	}
 
 	@Override

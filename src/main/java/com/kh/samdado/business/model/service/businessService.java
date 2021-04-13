@@ -27,8 +27,8 @@ public interface businessService {
 	int insertAlliance(Alliance a);
 	
 	// 사업장 등록
-	int insertBusAtt(BusinessAtt ba); 
-	int insertBusiness(Business b);
+	
+	int insertBusiness(Business b, List<BusinessAtt> list);
 	
 	// 사업장 리스트 카운트
 	int selectResListCount();
@@ -39,8 +39,7 @@ public interface businessService {
 	List<Business> selectResList();
 		
 	// 렌트카등록
-	int insertCar(Car c);
-	int insertCarAtt(CarAtt ca);
+	int insertCar(Car c, List<CarAtt> carList);
 	// 렌트카 디테일
 	Business selectCar(int bus_code);
 	// 렌트카리스트
@@ -100,6 +99,9 @@ public interface businessService {
 
 	// 배너 광고 인서트
 	int insertBannerAd(Alliance a);
+	
+	// 프리미엄 등록 시 만료일
+	int insertIncome(Income i);
 
 	List<Alliance> selectBannerAdImgList();
 

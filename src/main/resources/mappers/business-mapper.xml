@@ -141,16 +141,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , SYSDATE
 		  , SYSDATE
 		  , DEFAULT
-		  , DEFAULT
+		  , #{bus_classify}
 		  , #{bus_category}
 		  , DEFAULT
 		  , #{bus_phone}
 		  , #{res_category}
 		  , #{bus_opening}
+		  
 		  )
 	</insert>
-	<insert id="insertBusAtt" parameterType="BusinessAtt">
-		INSERT
+	<insert id="insertBusAtt" parameterType="java.util.List">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
 		  INTO BUSINESS_ATT
 		  (
 		  	FILE_NO
@@ -164,16 +165,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  VALUES
 		  (
 		  	BUSATT_SEQ_NO.NEXTVAL
-		  , #{file_name}
-		  , #{file_root}
+		  , #{item.file_name}
+		  , #{item.file_root}
 		  , DEFAULT
-		  , #{file_rename}
+		  , #{item.file_rename}
 		  , DEFAULT
 		  , BUS_SEQ_NO.CURRVAL
 		  )
+		</foreach>
 	</insert>
-	<insert id="insertCar">
-		INSERT
+	<insert id="insertCar" parameterType="java.util.List">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
 		  INTO CAR
 		  (
 		  	CAR_NO
@@ -190,17 +192,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  (
 		  	CAR_SEQ_NO.NEXTVAL
 		  , BUS_SEQ_NO.CURRVAL
-		  , #{car_name}
-		  , #{car_type}
-		  , #{car_producer}
-		  , #{car_fuel}
-		  , #{car_price}
+		  , #{item.car_name}
+		  , #{item.car_type}
+		  , #{item.car_producer}
+		  , #{item.car_fuel}
+		  , #{item.car_price}
 		  , SYSDATE
 		  , SYSDATE
 		  )
+		</foreach>
 	</insert>
 	<insert id="insertCarAtt" parameterType="CarAtt">
-		INSERT
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
 		  INTO CAR_ATT
 		  (
 		  	FILE_NO
@@ -214,13 +217,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  VALUES
 		  (
 		  	BUSATT_SEQ_NO.NEXTVAL
-		  , #{file_name}
-		  , #{file_root}
+		  , #{item.file_name}
+		  , #{item.file_root}
 		  , DEFAULT
-		  , #{file_rename}
+		  , #{item.file_rename}
 		  , DEFAULT
 		  , CAR_SEQ_NO.CURRVAL
 		  )
+		</foreach>
 	</insert>
   
 	<insert id="insertRoom" parameterType="Room">
@@ -691,7 +695,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
        WHERE 
              REF_BUS_CODE = #{bus_code}
    </select>
-   
+
+	<insert id="insertIncome" parameterType="Income">
+		INSERT
+		  INTO INCOME
+		  (
+		  	PAY_NO
+		  , ITEM
+		  , AMOUNT
+	    , PDATE
+		  , EXDATE
+		  , US_NO
+		  )
+		  VALUES
+		  (
+		  	INC_SEQ_NO.NEXTVAL
+		  , '프리미엄'
+		  , #{amount}
+		  , SYSDATE
+		  , SYSDATE + #{primonth}
+		  , #{usno}
+		  )
+	</insert>
+
    <insert id="insertIncome" parameterType="Income">
 		INSERT
 		INTO Income
@@ -864,5 +890,4 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	     	   BUS_CODE = #{bus_code}
 	</select>
 	
-
 </mapper>

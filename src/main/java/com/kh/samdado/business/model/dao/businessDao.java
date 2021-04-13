@@ -26,7 +26,7 @@ public interface businessDao {
 	int insertAlliance(Alliance a);
 	
 	// 사업장 등록
-	int insertBusAtt(BusinessAtt ba);
+	int insertBusAtt(List<BusinessAtt> list);
 	int insertBusiness(Business b);
 
 	// 사업장 리스트 카운트
@@ -39,7 +39,7 @@ public interface businessDao {
 	
 	// 렌트카등록
 	int insertCar(Car c);
-	int insertCarAtt(CarAtt ca);
+	int insertCarAtt(List<CarAtt> carList);
 	// 렌트카 디테일
 	Business selectCar(int bus_code);
 	// 렌트카 리스트
@@ -101,6 +101,10 @@ public interface businessDao {
 	//배너 광고 인서트
 	int insertBannerAd(Alliance a);
 
+
+	// 프리미엄 등록 시 
+	int insertIncome(Income i);
+
 	List<Alliance> selectBannerAdImgList();
 
 	Business selectBannerAdDetail(Business selectBusCodeUser);
@@ -112,6 +116,7 @@ public interface businessDao {
 	int updateReadCount(Business selectBusCodeUser);
 
 	Business getBusDetail(int bus_code);
+
 
 	
 

@@ -39,8 +39,8 @@ public class businessDaoImpl implements businessDao {
 
 	// 사업장 첨부파일 등록
 	@Override
-	public int insertBusAtt(BusinessAtt ba) {
-		return sqlSession.insert("businessMapper.insertBusAtt", ba);
+	public int insertBusAtt(List<BusinessAtt> list) {
+		return sqlSession.insert("businessMapper.insertBusAtt", list);
 	}
 	
 	// 사업장 등록
@@ -73,8 +73,8 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.insert("businessMapper.insertCar", c);
 	}
 	@Override
-	public int insertCarAtt(CarAtt ca) {
-		return sqlSession.insert("businessMapper.insertCarAtt", ca);
+	public int insertCarAtt(List<CarAtt> carList) {
+		return sqlSession.insert("businessMapper.insertCarAtt", carList);
 	}
 	// 렌트카 리스트
 	@Override
@@ -208,6 +208,12 @@ public class businessDaoImpl implements businessDao {
   @Override
 	public Report findReportStatus(Report r) {		
 		return sqlSession.selectOne("businessMapper.findReportStatus", r);
+	}
+  	
+  	// 프리미엄 등록 시 만료일
+	@Override
+	public int insertIncome(Income i) {
+		return sqlSession.insert("businessMapper.insertIncome", i);
 	}
 
     // 지혜
