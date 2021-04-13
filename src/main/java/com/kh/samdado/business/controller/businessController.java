@@ -516,10 +516,10 @@ public class businessController {
 		}
 		
 		Business selectBusCodeUser = bService.selectBusCodeUser(bus_code);
-		System.out.println("selectBusCodeUser : " + selectBusCodeUser);
+		//System.out.println("selectBusCodeUser : " + selectBusCodeUser);
 		
 		Business sbd = bService.selectBannerAdDetail(selectBusCodeUser, !flagbuscode);
-		System.out.println("sbd : " + sbd);
+		//System.out.println("sbd : " + sbd);
 		
 		
 		if (sbd != null) {
@@ -536,6 +536,29 @@ public class businessController {
 			model.addAttribute("msg", "사업장 상세보기에 실패했습니다.");
 			return "redirect:/main";
 		}
+	}
+	
+	@GetMapping("/adminToDetail")
+	public String adminToDetail(int bus_code, Model model) {
+		
+		Business selectBusCodeUser = bService.selectBusCodeUser(bus_code);
+		//System.out.println("프리미엄 광고 디테일 보러가기 selectBusCodeUser : " + selectBusCodeUser);
+		
+		if (selectBusCodeUser != null) {
+			if (selectBusCodeUser.getBus_category().equals("R")) { // 음식점
+				return "redirect:/business/restaurant_detail?bus_code=" + selectBusCodeUser.getBus_code();
+			} else if (selectBusCodeUser.getBus_category().equals("T")) { // 관광지
+				return "redirect:/business/tour_detail?bus_code=" + selectBusCodeUser.getBus_code();
+			} else if (selectBusCodeUser.getBus_category().equals("H")) { // 숙박
+				return "redirect:/business/hotel_detail?bus_code=" + selectBusCodeUser.getBus_code();
+			} else { // 렌트카
+				return "redirect:/business/car_detail?bus_code=" + selectBusCodeUser.getBus_code();
+			}
+		} else {
+			model.addAttribute("msg", "사업장 상세보기에 실패했습니다.");
+			return "redirect:/admin/adminAd2Manage";
+		}
+		
 	}
 	
 	// ************************************************************************************************

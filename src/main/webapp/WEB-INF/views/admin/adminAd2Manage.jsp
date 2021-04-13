@@ -62,24 +62,24 @@
 	                       <th>${ apa.payno }</th>
 	                       <td>${ apa.usno }</td>
 	                       <td>${ apa.usname }</td>
-	                       <td>${ apa.bus_code }</td>
+	                       <td id="bus_code">${ apa.bus_code }</td>
 	                       <c:choose>
-				                  <c:when test="${ apa.bus_category eq 'R' }">
-	                            	<td>음식점</td>
-	                              </c:when>
-	                              <c:when test="${ apa.bus_category eq 'H' }">
-	                            	<td>숙박</td>
-	                              </c:when>
-	                              <c:when test="${ apa.bus_category eq 'T' }">
-	                            	<td>관광지</td>
-	                              </c:when>
-	                              <c:otherwise>
-	                              	<td>렌트</td>
-	                              </c:otherwise>
-	                            </c:choose>
+			                  <c:when test="${ apa.bus_category eq 'R' }">
+                            	<td>음식점</td>
+                              </c:when>
+                              <c:when test="${ apa.bus_category eq 'H' }">
+                            	<td>숙박</td>
+                              </c:when>
+                              <c:when test="${ apa.bus_category eq 'T' }">
+                            	<td>관광지</td>
+                              </c:when>
+                              <c:otherwise>
+                              	<td>렌트</td>
+                              </c:otherwise>
+	                       </c:choose>
 	                       <td>${ apa.pdate }</td>
 	                       <td>${ apa.exdate }</td>
-	                       <td><a class="btn btn-info" href="#">보러가기</a></td>
+	                       <td><a class="btn btn-info" id="goDetailPre2Btn">보러가기</a></td>
 	                   </tr>
 	                 </c:forEach>                      
                 </tbody>
@@ -222,8 +222,9 @@
 										var bus_category = $("<td>").text(data[i].bus_category);
 										var pdate = $("<td>").text(data[i].pdate);
 										var exdate = $("<td>").text(data[i].exdate);
+										var goDetail = $("<td> <a class='btn btn-info' onclick='goToPre2Detail(" + data[i].bus_code + ")'>보러가기</a>");
 										
-										tr.append(payno, usno, usname, bus_code, bus_category, pdate, exdate); // 테이블 행에 추가
+										tr.append(payno, usno, usname, bus_code, bus_category, pdate, exdate, goDetail); // 테이블 행에 추가
 										tableBody.append(tr); // 테이블에 추가
 									}
 									
@@ -235,7 +236,26 @@
 							});
 						});
 					});
+					
+					// 해당 게시글 하나를 누르면 상세페이지가 보여지게 하는 컨트롤러 호출
+					function goToPre2Detail(bus_code) {
+						location.href='${ contextPath }/business/pre2Detail?bus_code=' + bus_code;
+					}
 				</script>
+				
+				
+				<script>
+		             $("#goDetailPre2Btn").click(function(){
+		
+		         		var bus_code = $("#bus_code").text();
+		         		
+		         		location.href="${ contextPath }/business/adminToDetail?bus_code=" + bus_code;
+		         		
+		             });
+         	   </script>
+				
+				
+				
         </div>
    
     </div>
