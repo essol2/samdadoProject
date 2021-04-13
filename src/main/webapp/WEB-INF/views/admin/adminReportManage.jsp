@@ -78,27 +78,43 @@
 					  <div class="modal-dialog">
 					    <div class="modal-content">
 					      <div class="modal-header">
-					        <h5 class="modal-title" id="exampleModalLabel">신고 첨부내역</h5>
+					        <h5 class="modal-title" id="exampleModalLabel">신고 파일 첨부내역</h5>
 					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					      </div>
 					      <div class="modal-body">
-					      
-					      	<div class="row">
-			                    <div class="col">
-			                         <img src="${ contextPath }/resources/images/image_admin/logo_g.png" class="card-img-top" alt="...">
-			                    </div>
-			                    <div class="col">
-			                        <h3 id="page_title">삼다도</h3>
-			                    </div>
-		                   </div>
-		                   
 		                   <div>
-			                   	신고번호 : ${ status.current.report_no } <br>
-						     	신고자 : ${ status.current.usname } <br>
-						     	신고 내용 : ${ status.current.rep_cont } <br>
-						     	첨부파일 : <img src="${ contextPath }/resources/busUploadFiles/${ status.current.r_img_cname }"> <br>
-						     	사업장 코드 : ${ status.current.bus_code } <br>
-						     	신고 날짜 : <fmt:formatDate value='${ status.current.rdate }' type='both' pattern='yyyy-MM-dd' />
+		                   		<form>
+								  <div class="mb-3">
+								    <label for="report_num" class="form-label">신고 번호</label>
+								    <input type="text" class="form-control" id="report_num" aria-describedby="emailHelp" value="${ status.current.report_no }" readonly>
+								  </div>
+								  <div class="mb-3">
+								    <label for="report_user" class="form-label">신고자</label>
+								    <input type="text" class="form-control" id="report_user" value="${ status.current.usname }" readonly>
+								  </div>
+								  <div class="mb-3">
+								    <label for="report_content" class="form-label">신고 내용</label>
+								    <textarea class="form-control" id="report_content" style="height: 100px; resize: none;" readonly>${ status.current.rep_cont }</textarea>
+								  </div>
+								  <div class="mb-3">
+								    <label for="report_bus_code" class="form-label">사업장 코드</label>
+								    <input type="text" class="form-control" id="report_bus_code" value="${ status.current.bus_code }" readonly>
+								  </div>
+								  <div class="mb-3">
+								    <label for="report_date" class="form-label">신고 날짜</label>
+								    <input type="text" class="form-control" id="report_date" value="<fmt:formatDate value='${ status.current.rdate }' type='both' pattern='yyyy-MM-dd' />" readonly>
+								  </div>
+								  <div class="mb-3">
+								    <label for="report_atta" class="form-label">첨부파일</label> <br>
+								    <div class="row row-cols-1 row-cols-md-2">
+									  <div class="col">
+									    <div class="card" style="width: 470px;">
+									      <img src="${ contextPath }/resources/busUploadFiles/${ status.current.r_img_cname }" class="card-img-top" alt="...">
+									    </div>
+									  </div> 
+									</div>
+								  </div>
+								</form>
 		                   </div>
 					      	
 					      </div>
@@ -114,24 +130,24 @@
               </table>
               
               
-             <script>
-             $("#admitReportBtn").click(function(){
-
-	         		var report_no = $("#report_no").text();
-	         		var bus_code = $("#bus_code").text();
-	         		
-	         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code;
-             });
+            <script>
+	             $("#admitReportBtn").click(function(){
+	
+		         		var report_no = $("#report_no").text();
+		         		var bus_code = $("#bus_code").text();
+		         		
+		         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code;
+	             });
          	</script>
          	
          	<script>
-         	 $("#rejectReport").click(function(){
-
-	         		var report_no = $("#report_no").text();
-	         		var bus_code = $("#bus_code").text();
-	         		
-	         		location.href="${contextPath}/admin/rejectReport?report_no=" + report_no + "&bus_code=" + bus_code;
-         	 });
+	         	 $("#rejectReport").click(function(){
+	
+		         		var report_no = $("#report_no").text();
+		         		var bus_code = $("#bus_code").text();
+		         		
+		         		location.href="${contextPath}/admin/rejectReport?report_no=" + report_no + "&bus_code=" + bus_code;
+	         	 });
          	</script>
 
               <br><hr> 
@@ -236,6 +252,7 @@
                             <th>사업장 코드</th>
                             <th>신고 누적 횟수</th>
                             <th>처리 상태</th>
+                            <th>첨부 파일</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -252,9 +269,6 @@
 		         		search.searchCondition =  $("#searchCondition").val();
 		         		search.searchValue =  $("#searchValue").val();
 		         		
-		         		alert(search.searchCondition);
-		         		alert(search.searchValue);
-		         		
 						$.ajax({
 							url : "${contextPath}/admin/searchReport",
 							data : JSON.stringify(search),
@@ -262,7 +276,6 @@
 							contentType : "application/json; charset=utf-8",
 							dataType : "json",
 							success : function(data) {
-								alert("data" + data);
 								console.log(data);
 								
 								tableBody = $("#resultSearchReportTable tbody");
@@ -280,6 +293,7 @@
 									var bus_code = $("<td>").text(data[i].bus_code);
 									var r_count = $("<td>").text(data[i].r_count);
 									var rstatus = $("<td>").text(data[i].rstatus);
+									//var showAtta = $("<td> <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal + " + data[i]"'>보기</button>");
 									
 									tr.append(report_no, rep_cont, rdate, rexdate, usno, usname, bus_code, r_count, rstatus); // 테이블 행에 추가
 									tableBody.append(tr); // 테이블에 추가

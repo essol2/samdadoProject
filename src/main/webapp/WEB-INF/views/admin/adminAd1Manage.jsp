@@ -108,26 +108,44 @@
 							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							      </div>
 							      <div class="modal-body">
-							      	
-									  <div class="row">
-					                    <div class="col">
-					                         <img src="${ contextPath }/resources/images/image_admin/logo_g.png" class="card-img-top" alt="...">
-					                    </div>
-					                    <div class="col">
-					                        <h3 id="page_title">삼다도</h3>
-					                    </div>
-					                  </div>
-					                  
-					                  <div>
-					                  	No : ${ status.current.alno } <br>
-								     	신청자 : ${ status.current.usname } <br>
-								     	카테고리 : ${ status.current.bus_category } <br>
-								     	기업 소개 : ${ status.current.alintro } <br>
-								     	사업장 코드 : ${ status.current.bus_code } <br>
-								     	신청 날짜 : <fmt:formatDate value='${ status.current.alsubdate }' type='both' pattern='yyyy-MM-dd' /> <br>
-								     	첨부파일 : <img src="${ contextPath }/resources/busUploadFiles/alliance/${ status.current.aimgcname }"> <br>
-					                  </div>
-							     	
+									  <div>
+				                   		<form>
+										  <div class="mb-3">
+										    <label for="al_num_head" class="form-label">광고 번호</label>
+										    <input type="text" class="form-control" id="al_num_head" aria-describedby="emailHelp" value="${ status.current.alno }" readonly>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_user_head" class="form-label">신청자</label>
+										    <input type="text" class="form-control" id="al_user_head" value="${ status.current.usname }" readonly>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_intro_head" class="form-label">카테고리</label>
+										    <input type="text" class="form-control" id="al_intro_head" value="${ status.current.bus_category }" readonly>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_intro_head" class="form-label">기업 소개</label>
+										    <textarea class="form-control" id="al_intro" style="height: 100px; resize: none;" readonly>${ status.current.alintro }</textarea>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_bus_code_head" class="form-label">사업장 코드</label>
+										    <input type="text" class="form-control" id="al_bus_code_head" value="${ status.current.bus_code }" readonly>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_sub_date_head" class="form-label">신청 날짜</label>
+										    <input type="text" class="form-control" id="al_sub_date_head" value="<fmt:formatDate value='${ status.current.alsubdate }' type='both' pattern='yyyy-MM-dd' />" readonly>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_atta_head" class="form-label">첨부파일</label> <br>
+										    <div class="row row-cols-1 row-cols-md-2">
+											  <div class="col">
+											    <div class="card" style="width: 470px;">
+											      <img src="${ contextPath }/resources/busUploadFiles/alliance/${ status.current.aimgcname }" class="card-img-top" alt="...">
+											    </div>
+											  </div>
+											</div>
+										  </div>
+										</form>
+			                         </div>
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -280,13 +298,46 @@
 							        <h5 class="modal-title" id="exampleModalLabel">제출 첨부내역</h5>
 							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							      </div>
+							      
 							      <div class="modal-body">
-							     	No : ${ Astatus.current.alno } <br>
-							     	신청자 : ${ Astatus.current.usname } <br>
-							     	기업 소개 : ${ Astatus.current.alintro } <br>
-							     	사업장 코드 : ${ Astatus.current.bus_code } <br>
-							     	신청 날짜 : <fmt:formatDate value='${ Astatus.current.alsubdate }' type='both' pattern='yyyy-MM-dd' /> <br>
-							     	첨부파일 : <img src="${ contextPath }/resources/busUploadFiles/alliance/${ Astatus.current.aimgcname }"> <br>
+								      <div>
+				                   		<form>
+										  <div class="mb-3">
+										    <label for="al_num" class="form-label">광고 번호</label>
+										    <input type="text" class="form-control" id="al_num" aria-describedby="emailHelp" value="${ Astatus.current.alno }" readonly>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_user" class="form-label">신청자</label>
+										    <input type="text" class="form-control" id="al_user" value="${ Astatus.current.usname }" readonly>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_category" class="form-label">카테고리</label>
+										    <input type="text" class="form-control" id="al_category" value="${ Astatus.current.bus_category }" readonly>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_intro" class="form-label">기업 소개</label>
+										    <textarea class="form-control" id="al_intro" style="height: 100px; resize: none;" readonly>${ Astatus.current.alintro }</textarea>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_bus_code" class="form-label">사업장 코드</label>
+										    <input type="text" class="form-control" id="al_bus_code" value="${ Astatus.current.bus_code }" readonly>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_sub_date" class="form-label">신고 날짜</label>
+										    <input type="text" class="form-control" id="al_sub_date" value="<fmt:formatDate value='${ Astatus.current.alsubdate }' type='both' pattern='yyyy-MM-dd' />" readonly>
+										  </div>
+										  <div class="mb-3">
+										    <label for="al_atta" class="form-label">첨부파일</label> <br>
+										    <div class="row row-cols-1 row-cols-md-2">
+											  <div class="col">
+											    <div class="card" style="width: 470px;">
+											      <img src="${ contextPath }/resources/busUploadFiles/alliance/${ Astatus.current.aimgcname }" class="card-img-top" alt="...">
+											    </div>
+											  </div>
+											</div>
+										  </div>
+										</form>
+			                         </div>
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
