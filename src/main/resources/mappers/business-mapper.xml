@@ -465,7 +465,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
 		   AND BUS_CATEGORY = 'T'
 		   AND BUS_STATUS = 'Y'
-	  ORDER BY B.BUS_CODE DESC
+	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	<!-- 호텔리스트 -->
 	<select id="selectHotelList" resultMap="BusinessResultSet">
@@ -487,7 +487,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
  		 WHERE   
        		   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'H'
-	  ORDER BY B.BUS_CODE DESC
+	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	<!-- 음식점리스트 -->
 	<select id="selectResList" resultMap="BusinessResultSet">
@@ -510,7 +510,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
        		   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'R'
        	   AND BUS_CLASSIFY = 'G'
-	  ORDER BY B.BUS_CODE DESC
+	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	
 	<!-- 렌트카리스트 -->
@@ -537,7 +537,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE 
 		 	   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'C'
-	  ORDER BY B.BUS_CODE DESC
+	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	<!--지혜 -->
 

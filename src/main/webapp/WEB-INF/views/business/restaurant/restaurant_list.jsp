@@ -332,6 +332,20 @@
 
         .profile {
 
+            display: none;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
+        .moreProfile {
+
             display: flex;
             flex-direction: column;
             /* align-items: center; */
@@ -563,20 +577,20 @@
                     <button class="moreBtn">더보기</button>
                 </div>
         </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
+		<!-- 더보기 -->
+		<script>				
+						$(document).ready(function(){
+							size_div = $('.profile').length;
+							
+							x = 9;
+							$('.profile:lt('+x+')').addClass('moreProfile');
+							$('.moreBtn').click(function(){
+								x= (x+9 <= size_div)? x+9 : size_div;
+								$('.profile:lt('+x+')').addClass('moreProfile');	
+							});
+						});
+		</script>
         
         <footer>
            <jsp:include page="../../common/footer.jsp"/>
