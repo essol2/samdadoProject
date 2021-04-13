@@ -207,7 +207,7 @@ public class businessServiceImpl implements businessService {
 
   	// 프리미엄 등록 시 만료일
 	@Override
-	public int insertIncome(Income i) {
+	public int insertIncome1(Income i) {
 		return bDao.insertIncome(i);
 	}
 
