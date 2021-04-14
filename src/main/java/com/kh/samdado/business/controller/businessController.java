@@ -487,9 +487,9 @@ public class businessController {
 	
 	// 결제 성공 시 insert
 	
-	@GetMapping("/pay")
+	@GetMapping("/buy")
 	public String payInsert(Income i, Booking b, Point p) {
-		
+		System.out.println("income 확인 : " + i);
 		int income = bService.insertIncome(i);
 		int booking = bService.insertBooking(b);
 		int point = bService.insertPoint(p);

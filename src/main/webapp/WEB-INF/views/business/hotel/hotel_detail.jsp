@@ -473,7 +473,7 @@
 <body>
 
    <!-- navi.jsp include -->
-   
+   <jsp:include page="../../common/navi.jsp"/>
     
     
     <section id="main-container">

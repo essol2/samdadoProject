@@ -151,7 +151,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM (
 		        SELECT *
 		        FROM POINT
-		        WHERE US_NO = 21
+		        WHERE US_NO = #{usno}
 		        ORDER BY PDATE DESC
       		 )
 		WHERE 
