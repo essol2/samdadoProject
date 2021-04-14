@@ -325,7 +325,7 @@
                     </div>
                     <div id="rightAdverBox">
                         <div id="topAdverBox">
-                            <h2 style="color: #467355;">실시간 누적 클릭 수 : &nbsp; <b id="boldText">덧셈식 만들어야지!</b> 회</h2>
+                            <h2 style="color: #467355;">실시간 누적 클릭 수 : &nbsp; <b id="boldText">귀찮다!</b> 회</h2>
                         </div>
                         <div id="bottomAdverBox">
                             <div class="container"> 
