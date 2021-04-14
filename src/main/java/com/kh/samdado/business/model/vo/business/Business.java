@@ -53,6 +53,7 @@ public class Business {
 	private int al_no;
 	private String bus_opening;
 	private String file_rename;  // 비즈니스 첨부파일경로 join
+	private String file_lv;
 	private String usname; // user 테이블 조인
 	// 관광지리스트 조인
 	private String pro_name;	// 상품이름

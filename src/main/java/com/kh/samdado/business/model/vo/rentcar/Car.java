@@ -18,7 +18,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-@Builder
 
 public class Car {
 //	CAR_NO	NUMBER
@@ -42,5 +41,5 @@ public class Car {
 	private Date car_date;
 	private Date car_modify;
 	
-	private List<Car> carList;
+
 }

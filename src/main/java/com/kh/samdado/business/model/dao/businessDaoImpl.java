@@ -16,6 +16,7 @@ import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
+import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
@@ -69,8 +70,8 @@ public class businessDaoImpl implements businessDao {
 	
 	// 렌트카 등록
 	@Override
-	public int insertCar(Car c) {
-		return sqlSession.insert("businessMapper.insertCar", c);
+	public int insertCar(List<Car> cars) {
+		return sqlSession.insert("businessMapper.insertCar", cars);
 	}
 	@Override
 	public int insertCarAtt(List<CarAtt> carList) {
@@ -89,12 +90,12 @@ public class businessDaoImpl implements businessDao {
 
 	// 호텔등록
 	@Override
-	public int insertRoomAtt(RoomAtt ra) {
-		return sqlSession.insert("businessMapper.insertRoomAtt", ra);
+	public int insertRoomAtt(List<RoomAtt> raList) {
+		return sqlSession.insert("businessMapper.insertRoomAtt", raList);
 	}
 	@Override
-	public int insertRoom(Room r) {
-		return sqlSession.insert("businessMapper.insertRoom", r);
+	public int insertRoom(List<Room> rooms) {
+		return sqlSession.insert("businessMapper.insertRoom", rooms);
 	}
 	// 호텔리스트
 	@Override
@@ -121,8 +122,8 @@ public class businessDaoImpl implements businessDao {
 	}
 	// 관광지디테일
 	@Override
-	public Business selectTour(int bus_code) {
-		return sqlSession.selectOne("businessMapper.selectTour", bus_code);
+	public List<Business> selectTour(int bus_code) {
+		return sqlSession.selectList("businessMapper.selectTour", bus_code);
 	}
 	
 

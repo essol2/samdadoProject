@@ -5,7 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>렌트카 등록</title>
-	
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- 결제 API -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>	
 <style>
 	/* 공통 - 폰트 */
   	* {
@@ -80,7 +84,22 @@
         text-align: center;
     }
 
-    #joinBtn{
+    .joinBtn{
+        width: 20%;
+        background-color:#467355;
+        border-radius:6px;
+        border:1px solid #467355;
+        cursor:pointer;
+        color:#ffffff;
+        font-family:Arial;
+        font-size:18px;
+        font-weight:bold;
+        padding:10px 79px;
+        text-decoration:none;
+        font-family: 'Nanum Gothic', sans-serif;
+    }
+    
+    .joinBtn1{
         width: 20%;
         background-color:#467355;
         border-radius:6px;
@@ -259,6 +278,38 @@
 				<div class="join-wrap">
 				    <h3><label>매장사진</label></h3>
 				    <span class="box">
+				        <input type="file" multiple="multiple" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 추가사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 추가사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 추가사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 추가사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
 				        <input type="file" name="uploadFile" class="content" required>
 				    </span>   
 				</div>
@@ -285,7 +336,7 @@
 				<div class="join-wrap"> 
 					<h3><label>제작사</label></h3>
 				    <span class="box">
-				        <input multiple="multiple" type="text" id="address" class="content" name="carList[0].car_producer">
+				        <input multiple="multiple" type="text" id="carPro" class="content" name="carList[0].car_producer">
 				    </span>
 				</div> 
 				
@@ -293,7 +344,7 @@
 				<div class="join-wrap">
 				    <h3><label>차량</label></h3>
 				    <span class="box">
-				        <input multiple="multiple" type="text" id="address" class="content" name="carList[0].car_name">
+				        <input multiple="multiple" type="text" id="carName" class="content" name="carList[0].car_name">
 				    </span>
 				</div> 
 				
@@ -301,29 +352,29 @@
 				<div class="join-wrap">
 				    <h3><label>가격</label></h3>
 				    <span class="box">
-				        <input multiple="multiple" type="text" id="mobile" class="content" name="carList[0].car_price" required>
+				        <input multiple="multiple" type="text" id="carPrice" class="content" name="carList[0].car_price" required>
 				    </span>
 				</div>
 				
 				<!-- 차종 -->
 		        <div class="join-wrap" >
 		            <h3><label>차종</label></h3>           
-	                <input multiple="multiple" type="radio" name="carList[0].car_type" value="소형">
+	                <input multiple="multiple" type="checkbox" class="carType" name="carList[0].car_type" value="소형">
 	                <label for = "소형">소형</label>&nbsp;
-	                <input type="radio" name="carList[0].car_type" value="중형">
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="중형">
 	                <label for = "중형">중형</label>&nbsp;
-	                <input type="radio" name="carList[0].car_type" value="대형">
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="대형">
 	                <label for = "대형">대형</label>&nbsp;
-	                <input type="radio" name="carList[0].car_type" value="스포츠">
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="스포츠">
 	                <label for = "스포츠">스포츠</label>&nbsp;
 		        </div>
 		        
 		        <!-- 연료 -->
 		        <div class="join-wrap" >
 		            <h3><label>연료</label></h3>           
-	                <input multiple="multiple" type="radio" name="carList[0].car_fuel" value="디젤">
+	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="디젤">
 	                <label for = "디젤">디젤</label>&nbsp;
-	                <input type="radio" name="carList[0].car_fuel" value="가솔린">
+	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="가솔린">
 	                <label for ="가솔린">가솔린</label>&nbsp;
 		        </div>
 				
@@ -393,25 +444,33 @@
 			</div>
 		</div>
 		
-			<div class="btnArea">
-            	<button type="submit" class="joinBtn1" id="submitBtn" style="display:none;"><a>등록하기</a></button>
-            	
-	            <button class="joinBtn1" id="payBtn" type="button"><a>결제하기</a></button>
-	            <button type="button" class="joinBtn" onclick="javascript.historyback()">돌아가기</button>
-	        </div>
+		<div class="btnArea">
+           	<button type="submit" class="joinBtn1" id="submitBtn" style="display:none;"><a>등록하기</a></button>
+           	
+            <button class="joinBtn1" id="payBtn" type="button"><a>결제하기</a></button>
+            <button type="button" class="joinBtn" onclick="javascript.historyback()">돌아가기</button>
+        </div>
+        
 		</form>
 	</div>
 	
 <script>
+	var _cnt = 1;
        function addCar(){
            var div = document.createElement('div');
 
-           $(div).attr('class', 'join-content');
-
+           $(div).attr('id', 'carInfoDiv-' + _cnt);
+		   $(div).attr('class', 'join-content');
            div.innerHTML = document.getElementById('join-content').innerHTML;
-
            document.getElementById('car-main').appendChild(div);
-
+           
+           $("#carInfoDiv-"+_cnt).children().find('.fuel').attr('name', 'carList[' + _cnt + '].car_fuel');
+           $("#carInfoDiv-"+_cnt).children().find('.carType').attr('name', 'carList[' + _cnt + '].car_type');
+           $("#carInfoDiv-"+_cnt).children().find('#carPro').attr('name', 'carList[' + _cnt + '].car_producer');
+           $("#carInfoDiv-"+_cnt).children().find('#carName').attr('name', 'carList[' + _cnt + '].car_name');
+           $("#carInfoDiv-"+_cnt).children().find('#carPrice').attr('name', 'carList[' + _cnt + '].car_price');
+           
+           _cnt++;
        }
        
        $("#gen").change(function() {
