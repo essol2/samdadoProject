@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +14,13 @@
     <!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    
+    <!-- chart.js library -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script> 
+	
+	<meta name=“_csrf” th:content=“${_csrf.token}”/>
+	<meta name=“_csrf_header” th:content=“${_csrf.headerrName}”/>
+	
 </head>
 <style>
 
@@ -138,6 +146,11 @@
         border : 1px solid lightgray;
         border-collapse: collapse;
     }
+    
+    #forExcelExport{
+    	height : 550px;
+    	/* border: 1px solid red; */
+    }
 
     .thisWalletPage{
         color : #467355;
@@ -223,6 +236,12 @@
     .walletPerson{
         width : 10%;
     }
+    
+    /* #walletMidTable{
+    	height : 500px;
+    } */
+    
+    
 
     #walletMidTable th{
         background-color: rgb(228, 228, 228);
@@ -340,7 +359,7 @@
     }
 
     #walletBottomTable{
-        margin-top : 10%;
+        margin-top : 2%;
         text-align: center;
         background-color: white;
         height: 40px;
@@ -445,6 +464,18 @@
 	#accompanyTd{
 		width : 230px;
 	}
+	
+	.chartBtns{
+		background-color : #467355;
+		color : white;
+		padding : 5px;
+		border-style : none;
+	}
+	
+	.listTableTr:hover{
+		cursor : pointer;
+		color : #467355;
+	}
 </style>
 <body>
     <div id="back">
@@ -458,7 +489,7 @@
 
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
+                    <button class="menuButton" id="myInfo" onclick="location.href='${contextPath}/mypage/booking'"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행</div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/walletW.png" class="btnImg"> <br> 내 지갑</div></button>
 
@@ -479,6 +510,70 @@
                 	<td><button class="addingNew" id="btnExport"><b>+엑셀다운</b></button></td>
                 </tr>
                 </table>
+                
+                <div class="container" style="width : 550px;">
+                	<canvas id="myChart"></canvas>
+                	<!-- <div id="btnsArea">
+			    	<button class="chartBtns" id="byClassify">구분별</button>
+			    	<button class="chartBtns" id="byWhopay">결제인별</button>
+			    </div> -->
+                </div>
+                
+                <script	language=JavaScript>
+                	var arr = new Array();
+                	
+                	<c:forEach items="${chaList}" var="item">
+                		arr.push({accClassify:"${item.accClassify}"
+                				, oneTotalSum : "${item.oneTotalSum}"});
+                	</c:forEach>
+                	
+                	if(arr.length == 1){
+                		for(var j=0; j<5; j++){
+                			arr.push({accClassify : '', oneTotalSum : 0});
+                		}
+                	} else if(arr.length == 2){
+                		for(var j=0; j<4; j++){
+                			arr.push({accClassify : '', oneTotalSum : 0});
+                		}
+                	} else if(arr.length == 3){
+                		for(var j=0; j<3; j++){
+                			arr.push({accClassify : '', oneTotalSum : 0});
+                		}
+                	} else if(arr.length == 4){
+                		for(var j=0; j<2; j++){
+                			arr.push({accClassify : '', oneTotalSum : 0});
+                		}
+                	} else if(arr.length == 5){
+                		for(var j=0; j<1; j++){
+                			arr.push({accClassify : '', oneTotalSum : 0});
+                		}
+                	} else{
+                		console.log(arr);
+                	}
+                	
+                	//console.log(arr);
+                	
+    		
+			    	data = { 
+			    		datasets: [{ 
+			    			backgroundColor: ['#40634c', '#467355', '#689978','#88b897','#badbc5', '#c9f5d7'], 
+ 			    			data: [arr[0].oneTotalSum, arr[1].oneTotalSum, arr[2].oneTotalSum, arr[3].oneTotalSum,arr[4].oneTotalSum, arr[5].oneTotalSum],
+ 							
+			    		}], 
+			    		labels: [arr[0].accClassify,arr[1].accClassify,arr[2].accClassify,arr[3].accClassify,arr[4].accClassify,arr[5].accClassify] 
+			    	};
+			    	
+			    	var ctx2 = document.getElementById("myChart"); 
+			    	var myDoughnutChart = new Chart(ctx2, { 
+			    		type: 'doughnut', 
+			    		data: data, 
+			    		options: {
+			    			cutoutPercentage: 30
+			    		} 
+			    	}); 
+                /* }); */
+			    
+			    </script>
                 <div id="forExcelExport">
                 <table id="walletMidTable" class="mainTable">
                     <thead>
@@ -494,30 +589,36 @@
                         <th class="walletWhoPay">결제인</th>
                       </tr>
                     </thead>
-                    <tbody>
-                    <%-- <c:if test="${ abList } != null"> --%>
-                    <c:forEach var="ab" items="${ abList }">
-                      <tr>
-                        <td class="walletName">${ ab.accName }</td>
+                    <tbody >
+                   
+                    <c:forEach var="ab" items="${ abList }" varStatus="abStatus">
+                      <tr id="forChageAjax${abStatus.index}" class="listTableTr" onclick="deleteClick(${abStatus.index})">
+                        <td class="walletName" id='deleteClick' >${ ab.accName }</td>
                         <td class="walletCate"> ${ ab.accClassify }</td>
-                        <td class="walletPrice">${ ab.accWon }</td>
+                        <td class="walletPrice"><fmt:formatNumber value="${ ab.accWon }" pattern="#,###"/></td>
                         <td class="walletPayDate"><fmt:formatDate value="${ ab.accTripDate }" type="date" pattern="yyyy-MM-dd"/></td>
                         <td class="walletStatus">${ab.accPstatus }</td>
                         <td class="walletTouch">
                             <label class="switch">
-                                <input type="checkbox" <c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
+                                <input type="checkbox" class="slideCheck" onclick="javascript:setOnBtnClick(${abStatus.index});" 
+                                		id="slideCheck${abStatus.index}"<c:if test="${ ab.accDutch == 'on' }">checked</c:if>>
                                 <span class="slider round"></span>
                             </label>
+                            <input type="hidden" id="thisDate${abStatus.index}" value="${ab.accTripDate}">
+                        	<input type="hidden" id="thisColNum${abStatus.index}" value="${ab.accno}">
                         </td>
-          				<td class="walletStatus">${ab.accOneWon}</td>
-	          			<c:if test="${ empty ab.whopay }">
-	          				<td class="walletAccompany"> 1인지불 </td>
-	          				<td class="walletWhoPay">${ loginUser.usname }</td>
-	          			</c:if>
-	          			<c:if test="${ !empty ab.whopay}">
-	          				<td class="walletAccompany"> ${ ab.accAccompany } </td>
-	          				<td class="walletWhoPay">${ab.whopay}</td>
-	          			</c:if>
+                        <td class="walletPerson" id="wpId${abStatus.index}">
+	                 	<fmt:formatNumber value="${ ab.accWon/ab.accAccompany }" pattern="#,###"/>
+                        </td>
+                        <td class="walletAccompany" id="together${abStatus.index}"> ${ ab.accAccompany } </td>
+                        <c:choose>
+		          			<c:when test="${ empty ab.whopay }">
+		          				<td class="walletWhoPay" id="payPersonNull${abStatus.index}">${ loginUser.usname }</td>
+		          			</c:when>
+		          			<c:when test="${ !empty ab.whopay}">
+		          				<td class="walletWhoPay" id="payPerson${abStatus.index}">${ab.whopay}</td>
+		          			</c:when>
+	          			</c:choose>
                     </c:forEach>
                     </tbody>
                   </table>
@@ -558,11 +659,11 @@
                 				<td><label for="_pwd" class="inputeda" id="forMargin" style="float:right;">구분</label></td>
                 				<td class="inputTd" colspan="2">
                 					<select class="inputeda" id="accClassify" name="accClassify" style="width:90%;">
-                					 	<option value="구분" selected> 구분 </option>
+                					 	<option value="구분" selected disabled> 구분 </option>
 		                				<option value="숙박">숙박</option>
 		                				<option value="교통">교통</option>
 		                				<option value="식비">식비</option>
-		                				<option value="관광지 입장권">관광지 입장권</option>
+		                				<option value="입장권">입장권</option>
 		                				<option value="체험권">체험권</option>
 		                				<option value="직접입력">직접입력</option>
 	                				</select>
@@ -580,17 +681,17 @@
                 				<td class="inputTd"><input type="date" class="inputeda" id="accTripDate" name="accTripDate" style="width:75%;" required></td>
                 			</tr>
                 			<tr>
-                				<td><label for="_id" class="inputeda" style="float:right;">결제상태 </label></td>
+                				<td><label for="_id" class="inputeda" style="float:right;" disabled>결제상태 </label></td>
                 				<td class="inputTd" colspan="2">
 	                				<select class="inputeda" id="accPstatus" name="accPstatus" style="width:90%;">
-		                				<option value="결제완료">결제완료</option>
+		                				<option value="결제완료">미리예약</option>
 		                				<option value="현장결제">현장결제</option>
 	                				</select>
                 				</td>
                 				<td><label for="_id" class="form-label" style="float:right;"> 결제수단 </label></td>
                 				<td class="inputTd">
                 					<select class="inputeda" id="payMethod" name="payMethod" style="width:75%;">
-                					 	<option value="구분" selected> 결제수단 </option>
+                					 	<option value="구분" selected disabled> 결제수단 </option>
 		                				<option value="checkCard">체크카드</option>
 		                				<option value="creditCard">신용카드</option>
 		                				<option value="account">계좌이체</option>
@@ -607,7 +708,7 @@
 	                            	</label>
                             	</td>
                             	<td class="inputTd" id="accompanyTd">
-                            		<input type="number" class="inputeda" id="accAccompany" name="accAccompany" style="width:100%;" placeholder="동행인은 몇명인가요?" value="0">
+                            		<input type="number" class="inputeda" id="accAccompany" name="accAccompany" min="1" max="20" style="width:100%;" placeholder="동행인은 몇명인가요?" value="1">
                             	</td>
                 				<td class="inputTd" colspan="2">
                 					<input type="text" class="inputeda" id="whopay" name="whopay" style="width:83%;" placeholder="누가계산했나요?">
@@ -627,13 +728,21 @@
 		<div class="modal_layer"></div>
 	</div>
     
+    <!-- 부트스트랩 --> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- 가계부 메뉴 들어가기 -->
     <script>
     function goToWallet(){
 		/* console.log("jsp안에서 usno확인 : " + usno); */
 		location.href='${contextPath}/mypage/wallet?usno='+${loginUser.usno};
 	};
     </script>
-    <script>
+	
+	<!-- 새로운 가계부 내역 입력하는 모달 띄우기 -->
+	<script>
+
 		$("#addNewDetail").click(function(){
 		   $("#modal").fadeIn();
 		});
@@ -642,6 +751,8 @@
 		   $("#modal").fadeOut();
 		});      
 	</script>
+	
+	<!-- 모달창 안에 사용자가 입력하는 값에 따라 hide, show되는 input들 -->
 	<script>
 		$(document).ready(function() {
 		  $('#accClassify').change(function() {
@@ -685,11 +796,97 @@
 			}); 
 		}); 
 	</script>
+	
+	<!-- 엑셀로 내려받기 -->
 	<script>
 		$("#btnExport").click(function (e) {
 			window.open('data:application/vnd.ms-excel,' + encodeURIComponent($("#forExcelExport").html()))
 			 e.preventDefault();
 		});
+	</script>
+	
+	<!-- on/off Button Toggle -->
+	<script>
+	$('input:checkbox').prop('click');
+
+	function setOnBtnClick(i) {
+			
+		var accDutch = $("#slideCheck"+i).prop("checked");
+		var accAccomString = "";
+		var accAccompany = 1;
+		
+		var whopay = "";
+		
+		console.log("#slideCheck"+i);
+		console.log("accDutch = " + accDutch);
+		
+		if(accDutch == true){
+			accAccompany = prompt("몇명이서 더치페이 할까요?", "숫자만 입력해 주세요.");
+			//accAccompany = Integer.parseInt(accAccomString);
+			whopay = prompt("누가 결제했나요?", "");
+			accDutch = 'off';
+		} else{
+			accDutch = 'on'
+			whopay = "${loginUser.usname}";
+		}
+		var accno = $("#thisColNum"+i).val();
+		console.log("accDutch = " + accDutch);
+		console.log("accno = " + accno);
+		console.log("whopay = " + whopay);
+		
+		var searchOb = new Object();
+		searchOb.accno = accno;
+		searchOb.accDutch = accDutch;
+		searchOb.accAccompany = accAccompany;
+		searchOb.whopay = whopay;
+				
+		$.ajax({
+			url : "onoff",
+			data : JSON.stringify(searchOb),
+			type : "POST",
+			contentType : "application/json; charset=utf-8",
+			success : function(data){
+				var wpId = $("#wpId"+i).text(data.accOneWon);
+				var together = $("#together"+i).text(data.accAccompany);
+				
+				if(data.whopay == null)
+					var payPerson = $("#payPersonNull"+i).text(data.whopay);
+				else
+					var payPerson = $("#payPerson"+i).text(data.whopay);
+			},
+			errorr:function(e){
+				alert("error code : " + e.status + "\n" + "message : " + e.responseText);
+			}
+		});
+	}
+	</script>
+	
+	<!-- <script>
+	$(document).ready(function (){
+		  $('.listTableTr').hover(function(){
+			  $(this).css("background-color", "lightgray");
+		  });
+		  $('.listTableTre').mouseleave(function(){
+			  $(this).css("background-color", "white");
+		  });
+	});
+	</script> -->
+	
+	<!-- 선택 행 삭제하는 스크립트 -->
+	<script>
+		function deleteClick(i){
+			var accno = $("#thisColNum"+i).val();
+			var usno = ${loginUser.usno};
+			//console.log(accno);
+			//console.log(usno);
+			
+			var confirmflag = confirm("해당 내역을 삭제하시겠습니까?");
+			
+			if(confirmflag){
+				location.href="${contextPath}/mypage/deleteacc?accno=" + accno + "&usno=" + usno;
+	        }
+			
+		}
 	</script>
 </body>
 </html>

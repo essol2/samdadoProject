@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
@@ -13,6 +14,7 @@ import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.dao.MypageDao;
 import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
+import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
@@ -41,7 +43,25 @@ public class MypageServiceImpl implements MypageService{
 	public List<Alliance> selectAdvertList(String usno) {
 		return mDao.selectAdvertList(usno);
 	}
-
+	
+	// 신청중에 있는 사업장 전체 갯수 구하기
+	@Override
+	public int selectApplyListCount(String usno) {
+		return mDao.selectApplyListCount(usno);
+	}
+	
+	// 제휴회원 - 광고 신청을 진행중인 사업장 리소드 select 메소드
+	@Override
+	public List<Alliance> selectAppAdvertList(ApplyPageInfo api, String usno) {
+		return mDao.selectAppAdvertList(api, usno);
+	}
+	
+	// 제휴회원 - 프리미엄 광고 내역 불러오기
+	@Override
+	public List<Business> selectPBusList(String usno) {
+		return mDao.selectPBusList(usno);
+	}
+	
 	// 제휴회원 - 포인트 충전 내역 insert 메소드
 	@Override
 	public int insertNewPayment(Income ic) {
@@ -115,5 +135,29 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectRecentDate(un);
 	}
 
+	// 일반회원 - 가계부 on.off 버튼 클릭시 db 내용 바꾸기
+	@Override
+	public int updateOnOffBtn(AccountBook abObject) {
+		return mDao.updateOnOffBtn(abObject);
+	}
 
+	// 일반회원 - 가계부 기존 해당 컬럼 객체 값 가져오기
+	@Override
+	public AccountBook selectOrigin(AccountBook ab) {
+		return mDao.selectOrigin(ab);
+	}
+
+	// 일반회원 - 가계부 삭제
+	@Override
+	public int deleteAcc(int accno) {
+		return mDao.deleteAcc(accno);
+	}
+
+	// 일반회원 - 가계부 차트 조회 메소드
+	@Override
+	public List<AccountBook> selectChartList(AccountBook ab) {
+		return mDao.selectChartList(ab);
+	}
+
+	
 }

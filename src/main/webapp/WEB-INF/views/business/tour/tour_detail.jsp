@@ -14,17 +14,11 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <title>samdado</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script>
-        function display() {
-            var control = document.getElementById("bussiness_no_div");
-            if (control.style.display != 'block') {
-                control.style.display = 'block';
-            } else {
-                control.style.display = 'none'
-            }
-        }
-    </script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+    
     <style>
         /* 공통 - 폰트 */
         * {
@@ -507,7 +501,7 @@
 
             <div id="ho_info">
                 <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
-                <label id="report_btn"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
+                <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="report_btn"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">064-738-7060</label>
             </div>
@@ -515,7 +509,7 @@
 
         <div class="colsmom">
             <div class="col">
-                <img class="mainimage" src="../resources/images/image_listpage/tour3.png">
+                <img class="mainimage" src="../resources/busUploadFiles/${ tour.file_rename }">
                 <div class="other">
                     <img class="otherimage" src="../resources/images/image_listpage/tour3_1.png">
                     <img class="otherimage" src="../resources/images/image_listpage/tour3_2.png">
@@ -626,8 +620,7 @@
         <div class="btnArea">
             <button class="moreBtn">더보기</button>
         </div>
-
-        <!-- 후기 -->
+        
         <!-- 후기 -->
         <div id="review_area">
             <label>후기</label>&nbsp;&nbsp;<label>★ 4.5(후기 99개)</label><br>
@@ -686,8 +679,27 @@
                 </div>
             </div>
         </div>
-        </div>
+        
     </section>
+    
+    <script>
+	    $.datepicker.setDefaults({
+	        dateFormat: 'yy-mm-dd',
+	        prevText: '이전 달',
+	        nextText: '다음 달',
+	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	        showMonthAfterYear: true,
+	        yearSuffix: '년'
+	    });
+    
+        $( function() {
+          $( ".datepicker" ).datepicker();
+        } );
+    </script>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -702,7 +714,7 @@
                     <!-- 예약날짜-->
                     <div class="start-div">
                         <label for="startDate">예약날짜</label>
-                        <input type="date" id="startDate" name="startDate" onchange="startDate(this)">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
                     </div>
                 </div>
                 <div class="modal-body2">
@@ -711,37 +723,37 @@
                         <div class="rows">
                             <span class="cell cols1">성인입장권</span>
                             <span class="cell cols2">10000원</span>
-                            <span class="cell cols3"><input type="number" onchange="adult(this)">명</span>
+                            <span class="cell cols3"><input type="number" id="adultNumber"onchange="adult(this)">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">청소년입장권</span>
                             <span class="cell cols2">9000원</span>
-                            <span class="cell cols3"><input type="number" onchange="youth(this)">명</span>
+                            <span class="cell cols3"><input type="number" id="youthNumber" onchange="youth(this)">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">어린이입장권</span>
                             <span class="cell cols2">8000원</span>
-                            <span class="cell cols3"><input type="number" onchange="child(this)">명</span>
+                            <span class="cell cols3"><input type="number" id="childNumber" onchange="child(this)">명</span>
                         </div>
                     </div>
                     <div id="table2">
                         <div class="rows2">
                             <span class="cell cols1">성인입장권</span>
                             <span class="cell cols2">10000원 *<span id="adultResult"></span>명</span>
-                            <span class="cell cols3">20000원</span>
+                            <span class="cell cols3"><input type="text" id="adultPay" style="border:none;width:80px" readonly></span>
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">청소년입장권</span>
                             <span class="cell cols2">9000원 *<span id="youthResult"></span>명</span>
-                            <span class="cell cols3">9000원</span>
+                            <span class="cell cols3"><input type="text" id="youthPay" style="border:none;width:80px" readonly></span>
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">어린이입장권</span>
-                            <span class="cell cols2">80000원 *<span id="childResult"></span>명</span>
-                            <span class="cell cols3">8000원</span>
+                            <span class="cell cols2">8000원 *<span id="childResult"></span>명</span>
+                            <span class="cell cols3"><input type="text" id="childPay" style="border:none;width:80px" readonly></span>
                         </div>
                     </div>
-                    <label>총 금액 : 37000원</label>
+                    <label>총 합계 : <input type="text" id="payResult" style="border:none;width:80px" readonly></label>
                     <button class="payBtn">결제하기</button>
                 </div>
 
@@ -753,25 +765,121 @@
     </div>
     
     <script>
+
+  	$(".payBtn").click(function() {
+  		
+  		var name = document.getElementById('cAmount').value;
+  		var payResult = document.getElementById('payResult').value;
+  		var amount = payResult;
+  		
+	    var IMP = window.IMP;
+	    IMP.init('imp34313892');
+	    IMP.request_pay({
+	        pg : 'html5_inicis',
+	        pay_method : 'card',
+	        merchant_uid : 'merchant_' + new Date().getTime(),
+	        name : name,
+	        amount : amount,
+	        buyer_email : "${loginUser.usemail}",
+	        buyer_name : "${loginUser.usname}",
+	        buyer_tel : "${loginUser.usphone}",
+	        buyer_addr : '',
+	        buyer_postcode : ''
+	    }, function(rsp) {
+	        if ( rsp.success ) {
+	            var msg = '결제가 완료되었습니다!';
+	            msg += '결제 금액 : ' + rsp.paid_amount;
+	            location.href = '${contextPath}/mypage/payment?amount='+amount+'&item='+name+'&usno='+${loginUser.usno};
+	        } else {
+	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
+	        }
+	    
+	        alert(msg);
+	    });
+  	});
+    </script>
+    
+    <script>
+	    function startDate(e) {	  	  
+	  	  const value = e.value;	  	  
+	  	  document.getElementById('startDateResult').innerText
+	  	    = value;	
+	  	}
+	</script>
+    
+    <script>    
+	    var adultPay = document.getElementById('adultPay').value * document.getElementById('adultNumber').value
+		var youthPay = document.getElementById('youthPay').value * document.getElementById('youthNumber').value
+		var childPay = document.getElementById('childPay').value * document.getElementById('childNumber').value
+		console.log(adultPay);
 	    function adult(e) {	  	  
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('adultResult').innerText
-	  	    = value;
+	  	    = value;	  	  
+	  	
+	  		document.getElementById('adultPay').value = adultPay;
+        	document.getElementById('payResult').value = adultPay + youthPay + childPay;
 	  	}
 	    
 	    function youth(e) {
 		  	  const value = e.value;		  	  
 		  	  document.getElementById('youthResult').innerText
-		  	    = value;		  	  
+		  	    = value;
+		  	  
+		  	document.getElementById('payResult').value = adultPay + youthPay + childPay
 		  	}
 	
 	    function child(e) {
 	    	  const value = e.value;	    	  
 	    	  document.getElementById('childResult').innerText
 	    	    = value;
+	    	  
+	    	  document.getElementById('payResult').value = adultPay + youthPay + childPay
 	    	}
 	
     </script>
+    
+    <!-- 신고Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <img src="../resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
+            <h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2>
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <form action="${ contextPath }/business/report" id="writeForm" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+            
+            <input type="hidden" name="rep_res" value="허위매물">
+            <input type="hidden" name="usno" value="${ loginUser.usno }">
+             <input type="hidden" name="bus_code" value="${ t.bus_code }">
+                      
+                <!--신고대상-->
+                <div class="name_div">
+                    <label for="id">신고대상</label>                   
+                    <input type="text" id="name" name="bus_name" value="${ t.bus_name }" readonly>
+                </div>
+                <!--신고사유-->
+                <div class="reason_div">
+                    <label for="reason">신고사유</label>                    
+                    <input type="text" id="reason" name="rep_cont" placeholder="50자 이내로 작성해주세요" required>
+                </div>
+                <!--파일첨부-->
+                <div class="reportimg_div">
+                    <label for="reportimg">파일첨부</label>                    
+                    <input type="file" id="reportimg" name="uploadFile">
+                </div>
+                
+            </div>
+            <div class="modal-footer">                
+                <button type="submit" id="reportBtn">신고하기</button>
+                <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
 
      <footer>
             <div id="footer_left">

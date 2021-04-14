@@ -26,6 +26,8 @@ import com.kh.samdado.admin.model.vo.Pagination;
 import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
@@ -54,7 +56,6 @@ public class AdminController {
 		
 		// 1_1. 관리자 메인 페이지에서 미답변 qna 5개만 보이는 limit절 select
 		List<QnA> qnaList = aService.adminMainQnaSelect();	
-		//System.out.println("qnaList : " + qnaList);
 		
 		// 1_2. 관리자 메인 페이지에서 신규 사업장 limit절 select
 		List<Business> businessList = aService.adminMainBusinessSelect();	
@@ -62,8 +63,7 @@ public class AdminController {
 		// ---------------------------------------------------
 		
 		// 1_3. 관리자 메인 페이지에서 총 회원수 카운트 select
-		int countUserResult = uService.countUser() - 1; // 관리자 1명 제외
-		//System.out.println("회원 수 countUserResult : " + countUserResult);
+		int countUserResult = uService.countUser();
 		
 		// 1_4. 관리자 메인 페이지에서 신규 배너광고 신청 카운트 select
 		int countAd1Result = aService.countAd1();
@@ -73,7 +73,6 @@ public class AdminController {
 		
 		// 1_6. 관리자 메인 페이지에서 신규 QnA 신청 카운트 select
 		int countQnAResult = aService.countQnA();
-		// System.out.println("QnA result : " + countQnAResult);
 		
 		// -----------------------------------------------------
 		
@@ -84,6 +83,8 @@ public class AdminController {
 		// -----------------------------------------------------
 		
 		// 1_9. 상단바 오른쪽 달력 파트
+		
+		// -----------------------------------------------------
 
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("countQnAResult", countQnAResult);
@@ -98,13 +99,36 @@ public class AdminController {
 
 	// 2_1. 관리자 홈 배너 광고관리 페이지로
 	@GetMapping("/advertise1")
-	public String adminAdvertise1View() {
+	public String adminAdvertise1View(Model model,
+								@RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
+		
+		int listCount = aService.countAd1();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		List<Alliance> bannerAdList = aService.adminbannerAdSelect(pi);
+		
+		List<Alliance> admitbannerAdList = aService.admitbannerAdListSelect();
+
+		model.addAttribute("bannerAdList", bannerAdList);
+		model.addAttribute("admitbannerAdList", admitbannerAdList);
+		model.addAttribute("pi", pi);
+		
 		return "admin/adminAd1Manage";
 	}
 	
 	// 2_2. 관리자 홈 프리미엄 광고관리 페이지로
 	@GetMapping("/advertise2")
-	public String adminAdvertise2View() {
+	public String adminAdvertise2View(Model model,
+			@RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
+		
+		int listCount = aService.countAd2();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		List<Income> adminPremiumAd = aService.adminPremiumAdSelect(pi);
+		
+		model.addAttribute("adminPremiumAd", adminPremiumAd);
+		model.addAttribute("pi", pi);
+		
 		return "admin/adminAd2Manage";
 	}
 	
@@ -112,22 +136,15 @@ public class AdminController {
 	@GetMapping("/report")
 	public String adminReport(Model model,
             					@RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
-		
-		// 페이징 처리 로직
-		// 1. 게시글 갯수 구하기
+	
 		int listCount = bService.countReport();
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		List<Report> reportList = aService.adminReportSelect(pi);
 		
-		if (reportList != null) {
-			model.addAttribute("reportList", reportList);
-			model.addAttribute("pi", pi);
-		} else {
-			model.addAttribute("msg", "신고 리스트 조회에 실패하였습니다.");
-		}
-				
-		
+		model.addAttribute("reportList", reportList);
+		model.addAttribute("pi", pi);
+	
 		return "admin/adminReportManage";
 	}
 	
@@ -136,20 +153,14 @@ public class AdminController {
 	public String adminQna(Model model,
 			                  @RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
 		
-		// 페이징 처리 로직
-		// 1. 게시글 갯수 구하기
 		int listCount = aService.countQnA();
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		List<QnA> qnaList = aService.adminQnaSelect(pi);
 		
-		if (qnaList != null) {
-			model.addAttribute("qnaList", qnaList);
-			model.addAttribute("pi", pi);
-		} else {
-			model.addAttribute("msg", "QnA 리스트 조회에 실패하였습니다.");
-		}
-		
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("pi", pi);
+
 		return "admin/adminQna";
 	}
 	
@@ -203,29 +214,61 @@ public class AdminController {
 		
 	}
 	
-
-//	@GetMapping("/searchQna")
-//	public String searchQna(@ModelAttribute Search search,
-//							Model model) {
-//		
-//		List<QnA> searchQnaList = aService.searchQnaList(search);
-//		
-//		model.addAttribute("searchQnaList", searchQnaList);
-//		
-//		return "admin/adminQna";
-//	}
-	
 	@RequestMapping("/searchQna")
 	@ResponseBody
-	public List<QnA> searchQna(HttpServletResponse response, @RequestBody aSearch search, Model model) {
-		response.setContentType("application/json; charset=utf-8");
+	public List<QnA> searchQna(HttpServletResponse response, @RequestBody aSearch search) {
 
 		List<QnA> searchQnaList = aService.searchQnaList(search);
 
 		return searchQnaList;
 	}
 	
+	
+	@RequestMapping("/searchReport")
+	@ResponseBody
+	public List<Report> searchReport(HttpServletResponse response, @RequestBody aSearch search) {
 
+		List<Report> searchReportList = aService.searchReportList(search);
+
+		return searchReportList;
+	}
+	
+	@RequestMapping("/searchbannerAd")
+	@ResponseBody
+	public List<Alliance> searchbannerAd(HttpServletResponse response, @RequestBody aSearch search) {
+
+		List<Alliance> searchAllianceList = aService.searchAllianceList(search);
+
+		return searchAllianceList;
+	}
+	
+	@RequestMapping("/searchUser")
+	@ResponseBody
+	public List<User> searchUser(HttpServletResponse response, @RequestBody aSearch search) {
+
+		List<User> searchUserList = uService.searchUserList(search);
+		
+//		for (User u : searchUserList) {
+//			System.out.println(u.toString());
+//		}
+
+		return searchUserList;
+	}
+	
+	@RequestMapping("/searchpreAd")
+	@ResponseBody
+	public List<Income> searchpreAd(HttpServletResponse response, @RequestBody aSearch search) {
+
+		List<Income> searchPreAdList = aService.searchPreAdList(search);
+		
+		for (Income pre : searchPreAdList) {
+			System.out.println(pre.toString());
+		}
+
+		return searchPreAdList;
+	}
+	
+	
 	@GetMapping("/userList")
 	public String userList(Model model,
 			               @RequestParam(value="page", required = false, defaultValue = "1") int currentPage) {
@@ -234,8 +277,6 @@ public class AdminController {
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		List<User> allUserList = uService.selectAllUserList(pi);
-		
-		// List<User> allUserList = uService.selectAllUserList();
 		
 		model.addAttribute("allUserList", allUserList);
 		model.addAttribute("pi", pi);
@@ -258,6 +299,7 @@ public class AdminController {
 		} else {
 			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가
 			result = aService.updateRstatusToYAndRexdate(report);
+			System.out.println("신고 else result : " + result);
 		}	
 
 		if (result > 0) model.addAttribute("msg", "신고 승인 처리가 완료되었습니다.");	
@@ -280,6 +322,37 @@ public class AdminController {
 		return "redirect:/admin/report";
 	}
 	
+	// 배너 광고 승인
+	@GetMapping("/admitBannerAd")
+	public String admitBannerAd(@ModelAttribute Alliance alliance,
+							Model model) {
+		
+		int result = aService.updateAdmitBannerAdStatus(alliance); // Y, STARTDATE + 3
+		
+		if (result > 0) model.addAttribute("msg", "배너광고 승인 처리가 완료되었습니다.");	
+		else throw new AdminException("배너광고 승인 처리에 실패하였습니다.");
+
+		return "redirect:/admin/advertise1";
+	}
+	
+	// 배너 광고 거절
+	@GetMapping("/rejectBannerAd")
+	public String rejectBannerAd(@ModelAttribute Alliance alliance,
+							Model model) {
+		int result = 0;
+		
+		if (alliance.getAmassage().equals("이미지 불일치")) {
+			result = aService.updateRejectBannerAdStatusRI(alliance); // RI
+		} else { // 포인트 미충전
+			result = aService.updateRejectBannerAdStatusRP(alliance); // RP
+		}
+		
+		if (result > 0) model.addAttribute("msg", "배너광고 반려 처리가 완료되었습니다.");	
+		else throw new AdminException("배너광고 반려 처리에 실패하였습니다.");
+
+		return "redirect:/admin/advertise1";
+	}
+
 	
 	
 

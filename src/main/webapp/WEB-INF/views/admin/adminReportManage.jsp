@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- fmt 라이브러리 사용 -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!doctype html>
@@ -47,59 +46,109 @@
                 <thead>
                     <tr>
                         <th>신고 번호</th>
-                        <th>신고 사유</th>
+                        <th>신고자</th>
                         <th>신고 내용</th>
-                        <th>신고 날짜</th>
                         <th>첨부 파일</th>
-                        <th>처리 상태</th>
-                        <th>회원 이름</th> <!-- 회원 이름으로 바꾸기 -->
                         <th>사업장 코드</th>
-                        <th>승인 버튼</th>
-                        <th>반려 버튼</th>
+                        <th>신고 날짜</th>
+                        <th>승인</th>
+                        <th>반려</th>
                     </tr>
                 </thead>
                 
                 <tbody>        
-                <c:forEach var="rpl" items="${ reportList }">
+                <c:forEach var="rpl" items="${ reportList }" varStatus="status"> 
                    <tr>
                        <th id="report_no">${ rpl.report_no }</th>
-                       <td>${ rpl.rep_res }</td>
-                       <td>${ rpl.rep_cont }</td>                       
-                       <td><fmt:formatDate value='${ rpl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
-                       <td><a class="btn btn-info" href="#">보기</a></td>
-                       <c:if test="${ rpl.rstatus eq 'N' }">
-                       <td>미처리</td>
-                       </c:if>
                        <td>${ rpl.usname }</td>
+                       <td><b>${ rpl.rep_cont }</b></td>                       
+                       <td>
+                       <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal${ status.count }">
+			  				보기
+					   </button>
+                       </td>
                        <td id="bus_code">${ rpl.bus_code }</td>
+                       <td><fmt:formatDate value='${ rpl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
                        <td><button class="btn btn-secondary" id="admitReportBtn">승인</button></td> <!-- db 상태 y -->
                        <td><button class="btn btn-success" id="rejectReport">반려</button></td> <!-- db 상태 r -->
                    </tr>
-                  </c:forEach>   
+                   
+                   <!-- 모달 -->
+                   <div class="modal fade" id="exampleModal${ status.count }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">신고 파일 첨부내역</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+		                   <div>
+		                   		<form>
+								  <div class="mb-3">
+								    <label for="report_num" class="form-label">신고 번호</label>
+								    <input type="text" class="form-control" id="report_num" aria-describedby="emailHelp" value="${ status.current.report_no }" readonly>
+								  </div>
+								  <div class="mb-3">
+								    <label for="report_user" class="form-label">신고자</label>
+								    <input type="text" class="form-control" id="report_user" value="${ status.current.usname }" readonly>
+								  </div>
+								  <div class="mb-3">
+								    <label for="report_content" class="form-label">신고 내용</label>
+								    <textarea class="form-control" id="report_content" style="height: 100px; resize: none;" readonly>${ status.current.rep_cont }</textarea>
+								  </div>
+								  <div class="mb-3">
+								    <label for="report_bus_code" class="form-label">사업장 코드</label>
+								    <input type="text" class="form-control" id="report_bus_code" value="${ status.current.bus_code }" readonly>
+								  </div>
+								  <div class="mb-3">
+								    <label for="report_date" class="form-label">신고 날짜</label>
+								    <input type="text" class="form-control" id="report_date" value="<fmt:formatDate value='${ status.current.rdate }' type='both' pattern='yyyy-MM-dd' />" readonly>
+								  </div>
+								  <div class="mb-3">
+								    <label for="report_atta" class="form-label">첨부파일</label> <br>
+								    <div class="row row-cols-1 row-cols-md-2">
+									  <div class="col">
+									    <div class="card" style="width: 470px;">
+									      <img src="${ contextPath }/resources/busUploadFiles/${ status.current.r_img_cname }" class="card-img-top" alt="...">
+									    </div>
+									  </div> 
+									</div>
+								  </div>
+								</form>
+		                   </div>
+					      	
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					
+                </c:forEach>   
                 </tbody>
               </table>
               
               
-             <script>
-             $("#admitReportBtn").click(function(){
-
-	         		var report_no = $("#report_no").text();
-	         		var bus_code = $("#bus_code").text();
-	         		
-	         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code;
-             });
+            <script>
+	             $("#admitReportBtn").click(function(){
+	
+		         		var report_no = $("#report_no").text();
+		         		var bus_code = $("#bus_code").text();
+		         		
+		         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code;
+	             });
          	</script>
          	
          	<script>
-         	 $("#rejectReport").click(function(){
-
-	         		var report_no = $("#report_no").text();
-	         		var bus_code = $("#bus_code").text();
-	         		
-	         		location.href="${contextPath}/admin/rejectReport?report_no=" + report_no + "&bus_code=" + bus_code;
-         	 });
+	         	 $("#rejectReport").click(function(){
+	
+		         		var report_no = $("#report_no").text();
+		         		var bus_code = $("#bus_code").text();
+		         		
+		         		location.href="${contextPath}/admin/rejectReport?report_no=" + report_no + "&bus_code=" + bus_code;
+	         	 });
          	</script>
-                 
 
               <br><hr> 
 
@@ -109,35 +158,55 @@
                     <ul class="pagination">
                     <!-- [이전] -->
 	               <c:if test="${ pi.currentPage <= 1 }">
-	                  [이전] &nbsp;
+	                  <li class="page-item disabled">
+                          <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
 	               <c:if test="${ pi.currentPage > 1 }">
-	                  <c:url var="before" value="/admin/qna">
+	                  <c:url var="before" value="/admin/report">
 	                     <c:param name="page" value="${ pi.currentPage - 1 }"/>
 	                  </c:url>
-	                  <a href="${ before }">[이전]</a> &nbsp;
+	                  <li class="page-item">
+                          <a class="page-link" href="${ before }" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
+	               
 	               <!-- 페이지 숫자 -->
 	               <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	          	      
 	                  <c:if test="${ p eq pi.currentPage }">
-	                     <font color="red" size="4"><b>[${ p }]</b></font>
+	                     <li class="page-item active"><a class="page-link" href="#">${ p }</a></li>
 	                  </c:if>
 	                  <c:if test="${ p ne pi.currentPage }">
-	                     <c:url var="pagination" value="/admin/qna">
+	                     <c:url var="pagination" value="/admin/report">
 	                        <c:param name="page" value="${ p }"/>
 	                     </c:url>
-	                     <a href="${ pagination }">${ p }</a> &nbsp;
+	                     <li class="page-item"><a class="page-link" href="${ pagination }">${ p }</a></li>
 	                  </c:if>
+	                  
 	               </c:forEach>
+	               
 	               <!-- [다음] -->
 	               <c:if test="${ pi.currentPage >= pi.maxPage }">
-	                  [다음]
+	                  <li class="page-item disabled">
+                          <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
 	               <c:if test="${ pi.currentPage < pi.maxPage }">
-	                  <c:url var="after" value="/admin/qna">
+	                  <c:url var="after" value="/admin/report">
 	                     <c:param name="page" value="${ pi.currentPage + 1 }" />
 	                  </c:url>
-	                  <a href="${ after }">[다음]</a>
+	                  <li class="page-item">
+                          <a class="page-link" href="${ after }" aria-label="Previous">
+                          <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
 	              </ul>
                 </nav>
@@ -149,23 +218,25 @@
                 <h3>신고<span style="color: seagreen;"> 내역조회 </span>하기</h3>
                 <br>
                 
-                <div class="search_report_div">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>-------</option>
-                        <option value="report_no" <c:if test="${ param.searchCondition == 'report_no' }">selected</c:if>>신고 번호</option>
-	                    <option value="rep_res" <c:if test="${ param.searchCondition == 'rep_res' }">selected</c:if>>신고 사유</option>
-	                    <option value="rep_cont" <c:if test="${ param.searchCondition == 'rep_cont' }">selected</c:if>>신고 내용</option> <!-- like 조회 -->
-	                    <option value="rdate" <c:if test="${ param.searchCondition == 'rdate' }">selected</c:if>>신고 날짜</option>
-	                    <option value="rexdate" <c:if test="${ param.searchCondition == 'rexdate' }">selected</c:if>>신고 만기 날짜</option>
-	                    <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option> <!-- 회원 이름으로 바꾸기 -->
-	                    <option value="bus_code" <c:if test="${ param.searchCondition == 'bus_code' }">selected</c:if>>사업장 코드</option>
-	                    <option value="r_count" <c:if test="${ param.searchCondition == 'r_count' }">selected</c:if>>신고 누적 횟수</option>
-	                    <option value="rstatus" <c:if test="${ param.searchCondition == 'rstatus' }">selected</c:if>>처리 상태(승인)</option>
-	                    <option value="rstatus" <c:if test="${ param.searchCondition == 'rstatus' }">selected</c:if>>처리 상태(반려)</option>
-                    </select>
-                    <input type="text" id="searchValue" class="form-control">
-                    <button class="btn btn-secondary" onclick="searchReport();">검색하기</button>
-                </div>
+               <form id="search_report_form"> 
+	                <div class="search_report_div">
+	                    <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
+	                        <option selected>-------</option>
+	                        <option value="report_no" <c:if test="${ param.searchCondition == 'report_no' }">selected</c:if>>신고 번호</option>
+		                    <option value="rep_cont" <c:if test="${ param.searchCondition == 'rep_cont' }">selected</c:if>>신고 내용</option> <!-- like 조회 -->
+		                    <option value="rdate" <c:if test="${ param.searchCondition == 'rdate' }">selected</c:if>>신고 날짜</option>
+		                    <option value="rexdate" <c:if test="${ param.searchCondition == 'rexdate' }">selected</c:if>>신고 만기 날짜</option>
+		                    <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option> <!-- 회원 이름으로 바꾸기 -->
+		                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원 이름</option> <!-- 회원 이름으로 바꾸기 -->
+		                    <option value="bus_code" <c:if test="${ param.searchCondition == 'bus_code' }">selected</c:if>>사업장 코드</option>
+		                    <option value="r_count" <c:if test="${ param.searchCondition == 'r_count' }">selected</c:if>>신고 누적 횟수</option>
+		                    <option value="rstatus" <c:if test="${ param.searchCondition == 'rstatus' }">selected</c:if>>처리 상태(승인)</option>
+		                    <option value="rstatus" <c:if test="${ param.searchCondition == 'rstatus' }">selected</c:if>>처리 상태(반려)</option>
+	                    </select>
+	                   <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
+		               <button class="btn btn-secondary" type="button">검색하기</button>
+	                </div>
+                </form>
                 
                 <br>
 
@@ -173,57 +244,75 @@
                     <thead>
                         <tr>
                             <th>신고 번호</th>
-                            <th></th>
-                            <th>신고 사유</th>
                             <th>신고 내용</th>
                             <th>신고 날짜</th>
                             <th>신고 만기 날짜</th>
+                            <th>회원 번호</th>
                             <th>회원 이름</th>
                             <th>사업장 코드</th>
                             <th>신고 누적 횟수</th>
                             <th>처리 상태</th>
+                            <th>첨부 파일</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="srl" items="${ searchReportList }">
-                        	<tr>
-			                     <th>${ srl.report_no }</th>
-			                     <td>${ srl.rep_res }</td>
-			                     <td>${ srl.rep_cont }</td>           
-			                     <td><fmt:formatDate value='${ srl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
-			                     <td><fmt:formatDate value='${ srl.rexdate }' type='both' pattern='yyyy-MM-dd' /></td>
-			                     <td>${ srl.usname }</td>
-			                     <td>${ srl.bus_code }</td>
-			                     <td>${ srl.r_count }</td>
-			                     <td>${ srl.rstatus }</td>
-			                     <td>${ srl.usstatus }</td> <!-- 반려 or 승인 -->
-			                 </tr>
-	               		</c:forEach>  
                     </tbody>
                   </table>
                </div>
                <br><hr>
                
-                <!-- 검색 페이지네이션 -->
-                <div class="row-page">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>           
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                        </ul>
-                    </nav>
-                </div>
-               
-               <br><br>
+              <script>
+				$(function() {
+					$("#search_report_form button[type=button]").on("click", function() {
+		         		
+		         		var search = {};
+		         		search.searchCondition =  $("#searchCondition").val();
+		         		search.searchValue =  $("#searchValue").val();
+		         		
+						$.ajax({
+							url : "${contextPath}/admin/searchReport",
+							data : JSON.stringify(search),
+							type : "post", 
+							contentType : "application/json; charset=utf-8",
+							dataType : "json",
+							success : function(data) {
+								console.log(data);
+								
+								tableBody = $("#resultSearchReportTable tbody");
+								tableBody.html("");
+								
+								for (var i in data) {
+									var tr = $("<tr>");
+									
+									var report_no = $("<th>").text(data[i].report_no);
+									var rep_cont = $("<td>").text(data[i].rep_cont);
+									var rdate = $("<td>").text(data[i].rdate);
+									var rexdate = $("<td>").text(data[i].rexdate);
+									var usno = $("<td>").text(data[i].usno);
+									var usname = $("<td>").text(data[i].usname);
+									var bus_code = $("<td>").text(data[i].bus_code);
+									var r_count = $("<td>").text(data[i].r_count);
+									var rstatus = $("<td>").text(data[i].rstatus);
+									//var showAtta = $("<td> <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal + " + data[i]"'>보기</button>");
+									
+									tr.append(report_no, rep_cont, rdate, rexdate, usno, usname, bus_code, r_count, rstatus); // 테이블 행에 추가
+									tableBody.append(tr); // 테이블에 추가
+								}
+								
+								
+							},
+							error : function(e) {
+								alert("error code : " + e.status + "\n"
+										+ "message : " + e.responseText);
+							}
+						});
+					});
+				});
+			</script>
+
+        
+            
+       
         </div>
    
     </div>

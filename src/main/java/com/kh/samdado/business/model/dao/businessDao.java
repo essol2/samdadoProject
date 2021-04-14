@@ -12,10 +12,14 @@ import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
+import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
+import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.vo.Booking;
+import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.vo.User;
 
 public interface businessDao {
@@ -23,29 +27,40 @@ public interface businessDao {
 	int insertAlliance(Alliance a);
 	
 	// 사업장 등록
-	int insertBusAtt(BusinessAtt ba);
+	int insertBusAtt(List<BusinessAtt> list);
 	int insertBusiness(Business b);
 
 	// 사업장 리스트 카운트
 	int selectResListCount();
-
-	// 사업장 리스트 가져오기
-	List<Business> selectList();
 	
 	// 음식점 디테일
 	Business selectRestaurant(int bus_code);
+	// 사업장 리스트 가져오기
+	List<Business> selectResList();
 	
 	// 렌트카등록
-	int insertCar(Car c);
-	int insertCarAtt(CarAtt ca);
-
+	int insertCar(List<Car> cars);
+	int insertCarAtt(List<CarAtt> carList);
+	// 렌트카 디테일
+	Business selectCar(int bus_code);
+	// 렌트카 리스트
+	List<Business> selectCarList();
+	
 	// 호텔등록
-	int insertRoomAtt(RoomAtt ra);
-	int insertRoom(Room r);
-
+	int insertRoomAtt(List<RoomAtt> raList);
+	int insertRoom(List<Room> rooms);
+	// 호텔리스트
+	List<Business> selectHotelList();
+	// 호텔디테일
+	Business selectHotel(int bus_code);
+	
 	// 관광지등록
 	int insertTour(TourProduct tp);
-  
+	// 관광지페이지
+	List<Business> selectTourList();
+	// 관광지디테일
+	List<Business> selectTour(int bus_code);
+	
 	// 관광지 예약
 	public int bookingTour(TourBooking tourbooking);
 
@@ -74,13 +89,50 @@ public interface businessDao {
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
 
-	
+	// 일반결제 메소드3개
+	int insertIncome(Income i);
+
+	int insertBooking(Booking b);
+
+	int insertPoint(Point p);
 
 	// 비즈니스 등록 폼, 본인이 등록한 사업장 셀렉
 	List<Business> selectMyBusinessCategory(User loginUser);
 
 	//배너 광고 인서트
 	int insertBannerAd(Alliance a);
+
+
+	// 프리미엄 등록 시 
+	int insertIncome1(Income i);
+
+	List<Alliance> selectBannerAdImgList();
+
+	Business selectBannerAdDetail(Business selectBusCodeUser);
+
+	Business selectBusCodeUser(int bus_code);
+
+	int insertPointDeduction(Business selectBusCodeUser);
+
+	int updateReadCount(Business selectBusCodeUser);
+
+	Business getBusDetail(int bus_code);
+
+
+	
+
+
+
+
+
+
+
+
+
+
+	
+
+	
 
 	
 	

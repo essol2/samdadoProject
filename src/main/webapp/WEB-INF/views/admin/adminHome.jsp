@@ -201,7 +201,7 @@
                         </thead>
                         <tbody>
                         <c:forEach var="q" items="${ qnaList }">
-	                        <tr>
+	                        <tr onclick='showQnA();' style="cursor: pointer;">
 	                            <th>${ q.qnano }</th>
 	                            <td>${ q.usname }</td>
 	                            <td style="overflow: hidden; white-space : nowrap; text-overflow: ellipsis;">${ q.qcont }</td>
@@ -227,7 +227,7 @@
                         </thead>
                         <tbody>
                         <c:forEach var="bl" items="${ businessList }">
-	                        <tr>
+	                        <tr onclick='showBusiness(${bl.bus_code});' style="cursor: pointer;">
 	                            <th>${ bl.bus_code }</th>
 	                            <td>${ bl.usname }</td>
 	                            <c:choose>
@@ -257,9 +257,15 @@
     </div>
     
     <script>
-  
-    
-    </script>
+		function showQnA() {
+			location.href='${ contextPath }/admin/qna';
+		}
+		
+		function showBusiness(bus_code) {
+			location.href="${ contextPath }/business/adminToDetail?bus_code=" + bus_code;
+		}
+	</script>
+	
     
     <!-- Optional JavaScript; choose one of the two! -->
 

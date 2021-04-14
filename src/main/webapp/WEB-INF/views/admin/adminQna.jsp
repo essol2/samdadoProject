@@ -80,35 +80,55 @@
                     <ul class="pagination">
                     <!-- [이전] -->
 	               <c:if test="${ pi.currentPage <= 1 }">
-	                  [이전] &nbsp;
+	                  <li class="page-item disabled">
+                          <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
 	               <c:if test="${ pi.currentPage > 1 }">
 	                  <c:url var="before" value="/admin/qna">
 	                     <c:param name="page" value="${ pi.currentPage - 1 }"/>
 	                  </c:url>
-	                  <a href="${ before }">[이전]</a> &nbsp;
+	                  <li class="page-item">
+                          <a class="page-link" href="${ before }" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
+	               
 	               <!-- 페이지 숫자 -->
 	               <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	          	      
 	                  <c:if test="${ p eq pi.currentPage }">
-	                     <font color="red" size="4"><b>[${ p }]</b></font>
+	                     <li class="page-item active"><a class="page-link" href="#">${ p }</a></li>
 	                  </c:if>
 	                  <c:if test="${ p ne pi.currentPage }">
 	                     <c:url var="pagination" value="/admin/qna">
 	                        <c:param name="page" value="${ p }"/>
 	                     </c:url>
-	                     <a href="${ pagination }">${ p }</a> &nbsp;
+	                     <li class="page-item"><a class="page-link" href="${ pagination }">${ p }</a></li>
 	                  </c:if>
+	                  
 	               </c:forEach>
+	               
 	               <!-- [다음] -->
 	               <c:if test="${ pi.currentPage >= pi.maxPage }">
-	                  [다음]
+	                  <li class="page-item disabled">
+                          <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
 	               <c:if test="${ pi.currentPage < pi.maxPage }">
 	                  <c:url var="after" value="/admin/qna">
 	                     <c:param name="page" value="${ pi.currentPage + 1 }" />
 	                  </c:url>
-	                  <a href="${ after }">[다음]</a>
+	                  <li class="page-item">
+                          <a class="page-link" href="${ after }" aria-label="Previous">
+                          <span aria-hidden="true">&raquo;</span>
+                          </a>
+                      </li>
 	               </c:if>
 	              </ul>
                 </nav>
@@ -119,34 +139,24 @@
                <div class="find_qna">
                 <h3>Q&A<span style="color: seagreen;"> 내역조회 </span>하기</h3>
                 <br>
-                
-             
-			<form id="search_qna_form">
-               <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
-                   <option>--------</option>
-                   <option value="qnano" <c:if test="${ param.searchCondition == 'qnano' }">selected</c:if>>Q&A번호</option>
-                   <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원명</option>
-                   <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
-                   <option value="qcont" <c:if test="${ param.searchCondition == 'qcont' }">selected</c:if>>문의내용</option> <!-- like 조회 -->
-                   <option value="qdate" <c:if test="${ param.searchCondition == 'qdoate' }">selected</c:if>>문의날짜</option>
-                   <option value="qreply" <c:if test="${ param.searchCondition == 'qreply' }">selected</c:if>>답변내용</option>
-                   <option value="qstatus" <c:if test="${ param.searchCondition == 'qstatus' }">selected</c:if>>답변 상태(Y/N)</option>
-               </select>
-               <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
-               <button class="btn btn-secondary" type="button">검색하기</button>
-			</form>
+ 
+				<form id="search_qna_form">
+					<div class="search_qna_div">
+		               <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
+		                   <option>--------</option>
+		                   <option value="qnano" <c:if test="${ param.searchCondition == 'qnano' }">selected</c:if>>Q&A번호</option>
+		                   <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원명</option>
+		                   <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
+		                   <option value="qcont" <c:if test="${ param.searchCondition == 'qcont' }">selected</c:if>>문의내용</option> <!-- like 조회 -->
+		                   <option value="qdate" <c:if test="${ param.searchCondition == 'qdoate' }">selected</c:if>>문의날짜</option>
+		                   <option value="qreply" <c:if test="${ param.searchCondition == 'qreply' }">selected</c:if>>답변내용</option>
+		                   <option value="qstatus" <c:if test="${ param.searchCondition == 'qstatus' }">selected</c:if>>답변 상태(Y/N)</option>
+		               </select>
+		               <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
+		               <button class="btn btn-secondary" type="button">검색하기</button>
+					</div>
+				</form>
             
-                
-                <!-- 
-                <script>
-		         	function searchQna(){
-		         		var searchCondition = $("#searchCondition").val();
-		         		var searchValue = $("#searchValue").val();
-		         		
-		         		location.href="${contextPath}/admin/searchQna?searchCondition=" + searchCondition + "&searchValue=" + searchValue;
-		         	}
-	         	</script>
-                 -->
                 <br>
 
                 <table class="table table-borderless" id="resultSearchQnaTable">
@@ -162,16 +172,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    	<c:forEach var="sq" items="${ searchQnaList }">
-		                   <tr>
-		                       <th scope="row">${ sq.qnano }</th>
-		                       <td>${ sq.usname }</td>
-		                       <td>${ sq.usno }</td>
-		                       <td>${ sq.qcont }</td>
-		                       <td>${ sq.qreply }</td>
-		                       <td>${ q.qstatus }</td>
-		                   </tr>
-		                </c:forEach>  
+                    	
                     </tbody>
                   </table>
                </div>
@@ -179,23 +180,38 @@
                <script>
 					$(function() {
 						$("#search_qna_form button[type=button]").on("click", function() {
-							//var searchCondition = $("#searchCondition").val();
-			         		//var searchValue = $("#searchValue").val();
 			         		
 			         		var search = {};
 			         		search.searchCondition =  $("#searchCondition").val();
 			         		search.searchValue =  $("#searchValue").val();
-			         		
 
 							$.ajax({
-								url : "admin/searchQna",
+								url : "${contextPath}/admin/searchQna",
 								data : JSON.stringify(search),
-								type : "get", 
+								type : "post", 
 								contentType : "application/json; charset=utf-8",
 								dataType : "json",
 								success : function(data) {
-									alert("data" + data);
-									console.log(data);
+
+									tableBody = $("#resultSearchQnaTable tbody");
+									tableBody.html("");
+									
+									for (var i in data) {
+										var tr = $("<tr>");
+										
+										var qnano = $("<th>").text(data[i].qnano);
+										var usname = $("<td>").text(data[i].usname);
+										var usno = $("<td>").text(data[i].usno);
+										var qcont = $("<td>").text(data[i].qcont);
+										var qdate = $("<td>").text(data[i].qdate);
+										var qreply = $("<td>").text(data[i].qreply);
+										var qstatus = $("<td>").text(data[i].qstatus);
+										
+										tr.append(qnano, usname, usno, qcont, qdate, qreply, qstatus); // 테이블 행에 추가
+										tableBody.append(tr); // 테이블에 추가
+									}
+									
+									
 								},
 								error : function(e) {
 									alert("error code : " + e.status + "\n"
@@ -208,27 +224,6 @@
 
                <br><hr>
 
-                <!-- 검색 페이지네이션 -->
-                <div class="row-page">
-                  <nav aria-label="Page navigation example">
-                      <ul class="pagination">
-                      <li class="page-item">
-                          <a class="page-link" href="#" aria-label="Previous">
-                          <span aria-hidden="true">&laquo;</span>
-                          </a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-                      <li class="page-item">
-                          <a class="page-link" href="#" aria-label="Next">
-                          <span aria-hidden="true">&raquo;</span>
-                          </a>
-                      </li>
-                      </ul>
-                  </nav>
-              </div>
-               <br><br><br><br><br><br><br><br><br><br><br><br>
         </div>
    
     </div>

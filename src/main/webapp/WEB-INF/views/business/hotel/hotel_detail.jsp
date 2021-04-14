@@ -14,17 +14,11 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <title>samdado</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script>
-        function display() {
-            var control = document.getElementById("bussiness_no_div");
-            if (control.style.display != 'block') {
-                control.style.display = 'block';
-            } else {
-                control.style.display = 'none'
-            }
-        }
-    </script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+    
     <style>
         /* 공통 - 폰트 */
         * {
@@ -164,7 +158,7 @@
             max-width: 90%;
         }
 
-        .small_view_morebtn {
+        #small_view_morebtn {
             float: right;
             margin-right: 3%;
             border: 0;
@@ -201,7 +195,7 @@
             height: 100%;
         }
 
-        .mapBtn {
+        #mapBtn {
             position: absolute;
             background-color: white;
             border-radius: 6px;
@@ -477,8 +471,10 @@
 </head>
 
 <body>
+
    <!-- navi.jsp include -->
-    <jsp:include page="../../common/navi.jsp"/>
+   
+    
     
     <section id="main-container">
         <!-- 상세페이지 헤더 -->
@@ -486,7 +482,7 @@
             <div class="title_area">
                 <div class="title_area">
                     <img src="../resources/images/image_listpage/premium.png"><br>
-                    <label id="ho_title" class="title_tag">코트야드 바이 메리어드 서귀포시</label>
+                    <label id="ho_title" class="title_tag">${ h.bus_name }</label>
                     <label id="ho_grade" class="title_tag">4성급</label><br>
                 </div>
                 <label id="ho_address">제주특별차치도 서귀포시 </label>
@@ -494,29 +490,71 @@
 
             <div id="ho_info">
                 <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
-                <label id="report_btn"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
+                <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="report_btn"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">064-738-7060</label>
             </div>
         </div>
 
+        <!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-                <img class="mainimage" src="../resources/images/image_listpage/hotel1.png">
+                <img id="bigPic" class="mainimage" src="../resources/busUploadFiles/">
                 <div class="other">
-                    <img class="otherimage" src="../resources/images/image_listpage/hotel1_1.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/hotel1_2.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/hotel1_3.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/hotel1_4.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/hotel1_5.png">
-
+                	<img id="smallPic" class="otherimage" src="../resources/busUploadFiles/">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour1.png">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour3.png">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/list9.png">
+                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/restaurant2_4.png">                   
                 </div>
             </div>
+         	   
+            <!-- 매장 사진 클릭 시 변경 스크립트 -->
+			<script>
+                var bigPic = document.querySelector("#bigPic");
+                var smallPic = document.querySelectorAll("#smallPic")
+
+                for(var i = 0; i < smallPic.length; i++){
+                    smallPic[i].addEventListener("click", changepic);
+                    
+                }
+                function changepic(){
+                    var smallPicAttribute = this.getAttribute("src");
+                    bigPic.setAttribute("src", smallPicAttribute);
+
+                }
+            </script>
 
             <div class="col3">
+                <!-- 구글지도 -->
                 <div class="col2">
-                    <button class="mapBtn">지도에서 보기</button>
-                    <img src="../resources/images/image_listpage/map.png" class="map">
+                    <div id="map" style="width: 555px; height:330px;">
+                    <button type="button" id="mapBtn" 
+                    onclick="window.open('https://map.kakao.com/link/search/한식','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
+                    </div>
+                    
+                    <!-- 구글지도 api -->
+	                <script>
+		             // 이미지 지도에 표시할 마커입니다
+		             // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+		             var markers = [
+		                 {
+		                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
+		                     text: '${res.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+		                 }
+		             ];
+		
+		             var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div  
+		                 staticMapOption = { 
+		                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
+		                     level: 3, // 이미지 지도의 확대 레벨
+		                     marker: markers // 이미지 지도에 표시할 마커 
+		                 };    
+		
+		             // 이미지 지도를 생성합니다
+		             var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+					</script>
+                    
                 </div>
                 <!-- 작은 리뷰 -->
                 <div class="col2" id="small_view_area">
@@ -554,12 +592,85 @@
                             최고의 숙소 상태와 너무너무 친절하신 호스트분까지
 
                         </p>
-                        <button class="small_view_morebtn">more...</button>
+                        <button type="button" id="small_view_morebtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">more...</button>
                     </div>
+                    <!-- Modal -->
+				    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+					    <div class="modal-dialog modal-dialog-centered" style="max-width:60%;">
+					        <div class="modal-content" style="width:100%;">
+						        <div class="modal-header">
+						            <h5 class="modal-title" id="staticBackdropLabel">다녀온 고객 후기</h5>
+						            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						        </div>
+						        <div class="modal-body">
+						            <div class="review-main">
+						
+						            <!-- 리뷰 상단 -->
+						            <div class="review-title">
+						                <div class="reivew-name">
+						                    <h3>제주호텔 ★★★★</h3>
+						                </div>
+						                <div class="review-avg">
+						                    <div class="avg-con">
+						                        <div class="avg-img"></div>
+						                        <img src="image/평점.png">
+						                        <div class="avg-text">
+						                            <p style="font-size: 25px; color: blue;">최고</p>
+						                            <p>n개의 후기</p>
+						                        </div>
+						                    </div>
+						                </div>
+						            </div>
+						
+						            <!-- 리뷰 바디 -->
+						            <div class="review-body">
+						                <div class="review-box">
+						                    <div class="review-user"> 
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						                <div class="review-box">
+						                    <div class="review-user">
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						                <div class="review-box">
+						                    <div class="review-user">
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						            </div>
+						            </div>
+						        </div>
+						        <div class="modal-footer">
+						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						            <button type="button" class="btn btn-primary">Understood</button>
+						        </div>
+					        </div>
+					    </div>
+				    </div>
                 </div>
-
             </div>
         </div>
+        <!-- 편의시설 -->
         <div class="checktable">
             <h2>주요 편의 시설</h2><br>
             <label><img src="../resources/images/image_listpage/check.png">무료 인터넷</label>
@@ -573,6 +684,7 @@
 
         <hr class="boundary">
 
+		<!-- 매장소개 -->
         <div class="introduce">
             <h2>소개</h2><br>
             <p>
@@ -634,7 +746,7 @@
             </div>
             <div class="btnArea">
                 <br>
-                <b>130,000원</b><br>
+                <b>80,000원</b><br>
                 <b>1박당 객실 요금</b><br><br>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     예약하기
@@ -770,8 +882,26 @@
                 </div>
             </div>
         </div>
-        </div>
+        
     </section>
+    <script>
+	    $.datepicker.setDefaults({
+	        dateFormat: 'yy-mm-dd',
+	        prevText: '이전 달',
+	        nextText: '다음 달',
+	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	        showMonthAfterYear: true,
+	        yearSuffix: '년'
+	    });
+    
+        $( function() {
+          $( ".datepicker" ).datepicker();
+        } );
+    </script>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -786,19 +916,20 @@
                     <!--체크인날짜-->
                     <div class="start-div">
                         <label for="startDate">체크인</label>
-                        <input type="date" id="startDate" name="startDate" onchange="startDate(this)">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
                     </div>
 
                     <!--체크아웃날짜-->
                     <div class="end-div">
                         <label for="endDate">체크아웃</label>
                         <label id="error" class="error">체크아웃날짜는 체크인날짜 이전 일 수 없습니다.</label>
-                        <input type="date" id="endDate" name="endDate" onchange="endDate(this)">
+                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)">
                     </div>
                 </div>
 
                 <div class="modal-body2">
                     <label>80,000원 / 박</label><br>
+                    <input type="hidden" id="cAmount" name="cAmount" value="80000">
                     <div class="modal-book">
                         <div class="checkin">
                             <label>체크인</label><br>
@@ -827,10 +958,12 @@
                         </div>
                     </div>
                     <label>80,000원 * </label>
-                    <label id="travleResult"></label>
+                    <label><input type="text" id="days" style="border:none;width:20px;" readonly></label>
+                    <label>박</label>
                     <br>
                     <b>총 합계 : </b>
-                    <b id="payResult"></b>
+                    <b><input type="text" id="payResult" style="border:none;width:80px" readonly></b>
+                    <b>원</b>
                     <button class="payBtn">결제하기</button>
                 </div>
                 <div class="modal-footer">
@@ -840,130 +973,14 @@
         </div>
     </div>
     
-    <script>
-	    function startDate(e) {	  	  
-	  	  const value = e.value;	  	  
-	  	  document.getElementById('startDateResult').innerText
-	  	    = value;
-	  	}
-	    
-	    function endDate(e) {
-		  	  const value = e.value;		  	  
-		  	  document.getElementById('endDateResult').innerText
-		  	    = value;
-		  	  
-		  	}
+      <script>
 
-	    function handleOnChange(e) {
-	    	  const value = e.value;	    	  
-	    	  document.getElementById('result').innerText
-	    	    = value;
-	    	}
-    </script>
-    
-    <!-- Modal2 -->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <img src="../resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
-                    <h2 class="modal-title" id="exampleModalLabel">안녕.</h2>
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-                </div>
-                <div class="modal-body">
-                    <!--체크인날짜-->
-                    <div class="start-div">
-                        <label for="startDate">체크인</label>
-                        <input type="date" id="startDate" name="startDate">
-                    </div>
-
-                    <!--체크아웃날짜-->
-                    <div class="end-div">
-                        <label for="endDate">체크아웃</label>
-                        <label id="error" class="error">체크아웃날짜는 체크인날짜 이전 일 수 없습니다.</label>
-                        <input type="date" id="endDate" name="endDate">
-                    </div>
-                </div>
-
-                <div class="modal-body2">
-                    <label>80,000원 / 박</label><br>
-                    <div class="modal-book">
-                        <div class="checkin">
-                            <label>체크인</label><br>
-                            <b>2021.03.02</b>
-                        </div>
-                        <div class="checkout">
-                            <label>체크아웃</label><br>
-                            <b>2021.03.09</b>
-                        </div>
-                    </div>
-                    <div class="modal-book2">
-                        <div class="people">
-                            <label>인원 : </label>
-                            <label>2명</label>
-                        </div>
-                        <div class="people2">
-                            <select>
-                                <option>인원</option>
-                                <option>1명</option>
-                                <option>2명</option>
-                                <option>3명</option>
-                                <option>4명</option>
-                                <option>5명</option>
-                                <option>6명 이상</option>
-                            </select>
-                        </div>
-                    </div>
-                    <label>80,000원 * 8박</label><br>
-                    <b>총 합계 : 640,000원</b>
-                    <button class="payBtn">결제하기</button>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-            <div id="footer_left">
-                <img src="../resources/images/image_footer/footerlogo.png" class="leftImg">
-            </div>
-            <div id="footer_center">
-                <img src="../resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
-                <img src="../resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
-                <img src="../resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
-            </div>
-            <div id="footer_right">
-                <p id="samdado_news">삼다도 소식</p>
-                <img src="../resources/images/image_footer/facebook.png" class="rightImg">
-                <img src="../resources/images/image_footer/twitter.png" class="rightImg">
-                <img src="../resources/images/image_footer/LinkedIn.png" class="rightImg">
-                <img src="../resources/images/image_footer/pininterest.png" class="rightImg">
-            </div>
-            <br>
-            <br>
-            <hr>
-            <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
-        </footer>
-        
-        <script>
-
-  	$("#payBtn").click(function() {
+  	$(".payBtn").click(function() {
   		
-  		var name = $('input[name="cAmount"]:checked').val();
-  		
-  		var amount = 0;
-  		if(name == '3만원 충전'){
-  			amount = 300;
-  		} else if(name == '6만원 충전'){
-  			amount = 200;
-  		} else{
-  			amount = 100;
-  		}
-  		
-  		console.log(name);
-  		
+  		var name = document.getElementById('cAmount').value;
+  		var payResult = document.getElementById('payResult').value;
+  		// var amount = payResult;
+  		var amount = 100;
 	    var IMP = window.IMP;
 	    IMP.init('imp34313892');
 	    IMP.request_pay({
@@ -990,9 +1007,123 @@
 	    });
   	});
     </script>
+    
+    <script>
+	    function startDate(e) {	  	  
+	  	  const value = e.value;	  	  
+	  	  document.getElementById('startDateResult').innerText
+	  	    = value;
+	  	  
+		  	var sdd = document.getElementById("startDate").value;
+		    var edd = document.getElementById("endDate").value;
+		    var amount = document.getElementById("cAmount").value;
+		    var ar1 = sdd.split('-');
+		    var ar2 = edd.split('-');
+		    var da1 = new Date(ar1[0], ar1[1], ar1[2]);
+		    var da2 = new Date(ar2[0], ar2[1], ar2[2]);
+		    var dif = da2 - da1;
+		    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+		    if(sdd && edd){		        
+		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
+		        document.getElementById('payResult').value = amount * days
+		     }
+	  	}
+	    
+	    function endDate(e) {
+		  	  const value = e.value;		  	  
+		  	  document.getElementById('endDateResult').innerText
+		  	    = value;
+		  	  
+			  	var sdd = document.getElementById("startDate").value;
+			    var edd = document.getElementById("endDate").value;
+			    var amount = document.getElementById("cAmount").value;
+			    var ar1 = sdd.split('-');
+			    var ar2 = edd.split('-');
+			    var da1 = new Date(ar1[0], ar1[1], ar1[2]);
+			    var da2 = new Date(ar2[0], ar2[1], ar2[2]);
+			    var dif = da2 - da1;			    
+			    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			    
+			    if(sdd && edd){		        
+			        var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
+			        document.getElementById('payResult').value = amount * days
+			     }
+			    if(sdd >= edd){
+			    	alert('체크아웃날짜를 다시 체크해주세요.');
+			    }
+		  	}
 
-
-
+	    function handleOnChange(e) {
+	    	  const value = e.value;	    	  
+	    	  document.getElementById('result').innerText
+	    	    = value;
+	    	}
+    </script>
+    
+    <!-- 신고Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <img src="../resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
+            <h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2>
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <form action="${ contextPath }/business/report" id="writeForm" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+            
+            <input type="hidden" name="rep_res" value="허위매물">
+            <input type="hidden" name="usno" value="${ loginUser.usno }">
+             <input type="hidden" name="bus_code" value="${ h.bus_code }">
+                      
+                <!--신고대상-->
+                <div class="name_div">
+                    <label for="id">신고대상</label>                   
+                    <input type="text" id="name" name="bus_name" value="${ h.bus_name }" readonly>
+                </div>
+                <!--신고사유-->
+                <div class="reason_div">
+                    <label for="reason">신고사유</label>                    
+                    <input type="text" id="reason" name="rep_cont" placeholder="50자 이내로 작성해주세요" required>
+                </div>
+                <!--파일첨부-->
+                <div class="reportimg_div">
+                    <label for="reportimg">파일첨부</label>                    
+                    <input type="file" id="reportimg" name="uploadFile">
+                </div>
+                
+            </div>
+            <div class="modal-footer">                
+                <button type="submit" id="reportBtn">신고하기</button>
+                <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
+        
+    <footer>
+            <div id="footer_left">
+                <img src="../resources/images/image_footer/footerlogo.png" class="leftImg">
+            </div>
+            <div id="footer_center">
+                <img src="../resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
+                <img src="../resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
+                <img src="../resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
+            </div>
+            <div id="footer_right">
+                <p id="samdado_news">삼다도 소식</p>
+                <img src="../resources/images/image_footer/facebook.png" class="rightImg">
+                <img src="../resources/images/image_footer/twitter.png" class="rightImg">
+                <img src="../resources/images/image_footer/LinkedIn.png" class="rightImg">
+                <img src="../resources/images/image_footer/pininterest.png" class="rightImg">
+            </div>
+            <br>
+            <br>
+            <hr>
+            <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
+        </footer>
+        
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

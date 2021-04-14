@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,157 +12,13 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+	
 	<jsp:include page="../common/navi.jsp"/>
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_modal.css" type="text/css">
-<style>
-		.route_title {
-            max-width: 48%;
-            max-height: 800px;
-            margin-left : 10%;
-        }
-
-        #content-logo {
-            /* display: inline-block; */
-            position: relative;
-            margin-left: 100px;
-        }
-
-        .content-title {
-            font-size: 30px;
-            color: black;
-            display: inline-block;
-            position: relative;
-        }
-
-        #route_select {
-            border: 2px solid black;
-            width: 80%;
-            position: relative;
-            margin: auto;
-        }
-
-        #select td {
-            padding-left: 10px;
-            padding-right: 10px;
-            text-align: center;
-            width: 80px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-        }
-
-        .bold {
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .tabletr {
-            padding-top: 10px;
-            padding-bottom: 5px;
-        }
-
-        #map {
-            width: 100%;
-            position: relative;
-            margin-left: 12%;
-        }
-
-        .c_border {
-            border: 1px solid black;
-            width: 75%;
-            margin-left: 20%;
-        }
-
-        .c1_border {
-            border: 1px solid black;
-            width: 60%;
-            margin-left: 20%;
-        }
-
-        #title1, #title2,  #title3,  #title4 {
-            margin-left: 20%;
-            margin-bottom: -10px;
-        }
-        
-        #morebtn {
-            width: 25%;
-            margin-left: 37.5%;
-            margin-left: 37.5%;
-        }
-
-        #left-border {
-            /* height: 1650px; */
-            height: auto;
-            width: 90%;
-        }
-
-        .spot_border {
-            height: 225px;
-            width: 150px;
-            border: rgb(70, 115, 85) 3px solid;
-        }
-        
-        ._btn {
-            background-color: rgb(70, 115, 85);
-            border: rgb(70, 115, 85);
-            color: white;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            font-weight: 700;
-            height: 45px;
-        }
-
-        .spot_title {
-            margin-top: 10%;
-            text-align: center;
-            font-weight: bolder;
-            font-size: 25px;
-            cursor: default;
-        }
-
-        .spot_btn {
-            background-color: rgb(255,255,255);
-            border: 0px;
-            width: 100%;
-            margin-top:80%;
-        }
-
-        #ch_btn {
-            width: 40%;
-            margin-left: 8%;
-            margin-right: 1%;
-        }
-
-        #add_btn {
-            width: 40%;
-            margin-right: 8%;
-            margin-left: 1%;
-        }
-
-        #arrow {
-            margin-left: 40%;
-            margin-top: 2%;
-            margin-bottom: 2%;
-        }
-
-        .detail {
-            font-size: 15px;
-            font-weight: 100;
-        }
-        
-       #searchbtn {
-            font-weight: 300;
-            margin-bottom: 10px;
-            margin-left: 88%;
-            width: 100px;
-            height: 35px;
-        }
-	
-</style>
+	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css">
 </head>
 <body>
 		<div id="bottom">
@@ -169,7 +27,7 @@
                 <div class="route_title">
                     <image id="content_logo" width="70px" height="70px" src="../resources/images/image_main/logo_g.png"></image>
                     &nbsp;
-                    <label class="content-title">길 만들기</label>
+                    <label class="content-title">찾은 길</label>
                 </div>
 
                 <div id="route_select">
@@ -196,7 +54,7 @@
                 	<c:if test="${ param.thema == 'beach' }">
                 		<c:set var="check7" value="checked"/>
                 	</c:if>
-                 	
+                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get" onsubmint="return searchForm();">
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 		<input type="radio" name="area" id="east" value="east" ${ check1 }>
                 		<label for="east">  동부</label>
@@ -223,7 +81,7 @@
                 		<input type="date" name="routeDate" id="routeDate" value="${routeDate}">
                 		
                 		<button class="_btn" id="searchbtn">검색하기</button>
-                	
+                	</form>
                 </div>
                 <br>
                 
@@ -241,7 +99,7 @@
 							<label class="content-title" id="title1" >추천 길</label>
 							<div class="c_border" id="left-border">
 								<table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
-									<c:forEach var="r" items="${ list }">
+									<c:forEach var="r" items="${ list }" varStatus="index">
 										<tr>
 											<td>
 												<img src="${ r.spot_path }${ r.spot_oname }">
@@ -253,25 +111,23 @@
 												</div>
 											</td>
 										</tr>
-
-	                                    <tr>
-	                                       <td colspan="2">
-	                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
-	                                           <span class="detail">26.8km</span>
-	                                           <span class="detail">59분</span>
-	                                        </td>
-	                                    </tr>
+										<c:if test="${ !index.last }">
+		                                    <tr>
+		                                       <td colspan="2">
+		                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
+		                                           <span class="detail">26.8km</span>
+		                                           <span class="detail">59분</span>
+		                                        </td>
+		                                    </tr>
+	                                    </c:if>
                                </c:forEach>
-                                   
-
-                                    
-
+                                 
                                    <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: 10%; font-size: 16px;">총 이동 거리 40.1km </p></td></tr>
                                    <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: -5%; font-size: 16px; margin-bottom: 10%;">예상 이동 시간 83분</p></td></tr>
                                    
                                    <tr>
                                         <td colspan="2"> 
-                                            <button class="_btn" id="ch_btn">순서 바꾸기</button>
+                                            <button class="_btn" id="ch_btn" onclick="location.href='${ contextPath }/route/changeRoute'">순서 바꾸기</button>
                                             <button class="_btn" id="add_btn">추가하기</button>
                                         </td>
                                    </tr>
@@ -283,24 +139,36 @@
                             <div id="content_right" style="width: 100%;">
                                 <label class="content-title" id="title2">예상 예산</label>
                                 <div class="c1_border" id="right-top-border">
-                                    <table style="width=100%">
-                                        <tr>
-                                            <td id="navi-content" style="padding: 10px;">&nbsp;만장굴 입장료 (성인) 4,000원</td>
-                                        </tr>
+                                    <table id="costTable">
+                                    	<c:set var="totalPrice" value="0"/>
+                                		<c:forEach var="r" items="${ list }">
+											<tr>
+		                                    	<td id="cost-content">&nbsp;${ r.spot_title } <fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+		                                        <c:set var="totalPrice" value="${ totalPrice + r.spot_price }"/>
+		                                    </tr>
+                                      	</c:forEach>
+                                    	
                                         <tr> 
-                                            <td id="navi-content" style="text-align: right; padding: 10px;" >총 4,000원&nbsp;</td>
+                                            <td id="cost-content" style="text-align: right;" >총 <fmt:formatNumber value="${ totalPrice }" pattern="#,###"/>원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>
 							</div>
-                               
+                            
                                 <br>
                                 
-                                <label class="content-title" id="title3">삼다수 님을 위한 <br> 삼다도의 추천 숙박</label>
+                                <c:if test="${ !empty loginUser }">
+                                	<label class="content-title" id="title3">${ loginUser.usname } 님을 위한 <br> 삼다도의 추천 숙박</label>
+                                </c:if>
+                                
+                                <c:if test="${ empty loginUser }">
+                                	<label class="content-title" id="title3">삼다도의 추천 숙박</label>
+                                </c:if>
+                                
                                 <div class="c1_border" id="right-middle-border">
                                     <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                         <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
+                                            <td><img src="${contextPath}/resources/images/image_route/호텔이미지.png"></td>
                                         </tr>
                                         <tr>
                                             <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
@@ -323,10 +191,11 @@
                                 </div>
                                 <br>
 
-                                <button class="_btn" id="morebtn">숙박 더 보러 가기</button>
+                                <button class="_btn" id="morebtn" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 더 보러 가기</button>
                                 
                                 <br><br>
-                                <label class="content-title" id="title4">삼다수 님이 찜하신 숙박</label>
+                                <c:if test="${ !empty loginUser }">
+                                <label class="content-title" id="title4">${ loginUser.usname } 님이 찜하신 숙박</label>
                                 <div class="c1_border" id="right-bottom-border">
                                     <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                         <tr>
@@ -351,6 +220,7 @@
                                         </tr>
                                     </table>
                                 </div>
+                                </c:if>
                                 <br>
                         </th>
                     </table>
@@ -416,7 +286,165 @@
                 </div>
             </div>
         </div>
-         <script>
+    
+    <script language=JavaScript>
+    	var arr = new Array();
+    	<c:forEach items="${list}" var="list">
+    		arr.push({
+    			title: "${list.spot_title}",
+    			address: "${list.spot_address}"
+    			});
+    	</c:forEach>
+    	
+    	var positions = arr;
+    	
+    	var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
+			level: 8
+		};
+
+		var map = new kakao.maps.Map(container, options);
+		
+		var geocoder = new kakao.maps.services.Geocoder();
+		var imageSrc = "${ contextPath }/resources/images/image_route/marker.png";
+		var imageSize = new kakao.maps.Size(33, 54);
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		var bounds = new kakao.maps.LatLngBounds();
+		var linePath = new Array();
+		
+		var linePath = [];
+
+		var polyline = new kakao.maps.Polyline({
+		    path: linePath,
+		    strokeWeight: 3,
+		    strokeOpacity: 1,
+		    strokeColor: 'red',
+		    strokeStyle: 'solid'
+		});
+
+		const addressSearch = address => {
+		    return new Promise((resolve, reject) => {
+		        geocoder.addressSearch(address.address, function(result, status) {
+		            if (status === kakao.maps.services.Status.OK) {
+		            	
+		            	  var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					        
+					        console.log(result[0]);
+						       
+						       // 결과값으로 받은 위치를 마커로 표시합니다
+						        var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords,
+						            image: markerImage
+						        });
+						       
+						       marker.setMap(map);
+							
+					        // 인포윈도우로 장소에 대한 설명을 표시합니다
+					        var infowindow = new kakao.maps.InfoWindow({
+					            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address.title + '</div>'
+					        });
+					        
+					        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+						    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+					    	
+					    	bounds.extend(new kakao.maps.LatLng(coords.Ma, coords.La));
+					    	map.setBounds(bounds);
+		            	
+		                resolve(result);
+		            } else {
+		                reject(status);
+		            }
+		        });
+		    });
+		};
+
+		(async () => {
+		    try {
+		        for(let address of positions) {
+		            const result = await addressSearch(address);
+		            setPolyLine(result);
+		        }
+		    } catch (e) {
+		        console.log(e);
+		    }
+		})();
+
+		function setPolyLine(result) {
+		    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		    linePath.push(coords);
+		    polyline.setPath(linePath);
+
+		    if(!polyline.getMap()) {
+		        polyline.setMap(map);
+		    }
+		}
+		
+		/* positions.forEach(function(addr, index){
+			geocoder.addressSearch(addr.address, function(result, status) {
+				
+				 if (status === kakao.maps.services.Status.OK) {
+					 
+				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+				        
+				        console.log(result[0]);
+					       
+					       // 결과값으로 받은 위치를 마커로 표시합니다
+					        var marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords,
+					            image: markerImage
+					        });
+					       
+					       marker.setMap(map);
+						
+				        // 인포윈도우로 장소에 대한 설명을 표시합니다
+				        var infowindow = new kakao.maps.InfoWindow({
+				            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + positions[index].title + '</div>'
+				        });
+				        
+				        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+				    	
+				    	bounds.extend(new kakao.maps.LatLng(coords.Ma, coords.La));
+				    	map.setBounds(bounds);
+				    	
+						linePath.push(new kakao.maps.LatLng(coords.Ma, coords.La)); 
+						console.log(linePath);
+						
+						var polyline = new kakao.maps.Polyline({
+									path: linePath, 
+									strokeWeight: 3, 
+									strokeOpacity: 1,
+									strokeColor: 'red', 
+									strokeStyle: 'solid' 
+						});
+						
+						/* polyline.setMap(map);
+						
+						console.log("길이: " + polyline.getLength());
+
+				 }
+				
+				 });
+			}); */
+		
+		function makeOverListener(map, marker, infowindow) {
+			return function() {
+				infowindow.open(map, marker);
+				};
+			}
+
+			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			function makeOutListener(infowindow) {
+				return function() {
+					infowindow.close();
+				};
+			}
+    </script>
+    
+    <!-- <script>
 		var container = document.getElementById('map');
 		var options = {
 			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
@@ -424,7 +452,70 @@
 		};
 
 		var map = new kakao.maps.Map(container, options);
-	</script>
+		var geocoder = new kakao.maps.services.Geocoder();
+		
+		var imageSrc = "${ contextPath }/resources/images/image_route/marker.png";
+		var imageSize = new kakao.maps.Size(33, 54);
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		
+		<c:forEach var="list" items="${list}" varStatus="listStatus">
+			// 주소로 좌표를 검색합니다
+			geocoder.addressSearch('${list.spot_address}', function(result, status) {
+	
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
+					
+			         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+			        // 결과값으로 받은 위치를 마커로 표시합니다
+			        var marker = new kakao.maps.Marker({
+			            map: map,
+			            position: coords,
+			            image : markerImage
+			        });
+	
+			        // 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new kakao.maps.InfoWindow({
+			            content: '<div style="width:150px;text-align:center;padding:6px 0;">${list.spot_title}</div>'
+			        });
+			       
+			       kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+			       kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+	
+			         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			      map.setCenter(coords);
+			         
+			      var first_polyline = new kakao.maps.LatLng(coords.La, coords.Ma);
+			      
+			      console.log(first_polyline);
+			      
+			      var first_linePath = new kakao.maps.Polyline({
+			    	 path: first_polyline,
+			    	 strokeWeight: 3,
+			    	 strokeColor: 'red',
+			    	 strokeStyle: 'solid'
+			      });first_linePath.setMap(map);
+			    } 
+			    
+			      
+			      
+			     function makeOverListener(map, marker, infowindow) {
+			    	    return function() {
+			    	        infowindow.open(map, marker);
+			    	    };
+			    	}
+
+			    	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			    	function makeOutListener(infowindow) {
+			    	    return function() {
+			    	        infowindow.close();
+			    	    };
+			    	}
+			});    
+			
+		</c:forEach>
+
+	</script> -->
 </body>
 		<footer>
            <jsp:include page="../common/footer.jsp"/>

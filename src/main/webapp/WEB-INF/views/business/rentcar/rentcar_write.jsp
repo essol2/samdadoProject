@@ -4,157 +4,103 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-	
+<title>렌트카 등록</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- 결제 API -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>	
 <style>
-       
-    /* 푸터 */
-    footer{
-        width: 100%;
-        background-color: rgb(70, 115, 85);
-        height : 180px;
-    }
-
-    .leftImg{
-        margin-left:30px;
-        margin-top:20px;
-    }
-
-
-    #footer_center {
-        margin-left:350px;
-        margin-top:-130px;
-        color:white;
-    }
-
-    #footer_right{
-        margin-left:800px;
-        margin-top:-120px;
-        color:white;
-    }
-
-    .rightImg{
-        padding-right: 15px;
-    }
-
-    #copyRight{
-        color:white;
-        margin-left: 500px;
-        margin-top:60px;
-    }
-
-    /* 회원가입 기본틀 */
-
-    :root{
-    --body-background-color: #dadada
-    --font-color: #4e4e4e;
-    --border-gray-color : #dadada;   
-    }
-
-    *{
-    margin:0;
-    padding:0;
-    }
-
-    body{
-    background:var(--body-background-color);
+	/* 공통 - 폰트 */
+  	* {
+        font-family: 'Jeju Myeongjo', serif;
+    }  
+	h3{
+        margin: 25px 0px 12px;
     }
 
     .main-container{
-    width:87%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    }
-    .main-container .main-wrap{
-    width:100%;
-
-    }
-    .main-container .sel-lang-wrap
-    {
-    width: 96px;
-    height: 30px;
-    color: var(--font-color);
-    border: solid 1px var(--border-gray-color);
+        width: 87%;   
     }
 
-    .main-container {
-    display:flex;
-    justify-content:flex-end;
+    .logo-div{
+        display: flex;
+        background-color: rgb(70, 115, 85);
+        padding-left: 2%;
     }
 
+    .logo-wrap{
+        flex: 0 0 auto;
+        width: 8.2%;
+        height: 13%;
+    }
+
+    .title-wrap{
+        width: 92.33%;
+        color: white;
+        margin-top: 2.5%;
+    }
     
-    .main-container .logo-wrap{
+    .join-main{
         width: 100%;
-        display:flex;   
-        flex-direction: column;
-        /* align-items: center; */
-        background-color: #467355;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
-    .title_img{
-        padding: 30px;
-        color: #ffffff;
+    .car-main{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
-    .logo-wrap label {
-        font-size: 30px;
+    .join-content{
+        width: 30%;
+        flex-wrap: wrap;
+        margin: 0 30px 0 30px;
+    }
+    
+    .box{
+        width: 100%;
+        height: 50%;
+        border: 1px solid black;
+        box-sizing: border-box;
+        padding: 10px 12px;
+        border-radius: 8px;
+    }
+
+    .content, .postcodify_postcode5, 
+    .postcodify_address, .postcodify_details{
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: #fff;
+    }
+    
+    .btnArea{
+        width: 100%;
+        padding: 3%;
         text-align: center;
     }
 
-    .terms-section-wrap{
-        padding-top: 60px;
-        display: flex; 
-        flex-direction: column;
-        align-items: center;
+    .joinBtn{
+        width: 20%;
+        background-color:#467355;
+        border-radius:6px;
+        border:1px solid #467355;
+        cursor:pointer;
+        color:#ffffff;
+        font-family:Arial;
+        font-size:18px;
+        font-weight:bold;
+        padding:10px 79px;
+        text-decoration:none;
+        font-family: 'Nanum Gothic', sans-serif;
     }
-
-    .terms-check-wrap{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-top: 10px;
-    }
-
-    /* 회원가입 기본틀 끝 */
-
-    /* 약관 페이지 */
-    textarea{
-        border: solid 1px var(--border-gray-color);
-    }
-
-
-    .terms-div{
-        margin-top:30px;
-        font-size: 14px;   
-    }
-
-    .terms-all-div{
-        font-size: 15px;
-    }
-
-    .terms-div, .terms-all-div{
-        font-weight: bold;   
-    }
-
-    .partner-div, .user-div{
-        margin-top: 30px;
-        color: #666;
-    }
-
-    #terms-privacy, #terms-service, label{
-        cursor: pointer;
-    }
-
-    #partner-signup, #user-signup{
-        font-size: 14px;
-        line-height: 14px;
-        display: inline-block;
-        cursor: pointer;
-        color: black;
-    }
-
-    #btnJoin {   
+    
+    .joinBtn1{
+        width: 20%;
         background-color:#467355;
         border-radius:6px;
         border:1px solid #467355;
@@ -168,399 +114,447 @@
         font-family: 'Nanum Gothic', sans-serif;
     }
 
-    .button-class{
-        margin-top: 40px;
+    .addBtn-area{
+        width: 80%;
     }
 
-    .button-class2{
-        margin-top: 40px;
-        left: 20%;
-    }
-
-    /* 약관페이지 끝*/
-
-    /* 가입양식 페이지 */
-
-    h3 {
-        margin: 19px 0 8px;
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    .signup-section-wrap{
-      width: 75%;
-    }
-
-
-    .signup-div, .dog-div, .btn_area{
-        position: relative;
-        left: 45%;
-    }
-
-    .box {
-        display: block;
-        width: 465px;
-        height: 48px;
-        left: auto;
-        border: solid 1px var(--border-gray-color);
-        padding: 10px 14px 10px 14px;
-        box-sizing: border-box;
-        background: white;
-        position: relative;
-    }
-
-    .int {
-        display: block;
-        position: relative;
-        width: 100%;
-        height: 29px;
-        border: none;
-        background: #fff;
-        font-size: 15px;
-    }
-
-    .box.int_pass {
-        padding-right: 40px;
-    }
-
-    .box.int_pass_check {
-        padding-right: 40px;
-    }
-
-    #bir_wrap {
-        display: table;
-        width: 100%;
-    }
-
-    #bir_yy {
-        display: table-cell;
-        width: 147px;
-        
-    }
-
-    #bir_mm {
-        display: table-cell;
-        width: 147px;
-        vertical-align: middle;
-    }
-
-    #bir_dd {
-        display: table-cell;
-        width: 147px;
-    }
-
-    #bir_mm, #bir_dd {
-        padding-left: 10px;
-    }
-
-    select {
-        width: 100%;
-        height: 29px;
-        font-size: 15px;
-        background: #fff url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100% 50% no-repeat;
-        background-size: 20px 8px;
-        -webkit-appearance: none;
-        display: inline-block;
-        text-align: start;
-        border: none;
-        cursor: default;    
-    }
-
-    /* 에러메세지 */
-
-    .error_next_box {
-        margin-top: 9px;
-        font-size: 12px;
-        color: red;    
-        display: none;
-    }
-
-    #alertTxt {
-        position: absolute;
-        top: 19px;
-        right: 38px;
-        font-size: 12px;
-        color: red;
-        display: none;
-    }
-
-    /* 버튼 */
-
-    .btn_area {
-        margin: 30px 0 91px;
-        
-    }
-
-    /* 회원가입 양식 끝 */
-
-    /* 방추가 */
-
-    #car_add{
-        width: 70px;
-        height: 30px;
+    .addBtn{
+        color: white;
         float: right;
         background-color: #467355;
-        color: #ffffff;
-        font-weight: bold;
-        /* background-color: #467355; */
-        border-radius: 6px;
-        border: 1px solid #467355;
-        /* margin-right: 1%; */
-        
+        border:1px solid #467355;
+        border-radius: 8px;
+        font-weight:bold;
     }
-
-    #deleteBtn{
-        width: 70px;
-        height: 30px;
-        float: right;
-        background-color: #467355;
-        color: #ffffff;
-        font-weight: bold;
-        /* background-color: #467355; */
-        border-radius: 6px;
-        border: 1px solid #467355;
-        margin-bottom: 1%;
+    
+    .textArea-con{
+    	width:105%;
+    	
     }
-
-
-
-    #searchBtn {
-        background-color:#467355;
+    
+    #postcodify_search_button{
+    	background-color:#467355;
         border-radius:6px;
         border:1px solid #467355;
-        color: #ffffff;
-        font-weight: bold;
+        cursor:pointer;
+        color:#ffffff;
+    }
+    
+    .join-wrap{
+        width: 100%;
+
+    }
+    
+    h3 label{
+    	margin-top: 5px;
+    }
+    
+    .guideBox{
+    	margin-top: 20px;
+    }
+    
+    .textbtn{
+    	font-size:20px; 
+    	cursor:pointer;
     }
 </style>
 </head>
 <body>
 	<!-- 네비 -->
 	<jsp:include page="../../common/navi.jsp"/>
+	
 	<!-- 메인 -->
 	<div class="main-container">
-    	<div class="main-wrap">
-        	<div class="logo-wrap" id="logo-div">
-          		<label class="title_img">렌트카 등록페이지</label>
-        	</div>
+	
+		<!-- 로고헤더 -->
+        <div class="logo-div">
+            <div class="logo-wrap">
+                <img src="${ contextPath }/resources/images/image_main/logo_w.png" style="width: 100px; height: 100px;">
+            </div>
+            <div class="title-wrap">
+                <h3 style="margin: 0;">음식점 등록페이지</h3>
+            </div>        
+        </div>
+        
         <form action="${ contextPath }/business/rentcar_insert" method="post" enctype="multipart/form-data">
 		
 		<input type="hidden" name="us_no" value="${ loginUser.usno }">
 		<input type="hidden" name="bus_category" value="C">
-		<input type="hidden" name="res_category" value="">
 		
-		<section class="signup-section-wrap">
-			<!-- 사업장명 -->
-			<div class="signup-div" >
-			    <h3 class="join_title">
-			        <label for="id">사업장명</label>
-			    </h3>
-			    <span class="box int_id">
-			        <input type="text" id="id" class="int" name="bus_name">               
-			    
-			    <span class="error_next_box"></span>
+		<div class="join-main">
+			<div class="join-content">
+			 
+			 	<div class="join-wrap">
+                    <h3><label>함께하기</label></h3>
+                    <span  class="box">
+                        <input type="radio" id="gen" name="bus_classify" value="G">
+		                <label for = "일반">일반</label>&nbsp;&nbsp;&nbsp;
+		                <input type="radio" id="pri" name="bus_classify" value="P">
+		                <label for = "프리미엄">프리미엄</label>&nbsp;
+                    </span>
+                </div>
+                
+				<div id="hidenDiv">
+                <div class="join-wrap" id="dateBox">
+                    <h3><label>개월</label></h3>
+                    <span  class="box">
+                        <select class="content" id="payCategory" name="primonth">
+	                    <option value="0" selected>선택</option>
+	                    <option value="30">1개월 : 10억</option>
+	                    <option value="90">3개월 : 27억</option>
+	                    <option value="180">6개월 : 58억</option>
+	                </select>
+                    </span>
+                </div>
+                
+                <div class="guideBox">
+			        <h3>프리미엄 약관&nbsp;&nbsp;<span class="textbtn" >[열기]</span></h3>
+			        <div style="display:none">
+			            <div class="join-wrap">
+			                <div id="pricont" class="box" style="height:300px">
+			                   <textarea style="width: 100%; height:100%; text-align:left;">① “공급사업자”라 함은 본 서비스를 제공하는 사업자를 말한다.
+			                   ② “이용사업자”라 함은 본 서비스를 무료로 이용하는 자 및 공급사업자와 본 서비스 이용계약을 체결한 자로서 본 서비스를 이용하는 개인, 법인 또는 개인사업자 혹은 개인을 말한다.
+			                   ③ “신청사업자"라 함은 본 서비스를 유료로 이용하기 위해 이용신청을 하는 자를 말한다.
+							④ "이용계약"이라 함은 이용사업자가 본 서비스 이용을 개시하며 공급사업자와 상호 동의한 요금제 및 개별 계약을 말한다.
+							⑤ “최종이용자”라 함은 클라우드 컴퓨팅서비스를 통해 이용사업자가 제공하는 서비스를 이용하는 자를 말한다.
+							⑥ “이용사업자 데이터”라 함은 이용사업자 및 최종이용자가 공급사업자의 정보통신자원에 제출, 기록, 업로드 등의 형식으로 저장하는 정보로서 이용사업자가 소유 또는 관리하는 정보를 말한다.
+			                   </textarea>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+                </div>
+			 	
+	         	<div class="join-wrap">
+                    <h3><label>사업장명</label></h3>
+                    <span  class="box">
+                        <input type="text" class="content" name="bus_name" required>
+                    </span>
+                </div>
+			
+				<!-- 도로명주소 api -->
+            	<div class="join-wrap">
+	                <h3><label>우편주소</label></h3>
+					<span  class="box">
+	                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" style="width:80%;" readonly>
+		                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;">검색</button>
+	                </span>
+            	</div>
+	            <div class="join-wrap">
+	                <h3><label>도로명주소</label></h3>
+					<span  class="box">
+	                    <input type="text" id="address2" name="bus_address" class="postcodify_address" readonly>                    
+	                </span>
+	            </div>
+	            <div class="join-wrap">
+					<h3><label>상세주소</label></h3>
+					<span  class="box">
+	                	<input type="text" id="address3" name="bus_address" class="postcodify_details">
+	                </span>
+	            </div>
+			
+				<!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
+				<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+				<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
+				<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+			
+				<!-- 운영시간 -->
+				<div class="join-wrap">
+				    <h3><label>운영시간</label></h3>
+				    <span class="box">
+				        <input type="text" id="address" class="content" name="bus_opening">
+				    </span>
+				</div>
+			
+				<!-- 전화번호 -->
+				<div class="join-wrap">
+				    <h3><label>전화번호</label></h3>
+				    <span class="box">
+				        <input type="text" id="address" class="content" name="bus_phone" required>
+				    </span>
+				</div>    
+			
+				<!-- 매장사진 -->
+				<div class="join-wrap">
+				    <h3><label>매장사진</label></h3>
+				    <span class="box">
+				        <input type="file" multiple="multiple" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 추가사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 추가사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 추가사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+				
+				<!-- 추가사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content" required>
+				    </span>   
+				</div>
+			
+				<!-- 소개글 -->
+				<div class="join-wrap">
+				    <h3><label>소개글</label></h3>
+				    <textarea id="intArea" class="textArea-con" name="bus_intro" rows="10" cols="64" style="resize:none;"></textarea>
+				</div>	
 			</div>
+		</div>
+		<!-- 라인 -->
+        <hr style="margin-top:5%;">
 			
-			<!-- 도로명주소 api -->
-            <div class="signup-div">
-                <h3 class="join_title"><label for="address1">우편번호</label></h3>
-                <span class="box int_pass" style=" display: -webkit-inline-box;">
-                    <input type="text" id="address1" name="bus_address" class="postcodify_postcode5" readonly>
-                    <button type="button" id="postcodify_search_button" style="width: 40px; height: 30px;">검색</button>                  
-                </span>
-            </div>
-            <div class="signup-div">
-                <h3 class="join_title"><label for="address2">도로명주소</label></h3>
-                <span class="box int_pass_check">
-                    <input type="text" id="address2" name="bus_address" class="postcodify_address" readonly>                    
-                </span>
-            </div>
-            <div class="signup-div">
-                <h3 class="join_title"><label for="address3">상세주소</label></h3>
-                <span class="box int_name">
-                    <input type="text" id="address3" name="bus_address" class="postcodify_details">
-                </span>
-            </div>
+		<!-- 차량추가 버튼 -->
+        <div class="addBtn-area">
+            <button type="button" class="addBtn" id="addBtn" onclick="addCar()">차량추가(몇개추가)</button>
+        </div>
+		
+		<!-- 렌트카 추가 -->
+        <div class="car-main" id="car-main">
+			<div class="join-content" id="join-content">
 			
-			<!-- jQuery가 포함 된 상태에서 postcodify 스크립트 포함 -->
-			<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-			<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
-			<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
-			
-			<!-- 운영시간 -->
-			<div class="signup-div">
-			    <h3 class="join-title"><label for="address">운영시간</label></h3>
-			    <span class="box int_address">
-			        <input type="text" id="address" class="int" name="bus_opening">
-			    </span>
-			</div>
-			
-			<!-- 전화번호 -->
-			<div class="signup-div">
-			    <h3 class="join-title"><label for="address">전화번호</label></h3>
-			    <span class="box int_address">
-			        <input type="text" id="address" class="int" name="bus_phone">
-			    </span>
-			</div>    
-			
-			<!-- 매장사진 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="phoneNo">매장사진</label></h3>
-			    <span class="box int_mobile">
-			        <input type="file" name="uploadFile" class="int">
-			    </span>   
-			</div>
-			
-			<!-- 소개글 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="phoneNo">소개글</label></h3>
-			    <textarea id="intArea" name="bus_intro" class="intArea" rows="10" cols="64" ></textarea>
-			</div>
-			
-			<br>
-			
-			<hr>
-			<!-- 차량 추가 버튼 -->
-			<input type="button" value="차량추가" onclick="add_div()" id="car_add"><br/>
-	
-			<!-- 제작사명 -->
-			<div id="add_car_area">
-				<div class="signup-div">
-				    <h3 class="join-title"><label for="address">제작사</label></h3>
-				    <span class="box int_address">
-				        <input type="text" id="address" class="int" name="car_producer">
+				<div class="join-wrap"> 
+					<h3><label>제작사</label></h3>
+				    <span class="box">
+				        <input multiple="multiple" type="text" id="carPro" class="content" name="carList[0].car_producer">
 				    </span>
 				</div> 
 				
 				<!-- 차량 -->
-				<div class="signup-div">
-				    <h3 class="join-title"><label for="address">차량</label></h3>
-				    <span class="box int_address">
-				        <input type="text" id="address" class="int" name="car_name">
+				<div class="join-wrap">
+				    <h3><label>차량</label></h3>
+				    <span class="box">
+				        <input multiple="multiple" type="text" id="carName" class="content" name="carList[0].car_name">
 				    </span>
 				</div> 
 				
 				<!-- 가격 -->
-				<div class="signup-div">
-				    <h3 class="join_title"><label for="phoneNo">가격</label></h3>
-				    <span class="box int_mobile">
-				        <input type="tel" id="mobile" class="int" name="car_price">
+				<div class="join-wrap">
+				    <h3><label>가격</label></h3>
+				    <span class="box">
+				        <input multiple="multiple" type="text" id="carPrice" class="content" name="carList[0].car_price" required>
 				    </span>
 				</div>
 				
 				<!-- 차종 -->
-				<div class="signup-div">
-				    <h3 class="join_title"><label for="phoneNo">차종</label></h3>
-			        <select class="box int_name" name="car_type">
+		        <div class="join-wrap" >
+		            <h3><label>차종</label></h3>           
+	                <input multiple="multiple" type="checkbox" class="carType" name="carList[0].car_type" value="소형">
+	                <label for = "소형">소형</label>&nbsp;
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="중형">
+	                <label for = "중형">중형</label>&nbsp;
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="대형">
+	                <label for = "대형">대형</label>&nbsp;
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="스포츠">
+	                <label for = "스포츠">스포츠</label>&nbsp;
+		        </div>
+		        
+		        <!-- 연료 -->
+		        <div class="join-wrap" >
+		            <h3><label>연료</label></h3>           
+	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="디젤">
+	                <label for = "디젤">디젤</label>&nbsp;
+	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="가솔린">
+	                <label for ="가솔린">가솔린</label>&nbsp;
+		        </div>
+				
+				 <!-- 차종 -->
+				<!--<div class="join-wrap">
+				    <h3><label>차종</label></h3>
+				    <span class="box">
+			        <select class="content" multiple="multiple" name="car_type">
 			            <option value="select" selected>선택</option>
-			            <option value="small">소형</option>
-			            <option value="Medium">중형</option>
-			            <option value="large">대형</option>
-			            <option value="sport">스포츠</option>
-			        </select>          
+			            <option value="소형">소형</option>
+			            <option value="중형">중형</option>
+			            <option value="대형">대형</option>
+			            <option value="스포츠">스포츠</option>
+			        </select>
+			        </span> 
 				</div>
 				
-				<!-- 연료 -->
-				<div class="signup-div">
-				    <h3 class="join_title"><label for="phoneNo">연료</label></h3>
-			        <select class="box int_name" name="car_fuel">
+				연료
+				<div class="join-wrap">
+				    <h3><label>연료</label></h3>
+				    <span class="box">
+			        <select class="content" multiple="multiple" name="car_fuel">
 			            <option value="select" selected>선택</option>
-			            <option value="diesel">디젤</option>
-			            <option value="gasoline">가솔린</option>
-			        </select>                
+			            <option value="디젤">디젤</option>
+			            <option value="가솔린">가솔린</option>
+			        </select>
+			        </span>                
+				</div> -->
+				
+				
+				
+				<!-- 차량사진 -->
+				<div class="join-wrap">
+				    <h3><label>차량사진</label></h3>
+				    <span class="box">
+				        <input multiple="multiple" type="file" name="car" class="content" required>
+				    </span>
 				</div>
-				
-				<!-- 추가사진 -->
-			<div class="signup-div">
-			    <h3 class="join_title"><label for="phoneNo">추가사진</label></h3>
-			    <span class="box int_mobile">
-			        <input type="file" name="car" class="int">
-			    </span>
+				<!-- 차량사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="car" class="content">
+				    </span>
+				</div>
+				<!-- 차량사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="car" class="content">
+				    </span>
+				</div>
+				<!-- 차량사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="car" class="content">
+				    </span>
+				</div>
+				<!-- 차량사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="car" class="content">
+				    </span>
+				</div>
 			</div>
-				
-			</div>
-			<input type="button" value="삭제" onclick="remove_div(this)" id="deleteBtn" style="display: none;">
-			<div id="new_car"></div>
-			  <!-- 등록, 뒤로가기 버튼 -->
-			<div class="btn_area">
-			          <!-- Optional JavaScript; choose one of the two! -->
-			
-			     <!-- Option 1: Bootstrap Bundle with Popper -->
-			     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-			
-			     <!-- Option 2: Separate Popper and Bootstrap JS -->
-			     <!--
-			     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-			     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-			     -->
-			     <!-- Button trigger modal -->
-			     <button id="btnJoin" class="btn btn-primary">등록하기</button>
-			     <!-- Modal -->
-			     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-			         <div class="modal-dialog">
-			         <div class="modal-content">
-			             <div class="modal-header">
-			             <h5 class="modal-title" id="staticBackdropLabel">여긴뭐지</h5>
-			             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			             </div>
-			             <div class="modal-body">
-			                 	카카오톡 결제
-			             </div>
-			             <div class="modal-footer">
-			             <button type="button" class="btn btn-primary">결제하기</button>
-			             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-			             </div>
-			         </div>
-			         </div>
-			     </div>
-			     <button type="button" href="#" id="btnJoin" class="btn btn-primary">
-			     <a>뒤로가기</a>
-			     </button>
-			 </div>
-			</section>
-			</form>	
-        </div>        
-    </div> 
+		</div>
+		
+		<div class="btnArea">
+           	<button type="submit" class="joinBtn1" id="submitBtn" style="display:none;"><a>등록하기</a></button>
+           	
+            <button class="joinBtn1" id="payBtn" type="button"><a>결제하기</a></button>
+            <button type="button" class="joinBtn" onclick="javascript.historyback()">돌아가기</button>
+        </div>
+        
+		</form>
+	</div>
+	
+<script>
+	var _cnt = 1;
+       function addCar(){
+           var div = document.createElement('div');
+
+           $(div).attr('id', 'carInfoDiv-' + _cnt);
+		   $(div).attr('class', 'join-content');
+           div.innerHTML = document.getElementById('join-content').innerHTML;
+           document.getElementById('car-main').appendChild(div);
+           
+           $("#carInfoDiv-"+_cnt).children().find('.fuel').attr('name', 'carList[' + _cnt + '].car_fuel');
+           $("#carInfoDiv-"+_cnt).children().find('.carType').attr('name', 'carList[' + _cnt + '].car_type');
+           $("#carInfoDiv-"+_cnt).children().find('#carPro').attr('name', 'carList[' + _cnt + '].car_producer');
+           $("#carInfoDiv-"+_cnt).children().find('#carName').attr('name', 'carList[' + _cnt + '].car_name');
+           $("#carInfoDiv-"+_cnt).children().find('#carPrice').attr('name', 'carList[' + _cnt + '].car_price');
+           
+           _cnt++;
+       }
+       
+       $("#gen").change(function() {
+    	    $("#hidenDiv").hide();
+    	});
+
+    	$("#pri").change(function(){
+    		$("#hidenDiv").show();
+    	});
+
+    	$(document).on("click",".guideBox > h3",function(){
+    	    if($(this).next().css("display")=="none"){
+    	        $(this).next().show();
+    	        $(this).children("span").text("[닫기]");
+    	    }else{
+    	        $(this).next().hide();
+    	        $(this).children("span").text("[열기]");
+    	    }
+    	});
+
+    	$("#pri").change(function() {
+    	    if(this.checked) {
+    	        $("#payBtn").show();
+    	        $("#submitBtn").hide();
+    	    }
+    	});
+
+    	$("#gen").change(function(){
+    		if(this.checked){
+    			$("#submitBtn").show();
+    			$("#payBtn").hide();
+    		}
+    	});
+
+
+
+    	$("#payBtn").on("click",function() {
+    		
+    	var name = $("#payCategory option:selected").val();
+
+    	console.log(name);
+    	var amount = 0;
+    	if(name == '30'){
+    		amount = 100;
+    	} else if(name == '90'){
+    		amount = 200;
+    	} else{
+    		amount = 300;
+    	}
+    	console.log(name);
+
+    	    var IMP = window.IMP;
+    	    IMP.init('imp34313892');
+    	    IMP.request_pay({
+    	        pg : 'html5_inicis',
+    	        pay_method : 'card',
+    	        merchant_uid : 'merchant_' + new Date().getTime(),
+    	        name : name,
+    	        amount : amount,
+    	        buyer_email : "${loginUser.usemail}",
+    	        buyer_name : "${loginUser.usname}",
+    	        buyer_tel : "${loginUser.usphone}",
+    	        buyer_addr : '',
+    	        buyer_postcode : ''
+    	    }, function(rsp) {
+    	        if ( rsp.success ) {
+    	            var msg = '결제가 완료되었습니다!';
+    	           	$("#payBtn").hide();
+    	           	$("#submitBtn").show();
+    	            msg += '결제 금액 : ' + rsp.paid_amount;
+    	        } else {
+    	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
+    	        }
+    	    
+    	        alert(msg);
+    	    });
+    	});       
+</script>
     
     
-	<!--은화 : footer-->
 	<footer>
-	    <div id="footer_left">
-	        <img src="../resources/images/image_footer/footerlogo.png" class="leftImg">
-	    </div>
-	    <div id="footer_center">
-	        <img src="../resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
-	        <img src="../resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
-	        <img src="../resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
-	    </div>
-	    <div id="footer_right">
-	        <p id="samdado_news">삼다도 소식</p>
-	        <img src="../resources/images/image_footer/facebook.png" class="rightImg">
-	        <img src="../resources/images/image_footer/twitter.png" class="rightImg">
-	        <img src="../resources/images/image_footer/LinkedIn.png" class="rightImg">
-	        <img src="../resources/images/image_footer/pininterest.png" class="rightImg">
-	    </div>
-	    <br>
-	    <br>
-	    <hr>
-	    <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
+		<jsp:include page="../../common/footer.jsp"/>
 	</footer>
-    <script type="text/javascript">
-        function add_div(){
-            /* 차량추가 클릭 시 div 생성 */
-            var div = document.createElement('div');
-            /* add_car_area 안의 내용 div에 추가 생성 */
-            div.innerHTML = document.getElementById('add_car_area').innerHTML;
-            /* new_car에 div 담아줌 */
-            document.getElementById('new_car').appendChild(div);
-
-            $('#add_car_area').css({'float':'left', 'margin' : '0'});
-        }
-        /* 삭제 클릭 시 클릭 이벤트가 발생 된 div 삭제 */
-        function remove_div(obj){
-
-        /* 생성 된 new_car의 부모의 자식 삭제 */
-        document.getElementById('new_car').removeChild(obj.parentNode);
-        }   
-    </script>
+	
+    
 </body>
 </html>

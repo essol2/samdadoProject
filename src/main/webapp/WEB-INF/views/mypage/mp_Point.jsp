@@ -476,8 +476,8 @@
 
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/buserinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/adverB.png" class="btnImg"> <br> 광고관리</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToBuss();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToAdvert();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/adverB.png" class="btnImg"> <br> 광고관리</div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToPoint()"><div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/walletW.png" class="btnImg"> <br> 내 포인트</div></button>
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/gotoqna'"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/qnaB.png" class="btnImg"> <br> 문의하기</div></button>
 
@@ -527,7 +527,6 @@
 		                            </tr>
 	                            </thead>
 	                            <tbody>
-	                            <c:if test="${ pList }.size() > 0">
 		                            <c:forEach var="p" items="${ pList }">
 			                            <tr>
 			                                <td>${ p.pdate }</td>
@@ -535,12 +534,11 @@
 			                                <td style="color : #467355">${ p.pamount }</td>
 			                            </tr>
 		                            </c:forEach>
-		                         </c:if>
-		                         <c:if test=" ${pList }.size() <= 0">
+		                         <%-- <c:if test=" ${pList }.size() <= 0">
 		                         	<tr>
 		                         		<td colspan="3">조회된 정보가 없습니다.</td>
 		                         	</tr>
-		                         </c:if>
+		                         </c:if> --%>
 								</tbody>
 	                        </table> 
                         </div>
@@ -578,6 +576,14 @@
 		/* console.log("jsp안에서 usno확인 : " + usno); */
 		location.href='${contextPath}/mypage/point?usno='+${loginUser.usno};
 	};
+	
+	function goToBuss(){
+		location.href='${contextPath}/mypage/buss?usno='+${loginUser.usno};
+	}
+	
+	function goToAdvert(){
+		location.href="${contextPath}/mypage/advert?usno="+${loginUser.usno};
+	}
   </script>
   
   <!-- 결제API -->
@@ -596,7 +602,7 @@
   			amount = 100;
   		}
   		
-  		console.log(name);
+  		//console.log(name);
   		
 	    var IMP = window.IMP;
 	    IMP.init('imp34313892');

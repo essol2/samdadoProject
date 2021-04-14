@@ -226,30 +226,6 @@
 
         /* 검색필터끝 */
 
-        /* 사업장종류선택 */
-
-        #choise-nav {
-            list-style-type: none;
-            text-align: center;
-            margin: 0;
-            padding: 1.3rem;
-            display: flex;
-            justify-content: flex-end;
-            align-items: flex-end;            
-        }
-
-        #choise-nav ul {
-            display: flex;
-        }
-
-        #choise-nav li {
-            display: flex;
-            font-size: 20px;
-            padding: 10px;
-        }
-
-        /* 사업장종류선택끝 */
-
         /* 정렬필터 */
 
         #choise2-nav {
@@ -274,14 +250,19 @@
         /* 정렬필터끝 */
 
         /* 리스트 */
-
+		
+		.list{
+			flex-direction: column;
+		}
+		
         #firstlist {            
             margin-left: 1%;
             /* flex: 5; */
             display: flex;
-            justify-content: center;
+            /* justify-content: center; */
             align-items: center;
-
+			max-width: 1600px;
+    		flex-wrap: wrap;
         }
 
         .premium {
@@ -329,12 +310,15 @@
 
         #secondlist {            
             margin-left: 1%;
-            /* flex: 5; */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+		    /* flex: 5; */
+		    display: flex;
+		    /* justify-content: center; */
+		    align-items: center;
+		    /* max-width: 1600px; */
+		    flex-wrap: wrap;
 
         }
+        
         #thirdlist {
            
             margin-left: 1%;
@@ -342,10 +326,25 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            
 
         }
 
         .profile {
+
+            display: none;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
+        .moreProfile {
 
             display: flex;
             flex-direction: column;
@@ -360,10 +359,11 @@
         }
 
         .image {
-
             object-fit: cover;
             width: 400px;
             height: 300px;
+            border: 1px solid gray;
+            border-radius: 3%; 
         }
 
         /* 리스트끝 */
@@ -413,6 +413,30 @@
             margin-bottom: 50px;
             font-family: 'GmarketSansBold' !important;
         }
+        
+        /* 사업장종류선택 */
+
+        #choise-nav {
+            list-style-type: none;
+            text-align: center;
+            margin: 0;
+            padding: 1.3rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;            
+        }
+
+        #choise-nav ul {
+            display: flex;
+        }
+
+        #choise-nav li {
+            display: flex;
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        /* 사업장종류선택끝 */
     </style>
 </head>
 
@@ -423,7 +447,7 @@
         <!-- 전체 section-->
         <section id="main-container">
             <nav id="choise-nav">
-                <ul id="choise">
+               <ul id="choise">
                     <li>
                         <div class="cover"><a href='${ contextPath }/business/hotel_list'>숙박</a></div>
                     </li>
@@ -434,10 +458,9 @@
                         <div class="cover" style="background-color: rgb(70, 115, 85);"><label style="color: white;">음식점</label></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/car_list'>렌트카</a></div>
+                        <div class="cover"><a href='${ contextPath }/business/rentcar_list'>렌트카</a></div>
                     </li>
                 </ul>
-
             </nav>
 
             <nav id="filter-nav">
@@ -513,7 +536,7 @@
                         <p><img src="../resources/images/image_listpage/noheart.png"></p>
                     </div>
                     <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
+                        <img class="premium" src="../../resources/images/image_listpage/premium.png">
                         <img class="image" src="../resources/images/image_listpage/restaurant2.png">
                         <b>★4.90(후기 99+개)</b>
                         <b>JEJU오성</b>
@@ -533,7 +556,6 @@
                 <div id="secondlist">
 	                <c:forEach var="r" items="${ resList }">
 	                    <div class='profile'>
-	                        <img class="premium" src="../resources/images/image_listpage/premium.png">
 	                        <img class="image" src="../resources/busUploadFiles/${ r.file_rename }" onclick="selectRes(${r.bus_code})">
 	                        <b>★4.90(후기 99+개)</b>
 	                        <b>${ r.bus_name }</b>
@@ -543,6 +565,8 @@
 	                </c:forEach>
                 </div>        
 			</div>
+			
+			<!-- 디테일 이동 -->
 			<script>
 				function selectRes(bus_code){
 					location.href='${contextPath}/business/restaurant_detail?bus_code=' + bus_code;
@@ -553,40 +577,23 @@
                     <button class="moreBtn">더보기</button>
                 </div>
         </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         <footer>
-            <div id="footer_left">
-                <img src="../resources/images/image_footer/footerlogo.png" class="leftImg">
-            </div>
-            <div id="footer_center">
-                <img src="../resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
-                <img src="../resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
-                <img src="../resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
-            </div>
-            <div id="footer_right">
-                <p id="samdado_news">삼다도 소식</p>
-                <img src="../resources/images/image_footer/facebook.png" class="rightImg">
-                <img src="../resources/images/image_footer/twitter.png" class="rightImg">
-                <img src="../resources/images/image_footer/LinkedIn.png" class="rightImg">
-                <img src="../resources/images/image_footer/pininterest.png" class="rightImg">
-            </div>
-            <br>
-            <br>
-            <hr>
-            <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
+		
+		<!-- 더보기 -->
+		<script>				
+						$(document).ready(function(){
+							size_div = $('.profile').length;
+							
+							x = 9;
+							$('.profile:lt('+x+')').addClass('moreProfile');
+							$('.moreBtn').click(function(){
+								x= (x+9 <= size_div)? x+9 : size_div;
+								$('.profile:lt('+x+')').addClass('moreProfile');	
+							});
+						});
+		</script>
+        
+        <footer>
+           <jsp:include page="../../common/footer.jsp"/>
         </footer>
 
 

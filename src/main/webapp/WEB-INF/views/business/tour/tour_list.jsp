@@ -226,30 +226,6 @@
 
         /* 검색필터끝 */
 
-        /* 사업장종류선택 */
-
-        #choise-nav {
-            list-style-type: none;
-            text-align: center;
-            margin: 0;
-            padding: 1.3rem;
-            display: flex;
-            justify-content: flex-end;
-            align-items: flex-end;            
-        }
-
-        #choise-nav ul {
-            display: flex;
-        }
-
-        #choise-nav li {
-            display: flex;
-            font-size: 20px;
-            padding: 10px;
-        }
-
-        /* 사업장종류선택끝 */
-
         /* 정렬필터 */
 
         #choise2-nav {
@@ -274,14 +250,19 @@
         /* 정렬필터끝 */
 
         /* 리스트 */
-
+		
+		.list{
+			flex-direction: column;
+		}
+		
         #firstlist {            
             margin-left: 1%;
             /* flex: 5; */
             display: flex;
-            justify-content: center;
+            /* justify-content: center; */
             align-items: center;
-
+			max-width: 1600px;
+    		flex-wrap: wrap;
         }
 
         .premium {
@@ -329,12 +310,15 @@
 
         #secondlist {            
             margin-left: 1%;
-            /* flex: 5; */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+		    /* flex: 5; */
+		    display: flex;
+		    /* justify-content: center; */
+		    align-items: center;
+		    /* max-width: 1600px; */
+		    flex-wrap: wrap;
 
         }
+        
         #thirdlist {
            
             margin-left: 1%;
@@ -342,10 +326,25 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            
 
         }
 
         .profile {
+
+            display: none;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
+        .moreProfile {
 
             display: flex;
             flex-direction: column;
@@ -358,12 +357,13 @@
             height: 500px;
             box-sizing: border-box;
         }
-
+        
         .image {
-
             object-fit: cover;
             width: 400px;
             height: 300px;
+            border: 1px solid gray;
+            border-radius: 3%; 
         }
 
         /* 리스트끝 */
@@ -413,15 +413,40 @@
             margin-bottom: 50px;
             font-family: 'GmarketSansBold' !important;
         }
+        
+        /* 사업장종류선택 */
+
+        #choise-nav {
+            list-style-type: none;
+            text-align: center;
+            margin: 0;
+            padding: 1.3rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;            
+        }
+
+        #choise-nav ul {
+            display: flex;
+        }
+
+        #choise-nav li {
+            display: flex;
+            font-size: 20px;
+            padding: 10px;
+        }
+
+        /* 사업장종류선택끝 */
     </style>
 </head>
 
 <body>
-     <!-- navi.jsp include -->
+    <!-- navi.jsp include -->
     <jsp:include page="../../common/navi.jsp"/>
 
         <!-- 전체 section-->
         <section id="main-container">
+        	<!-- 페이지 이동 nav -->
             <nav id="choise-nav">
                 <ul id="choise">
                     <li>
@@ -434,10 +459,9 @@
                         <div class="cover"><a href='${ contextPath }/business/restaurant_list'>음식점</a></div>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/car_list'>렌트카</a></div>
+                        <div class="cover"><a href='${ contextPath }/business/rentcar_list'>렌트카</a></div>
                     </li>
                 </ul>
-
             </nav>
 
             <nav id="filter-nav">
@@ -531,32 +555,43 @@
                 </div>
 
                 <div id="secondlist">
+                <c:forEach var="t" items="${ tourList }">
                     <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/tour4.png">
+                        <img class="image" src="../resources/images/image_listpage/tour4.png" onclick="selectRes(${t.bus_code})">
                         <b>★4.90(후기 99+개)</b>
-                        <b>등산코스</b>
-                        <b>입장료 : 3000</b>
+                        <b>${ t.bus_name }</b>
+                        <b>입장료 : ${ t.pro_price }</b>
                         <p><img src="../resources/images/image_listpage/noheart.png"></p>
                     </div>
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/tour5.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>감귤체험</b>
-                        <b>입장료 : 3000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/tour6.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>아쿠아리움</b>
-                        <b>입장료 : 3000</b>                        
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
+                </c:forEach>
                 </div>        
-
+			</div>
+			
+			<!-- 디테일 이동 -->
+			<script>
+				function selectRes(bus_code){
+					location.href='${contextPath}/business/tour_detail?bus_code=' + bus_code;
+				}
+			</script>
+			
+			
                 <div class="btnarea">
                     <button class="moreBtn">더보기</button>
                 </div>
+                
+            <!-- 더보기 -->
+			<script>				
+						$(document).ready(function(){
+							size_div = $('.profile').length;
+							
+							x = 9;
+							$('.profile:lt('+x+')').addClass('moreProfile');
+							$('.moreBtn').click(function(){
+								x= (x+9 <= size_div)? x+9 : size_div;
+								$('.profile:lt('+x+')').addClass('moreProfile');	
+							});
+						});
+			</script>
 
         </section>
 

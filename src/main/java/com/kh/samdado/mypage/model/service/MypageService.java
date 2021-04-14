@@ -2,12 +2,14 @@ package com.kh.samdado.mypage.model.service;
 
 import java.util.List;
 
+import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
+import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
@@ -24,6 +26,15 @@ public interface MypageService {
 	
 	// 제휴회원 - 광고 관리 메소드
 	public List<Alliance> selectAdvertList(String usno);
+	
+	// 신청중에 있는 사업장 전체 갯수 구하기
+	public int selectApplyListCount(String usno);
+	
+	// 제휴회원 - 광고 신청을 진행중인 사업장 리소드 select 메소드
+	public List<Alliance> selectAppAdvertList(ApplyPageInfo api, String usno);
+	
+	// 제휴회원 - 프리미엄 광고 내역 불러오기
+	public List<Business> selectPBusList(String usno);
 	
 	// 제휴회원 - 포인트 충전 내역 insert 메소드
 	public int insertNewPayment(Income ic);
@@ -61,8 +72,19 @@ public interface MypageService {
 	// 일반회원 - 가계부 가장 최근 날짜 가져오기
 	public List<AccountBook> selectRecentDate(String un);
 
-	
+	// 일반회원 - 가계부 on.off 버튼 클릭시 db 내용 바꾸기
+	public int updateOnOffBtn(AccountBook abObject);
 
+	// 일반회원 - 가계부 기존 해당 컬럼 객체 값 가져오기
+	public AccountBook selectOrigin(AccountBook ab);
+
+	// 일반회원 - 가계부 삭제
+	public int deleteAcc(int accno);
+
+	// 일반회원 - 가계부 차트 조회
+	public List<AccountBook> selectChartList(AccountBook ab);
+
+	
 
 	
 }
