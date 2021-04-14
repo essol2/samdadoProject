@@ -177,7 +177,7 @@ public class MypageController {
 			 				   @ModelAttribute Point po,
 			 				   Model model) {
 		
-		 // System.out.println("income 확인 : " + ic);
+		  System.out.println("income 확인 : " + ic);
 		 
 		 // Income DB에 결제 내역 insert하기
 		 int result = mService.insertNewPayment(ic);
@@ -186,8 +186,10 @@ public class MypageController {
 		 po.setPamount(ic.getAmount());
 		 // point 잔액은 기존 잔액+충전액 넣어주기
 		 // 1. 기존에 있었던 balance 찾아오기
+		 System.out.println("po확인 : " + po);
 		 Point prePoint = mService.prePoint(po);
-		 //System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
+//		 System.out.println("prePoint 확인 : " + prePoint);
+//		 System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
 		 
 		 if(prePoint != null) {
 			 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
@@ -197,7 +199,7 @@ public class MypageController {
 			 po.setPbalance(ic.getAmount());
 		 }
 		 
-		 //System.out.println("Point객체 확인 : " + po);
+		 System.out.println("Point객체 확인 : " + po);
 		 
 		 // Point DB에 포인트 넣어주기
 		 int result2 = mService.insertNewPoint(po);

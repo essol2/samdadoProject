@@ -332,6 +332,20 @@
 
         .profile {
 
+            display: none;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
+        .moreProfile {
+
             display: flex;
             flex-direction: column;
             /* align-items: center; */

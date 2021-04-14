@@ -736,7 +736,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		VALUES
 		(
 			INC_SEQ_NO.NEXTVAL
-		  , #{item}
+		  , '수수료'
 		  , #{amount}
 		  , SYSDATE
 		  , NULL
