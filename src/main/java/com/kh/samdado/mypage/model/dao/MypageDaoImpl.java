@@ -2,6 +2,7 @@ package com.kh.samdado.mypage.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,7 @@ import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
+import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
@@ -40,6 +42,27 @@ public class MypageDaoImpl implements MypageDao{
 	public List<Alliance> selectAdvertList(String usno) {
 		return sqlSession.selectList("mypageMapper.selectAdvertList", usno);
 	}
+	
+	// 신청중에 있는 사업장 전체 갯수 구하기
+	@Override
+	public int selectApplyListCount(String usno) {
+		return sqlSession.selectOne("mypageMapper.selectApplyListCount", usno);
+	}
+	
+	// 제휴회원 - 광고 신청을 진행중인 사업장 리소드 select 메소드
+	@Override
+	public List<Alliance> selectAppAdvertList(ApplyPageInfo api, String usno) {
+		int offset = (api.getCurrentPage()-1) * api.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, api.getBoardLimit());
+		return sqlSession.selectList("mypageMapper.selectAppAdvertList", usno, rowBounds);
+	}
+	
+	// 제휴회원 - 프리미엄 광고 내역 불러오기
+	@Override
+	public List<Business> selectPBusList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectPBusList", usno);
+	}
+
 	
 	// 제휴회원 -  포인트 충전 내역 insert 메소드
 	@Override
@@ -136,6 +159,5 @@ public class MypageDaoImpl implements MypageDao{
 	public List<AccountBook> selectChartList(AccountBook ab) {
 		return sqlSession.selectList("mypageMapper.selectChartList", ab);
 	}
-
 
 }

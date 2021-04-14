@@ -513,10 +513,10 @@
                 
                 <div class="container" style="width : 550px;">
                 	<canvas id="myChart"></canvas>
-                	<div id="btnsArea">
+                	<!-- <div id="btnsArea">
 			    	<button class="chartBtns" id="byClassify">구분별</button>
 			    	<button class="chartBtns" id="byWhopay">결제인별</button>
-			    </div>
+			    </div> -->
                 </div>
                 
                 <script	language=JavaScript>

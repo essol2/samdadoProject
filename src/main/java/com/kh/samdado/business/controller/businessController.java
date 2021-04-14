@@ -550,9 +550,12 @@ public class businessController {
 		
 		int result = bService.insertBannerAd(a);
 		
+		String usno = a.getUsno();
+		
 		if(result > 0) {
+			model.addAttribute("usno", usno);
 			model.addAttribute("msg", "배너 광고 신청이 완료되었습니다. 마이페이지에서 확인하세요!");
-			return "redirect:/mypage/mp_Advertisement";
+			return "redirect:/mypage/buss";
 		} else {
 			throw new businessException("배너 광고 신청에 실패하였습니다.");
 		}
