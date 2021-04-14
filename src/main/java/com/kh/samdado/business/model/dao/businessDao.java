@@ -12,6 +12,7 @@ import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
+import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
@@ -38,7 +39,7 @@ public interface businessDao {
 	List<Business> selectResList();
 	
 	// 렌트카등록
-	int insertCar(Car c);
+	int insertCar(List<Car> cars);
 	int insertCarAtt(List<CarAtt> carList);
 	// 렌트카 디테일
 	Business selectCar(int bus_code);
@@ -46,8 +47,8 @@ public interface businessDao {
 	List<Business> selectCarList();
 	
 	// 호텔등록
-	int insertRoomAtt(RoomAtt ra);
-	int insertRoom(Room r);
+	int insertRoomAtt(List<RoomAtt> raList);
+	int insertRoom(List<Room> rooms);
 	// 호텔리스트
 	List<Business> selectHotelList();
 	// 호텔디테일
@@ -58,7 +59,7 @@ public interface businessDao {
 	// 관광지페이지
 	List<Business> selectTourList();
 	// 관광지디테일
-	Business selectTour(int bus_code);
+	List<Business> selectTour(int bus_code);
 	
 	// 관광지 예약
 	public int bookingTour(TourBooking tourbooking);

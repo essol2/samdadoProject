@@ -509,7 +509,7 @@
 
         <div class="colsmom">
             <div class="col">
-                <img class="mainimage" src="../resources/images/image_listpage/tour3.png">
+                <img class="mainimage" src="../resources/busUploadFiles/${ tour.file_rename }">
                 <div class="other">
                     <img class="otherimage" src="../resources/images/image_listpage/tour3_1.png">
                     <img class="otherimage" src="../resources/images/image_listpage/tour3_2.png">
