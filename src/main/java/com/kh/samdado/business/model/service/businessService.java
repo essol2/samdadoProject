@@ -18,6 +18,7 @@ import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
+import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 
@@ -27,8 +28,8 @@ public interface businessService {
 	int insertAlliance(Alliance a);
 	
 	// 사업장 등록
-	int insertBusAtt(BusinessAtt ba); 
-	int insertBusiness(Business b);
+	
+	int insertBusiness(Business b, List<BusinessAtt> list);
 	
 	// 사업장 리스트 카운트
 	int selectResListCount();
@@ -39,16 +40,14 @@ public interface businessService {
 	List<Business> selectResList();
 		
 	// 렌트카등록
-	int insertCar(Car c);
-	int insertCarAtt(CarAtt ca);
+	int insertCar(List<Car> cars, List<CarAtt> carList);
 	// 렌트카 디테일
 	Business selectCar(int bus_code);
 	// 렌트카리스트
 	List<Business> selectCarList();
 	
 	// 호텔등록
-	int insertRoomAtt(RoomAtt ra);
-	int insertRoom(Room r);
+	int insertRoom(List<Room> rooms, List<RoomAtt> raList);
 	// 호텔리스트
 	List<Business> selectHotelList();
 	// 호텔디테일
@@ -59,7 +58,7 @@ public interface businessService {
 	// 관광지리스트
 	List<Business> selectTourList();
 	// 관광지디테일
-	Business selectTour(int bus_code);
+	List<Business> selectTour(int bus_code);
 	
 	// 관광지 예약
 	public int bookingTour(TourBooking tourbooking);
@@ -100,6 +99,9 @@ public interface businessService {
 
 	// 배너 광고 인서트
 	int insertBannerAd(Alliance a);
+	
+	// 프리미엄 등록 시 만료일
+	int insertIncome1(Income i);
 
 	List<Alliance> selectBannerAdImgList();
 
@@ -108,6 +110,8 @@ public interface businessService {
 	Business selectBannerAdDetail(Business selectBusCodeUser, boolean flag);
 
 	Business getBusDetail(int bus_code);
+
+	
 
 	
 

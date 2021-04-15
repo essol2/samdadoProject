@@ -85,6 +85,28 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="room_amenity" column="ROOM_AMENITY" />
 	</resultMap>
 	
+	<resultMap type="Alliance" id="AllianceResultSet">
+		<id property="alno" column="AL_NO" />
+		<result property="alintro" column="AL_INTRO" />
+		<result property="alsubdate" column="AL_SUBDATE" />
+		<result property="startdate" column="START_DATE" />
+		<result property="alstatus" column="ALSTATUS" />
+		<result property="aimgpath" column="A_IMG_PATH" />
+		<result property="aimgname" column="A_IMG_NAME" />
+		<result property="aimgcname" column="A_IMG_CNAME" />
+		<result property="amassage" column="A_MASSAGE" />
+		<result property="usno" column="US_NO" />
+		<result property="bus_code" column="BUS_CODE" />
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
+		<!-- INCOME 테이블 조인을 위한 필드 -->
+		<result property="amount" column="amount" />	
+		<!-- BUSINESS 테이블 조인을 위한 필드 -->
+		<result property="bus_category" column="BUS_CATEGORY" />	
+		<!-- POINT 테이블 조인을 위한 필드 -->
+		<result property="pbalance" column="PBALANCE" />
+	</resultMap>
+	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
 	<!-- 1. 이메일, 전화번호 변경 메소드 -->
 	<update id="updateUserInfo" parameterType="User">
@@ -151,7 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM (
 		        SELECT *
 		        FROM POINT
-		        WHERE US_NO = 21
+		        WHERE US_NO = #{usno}
 		        ORDER BY PDATE DESC
       		 )
 		WHERE 
@@ -351,5 +373,43 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM BUSINESS B, BUSINESS_ATT BA 
 		WHERE B.BUS_CODE = BA.BUS_CODE
 		AND B.US_NO = #{bus_code}
+	</select>
+	
+	<!-- 제휴회원 - 진행중인 광고 목록 리스트 -->
+	<select id="selectAdvertList" resultMap="AllianceResultSet">
+		SELECT *
+		FROM BUSINESS B, ALLIANCE A
+		WHERE B.BUS_CODE = A.BUS_CODE
+		AND (B.BUS_CLASSIFY = 'P' OR A.ALSTATUS = 'Y')
+		AND A.US_NO= #{usno}
+	</select>
+	
+	<!-- 제휴회원 - 배너 광고 신청한 사업장 목록 조회 -->
+	<select id="selectAppAdvertList" resultMap="AllianceResultSet">
+		SELECT *
+		FROM BUSINESS B, ALLIANCE A
+		WHERE B.BUS_CODE = A.BUS_CODE
+		AND A.ALSTATUS = 'N'
+		AND A.US_NO=#{usno}
+	</select>
+	
+	<!-- 신청중에 있는 사업장 갯수 조회 -->
+	<select id="selectApplyListCount" resultType="_int">
+		SELECT 
+		       COUNT(*)
+		  FROM
+		       ALLIANCE
+		 WHERE
+		       ALSTATUS = 'N'
+		 AND 
+		 		US_NO = #{usno}
+	</select>
+	
+	<!-- 프리미엄 광고중인 사업장 리스트 출력 -->
+	<select id="selectPBusList" resultMap="bussResultSet">
+		SELECT *
+		FROM BUSINESS
+		WHERE US_NO = #{usno}
+		AND BUS_CLASSIFY = 'P'
 	</select>
 </mapper>

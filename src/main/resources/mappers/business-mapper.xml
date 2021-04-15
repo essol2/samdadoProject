@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="al_no" column="AL_NO" />
 		<result property="bus_opening" column="BUS_OPENING" />
 		<result property="file_rename" column="FILE_RENAME" />	<!-- 비즈니스ATT 대한 JOIN -->
+		<result property="file_lv" column="FILE_LV" />
 		<!-- USER 테이블 조인을 위한 필드 -->
 		<result property="usname" column="US_NAME" />
 		<!-- 관광지프로덕트 조인 -->	
@@ -141,16 +142,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , SYSDATE
 		  , SYSDATE
 		  , DEFAULT
-		  , DEFAULT
+		  , #{bus_classify}
 		  , #{bus_category}
 		  , DEFAULT
 		  , #{bus_phone}
 		  , #{res_category}
 		  , #{bus_opening}
+		  
 		  )
 	</insert>
-	<insert id="insertBusAtt" parameterType="BusinessAtt">
-		INSERT
+	<insert id="insertBusAtt" parameterType="java.util.List">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
 		  INTO BUSINESS_ATT
 		  (
 		  	FILE_NO
@@ -164,16 +166,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  VALUES
 		  (
 		  	BUSATT_SEQ_NO.NEXTVAL
-		  , #{file_name}
-		  , #{file_root}
+		  , #{item.file_name}
+		  , #{item.file_root}
 		  , DEFAULT
-		  , #{file_rename}
+		  , #{item.file_rename}
 		  , DEFAULT
 		  , BUS_SEQ_NO.CURRVAL
 		  )
+		</foreach>
 	</insert>
-	<insert id="insertCar">
-		INSERT
+	<insert id="insertCar" parameterType="java.util.List">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
 		  INTO CAR
 		  (
 		  	CAR_NO
@@ -190,17 +193,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  (
 		  	CAR_SEQ_NO.NEXTVAL
 		  , BUS_SEQ_NO.CURRVAL
-		  , #{car_name}
-		  , #{car_type}
-		  , #{car_producer}
-		  , #{car_fuel}
-		  , #{car_price}
+		  , #{item.car_name}
+		  , #{item.car_type}
+		  , #{item.car_producer}
+		  , #{item.car_fuel}
+		  , #{item.car_price}
 		  , SYSDATE
 		  , SYSDATE
 		  )
+		</foreach>
 	</insert>
 	<insert id="insertCarAtt" parameterType="CarAtt">
-		INSERT
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
 		  INTO CAR_ATT
 		  (
 		  	FILE_NO
@@ -214,17 +218,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  VALUES
 		  (
 		  	BUSATT_SEQ_NO.NEXTVAL
-		  , #{file_name}
-		  , #{file_root}
+		  , #{item.file_name}
+		  , #{item.file_root}
 		  , DEFAULT
-		  , #{file_rename}
+		  , #{item.file_rename}
 		  , DEFAULT
 		  , CAR_SEQ_NO.CURRVAL
 		  )
+		</foreach>
 	</insert>
   
-	<insert id="insertRoom" parameterType="Room">
-		INSERT
+	<insert id="insertRoom" parameterType="java.util.List">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
 		  INTO ROOM
 		  (
 		  	ROOM_NO
@@ -241,43 +246,45 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  (
 		  	ROOM_SEQ_NO.NEXTVAL
 		  , BUS_SEQ_NO.CURRVAL
-		  , #{room_name}
-		  , #{room_price}
+		  , #{item.room_name}
+		  , #{item.room_price}
 		  , SYSDATE
 		  , SYSDATE
-		  , #{room_people}
-		  , #{room_amenity}
+		  , #{item.room_people}
+		  , #{item.room_amenity}
 		  , DEFAULT
 		  )
+		</foreach>
 	</insert>
 	
 	<insert id="insertRoomAtt" parameterType="RoomAtt">
-		INSERT
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
 		  INTO ROOM_ATT
 		  (
 		  	FILE_NO
-		  , FILE_NAME
-		  , FILE_ROOT
-		  , FILE_STATUS
-		  , FILE_RENAME
-		  , FILE_LV
-		  , ROOM_NO
+		  ,	FILE_NAME
+		  ,	FILE_ROOT
+		  ,	FILE_STATUS
+		  ,	FILE_RENAME
+		  ,	FILE_LV
+		  ,	ROOM_NO
 		  )
 		  VALUES
 		  (
 		  	BUSATT_SEQ_NO.NEXTVAL
-		  , #{file_name}
-		  , #{file_root}
+		  , #{item.file_name}
+		  , #{item.file_root}
 		  , DEFAULT
-		  , #{file_rename}
+		  , #{item.file_rename}
 		  , DEFAULT
 		  , ROOM_SEQ_NO.CURRVAL
 		  )
+		</foreach>
 	</insert>
 	
 	<insert id="insertTour" parameterType="TourProduct">
 		INSERT
-		  INTO Tour_Product
+		  INTO TOUR_PRODUCT
 		  (
 		  	PRO_NO
 		  , BUS_CODE
@@ -354,6 +361,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , RES_CATEGORY
 		     , BUS_OPENING
 		     , BT.FILE_RENAME
+		     , BT.FILE_LV
 		     , TP.PRO_NAME
 		     , TP.PRO_PRICE
 		     , TP.PRO_ADULT
@@ -461,7 +469,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
 		   AND BUS_CATEGORY = 'T'
 		   AND BUS_STATUS = 'Y'
-	  ORDER BY B.BUS_CODE DESC
+	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	<!-- 호텔리스트 -->
 	<select id="selectHotelList" resultMap="BusinessResultSet">
@@ -483,7 +491,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
  		 WHERE   
        		   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'H'
-	  ORDER BY B.BUS_CODE DESC
+	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	<!-- 음식점리스트 -->
 	<select id="selectResList" resultMap="BusinessResultSet">
@@ -506,7 +514,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
        		   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'R'
        	   AND BUS_CLASSIFY = 'G'
-	  ORDER BY B.BUS_CODE DESC
+	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	
 	<!-- 렌트카리스트 -->
@@ -533,7 +541,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE 
 		 	   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'C'
-	  ORDER BY B.BUS_CODE DESC
+	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	<!--지혜 -->
 
@@ -691,7 +699,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
        WHERE 
              REF_BUS_CODE = #{bus_code}
    </select>
-   
+
+	<insert id="insertIncome1" parameterType="Income">
+		INSERT
+		  INTO INCOME
+		  (
+		  	PAY_NO
+		  , ITEM
+		  , AMOUNT
+	    , PDATE
+		  , EXDATE
+		  , US_NO
+		  )
+		  VALUES
+		  (
+		  	INC_SEQ_NO.NEXTVAL
+		  , '프리미엄'
+		  , #{amount}
+		  , SYSDATE
+		  , SYSDATE + #{primonth}
+		  , #{usno}
+		  )
+	</insert>
+
    <insert id="insertIncome" parameterType="Income">
 		INSERT
 		INTO Income
@@ -706,7 +736,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		VALUES
 		(
 			INC_SEQ_NO.NEXTVAL
-		  , #{item}
+		  , '수수료'
 		  , #{amount}
 		  , SYSDATE
 		  , NULL
@@ -864,5 +894,4 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	     	   BUS_CODE = #{bus_code}
 	</select>
 	
-
 </mapper>

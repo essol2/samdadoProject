@@ -1,8 +1,11 @@
 package com.kh.samdado.business.model.vo.rentcar;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +30,7 @@ public class Car {
 //	CAR_DATE	DATE
 //	CAR_MODIFY	DATE
 	
+	
 	private int car_no;
 	private int bus_code;
 	private String car_name;
@@ -36,4 +40,6 @@ public class Car {
 	private String car_price;
 	private Date car_date;
 	private Date car_modify;
+	
+
 }

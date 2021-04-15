@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.business.model.vo.business.Business;
-import com.kh.samdado.business.model.vo.business.BusinessAtt;
+import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.mypage.model.vo.AccountBook;
+import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
+import com.kh.samdado.mypage.model.vo.ApplyPagination;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
@@ -174,7 +177,7 @@ public class MypageController {
 			 				   @ModelAttribute Point po,
 			 				   Model model) {
 		
-		 // System.out.println("income 확인 : " + ic);
+		  System.out.println("income 확인 : " + ic);
 		 
 		 // Income DB에 결제 내역 insert하기
 		 int result = mService.insertNewPayment(ic);
@@ -183,8 +186,10 @@ public class MypageController {
 		 po.setPamount(ic.getAmount());
 		 // point 잔액은 기존 잔액+충전액 넣어주기
 		 // 1. 기존에 있었던 balance 찾아오기
+		 System.out.println("po확인 : " + po);
 		 Point prePoint = mService.prePoint(po);
-		 //System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
+//		 System.out.println("prePoint 확인 : " + prePoint);
+//		 System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
 		 
 		 if(prePoint != null) {
 			 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
@@ -194,7 +199,7 @@ public class MypageController {
 			 po.setPbalance(ic.getAmount());
 		 }
 		 
-		 //System.out.println("Point객체 확인 : " + po);
+		 System.out.println("Point객체 확인 : " + po);
 		 
 		 // Point DB에 포인트 넣어주기
 		 int result2 = mService.insertNewPoint(po);
@@ -241,13 +246,7 @@ public class MypageController {
 	 public String myBusiness() {
 		 return "";
 	 }
-	 
-	 // 제휴회원 광고관리 페이지로 이동
-	 @GetMapping("/advert")
-	 public String myAdvert() {
-		 return "";
-	 }
-	 
+
 	 
 	// 제휴회원 - 문의하기
 	 @PostMapping("/sendQnA")
@@ -284,6 +283,43 @@ public class MypageController {
 		 return mv;
 	 }
 	 
+	 // 제휴회원 - 광고관리 조회 메소드
+	 @GetMapping("/advert")
+	 public ModelAndView selectAdvertList(ModelAndView mv,
+			 							  @RequestParam(name="usno") String usno,
+			 							  @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
+		 
+		
+		 // 신청중에 있는 사업장 전체 갯수 구하기
+		 int applyListCount = mService.selectApplyListCount(usno);
+		 
+		 //System.out.println("전체 갯수 조회하기 : " + applyListCount);
+		 
+		 // 요청 페이지에 맞는 게시글 리스트 조회
+		 ApplyPageInfo api = ApplyPagination.getApplyPageInfo(currentPage, applyListCount);
+		 
+		 //System.out.println("api확인 ; " +api);
+		 
+		 // 신청중에 있는 사업장 리스트로 불러오기
+		 List<Alliance> applyList = mService.selectAppAdvertList(api, usno);
+
+		 // 사업중에 광고 하고 있는 사업장 리스트로 불러오기
+		 List<Alliance> allList = mService.selectAdvertList(usno);
+		 
+		 // 프리미엄 광고중인 사업장 리스트 불러오기
+		 List<Business> pBussList = mService.selectPBusList(usno);
+		 
+		 //System.out.println("applyList 확인 : " + applyList);
+		 //System.out.println("allList 확인 : " +allList);
+		 
+		 mv.addObject("api", api);
+		 mv.addObject("allList", allList);
+		 mv.addObject("applyList", applyList);
+		 mv.addObject("pbusList", pBussList);
+		 mv.setViewName("mypage/mp_Advertisement");
+		 
+		 return mv;
+	 }
 /*=====================================================================================================*/
 	 
 	// 일반회원 마이페이지로 이동
