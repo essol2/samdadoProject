@@ -286,8 +286,10 @@
 									
 									var report_no = $("<th>").text(data[i].report_no);
 									var rep_cont = $("<td>").text(data[i].rep_cont);
-									var rdate = $("<td>").text(data[i].rdate);
-									var rexdate = $("<td>").text(data[i].rexdate);
+									//var rdate = $("<td>").text(data[i].rdate);
+									var rtodate = $("<td>").text(data[i].rtodate);
+									//var rexdate = $("<td>").text(data[i].rexdate);
+									var retodate = $("<td>").text(data[i].retodate);
 									var usno = $("<td>").text(data[i].usno);
 									var usname = $("<td>").text(data[i].usname);
 									var bus_code = $("<td>").text(data[i].bus_code);
@@ -295,7 +297,7 @@
 									var rstatus = $("<td>").text(data[i].rstatus);
 									//var showAtta = $("<td> <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal + " + data[i]"'>보기</button>");
 									
-									tr.append(report_no, rep_cont, rdate, rexdate, usno, usname, bus_code, r_count, rstatus); // 테이블 행에 추가
+									tr.append(report_no, rep_cont, rtodate, retodate, usno, usname, bus_code, r_count, rstatus); // 테이블 행에 추가
 									tableBody.append(tr); // 테이블에 추가
 								}
 								

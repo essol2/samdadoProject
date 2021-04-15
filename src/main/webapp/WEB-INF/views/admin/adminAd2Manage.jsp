@@ -220,11 +220,13 @@
 										var usname = $("<td>").text(data[i].usname);
 										var bus_code = $("<td>").text(data[i].bus_code);
 										var bus_category = $("<td>").text(data[i].bus_category);
-										var pdate = $("<td>").text(data[i].pdate);
-										var exdate = $("<td>").text(data[i].exdate);
+										//var pdate = $("<td>").text(data[i].pdate);
+										var ptodate = $("<td>").text(data[i].ptodate);
+										//var exdate = $("<td>").text(data[i].exdate);
+										var pextodate = $("<td>").text(data[i].pextodate);
 										var goDetail = $("<td> <a class='btn btn-info' onclick='goToPre2Detail(" + data[i].bus_code + ")'>보러가기</a>");
 										
-										tr.append(payno, usno, usname, bus_code, bus_category, pdate, exdate, goDetail); // 테이블 행에 추가
+										tr.append(payno, usno, usname, bus_code, bus_category, ptodate, pextodate, goDetail); // 테이블 행에 추가
 										tableBody.append(tr); // 테이블에 추가
 									}
 									

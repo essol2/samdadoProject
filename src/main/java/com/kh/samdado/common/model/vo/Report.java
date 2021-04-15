@@ -45,7 +45,10 @@ public class Report {
 	private int bus_code;       // 신고받은사업장고유번호		// 비지니스 테이블 조인
 	private String bus_name;	// 신고받은 사업장명
 	
-	private String usname; // user 테이블 조인
+	private String usname;      // user 테이블 조인
+	
+	private String rtodate;	    // 관리자 서치 날짜 포멧팅을 위한 컬럼
+	private String retodate;	// 관리자 서치 날짜 포멧팅을 위한 컬럼
 	
 
 
