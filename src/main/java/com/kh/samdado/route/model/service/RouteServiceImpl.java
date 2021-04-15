@@ -27,11 +27,6 @@ public class RouteServiceImpl implements RouteService {
 		return rDao.spotDelete();
 	}
 	
-	@Override
-	public List<TourSpot> spotSearch() {
-		// TODO Auto-generated method stub
-		return rDao.spotSearch();
-	}
 	
 	@Override
 	public int spotAdd() {
@@ -49,6 +44,11 @@ public class RouteServiceImpl implements RouteService {
 	public int routeAdd() {
 		// TODO Auto-generated method stub
 		return rDao.routeAdd();
+	}
+
+	@Override
+	public List<TourSpot> spotSearch(String sTitle) {
+		return rDao.spotSearch(sTitle);
 	}
  
    

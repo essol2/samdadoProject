@@ -12,7 +12,7 @@ public interface RouteService {
 
 	public int spotDelete(); 			// 여행지 삭제
 	
-	public List<TourSpot> spotSearch();	// 여행지 검색
+	public List<TourSpot> spotSearch(String sTitle);	// 여행지 검색
 	
 	public int spotAdd();				// 여행지 추가
 	
