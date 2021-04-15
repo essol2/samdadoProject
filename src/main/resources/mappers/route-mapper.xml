@@ -89,6 +89,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			   	</if>
 	</select>
 
+	<select id="spotSearch" parameterType="String" resultMap="TourSpotResultSet">
+	<bind name="st" value="'%' + _parameter + '%'"/>
+		SELECT
+			SPOT_NO,
+			SPOT_TITLE,
+			SPOT_ADDRESS
+		FROM
+			TOUR_SPOT
+		WHERE
+			SPOT_TITLE LIKE #{st}
+	</select>
 	
 
 </mapper>
