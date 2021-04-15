@@ -1,5 +1,7 @@
 package com.kh.samdado.admin.controller;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.kh.samdado.admin.model.exception.AdminException;
 import com.kh.samdado.admin.model.service.AdminService;
 import com.kh.samdado.admin.model.vo.PageInfo;
@@ -29,6 +33,7 @@ import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
@@ -219,7 +224,13 @@ public class AdminController {
 	public List<QnA> searchQna(HttpServletResponse response, @RequestBody aSearch search) {
 
 		List<QnA> searchQnaList = aService.searchQnaList(search);
-
+		
+		for (QnA q : searchQnaList) {
+			if (q.getQreply().equals(null)) {
+				q.setQreply("미답변");
+			}
+		}
+		
 		return searchQnaList;
 	}
 	
@@ -229,7 +240,17 @@ public class AdminController {
 	public List<Report> searchReport(HttpServletResponse response, @RequestBody aSearch search) {
 
 		List<Report> searchReportList = aService.searchReportList(search);
-
+		
+		for (Report r : searchReportList) {
+			if (r.getRstatus().equals("N")) {
+				r.setRstatus("신청완료");
+			} else if (r.getRstatus().equals("R")) {
+				r.setRstatus("거부");
+			} else {
+				r.setRstatus("승인 완료");				
+			}
+		}
+		
 		return searchReportList;
 	}
 	
@@ -238,7 +259,30 @@ public class AdminController {
 	public List<Alliance> searchbannerAd(HttpServletResponse response, @RequestBody aSearch search) {
 
 		List<Alliance> searchAllianceList = aService.searchAllianceList(search);
+		
+		for (Alliance a : searchAllianceList) {
 
+			if (a.getBus_category().equals("H")) {
+				a.setBus_category("숙박");
+			} else if(a.getBus_category().equals("R")) {
+				a.setBus_category("음식점");
+			} else if(a.getBus_category().equals("T")) {
+				a.setBus_category("관광지");				
+			} else {
+				a.setBus_category("렌트");								
+			}
+			
+			if (a.getAlstatus().equals("N")) {
+				a.setAlstatus("신청 완료");
+			} else if (a.getAlstatus().equals("Y")) {
+				a.setAlstatus("승인 완료");
+			} else if (a.getAlstatus().equals("RP")) {
+				a.setAlstatus("포인트 부족");
+			} else {
+				a.setAlstatus("이미지 부적합");
+			}
+		}
+		
 		return searchAllianceList;
 	}
 	
@@ -248,9 +292,11 @@ public class AdminController {
 
 		List<User> searchUserList = uService.searchUserList(search);
 		
-//		for (User u : searchUserList) {
-//			System.out.println(u.toString());
-//		}
+		for (User u : searchUserList) {
+			if (u.getBusno().equals(null)) {
+				u.setBusno("없음");
+			}
+		}
 
 		return searchUserList;
 	}
@@ -261,8 +307,16 @@ public class AdminController {
 
 		List<Income> searchPreAdList = aService.searchPreAdList(search);
 		
-		for (Income pre : searchPreAdList) {
-			System.out.println(pre.toString());
+		for (Income i : searchPreAdList) {
+			if (i.getBus_category().equals("H")) {
+				i.setBus_category("숙박");
+			} else if(i.getBus_category().equals("R")) {
+				i.setBus_category("음식점");
+			} else if(i.getBus_category().equals("T")) {
+				i.setBus_category("관광지");				
+			} else {
+				i.setBus_category("렌트");								
+			}
 		}
 
 		return searchPreAdList;
@@ -351,6 +405,19 @@ public class AdminController {
 		else throw new AdminException("배너광고 반려 처리에 실패하였습니다.");
 
 		return "redirect:/admin/advertise1";
+	}
+	
+	@PostMapping("/sendSMS")
+	public String sendSMS() {
+		return "admin/sendSMSForm";
+	}
+	
+	@GetMapping("/selectGetProfit")
+	public @ResponseBody String selectGetProfit() {
+		
+		List<Integer> profits = aService.selectGetProfit();
+	
+		return new Gson().toJson(profits);
 	}
 
 	

@@ -8,6 +8,7 @@ import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.vo.User;
 
@@ -59,5 +60,9 @@ public interface AdminService {
 	List<Income> adminPremiumAdSelect(PageInfo pi);
 
 	List<Income> searchPreAdList(aSearch search);
+
+	List<Point> getPointList();
+
+	List<Integer> selectGetProfit();
 
 }

@@ -214,14 +214,15 @@
 										var usno = $("<th>").text(data[i].usno);
 										var usname = $("<td>").text(data[i].usname);
 										var usid = $("<td>").text(data[i].usid);
-										var usbirth = $("<td>").text(data[i].usbirth);
+										//var usbirth = $("<td>").text(data[i].usbirth);
+										var utodate = $("<td>").text(data[i].utodate);
 										var usemail = $("<td>").text(data[i].usemail);
 										var usphone = $("<td>").text(data[i].usphone);
 										var uspart = $("<td>").text(data[i].uspart);
 										var busno = $("<td>").text(data[i].busno);
 										var usstatus = $("<td>").text(data[i].usstatus);
 										
-										tr.append(usno, usname, usid, usbirth, usemail, usphone, uspart, busno, usstatus); // 테이블 행에 추가
+										tr.append(usno, usname, usid, utodate, usemail, usphone, uspart, busno, usstatus); // 테이블 행에 추가
 										tableBody.append(tr); // 테이블에 추가
 									}
 									

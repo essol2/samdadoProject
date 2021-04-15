@@ -34,4 +34,8 @@ public class User {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date usstop;
 	private String authKey;
+	
+	private String utodate;	// 관리자 서치 날짜 포멧팅을 위한 컬럼
+	
+	
 }

@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="uspwd" column="US_PWD" />
 		<result property="usname" column="US_NAME" />
 		<result property="usbirth" column="US_BIRTH" />
+		<result property="utodate" column="UTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
 		<result property="usemail" column="US_EMAIL" />
 		<result property="usphone" column="US_PHONE" />
 		<result property="busno" column="BUS_NO" />
@@ -272,9 +273,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
    <select id="searchUserList" parameterType="aSearch" resultMap="userResultSet">
 	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
 		SELECT
-		       *
+				 US_NO
+				,US_ID
+				,US_NAME
+				,TO_CHAR(US_BIRTH, 'YYYY-MM-DD') AS UTODATE
+				,US_EMAIL
+				,US_PHONE
+				,BUS_NO
+				,US_PART
+				,US_STATUS
 		  FROM
-		       "USER"	
+		        "USER"	
 		<where>
 			<choose>
 				<when test="searchCondition == 'usno'">
@@ -298,6 +307,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				<when test="searchCondition == 'busno'">
 					AND BUS_NO LIKE #{sv}
 				</when>
+				<when test="searchCondition == 'uspart'">
+					AND US_PART LIKE #{sv}
+				</when>
 				<when test="searchCondition == 'usstatus'">
 					AND US_STATUS LIKE #{sv}
 				</when>
@@ -309,6 +321,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 						 OR US_EMAIL LIKE #{sv}
 						 OR US_PHONE LIKE #{sv}
 						 OR BUS_NO LIKE #{sv}
+						 OR US_PART LIKE #{sv})
 						 OR US_STATUS LIKE #{sv})
 				</otherwise>	
 			</choose>

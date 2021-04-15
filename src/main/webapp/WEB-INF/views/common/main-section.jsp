@@ -84,7 +84,9 @@
             
                 <!-- 은솔 : 배너광고 구간 -->
                 <h3 style="margin-left : 3%;"> 이제, 여행은 가까운 곳에서.</h3>
-                <div class="tableArea">
+                <br>
+                
+                <div class="tableArea" style="margin-left : 3%;">
 					<table id="bannerAdImglistTable">
 						<thead>
 							<tr>
@@ -96,6 +98,7 @@
             </div>
         </div>
         </section>
+        <br>
         
         
      <!-- ajax -->
@@ -118,12 +121,12 @@
 					for (var i in data) {
 						var tr = $("<tr onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
 						
-						var alno = $("<td>").text(data[i].alno); 
-						var bus_code = $("<td>").text(data[i].bus_code); 
+						//var alno = $("<td>").text(data[i].alno); 
+						//var bus_code = $("<td>").text(data[i].bus_code); 
 						var aimgcname = $("<td>");
-						aimgcname.html("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + ">'");
+						aimgcname.html("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 500px;'>");
 						
-						tr.append(alno, bus_code, aimgcname);
+						tr.append(aimgcname);
 						tableBody.append(tr);
 					}
 				},

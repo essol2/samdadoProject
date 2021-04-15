@@ -34,6 +34,7 @@ public class QnA {
 	private char qstatus;
 	private String usno;
 	
-	private String usname; // USER 테이블 조인을 위한 필드
+	private String usname;      // USER 테이블 조인을 위한 필드
+	private String qtodate;	    // 관리자 서치 날짜 포멧팅을 위한 컬럼
 	
 }

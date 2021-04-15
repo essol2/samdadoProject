@@ -281,7 +281,9 @@
 	                              </c:otherwise>
 	                            </c:choose>
 		                       <td>${ abal.bus_code }</td>
-		                       <td>${ abal.pbalance }</td>
+		                       <td>
+		                       	${ abal.pbalance }
+		                       </td>
 		                	   <td>
 		                       <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#abalexampleModal${ Astatus.count }">
 					  				보기
@@ -323,7 +325,7 @@
 										    <input type="text" class="form-control" id="al_bus_code" value="${ Astatus.current.bus_code }" readonly>
 										  </div>
 										  <div class="mb-3">
-										    <label for="al_sub_date" class="form-label">신고 날짜</label>
+										    <label for="al_sub_date" class="form-label">신청 날짜</label>
 										    <input type="text" class="form-control" id="al_sub_date" value="<fmt:formatDate value='${ Astatus.current.alsubdate }' type='both' pattern='yyyy-MM-dd' />" readonly>
 										  </div>
 										  <div class="mb-3">
@@ -426,10 +428,11 @@
 										var bus_category = $("<td>").text(data[i].bus_category);
 										var bus_code = $("<td>").text(data[i].bus_code);
 										var pbalance = $("<td>").text(data[i].pbalance);
-										var alsubdate = $("<td>").text(data[i].alsubdate);
+										//var alsubdate = $("<td>").text(data[i].alsubdate);
+										var altodate = $("<td>").text(data[i].altodate);
 										var alstatus = $("<td>").text(data[i].alstatus);
 										
-										tr.append(alno, usname, bus_category, bus_code, pbalance, alsubdate, alstatus); // 테이블 행에 추가
+										tr.append(alno, usname, bus_category, bus_code, pbalance, altodate, alstatus); // 테이블 행에 추가
 										tableBody.append(tr); // 테이블에 추가
 									}
 									

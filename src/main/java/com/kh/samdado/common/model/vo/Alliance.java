@@ -32,6 +32,9 @@ public class Alliance {
 	private int alno;			// 배너 광고 시퀀스pk
 	private String alintro;		// 간단 소개글
 	private Date alsubdate;		// 배너 광고 신청 날짜
+	
+	private String altodate;	// 관리자 서치 날짜 포멧팅을 위한 컬럼
+	
 	private String alstatus;	// 상태
 	private Date startdate;		// 배너 광고 시작 날짜
 	private String aimgpath;

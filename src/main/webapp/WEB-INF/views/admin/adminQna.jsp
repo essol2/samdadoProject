@@ -203,11 +203,12 @@
 										var usname = $("<td>").text(data[i].usname);
 										var usno = $("<td>").text(data[i].usno);
 										var qcont = $("<td>").text(data[i].qcont);
-										var qdate = $("<td>").text(data[i].qdate);
+										//var qdate = $("<td>").text(data[i].qdate);
+										var qtodate = $("<td>").text(data[i].qtodate);
 										var qreply = $("<td>").text(data[i].qreply);
 										var qstatus = $("<td>").text(data[i].qstatus);
 										
-										tr.append(qnano, usname, usno, qcont, qdate, qreply, qstatus); // 테이블 행에 추가
+										tr.append(qnano, usname, usno, qcont, qtodate, qreply, qstatus); // 테이블 행에 추가
 										tableBody.append(tr); // 테이블에 추가
 									}
 									
