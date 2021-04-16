@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -512,16 +513,25 @@ public class businessController {
 		return mv;
 	}
 	
-	// 결제 성공 시 insert
+	// 예약결제 성공 시 insert
 	
-	@GetMapping("/buy")
-	public String payInsert(Income i, Booking b, Point p) {
+	@GetMapping("/pay")
+	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, Model model) {
+		p.setPamount(i.getAmount());
+		i.setAmount(i.getAmount() * 1/10);
+		p.setPbalance(i.getAmount() * 9);
 		System.out.println("income 확인 : " + i);
+		System.out.println("point 확인 : " + p);
+		System.out.println("booking 확인 : " + b);
 		int income = bService.insertIncome(i);
-		int booking = bService.insertBooking(b);
 		int point = bService.insertPoint(p);
+		int booking = bService.insertBooking(b);
+		System.out.println("income 확인 : " + income);
+		System.out.println("point 확인 : " + point);
+		System.out.println("booking 확인 : " + booking);
 		
-		return null;
+		
+		return "redirect:/main";
 		
 	}
 

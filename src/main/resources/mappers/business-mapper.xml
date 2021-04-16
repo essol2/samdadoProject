@@ -759,11 +759,85 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		(
 			PON_SEQ_NO.NEXTVAL
 		  , SYSDATE
-		  , '포인트 충전'
+		  , '예약 포인트 적립'
 		  , #{pbalance}
 		  , #{pamount}
 		  , #{usno}
 		)
+	</insert>
+	
+	<!-- 
+	<insert id="insertBookingHotel" parameterType="TourProduct">
+		INSERT
+		  INTO ROOM_BOOKING
+		  (
+		  	R_BOOKING_NO
+		  , R_PRODUCT_NAME
+		  , R_BOOKING_DATE
+		  , R_BOOKING_MODIFY
+		  , R_BOOKING_ADDRESS
+		  , R_BOOKING_PAY
+		  , R_BOOKING_NUMBER
+		  , R_BOOKING_PHONE
+		  , R_TOUR_DATE
+		  , US_NO
+		  , HOTEL_NO
+		  , BUS_CODE
+		  , BUS_NAME
+		  )
+		  VALUES
+		  (
+		  	BOOKING_NO.NEXTVAL
+		  , #{r.name}
+		  , SYSDATE
+		  , NULL
+		  , #{r.address}
+		  , #{amount}
+		  , #{number}
+		  , #{r.phone}
+		  , #{startDate}
+		  , #{usno}
+		  , ROOM_SEQ_NO.CURVAL
+		  , BUS_SEQ_NO.CURVAL
+		  , #{h.name}
+		  )
+	</insert>
+	 -->
+	 
+	 <insert id="insertBookingHotel">
+		INSERT
+		  INTO ROOM_BOOKING
+		  (
+		  	R_BOOKING_NO
+		  , R_PRODUCT_NAME
+		  , R_BOOKING_DATE
+		  , R_BOOKING_MODIFY
+		  , R_BOOKING_ADDRESS
+		  , R_BOOKING_PAY
+		  , R_BOOKING_NUMBER
+		  , R_BOOKING_PHONE
+		  , R_TOUR_DATE
+		  , US_NO
+		  , HOTEL_NO
+		  , BUS_CODE
+		  , BUS_NAME
+		  )
+		  VALUES
+		  (
+		  	BOOKING_NO.NEXTVAL
+		  , '방이름'
+		  , SYSDATE
+		  , NULL
+		  , '경기도'
+		  , '80000'
+		  , '3'
+		  , '010-3949-3736'
+		  , '21/04/15'
+		  , '2'
+		  , ROOM_SEQ_NO.CURVAL
+		  , BUS_SEQ_NO.CURVAL
+		  , '사업장이름'
+		  )
 	</insert>
    
    <!-- 지혜 -->
