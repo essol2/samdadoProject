@@ -44,6 +44,28 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<result property="payMethod" column="PAYMETHOD"/>
 	</resultMap>
 	
+	<resultMap type="Alliance" id="AllianceResultSet">
+		<id property="alno" column="AL_NO" />
+		<result property="alintro" column="AL_INTRO" />
+		<result property="alsubdate" column="AL_SUBDATE" />
+		<result property="startdate" column="START_DATE" />
+		<result property="alstatus" column="ALSTATUS" />
+		<result property="aimgpath" column="A_IMG_PATH" />
+		<result property="aimgname" column="A_IMG_NAME" />
+		<result property="aimgcname" column="A_IMG_CNAME" />
+		<result property="amassage" column="A_MASSAGE" />
+		<result property="usno" column="US_NO" />
+		<result property="bus_code" column="BUS_CODE" />
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
+		<!-- INCOME 테이블 조인을 위한 필드 -->
+		<result property="amount" column="amount" />	
+		<!-- BUSINESS 테이블 조인을 위한 필드 -->
+		<result property="bus_category" column="BUS_CATEGORY" />	
+		<!-- POINT 테이블 조인을 위한 필드 -->
+		<result property="pbalance" column="PBALANCE" />
+	</resultMap>
+	
 	<resultMap type="Business" id="bussResultSet">
 		<id property="bus_code" column="BUS_CODE" />
 		<result property="us_no" column="US_NO" />
@@ -83,29 +105,11 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="room_price" column="ROOM_PRICE" />
 		<result property="room_people" column="ROOM_PEOPLE" />
 		<result property="room_amenity" column="ROOM_AMENITY" />
+		<!-- 광고 조인 -->
+		<collection property="alliance" resultMap="AllianceResultSet"/>
 	</resultMap>
 	
-	<resultMap type="Alliance" id="AllianceResultSet">
-		<id property="alno" column="AL_NO" />
-		<result property="alintro" column="AL_INTRO" />
-		<result property="alsubdate" column="AL_SUBDATE" />
-		<result property="startdate" column="START_DATE" />
-		<result property="alstatus" column="ALSTATUS" />
-		<result property="aimgpath" column="A_IMG_PATH" />
-		<result property="aimgname" column="A_IMG_NAME" />
-		<result property="aimgcname" column="A_IMG_CNAME" />
-		<result property="amassage" column="A_MASSAGE" />
-		<result property="usno" column="US_NO" />
-		<result property="bus_code" column="BUS_CODE" />
-		<!-- USER 테이블 조인을 위한 필드 -->
-		<result property="usname" column="US_NAME" />	
-		<!-- INCOME 테이블 조인을 위한 필드 -->
-		<result property="amount" column="amount" />	
-		<!-- BUSINESS 테이블 조인을 위한 필드 -->
-		<result property="bus_category" column="BUS_CATEGORY" />	
-		<!-- POINT 테이블 조인을 위한 필드 -->
-		<result property="pbalance" column="PBALANCE" />
-	</resultMap>
+	
 	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
 	<!-- 1. 이메일, 전화번호 변경 메소드 -->
@@ -411,5 +415,19 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM BUSINESS
 		WHERE US_NO = #{usno}
 		AND BUS_CLASSIFY = 'P'
+	</select>
+	
+	<select id="selectClickCount" parameterType="Business" resultType="_int">
+		SELECT SUM(AD_COUNT)
+		FROM BUSINESS
+		WHERE US_NO = #{usno}
+	</select>
+	
+	<select id="selectAlliChartList" resultMap="bussResultSet">
+		SELECT TO_CHAR(TO_DATE(A.START_DATE, 'YY-MM-DD'), 'MONTH') thisMonth, SUM(B.AD_COUNT) totalCount
+		FROM BUSINESS B, ALLIANCE A
+		WHERE B.BUS_CODE = A.BUS_CODE
+		AND B.US_NO = #{usno}
+		GROUP BY  TO_CHAR(TO_DATE(A.START_DATE, 'YY-MM-DD'), 'MONTH')
 	</select>
 </mapper>
