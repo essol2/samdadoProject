@@ -106,6 +106,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="room_people" column="ROOM_PEOPLE" />
 		<result property="room_amenity" column="ROOM_AMENITY" />
 		<!-- 광고 조인 -->
+		<result property="thisMonth" column="THISMONTH"/>
+		<result property="totalCount" column="TOTALCOUNT"/>
 		<collection property="alliance" resultMap="AllianceResultSet"/>
 	</resultMap>
 	
@@ -424,7 +426,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="selectAlliChartList" resultMap="bussResultSet">
-		SELECT TO_CHAR(TO_DATE(A.START_DATE, 'YY-MM-DD'), 'MONTH') thisMonth, SUM(B.AD_COUNT) totalCount
+		SELECT TO_CHAR(TO_DATE(A.START_DATE, 'YY-MM-DD'), 'MONTH') THISMONTH, SUM(B.AD_COUNT) TOTALCOUNT
 		FROM BUSINESS B, ALLIANCE A
 		WHERE B.BUS_CODE = A.BUS_CODE
 		AND B.US_NO = #{usno}

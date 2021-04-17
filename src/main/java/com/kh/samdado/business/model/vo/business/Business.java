@@ -80,8 +80,8 @@ public class Business {
 	private String file_name;	// 파일명
 	
 	// 마이페이지 달 별 클릭수 계산
-	private int thisMonth;
-	private int totalCount;
+	private String thisMonth;
+	private String totalCount;
 	private Alliance alliance;
 
 }
