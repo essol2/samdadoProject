@@ -482,26 +482,26 @@
             <div class="title_area">
                 <div class="title_area">
                     <img src="../resources/images/image_listpage/premium.png"><br>
-                    <label id="ho_title" class="title_tag">${ h.bus_name }</label>
+                    <label id="ho_title" class="title_tag">${ hotel.bus_name }</label>
                     <label id="ho_grade" class="title_tag">4성급</label><br>
                 </div>
-                <label id="ho_address">제주특별차치도 서귀포시 </label>
+                <label id="ho_address">${ hotel.bus_address.substring(6) }</label>
             </div>
 
             <div id="ho_info">
                 <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="report_btn"><img id="report" class="report_img"
-                        src="../resources/images/image_listpage/phone.png">064-738-7060</label>
+                        src="../resources/images/image_listpage/phone.png">${ hotel.bus_phone }</label>
             </div>
         </div>
 
         <!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-                <img id="bigPic" class="mainimage" src="../resources/busUploadFiles/">
+                <img id="bigPic" class="mainimage" src="../resources/busUploadFiles/${ hotel.file_rename }">
                 <div class="other">
-                	<img id="smallPic" class="otherimage" src="../resources/busUploadFiles/">
+                	<img id="smallPic" class="otherimage" src="../resources/busUploadFiles/${ hotel.file_rename }">
                     <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour1.png">
                     <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour3.png">
                     <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/list9.png">
@@ -530,7 +530,7 @@
                 <div class="col2">
                     <div id="map" style="width: 555px; height:330px;">
                     <button type="button" id="mapBtn" 
-                    onclick="window.open('https://map.kakao.com/link/search/한식','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
+                    onclick="window.open('https://map.kakao.com/link/search/호텔','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
                     </div>
                     
                     <!-- 구글지도 api -->
@@ -540,7 +540,7 @@
 		             var markers = [
 		                 {
 		                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
-		                     text: '${res.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+		                     text: '${hotel.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
 		                 }
 		             ];
 		
@@ -687,38 +687,7 @@
 		<!-- 매장소개 -->
         <div class="introduce">
             <h2>소개</h2><br>
-            <p>
-                안녕하세요^^
-
-                25층에서 속초바다 야경과 함께 즐거운 추억 만드세요.
-
-                문의 사항 있으면 편하게 연락주시기 바랍니다.
-
-
-                속초 해수욕장 도보5분,외옹치둘레길 도보 5~10분,고속터미널
-
-                도보 7분이마트 도보10분 거리에 위치하고 있습니다.대포항,
-
-                아바이마을, 엑스포먹거리단지, 청초호까지 차로 5분이면
-
-
-                구경가능합니다.
-                산,호수,바다를 한번에 만날 수 있는 속초로
-
-                초대합니다^^
-
-
-                *인피니티풀은 8월31일까지 운영합니다.
-
-                이용에 참고 바랍니다.
-
-                (이용료 성인 3만원 부가세별도)
-
-
-                *부대시설 이용 시 별도 비용이 추가 될 수 있습니다.
-            </p>
-
-
+            <p>${ hotel.bus_intro }</p>
         </div>
 
         <hr class="boundary">
@@ -928,6 +897,7 @@
                 </div>
 
                 <div class="modal-body2">
+                	<label><input type="text" id="roomName" style="border:none;width:50px;" readonly value="방이름"></label><br>
                     <label>80,000원 / 박</label><br>
                     <input type="hidden" id="cAmount" name="cAmount" value="80000">
                     <div class="modal-book">
@@ -947,13 +917,13 @@
                         </div>
                         <div class="people2">
                             <select id="selectBox" onchange="handleOnChange(this)">
-                                <option value="0명">인원</option>
-                                <option value="1명">1명</option>
-                                <option value="2명">2명</option>
-                                <option value="3명">3명</option>
-                                <option value="4명">4명</option>
-                                <option value="5명">5명</option>
-                                <option value="6명">6명 이상</option>
+                                <option value="0">인원</option>
+                                <option value="1">1명</option>
+                                <option value="2">2명</option>
+                                <option value="3">3명</option>
+                                <option value="4">4명</option>
+                                <option value="5">5명</option>
+                                <option value="6">6명 이상</option>
                             </select>
                         </div>
                     </div>
@@ -977,8 +947,11 @@
 
   	$(".payBtn").click(function() {
   		
-  		var name = document.getElementById('cAmount').value;
+  		var name = document.getElementById('roomName').value;
   		var payResult = document.getElementById('payResult').value;
+  		var startDate = document.getElementById("startDate").value;  		
+  	 	var phone = ${ hotel.bus_phone };
+  	    var bookingLv = 1;
   		// var amount = payResult;
   		var amount = 100;
 	    var IMP = window.IMP;
@@ -998,7 +971,10 @@
 	        if ( rsp.success ) {
 	            var msg = '결제가 완료되었습니다!';
 	            msg += '결제 금액 : ' + rsp.paid_amount;
-	            location.href = '${contextPath}/business/pay?amount='+amount+'&item='+name+'&usno='+${loginUser.usno};
+	            location.href = '${contextPath}/business/pay?amount='+amount+'&item='+name+'&usno='+${loginUser.usno}
+					            +'&r_bus_code='+${ hotel.bus_code }+'&r_booking_trv='+startDate+'&r_bookingLv='+bookingLv
+					            +'&r_booking_phone='+phone+'&r_booking_product='+name+'&r_booking_pay='+amount;
+	            				
 	        } else {
 	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
 	        }
@@ -1074,12 +1050,12 @@
             
             <input type="hidden" name="rep_res" value="허위매물">
             <input type="hidden" name="usno" value="${ loginUser.usno }">
-             <input type="hidden" name="bus_code" value="${ h.bus_code }">
+             <input type="hidden" name="bus_code" value="${ hotel.bus_code }">
                       
                 <!--신고대상-->
                 <div class="name_div">
                     <label for="id">신고대상</label>                   
-                    <input type="text" id="name" name="bus_name" value="${ h.bus_name }" readonly>
+                    <input type="text" id="name" name="bus_name" value="${ hotel.bus_name }" readonly>
                 </div>
                 <!--신고사유-->
                 <div class="reason_div">

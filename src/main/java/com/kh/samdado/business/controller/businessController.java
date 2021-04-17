@@ -516,20 +516,35 @@ public class businessController {
 	// 예약결제 성공 시 insert
 	
 	@GetMapping("/pay")
-	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, Model model) {
+	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p) {
+		// 포인트에 amount 넣어주기
 		p.setPamount(i.getAmount());
-		i.setAmount(i.getAmount() * 1/10);
-		p.setPbalance(i.getAmount() * 9);
-		System.out.println("income 확인 : " + i);
-		System.out.println("point 확인 : " + p);
-		System.out.println("booking 확인 : " + b);
+		// income에  들어갈 원가 10퍼센트 셋팅
+		i.setAmount(i.getAmount() * 1/10);		
+//		System.out.println("income 확인 : " + i);
+//		System.out.println("point 확인 : " + p);
+//		System.out.println("booking 확인 : " + b);
 		int income = bService.insertIncome(i);
-		int point = bService.insertPoint(p);
-		int booking = bService.insertBooking(b);
-		System.out.println("income 확인 : " + income);
-		System.out.println("point 확인 : " + point);
-		System.out.println("booking 확인 : " + booking);
 		
+		Point findPoint = bService.findPoint(p);
+		
+		 if(findPoint != null) {
+			 // 이미 포인트가 있으면 기존 포인트 + 결제금액의 90% 적립
+			 p.setPbalance(findPoint.getPbalance()+i.getAmount() * 9);
+		 } else {
+			 // 첫 결제면 그대로 결제금액 90% 셋팅
+			 p.setPbalance(i.getAmount() * 9);
+		 }
+		 // 포인트 넣기
+		int point = bService.insertPoint(p);
+		// 예약정보 insert
+		if(b.getBookingLv() == 1) {
+			int bookingHotel = bService.insertBooking(b);			
+		} else if(b.getBookingLv() == 2) {
+			
+		} else if(b.getBookingLv() == 3) {
+			
+		}
 		
 		return "redirect:/main";
 		
