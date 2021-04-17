@@ -91,12 +91,14 @@ public interface businessDao {
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
 
-	// 일반결제 메소드3개
+	// 일반결제 메소드
 	int insertIncome(Income i);
 
 	int insertBooking(Booking b);
 
 	int insertPoint(Point p);
+	
+	public Point findPoint(Point p);
 
 	// 비즈니스 등록 폼, 본인이 등록한 사업장 셀렉
 	List<Business> selectMyBusinessCategory(User loginUser);

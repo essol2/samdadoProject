@@ -175,7 +175,7 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.insert("businessMapper.jjim", jjim);
 	}
 	
-	// 일반결제 메소드 3개
+	// 일반결제 메소드
 	  @Override
 		public int insertIncome(Income i) {
 		  return sqlSession.insert("businessMapper.insertIncome", i);
@@ -189,6 +189,12 @@ public class businessDaoImpl implements businessDao {
 		@Override
 		public int insertPoint(Point p) {
 			return sqlSession.insert("businessMapper.insertPoint", p);
+		}
+		
+		@Override
+		public Point findPoint(Point p) {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne("businessMapper.findPoint", p);
 		}
 
 	@Override

@@ -113,6 +113,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="pbalance" column="PBALANCE" />
 	</resultMap>
 	
+	<resultMap type="Point" id="pointResultSet">
+		<id property="pno" column="PNO" />
+		<result property="pdate" column="PDATE" />
+		<result property="pdetail" column="PDETAIL" />
+		<result property="pbalance" column="PBALANCE" />
+		<result property="pamount" column="PAMOUNT" />
+		<result property="usno" column="US_NO" />
+	</resultMap>
+	
 	<insert id="insertBusiness" parameterType="Business">
 		INSERT
 		  INTO BUSINESS
@@ -800,44 +809,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usno}
 		)
 	</insert>
-	
-	<!-- 
-	<insert id="insertBookingHotel" parameterType="TourProduct">
-		INSERT
-		  INTO ROOM_BOOKING
-		  (
-		  	R_BOOKING_NO
-		  , R_PRODUCT_NAME
-		  , R_BOOKING_DATE
-		  , R_BOOKING_MODIFY
-		  , R_BOOKING_ADDRESS
-		  , R_BOOKING_PAY
-		  , R_BOOKING_NUMBER
-		  , R_BOOKING_PHONE
-		  , R_TOUR_DATE
-		  , US_NO
-		  , HOTEL_NO
-		  , BUS_CODE
-		  , BUS_NAME
-		  )
-		  VALUES
-		  (
-		  	BOOKING_NO.NEXTVAL
-		  , #{r.name}
-		  , SYSDATE
-		  , NULL
-		  , #{r.address}
-		  , #{amount}
-		  , #{number}
-		  , #{r.phone}
-		  , #{startDate}
-		  , #{usno}
-		  , ROOM_SEQ_NO.CURVAL
-		  , BUS_SEQ_NO.CURVAL
-		  , #{h.name}
-		  )
-	</insert>
-	 -->
 	 
 	 <insert id="insertBookingHotel">
 		INSERT
@@ -860,20 +831,32 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  VALUES
 		  (
 		  	BOOKING_NO.NEXTVAL
-		  , '방이름'
+		  , #{r_booking_product}
 		  , SYSDATE
 		  , NULL
-		  , '경기도'
-		  , '80000'
+		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{r_booking_pay}
 		  , '3'
-		  , '010-3949-3736'
-		  , '21/04/15'
-		  , '2'
-		  , ROOM_SEQ_NO.CURVAL
-		  , BUS_SEQ_NO.CURVAL
-		  , '사업장이름'
+		  , #{r_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{r_booking_trv}
+		  , #{usno}
+		  , '1'	<!-- 방등록 되면 방 번호 따오기 -->
+		  , #{r_bus_code}
+		  , '사업장이름' <!-- 왜안됨 -->
 		  )
 	</insert>
+	
+	<select id="findPoint" parameterType="Point" resultMap="pointResultSet">
+		SELECT *
+		FROM (
+		        SELECT *
+		        FROM POINT
+		        WHERE US_NO = #{usno}
+		        ORDER BY PDATE DESC
+      		 )
+		WHERE 
+				ROWNUM = 1
+	</select>
    
    <!-- 지혜 -->
    <select id="selectBannerAdImgList" resultMap="AllianceResultSet">

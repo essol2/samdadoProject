@@ -166,7 +166,7 @@ public class businessServiceImpl implements businessService {
 		return 0;
   }
 	
-	// 일반결제 메소드 3개
+	// 일반결제 메소드
 	@Override
 	public int insertIncome(Income i) {
 		// TODO Auto-generated method stub
@@ -183,6 +183,12 @@ public class businessServiceImpl implements businessService {
 	public int insertPoint(Point p) {
 		// TODO Auto-generated method stub
 		return bDao.insertPoint(p);
+	}
+	
+	@Override
+	public Point findPoint(Point p) {
+		// TODO Auto-generated method stub
+		return bDao.findPoint(p);
 	}
 
 	// 지혜
