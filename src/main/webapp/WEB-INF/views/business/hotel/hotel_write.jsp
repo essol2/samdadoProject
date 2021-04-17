@@ -315,7 +315,7 @@
 		        <div class="join-wrap">
 		            <h3><label>매장사진</label></h3>
 		            <span class="box">
-		                <input type="file" multiple="multiple" name="uploadFile" id="accomm" class="content" required>
+		                <input type="file" name="mainFile" id="accomm" class="content" required>
 		            </span>
 		        </div>
 		        
@@ -323,7 +323,7 @@
 		        <div class="join-wrap">
 		            <h3><label>추가사진</label></h3>
 		            <span class="box">
-		                <input type="file" name="uploadFile" id="accomm" class="content">
+		                <input multiple="multiple"  type="file" name="uploadFile" id="accomm" class="content">
 		            </span>
 		        </div>
 		        

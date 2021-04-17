@@ -8,6 +8,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Samadado</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <style>
         /* 공통 - 폰트 */
@@ -556,11 +558,15 @@
                 <div id="secondlist">
 	                <c:forEach var="r" items="${ resList }">
 	                    <div class='profile'>
-	                        <img class="image" src="../resources/busUploadFiles/${ r.file_rename }" onclick="selectRes(${r.bus_code})">
+	                        <c:if test="${ r.file_lv eq '0' }">
+	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ r.file_rename }" onclick="selectRes(${r.bus_code})">
+	                        </c:if>
 	                        <b>★4.90(후기 99+개)</b>
 	                        <b>${ r.bus_name }</b>
-	                        <b>${ r.res_category }</b>                        
+	                        <b>${ r.res_category }</b>
+	                        <c:if test="${ loginUser.usno != null }">                    
 	                        <p><img src="../resources/images/image_listpage/heart.png"></p>
+	                        </c:if>
 	                    </div>
 	                </c:forEach>
                 </div>        

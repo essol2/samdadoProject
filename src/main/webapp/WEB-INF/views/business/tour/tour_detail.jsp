@@ -13,12 +13,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <title>samdado</title>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -185,14 +186,14 @@
             border: 1.2px solid black;
         }
 
-        /* 지도보기 */
+         /* 지도보기 */
 
         .map {
             width: 100%;
             height: 100%;
         }
 
-        .mapBtn {
+        #mapBtn {
             position: absolute;
             background-color: white;
             border-radius: 6px;
@@ -324,6 +325,17 @@
             margin: 1%;
             margin-bottom: 0;
         }
+        
+        #map {
+            margin: auto;
+            border-radius: 6px;
+        }
+		
+		#exampleModalLabel{
+			font-size: 30px;
+			font-weight: bold;
+			
+		}
 
         /* 부트스트랩 모달*/
 
@@ -479,6 +491,76 @@
         #agreement_checkbox {
             margin-left: -118%;
         } */
+        
+        /* 작은 리뷰박스 클릭 */
+    .review-main{
+        width: 100%;
+        
+    }
+
+    .modal-dialog {
+        max-width: 60%;
+    }
+
+    .review-title{
+        justify-content:space-between;
+        display: flex;
+    }
+
+    .reivew-name{
+        margin-top: 25px;
+    }
+
+    .review-avg{
+        width: 25%;
+    }
+
+    .avg-con{
+        display: flex;
+        float: right;
+        width: 100%;
+        
+    }
+
+    .avg-img{
+        position: relative;
+    }
+
+    .avg-text{
+        position: relative;
+        width: 70%;
+    }
+
+    .avg-con p{
+        margin-top: 10px;
+        margin-bottom: 0;
+    }
+
+    .review-box{
+        display: flex;
+        border: 1px solid gray;
+        border-radius: 8px;
+        padding: 10px 0px;
+        margin: 10px 0 10px 0;
+    }
+
+    .review-user{
+        width: 10%;
+        text-align: center;
+        margin: auto;
+        margin-left: 3%;
+    }
+
+    .review-con{
+        width: 90%;
+        padding-left: 10px;
+        margin-left: 5%;
+        margin-bottom: 5px;
+    }
+
+    p {
+        margin: 1rem 0 0 0;
+    }
     </style>
 
 </head>
@@ -493,37 +575,82 @@
             <div class="title_area">
                 <div class="title_area">
                     <img src="../resources/images/image_listpage/premium.png"><br>
-                    <label id="ho_title" class="title_tag">서광 승마장</label>
+                    <label id="ho_title" class="title_tag">${ tour.bus_name }</label>
                     <br>
                 </div>
-                <label id="ho_address">제주특별차치도 서귀포시 </label>
+                <label id="ho_address">${ tour.bus_address.substring(6) }</label>
             </div>
 
             <div id="ho_info">
                 <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="report_btn"><img id="report" class="report_img"
-                        src="../resources/images/image_listpage/phone.png">064-738-7060</label>
+                        src="../resources/images/image_listpage/phone.png">${ tour.bus_phone }</label>
             </div>
         </div>
-
+		
+		<!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-                <img class="mainimage" src="../resources/busUploadFiles/${ tour.file_rename }">
+            	<c:forEach var="a" items="${ att }">
+            	<c:if test="${ a.file_lv eq '0' }">
+                <img id="bigPic" class="mainimage" src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }">
+				</c:if>
+				</c:forEach>
                 <div class="other">
-                    <img class="otherimage" src="../resources/images/image_listpage/tour3_1.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/tour3_2.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/tour3_3.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/tour3_4.png">
-
+					<c:forEach var="a" items="${ att }">
+                    <img id="smallPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }">
+	                </c:forEach>
                 </div>
             </div>
+            
+            <!-- 매장 사진 클릭 시 변경 스크립트 -->
+			<script>
+                var bigPic = document.querySelector("#bigPic");
+                var smallPic = document.querySelectorAll("#smallPic")
+
+                for(var i = 0; i < smallPic.length; i++){
+                    smallPic[i].addEventListener("click", changepic);
+                    
+                }
+                function changepic(){
+                    var smallPicAttribute = this.getAttribute("src");
+                    bigPic.setAttribute("src", smallPicAttribute);
+
+                }
+            </script>
 
             <div class="col3">
+	            <!-- 구글지도 -->
                 <div class="col2">
-                    <button class="mapBtn">지도에서 보기</button>
-                    <img src="../resources/images/image_listpage/map.png" class="map">
+                    <div id="map" style="width: 555px; height:330px;">
+                    <button type="button" id="mapBtn" 
+                    onclick="window.open('https://map.kakao.com/link/search/${tour.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
+                    </div>
                 </div>
+                
+                <!-- 구글지도 api -->
+                <script>
+	             // 이미지 지도에 표시할 마커입니다
+	             // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+	             var markers = [
+	                 {
+	                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
+	                     text: '${tour.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+	                 }
+	             ];
+	
+	             var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div  
+	                 staticMapOption = { 
+	                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
+	                     level: 3, // 이미지 지도의 확대 레벨
+	                     marker: markers // 이미지 지도에 표시할 마커 
+	                 };    
+	
+	             // 이미지 지도를 생성합니다
+	             var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+				</script>
+				
                 <!-- 작은 리뷰 -->
                 <div class="col2" id="small_view_area">
                     <button type="button" class="small_view_btn">후기</button><br>
@@ -559,14 +686,87 @@
                             최고의 숙소 상태와 너무너무 친절하신 호스트분까지
                             최고의 숙소 상태와 너무너무 친절하신 호스트분까지
 
-                        </p>
-                        <button class="small_view_morebtn">more...</button>
+                         </p>
+                		<button type="button" id="small_view_morebtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">more...</button>
                     </div>
+                    <!-- Modal -->
+				    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+					    <div class="modal-dialog modal-dialog-centered" style="max-width:60%;">
+					        <div class="modal-content" style="width:100%;">
+						        <div class="modal-header">
+						            <h5 class="modal-title" id="staticBackdropLabel">다녀온 고객 후기</h5>
+						            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						        </div>
+						        <div class="modal-body">
+						            <div class="review-main">
+						
+						            <!-- 리뷰 상단 -->
+						            <div class="review-title">
+						                <div class="reivew-name">
+						                    <h3>제주호텔 ★★★★</h3>
+						                </div>
+						                <div class="review-avg">
+						                    <div class="avg-con">
+						                        <div class="avg-img"></div>
+						                        <img src="">
+						                        <div class="avg-text">
+						                            <p style="font-size: 25px; color: blue;">최고</p>
+						                            <p>n개의 후기</p>
+						                        </div>
+						                    </div>
+						                </div>
+						            </div>
+						
+						            <!-- 리뷰 바디 -->
+						            <div class="review-body">
+						                <div class="review-box">
+						                    <div class="review-user"> 
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						                <div class="review-box">
+						                    <div class="review-user">
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						                <div class="review-box">
+						                    <div class="review-user">
+						                        <p>은솔이</p>
+						                        <p>2020년 2월</p>
+						                    </div>
+						                    <div class="review-con">
+						                        <img src="" style="width: 300px; height: 300px;">
+						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
+						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
+						                    </div>
+						                </div>
+						            </div>
+						            </div>
+						        </div>
+						        <div class="modal-footer">
+						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						            <button type="button" class="btn btn-primary">Understood</button>
+						        </div>
+					        </div>
+					    </div>
+				    </div>
                 </div>
             </div>
         </div>
         <div class="checktable">
-            <h2>주요 편의 시설</h2><br>
+            <h2>주변 편의 시설</h2><br>
             <label><img src="../resources/images/image_listpage/check.png">테라스</label>
             <label><img src="../resources/images/image_listpage/check.png">편의점</label>
             <label><img src="../resources/images/image_listpage/check.png">주차</label><br>
@@ -575,22 +775,10 @@
 
         <hr class="boundary">
 
+		<!-- 매장소개 -->
         <div class="introduce">
             <h2>소개</h2><br>
-            <p>
-                한라산 초원에서 즐기는 이색승마체험!
-
-
-                한라산 대초원과 오름을 배경으로 달리는 조랑말 승마!
-
-
-                단거리부터 긴코스까지 다양한 승마 코스!
-
-
-                영어 및 일본어 가능.(English possible / 日本語可能
-            </p>
-
-
+            <p>${ tour.bus_intro }</p>
         </div>
 
         <hr class="boundary">
@@ -600,10 +788,10 @@
                 <img src="../resources/images/image_listpage/tour3_5.png" class="detailImg">
             </div>
             <div class="detailView">
-                <b>서광 승마장</b><br><br>
-                <label>어린이 8000원</label><br>
-                <label>청소년 9000원</label><br>
-                <label>성인 10000원</label>
+                <b>상품명 : ${ tour.pro_name }</b><br><br>
+                <label>어른 : ${ tour.pro_adult }원</label><br>
+                <label>청소년 : ${ tour.pro_youth }원</label><br>
+                <label>${ tour.pro_child }</label>
 
 
             </div>
@@ -616,11 +804,6 @@
 
         </div>
 
-
-        <div class="btnArea">
-            <button class="moreBtn">더보기</button>
-        </div>
-        
         <!-- 후기 -->
         <div id="review_area">
             <label>후기</label>&nbsp;&nbsp;<label>★ 4.5(후기 99개)</label><br>
@@ -722,34 +905,34 @@
                     <div id="table">
                         <div class="rows">
                             <span class="cell cols1">성인입장권</span>
-                            <span class="cell cols2">10000원</span>
+                            <span class="cell cols2"> ${ tour.pro_adult }원</span>
                             <span class="cell cols3"><input type="number" id="adultNumber"onchange="adult(this)">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">청소년입장권</span>
-                            <span class="cell cols2">9000원</span>
+                            <span class="cell cols2">${ tour.pro_youth }원</span>
                             <span class="cell cols3"><input type="number" id="youthNumber" onchange="youth(this)">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">어린이입장권</span>
-                            <span class="cell cols2">8000원</span>
+                            <span class="cell cols2">${ tour.pro_child }원</span>
                             <span class="cell cols3"><input type="number" id="childNumber" onchange="child(this)">명</span>
                         </div>
                     </div>
                     <div id="table2">
                         <div class="rows2">
                             <span class="cell cols1">성인입장권</span>
-                            <span class="cell cols2">10000원 *<span id="adultResult"></span>명</span>
+                            <span class="cell cols2">${ tour.pro_adult }원 *<span id="adultResult"></span>명</span>
                             <span class="cell cols3"><input type="text" id="adultPay" style="border:none;width:80px" readonly></span>
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">청소년입장권</span>
-                            <span class="cell cols2">9000원 *<span id="youthResult"></span>명</span>
+                            <span class="cell cols2">${ tour.pro_youth }원 *<span id="youthResult"></span>명</span>
                             <span class="cell cols3"><input type="text" id="youthPay" style="border:none;width:80px" readonly></span>
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">어린이입장권</span>
-                            <span class="cell cols2">8000원 *<span id="childResult"></span>명</span>
+                            <span class="cell cols2">${ tour.pro_child }원 *<span id="childResult"></span>명</span>
                             <span class="cell cols3"><input type="text" id="childPay" style="border:none;width:80px" readonly></span>
                         </div>
                     </div>
@@ -811,7 +994,7 @@
 	    var adultPay = document.getElementById('adultPay').value * document.getElementById('adultNumber').value
 		var youthPay = document.getElementById('youthPay').value * document.getElementById('youthNumber').value
 		var childPay = document.getElementById('childPay').value * document.getElementById('childNumber').value
-		console.log(adultPay);
+		// console.log(adultPay);
 	    function adult(e) {	  	  
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('adultResult').innerText
@@ -881,42 +1064,12 @@
         </div>
     </div>
 
-     <footer>
-            <div id="footer_left">
-                <img src="../resources/images/image_footer/footerlogo.png" class="leftImg">
-            </div>
-            <div id="footer_center">
-                <img src="../resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
-                <img src="../resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
-                <img src="../resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
-            </div>
-            <div id="footer_right">
-                <p id="samdado_news">삼다도 소식</p>
-                <img src="../resources/images/image_footer/facebook.png" class="rightImg">
-                <img src="../resources/images/image_footer/twitter.png" class="rightImg">
-                <img src="../resources/images/image_footer/LinkedIn.png" class="rightImg">
-                <img src="../resources/images/image_footer/pininterest.png" class="rightImg">
-            </div>
-            <br>
-            <br>
-            <hr>
-            <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
-        </footer>
+    <footer>
+          <jsp:include page="../../common/footer.jsp"/>
+    </footer>
 
 
 
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-        crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-    -->
 
 </body>
 
