@@ -417,7 +417,10 @@ public class MypageController {
 	 
 	 // 일반회원 - 내예약목록 페이지 이동
 	 @GetMapping("/booking")
-	 public String goToBooking() {
+	 public String goToBooking(@RequestParam(name="usno") String usno) {
+		 
+		 
+		 
 		 return "/mypage/mp_MyReservation";
 	 }
 

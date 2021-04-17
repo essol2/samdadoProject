@@ -368,7 +368,7 @@
 						    
 						    data = { 
 						    		datasets: [{ 
-						    			label: 'Months',
+						    			label: '월별 배너광고 클릭 수',
 						    			borderColor: '#467355',
 			 			    			data: [arr[0].totalCount, arr[1].totalCount, arr[2].totalCount, arr[3].totalCount, arr[4].totalCount],
 			 							
