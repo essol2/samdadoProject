@@ -49,6 +49,12 @@ public class businessServiceImpl implements businessService {
 	public int selectResListCount() {
 		return bDao.selectResListCount();
 	}
+	// 사업장 사진
+	@Override
+	public List<BusinessAtt> selectAtt(int bus_code) {
+		return bDao.selectAtt(bus_code);
+	}
+
 	
 	// 음식점 디테일
 	@Override
@@ -109,7 +115,7 @@ public class businessServiceImpl implements businessService {
 	}
 	// 관광지 디테일
 	@Override
-	public List<Business> selectTour(int bus_code) {
+	public Business selectTour(int bus_code) {
 		return bDao.selectTour(bus_code);
 	}
 
@@ -238,6 +244,13 @@ public class businessServiceImpl implements businessService {
 		return bDao.getBusDetail(bus_code);
 	}
 
+	// 메인사진
+	@Override
+	public int insertMain(BusinessAtt bat) {
+		return bDao.insertMain(bat);
+	}
+
+	
 
 
 	

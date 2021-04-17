@@ -33,6 +33,8 @@ public interface businessService {
 	
 	// 사업장 리스트 카운트
 	int selectResListCount();
+	// 사업장 사진
+	List<BusinessAtt> selectAtt(int bus_code);
 	
 	// 음식점 디테일
 	Business selectRestaurant(int bus_code);
@@ -58,7 +60,7 @@ public interface businessService {
 	// 관광지리스트
 	List<Business> selectTourList();
 	// 관광지디테일
-	List<Business> selectTour(int bus_code);
+	Business selectTour(int bus_code);
 	
 	// 관광지 예약
 	public int bookingTour(TourBooking tourbooking);
@@ -110,6 +112,10 @@ public interface businessService {
 	Business selectBannerAdDetail(Business selectBusCodeUser, boolean flag);
 
 	Business getBusDetail(int bus_code);
+
+	int insertMain(BusinessAtt bat);
+
+	
 
 	
 

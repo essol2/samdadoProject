@@ -29,6 +29,8 @@ public interface businessDao {
 	// 사업장 등록
 	int insertBusAtt(List<BusinessAtt> list);
 	int insertBusiness(Business b);
+	// 사업장 사진
+	List<BusinessAtt> selectAtt(int bus_code);
 
 	// 사업장 리스트 카운트
 	int selectResListCount();
@@ -59,7 +61,7 @@ public interface businessDao {
 	// 관광지페이지
 	List<Business> selectTourList();
 	// 관광지디테일
-	List<Business> selectTour(int bus_code);
+	Business selectTour(int bus_code);
 	
 	// 관광지 예약
 	public int bookingTour(TourBooking tourbooking);
@@ -117,6 +119,10 @@ public interface businessDao {
 	int updateReadCount(Business selectBusCodeUser);
 
 	Business getBusDetail(int bus_code);
+
+	int insertMain(BusinessAtt bat);
+
+	
 
 
 	

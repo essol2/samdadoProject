@@ -43,7 +43,6 @@ public class businessDaoImpl implements businessDao {
 	public int insertBusAtt(List<BusinessAtt> list) {
 		return sqlSession.insert("businessMapper.insertBusAtt", list);
 	}
-	
 	// 사업장 등록
 	@Override
 	public int insertBusiness(Business b) {
@@ -54,6 +53,11 @@ public class businessDaoImpl implements businessDao {
 	@Override
 	public int selectResListCount() {
 		return sqlSession.selectOne("businessMapper.selectResListCount");
+	}
+	// 사업장 사진
+	@Override
+	public List<BusinessAtt> selectAtt(int bus_code) {
+		return sqlSession.selectList("businessMapper.selectAtt", bus_code);
 	}
 
 	
@@ -91,10 +95,18 @@ public class businessDaoImpl implements businessDao {
 	// 호텔등록
 	@Override
 	public int insertRoomAtt(List<RoomAtt> raList) {
+		/*
+		 * for(RoomAtt room : raList) { sqlSession.insert("", room); }
+		 */
 		return sqlSession.insert("businessMapper.insertRoomAtt", raList);
 	}
 	@Override
 	public int insertRoom(List<Room> rooms) {
+		/*
+		 * for(Room room : rooms) { sqlSession.insert("", room);
+		 * 
+		 * }
+		 */
 		return sqlSession.insert("businessMapper.insertRoom", rooms);
 	}
 	// 호텔리스트
@@ -122,8 +134,8 @@ public class businessDaoImpl implements businessDao {
 	}
 	// 관광지디테일
 	@Override
-	public List<Business> selectTour(int bus_code) {
-		return sqlSession.selectList("businessMapper.selectTour", bus_code);
+	public Business selectTour(int bus_code) {
+		return sqlSession.selectOne("businessMapper.selectTour", bus_code);
 	}
 	
 
@@ -255,5 +267,12 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.selectOne("businessMapper.getBusDetail", bus_code);
 
 	}
+
+	@Override
+	public int insertMain(BusinessAtt bat) {
+		return sqlSession.insert("businessMapper.insertMain", bat);
+	}
+
+	
 	
 }

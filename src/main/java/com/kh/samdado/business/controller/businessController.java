@@ -39,6 +39,7 @@ import com.kh.samdado.business.model.vo.business.BusinessAtt;
 
 import com.kh.samdado.business.model.vo.hotel.Room;
 import com.kh.samdado.business.model.vo.hotel.RoomAtt;
+import com.kh.samdado.business.model.vo.hotel.RoomAttList;
 import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.hotel.RoomList;
 import com.kh.samdado.business.model.vo.rentcar.Car;
@@ -73,10 +74,12 @@ public class businessController {
 		System.out.println("나와라" + bus_code);
 	
 		Business b = bService.selectHotel(bus_code);
+		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 	
 		if(b != null) {
 			System.out.println("디테일 : " + b);
 			model.addAttribute("hotel", b);
+			model.addAttribute("att" + attList);
 		return "business/hotel/hotel_detail";
 		} else {
 			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
@@ -92,13 +95,18 @@ public class businessController {
 
 	// 호텔등록
 	@PostMapping("/hotel_insert")
-	public String hotelInsert(Business b, Room r, RoomList rl, Income i, @RequestParam int primonth,
+	public String hotelInsert(Business b, Room r, RoomList rl, Income i, BusinessAtt bat, @RequestParam int primonth,
 							  @RequestParam(value = "uploadFile") List<MultipartFile> rfile,
-							  @RequestParam(value = "room") List<MultipartFile> roomFile, HttpServletRequest request, Map map) {
- 
+							  @RequestParam(value = "room") List<MultipartFile> roomFile, 
+							  @RequestParam(value = "mainFile") MultipartFile mainFile,
+							  HttpServletRequest request, Map map) {
+								
+		// System.out.println("roomFile : " + roomFile);
+		// System.out.println("roomFile : " + roomFile);
 		
 		// 유저넘버 인컴에 담아주기
 		i.setUsno(b.getUs_no());
+		
 		// 첨부파일 리스트 객체 생성
 		List <BusinessAtt> list = new ArrayList<>(); 
 		List <RoomAtt> raList = new ArrayList<>();
@@ -106,9 +114,11 @@ public class businessController {
 		List<Room> rooms = new ArrayList<>();
 		rooms = rl.getRoomList();
 		
+		
 		// 가져온 bfiles 돌리기
 		for(MultipartFile mf : rfile) {
 			MultipartFile file = mf;
+			
 			// 업로드 파일 서버에 저장
 			// 파일이 첨부 되었다면
 			if (!file.getOriginalFilename().equals("")) {
@@ -128,6 +138,7 @@ public class businessController {
 			}
 		}
 		
+	
 		for(MultipartFile mf : roomFile) {
 			MultipartFile file = mf;
 			
@@ -149,6 +160,23 @@ public class businessController {
 			}
 		}
 		
+		// 업로드 파일 서버에 저장
+		// 파일이 첨부 되었다면
+		if(!mainFile.getOriginalFilename().equals("")) {
+			// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+			Map<String, String> file = busSaveFile(mainFile, request);
+			
+			// DB에 저장하기 위한 파일명 세팅
+			if(file != null) {
+				
+				bat.setFile_name(mainFile.getOriginalFilename());
+				
+				// 맵에 담겨져있는 값의 키 불러오기
+				bat.setFile_rename((String)file.get("rename"));
+				bat.setFile_root((String)file.get("path"));
+			}
+		}
+		
 		if(primonth != 0) {
 			// 넘어온 개월수에 따라 amount값 주기
 			if(primonth == 30) {
@@ -163,7 +191,8 @@ public class businessController {
 		
 		int result = bService.insertBusiness(b, list);
 		int result3 = bService.insertRoom(rooms, raList);
-
+		int result4 = bService.insertMain(bat);
+		
 		if (result > 0 && result3 > 0) {
 			return "redirect:/main";
 		} else {
@@ -190,17 +219,17 @@ public class businessController {
 	public String tourDetail(@RequestParam int bus_code,
 			   				Model model) {
 
-		// System.out.println("나와라" + bus_code);
+		//System.out.println("나와라 : " + bus_code);
 	
-		List<Business> b = bService.selectTour(bus_code);
-		
+		Business b = bService.selectTour(bus_code);
+		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		if(b != null) {
-			System.out.println("디테일 : " + b);
 			model.addAttribute("tour", b);
-			System.out.println(model);
+			model.addAttribute("att", attList);
+			// System.out.println(model);
 			return "business/tour/tour_detail";
 		} else {
-			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
+			model.addAttribute("msg", "관광지 보기에 실패했습니다.");
 		return "business/tour/tour_list";
 		}
 	}
@@ -213,8 +242,9 @@ public class businessController {
 
 	// 관광지 등록
 	@PostMapping("/tour_insert")
-	public String tourInsert(Business b,  TourProduct tp, Income i, @RequestParam int primonth,
-							 @RequestParam(value = "uploadFile") List<MultipartFile> tfiles, 
+	public String tourInsert(Business b, TourProduct tp, Income i, BusinessAtt bat, @RequestParam int primonth,
+							 @RequestParam(value = "uploadFile") List<MultipartFile> tfiles,
+							 @RequestParam(value = "mainFile") MultipartFile mainFile,
 							 HttpServletRequest request, Map map) {
 
 		// 유저넘버 인컴에 담아주기
@@ -223,16 +253,9 @@ public class businessController {
 		// 첨부파일 리스트 객체 생성
 		List <BusinessAtt> list = new ArrayList<>();
 		
-		// System.out.println("b : " + b);
-
-		// System.out.println("b : " + tp);
-
-		// System.out.println("file : " + file.getOriginalFilename());
 		// 가져온 bfiles 돌리기
 		for(MultipartFile mf : tfiles) {
 			MultipartFile file = mf;
-			
-			// System.out.println("for문 파일 file : " + file.getOriginalFilename() );
 			
 			// 업로드 파일 서버에 저장
 			// 파일이 첨부 되었다면
@@ -254,6 +277,23 @@ public class businessController {
 			}
 		}
 		
+		// 업로드 파일 서버에 저장
+		// 파일이 첨부 되었다면
+		if(!mainFile.getOriginalFilename().equals("")) {
+			// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+			Map<String, String> file = busSaveFile(mainFile, request);
+			
+			// DB에 저장하기 위한 파일명 세팅
+			if(file != null) {
+				
+				bat.setFile_name(mainFile.getOriginalFilename());
+				
+				// 맵에 담겨져있는 값의 키 불러오기
+				bat.setFile_rename((String)file.get("rename"));
+				bat.setFile_root((String)file.get("path"));
+			}
+		}
+		
 		if(primonth != 0) {
 			// 넘어온 개월수에 따라 amount값 주기
 			if(primonth == 30) {
@@ -268,7 +308,8 @@ public class businessController {
 		
 		int result = bService.insertBusiness(b, list);
 		int result3 = bService.insertTour(tp);
-
+		int result4 = bService.insertMain(bat);
+		
 		if (result > 0 && result3 > 0) {
 			return "redirect:/main";
 		} else {
@@ -316,8 +357,9 @@ public class businessController {
 
 	// 음식점 등록 - 파일첨부(리네임)
 	@PostMapping("/restaurant_insert")
-	public String restaurantInsert(Business b, @RequestParam int primonth, Income i,
+	public String restaurantInsert(Business b, @RequestParam int primonth, Income i, BusinessAtt bat,
 							  @RequestParam(value="uploadFile") List<MultipartFile> bfiles,
+							  @RequestParam(value = "mainFile") MultipartFile mainFile,
 							  HttpServletRequest request, Map map) {
 		// 유저넘버 인컴에 담아주기
 		i.setUsno(b.getUs_no());
@@ -351,6 +393,23 @@ public class businessController {
 			}
 		}
 		
+		// 업로드 파일 서버에 저장
+		// 파일이 첨부 되었다면
+		if(!mainFile.getOriginalFilename().equals("")) {
+			// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+			Map<String, String> file = busSaveFile(mainFile, request);
+			
+			// DB에 저장하기 위한 파일명 세팅
+			if(file != null) {
+				
+				bat.setFile_name(mainFile.getOriginalFilename());
+				
+				// 맵에 담겨져있는 값의 키 불러오기
+				bat.setFile_rename((String)file.get("rename"));
+				bat.setFile_root((String)file.get("path"));
+			}
+		}
+		
 		if(primonth != 0) {
 			// 넘어온 개월수에 따라 amount값 주기
 			if(primonth == 30) {
@@ -363,6 +422,7 @@ public class businessController {
 			int result3 = bService.insertIncome1(i);
 		}
 		int result = bService.insertBusiness(b, list);
+		int result2 = bService.insertMain(bat);
 		
 		if(result > 0) {
 			
@@ -419,9 +479,11 @@ public class businessController {
 
 	// 렌트카 등록
 	@PostMapping("/rentcar_insert")
-	public String rentcarInsert(Business b, CarList c, Car car, Income i, @RequestParam int primonth,
-			@RequestParam(value = "uploadFile") List<MultipartFile> bfiles,
-			@RequestParam(value = "car") List<MultipartFile> carFiles, HttpServletRequest request, Map map) {
+	public String rentcarInsert(Business b, CarList c, Car car, Income i, BusinessAtt bat, @RequestParam int primonth,
+								@RequestParam(value = "uploadFile") List<MultipartFile> bfiles,
+								@RequestParam(value = "mainFile") MultipartFile mainFile,
+								@RequestParam(value = "car") List<MultipartFile> carFiles, 
+								HttpServletRequest request, Map map) {
 		
 		// System.out.println("car : " + c.getList());
 		// 유저넘버 인컴에 담아주기
@@ -478,6 +540,23 @@ public class businessController {
 			}
 		}
 		
+		// 업로드 파일 서버에 저장
+		// 파일이 첨부 되었다면
+		if(!mainFile.getOriginalFilename().equals("")) {
+			// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+			Map<String, String> file = busSaveFile(mainFile, request);
+			
+			// DB에 저장하기 위한 파일명 세팅
+			if(file != null) {
+				
+				bat.setFile_name(mainFile.getOriginalFilename());
+				
+				// 맵에 담겨져있는 값의 키 불러오기
+				bat.setFile_rename((String)file.get("rename"));
+				bat.setFile_root((String)file.get("path"));
+			}
+		}
+		
 		if(primonth != 0) {
 			// 넘어온 개월수에 따라 amount값 주기
 			if(primonth == 30) {
@@ -492,7 +571,8 @@ public class businessController {
 		
 		int result = bService.insertBusiness(b, list);
 		int result2 = bService.insertCar(cars, carList);
-
+		int result4 = bService.insertMain(bat);
+		
 		if (result > 0  && result2 > 0) {
 			return "redirect:/main";
 		} else {

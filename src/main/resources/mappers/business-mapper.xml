@@ -175,6 +175,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		</foreach>
 	</insert>
+	<insert id="insertMain" parameterType="BusinessAtt">
+		  INSERT
+		  INTO BUSINESS_ATT
+		  (
+		  	FILE_NO
+		  ,	FILE_NAME
+		  ,	FILE_ROOT
+		  ,	FILE_STATUS
+		  ,	FILE_RENAME
+		  ,	FILE_LV
+		  ,	BUS_CODE
+		  )
+		  VALUES
+		  (
+		  	BUSATT_SEQ_NO.NEXTVAL
+		  , #{file_name}
+		  , #{file_root}
+		  , DEFAULT
+		  , #{file_rename}
+		  , '0'
+		  , BUS_SEQ_NO.CURRVAL
+		  )
+	</insert>
 	<insert id="insertCar" parameterType="java.util.List">
 		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
 		  INTO CAR
@@ -191,7 +214,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	CAR_SEQ_NO.NEXTVAL
+		  	get_car_seq
 		  , BUS_SEQ_NO.CURRVAL
 		  , #{item.car_name}
 		  , #{item.car_type}
@@ -217,7 +240,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	BUSATT_SEQ_NO.NEXTVAL
+		  	get_busatt_seq
 		  , #{item.file_name}
 		  , #{item.file_root}
 		  , DEFAULT
@@ -244,7 +267,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	ROOM_SEQ_NO.NEXTVAL
+		  	get_room_seq
 		  , BUS_SEQ_NO.CURRVAL
 		  , #{item.room_name}
 		  , #{item.room_price}
@@ -271,7 +294,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	BUSATT_SEQ_NO.NEXTVAL
+		  	get_busatt_seq
 		  , #{item.file_name}
 		  , #{item.file_root}
 		  , DEFAULT
@@ -289,20 +312,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  	PRO_NO
 		  , BUS_CODE
 		  , PRO_NAME
-		  , PRO_PRICE
 		  , PRO_ADULT
 		  , PRO_YOUTH
 		  , PRO_CHILD
+		  , PRO_FAC
 		  )
 		  VALUES
 		  (
 		  	TOUR_SEQ_NO.NEXTVAL
 		  , BUS_SEQ_NO.CURRVAL
 		  , #{pro_name}
-		  , #{pro_price}
 		  , #{pro_adult}
 		  , #{pro_youth}
 		  , #{pro_child}
+		  , #{pro_fac}
 		  )
 	</insert>
 	
@@ -318,29 +341,26 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	<!-- 음식점 디테일 -->
 	<select id="selectRestaurant" resultMap="BusinessResultSet">
-		SELECT
-			   B.BUS_CODE
-			 , US_NO
-			 , BUS_NAME
-			 , BUS_ADDRESS
-			 , BUS_INTRO
-			 , BUS_DATE
-			 , BUS_MODIFY
-			 , AD_COUNT
-			 , BUS_CLASSIFY
-			 , BUS_CATEGORY
-			 , BUS_STATUS
-			 , BUS_PHONE
-			 , RES_CATEGORY
-			 , BUS_OPENING
-			 , BT.FILE_RENAME
-		  FROM 
-  		       BUSINESS B
-  		  JOIN 
-  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE 
-		 WHERE 
-		 	   BUS_STATUS = 'Y'
-       	   AND B.BUS_CODE = #{bus_code}
+		SELECT 
+		       BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		  FROM
+		       BUSINESS
+		 WHERE
+			   BUS_CODE = #{bus_code}
+		   AND BUS_STATUS = 'Y'
 	</select>
 	
 	<!-- 관광지디테일 -->
@@ -360,19 +380,31 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_PHONE
 		     , RES_CATEGORY
 		     , BUS_OPENING
-		     , BT.FILE_RENAME
-		     , BT.FILE_LV
 		     , TP.PRO_NAME
-		     , TP.PRO_PRICE
 		     , TP.PRO_ADULT
 		     , TP.PRO_YOUTH
 		     , TP.PRO_CHILD
 		  FROM
-		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
+		       BUSINESS B, TOUR_PRODUCT TP
 		 WHERE
-		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
+		       B.BUS_CODE = TP.BUS_CODE   	   
 		   AND B.BUS_CODE = #{bus_code}
 		   AND BUS_STATUS = 'Y'
+	</select>
+	<select id="selectAtt" resultMap="BusinessAttResultSet">
+		SELECT
+		  	   FILE_NO
+			 , FILE_NAME
+             , FILE_STATUS
+             , FILE_RENAME
+             , FILE_LV 
+             , BUS_CODE
+		  FROM 
+		  	   BUSINESS_ATT
+		 WHERE
+			   BUS_CODE = #{bus_code}
+      ORDER BY
+               FILE_LV		       
 	</select>
 	<!-- 렌트카디테일 -->
 	<select id="selectCar" resultMap="BusinessResultSet">
@@ -459,7 +491,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , RES_CATEGORY
 		     , BUS_OPENING
 		     , BT.FILE_RENAME
-		     , PRO_PRICE
+		     , BT.FILE_LV
 		     , PRO_ADULT
 		     , PRO_YOUTH
 		     , PRO_CHILD
@@ -484,6 +516,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BUS_OPENING
      		 , HOTEL_CATEGORY
      		 , BT.FILE_RENAME
+     		 , BT.FILE_LV
   		  FROM 
   		       BUSINESS B
   		  JOIN 
@@ -506,6 +539,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BUS_OPENING
      		 , RES_CATEGORY
      		 , BT.FILE_RENAME
+     		 , BT.FILE_LV
   		  FROM 
   		       BUSINESS B
   		  JOIN 
@@ -534,6 +568,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			 , BUS_PHONE
 			 , BUS_OPENING
 			 , BT.FILE_RENAME
+			 , BT.FILE_LV
 		  FROM 
   		       BUSINESS B
   		  JOIN 
