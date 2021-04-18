@@ -92,7 +92,9 @@ public interface businessService {
 	// 일반결제 메소드
 	public int insertIncome(Income i);
 
-	int insertBooking(Booking b);
+	int insertBookingHotel(Booking b);
+	
+	int insertBookingTour(Booking b);
 
 	int insertPoint(Point p);
 	
@@ -116,6 +118,8 @@ public interface businessService {
 	Business getBusDetail(int bus_code);
 
 	int insertMain(BusinessAtt bat);
+
+	
 
 	
 

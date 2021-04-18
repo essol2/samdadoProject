@@ -791,7 +791,7 @@
                 <b>상품명 : ${ tour.pro_name }</b><br><br>
                 <label>어른 : ${ tour.pro_adult }원</label><br>
                 <label>청소년 : ${ tour.pro_youth }원</label><br>
-                <label>${ tour.pro_child }</label>
+                <label>어린이 : ${ tour.pro_child }원</label>
 
 
             </div>
@@ -901,42 +901,43 @@
                     </div>
                 </div>
                 <div class="modal-body2">
+                	<label><input type="text" id="tourName" style="border:none;width:80px;" readonly value="${ tour.pro_name }"></label><br>
                     <h4 id="startDateResult"></h4>
                     <div id="table">
                         <div class="rows">
                             <span class="cell cols1">성인입장권</span>
                             <span class="cell cols2"> ${ tour.pro_adult }원</span>
-                            <span class="cell cols3"><input type="number" id="adultNumber"onchange="adult(this)">명</span>
+                            <span class="cell cols3"><input type="number" id="adultNumber" onchange="adult(this)" value="0" min="0">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">청소년입장권</span>
                             <span class="cell cols2">${ tour.pro_youth }원</span>
-                            <span class="cell cols3"><input type="number" id="youthNumber" onchange="youth(this)">명</span>
+                            <span class="cell cols3"><input type="number" id="youthNumber" onchange="youth(this)" value="0" min="0">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">어린이입장권</span>
                             <span class="cell cols2">${ tour.pro_child }원</span>
-                            <span class="cell cols3"><input type="number" id="childNumber" onchange="child(this)">명</span>
+                            <span class="cell cols3"><input type="number" id="childNumber" onchange="child(this)" value="0" min="0">명</span>
                         </div>
                     </div>
                     <div id="table2">
                         <div class="rows2">
                             <span class="cell cols1">성인입장권</span>
                             <span class="cell cols2">${ tour.pro_adult }원 *<span id="adultResult"></span>명</span>
-                            <span class="cell cols3"><input type="text" id="adultPay" style="border:none;width:80px" readonly></span>
+                            <span class="cell cols3"><input type="text" id="adultPay" style="border:none;width:70px" readonly>원</span>
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">청소년입장권</span>
                             <span class="cell cols2">${ tour.pro_youth }원 *<span id="youthResult"></span>명</span>
-                            <span class="cell cols3"><input type="text" id="youthPay" style="border:none;width:80px" readonly></span>
+                            <span class="cell cols3"><input type="text" id="youthPay" style="border:none;width:70px" readonly>원</span>
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">어린이입장권</span>
                             <span class="cell cols2">${ tour.pro_child }원 *<span id="childResult"></span>명</span>
-                            <span class="cell cols3"><input type="text" id="childPay" style="border:none;width:80px" readonly></span>
+                            <span class="cell cols3"><input type="text" id="childPay" style="border:none;width:70px" readonly>원</span>
                         </div>
                     </div>
-                    <label>총 합계 : <input type="text" id="payResult" style="border:none;width:80px" readonly></label>
+                    <label>총 합계 : <input type="text" id="payResult" style="border:none;width:70px" readonly>원</label>
                     <button class="payBtn">결제하기</button>
                 </div>
 
@@ -951,10 +952,13 @@
 
   	$(".payBtn").click(function() {
   		
-  		var name = document.getElementById('cAmount').value;
+  		var name = document.getElementById('tourName').value;
   		var payResult = document.getElementById('payResult').value;
-  		var amount = payResult;
-  		
+  		var startDate = document.getElementById("startDate").value;  		
+  	 	var phone = ${ tour.bus_phone };
+  	    var bookingLv = 2;
+  		// var amount = payResult;
+  		var amount = 100;
 	    var IMP = window.IMP;
 	    IMP.init('imp34313892');
 	    IMP.request_pay({
@@ -972,7 +976,10 @@
 	        if ( rsp.success ) {
 	            var msg = '결제가 완료되었습니다!';
 	            msg += '결제 금액 : ' + rsp.paid_amount;
-	            location.href = '${contextPath}/mypage/payment?amount='+amount+'&item='+name+'&usno='+${loginUser.usno};
+	            location.href = '${contextPath}/business/pay?amount='+amount+'&item='+name+'&usno='+${loginUser.usno}
+					            +'&t_bus_code='+${ tour.bus_code }+'&t_booking_trv='+startDate+'&bookingLv='+bookingLv
+					            +'&t_booking_phone='+phone+'&t_booking_product='+name+'&t_booking_pay='+amount;
+	            				
 	        } else {
 	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
 	        }
@@ -990,17 +997,18 @@
 	  	}
 	</script>
     
-    <script>    
-	    var adultPay = document.getElementById('adultPay').value * document.getElementById('adultNumber').value
-		var youthPay = document.getElementById('youthPay').value * document.getElementById('youthNumber').value
-		var childPay = document.getElementById('childPay').value * document.getElementById('childNumber').value
-		// console.log(adultPay);
+    <script>
 	    function adult(e) {	  	  
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('adultResult').innerText
-	  	    = value;	  	  
-	  	
+	  	    = value;
+	  	  
+		  	var adultPay = ${ tour.pro_adult } * document.getElementById('adultNumber').value;
+		  	var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
+		  	var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
 	  		document.getElementById('adultPay').value = adultPay;
+	  		document.getElementById('youthPay').value = youthPay;
+	  		document.getElementById('childPay').value = childPay;
         	document.getElementById('payResult').value = adultPay + youthPay + childPay;
 	  	}
 	    
@@ -1009,15 +1017,27 @@
 		  	  document.getElementById('youthResult').innerText
 		  	    = value;
 		  	  
-		  	document.getElementById('payResult').value = adultPay + youthPay + childPay
+			  	var adultPay = ${ tour.pro_adult } * document.getElementById('adultNumber').value;
+			  	var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
+			  	var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
+			  	document.getElementById('adultPay').value = adultPay;
+			  	document.getElementById('youthPay').value = youthPay;
+			  	document.getElementById('childPay').value = childPay;
+			  	document.getElementById('payResult').value = adultPay + youthPay + childPay;
 		  	}
 	
 	    function child(e) {
-	    	  const value = e.value;	    	  
+	    	const value = e.value;	    	  
 	    	  document.getElementById('childResult').innerText
 	    	    = value;
 	    	  
-	    	  document.getElementById('payResult').value = adultPay + youthPay + childPay
+	    	  var adultPay = ${ tour.pro_adult } * document.getElementById('adultNumber').value;
+			  var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
+	    	  var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
+	    	  document.getElementById('adultPay').value = adultPay;
+			  document.getElementById('youthPay').value = youthPay;
+	    	  document.getElementById('childPay').value = childPay;
+	    	  document.getElementById('payResult').value = adultPay + youthPay + childPay;
 	    	}
 	
     </script>

@@ -168,15 +168,18 @@ public class businessServiceImpl implements businessService {
 	
 	// 일반결제 메소드
 	@Override
-	public int insertIncome(Income i) {
-		// TODO Auto-generated method stub
+	public int insertIncome(Income i) {		
 		return bDao.insertIncome(i);
 	}
 
 	@Override
-	public int insertBooking(Booking b) {
-		// TODO Auto-generated method stub
-		return bDao.insertBooking(b);
+	public int insertBookingHotel(Booking b) {		
+		return bDao.insertBookingHotel(b);
+	}
+	
+	@Override
+	public int insertBookingTour(Booking b) {		
+		return bDao.insertBookingTour(b);
 	}
 
 	@Override

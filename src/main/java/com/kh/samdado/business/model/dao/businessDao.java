@@ -94,7 +94,9 @@ public interface businessDao {
 	// 일반결제 메소드
 	int insertIncome(Income i);
 
-	int insertBooking(Booking b);
+	int insertBookingHotel(Booking b);
+	
+	int insertBookingTour(Booking b);
 
 	int insertPoint(Point p);
 	

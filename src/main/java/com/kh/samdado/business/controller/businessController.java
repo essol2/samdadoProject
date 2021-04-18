@@ -619,9 +619,9 @@ public class businessController {
 		int point = bService.insertPoint(p);
 		// 예약정보 insert
 		if(b.getBookingLv() == 1) {
-			int bookingHotel = bService.insertBooking(b);			
+			int bookingHotel = bService.insertBookingHotel(b);
 		} else if(b.getBookingLv() == 2) {
-			
+			int bookingTour = bService.insertBookingTour(b);
 		} else if(b.getBookingLv() == 3) {
 			
 		}
