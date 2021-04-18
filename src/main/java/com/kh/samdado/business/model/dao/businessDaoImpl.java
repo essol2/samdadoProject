@@ -280,10 +280,15 @@ public class businessDaoImpl implements businessDao {
 	}
 
 	@Override
+	public int insertPointColumn(Business selectBusCodeUser) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("businessMapper.insertPointColumn", selectBusCodeUser);
+	}
+
+  @Override
 	public int insertMain(BusinessAtt bat) {
 		return sqlSession.insert("businessMapper.insertMain", bat);
 	}
 
-	
 	
 }

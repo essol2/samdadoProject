@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,14 +11,18 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 	
 	<jsp:include page="../common/navi.jsp"/>
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_modal.css" type="text/css">
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css">
-<style>
+	<style>
+	
+	.modal-body div {
+			margin: 0px;
+		}
         .spot_btn {
             background-color: rgb(255,255,255);
             border: 0px;
@@ -67,6 +72,37 @@
         
         div {
         disply:block;
+        }
+        
+        <!-- 상세보기 modal -->
+        .modal-body div {
+			margin: 0px;
+		}
+	        .top_div {
+            display: flex;
+        }
+
+        .bottom_div {
+            text-align: center;
+        }
+
+        .left_div {
+            padding-left: 20px;
+
+        }
+
+        .right_div {
+            text-align: center;
+            width: 100%;
+        }
+
+        .detail_img {
+            width: 300px;
+            height: 200px;
+        }
+
+        .detail_content {
+            font-size: 13px;
         }
     </style>
 </head>
@@ -150,30 +186,31 @@
 							<div class="c_border" id="left-border">
 								<table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
 									<c:forEach var="r" items="${ list }" varStatus="index">
-										<tr>
+										<tr id="tr1">
 											<td>
 												<img src="${ r.spot_path }${ r.spot_oname }">
 											</td>
 											<td>
-											<div class="parent">
-												<div class="spot_border">
-													<p class="spot_title">${ r.spot_title }</p>
-													<button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
-												</div>
-												<div class="spot_chnge">
-                                                	<button class="up_down"><img src="../resources/images/image_route/btn_up.png"></button>
-                                                    <br>
-                                                    <button class="up_down"><img src="../resources/images/image_route/btn_down.png"></button>
-                                                </div>
-                                             </div>   
+												<div class="parent">
+													<div class="spot_border">
+														<p class="spot_title">${ r.spot_title }</p>
+														<button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
+													</div>
+													<div class="spot_chnge">
+	                                                	<button class="up_down" id="tableUp" onclick="moveUp(this)" ><img src="../resources/images/image_route/btn_up.png"></button>
+	                                                    <br>
+	                                                    <button class="up_down" id="tableDown" onclick="moveDown(this)"><img src="../resources/images/image_route/btn_down.png"></button>
+	                                                </div>
+	                                             </div>   
 											</td>
 										</tr>
+										
 										<c:if test="${ !index.last }">
-		                                    <tr>
+		                                    <tr id="tr2">
 		                                       <td colspan="2">
 		                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
-		                                           <span class="detail">26.8km</span>
-		                                           <span class="detail">59분</span>
+		                                           <!-- <span class="detail">26.8km</span>
+		                                           <span class="detail">59분</span> -->
 		                                        </td>
 		                                    </tr>
 	                                    </c:if>
@@ -197,11 +234,16 @@
                                 <label class="content-title" id="title2">예상 예산</label>
                                 <div class="c1_border" id="right-top-border">
                                     <table id="costTable">
-                                        <tr>
-                                            <td id="cost-content">&nbsp;만장굴 입장료 (성인) 4,000원</td>
-                                        </tr>
+                                        <c:set var="totalPrice" value="0"/>
+                                		<c:forEach var="r" items="${ list }">
+											<tr>
+		                                    	<td id="cost-content">&nbsp;${ r.spot_title } <fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+		                                        <c:set var="totalPrice" value="${ totalPrice + r.spot_price }"/>
+		                                    </tr>
+                                      	</c:forEach>
+                                    	
                                         <tr> 
-                                            <td id="cost-content" style="text-align: right;" >총 4,000원&nbsp;</td>
+                                            <td id="cost-content" style="text-align: right;" >총 <fmt:formatNumber value="${ totalPrice }" pattern="#,###"/>원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -290,10 +332,15 @@
                 </div>
                 <class class="_modal-body" id="modal-body" style="max-height: 420px; overflow: auto; overflow-x: hidden;">
                     <input type="text" id="search_input" placeholder="관광지를 검색하세요.">
+                    <button id="search_btn">검색</button>
                     <br><br>
-                    <p id="zzim">삼다수 님이 찜하신 관광지</p>
+                    
+                    <div id="search_list"></div>
+                    
+                    <c:if test="${ !empty loginUser }">
+                    <p id="zzim">${ loginUser.usname } 님이 찜하신 관광지</p>
                     <div class="zzim_list">
-                        <p class="zzim_content_title" >제주김만복 본점</p>
+                        <p class="zzim_content_title">제주김만복 본점</p>
                         <p class="zzim_content">제주 제주시 오라로 41</p>
                         <p class="zzim_content">
                         	오라 3동 2250-1
@@ -306,7 +353,7 @@
                         <p class="zzim_content_title" >제주김만복 본점</p>
                         <p class="zzim_content">제주 제주시 오라로 41</p>
                         <p class="zzim_content">
-                            오라 3동 2250-1
+                            	오라 3동 2250-1
                             <button id="addbtn">
                                 <img src="../resources/images/image_route/download.png">추가하기
                             </button>
@@ -316,7 +363,7 @@
                         <p class="zzim_content_title" >제주김만복 본점</p>
                         <p class="zzim_content">제주 제주시 오라로 41</p>
                         <p class="zzim_content">
-                            오라 3동 2250-1
+                           	 오라 3동 2250-1
                             <button id="addbtn">
                                 <img src="../resources/images/image_route/download.png">추가하기
                             </button>
@@ -333,19 +380,282 @@
                         </p>
                     </div>
                     <br>
+                    </c:if>
+                    
+                    <br>
                 </class>
                 </div>
             </div>
         </div>
-         <script>
-		var container = document.getElementById('map');
+        
+   		<!-- 상세보기 button -->
+        <button id="detail_modal" type="button" class="mapSearchbtn" data-bs-toggle="modal" data-bs-target="#detailModal" style="position: relative; z-index: 10; margin-left: 91%; margin-top: 1%; display:none;"></button>
+        
+        <!-- 상세보기 Modal -->
+	    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-header">
+	                    <p id="searchtitle">상세보기</p>
+	                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                </div>
+	                <class class="modal-body" id="modal-body">
+	                    <div class="top_div">
+
+	                        <div class="right_div">
+	                            <br>
+		                            <p id="detail_title"></p>
+		                            <p class="detail_content" id="detail_address"></p>
+	                        </div>
+	                    </div>
+	
+	                    <div class="bottom_div">
+	                        <br>
+	                        <p id="detail_content"></p>
+	                    </div>
+	                </class>
+	            </div>
+	        </div>
+	    </div>
+	    
+	<!-- 순서 변경 -->
+	<script>
+
+	 function moveUp(el) {
+		var $tr1 = $(el).closest('tr');
+	 	
+		if($tr1.prev().html() != null) {
+			$tr1.prev().prev().before($tr1);
+		 	
+			var $tr2 = $tr1.next();
+			$tr2.next().after($tr2);
+		}
+		
+	}
+	
+	function moveDown(el) {
+		var $tr1 = $(el).closest('tr');
+		
+		if($tr1.next().next().next().next().html() != null) {
+			$tr1.next().next().after($tr1);
+			
+			var $tr2 = $tr1.prev();
+			$tr2.prev().before($tr2);		
+		}
+	}
+	
+	
+	</script>
+	    
+	<!-- 검색 모달창 -->
+	<script language=JavaScript>
+		$("#search_btn").on("click", function(){
+		var sTitle = $("#search_input").val();
+		var data = { sTitle : sTitle };
+		
+		$.ajax({
+			url: "${ contextPath }/route/searchSpot",
+			data: data,
+			type: "post",
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+				
+				sdiv = $("#search_list");
+				sdiv.html("");
+				
+				for(var i in data) {
+					div = $("<div class='zzim_list'>");
+					title = $("<p class='zzim_content_title'>").text(data[i].spot_title);
+					address = $("<p class='zzim_content'>").text(data[i].spot_address);
+					add = $("<button id='addbtn'><img src='../resources/images/image_route/download.png'>추가하기</button>");
+					br = $("<br>");
+
+					div.append(title, address, add);
+					sdiv.append(div, br);
+				}
+				
+				$("#search_input").val("");			
+			}
+			
+		});
+		
+		});
+	</script>    
+        
+        
+    <!--  지도 스크립트 -->
+    <script language=JavaScript>
+    	var arr = new Array();
+    	<c:forEach items="${list}" var="list">
+    		arr.push({
+    			title: "${list.spot_title}",
+    			address: "${list.spot_address}",
+    			content: "${list.spot_content}",
+    			path1: "${list.spot_path}",
+    			path2: "${list.spot_oname}"
+    			});
+    	</c:forEach>
+    	
+    	var positions = arr;
+    	
+    	console.log(positions);
+    	
+    	var container = document.getElementById('map');
 		var options = {
 			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
-			level: 9
+			level: 8
 		};
 
 		var map = new kakao.maps.Map(container, options);
-	</script>
+		
+		var geocoder = new kakao.maps.services.Geocoder();
+		var imageSrc = "${ contextPath }/resources/images/image_route/marker.png";
+		var imageSize = new kakao.maps.Size(33, 54);
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		var bounds = new kakao.maps.LatLngBounds();
+		
+		var linePath = [];
+		
+		var distanceOverlay;
+		
+		var polyline = new kakao.maps.Polyline({
+		    path: linePath,
+		    strokeWeight: 3,
+		    strokeOpacity: 1,
+		    strokeColor: 'red',
+		    strokeStyle: 'solid'
+		});
+		
+		
+		const addressSearch = address => {
+		    return new Promise((resolve, reject) => {
+		        geocoder.addressSearch(address.address, function(result, status) {
+		            if (status === kakao.maps.services.Status.OK) {
+		            	
+		            	  var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						       
+						       // 결과값으로 받은 위치를 마커로 표시합니다
+						        var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords,
+						            image: markerImage
+						        });
+						       
+						       marker.setMap(map);
+							
+
+					        // 인포윈도우로 장소에 대한 설명을 표시합니다
+					        var infowindow = new kakao.maps.InfoWindow({
+					            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address.title + '</div>'
+					        });
+					        
+					        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+						    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+						    
+						    kakao.maps.event.addListener(marker, 'click', function() {
+						        document.getElementById("detail_modal").click();
+						        document.getElementById("detail_title").innerHTML = address.title;
+						        document.getElementById("detail_address").innerHTML = address.address;
+						        document.getElementById("detail_content").innerHTML = address.content;
+						        
+						  	});
+					    	
+					    	bounds.extend(new kakao.maps.LatLng(coords.Ma, coords.La));
+					    	map.setBounds(bounds);
+		                
+		                resolve(result);
+		            } else {
+		                reject(status);
+		            }
+		        });
+		    });
+		};
+
+		(async () => {
+		    try {
+		        for(let address of positions) {
+		            const result = await addressSearch(address);
+		            setPolyLine(result);
+		            console.log("길이: " + polyline.getLength());
+		        }
+		    } catch (e) {
+		        console.log(e);
+		    }
+		})();
+
+		function setPolyLine(result) {
+		    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		    linePath.push(coords);
+		    polyline.setPath(linePath);
+		    
+		    if(!polyline.getMap()) {
+		        polyline.setMap(map);
+		    }
+		}
+		
+		/* positions.forEach(function(addr, index){
+			geocoder.addressSearch(addr.address, function(result, status) {
+				
+				 if (status === kakao.maps.services.Status.OK) {
+					 
+				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+				        
+				        console.log(result[0]);
+					       
+					       // 결과값으로 받은 위치를 마커로 표시합니다
+					        var marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords,
+					            image: markerImage
+					        });
+					       
+					       marker.setMap(map);
+						
+				        // 인포윈도우로 장소에 대한 설명을 표시합니다
+				        var infowindow = new kakao.maps.InfoWindow({
+				            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + positions[index].title + '</div>'
+				        });
+				        
+				        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+					    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+				    	
+				    	bounds.extend(new kakao.maps.LatLng(coords.Ma, coords.La));
+				    	map.setBounds(bounds);
+				    	
+						linePath.push(new kakao.maps.LatLng(coords.Ma, coords.La)); 
+						console.log(linePath);
+						
+						var polyline = new kakao.maps.Polyline({
+									path: linePath, 
+									strokeWeight: 3, 
+									strokeOpacity: 1,
+									strokeColor: 'red', 
+									strokeStyle: 'solid' 
+						});
+						
+						/* polyline.setMap(map);
+						
+						console.log("길이: " + polyline.getLength());
+
+				 }
+				
+				 });
+			}); */
+		
+		function makeOverListener(map, marker, infowindow) {
+			return function() {
+				infowindow.open(map, marker);
+				};
+			}
+
+			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			function makeOutListener(infowindow) {
+				return function() {
+					infowindow.close();
+				};
+			}
+    </script>
 </body>
 		<footer>
            <jsp:include page="../common/footer.jsp"/>

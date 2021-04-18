@@ -223,11 +223,11 @@
 	                    <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
 	                        <option selected>-------</option>
 	                        <option value="report_no" <c:if test="${ param.searchCondition == 'report_no' }">selected</c:if>>신고 번호</option>
-		                    <option value="rep_cont" <c:if test="${ param.searchCondition == 'rep_cont' }">selected</c:if>>신고 내용</option> <!-- like 조회 -->
+		                    <option value="rep_cont" <c:if test="${ param.searchCondition == 'rep_cont' }">selected</c:if>>신고 내용</option>
 		                    <option value="rdate" <c:if test="${ param.searchCondition == 'rdate' }">selected</c:if>>신고 날짜</option>
 		                    <option value="rexdate" <c:if test="${ param.searchCondition == 'rexdate' }">selected</c:if>>신고 만기 날짜</option>
-		                    <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option> <!-- 회원 이름으로 바꾸기 -->
-		                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원 이름</option> <!-- 회원 이름으로 바꾸기 -->
+		                    <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
+		                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원 이름</option>
 		                    <option value="bus_code" <c:if test="${ param.searchCondition == 'bus_code' }">selected</c:if>>사업장 코드</option>
 		                    <option value="r_count" <c:if test="${ param.searchCondition == 'r_count' }">selected</c:if>>신고 누적 횟수</option>
 		                    <option value="rstatus" <c:if test="${ param.searchCondition == 'rstatus' }">selected</c:if>>처리 상태(승인)</option>
@@ -260,8 +260,62 @@
                   </table>
                </div>
                <br><hr>
-               
+               <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#searchModal' style="display:none;">보기</button>
+            	   <!-- 모달 -->
+	         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">신고 파일 첨부내역</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+	                  <div>
+	                  	<form>
+						  <div class="mb-3">
+						    <label for="report_num" class="form-label">신고 번호</label>
+						    <input type="text" class="form-control" id="report_num" aria-describedby="emailHelp" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="report_user" class="form-label">피신고자</label>
+						    <input type="text" class="form-control" id="report_user" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="report_content" class="form-label">신고 내용</label>
+						    <textarea class="form-control" id="report_content" style="height: 100px; resize: none;" readonly></textarea>
+						  </div>
+						  <div class="mb-3">
+						    <label for="report_bus_code" class="form-label">사업장 코드</label>
+						    <input type="text" class="form-control" id="report_bus_code" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="report_date" class="form-label">신고 날짜</label>
+						    <input type="text" class="form-control" id="report_date" value="<fmt:formatDate value='${ data[i].rtodate }' type='both' pattern='yyyy-MM-dd' />" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="report_atta" class="form-label">첨부파일</label> <br>
+						    <div class="row row-cols-1 row-cols-md-2">
+							  <div class="col">
+							    <div class="card" style="width: 470px;">
+							      <img src="${ contextPath }/resources/busUploadFiles/${ data[i].r_img_cname }" class="card-img-top" alt="...">
+							    </div>
+							  </div> 
+							</div>
+						  </div>
+						</form>
+	                  </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+            	
+            
+	
               <script>
+              
 				$(function() {
 					$("#search_report_form button[type=button]").on("click", function() {
 		         		
@@ -284,24 +338,25 @@
 								for (var i in data) {
 									var tr = $("<tr>");
 									
-									var report_no = $("<th>").text(data[i].report_no);
-									var rep_cont = $("<td>").text(data[i].rep_cont);
+									var report_no = $("<th id='ajaxReportno'>").text(data[i].report_no);
+									var rep_cont = $("<td id='ajaxReportcont'>").text(data[i].rep_cont);
 									//var rdate = $("<td>").text(data[i].rdate);
-									var rtodate = $("<td>").text(data[i].rtodate);
+									var rtodate = $("<td id='ajaxReportrtodate'>").text(data[i].rtodate);
 									//var rexdate = $("<td>").text(data[i].rexdate);
-									var retodate = $("<td>").text(data[i].retodate);
-									var usno = $("<td>").text(data[i].usno);
-									var usname = $("<td>").text(data[i].usname);
-									var bus_code = $("<td>").text(data[i].bus_code);
-									var r_count = $("<td>").text(data[i].r_count);
-									var rstatus = $("<td>").text(data[i].rstatus);
-									//var showAtta = $("<td> <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal + " + data[i]"'>보기</button>");
+									var retodate = $("<td id='ajaxReportretodate'>").text(data[i].retodate);
+									var usno = $("<td id='ajaxReportusno'>").text(data[i].usno);
+									var usname = $("<td id='ajaxReportusname'>").text(data[i].usname);
+									var bus_code = $("<td id='ajaxReportbus_code'>").text(data[i].bus_code);
+									var r_count = $("<td id='ajaxReportr_count'>").text(data[i].r_count);
+									var rstatus = $("<td id='ajaxReportrstatus'>").text(data[i].rstatus);
+									var showAtta = $("<td> <button type='button' class='btn btn-secondary' onclick='test(this);'>보기</button>");
+	
+									tr.append(report_no, rep_cont, rtodate, retodate, usno, usname, bus_code, r_count, rstatus, showAtta);
+									tableBody.append(tr);
 									
-									tr.append(report_no, rep_cont, rtodate, retodate, usno, usname, bus_code, r_count, rstatus); // 테이블 행에 추가
-									tableBody.append(tr); // 테이블에 추가
+									
 								}
-								
-								
+
 							},
 							error : function(e) {
 								alert("error code : " + e.status + "\n"
@@ -310,11 +365,37 @@
 						});
 					});
 				});
-			</script>
+				
+				function test(data){
+					var $data1 = $(data);
+					console.log($data1);
+					
+					 $(document).ready(function() {
+				            $('#searchModal').modal("show");
+				        });
+					 
+					var report_no = $("#ajaxReportno").text(data);
+					var rep_cont = $("#ajaxReportcont").text();
+					var rtodate = $("#ajaxReportrtodate").text();
+					var retodate = $("#ajaxReportretodate").text();
+					var usno = $("#ajaxReportusno").text();
+					var usname = $("#ajaxReportusname").text();
+					var bus_code = $("#ajaxReportbus_code").text();
+					var r_count = $("#ajaxReportr_count").text();
+					var rstatus = $("#ajaxReportrstatus").text();
+						
+					 
+					$("#report_num").val(report_no);
+		            $("#report_content").text(rep_cont);
+		            $("#report_date").val(rtodate);
+		            $("#report_bus_code").val(bus_code);
+		            $("#report_user").val(usname);
+		            $("#report_atta").val(report_atta);
 
-        
-            
-       
+				}
+			</script>
+			
+			
         </div>
    
     </div>
