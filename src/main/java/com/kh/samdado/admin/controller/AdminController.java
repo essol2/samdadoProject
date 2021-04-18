@@ -33,6 +33,7 @@ import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
@@ -54,6 +55,9 @@ public class AdminController {
 	
 	@Autowired
 	private businessService bService;
+	
+	@Autowired
+	private MypageService mService;
 	
 	// 1. 관리자 홈 페이지로
 	@GetMapping("/home")
@@ -209,6 +213,9 @@ public class AdminController {
 	public String insertReplyQna(QnA q, Model model) {
 	
 		int result = aService.insertQnaReply(q); // update
+		
+		String usno = q.getUsno();
+		int insertNews = mService.insertQnANews(usno);
 		
 		if (result > 0) {
 			model.addAttribute("msg", "답변 완료!");
@@ -394,9 +401,11 @@ public class AdminController {
 	public String rejectBannerAd(@ModelAttribute Alliance alliance,
 							Model model) {
 		int result = 0;
+		String usno = alliance.getUsno();
 		
 		if (alliance.getAmassage().equals("이미지 불일치")) {
 			result = aService.updateRejectBannerAdStatusRI(alliance); // RI
+			//int insertNews = mService.insertAlliNews(usno);
 		} else { // 포인트 미충전
 			result = aService.updateRejectBannerAdStatusRP(alliance); // RP
 		}

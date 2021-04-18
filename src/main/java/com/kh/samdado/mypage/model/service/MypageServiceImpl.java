@@ -170,4 +170,10 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectChartList(ab);
 	}
 
+	// 제휴회원 - 새로운 알림 등록
+	@Override
+	public int insertQnANews(String usno) {
+		return mDao.insertQnANews(usno);
+	}
+
 }
