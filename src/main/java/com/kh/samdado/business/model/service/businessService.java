@@ -80,6 +80,8 @@ public interface businessService {
 	// 신고하기
 	int insertReport(Report r);
 	
+	int updateReport(Report r);
+	
 	// 찜하기
 	public int jjim(Jjim jjim);
 
@@ -118,6 +120,8 @@ public interface businessService {
 	Business getBusDetail(int bus_code);
 
 	int insertMain(BusinessAtt bat);
+
+	
 
 	
 

@@ -158,6 +158,11 @@ public class businessServiceImpl implements businessService {
 	public int insertReport(Report r) {			
 		return bDao.insertReport(r);
 	}
+	
+	@Override
+	public int updateReport(Report r) {		
+		return bDao.updateReport(r);
+	}
 
 
 	@Override
@@ -259,6 +264,8 @@ public class businessServiceImpl implements businessService {
 	public int insertMain(BusinessAtt bat) {
 		return bDao.insertMain(bat);
 	}
+
+	
 
 	
 
