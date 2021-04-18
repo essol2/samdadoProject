@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
@@ -561,7 +561,9 @@
                 <div id="secondlist">
                 	<c:forEach var="h" items="${ hotelList }">
 	                    <div class='profile'>
+	                    	<c:if test="${ h.file_lv eq '0' }">
 	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/ ${ h.file_rename }" onclick="selectRes(${h.bus_code})">
+	                        </c:if>
 	                        <b>★4.90(후기 99+개)</b>
 	                        <b>${ h.bus_name }</b>
 	                        <b>38,000 ~ 40,000 / 박</b>

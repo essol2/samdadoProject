@@ -62,8 +62,20 @@ public class MypageDaoImpl implements MypageDao{
 	public List<Business> selectPBusList(String usno) {
 		return sqlSession.selectList("mypageMapper.selectPBusList", usno);
 	}
-
 	
+
+	// 제휴회원 - 광고 클릭수 계산해서 까져오기
+	@Override
+	public int selectClickCount(String usno) {
+		return sqlSession.selectOne("mypageMapper.selectClickCount", usno);
+	}
+	
+	// 제휴회원 - 광고관리 차트 데이터 리스트
+	@Override
+	public List<Business> selectAlliChartList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectAlliChartList", usno);
+	}
+
 	// 제휴회원 -  포인트 충전 내역 insert 메소드
 	@Override
 	public int insertNewPayment(Income ic) {
@@ -158,6 +170,12 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public List<AccountBook> selectChartList(AccountBook ab) {
 		return sqlSession.selectList("mypageMapper.selectChartList", ab);
+	}
+
+	// 제휴회원 - 새로운 알림 등록
+	@Override
+	public int insertQnANews(String usno) {
+		return sqlSession.insert("mypageMapper.insertQnANews", usno);
 	}
 
 }

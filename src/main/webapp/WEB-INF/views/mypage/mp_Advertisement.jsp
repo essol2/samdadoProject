@@ -268,7 +268,7 @@
                 <div class="menuBox" id="menuBox">
 
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/buserinfo'"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToAlert();"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToBuss();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToAdvert();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/adverW.png" class="btnImg"> <br> 광고관리</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToPoint();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 포인트</div></button>
@@ -325,21 +325,55 @@
                     </div>
                     <div id="rightAdverBox">
                         <div id="topAdverBox">
-                            <h2 style="color: #467355;">실시간 누적 클릭 수 : &nbsp; <b id="boldText">귀찮다!</b> 회</h2>
+                            <h2 style="color: #467355;">배너광고 실시간 누적 클릭 수 : &nbsp; <b id="boldText">${ clCount }</b> 회</h2>
                         </div>
                         <div id="bottomAdverBox">
                             <div class="container"> 
                                 <canvas id="myChart"></canvas> 
                             </div>
 						    <script>
+						    
+						    var arr = new Array();
+		                	
+		                	<c:forEach items="${chartList}" var="item">
+		                		arr.push({thisMonth:"${item.thisMonth}"
+		                				, totalCount : "${item.totalCount}"});
+		                	</c:forEach>
+		                	
+		                	if(arr.length == 1){
+		                		for(var j=0; j<5; j++){
+		                			arr.push({thisMonth : '', totalCount : 0});
+		                		}
+		                	} else if(arr.length == 2){
+		                		for(var j=0; j<4; j++){
+		                			arr.push({thisMonth : '', totalCount : 0});
+		                		}
+		                	} else if(arr.length == 3){
+		                		for(var j=0; j<3; j++){
+		                			arr.push({thisMonth : '', totalCount : 0});
+		                		}
+		                	} else if(arr.length == 4){
+		                		for(var j=0; j<2; j++){
+		                			arr.push({thisMonth : '', totalCount : 0});
+		                		}
+		                	} else if(arr.length == 5){
+		                		for(var j=0; j<1; j++){
+		                			arr.push({thisMonth : '', totalCount : 0});
+		                		}
+		                	} else{
+		                		console.log(arr);
+		                	}
+		                	
+		                	console.log(arr);
+						    
 						    data = { 
 						    		datasets: [{ 
-						    			label: 'My First Dataset',
+						    			label: '월별 배너광고 클릭 수',
 						    			borderColor: '#467355',
-			 			    			data: [10, 20, 30, 40, 50],
+			 			    			data: [arr[0].totalCount, arr[1].totalCount, arr[2].totalCount, arr[3].totalCount, arr[4].totalCount],
 			 							
 						    		}], 
-						    		labels: ["1월", "2월", "3월", "4월","5월"] 
+						    		labels: [arr[0].thisMonth, arr[1].thisMonth, arr[2].thisMonth, arr[3].thisMonth,arr[4].thisMonth] 
 						    	};
 						    	
 						    	var ctx2 = document.getElementById("myChart"); 
@@ -411,6 +445,9 @@
 	
 	function goToAdver(){
 		location.href="${contextPath}/mypage/advert?usno="+${loginUser.usno};
+	}
+	function goToAlert(){
+		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno};
 	}
 	</script>
 </body>

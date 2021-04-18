@@ -2,6 +2,8 @@ package com.kh.samdado.business.model.vo.business;
 
 import java.sql.Date;
 
+import com.kh.samdado.common.model.vo.Alliance;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -76,5 +78,10 @@ public class Business {
 	// 파일 한번에 리스트로 담기위한 객체속성!
 	private String file_root;	// 파일경로
 	private String file_name;	// 파일명
+	
+	// 마이페이지 달 별 클릭수 계산
+	private String thisMonth;
+	private String totalCount;
+	private Alliance alliance;
 
 }

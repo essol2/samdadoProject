@@ -4,18 +4,19 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="userMapper">
 	<resultMap type="User" id="userResultSet">
-	<id property="usno" column="US_NO" />
-	<result property="usid" column="US_ID" />
-	<result property="uspwd" column="US_PWD" />
-	<result property="usname" column="US_NAME" />
-	<result property="usbirth" column="US_BIRTH" />
-	<result property="usemail" column="US_EMAIL" />
-	<result property="usphone" column="US_PHONE" />
-	<result property="busno" column="BUS_NO" />
-	<result property="uspart" column="US_PART" />
-	<result property="usstatus" column="US_STATUS" />
-	<result property="usstop" column="US_STOP" />
-	<result property="authKey" column="AUTH_KEY" />
+		<id property="usno" column="US_NO" />
+		<result property="usid" column="US_ID" />
+		<result property="uspwd" column="US_PWD" />
+		<result property="usname" column="US_NAME" />
+		<result property="usbirth" column="US_BIRTH" />
+		<result property="utodate" column="UTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
+		<result property="usemail" column="US_EMAIL" />
+		<result property="usphone" column="US_PHONE" />
+		<result property="busno" column="BUS_NO" />
+		<result property="uspart" column="US_PART" />
+		<result property="usstatus" column="US_STATUS" />
+		<result property="usstop" column="US_STOP" />
+		<result property="authKey" column="AUTH_KEY" />
 	</resultMap>
 	
 	<!-- 로그인 -->
@@ -216,6 +217,119 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		   AND  US_NAME = #{usname}
 		   AND  US_STOP IS NULL
 	</update>
+	
+	<update id="updateAdminUser" parameterType="User"> 
+        UPDATE
+              "USER"
+         <set>
+	         <if test="usname != null">
+				US_NAME = #{usname}, 
+			 </if>
+			 <if test="usemail != null">
+				US_EMAIL = #{usemail}, 
+			 </if>
+			 <if test="busno != null">
+				BUS_NO = #{busno}, 
+			 </if>
+			 <if test="usphone != null">
+				US_PHONE = #{usphone}
+			 </if>
+		 </set>
+		 WHERE
+			    US_PART = #{uspart}
+		   AND  US_ID = #{usid}
+   </update>
+   
+   <select id="countUser" resultType="_int">
+   		 SELECT 
+   		       COUNT(*)
+		  FROM 
+		  	   "USER"
+		 WHERE 
+		 	   US_STOP IS NULL
+		 AND   US_PART <![CDATA[<>]]> '관리자'
+   </select>
+   
+   <select id="selectAllUserList" resultMap="userResultSet">
+   		SELECT
+			    US_NO
+			  , US_ID
+			  , US_PWD
+			  , US_NAME
+			  , US_BIRTH
+			  , US_EMAIL
+			  , US_PHONE
+			  , BUS_NO
+			  , US_PART
+			  , US_STATUS
+			  , US_STOP
+			  , AUTH_KEY
+		   FROM
+		   		"USER"
+		  WHERE US_STOP IS NULL	
+		 AND US_PART <![CDATA[<>]]> '관리자' 
+   </select>
+   
+   <select id="searchUserList" parameterType="aSearch" resultMap="userResultSet">
+	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
+		SELECT
+				 US_NO
+				,US_ID
+				,US_NAME
+				,TO_CHAR(US_BIRTH, 'YYYY-MM-DD') AS UTODATE
+				,US_EMAIL
+				,US_PHONE
+				,BUS_NO
+				,US_PART
+				,US_STATUS
+		  FROM
+		        "USER"	
+		<where>
+			<choose>
+				<when test="searchCondition == 'usno'">
+					US_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usid'">
+					AND US_ID LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usname'">
+					AND US_NAME LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usbirth'">
+					AND US_BIRTH LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usemail'">
+					AND US_EMAIL LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usphone'">
+					AND US_PHONE LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'busno'">
+					AND BUS_NO LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'uspart'">
+					AND US_PART LIKE #{sv}
+				</when>
+				<when test="searchCondition == 'usstatus'">
+					AND US_STATUS LIKE #{sv}
+				</when>
+				<otherwise>
+					AND (US_NO LIKE #{sv}
+						 OR US_ID LIKE #{sv}
+						 OR US_NAME LIKE #{sv}
+						 OR US_BIRTH LIKE #{sv}
+						 OR US_EMAIL LIKE #{sv}
+						 OR US_PHONE LIKE #{sv}
+						 OR BUS_NO LIKE #{sv}
+						 OR US_PART LIKE #{sv})
+						 OR US_STATUS LIKE #{sv})
+				</otherwise>	
+			</choose>
+		</where>
+		AND US_PART <![CDATA[<>]]> '관리자' 
+			  ORDER BY US_NO
+	</select>
+	
 	
 
 	

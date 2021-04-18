@@ -43,4 +43,9 @@ public class Income {
 	private String bus_category;    // business 테이블 조인 후 추가 컬럼
 	private int bus_code;           // business 테이블 조인 후 추가 컬럼
 
+	
+	private String ptodate;	        // 관리자 서치 날짜 포멧팅을 위한 컬럼
+	private String pextodate;	    // 관리자 서치 날짜 포멧팅을 위한 컬럼
+	
+
 }

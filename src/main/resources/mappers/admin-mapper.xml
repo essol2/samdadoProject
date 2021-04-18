@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<id property="qnano" column="QNA_NO" />
 		<result property="qcont" column="QCONT" />
 		<result property="qdate" column="QDATE" />
+		<result property="qtodate" column="QTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
 		<result property="qreply" column="QREPLY" />
 		<result property="qstatus" column="QSTATUS" />
 		<result property="usno" column="US_NO" />	
@@ -19,8 +20,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="rep_res" column="REP_RES" />
 		<result property="rep_cont" column="REP_CONT" />
 		<result property="rdate" column="RDATE" />
+		<result property="rtodate" column="RTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
 		<result property="rstatus" column="RSTATUS" />
 		<result property="rexdate" column="REXDATE" />
+		<result property="retodate" column="RETODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
 		<result property="r_img_path" column="R_IMG_PATH" />
 		<result property="r_img_name" column="R_IMG_NAME" />
 		<result property="r_img_cname" column="R_IMG_CNAME" />
@@ -58,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<id property="alno" column="AL_NO" />
 		<result property="alintro" column="AL_INTRO" />
 		<result property="alsubdate" column="AL_SUBDATE" />
+		<result property="altodate" column="ALTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
 		<result property="startdate" column="START_DATE" />
 		<result property="alstatus" column="ALSTATUS" />
 		<result property="aimgpath" column="A_IMG_PATH" />
@@ -81,7 +85,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="item" column="ITEM" />
 		<result property="amount" column="AMOUNT" />
 		<result property="pdate" column="PDATE" />
+		<result property="ptodate" column="PTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
 		<result property="exdate" column="EXDATE" />
+		<result property="pextodate" column="PEXTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
 		<result property="usno" column="US_NO" />
 		<!-- USER 테이블 조인을 위한 필드 -->
 		<result property="usname" column="US_NAME" />
@@ -142,12 +148,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<select id="searchQnaList" parameterType="aSearch" resultMap="qnaResultSet">
 	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
-		SELECT
-		       *
-		  FROM
-		       "QnA", "USER"	
+		SELECT 
+				  QNA_NO
+				, QCONT
+				, TO_CHAR(QDATE, 'YYYY-MM-DD') AS QTODATE
+				, QREPLY
+				, QSTATUS
+				, "QnA".US_NO
+				, US_NAME
+			FROM
+				 "QnA", "USER"	
 		<where>
-			"QnA".US_NO = "USER".US_NO <!-- 테이블 조인 -->
+				 "QnA".US_NO = "USER".US_NO 
 			<choose>
 				<when test="searchCondition == 'qnano'">
 					AND "QNA_NO" LIKE #{sv}
@@ -165,7 +177,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 					AND QSTATUS LIKE #{sv}
 				</when>
 				<when test="searchCondition == 'usno'">
-					AND US_NO LIKE #{sv}
+					AND "QnA".US_NO LIKE #{sv}
 				</when>
 				<when test="searchCondition == 'usname'">
 					AND US_NAME LIKE #{sv}
@@ -176,7 +188,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 						 OR QDATE LIKE #{sv}
 						 OR QREPLY LIKE #{sv}
 						 OR QSTATUS LIKE #{sv}
-						 OR US_NO LIKE #{sv}
+						 OR "QnA".US_NO LIKE #{sv}
 						 OR US_NAME LIKE #{sv})
 				</otherwise>	
 			</choose>
@@ -257,30 +269,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>	
 
 	<select id="adminbannerAdSelect" resultMap="AllianceResultSet">
-	<!--  	SELECT
-				ALLIANCE.AL_NO,
-                "USER".US_NAME,
-                BUSINESS.BUS_CATEGORY,
-                BUSINESS.BUS_CODE,
-				AMOUNT,
-				AL_INTRO,
-				AL_SUBDATE,
-				ALSTATUS,
-				START_DATE,
-				A_IMG_PATH,
-				A_IMG_NAME,
-				A_IMG_CNAME,
-				A_MASSAGE,
-				ALLIANCE.US_NO
-		FROM    
-				ALLIANCE,  INCOME, "USER", BUSINESS
-        WHERE 
-        		ALLIANCE.US_NO = INCOME.US_NO(+)
-        AND     ALLIANCE.US_NO = "USER".US_NO
-        AND     BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
-		AND     ALSTATUS = 'N'
-	-->
-	
 		 SELECT
                  ALLIANCE.AL_NO,
                  "USER".US_NAME,
@@ -339,10 +327,21 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<select id="searchReportList" parameterType="aSearch" resultMap="reportResultSet">
 	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
-		SELECT
-		       *
-		  FROM
-		       REPORT, "USER"	
+		SELECT 
+				  REPORT_NO
+				, REPORT.US_NO
+				, REP_CONT
+				, TO_CHAR(RDATE,'YYYY-MM-DD') AS RTODATE
+				, RSTATUS
+				, TO_CHAR(REXDATE,'YYYY-MM-DD') RETODATE
+				, US_NAME
+				, REF_BUS_CODE
+				, R_COUNT
+				, R_IMG_PATH
+				, R_IMG_NAME
+				, R_IMG_CNAME
+		FROM 
+				  REPORT, "USER"
 		<where>
 			REPORT.US_NO = "USER".US_NO <!-- 테이블 조인 -->
 			<choose>
@@ -350,7 +349,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 					AND REPORT_NO LIKE #{sv}
 				</when>
 				<when test="searchCondition == 'usno'">
-					AND US_NO LIKE #{sv}
+					AND REPORT.US_NO LIKE #{sv}
 				</when>
 				<when test="searchCondition == 'rep_cont'">
 					AND REP_CONT LIKE #{sv}
@@ -367,18 +366,22 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				<when test="searchCondition == 'bus_code'">
 					AND REF_BUS_CODE LIKE #{sv}
 				</when>
+				<when test="searchCondition == 'r_count'">
+					AND R_COUNT LIKE #{sv}
+				</when>
 				<when test="searchCondition == 'usname'">
 					AND US_NAME LIKE #{sv}
 				</when>
 				<otherwise>
 					AND (REPORT_NO LIKE #{sv}
-						 OR US_NO LIKE #{sv}
+						 OR REPORT.US_NO LIKE #{sv}
 						 OR REP_CONT LIKE #{sv}
 						 OR RDATE LIKE #{sv}
 						 OR RSTATUS LIKE #{sv}
 						 OR REXDATE LIKE #{sv}
 						 OR US_NAME LIKE #{sv}
 						 OR REF_BUS_CODE LIKE #{sv})
+						 OR R_COUNT LIKE #{sv})
 				</otherwise>	
 			</choose>
 		</where>
@@ -389,7 +392,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<select id="searchAllianceList" parameterType="aSearch" resultMap="AllianceResultSet">
 	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
 		SELECT
-		       ALLIANCE.AL_NO, US_NAME, BUS_CATEGORY, ALLIANCE.BUS_CODE, PBALANCE, AL_SUBDATE, ALSTATUS
+		         ALLIANCE.AL_NO
+		       , US_NAME
+		       , BUS_CATEGORY
+		       , ALLIANCE.BUS_CODE
+		       , PBALANCE
+		       , TO_CHAR(AL_SUBDATE, 'YYYY-MM-DD') AS ALTODATE
+		       , ALSTATUS
 		  FROM
 		       "USER", BUSINESS, ALLIANCE, "POINT"
 		<where>
@@ -433,11 +442,11 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="admitbannerAdListSelect" resultMap="AllianceResultSet">
-		<!--  
+
 		SELECT
                  ALLIANCE.AL_NO,
                  "USER".US_NAME,
-                 "POINT".PBALANCE,
+                 "USER".PBALANCE,
                  BUSINESS.BUS_CATEGORY,
                  BUSINESS.BUS_CODE,
                  AL_INTRO,
@@ -450,69 +459,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                  A_MASSAGE,
                  ALLIANCE.US_NO
 		FROM    
-                 ALLIANCE,  "USER", BUSINESS, "POINT"
+                        ALLIANCE,  "USER", BUSINESS, "POINT" 
         WHERE 	 
-        		 ALLIANCE.US_NO = "USER".US_NO
-        AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
-        AND      "POINT".US_NO(+) = ALLIANCE.US_NO
-		AND      ALSTATUS = 'Y'
-		-->
-		
-		SELECT
-                 ALLIANCE.AL_NO,
-                 "USER".US_NAME,
-                 "POINT".PBALANCE,
-                 BUSINESS.BUS_CATEGORY,
-                 BUSINESS.BUS_CODE,
-                 AL_INTRO,
-                 AL_SUBDATE,
-                 ALSTATUS,
-                 START_DATE,
-                 A_IMG_PATH,
-                 A_IMG_NAME,
-                 A_IMG_CNAME,
-                 A_MASSAGE,
-                 ALLIANCE.US_NO
-		FROM    
-                 ALLIANCE,  "USER", BUSINESS, "POINT" 
-        WHERE 	 
-        		 ALLIANCE.US_NO = "USER".US_NO
+        		        ALLIANCE.US_NO = "USER".US_NO
         AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
         AND      "POINT".US_NO(+) = ALLIANCE.US_NO
 		AND      ALSTATUS = 'Y'
         AND      "POINT".PBALANCE <![CDATA[<>]]> 0
-
-        
-        <!--
-        SELECT * 
-			FROM (SELECT
-                        ALLIANCE.AL_NO,
-                        "USER".US_NAME,
-                        "POINT".PBALANCE,
-                        BUSINESS.BUS_CATEGORY,
-                        BUSINESS.BUS_CODE,
-                        AL_INTRO,
-                        AL_SUBDATE,
-                        ALSTATUS,
-                        START_DATE,
-                        A_IMG_PATH,
-                        A_IMG_NAME,
-                        A_IMG_CNAME,
-                        A_MASSAGE,
-                        ALLIANCE.US_NO
-           FROM    
-                        ALLIANCE,  "USER", BUSINESS, "POINT"  
-           WHERE 	 
-                           ALLIANCE.US_NO = "USER".US_NO
-           AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
-           AND      "POINT".US_NO = ALLIANCE.US_NO
-           AND      ALSTATUS = 'Y'
-           AND      "POINT".PBALANCE <![CDATA[<>]]> 0
-           AND      "POINT".US_NO = #{usno}
-           ORDER BY PBALANCE)
-	 WHERE ROWNUM <![CDATA[<=]]> 1
-	 -->
-	 
+		GROUP BY 
+		ALLIANCE.AL_NO,
+		                 "USER".US_NAME,
+		                 "USER".PBALANCE,
+		                 BUSINESS.BUS_CATEGORY,
+		                 BUSINESS.BUS_CODE,
+		                 AL_INTRO,
+		                 AL_SUBDATE,
+		                 ALSTATUS,
+		                 START_DATE,
+		                 A_IMG_PATH,
+		                 A_IMG_NAME,
+		                 A_IMG_CNAME,
+		                 A_MASSAGE,
+		                 ALLIANCE.US_NO
+ 
 	</select>
 	
 	<select id="countAd2" resultType="_int">	
@@ -541,6 +510,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  		INCOME.US_NO ="USER".US_NO
 		  	AND INCOME.US_NO = BUSINESS.US_NO
 			AND ITEM = '프리미엄'
+	   ORDER BY PAY_NO 
 	</select>
 	
 	
@@ -548,8 +518,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<bind name="sv" value="'%' + _parameter.getSearchValue() + '%'"/> 
 		SELECT
 				  PAY_NO
-				, PDATE
-				, EXDATE
+				, TO_CHAR(PDATE, 'YYYY-MM-DD') AS PTODATE
+				, TO_CHAR(EXDATE, 'YYYY-MM-DD') AS PEXTODATE
 				, INCOME.US_NO
 				, US_NAME
 				, BUSINESS.BUS_CATEGORY
@@ -594,6 +564,23 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</where>
 			  ORDER BY PAY_NO
 	</select>
-
+	
+	<select id="selectGetProfit" resultType="_int">
+		SELECT 
+				<!-- 
+				EXTRACT(MONTH  FROM PDATE),
+				EXTRACT(YEAR  FROM PDATE),
+				 -->
+				SUM(AMOUNT)
+		FROM 
+		        INCOME
+		GROUP BY 
+		        EXTRACT(MONTH  FROM PDATE),
+		        EXTRACT(YEAR  FROM PDATE)
+		ORDER BY 
+		        EXTRACT(YEAR  FROM PDATE)
+	</select>
+	
+	
 
 </mapper>

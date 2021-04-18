@@ -8,6 +8,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Samadado</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <style>
         /* 공통 - 폰트 */
@@ -557,11 +559,16 @@
                 <div id="secondlist">
                 <c:forEach var="t" items="${ tourList }">
                     <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/tour4.png" onclick="selectRes(${t.bus_code})">
+                    	<input type="hidden" id="busCode" value="${ t.bus_code }">
+                    	<c:if test="${ t.file_lv eq '0'}">
+                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
+                    	</c:if>
                         <b>★4.90(후기 99+개)</b>
                         <b>${ t.bus_name }</b>
-                        <b>입장료 : ${ t.pro_price }</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
+                        <b>입장료 : 입장료 없음</b>
+                        <div id="frm_read">                
+                        <a href='javascript: like_func();'><img src="../resources/images/image_listpage/heart.png"></a>
+                        </div>
                     </div>
                 </c:forEach>
                 </div>        
@@ -617,7 +624,43 @@
             <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
         </footer>
 
+<script>
+function like_func(){
+	var d = $('#busCode').val();
+	var frm_read = $('#frm_read');
+	var busCode = $('#busCode', frm_read).val();
+	var mno = $('${loginUesr.usno}', frm_read).val();
+	console.log("busCode, mno : " + busCode +","+ mno + "," + d);
+	
+	/*
+	$.ajax({
+	  url: "../liketo/like.do",
+	  type: "GET",
+	  cache: false,
+	  dataType: "json",
+	  data: 'boardno=' +boardno,
+	  success: function(data) {
+	    var msg = '';
+	    var like_img = '';
+	    msg += data.msg;
+	    alert(msg);
+	    
+	    if(data.like_check == 0){
+	      like_img = "./images/dislike.png";
+	    } else {
+	      like_img = "./images/like.png";
+	    }      
+	    $('#like_img', frm_read).attr('src', like_img);
+	    $('#like_cnt').html(data.like_cnt);
+	    $('#like_check').html(data.like_check);
+	  },
+	  error: function(request, status, error){
+	    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	  }
+	}); */
+}
 
+</script>
 
 </body>
 

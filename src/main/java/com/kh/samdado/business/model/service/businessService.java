@@ -33,6 +33,8 @@ public interface businessService {
 	
 	// 사업장 리스트 카운트
 	int selectResListCount();
+	// 사업장 사진
+	List<BusinessAtt> selectAtt(int bus_code);
 	
 	// 음식점 디테일
 	Business selectRestaurant(int bus_code);
@@ -58,7 +60,7 @@ public interface businessService {
 	// 관광지리스트
 	List<Business> selectTourList();
 	// 관광지디테일
-	List<Business> selectTour(int bus_code);
+	Business selectTour(int bus_code);
 	
 	// 관광지 예약
 	public int bookingTour(TourBooking tourbooking);
@@ -87,12 +89,16 @@ public interface businessService {
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
 	
-	// 일반결제 메소드 3개
+	// 일반결제 메소드
 	public int insertIncome(Income i);
 
-	int insertBooking(Booking b);
+	int insertBookingHotel(Booking b);
+	
+	int insertBookingTour(Booking b);
 
 	int insertPoint(Point p);
+	
+	public Point findPoint(Point p);
 
 	// 배너 광고 등록 폼, 본인 사업장 가져오기
 	List<Business> selectMyBusinessCategory(User loginUser);
@@ -110,6 +116,12 @@ public interface businessService {
 	Business selectBannerAdDetail(Business selectBusCodeUser, boolean flag);
 
 	Business getBusDetail(int bus_code);
+
+	int insertMain(BusinessAtt bat);
+
+	
+
+	
 
 	
 

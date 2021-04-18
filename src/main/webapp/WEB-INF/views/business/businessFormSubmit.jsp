@@ -18,7 +18,10 @@
 
 <link rel="stylesheet" href="${ contextPath }/resources/css/Business/businessFormSubmit.css">
 
+<!--jQuery-->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
 </head>
 <body>
 
@@ -83,7 +86,7 @@
                     </div>
                 </div> 
 
-            <form action="${ contextPath }/business/insert/bannerAd" method="post" enctype="multipart/form-data">
+            <form action="${ contextPath }/business/insert/bannerAd" method="post" enctype="multipart/form-data" onsubmit="return submitValidate();">
 			<c:choose>
 				<c:when test="${ !empty selectMyBusinessCategory }">
 	                <div class="inner_content">
@@ -98,9 +101,11 @@
 	            </c:when>
 	            <c:otherwise>
 	            <div class="nonSelectCategory" style="text-align: center; padding: 20%;">
-	            	<h3>--- ${ loginUser.usname }님께서 등록하신 사업장이 없습니다. ---</h3>
+	            	<h3>--- ${ loginUser.usname }님께서 배너 광고로 등록할 수 있는 사업장이 없습니다. ---</h3>
 	            	<br>
-	            	<h5>[사업장 등록하러 가기]</h5>
+	            	<h5>* 관리자 승인 대기중인 사업장 또는 이미 배너 광고 중인 사업장은 목록에서 불러올 수 없습니다.</h5>
+	            	<h5><a href="${ contextPath }/mypage/buserinfo">[마이페이지 가기]</a></h5>
+	            	<h5>[사업장 등록하러 가기]</h5>  
 	                <br>
                     <a href='${ contextPath }/business/hotel_write'>호텔 등록</a> | 
 	                <a href='${ contextPath }/business/rentcar_write'>렌트카 등록</a> | 
@@ -153,6 +158,20 @@
     </div> 
  
  </div>
+ 
+ <script>
+		function submitValidate(){
+
+			if (confirm("제출시 수정할 수 없습니다. 제출하시겠습니까?") == true){
+				return true;
+			} else {
+			    return false;
+			}
+			
+			return true;
+		}
+	
+	</script>
 
  <!-- 모달창 자동 onload -->
  <script>

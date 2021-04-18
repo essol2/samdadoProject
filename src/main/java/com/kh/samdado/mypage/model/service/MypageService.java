@@ -36,6 +36,12 @@ public interface MypageService {
 	// 제휴회원 - 프리미엄 광고 내역 불러오기
 	public List<Business> selectPBusList(String usno);
 	
+	// 제휴회원 - 광고 클릭수 계산해서 까져오기
+	public int selectClickCount(String usno);
+	
+	// 제휴회원 - 광고관리 차트 데이터 리스트
+	public List<Business> selectAlliChartList(String usno);
+	
 	// 제휴회원 - 포인트 충전 내역 insert 메소드
 	public int insertNewPayment(Income ic);
 
@@ -83,6 +89,12 @@ public interface MypageService {
 
 	// 일반회원 - 가계부 차트 조회
 	public List<AccountBook> selectChartList(AccountBook ab);
+
+	// 제휴회원 - 새로운 알림 등록
+	public int insertQnANews(String usno);
+
+	// 제휴회원 - 배너 광고 신청 반려 등
+	//public int insertAlliNews(String usno);
 
 	
 

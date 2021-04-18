@@ -34,7 +34,7 @@
         #search_input {
             width: 80%;
             margin-left: 10%;
-            margin-right: 10%;
+            /* margin-right: 10%; */
 
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
@@ -43,7 +43,7 @@
         }
 
         #modal-body input {
-            background-image: url(../images/image_route/search.png);
+            background-image: url(../../images/image_route/search.png);
             background-repeat: no-repeat;
             background-size: 30px;
             padding-left: 35px;
@@ -83,7 +83,7 @@
         #addbtn {
             background-color: white;
             border: 0px;
-            margin-left: 65%;
+            margin-left: 80%;
         }
 		
 		button {

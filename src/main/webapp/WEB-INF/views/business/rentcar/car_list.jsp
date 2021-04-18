@@ -332,6 +332,20 @@
 
         .profile {
 
+            display: none;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
+        .moreProfile {
+
             display: flex;
             flex-direction: column;
             /* align-items: center; */
@@ -534,7 +548,9 @@
                 <div id="secondlist">
                 <c:forEach var="c" items="${ carList }">
                     <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/rentcar2.png" onclick="selectRes(${c.bus_code})">
+                    	<c:if test="${ c.file_lv eq '0' }">
+                        <img class="image" src="${ contextPath }/resources/images/image_listpage/rentcar2.png" onclick="selectRes(${c.bus_code})">
+                        </c:if>
                         <b>★4.90(후기 99+개)</b>
                         <b>${ c.bus_name }</b>
                         <p><img src="../resources/images/image_listpage/noheart.png"></p>

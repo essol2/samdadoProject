@@ -475,7 +475,7 @@
                 <div class="menuBox" id="menuBox">
 
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/buserinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToAlert();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToBuss();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToAdvert();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/adverB.png" class="btnImg"> <br> 광고관리</div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToPoint()"><div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/walletW.png" class="btnImg"> <br> 내 포인트</div></button>
@@ -583,6 +583,9 @@
 	
 	function goToAdvert(){
 		location.href="${contextPath}/mypage/advert?usno="+${loginUser.usno};
+	}
+	function goToAlert(){
+		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno};
 	}
   </script>
   

@@ -1,8 +1,7 @@
 package com.kh.samdado.business.model.vo.hotel;
 
 import java.sql.Date;
-
-import org.springframework.security.access.annotation.Secured;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -42,10 +41,11 @@ public class Room {
 	private int room_no;
 	private int bus_code;
 	private String room_name;
-	private int room_price;
+	private String room_price;
 	private Date room_date;
 	private Date room_modify;
 	private String room_people;
 	private String room_amenity;
 	private String room_state;
+
 }

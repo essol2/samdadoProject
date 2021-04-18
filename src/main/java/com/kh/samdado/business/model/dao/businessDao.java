@@ -29,6 +29,8 @@ public interface businessDao {
 	// 사업장 등록
 	int insertBusAtt(List<BusinessAtt> list);
 	int insertBusiness(Business b);
+	// 사업장 사진
+	List<BusinessAtt> selectAtt(int bus_code);
 
 	// 사업장 리스트 카운트
 	int selectResListCount();
@@ -59,7 +61,7 @@ public interface businessDao {
 	// 관광지페이지
 	List<Business> selectTourList();
 	// 관광지디테일
-	List<Business> selectTour(int bus_code);
+	Business selectTour(int bus_code);
 	
 	// 관광지 예약
 	public int bookingTour(TourBooking tourbooking);
@@ -89,12 +91,16 @@ public interface businessDao {
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
 
-	// 일반결제 메소드3개
+	// 일반결제 메소드
 	int insertIncome(Income i);
 
-	int insertBooking(Booking b);
+	int insertBookingHotel(Booking b);
+	
+	int insertBookingTour(Booking b);
 
 	int insertPoint(Point p);
+	
+	public Point findPoint(Point p);
 
 	// 비즈니스 등록 폼, 본인이 등록한 사업장 셀렉
 	List<Business> selectMyBusinessCategory(User loginUser);
@@ -117,6 +123,14 @@ public interface businessDao {
 	int updateReadCount(Business selectBusCodeUser);
 
 	Business getBusDetail(int bus_code);
+
+
+	int insertPointColumn(Business selectBusCodeUser);
+
+	int insertMain(BusinessAtt bat);
+
+	
+
 
 
 	

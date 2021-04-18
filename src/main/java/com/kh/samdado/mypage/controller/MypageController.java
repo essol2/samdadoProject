@@ -177,7 +177,7 @@ public class MypageController {
 			 				   @ModelAttribute Point po,
 			 				   Model model) {
 		
-		 // System.out.println("income 확인 : " + ic);
+		  //System.out.println("income 확인 : " + ic);
 		 
 		 // Income DB에 결제 내역 insert하기
 		 int result = mService.insertNewPayment(ic);
@@ -186,8 +186,10 @@ public class MypageController {
 		 po.setPamount(ic.getAmount());
 		 // point 잔액은 기존 잔액+충전액 넣어주기
 		 // 1. 기존에 있었던 balance 찾아오기
+		 //System.out.println("po확인 : " + po);
 		 Point prePoint = mService.prePoint(po);
-		 //System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
+//		 System.out.println("prePoint 확인 : " + prePoint);
+//		 System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
 		 
 		 if(prePoint != null) {
 			 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
@@ -238,14 +240,6 @@ public class MypageController {
 		 //return null;
 	 }
 
-	 
-	 // 제휴회원 사업장 페이지로 이동
-	 @GetMapping("/mybus")
-	 public String myBusiness() {
-		 return "";
-	 }
-
-	 
 	// 제휴회원 - 문의하기
 	 @PostMapping("/sendQnA")
 	 public String sendQnA(Model model,
@@ -274,7 +268,7 @@ public class MypageController {
 		 // 해당 사용자가 등록한 사업장 리스트 알아오기
 		 List<Business> bussList = mService.selectBussList(usno);
 		 
-		 System.out.println("bussList확인 : " + bussList);
+		 //System.out.println("bussList확인 : " + bussList);
 		 
 		 mv.addObject("bussList", bussList);
 		 mv.setViewName("mypage/mp_StoreList");
@@ -310,12 +304,34 @@ public class MypageController {
 		 //System.out.println("applyList 확인 : " + applyList);
 		 //System.out.println("allList 확인 : " +allList);
 		 
+		 // 클릭수 덧셈 및 출력 메소드
+		int clickCount = mService.selectClickCount(usno);
+		//System.out.println("clickCount확인 : " + clickCount);
+		 
+		// 차트에 넣을 데이터 메소드
+		List<Business> chartDataList = mService.selectAlliChartList(usno);
+		System.out.println(chartDataList);
+		
 		 mv.addObject("api", api);
 		 mv.addObject("allList", allList);
 		 mv.addObject("applyList", applyList);
 		 mv.addObject("pbusList", pBussList);
+		 mv.addObject("clCount", clickCount);
+		 mv.addObject("chartList", chartDataList);
 		 mv.setViewName("mypage/mp_Advertisement");
 		 
+		 return mv;
+	 }
+	 
+	 // 제휴회원 내소식
+	 @GetMapping("/alert")
+	 public ModelAndView selectAlertList(ModelAndView mv,
+			 							  @RequestParam(name="usno") String usno,
+			 							  @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
+		 
+		 // DB에서 가져와야 할 알림 내역들 : 문의하기, 신고 받은 내역, 포인트 충전 알림, 배너광고 신청, 승인, 반려(사유), 포인트 얼마 안남음
+		 
+		 mv.setViewName("mypage/mp_news");
 		 return mv;
 	 }
 /*=====================================================================================================*/
@@ -413,7 +429,10 @@ public class MypageController {
 	 
 	 // 일반회원 - 내예약목록 페이지 이동
 	 @GetMapping("/booking")
-	 public String goToBooking() {
+	 public String goToBooking(@RequestParam(name="usno") String usno) {
+		 
+		 
+		 
 		 return "/mypage/mp_MyReservation";
 	 }
 

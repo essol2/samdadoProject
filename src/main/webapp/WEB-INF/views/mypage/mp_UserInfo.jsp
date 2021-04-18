@@ -352,7 +352,7 @@
 
                     <button class="clickedBtn" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userW.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록<br><br> </div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle" onclick="location.href='${contextPath}/mypage/booking'"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약<br> <br></div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle" onclick="location.href='${contextPath}/mypage/booking'"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약<br> <br></div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행<br> <br></div></button>
                     <button class="menuButton" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑<br><br></div></button>
 
@@ -361,6 +361,7 @@
 
             <div id="mainBox">
                 <div id="leftBox">
+                <form action="${ contextPath }/mypage/updateInfo" method="POST" onsubmit="return submitValidate();">
                     <table id="memInfoTable">
                         <tr>
                             <th>이름, 아이디</th>
@@ -372,15 +373,16 @@
                         </tr>
                         
 						<tr>
-							<form action="${ contextPath }/mypage/updateInfo" method="POST" onsubmit="return submitValidate();">
+							
 	                            <th>이메일, 전화번호 수정</th>
 	                            <td>이메일 <input type="text" class="chInfoTag" id="email" name="email" value="${ loginUser.usemail }">
 	                                </td>
 	                            <td>전화번호 <input type="text" class="chInfoTag" id="phone" name="phone" value="${ loginUser.usphone }">
 	                                <input type="hidden" name="usid" id="usid" value="${ loginUser.usid }"></td>
 	                            <td><button id="changeInfo" type="submit">수정하기</button></td>
-                        	</form>
+                        	
                         </tr>
+                      
                         <tr>
                             <th >회원 탈퇴</th>
                             <td colspan="3"><p id="specificCon">회원 탈퇴 시 저장되어 있는 회원 정보는 3개월간 보관 후 영구적으로 삭제됩니다. <br>
@@ -393,6 +395,7 @@
                                 <button id="memOut">탈퇴</button></td>
                         </tr>
                     </table>
+                    </form>
                 </div>
                 <div id="rightBox">
                     <div id="alertBox">
@@ -447,6 +450,8 @@
 						   
 				<div class="modal_layer"></div>
 			</div>
+			</section>
+		</div>
 	<script>
 		$("#changePwdBtn").click(function(){
 		   $("#modal").fadeIn();
@@ -500,6 +505,10 @@
 		/* console.log("jsp안에서 usno확인 : " + usno); */
 		location.href='${contextPath}/mypage/wallet?usno='+${loginUser.usno};
 	};
+	
+	function goToBooking(){
+		location.href='${contextPath}/mypage/booking?usno='+${loginUser.usno};
+	}
     </script>
     
      <!-- Option 1: Bootstrap Bundle with Popper -->
