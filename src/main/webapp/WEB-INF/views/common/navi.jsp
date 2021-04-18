@@ -13,9 +13,15 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
 <!--jQuery-->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+<!-- 
+이 제이쿼리 코드가 안먹어서 일단 주석처리 하고 위에꺼로 바꿨어요 혹시 몰라서 안지우고 주석했음.. ㅠ (저는 지혜입니다....)
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ -->
 <!-- css 외부 파일 첨부 -->
 <link rel="stylesheet" href="${ contextPath }/resources/css/common/navi.css" type="text/css">
 <link rel="stylesheet" href="${ contextPath }/resources/css/user/addMember.css" type="text/css">

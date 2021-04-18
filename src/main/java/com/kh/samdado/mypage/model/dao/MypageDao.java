@@ -90,4 +90,7 @@ public interface MypageDao {
 	// 일반회원 - 차트 조회 메소드
 	public List<AccountBook> selectChartList(AccountBook ab);
 
+	// 제휴회원 - 새로운 알림 등록
+	public int insertQnANews(String usno);
+
 }

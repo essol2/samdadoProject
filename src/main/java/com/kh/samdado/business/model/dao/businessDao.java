@@ -127,10 +127,14 @@ public interface businessDao {
 
 	Business getBusDetail(int bus_code);
 
+
+	int insertPointColumn(Business selectBusCodeUser);
+
 	int insertMain(BusinessAtt bat);
 
 
 	
+
 
 
 	

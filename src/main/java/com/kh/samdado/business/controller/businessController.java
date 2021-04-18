@@ -850,11 +850,13 @@ public class businessController {
 				
 			// Rstatus가 n이 아닐 경우	
 			} else {
+
 				// rcount + 1
 				int result = bService.updateReport(r);
 									
+
 				if(result > 0) {							
-					return "redirect:/business/restaurant/restaurant_detail";
+					return "redirect:/business/restaurant/restaurant_detail?bus_code=" + r.getBus_code();
 				} else {
 					throw new businessException("신고에 실패하였습니다.");
 				}
