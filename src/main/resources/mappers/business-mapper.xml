@@ -836,13 +836,49 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , NULL
 		  , '경기도' <!-- 주소값 안넘어감 -->
 		  , #{r_booking_pay}
-		  , '3'
+		  , '3'	<!-- 인원 -->
 		  , #{r_booking_phone} <!-- 수식으로계산되는 문제 -->
 		  , #{r_booking_trv}
 		  , #{usno}
 		  , '1'	<!-- 방등록 되면 방 번호 따오기 -->
 		  , #{r_bus_code}
 		  , '사업장이름' <!-- 왜안됨 -->
+		  )
+	</insert>
+	
+	<insert id="insertBookingTour">
+		INSERT
+		  INTO TOUR_BOOKING
+		  (
+		  	T_BOOKING_NO
+		  ,	T_BUS_NAME
+		  , T_PRODUCT_NAME
+		  , T_BOOKING_DATE
+		  , T_BOOKING_MODIFY
+		  , T_BOOKING_ADDRESS
+		  , T_BOOKING_PAY
+		  , T_BOOKING_NUMBER
+		  , T_BOOKING_PHONE
+		  , T_TOUR_DATE
+		  , US_NO
+		  , PRO_NO
+		  , BUS_CODE		  
+		  )
+		  VALUES
+		  (
+		  	BOOKING_NO.NEXTVAL
+		  , '사업장이름' <!-- 왜안됨 -->
+		  , #{t_booking_product}
+		  , SYSDATE
+		  , NULL
+		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{t_booking_pay}
+		  , '3'	<!-- 인원 -->
+		  , #{t_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{t_booking_trv}
+		  , #{usno}
+		  , '1'	<!-- 상품번호 따오기 -->
+		  , #{t_bus_code}
 		  )
 	</insert>
 	

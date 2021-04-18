@@ -972,7 +972,7 @@
 	            var msg = '결제가 완료되었습니다!';
 	            msg += '결제 금액 : ' + rsp.paid_amount;
 	            location.href = '${contextPath}/business/pay?amount='+amount+'&item='+name+'&usno='+${loginUser.usno}
-					            +'&r_bus_code='+${ hotel.bus_code }+'&r_booking_trv='+startDate+'&r_bookingLv='+bookingLv
+					            +'&r_bus_code='+${ hotel.bus_code }+'&r_booking_trv='+startDate+'&bookingLv='+bookingLv
 					            +'&r_booking_phone='+phone+'&r_booking_product='+name+'&r_booking_pay='+amount;
 	            				
 	        } else {
