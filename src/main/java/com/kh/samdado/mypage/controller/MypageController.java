@@ -322,6 +322,18 @@ public class MypageController {
 		 
 		 return mv;
 	 }
+	 
+	 // 제휴회원 내소식
+	 @GetMapping("/alert")
+	 public ModelAndView selectAlertList(ModelAndView mv,
+			 							  @RequestParam(name="usno") String usno,
+			 							  @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
+		 
+		 // DB에서 가져와야 할 알림 내역들 : 문의하기, 신고 받은 내역, 포인트 충전 알림, 배너광고 신청, 승인, 반려(사유), 포인트 얼마 안남음
+		 
+		 
+		 return mv;
+	 }
 /*=====================================================================================================*/
 	 
 	// 일반회원 마이페이지로 이동
