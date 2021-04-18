@@ -421,6 +421,11 @@ public class businessController {
 			}
 			int result3 = bService.insertIncome1(i);
 		}
+		
+		System.out.println("b : " + b);
+		System.out.println("list :"  + list);
+		System.out.println("list :"  + bat);
+		
 		int result = bService.insertBusiness(b, list);
 		int result2 = bService.insertMain(bat);
 		
@@ -802,7 +807,7 @@ public class businessController {
   
   	// 신고하기	
 	@PostMapping("/report")
-	public String reportInsert(Report r,
+	public String reportInsert(Report r, int bus_code,
 							  @RequestParam(value="uploadFile") MultipartFile file,
 							  HttpServletRequest request, Map map) {
 		
@@ -821,13 +826,15 @@ public class businessController {
 			}
 		}
 		
+		Business selectUser = bService.selectBusCodeUser(bus_code);
+		r.setUsno(selectUser.getUs_no());
 		Report findReportStatus = bService.findReportStatus(r);
 		// System.out.println("r : " + r);
 		// System.out.println("frs : " + findReportStatus);
 		
 		// 해당 업체가 신고기록이 없을 때 insert
 		if(findReportStatus == null) {					
-			int result = bService.insertReport(r);					
+			int result = bService.insertReport(r);
 								
 			if(result > 0) {						
 				return "redirect:/main";
@@ -843,7 +850,8 @@ public class businessController {
 				
 			// Rstatus가 n이 아닐 경우	
 			} else {
-				int result = bService.insertReport(r);						
+				// rcount + 1
+				int result = bService.updateReport(r);
 									
 				if(result > 0) {							
 					return "redirect:/business/restaurant/restaurant_detail";

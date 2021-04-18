@@ -171,6 +171,11 @@ public class businessDaoImpl implements businessDao {
 	}
 	
 	@Override
+	public int updateReport(Report r) {		
+		return sqlSession.update("businessMapper.updateReport", r);
+	}
+	
+	@Override
 	public int jjim(Jjim jjim) {
 		return sqlSession.insert("businessMapper.jjim", jjim);
 	}
@@ -283,6 +288,8 @@ public class businessDaoImpl implements businessDao {
 	public int insertMain(BusinessAtt bat) {
 		return sqlSession.insert("businessMapper.insertMain", bat);
 	}
+
+	
 
 	
 	

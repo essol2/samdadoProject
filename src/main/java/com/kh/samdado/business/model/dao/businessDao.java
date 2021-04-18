@@ -80,6 +80,9 @@ public interface businessDao {
 		  
 	// 신고하기
 	int insertReport(Report r);
+	
+	int updateReport(Report r);
+
 		  
 	// 찜하기
 	public int jjim(Jjim jjim);
@@ -125,6 +128,7 @@ public interface businessDao {
 	Business getBusDetail(int bus_code);
 
 	int insertMain(BusinessAtt bat);
+
 
 	
 
