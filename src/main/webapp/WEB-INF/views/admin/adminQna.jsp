@@ -61,7 +61,7 @@
                    <tr>
                        <th scope="row">${ q.qnano }</th>
                        <td>${ q.usname }</td>
-                       <td>${ q.qcont }</td>
+                       <td><b>${ q.qcont }</b></td>
                        <input type="hidden" name="qnano" value="${ q.qnano }">
                        <td><input type="text" name="qreply" id="replyValue" class="form-control"></td>
                        <td><button type="submit" class="btn btn-secondary">답변</button></td>

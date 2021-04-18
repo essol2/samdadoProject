@@ -255,5 +255,11 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.selectOne("businessMapper.getBusDetail", bus_code);
 
 	}
+
+	@Override
+	public int insertPointColumn(Business selectBusCodeUser) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("businessMapper.insertPointColumn", selectBusCodeUser);
+	}
 	
 }

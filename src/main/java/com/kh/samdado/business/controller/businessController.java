@@ -738,10 +738,10 @@ public class businessController {
 				
 			// Rstatus가 n이 아닐 경우	
 			} else {
-				int result = bService.insertReport(r);						
-									
+				int result = bService.insertReport(r);		 			
+									 
 				if(result > 0) {							
-					return "redirect:/business/restaurant/restaurant_detail";
+					return "redirect:/business/restaurant/restaurant_detail?bus_code=" + r.getBus_code();
 				} else {
 					throw new businessException("신고에 실패하였습니다.");
 				}
