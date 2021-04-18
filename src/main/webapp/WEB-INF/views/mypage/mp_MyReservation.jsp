@@ -170,98 +170,6 @@
         padding : 3px;
         margin : 2px;
     }
-
-    @media (max-width:1650px){
-         /* 마이페이지 css */
-            body{
-                background-image: url('${contextPath}/resources/images/image_mp/backgroundImg.png');
-                background-repeat: no-repeat;
-                background-size: 100%;
-            }
-            #topMenu{
-            align-items: center;
-            width : 80%;
-            height : 150px;
-            /* border : 1px solid black; */
-            }
-            #countDday{
-                /* border : 1px solid pink; */
-                display : inline-block;
-                position : absolute;
-                width : 20%;
-                height : 150px;
-                color : white;
-                text-align : center;
-                font-size: 30px;
-                margin-left : 3%;
-            }
-            .menuBox{
-                width : 70%;
-                height : 150px;
-                /* border : 1px solid blue; */
-                display : inline-block;
-                position:relative;
-                top : 0;
-                left : 25%;
-                margin-left : 3%;
-                align-items: center;
-            }
-            .menuButton{
-                width : 130px;
-                height : 110px;
-                border : 1px solid white;
-                background-color: white;
-                color : #bfbfbf;
-                text-align : center;
-                display : inline-block;
-                margin-top : 2%;
-                margin-left : 2.5%;
-                border-radius: 2px;
-                align-items: center;
-                /* -webkit-transition-duration : 0.4s;
-                transition-duration: 0.4s; */
-            }
-
-            .menuButton:hover{
-                box-shadow: 6px 6px gray;
-                cursor: pointer;
-            }
-
-            .menuBoxEle{
-                /* border : 1px solid red; */
-                width : 110px;
-                height : 110px;
-                text-align: center;
-                margin-left : 3%;
-            }
-
-            .btnImg{
-                width: 60px;
-                /* height : 60px;
-                border : 1px solid yellow; */
-            }
-
-            .clickedBtn{
-                box-shadow: 3px 3px gray;
-                width : 130px;
-                height : 110px;
-                border : 1px solid #467355;
-                background-color:#467355;
-                color : white;
-                text-align : center;
-                display : inline-block;
-                margin-top : 2%;
-                margin-left : 2.5%;
-                border-radius: 2px;
-                align-items: center;
-            }
-
-            .clickedBtn:hover{
-                box-shadow: 6px 6px gray;
-                cursor: pointer;
-            }
-
-        }
 </style>
 <body>
 
@@ -271,7 +179,7 @@
         
         <section class="page-start">
             <div id="topMenu">
-                <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
+                <div id="countDday"> <p>${ loginUser.usname }님의 <br> 여행까지 <br>D-100</p> </div>
                 <div class="menuBox" id="menuBox">
 
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
@@ -285,6 +193,7 @@
 
             <div id="mainBox">
                 <div id="leftBox" class="reservBox"> 
+                	<br>
                     <h3 style="color: #467355; text-align: center;">숙박 예약 내역</h3>
                     <hr style="background-color: #467355; width : 90%; height: 2px;">
                     <h5>제주 신라 호텔</h5>
@@ -307,6 +216,7 @@
                 </div>
 
                 <div id="middleBox" class="reservBox">
+                	<br>
                     <h3 style="color: #467355; text-align: center;">렌트카 예약 내역</h3>
                     <hr style="background-color: #467355; width : 90%; height: 2px;">
                     <h5>SK렌트카</h5>
@@ -329,6 +239,7 @@
                 </div>
 
                 <div id="rightBox" class="reservBox">
+                	<br>
                     <h3 style="color: #467355; text-align: center;">입장권&체험권 예약 내역</h3>
                     <hr style="background-color: #467355; width : 90%; height: 2px;">
                     <h5>서귀포 감귤농장 체험장</h5>

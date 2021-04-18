@@ -113,6 +113,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="pbalance" column="PBALANCE" />
 	</resultMap>
 	
+	<resultMap type="Point" id="pointResultSet">
+		<id property="pno" column="PNO" />
+		<result property="pdate" column="PDATE" />
+		<result property="pdetail" column="PDETAIL" />
+		<result property="pbalance" column="PBALANCE" />
+		<result property="pamount" column="PAMOUNT" />
+		<result property="usno" column="US_NO" />
+	</resultMap>
+	
 	<insert id="insertBusiness" parameterType="Business">
 		INSERT
 		  INTO BUSINESS
@@ -175,6 +184,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		</foreach>
 	</insert>
+	<insert id="insertMain" parameterType="BusinessAtt">
+		  INSERT
+		  INTO BUSINESS_ATT
+		  (
+		  	FILE_NO
+		  ,	FILE_NAME
+		  ,	FILE_ROOT
+		  ,	FILE_STATUS
+		  ,	FILE_RENAME
+		  ,	FILE_LV
+		  ,	BUS_CODE
+		  )
+		  VALUES
+		  (
+		  	BUSATT_SEQ_NO.NEXTVAL
+		  , #{file_name}
+		  , #{file_root}
+		  , DEFAULT
+		  , #{file_rename}
+		  , '0'
+		  , BUS_SEQ_NO.CURRVAL
+		  )
+	</insert>
 	<insert id="insertCar" parameterType="java.util.List">
 		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
 		  INTO CAR
@@ -191,7 +223,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	CAR_SEQ_NO.NEXTVAL
+		  	get_car_seq
 		  , BUS_SEQ_NO.CURRVAL
 		  , #{item.car_name}
 		  , #{item.car_type}
@@ -217,7 +249,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	BUSATT_SEQ_NO.NEXTVAL
+		  	get_busatt_seq
 		  , #{item.file_name}
 		  , #{item.file_root}
 		  , DEFAULT
@@ -244,7 +276,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	ROOM_SEQ_NO.NEXTVAL
+		  	get_room_seq
 		  , BUS_SEQ_NO.CURRVAL
 		  , #{item.room_name}
 		  , #{item.room_price}
@@ -271,7 +303,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	BUSATT_SEQ_NO.NEXTVAL
+		  	get_busatt_seq
 		  , #{item.file_name}
 		  , #{item.file_root}
 		  , DEFAULT
@@ -289,20 +321,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  	PRO_NO
 		  , BUS_CODE
 		  , PRO_NAME
-		  , PRO_PRICE
 		  , PRO_ADULT
 		  , PRO_YOUTH
 		  , PRO_CHILD
+		  , PRO_FAC
 		  )
 		  VALUES
 		  (
 		  	TOUR_SEQ_NO.NEXTVAL
 		  , BUS_SEQ_NO.CURRVAL
 		  , #{pro_name}
-		  , #{pro_price}
 		  , #{pro_adult}
 		  , #{pro_youth}
 		  , #{pro_child}
+		  , #{pro_fac}
 		  )
 	</insert>
 	
@@ -318,29 +350,26 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	<!-- 음식점 디테일 -->
 	<select id="selectRestaurant" resultMap="BusinessResultSet">
-		SELECT
-			   B.BUS_CODE
-			 , US_NO
-			 , BUS_NAME
-			 , BUS_ADDRESS
-			 , BUS_INTRO
-			 , BUS_DATE
-			 , BUS_MODIFY
-			 , AD_COUNT
-			 , BUS_CLASSIFY
-			 , BUS_CATEGORY
-			 , BUS_STATUS
-			 , BUS_PHONE
-			 , RES_CATEGORY
-			 , BUS_OPENING
-			 , BT.FILE_RENAME
-		  FROM 
-  		       BUSINESS B
-  		  JOIN 
-  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE 
-		 WHERE 
-		 	   BUS_STATUS = 'Y'
-       	   AND B.BUS_CODE = #{bus_code}
+		SELECT 
+		       BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		  FROM
+		       BUSINESS
+		 WHERE
+			   BUS_CODE = #{bus_code}
+		   AND BUS_STATUS = 'Y'
 	</select>
 	
 	<!-- 관광지디테일 -->
@@ -360,19 +389,31 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_PHONE
 		     , RES_CATEGORY
 		     , BUS_OPENING
-		     , BT.FILE_RENAME
-		     , BT.FILE_LV
 		     , TP.PRO_NAME
-		     , TP.PRO_PRICE
 		     , TP.PRO_ADULT
 		     , TP.PRO_YOUTH
 		     , TP.PRO_CHILD
 		  FROM
-		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
+		       BUSINESS B, TOUR_PRODUCT TP
 		 WHERE
-		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
+		       B.BUS_CODE = TP.BUS_CODE   	   
 		   AND B.BUS_CODE = #{bus_code}
 		   AND BUS_STATUS = 'Y'
+	</select>
+	<select id="selectAtt" resultMap="BusinessAttResultSet">
+		SELECT
+		  	   FILE_NO
+			 , FILE_NAME
+             , FILE_STATUS
+             , FILE_RENAME
+             , FILE_LV 
+             , BUS_CODE
+		  FROM 
+		  	   BUSINESS_ATT
+		 WHERE
+			   BUS_CODE = #{bus_code}
+      ORDER BY
+               FILE_LV		       
 	</select>
 	<!-- 렌트카디테일 -->
 	<select id="selectCar" resultMap="BusinessResultSet">
@@ -459,7 +500,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , RES_CATEGORY
 		     , BUS_OPENING
 		     , BT.FILE_RENAME
-		     , PRO_PRICE
+		     , BT.FILE_LV
 		     , PRO_ADULT
 		     , PRO_YOUTH
 		     , PRO_CHILD
@@ -484,6 +525,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BUS_OPENING
      		 , HOTEL_CATEGORY
      		 , BT.FILE_RENAME
+     		 , BT.FILE_LV
   		  FROM 
   		       BUSINESS B
   		  JOIN 
@@ -506,6 +548,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BUS_OPENING
      		 , RES_CATEGORY
      		 , BT.FILE_RENAME
+     		 , BT.FILE_LV
   		  FROM 
   		       BUSINESS B
   		  JOIN 
@@ -534,6 +577,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			 , BUS_PHONE
 			 , BUS_OPENING
 			 , BT.FILE_RENAME
+			 , BT.FILE_LV
 		  FROM 
   		       BUSINESS B
   		  JOIN 
@@ -760,12 +804,96 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		(
 			PON_SEQ_NO.NEXTVAL
 		  , SYSDATE
-		  , '포인트 충전'
+		  , '예약 포인트 적립'
 		  , #{pbalance}
 		  , #{pamount}
 		  , #{usno}
 		)
 	</insert>
+	 
+	 <insert id="insertBookingHotel">
+		INSERT
+		  INTO ROOM_BOOKING
+		  (
+		  	R_BOOKING_NO
+		  , R_PRODUCT_NAME
+		  , R_BOOKING_DATE
+		  , R_BOOKING_MODIFY
+		  , R_BOOKING_ADDRESS
+		  , R_BOOKING_PAY
+		  , R_BOOKING_NUMBER
+		  , R_BOOKING_PHONE
+		  , R_TOUR_DATE
+		  , US_NO
+		  , HOTEL_NO
+		  , BUS_CODE
+		  , BUS_NAME
+		  )
+		  VALUES
+		  (
+		  	BOOKING_NO.NEXTVAL
+		  , #{r_booking_product}
+		  , SYSDATE
+		  , NULL
+		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{r_booking_pay}
+		  , '3'	<!-- 인원 -->
+		  , #{r_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{r_booking_trv}
+		  , #{usno}
+		  , '1'	<!-- 방등록 되면 방 번호 따오기 -->
+		  , #{r_bus_code}
+		  , '사업장이름' <!-- 왜안됨 -->
+		  )
+	</insert>
+	
+	<insert id="insertBookingTour">
+		INSERT
+		  INTO TOUR_BOOKING
+		  (
+		  	T_BOOKING_NO
+		  ,	T_BUS_NAME
+		  , T_PRODUCT_NAME
+		  , T_BOOKING_DATE
+		  , T_BOOKING_MODIFY
+		  , T_BOOKING_ADDRESS
+		  , T_BOOKING_PAY
+		  , T_BOOKING_NUMBER
+		  , T_BOOKING_PHONE
+		  , T_TOUR_DATE
+		  , US_NO
+		  , PRO_NO
+		  , BUS_CODE		  
+		  )
+		  VALUES
+		  (
+		  	BOOKING_NO.NEXTVAL
+		  , '사업장이름' <!-- 왜안됨 -->
+		  , #{t_booking_product}
+		  , SYSDATE
+		  , NULL
+		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{t_booking_pay}
+		  , '3'	<!-- 인원 -->
+		  , #{t_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{t_booking_trv}
+		  , #{usno}
+		  , '1'	<!-- 상품번호 따오기 -->
+		  , #{t_bus_code}
+		  )
+	</insert>
+	
+	<select id="findPoint" parameterType="Point" resultMap="pointResultSet">
+		SELECT *
+		FROM (
+		        SELECT *
+		        FROM POINT
+		        WHERE US_NO = #{usno}
+		        ORDER BY PDATE DESC
+      		 )
+		WHERE 
+				ROWNUM = 1
+	</select>
    
    <!-- 지혜 -->
    <select id="selectBannerAdImgList" resultMap="AllianceResultSet">

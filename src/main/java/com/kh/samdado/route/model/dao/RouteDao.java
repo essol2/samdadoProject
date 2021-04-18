@@ -12,7 +12,7 @@ public interface RouteDao {
 
 	int spotDelete();
 
-	List<TourSpot> spotSearch();
+	List<TourSpot> spotSearch(String sTitle);
 
 	int spotAdd();
 

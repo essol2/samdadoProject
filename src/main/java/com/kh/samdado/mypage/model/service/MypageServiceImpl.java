@@ -62,6 +62,17 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectPBusList(usno);
 	}
 	
+	// 제휴회원 - 광고 클릭수 계산해서 까져오기
+	@Override
+	public int selectClickCount(String usno) {
+		return mDao.selectClickCount(usno);
+	}
+	
+	// 제휴회원 - 광고관리 차트 데이터 리스트
+	@Override
+	public List<Business> selectAlliChartList(String usno) {
+		return mDao.selectAlliChartList(usno);
+	}
 	// 제휴회원 - 포인트 충전 내역 insert 메소드
 	@Override
 	public int insertNewPayment(Income ic) {
@@ -159,5 +170,4 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectChartList(ab);
 	}
 
-	
 }

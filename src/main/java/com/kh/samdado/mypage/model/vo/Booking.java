@@ -64,7 +64,8 @@ PRO_NO	VARCHAR2(30 BYTE)
 BUS_CODE	NUMBER
  * */
 	
-	private String us_no;
+	private String usno;
+	private int bookingLv;	// 예약종류(호텔:1/투어:2/렌트카:3)
 	
 	private int c_booking_no;
 	private String c_bus_name;

@@ -28,11 +28,9 @@ public class RouteDaoImpl implements RouteDao {
 	}
 
 	@Override
-	public List<TourSpot> spotSearch() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TourSpot> spotSearch(String sTitle) {
+		return sqlSession.selectList("routeMapper.spotSearch", sTitle);
 	}
-
 	@Override
 	public int spotAdd() {
 		// TODO Auto-generated method stub
@@ -50,6 +48,8 @@ public class RouteDaoImpl implements RouteDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 
 }

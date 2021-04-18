@@ -23,4 +23,5 @@ public class TourProduct {
 	private String pro_adult;
 	private String pro_youth;
 	private String pro_child;
+	private String pro_fac;
 }

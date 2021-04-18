@@ -49,6 +49,12 @@ public class businessServiceImpl implements businessService {
 	public int selectResListCount() {
 		return bDao.selectResListCount();
 	}
+	// 사업장 사진
+	@Override
+	public List<BusinessAtt> selectAtt(int bus_code) {
+		return bDao.selectAtt(bus_code);
+	}
+
 	
 	// 음식점 디테일
 	@Override
@@ -109,7 +115,7 @@ public class businessServiceImpl implements businessService {
 	}
 	// 관광지 디테일
 	@Override
-	public List<Business> selectTour(int bus_code) {
+	public Business selectTour(int bus_code) {
 		return bDao.selectTour(bus_code);
 	}
 
@@ -160,23 +166,32 @@ public class businessServiceImpl implements businessService {
 		return 0;
   }
 	
-	// 일반결제 메소드 3개
+	// 일반결제 메소드
 	@Override
-	public int insertIncome(Income i) {
-		// TODO Auto-generated method stub
+	public int insertIncome(Income i) {		
 		return bDao.insertIncome(i);
 	}
 
 	@Override
-	public int insertBooking(Booking b) {
-		// TODO Auto-generated method stub
-		return bDao.insertBooking(b);
+	public int insertBookingHotel(Booking b) {		
+		return bDao.insertBookingHotel(b);
+	}
+	
+	@Override
+	public int insertBookingTour(Booking b) {		
+		return bDao.insertBookingTour(b);
 	}
 
 	@Override
 	public int insertPoint(Point p) {
 		// TODO Auto-generated method stub
 		return bDao.insertPoint(p);
+	}
+	
+	@Override
+	public Point findPoint(Point p) {
+		// TODO Auto-generated method stub
+		return bDao.findPoint(p);
 	}
 
 	// 지혜
@@ -239,6 +254,13 @@ public class businessServiceImpl implements businessService {
 		return bDao.getBusDetail(bus_code);
 	}
 
+	// 메인사진
+	@Override
+	public int insertMain(BusinessAtt bat) {
+		return bDao.insertMain(bat);
+	}
+
+	
 
 
 	

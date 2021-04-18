@@ -19,6 +19,38 @@
 	<jsp:include page="../common/navi.jsp"/>
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_modal.css" type="text/css">
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css">
+	<style>
+		.modal-body div {
+			margin: 0px;
+		}
+	        .top_div {
+            display: flex;
+           /*  margin-bottom: 10%; */
+        }
+
+        .bottom_div {
+            text-align: center;
+        }
+
+        .left_div {
+            padding-left: 20px;
+
+        }
+
+        .right_div {
+            text-align: center;
+            width: 100%;
+        }
+
+        .detail_img {
+            width: 300px;
+            height: 200px;
+        }
+
+        .detail_content {
+            font-size: 13px;
+        }
+	</style>
 </head>
 <body>
 		<div id="bottom">
@@ -115,15 +147,15 @@
 		                                    <tr>
 		                                       <td colspan="2">
 		                                           <img id="arrow" src="../resources/images/image_route/arrow.png">
-		                                           <span class="detail">26.8km</span>
-		                                           <span class="detail">59분</span>
+		                                           <!-- <span class="detail">26.8km</span>
+		                                           <span class="detail">59분</span> -->
 		                                        </td>
 		                                    </tr>
 	                                    </c:if>
                                </c:forEach>
                                  
-                                   <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: 10%; font-size: 16px;">총 이동 거리 40.1km </p></td></tr>
-                                   <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: -5%; font-size: 16px; margin-bottom: 10%;">예상 이동 시간 83분</p></td></tr>
+                                   <tr><td colspan="2"><!-- <p id="navi-content" style="text-align: center; margin-top: 10%; font-size: 16px;">총 이동 거리 40.1km </p> --></td></tr>
+                                   <tr><td colspan="2"><!-- <p id="navi-content" style="text-align: center; margin-top: -5%; font-size: 16px; margin-bottom: 10%;">예상 이동 시간 83분</p> --></td></tr>
                                    
                                    <tr>
                                         <td colspan="2"> 
@@ -237,12 +269,18 @@
                     <p id="searchtitle">관광지 검색</p>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+               
                 <class class="_modal-body" id="modal-body" style="max-height: 420px; overflow: auto; overflow-x: hidden;">
-                    <input type="text" id="search_input" placeholder="관광지를 검색하세요.">
-                    <br><br>
-                    <p id="zzim">삼다수 님이 찜하신 관광지</p>
+                    	<input type="text" id="search_input" placeholder="관광지를 검색하세요.">
+                    	<button id="search_btn">검색</button>
+                   		<br><br>
+                    
+                    <div id="search_list"></div>
+                    
+                    <c:if test="${ !empty loginUser }">
+                    <p id="zzim">${ loginUser.usname } 님이 찜하신 관광지</p>
                     <div class="zzim_list">
-                        <p class="zzim_content_title" >제주김만복 본점</p>
+                        <p class="zzim_content_title">제주김만복 본점</p>
                         <p class="zzim_content">제주 제주시 오라로 41</p>
                         <p class="zzim_content">
                         	오라 3동 2250-1
@@ -255,7 +293,7 @@
                         <p class="zzim_content_title" >제주김만복 본점</p>
                         <p class="zzim_content">제주 제주시 오라로 41</p>
                         <p class="zzim_content">
-                            오라 3동 2250-1
+                            	오라 3동 2250-1
                             <button id="addbtn">
                                 <img src="../resources/images/image_route/download.png">추가하기
                             </button>
@@ -265,7 +303,7 @@
                         <p class="zzim_content_title" >제주김만복 본점</p>
                         <p class="zzim_content">제주 제주시 오라로 41</p>
                         <p class="zzim_content">
-                            오라 3동 2250-1
+                            	오라 3동 2250-1
                             <button id="addbtn">
                                 <img src="../resources/images/image_route/download.png">추가하기
                             </button>
@@ -282,17 +320,88 @@
                         </p>
                     </div>
                     <br>
+                    </c:if>
                 </class>
                 </div>
             </div>
         </div>
+        
+        <!-- 상세보기 button -->
+        <button id="detail_modal" type="button" class="mapSearchbtn" data-bs-toggle="modal" data-bs-target="#detailModal" style="position: relative; z-index: 10; margin-left: 91%; margin-top: 1%; display:none;"></button>
+        
+        <!-- 상세보기 Modal -->
+	    <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-header">
+	                    <p id="searchtitle">상세보기</p>
+	                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                </div>
+	                <class class="modal-body" id="modal-body">
+	                    <div class="top_div">
+
+	                        <div class="right_div">
+	                            <br>
+		                            <p id="detail_title"></p>
+		                            <p class="detail_content" id="detail_address"></p>
+	                        </div>
+	                    </div>
+	
+	                    <div class="bottom_div">
+	                        <br>
+	                        <p id="detail_content"></p>
+	                    </div>
+	                </class>
+	            </div>
+	        </div>
+	    </div>
+	    
+	<!-- 검색 모달창 -->
+	<script language=JavaScript>
+		$("#search_btn").on("click", function(){
+		var sTitle = $("#search_input").val();
+		var data = { sTitle : sTitle };
+		
+		$.ajax({
+			url: "${ contextPath }/route/searchSpot",
+			data: data,
+			type: "post",
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+				
+				sdiv = $("#search_list");
+				sdiv.html("");
+				
+				for(var i in data) {
+					div = $("<div class='zzim_list'>");
+					title = $("<p class='zzim_content_title'>").text(data[i].spot_title);
+					address = $("<p class='zzim_content'>").text(data[i].spot_address);
+					add = $("<button id='addbtn'><img src='../resources/images/image_route/download.png'>추가하기</button>");
+					br = $("<br>");
+
+					div.append(title, address, add);
+					sdiv.append(div, br);
+				}
+				
+				$("#search_input").val("");			
+			}
+			
+		});
+		
+		});
+	</script>    
     
+    <!--  지도 스크립트 -->
     <script language=JavaScript>
     	var arr = new Array();
     	<c:forEach items="${list}" var="list">
     		arr.push({
     			title: "${list.spot_title}",
-    			address: "${list.spot_address}"
+    			address: "${list.spot_address}",
+    			content: "${list.spot_content}",
+    			path1: "${list.spot_path}",
+    			path2: "${list.spot_oname}"
     			});
     	</c:forEach>
     	
@@ -311,10 +420,11 @@
 		var imageSize = new kakao.maps.Size(33, 54);
 		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 		var bounds = new kakao.maps.LatLngBounds();
-		var linePath = new Array();
 		
 		var linePath = [];
-
+		
+		var distanceOverlay;
+		
 		var polyline = new kakao.maps.Polyline({
 		    path: linePath,
 		    strokeWeight: 3,
@@ -322,15 +432,14 @@
 		    strokeColor: 'red',
 		    strokeStyle: 'solid'
 		});
-
+		
+		
 		const addressSearch = address => {
 		    return new Promise((resolve, reject) => {
 		        geocoder.addressSearch(address.address, function(result, status) {
 		            if (status === kakao.maps.services.Status.OK) {
 		            	
 		            	  var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-					        
-					        console.log(result[0]);
 						       
 						       // 결과값으로 받은 위치를 마커로 표시합니다
 						        var marker = new kakao.maps.Marker({
@@ -341,6 +450,7 @@
 						       
 						       marker.setMap(map);
 							
+
 					        // 인포윈도우로 장소에 대한 설명을 표시합니다
 					        var infowindow = new kakao.maps.InfoWindow({
 					            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address.title + '</div>'
@@ -348,10 +458,18 @@
 					        
 					        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
 						    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+						    
+						    kakao.maps.event.addListener(marker, 'click', function() {
+						        document.getElementById("detail_modal").click();
+						        document.getElementById("detail_title").innerHTML = address.title;
+						        document.getElementById("detail_address").innerHTML = address.address;
+						        document.getElementById("detail_content").innerHTML = address.content;
+						        
+						  	});
 					    	
 					    	bounds.extend(new kakao.maps.LatLng(coords.Ma, coords.La));
 					    	map.setBounds(bounds);
-		            	
+		                
 		                resolve(result);
 		            } else {
 		                reject(status);
@@ -365,6 +483,7 @@
 		        for(let address of positions) {
 		            const result = await addressSearch(address);
 		            setPolyLine(result);
+		            console.log("길이: " + polyline.getLength());
 		        }
 		    } catch (e) {
 		        console.log(e);
@@ -375,7 +494,7 @@
 		    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 		    linePath.push(coords);
 		    polyline.setPath(linePath);
-
+		    
 		    if(!polyline.getMap()) {
 		        polyline.setMap(map);
 		    }
@@ -444,78 +563,6 @@
 			}
     </script>
     
-    <!-- <script>
-		var container = document.getElementById('map');
-		var options = {
-			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
-			level: 9
-		};
-
-		var map = new kakao.maps.Map(container, options);
-		var geocoder = new kakao.maps.services.Geocoder();
-		
-		var imageSrc = "${ contextPath }/resources/images/image_route/marker.png";
-		var imageSize = new kakao.maps.Size(33, 54);
-		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-		
-		<c:forEach var="list" items="${list}" varStatus="listStatus">
-			// 주소로 좌표를 검색합니다
-			geocoder.addressSearch('${list.spot_address}', function(result, status) {
-	
-			    // 정상적으로 검색이 완료됐으면 
-			     if (status === kakao.maps.services.Status.OK) {
-					
-			         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-			        // 결과값으로 받은 위치를 마커로 표시합니다
-			        var marker = new kakao.maps.Marker({
-			            map: map,
-			            position: coords,
-			            image : markerImage
-			        });
-	
-			        // 인포윈도우로 장소에 대한 설명을 표시합니다
-			        var infowindow = new kakao.maps.InfoWindow({
-			            content: '<div style="width:150px;text-align:center;padding:6px 0;">${list.spot_title}</div>'
-			        });
-			       
-			       kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-			       kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-	
-			         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			      map.setCenter(coords);
-			         
-			      var first_polyline = new kakao.maps.LatLng(coords.La, coords.Ma);
-			      
-			      console.log(first_polyline);
-			      
-			      var first_linePath = new kakao.maps.Polyline({
-			    	 path: first_polyline,
-			    	 strokeWeight: 3,
-			    	 strokeColor: 'red',
-			    	 strokeStyle: 'solid'
-			      });first_linePath.setMap(map);
-			    } 
-			    
-			      
-			      
-			     function makeOverListener(map, marker, infowindow) {
-			    	    return function() {
-			    	        infowindow.open(map, marker);
-			    	    };
-			    	}
-
-			    	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-			    	function makeOutListener(infowindow) {
-			    	    return function() {
-			    	        infowindow.close();
-			    	    };
-			    	}
-			});    
-			
-		</c:forEach>
-
-	</script> -->
 </body>
 		<footer>
            <jsp:include page="../common/footer.jsp"/>

@@ -484,15 +484,13 @@
         
         <section class="page-start">
             <div id="topMenu">
-                <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
+				<div id="countDday"> <p>${ loginUser.usname }님의 <br> 여행까지 <br>D-100</p> </div>
                 <div class="menuBox" id="menuBox">
-
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록</div></button>
-                    <button class="menuButton" id="myInfo" onclick="location.href='${contextPath}/mypage/booking'"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행</div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/walletW.png" class="btnImg"> <br> 내 지갑</div></button>
-
                 </div>
             </div>
 
@@ -738,6 +736,10 @@
 		/* console.log("jsp안에서 usno확인 : " + usno); */
 		location.href='${contextPath}/mypage/wallet?usno='+${loginUser.usno};
 	};
+	
+	function goToBooking(){
+		location.href='${contextPath}/mypage/booking?usno='+${loginUser.usno};
+	}
     </script>
 	
 	<!-- 새로운 가계부 내역 입력하는 모달 띄우기 -->

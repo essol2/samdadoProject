@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.samdado.route.model.service.RouteService;
 import com.kh.samdado.route.model.vo.Route;
+import com.kh.samdado.route.model.vo.TourSpot;
 import com.kh.samdado.route.model.vo.rSearch;
 
 @Controller
@@ -70,8 +71,16 @@ public class RouteController {
 		return "";
 	}
 	
-	public String searchSpot() {		// 여행지 검색
-		return "";
+	@PostMapping(value="/searchSpot", produces="application/json; charset=utf-8")
+	public @ResponseBody List<TourSpot> searchSpot(String sTitle, HttpSession session) {		// 여행지 검색
+		
+		System.out.println(sTitle);
+		
+		List<TourSpot> tlist = rService.spotSearch(sTitle);
+		
+		System.out.println(tlist);
+		
+		return tlist;
 	}
 	
 	public String addSpot() {			// 여행지 추가

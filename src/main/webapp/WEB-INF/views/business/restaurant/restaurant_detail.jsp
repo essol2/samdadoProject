@@ -13,8 +13,8 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <title>samdado</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <style>
         /* 공통 - 폰트 */
         * {
