@@ -235,6 +235,7 @@ public class businessServiceImpl implements businessService {
 			if(flag) {
 				bDao.updateReadCount(selectBusCodeUser);		// 배너 조회수 카운트 업데이트
 				bDao.insertPointDeduction(selectBusCodeUser);	// 포인트 컬럽 인서트
+				bDao.insertPointColumn(selectBusCodeUser);
 			}
 			
 		return bDao.selectBannerAdDetail(selectBusCodeUser);
