@@ -349,7 +349,7 @@
 									var bus_code = $("<td id='ajaxReportbus_code'>").text(data[i].bus_code);
 									var r_count = $("<td id='ajaxReportr_count'>").text(data[i].r_count);
 									var rstatus = $("<td id='ajaxReportrstatus'>").text(data[i].rstatus);
-									var showAtta = $("<td> <button type='button' class='btn btn-secondary' onclick='test(this);'>보기</button>");
+									var showAtta = $("<td> <button type='button' class='btn btn-secondary' onclick='test("+data+");'>보기</button>");
 	
 									tr.append(report_no, rep_cont, rtodate, retodate, usno, usname, bus_code, r_count, rstatus, showAtta);
 									tableBody.append(tr);

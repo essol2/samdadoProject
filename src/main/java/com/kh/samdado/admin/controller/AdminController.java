@@ -28,15 +28,11 @@ import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
-<<<<<<< HEAD
+
 import com.kh.samdado.mypage.model.service.MypageService;
-import com.kh.samdado.mypage.model.vo.Point;
-=======
->>>>>>> branch 'demo' of https://github.com/essol2/samdadoProject.git
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
-
 
 @Controller
 @RequestMapping("/admin")
