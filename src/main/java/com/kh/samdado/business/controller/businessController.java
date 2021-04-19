@@ -829,15 +829,15 @@ public class businessController {
 		Business selectUser = bService.selectBusCodeUser(bus_code);
 		r.setUsno(selectUser.getUs_no());
 		Report findReportStatus = bService.findReportStatus(r);
-		// System.out.println("r : " + r);
-		// System.out.println("frs : " + findReportStatus);
+		 System.out.println("r : " + r);
+		 System.out.println("frs : " + findReportStatus);
 		
 		// 해당 업체가 신고기록이 없을 때 insert
 		if(findReportStatus == null) {					
 			int result = bService.insertReport(r);
 								
 			if(result > 0) {						
-				return "redirect:/main";
+				return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
 			} else {
 				throw new businessException("신고에 실패하였습니다.");
 			}
@@ -846,17 +846,18 @@ public class businessController {
 		} else {
 			// Rstatus가 n일 경우
 			if(findReportStatus.getRstatus().equals("N")) {
-				return "redirect:/main";
+				return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
 				
 			// Rstatus가 n이 아닐 경우	
 			} else {
 
-				// rcount + 1
-				int result = bService.updateReport(r);
+				// 기존 rcount를 가져와서 insert하기
+				System.out.println("r2 : " + r);
+				int result = bService.insertReport2(r);
 									
 
 				if(result > 0) {							
-					return "redirect:/business/restaurant/restaurant_detail?bus_code=" + r.getBus_code();
+					return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
 				} else {
 					throw new businessException("신고에 실패하였습니다.");
 				}

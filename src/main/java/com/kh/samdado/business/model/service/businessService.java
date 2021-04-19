@@ -80,6 +80,8 @@ public interface businessService {
 	// 신고하기
 	int insertReport(Report r);
 	
+	int insertReport2(Report r);
+	
 	int updateReport(Report r);
 	
 	// 찜하기
