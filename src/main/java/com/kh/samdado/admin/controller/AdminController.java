@@ -362,6 +362,9 @@ public class AdminController {
 		
 		int result = 0;
 		
+		// 같은 신고 객체 셀렉트
+		// 조건 rexdate == null && usno 동일 rownum <= 1 order by r_count // r_count가 3이면 
+		
 		// 1. 신고 누적 횟수 비교
 		if (report.getR_count() < 2) {
 			// 2_1. rstatus y로 업데이트, r_count + 1

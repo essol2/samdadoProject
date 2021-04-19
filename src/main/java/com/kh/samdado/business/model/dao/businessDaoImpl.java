@@ -300,6 +300,8 @@ public class businessDaoImpl implements businessDao {
 	public int insertMain(BusinessAtt bat) {
 		return sqlSession.insert("businessMapper.insertMain", bat);
 	}
+  
+ 
 
 	
 }

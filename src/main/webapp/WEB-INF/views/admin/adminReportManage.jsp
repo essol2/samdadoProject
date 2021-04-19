@@ -374,7 +374,7 @@
 				            $('#searchModal').modal("show");
 				        });
 					 
-					var report_no = $("#ajaxReportno").text(data);
+					var report_no = $("#ajaxReportno").text();
 					var rep_cont = $("#ajaxReportcont").text();
 					var rtodate = $("#ajaxReportrtodate").text();
 					var retodate = $("#ajaxReportretodate").text();
