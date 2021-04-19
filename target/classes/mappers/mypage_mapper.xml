@@ -18,6 +18,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<result property="authKey" column="AUTH_KEY" />
 	</resultMap>
 	
+	<resultMap type="QnA" id="qnaResultSet">
+		<id property="qnano" column="QNA_NO" />
+		<result property="qcont" column="QCONT" />
+		<result property="qdate" column="QDATE" />
+		<result property="qtodate" column="QTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
+		<result property="qreply" column="QREPLY" />
+		<result property="qstatus" column="QSTATUS" />
+		<result property="usno" column="US_NO" />	
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
+	</resultMap>
+	
 	<resultMap type="Point" id="pointResultSet">
 	<id property="pno" column="PNO" />
 	<result property="pdate" column="PDATE" />
@@ -109,6 +121,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="thisMonth" column="THISMONTH"/>
 		<result property="totalCount" column="TOTALCOUNT"/>
 		<collection property="alliance" resultMap="AllianceResultSet"/>
+	</resultMap>
+	
+	<resultMap type="Alert" id="AlertResultSet">
+		<id property="nno" column="NNO"/>
+		<result property="usno" column="US_NO"/>
+		<result property="ntitle" column="NTITLE"/>
+		<result property="nstatus" column="NSTATUS"/>
+		<result property="ncate" column="NCATE"/>
+		<result property="nkeyno" column="NKEYNO"/>
 	</resultMap>
 	
 	
@@ -432,9 +453,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		AND B.US_NO = #{usno}
 		GROUP BY  TO_CHAR(TO_DATE(A.START_DATE, 'YY-MM-DD'), 'MONTH')
 	</select>
+
 	
-	<insert id="insertQnANews">
-		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE)
-		VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '문의에 대한 답변이 등록되었습니다.', 'N', 'Q');
+	<insert id="insertQnANews" parameterType="Alert">
+		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO)
+		VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '문의에 대한 답변이 등록되었습니다.', 'N', 'Q', #{nkeyno})
 	</insert>
 </mapper>

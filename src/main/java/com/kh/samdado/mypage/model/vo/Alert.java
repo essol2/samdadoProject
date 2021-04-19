@@ -52,9 +52,24 @@ public class Alert {
 	DATE	DATE
 	STATUS	CHAR(1 BYTE)
 	EXDATE	DATE
+	
+	* ALERT
+	NNO	NUMBER
+	US_NO	NUMBER
+	NTITLE	VARCHAR2(1000 BYTE)
+	NSTATUS	VARCHAR2(5 BYTE)
+	NCATE	VARCHAR2(10 BYTE)
+	NKEYNO	NUMBER
 	*/
 	
+	private int nno;
 	private String usno;
+	private String ntitle;
+	private String nstatus;
+	private String ncate;
+	private int nkeyno;
+
+	
 	private int qno;
 	private String qcont;
 	@DateTimeFormat(pattern = "yyyy.MM.dd")

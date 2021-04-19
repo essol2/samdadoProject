@@ -91,6 +91,7 @@ public interface MypageDao {
 	public List<AccountBook> selectChartList(AccountBook ab);
 
 	// 제휴회원 - 새로운 알림 등록
-	public int insertQnANews(String usno);
+	public int insertQnANews(Alert a);
+
 
 }

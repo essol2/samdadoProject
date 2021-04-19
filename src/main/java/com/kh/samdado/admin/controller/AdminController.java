@@ -28,8 +28,8 @@ import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
-
 import com.kh.samdado.mypage.model.service.MypageService;
+import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
@@ -215,14 +215,18 @@ public class AdminController {
 	}
 	
 	@PostMapping("/insertReplyQna")
-	public String insertReplyQna(QnA q, Model model) {
-	
+	public String insertReplyQna(QnA q, Model model, Alert a) {
+
 		int result = aService.insertQnaReply(q); // update
 		
 		String usno = q.getUsno();
-		int insertNews = mService.insertQnANews(usno);
 		
-		if (result > 0) {
+		a.setUsno(usno);
+		a.setNkeyno(q.getQnano());
+		
+		int newNews = mService.insertQnANews(a);
+		
+		if (result > 0 && newNews  > 0) {
 			model.addAttribute("msg", "답변 완료!");
 			return "redirect:/admin/qna";
 		} else {

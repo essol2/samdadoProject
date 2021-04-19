@@ -91,12 +91,7 @@ public interface MypageService {
 	public List<AccountBook> selectChartList(AccountBook ab);
 
 	// 제휴회원 - 새로운 알림 등록
-	public int insertQnANews(String usno);
-
-	// 제휴회원 - 배너 광고 신청 반려 등
-	//public int insertAlliNews(String usno);
-
-	
+	public int insertQnANews(Alert a);
 
 	
 }

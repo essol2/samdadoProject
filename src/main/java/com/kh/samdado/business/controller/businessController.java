@@ -431,7 +431,7 @@ public class businessController {
 		
 		if(result > 0) {
 			
-			return "mypage/mp_StoreList";
+			return "/mypage/buss";
 		} else {
 			throw new businessException("사업 등록에 실패하였습니다.");
 		}
