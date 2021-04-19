@@ -823,7 +823,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
              (SELECT *
                 FROM "REPORT"
                WHERE 
-                     REF_BUS_CODE = 61          
+                     REF_BUS_CODE = #{ bus_code}          
                      ORDER BY REPORT_NO DESC)
        WHERE  ROWNUM = 1
    </select>
