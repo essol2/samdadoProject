@@ -81,6 +81,7 @@
 		                       <td id="bus_code">${ bal.bus_code }</td>
 		                       <td>${ bal.pbalance }</td>
 		                	   <td>
+		                	   <input type="hidden" id="usno" value="${bal.usno}">
 		                       <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal${ status.count }">
 					  				보기
 							   </button>
@@ -176,8 +177,9 @@
 	         		var alno = $("#al_no").text();
 	         		var bus_code = $("#bus_code").text();
 	         		var amassage = $("#amassage").val();
+	         		var usno = $("#usno").val();
 	         		
-	         		location.href="${contextPath}/admin/rejectBannerAd?alno=" + alno + "&bus_code=" + bus_code + "&amassage=" + amassage;
+	         		location.href="${contextPath}/admin/rejectBannerAd?alno=" + alno + "&bus_code=" + bus_code + "&amassage=" + amassage +"&usno=" + usno;
          	 });
          	</script>
 

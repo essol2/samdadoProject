@@ -79,7 +79,7 @@ public class Alert {
 	private int alno;
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date aldate;
-	private char alstatus;
+	private String alstatus;
 	private String almassage;
 	private int pno;
 	@DateTimeFormat(pattern = "yyyy.MM.dd")

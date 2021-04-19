@@ -171,7 +171,7 @@ public class MypageController {
 		 return mv;
 	 }
 	 
-	 // 제휴회원 - 포인트 충전 후 Income DB에 insert.
+	 // 제휴회원 - 포인트 충전 후 Income, Point, News에 insert.
 	 @GetMapping("/payment")
 	 public String goToPayment(@ModelAttribute Income ic,
 			 				   @ModelAttribute Point po,
@@ -200,7 +200,7 @@ public class MypageController {
 		 }
 		 
 		 //System.out.println("Point객체 확인 : " + po);
-		 
+
 		 // Point DB에 포인트 넣어주기
 		 int result2 = mService.insertNewPoint(po);
 		 

@@ -36,24 +36,20 @@ import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
-
 import com.kh.samdado.business.model.vo.hotel.Room;
 import com.kh.samdado.business.model.vo.hotel.RoomAtt;
-import com.kh.samdado.business.model.vo.hotel.RoomAttList;
-import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.hotel.RoomList;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
-
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.service.MypageService;
+import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
-
-import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.user.model.vo.User;
 
 
@@ -61,7 +57,8 @@ import com.kh.samdado.user.model.vo.User;
 @RequestMapping("/business")
 @SessionAttributes({ "loginUser", "msg" })
 public class businessController {
-
+	@Autowired
+	private MypageService mService;
 
 	@Autowired
 	businessService bService;
@@ -640,9 +637,10 @@ public class businessController {
 	@PostMapping("/insert/bannerAd")
 	public String boardInsert(Alliance a, Model model,
 							  @RequestParam(value="uploadFile") MultipartFile file,
-							  HttpServletRequest request) {
+							  HttpServletRequest request,
+							  Alert al) {
 		
-		// System.out.println("a : " + a);
+		 System.out.println("a : " + a);
 		// System.out.println("file : " + file);
 		
 		// 업로드 파일 서버에 저장
@@ -659,10 +657,20 @@ public class businessController {
 		}
 		
 		int result = bService.insertBannerAd(a);
-		
 		String usno = a.getUsno();
 		
-		if(result > 0) {
+		// 알림 기능 ---은솔---
+		// 1. alno 찾아오기
+		int nkeyno = mService.findAlno(a);
+		
+		// News 테이블에 담을 객체 - usno, nkeyno
+		al.setUsno(usno);
+		al.setNkeyno(nkeyno);
+		
+		// News에 Insert하기
+		int newsInsert = mService.insertAlliNews(al);
+		
+		if(result > 0 && newsInsert > 0) {
 			model.addAttribute("usno", usno);
 			model.addAttribute("msg", "배너 광고 신청이 완료되었습니다. 마이페이지에서 확인하세요!");
 			return "redirect:/mypage/buss";

@@ -224,6 +224,7 @@ public class AdminController {
 		a.setUsno(usno);
 		a.setNkeyno(q.getQnano());
 		
+		
 		int newNews = mService.insertQnANews(a);
 		
 		if (result > 0 && newNews  > 0) {
@@ -403,11 +404,23 @@ public class AdminController {
 	// 배너 광고 승인
 	@GetMapping("/admitBannerAd")
 	public String admitBannerAd(@ModelAttribute Alliance alliance,
-							Model model) {
+							    Model model, Alert alert) {
 		
 		int result = aService.updateAdmitBannerAdStatus(alliance); // Y, STARTDATE + 3
 		
-		if (result > 0) model.addAttribute("msg", "배너광고 승인 처리가 완료되었습니다.");	
+		// --- 은솔 --- 배너신고 승인시 알림주기
+		// 1. bus_code을 소유하고있는 회원의 usno 알아오기
+		String usno = mService.findAlliUsno(alliance);
+		
+		alert.setNkeyno(alliance.getAlno());
+		alert.setUsno(usno);
+		alert.setAlstatus("Y");
+		
+		// 2. News테이블에 insert
+		int insertNew = mService.insertNewApprove(alert);
+		
+		
+		if (result > 0 && insertNew > 0) model.addAttribute("msg", "배너광고 승인 처리가 완료되었습니다.");	
 		else throw new AdminException("배너광고 승인 처리에 실패하였습니다.");
 
 		return "redirect:/admin/advertise1";
@@ -416,18 +429,26 @@ public class AdminController {
 	// 배너 광고 거절
 	@GetMapping("/rejectBannerAd")
 	public String rejectBannerAd(@ModelAttribute Alliance alliance,
-							Model model) {
+							Model model, Alert alert) {
 		int result = 0;
 		String usno = alliance.getUsno();
+				
+		alert.setNkeyno(alliance.getAlno());
+		alert.setUsno(usno);
+		int insertNew = 0;
 		
 		if (alliance.getAmassage().equals("이미지 불일치")) {
 			result = aService.updateRejectBannerAdStatusRI(alliance); // RI
 			//int insertNews = mService.insertAlliNews(usno);
+			alert.setAlstatus("RI");
+			insertNew = mService.insertNewApprove(alert);
 		} else { // 포인트 미충전
 			result = aService.updateRejectBannerAdStatusRP(alliance); // RP
+			alert.setAlstatus("RP");
+			insertNew = mService.insertNewApprove(alert);
 		}
 		
-		if (result > 0) model.addAttribute("msg", "배너광고 반려 처리가 완료되었습니다.");	
+		if (result > 0 && insertNew > 0) model.addAttribute("msg", "배너광고 반려 처리가 완료되었습니다.");	
 		else throw new AdminException("배너광고 반려 처리에 실패하였습니다.");
 
 		return "redirect:/admin/advertise1";
