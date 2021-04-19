@@ -165,9 +165,15 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.insert("businessMapper.insertReview", review);
 	}
 
+	// 신고하기
 	@Override
 	public int insertReport(Report r) {		
 		return sqlSession.insert("businessMapper.insertReport", r);
+	}
+	
+	@Override
+	public int insertReport2(Report r) {
+		return sqlSession.insert("businessMapper.insertReport2", r);
 	}
 	
 	@Override

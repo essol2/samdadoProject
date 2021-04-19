@@ -796,18 +796,38 @@
                 <!--파일첨부-->
                 <div class="reportimg_div">
                     <label for="reportimg">파일첨부</label>                    
-                    <input type="file" id="reportimg" name="uploadFile">
+                    <input type="file" id="reportimg" name="uploadFile" onchange="setThumbnail(event);">
+                    <div id="image_container"></div>
                 </div>
                 
             </div>
             <div class="modal-footer">                
-                <button type="submit" id="reportBtn">신고하기</button>
+                <button type="submit" id="reportBtn" onclick="reportAlert()">신고하기</button>
                 <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
             </div>
             </form>
         </div>
         </div>
     </div>
+    
+    <script> 
+    	function reportAlert(){ 
+    		alert('신고가 완료되었습니다.'); 
+    	}
+    	
+    	function setThumbnail(event) { 
+    		var reader = new FileReader(); 
+    		reader.onload = function(event) { 
+    			var img = document.createElement("img"); 
+    			img.setAttribute("src", event.target.result); 
+    			document.querySelector("div#image_container").appendChild(img); 
+    		}; 
+    		reader.readAsDataURL(event.target.files[0]); 
+    	}
+    	
+    </script>
+
+
 
      <footer>
            <jsp:include page="../../common/footer.jsp"/>

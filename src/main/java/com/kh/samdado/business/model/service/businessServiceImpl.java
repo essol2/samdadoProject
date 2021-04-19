@@ -160,6 +160,11 @@ public class businessServiceImpl implements businessService {
 	}
 	
 	@Override
+	public int insertReport2(Report r) {		
+		return bDao.insertReport2(r);
+	}
+	
+	@Override
 	public int updateReport(Report r) {		
 		return bDao.updateReport(r);
 	}

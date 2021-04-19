@@ -81,6 +81,8 @@ public interface businessDao {
 	// 신고하기
 	int insertReport(Report r);
 	
+	int insertReport2(Report r);
+	
 	int updateReport(Report r);
 
 		  
