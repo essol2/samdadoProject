@@ -459,4 +459,87 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO)
 		VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '문의에 대한 답변이 등록되었습니다.', 'N', 'Q', #{nkeyno})
 	</insert>
+	
+	<select id="findAlno" resultType="_int">
+		SELECT AL_NO
+		FROM ALLIANCE
+		WHERE BUS_CODE = #{bus_code}
+	</select>
+	
+	<insert id="insertAlliNews" parameterType="Alert">
+		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO)
+		VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '배너 광고 신청이 완료되었습니다.', 'N', 'A', #{nkeyno})
+	</insert>
+	
+	<select id="findAlliUsno" resultType="string">
+		SELECT US_NO
+		FROM ALLIANCE
+		WHERE BUS_CODE = #{bus_code}
+	</select>
+	
+	<insert id="insertNewApprove" parameterType="Alert">
+		<if test='alstatus == "Y"'>
+			INSERT 
+			INTO 	NEWS
+			(
+				NNO
+			  , US_NO
+			  , NTITLE
+			  , NSTATUS
+			  , NCATE
+			  , NKEYNO
+			)
+			VALUES
+			(
+				NEWS_SEQ_NO.NEXTVAL
+			  , #{usno}
+			  , '배너 광고 신청이 승인되었습니다.'
+			  , 'N'
+			  , 'A'
+			  , #{nkeyno}
+			)
+		</if>
+		<if test='alstatus == "RI"'>
+			INSERT 
+			INTO 	NEWS
+			(
+				NNO
+			  , US_NO
+			  , NTITLE
+			  , NSTATUS
+			  , NCATE
+			  , NKEYNO
+			)
+			VALUES
+			(
+				NEWS_SEQ_NO.NEXTVAL
+			  , #{usno}
+			  , '배너 광고가 첨부파일 문제로 반려되었습니다.'
+			  , 'N'
+			  , 'A'
+			  , #{nkeyno}
+			)
+		</if>
+		<if test="alstatus == 'RP'">
+			INSERT 
+			INTO 	NEWS
+			(
+				NNO
+			  , US_NO
+			  , NTITLE
+			  , NSTATUS
+			  , NCATE
+			  , NKEYNO
+			)
+			VALUES
+			(
+				NEWS_SEQ_NO.NEXTVAL
+			  , #{usno}
+			  , '배너 광고가 포인트 문제로 반려되었습니다.'
+			  , 'N'
+			  , 'A'
+			  , #{nkeyno}
+			)
+		</if>
+	</insert>
 </mapper>
