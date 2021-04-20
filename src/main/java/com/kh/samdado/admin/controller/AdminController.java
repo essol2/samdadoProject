@@ -1,5 +1,7 @@
 package com.kh.samdado.admin.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -363,18 +365,51 @@ public class AdminController {
 		int result = 0;
 		
 		// 같은 신고 객체 셀렉트
-		// 조건 rexdate == null && usno 동일 rownum <= 1 order by r_count // r_count가 3이면 
+		Report selectReoprt = aService.selectReport(report);
+		
+		System.out.println("selectReoprt 출력 : " + selectReoprt);
+		// 조건 rexdate == null && usno 동일  r_count가 3이면 
 		
 		// 1. 신고 누적 횟수 비교
-		if (report.getR_count() < 2) {
+		if (selectReoprt.getR_count() < 2) {
 			// 2_1. rstatus y로 업데이트, r_count + 1
 			result = aService.updateRstatusToY(report);
 			System.out.println("신고 362 result : " + result);
-		} else {
-			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가
+		} else if (selectReoprt.getR_count() == 2) {
+			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가 -> 신고 3회 먹었을 때 rexdate 추가해줌 -> rcount -> 0
 			result = aService.updateRstatusToYAndRexdate(report);
 			System.out.println("신고 366 result : " + result);
-		}	
+		} //else {
+//				
+//			Report selectReportRexdate = aService.selectReportRexdate(report);
+//				
+//				System.out.println("여기 확인 ");
+//				Date today = new Date(); // 오늘날짜
+//				Date exday = selectReportRexdate.getRexdate(); // 만기일
+//				
+//				String day1 = null;
+//				String day2 = null;
+//			
+//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//				
+//					try {
+//						day1 = sdf.format(today); // 오늘
+//						day2 = sdf.format(exday); // 만기	
+//					} catch(Exception e) {
+//						e.printStackTrace();
+//					}
+//					
+//				int compare = day1.compareTo(day2);
+//				
+//				if (compare > 0) { // 만기날짜 넘음
+//					result = aService.updateRstatusToY(report);
+//					System.out.println("만기일 넘음 result : " + result);
+//				} else if (compare <= 0) { // 만기날짜 남음
+//					result = aService.updateRstatusToYAndNoRcount(report); // status -> y / count -> x
+//					System.out.println("만기일 남음 result : " + result);
+//				}
+//
+//		}
 
 		if (result > 0) model.addAttribute("msg", "신고 승인 처리가 완료되었습니다.");	
 		else throw new AdminException("신고 승인 처리에 실패하였습니다.");

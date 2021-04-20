@@ -14,7 +14,6 @@ import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
-import com.kh.samdado.user.model.vo.User;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -158,6 +157,24 @@ public class AdminServiceImpl implements AdminService {
 	public List<Integer> selectGetProfit() {
 		// TODO Auto-generated method stub
 		return aDao.selectGetProfit();
+	}
+
+	@Override
+	public Report selectReport(Report report) {
+		// TODO Auto-generated method stub
+		return aDao.selectReport(report);
+	}
+
+	@Override
+	public int updateRstatusToYAndNoRcount(Report report) {
+		// TODO Auto-generated method stub
+		return aDao.updateRstatusToYAndNoRcount(report);
+	}
+
+	@Override
+	public Report selectReportRexdate(Report report) {
+		// TODO Auto-generated method stub
+		return aDao.selectReportRexdate(report);
 	}
 
 

@@ -625,7 +625,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 										BUS_CODE
 							     FROM   
 							     		ALLIANCE
-							     WHERE  US_NO = #{usno})
+							     WHERE  US_NO = #{usno}
+							     AND    ALSTATUS <![CDATA[<>]]> 'Y')
 		  AND	US_NO = #{usno}
 		 -->
 		 
@@ -1102,16 +1103,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				"USER"
 			SET
 				PBALANCE = (SELECT *
-                FROM(SELECT 
-                			 POINT.PBALANCE
-                       FROM 
-                       		POINT
-                       WHERE 
-                             US_NO = #{us_no}
-                    ORDER BY PBALANCE)
+                			 FROM(SELECT POINT.PBALANCE 
+                          		  FROM 
+                       		           POINT
+                                  WHERE 
+                                  US_NO = #{us_no}
+                    		      ORDER BY PBALANCE)
               WHERE ROWNUM <![CDATA[<=]]> 1)
 		WHERE
-		US_NO = #{us_no};
+		US_NO = #{us_no}
 	</update>
 
 	
