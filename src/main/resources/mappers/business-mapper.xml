@@ -1018,14 +1018,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
    <!-- 지혜 -->
    <select id="selectBannerAdImgList" resultMap="AllianceResultSet">
 		SELECT
-                 AL_NO, ALSTATUS, BUS_CODE, A_IMG_CNAME
+                        AL_NO, BUS_CODE, A_IMG_CNAME
 		FROM    
-		                 ALLIANCE, POINT
+				         ALLIANCE, "USER"
 		WHERE 	 
-		                "POINT".US_NO = ALLIANCE.US_NO
-		AND      ALSTATUS = 'Y'
-		AND      POINT.PBALANCE <![CDATA[<>]]> 0
-		GROUP BY AL_NO, ALSTATUS, BUS_CODE, A_IMG_CNAME
+				          "USER".US_NO = ALLIANCE.US_NO
+		AND               "USER".PBALANCE <![CDATA[<>]]> 0
+		AND              ALSTATUS = 'Y'
+		GROUP BY AL_NO, BUS_CODE, A_IMG_CNAME
    </select>
    
    <select id="selectBannerAdDetail" parameterType="_int" resultMap="BusinessResultSet">

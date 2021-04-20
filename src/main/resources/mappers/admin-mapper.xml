@@ -300,7 +300,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			   START_DATE = SYSDATE + 3
 	     WHERE
 	     	   AL_NO = #{ alno }
-	       AND BUS_CODE = #{ bus_code }
+	      
+	       <!-- AND BUS_CODE = #{ bus_code }
+	       AND AL_INTRO = #{ alintro } -->
 	</update>
 	
 	<update id="updateRejectBannerAdStatusRI" parameterType="Alliance">
@@ -311,7 +313,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			   A_MASSAGE = #{ amassage }
 	     WHERE
 	     	   AL_NO = #{ alno }
-	       AND BUS_CODE = #{ bus_code }
+	     <!--  AND BUS_CODE = #{ bus_code }-->
 	</update>
 	
 	<update id="updateRejectBannerAdStatusRP" parameterType="Alliance">
@@ -322,7 +324,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			   A_MASSAGE = #{ amassage }
 	     WHERE
 	     	   AL_NO = #{ alno }
-	       AND BUS_CODE = #{ bus_code }
+	      <!--   AND BUS_CODE = #{ bus_code }-->
 	</update>
 	
 	<select id="searchReportList" parameterType="aSearch" resultMap="reportResultSet">
@@ -396,15 +398,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		       , US_NAME
 		       , BUS_CATEGORY
 		       , ALLIANCE.BUS_CODE
-		       , PBALANCE
+		       , "USER".PBALANCE
 		       , TO_CHAR(AL_SUBDATE, 'YYYY-MM-DD') AS ALTODATE
 		       , ALSTATUS
+		       , A_IMG_CNAME
+		       , AL_INTRO
 		  FROM
-		       "USER", BUSINESS, ALLIANCE, "POINT"
+		       "USER", BUSINESS, ALLIANCE
 		<where>
 			ALLIANCE.US_NO = "USER".US_NO
 		AND BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
-		AND "POINT".US_NO(+) = ALLIANCE.US_NO
+		AND "USER".US_NO = ALLIANCE.US_NO
 			<choose>
 				<when test="searchCondition == 'alno'">
 					AND ALLIANCE.AL_NO LIKE #{sv}
@@ -419,7 +423,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 					AND ALLIANCE.BUS_CODE LIKE #{sv}
 				</when>
 				<when test="searchCondition == 'pbalance'">
-					AND PBALANCE LIKE #{sv}
+					AND "USER".PBALANCE LIKE #{sv}
 				</when>
 				<when test="searchCondition == 'alsubdate'">
 					AND AL_SUBDATE LIKE #{sv}
@@ -432,7 +436,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 						 OR US_NAME LIKE #{sv}
 						 OR BUS_CATEGORY LIKE #{sv}
 						 OR ALLIANCE.BUS_CODE LIKE #{sv}
-						 OR PBALANCE LIKE #{sv}
+						 OR "USER".PBALANCE LIKE #{sv}
 						 OR AL_SUBDATE LIKE #{sv}
 						 OR ALSTATUS LIKE #{sv})
 				</otherwise>	

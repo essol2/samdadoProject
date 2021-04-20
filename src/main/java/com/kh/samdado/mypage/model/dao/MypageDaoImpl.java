@@ -202,10 +202,17 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.insert("mypageMapper.insertNewApprove", alert);
 	}
 
+
+	@Override
+	public int updatePbalance(Point po) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("mypageMapper.updatePbalance", po);
+
 	// 제휴회원 - Report 승인시 알림 등록
 	@Override
 	public int insertNewReport(Alert a) {
 		return sqlSession.insert("mypageMapper.insertNewReport", a);
+
 	}
 
 }

@@ -370,7 +370,7 @@
 		               <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
 		                   <option>--------</option>
 		                   <option value="alno" <c:if test="${ param.searchCondition == 'alno' }">selected</c:if>>No</option>
-		                   <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>신청자 회원명</option>
+		                   <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원명</option>
 		                   <option value="bus_category" <c:if test="${ param.searchCondition == 'bus_category' }">selected</c:if>>카테고리</option> 
 		                   <option value="bus_code" <c:if test="${ param.searchCondition == 'bus_code' }">selected</c:if>>사업장 코드</option> 
 		                   <option value="pbalance" <c:if test="${ param.searchCondition == 'pbalance' }">selected</c:if>>포인트</option>
@@ -395,6 +395,7 @@
 	                        <th>포인트</th> 
 	                        <th>신청날짜</th>
 	                        <th>처리 상태</th>
+	                        <th>첨부 파일</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -402,6 +403,62 @@
                     </tbody>
                   </table>
                </div>
+               
+             <!-- 모달 -->
+             <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">제출 첨부내역</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      
+			      <div class="modal-body">
+				      <div>
+                   		<form>
+						  <div class="mb-3">
+						    <label for="al_num" class="form-label">광고 번호</label>
+						    <input type="text" class="form-control" id="search_al_num" aria-describedby="emailHelp" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="al_user" class="form-label">신청자</label>
+						    <input type="text" class="form-control" id="search_al_user" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="al_category" class="form-label">카테고리</label>
+						    <input type="text" class="form-control" id="search_al_category" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="al_intro" class="form-label">기업 소개</label>
+						    <textarea class="form-control" id="search_al_intro" style="height: 100px; resize: none;" readonly></textarea>
+						  </div>
+						  <div class="mb-3">
+						    <label for="al_bus_code" class="form-label">사업장 코드</label>
+						    <input type="text" class="form-control" id="search_al_bus_code" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="al_sub_date" class="form-label">신청 날짜</label>
+						    <input type="text" class="form-control" id="search_al_sub_date" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="al_atta" class="form-label">첨부파일</label> <br>
+						    <div class="row row-cols-1 row-cols-md-2">
+							  <div class="col">
+							    <div class="card" style="width: 470px;" id="allianceSearchAjaxModalImgDiv">
+							      
+							    </div>
+							  </div>
+							</div>
+						  </div>
+						</form>
+                        </div>
+			      	</div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
                
                <script>
 					$(function() {
@@ -433,20 +490,44 @@
 										//var alsubdate = $("<td>").text(data[i].alsubdate);
 										var altodate = $("<td>").text(data[i].altodate);
 										var alstatus = $("<td>").text(data[i].alstatus);
+										var aimgcname = $("<td style='display: none;'>").text(data[i].aimgcname);
+										var alintro = $("<td style='display: none;'>").text(data[i].alintro);
+										var showAtta = $("<td> <button type='button' class='btn btn-secondary' onclick='test(this);'>보기</button>");
 										
-										tr.append(alno, usname, bus_category, bus_code, pbalance, altodate, alstatus); // 테이블 행에 추가
+										tr.append(alno, usname, bus_category, bus_code, pbalance, altodate, alstatus, aimgcname, alintro, showAtta); // 테이블 행에 추가
 										tableBody.append(tr); // 테이블에 추가
 									}
 									
 									
 								},
 								error : function(e) {
-									alert("error code : " + e.status + "\n"
-											+ "message : " + e.responseText);
+									alert("정보를 찾을 수 없습니다.");
 								}
 							});
 						});
 					});
+					
+					
+					function test(data){
+						
+						 $(document).ready(function() {
+							 	
+					            $('#allianceSearchAjaxModalImgDiv').html(""); // 이미지 지우기
+					            $('#searchModal').modal("show");
+					        });
+						
+						 console.log($(data).parent().parent().text());
+						 
+						 $("#search_al_num").val($(data).parent().parent().children('th').text());
+						 $("#search_al_user").val($(data).parent().parent().children('td').eq(0).text());
+						 $("#search_al_category").val($(data).parent().parent().children('td').eq(1).text());
+						 $("#search_al_intro").val($(data).parent().parent().children('td').eq(7).text());
+						 $("#search_al_bus_code").val($(data).parent().parent().children('td').eq(2).text());
+						 $("#search_al_sub_date").val($(data).parent().parent().children('td').eq(4).text());
+						 $("#allianceSearchAjaxModalImgDiv").append("<img id='allianceSearchAjaxModalImg' src='${ contextPath }/resources/busUploadFiles/alliance/" + $(data).parent().parent().children('td').eq(6).text() + "' class='card-img-top'>");
+
+					}
+					
 				</script>
 
                <br><hr>

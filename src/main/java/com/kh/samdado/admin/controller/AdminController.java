@@ -1,7 +1,5 @@
 package com.kh.samdado.admin.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -98,32 +96,9 @@ public class AdminController {
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		List<Alliance> bannerAdList = aService.adminbannerAdSelect(pi);
-		
-//		for (Alliance a : bannerAdList) {
-//			if (a.getBus_category().equals("H")) {
-//				a.setBus_category("숙박");
-//			} else if(a.getBus_category().equals("R")) {
-//				a.setBus_category("음식점");
-//			} else if(a.getBus_category().equals("T")) {
-//				a.setBus_category("관광지");				
-//			} else {
-//				a.setBus_category("렌트");								
-//			}
-//		}
-		
+	
 		List<Alliance> admitbannerAdList = aService.admitbannerAdListSelect();
 		
-//		for (Alliance a : admitbannerAdList) {
-//			if (a.getBus_category().equals("H")) {
-//				a.setBus_category("숙박");
-//			} else if(a.getBus_category().equals("R")) {
-//				a.setBus_category("음식점");
-//			} else if(a.getBus_category().equals("T")) {
-//				a.setBus_category("관광지");				
-//			} else {
-//				a.setBus_category("렌트");								
-//			}
-//		}
 
 		model.addAttribute("bannerAdList", bannerAdList);
 		model.addAttribute("admitbannerAdList", admitbannerAdList);
