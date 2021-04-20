@@ -201,6 +201,11 @@ public class businessDaoImpl implements businessDao {
 		public int insertBookingTour(Booking b) {
 			return sqlSession.insert("businessMapper.insertBookingTour", b);
 		}
+		
+		@Override
+		public int insertBookingCar(Booking b) {
+			return sqlSession.insert("businessMapper.insertBookingCar", b);
+		}
 
 		@Override
 		public int insertPoint(Point p) {

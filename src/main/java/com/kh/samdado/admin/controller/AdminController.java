@@ -340,15 +340,19 @@ public class AdminController {
 	// 신고 승인
 	@GetMapping("/admitReport")
 	public String admitReport(@ModelAttribute Report report,
-							Model model) {
+							Model model, Alert a) {
 		
 		int result = 0;
+		System.out.println("report 확인 : " + report);
 		
 		// 같은 신고 객체 셀렉트
 		Report selectReoprt = aService.selectReport(report);
 		
 		System.out.println("selectReoprt 출력 : " + selectReoprt);
 		// 조건 rexdate == null && usno 동일  r_count가 3이면 
+		
+		a.setNkeyno(report.getReport_no());
+		a.setUsno(report.getUsno());
 		
 		// 1. 신고 누적 횟수 비교
 		if (selectReoprt.getR_count() < 2) {
@@ -359,7 +363,9 @@ public class AdminController {
 			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가 -> 신고 3회 먹었을 때 rexdate 추가해줌 -> rcount -> 0
 			result = aService.updateRstatusToYAndRexdate(report);
 			System.out.println("신고 366 result : " + result);
-		} //else {
+      a.setNtitle("block");
+		}
+    //else {
 //				
 //			Report selectReportRexdate = aService.selectReportRexdate(report);
 //				
@@ -391,7 +397,10 @@ public class AdminController {
 //
 //		}
 
-		if (result > 0) model.addAttribute("msg", "신고 승인 처리가 완료되었습니다.");	
+   // --- 은솔 --- News에 신고 받은거 알리기
+		int newReport = mService.insertNewReport(a);
+    
+		if (result > 0 && newReport > 0) model.addAttribute("msg", "신고 승인 처리가 완료되었습니다.");	
 		else throw new AdminException("신고 승인 처리에 실패하였습니다.");
 
 		return "redirect:/admin/report";
