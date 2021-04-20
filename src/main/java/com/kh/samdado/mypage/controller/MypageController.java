@@ -190,20 +190,24 @@ public class MypageController {
 		 Point prePoint = mService.prePoint(po);
 //		 System.out.println("prePoint 확인 : " + prePoint);
 //		 System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
-		 
+		  
+
 		 if(prePoint != null) {
 			 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
 			 po.setPbalance(prePoint.getPbalance()+ic.getAmount());
+			 
 		 } else {
 			 // 2. prePoint가 null이라면 그냥 Amount를 넣어주기
-			 po.setPbalance(ic.getAmount());
+			 po.setPbalance(ic.getAmount());	
 		 }
 		 
-		 //System.out.println("Point객체 확인 : " + po);
+		 System.out.println("Point객체 확인 : " + po);
+		 
+		 mService.updatePbalance(po);
 
 		 // Point DB에 포인트 넣어주기
 		 int result2 = mService.insertNewPoint(po);
-		 
+
 		 if(result>0 || result2>0) {
 			 model.addAttribute("usno", po.getUsno());
 			return "redirect:point";

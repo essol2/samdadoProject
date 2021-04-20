@@ -200,4 +200,10 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.insertNewApprove(alert);
 	}
 
+	@Override
+	public int updatePbalance(Point po) {
+		// TODO Auto-generated method stub
+		return mDao.updatePbalance(po);
+	}
+
 }

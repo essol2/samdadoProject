@@ -119,6 +119,7 @@
 					tableBody.html("");
 					
 					for (var i in data) {
+				
 						var tr = $("<tr onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
 						
 						//var alno = $("<td>").text(data[i].alno); 

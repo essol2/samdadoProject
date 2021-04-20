@@ -105,5 +105,7 @@ public interface MypageDao {
 	// 제휴회원 - Alliance 승인시 새로운 알림 등록
 	public int insertNewApprove(Alert alert);
 
+	public int updatePbalance(Point po);
+
 
 }
