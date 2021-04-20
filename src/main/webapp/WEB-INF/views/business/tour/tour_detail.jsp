@@ -19,7 +19,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    
     <style>
         /* 공통 - 폰트 */
         * {
@@ -978,7 +978,7 @@
 	            msg += '결제 금액 : ' + rsp.paid_amount;
 	            location.href = '${contextPath}/business/pay?amount='+amount+'&item='+name+'&usno='+${loginUser.usno}
 					            +'&t_bus_code='+${ tour.bus_code }+'&t_booking_trv='+startDate+'&bookingLv='+bookingLv
-					            +'&t_booking_phone='+phone+'&t_booking_product='+name+'&t_booking_pay='+amount;
+					            +'&t_booking_product='+name+'&t_booking_pay='+amount;
 	            				
 	        } else {
 	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';

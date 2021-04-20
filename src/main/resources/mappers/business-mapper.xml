@@ -954,7 +954,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , '사업장이름' <!-- 왜안됨 -->
 		  , #{t_booking_product}
 		  , SYSDATE
-		  , NULL
+		  , DEFAULT
 		  , '경기도' <!-- 주소값 안넘어감 -->
 		  , #{t_booking_pay}
 		  , '3'	<!-- 인원 -->
@@ -963,6 +963,42 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usno}
 		  , '1'	<!-- 상품번호 따오기 -->
 		  , #{t_bus_code}
+		  )
+	</insert>
+	
+	<insert id="insertBookingCar">
+		INSERT
+		  INTO TOUR_BOOKING
+		  (
+		  	C_BOOKING_NO
+		  ,	C_BUS_NAME
+		  , C_PRODUCT_NAME
+		  , C_BOOKING_DATE
+		  , C_BOOKING_MODIFY
+		  , C_BOOKING_ADDRESS
+		  , C_BOOKING_PAY
+		  , C_BOOKING_NUMBER
+		  , C_BOOKING_PHONE
+		  , C_TOUR_DATE
+		  , US_NO
+		  , RENT_NO
+		  , BUS_CODE		  
+		  )
+		  VALUES
+		  (
+		  	BOOKING_NO.NEXTVAL
+		  , '사업장이름' <!-- 왜안됨 -->
+		  , #{C_booking_product}
+		  , SYSDATE
+		  , NULL
+		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{C_booking_pay}
+		  , '3'	<!-- 인원 -->
+		  , #{C_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{C_booking_trv}
+		  , #{usno}
+		  , '1'	<!-- 상품번호 따오기 -->
+		  , #{C_bus_code}
 		  )
 	</insert>
 	
