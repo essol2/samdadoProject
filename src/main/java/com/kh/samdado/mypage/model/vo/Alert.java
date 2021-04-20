@@ -51,7 +51,7 @@ public class Alert {
 	REP_CONT	VARCHAR2(50 BYTE)
 	DATE	DATE
 	STATUS	CHAR(1 BYTE)
-	EXDATE	DATE
+	REXDATE	DATE
 	
 	* ALERT
 	NNO	NUMBER
@@ -98,6 +98,6 @@ public class Alert {
 	private Date rdate;
 	private char rstatus;
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
-	private Date exdate;
+	private Date rexdate;
 	
 }

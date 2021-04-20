@@ -542,4 +542,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			)
 		</if>
 	</insert>
+	
+	<insert id="insertNewReport" parameterType="Alert">
+		<if test="ntitle == null">
+			INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO)
+			VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '회원님의 사업장에대한 신고가 접수되었습니다.', 'N', 'R', #{nkeyno})
+		</if>
+		<if test="ntitle == 'block'">
+			INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO)
+			VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '회원님의 사업장에대한 신고가 3회 누적되었습니다.', 'N', 'R', #{nkeyno})
+		</if>
+	</insert>
 </mapper>

@@ -58,6 +58,7 @@
                 
                 <tbody>        
                 <c:forEach var="rpl" items="${ reportList }" varStatus="status"> 
+                   <input type="hidden" id="hiddenUsno" value="${ rpl.usno }">
                    <tr>
                        <th id="report_no">${ rpl.report_no }</th>
                        <td>${ rpl.usname }</td>
@@ -135,8 +136,9 @@
 	
 		         		var report_no = $("#report_no").text();
 		         		var bus_code = $("#bus_code").text();
+		         		var usno = $("#hiddenUsno").val();
 		         		
-		         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code;
+		         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code + "&usno=" + usno;
 	             });
          	</script>
          	

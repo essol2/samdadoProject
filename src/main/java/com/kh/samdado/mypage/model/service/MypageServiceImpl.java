@@ -200,4 +200,10 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.insertNewApprove(alert);
 	}
 
+	// 제휴회원 - Report 승인시 알림 등록
+	@Override
+	public int insertNewReport(Alert a) {
+		return mDao.insertNewReport(a);
+	}
+
 }

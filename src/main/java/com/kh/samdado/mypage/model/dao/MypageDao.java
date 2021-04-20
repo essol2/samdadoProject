@@ -105,5 +105,8 @@ public interface MypageDao {
 	// 제휴회원 - Alliance 승인시 새로운 알림 등록
 	public int insertNewApprove(Alert alert);
 
+	// 제휴회원 - Report 승인시 알림 등록
+	public int insertNewReport(Alert a);
+
 
 }
