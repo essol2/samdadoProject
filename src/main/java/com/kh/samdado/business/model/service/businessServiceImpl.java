@@ -191,6 +191,11 @@ public class businessServiceImpl implements businessService {
 	public int insertBookingTour(Booking b) {		
 		return bDao.insertBookingTour(b);
 	}
+	
+	@Override
+	public int insertBookingCar(Booking b) {		
+		return bDao.insertBookingCar(b);
+	}
 
 	@Override
 	public int insertPoint(Point p) {
