@@ -581,6 +581,60 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		        EXTRACT(YEAR  FROM PDATE)
 	</select>
 	
+	<select id="selectReport" resultType="Report">
+		SELECT
+			REPORT_NO
+		  , REP_RES
+		  , REP_CONT
+		  , RDATE
+		  , RSTATUS
+		  , REXDATE
+		  , R_IMG_PATH
+		  , R_IMG_NAME
+		  , R_IMG_CNAME
+		  , US_NO
+		  , R_COUNT
+		  , REF_BUS_CODE
+		  , CHECK_NEWS
+	     FROM 
+	        REPORT
+	     WHERE
+	     	REPORT_NO = #{ report_no }
+	     AND
+	        REXDATE IS NULL 
+	</select>
+	
+	<update id="updateRstatusToYAndNoRcount" parameterType="Report">
+		UPDATE REPORT
+		   SET
+			   RSTATUS = 'Y'
+	     WHERE
+	     	   REPORT_NO = #{report_no}
+	       AND REF_BUS_CODE = #{bus_code}
+	</update>
+	
+	<select id="selectReportRexdate">
+		SELECT
+			REPORT_NO
+		  , REP_RES
+		  , REP_CONT
+		  , RDATE
+		  , RSTATUS
+		  , REXDATE
+		  , R_IMG_PATH
+		  , R_IMG_NAME
+		  , R_IMG_CNAME
+		  , US_NO
+		  , R_COUNT
+		  , REF_BUS_CODE
+		  , CHECK_NEWS
+	     FROM 
+	        REPORT
+	     WHERE
+	     	REPORT_NO = #{report_no}
+	     AND ROWNUM <![CDATA[<=]]> 1 
+	</select>
+	
 	
 
 </mapper>

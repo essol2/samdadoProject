@@ -167,6 +167,24 @@ public class AdminDaoImpl implements AdminDao {
 		return sqlSession.selectList("adminMapper.selectGetProfit");
 	}
 
+	@Override
+	public Report selectReport(Report report) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminMapper.selectReport", report);
+	}
+
+	@Override
+	public int updateRstatusToYAndNoRcount(Report report) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateRstatusToYAndNoRcount", report);
+	}
+
+	@Override
+	public Report selectReportRexdate(Report report) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminMapper.selectReportRexdate", report);
+	}
+
 
 
 }

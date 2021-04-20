@@ -509,7 +509,7 @@
 		<!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-                <img id="bigPic" class="mainimage" src="../resources/busUploadFiles/${ res.file_rename }">
+                <img id="bigPic" class="mainimage" src="${ contextPath }/resources/busUploadFiles/${ res.file_rename }">
                 <div class="other">
                 	<img id="smallPic" class="otherimage" src="../resources/busUploadFiles/${ res.file_rename }">
                     <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour1.png">

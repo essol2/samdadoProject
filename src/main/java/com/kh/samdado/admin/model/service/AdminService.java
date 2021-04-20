@@ -65,4 +65,10 @@ public interface AdminService {
 
 	List<Integer> selectGetProfit();
 
+	Report selectReport(Report report);
+
+	int updateRstatusToYAndNoRcount(Report report);
+
+	Report selectReportRexdate(Report report);
+
 }
