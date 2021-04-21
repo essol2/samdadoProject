@@ -767,6 +767,8 @@ public class businessController {
 	public @ResponseBody String selectBannerAdImgList() {
 		
 		List<Alliance> bannerImglist = bService.selectBannerAdImgList();
+		
+		
 
 		Gson gson = new GsonBuilder()
 				        .setDateFormat("yyyy-MM-dd")
@@ -822,7 +824,25 @@ public class businessController {
 		
 		// --- 은솔 : 포인트가 얼마 남지 않았을 때 News 테이블에 알람 insert 하기
 		// 1. 해당 사업장의 주인의 pbalance 찾아오기
-		//int thisPbalance = mService.findThisPB(sbd);
+		int thisPbalance = mService.findThisPB(selectBusCodeUser);
+		//System.out.println(thisPbalance);
+		
+		// 2. 방금 빠진 클릭건 100원 pno 알아오기
+		int pno = mService.findNewPno(selectBusCodeUser);
+		//System.out.println(pno);
+		
+		// 3. Point로 객체로 검색할 값 set 해주기
+		Point fdp = new Point();
+		fdp.setPno(pno);
+		fdp.setPbalance(thisPbalance);
+		fdp.setUsno(selectBusCodeUser.getUs_no());
+		//System.out.println(fdp);
+		
+		// 4. 만약 thisPbalance가 500보다 작으면 알람 데이터 넣기
+		if(thisPbalance <= 500 && thisPbalance > 400) {
+			mService.insertPointAlert(fdp);
+		}
+		
 		
 		if (sbd != null) {
 			if (sbd.getBus_category().equals("R")) { // 음식점
