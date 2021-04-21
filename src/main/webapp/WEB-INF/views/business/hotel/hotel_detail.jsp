@@ -18,7 +18,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-    
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -482,30 +482,32 @@
             <div class="title_area">
                 <div class="title_area">
                     <img src="../resources/images/image_listpage/premium.png"><br>
-                    <label id="ho_title" class="title_tag">${ h.bus_name }</label>
+                    <label id="ho_title" class="title_tag">${ hotel.bus_name }</label>
                     <label id="ho_grade" class="title_tag">4성급</label><br>
                 </div>
-                <label id="ho_address">제주특별차치도 서귀포시 </label>
+                <label id="ho_address">${ hotel.bus_address.substring(6) }</label>
             </div>
 
             <div id="ho_info">
                 <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="report_btn"><img id="report" class="report_img"
-                        src="../resources/images/image_listpage/phone.png">064-738-7060</label>
+                        src="../resources/images/image_listpage/phone.png">${ hotel.bus_phone }</label>
             </div>
         </div>
 
         <!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-                <img id="bigPic" class="mainimage" src="../resources/busUploadFiles/">
+            	<c:forEach var="h" items="${ att }">
+            	<c:if test="${ h.file_lv eq '0' }">
+                <img id="bigPic" class="mainimage" src="${ contextPath }/resources/busUploadFiles/${ h.file_rename }">
+                </c:if>
+                </c:forEach>
                 <div class="other">
-                	<img id="smallPic" class="otherimage" src="../resources/busUploadFiles/">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour1.png">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour3.png">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/list9.png">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/restaurant2_4.png">                   
+                	<c:forEach var="h" items="${ att }">
+                	<img id="smallPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ h.file_rename }">
+                	</c:forEach>
                 </div>
             </div>
          	   
@@ -540,7 +542,7 @@
 		             var markers = [
 		                 {
 		                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
-		                     text: '${res.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+		                     text: '${hotel.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
 		                 }
 		             ];
 		

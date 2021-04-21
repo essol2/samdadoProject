@@ -47,5 +47,6 @@ public class Room {
 	private String room_people;
 	private String room_amenity;
 	private String room_state;
+	private List<RoomAtt> roomAtt;
 
 }

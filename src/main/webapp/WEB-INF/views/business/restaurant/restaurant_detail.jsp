@@ -490,7 +490,9 @@
         <div id="ho_header">
             <div class="title_area">
                 <div class="title_area">
+                    <c:if test="${ res.bus_classify eq 'P' }">
                     <img src="../resources/images/image_listpage/premium.png"><br>
+                    </c:if>
                     <label id="ho_title" class="title_tag">${ res.bus_name }</label>
                     <br>
                 </div>
@@ -509,13 +511,15 @@
 		<!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-                <img id="bigPic" class="mainimage" src="../resources/busUploadFiles/${ res.file_rename }">
+            	<c:forEach var="a" items="${ att }">
+            	<c:if test="${ a.file_lv eq '0' }">
+                <img id="bigPic" class="mainimage" src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }">
+				</c:if>
+				</c:forEach>
                 <div class="other">
-                	<img id="smallPic" class="otherimage" src="../resources/busUploadFiles/${ res.file_rename }">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour1.png">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour3.png">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/list9.png">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/restaurant2_4.png">                   
+					<c:forEach var="a" items="${ att }">
+                    <img id="smallPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }">
+	                </c:forEach>
                 </div>
             </div>
          	   
@@ -640,7 +644,7 @@
 						                        <p>2020년 2월</p>
 						                    </div>
 						                    <div class="review-con">
-						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <img src="" style="width: 300px; height: 300px;">
 						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
 						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
 						                    </div>
@@ -651,7 +655,7 @@
 						                        <p>2020년 2월</p>
 						                    </div>
 						                    <div class="review-con">
-						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <img src="" style="width: 300px; height: 300px;">
 						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
 						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
 						                    </div>
@@ -662,7 +666,7 @@
 						                        <p>2020년 2월</p>
 						                    </div>
 						                    <div class="review-con">
-						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
+						                        <img src="" style="width: 300px; height: 300px;">
 						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
 						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
 						                    </div>

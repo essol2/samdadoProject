@@ -18,7 +18,6 @@ import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
-import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 
@@ -42,14 +41,14 @@ public interface businessService {
 	List<Business> selectResList();
 		
 	// 렌트카등록
-	int insertCar(List<Car> cars, List<CarAtt> carList);
+	int insertCar(List<Car> cars);
 	// 렌트카 디테일
 	Business selectCar(int bus_code);
 	// 렌트카리스트
 	List<Business> selectCarList();
 	
 	// 호텔등록
-	int insertRoom(List<Room> rooms, List<RoomAtt> raList);
+	int insertRoom(List<Room> rooms);
 	// 호텔리스트
 	List<Business> selectHotelList();
 	// 호텔디테일

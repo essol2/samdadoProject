@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +73,7 @@
             width: 85%;
             display: flex;
             flex-direction: column;
-            padding-top: 5%;
+            /* padding-top: 5%; */
             padding-left: 6.3%;
 
         }
@@ -201,9 +202,9 @@
             cursor: pointer;
             color: skyblue;
             font-family: Arial;
-            font-size: 10px;
+            font-size: 15px;
             font-weight: bold;
-            padding: 6px 25px;
+            padding: 10px 35px;
             text-decoration: none;
         }
 
@@ -282,7 +283,7 @@
 
         }
 
-        .btn {
+        #bookingBtn {
             background-color: rgb(70, 115, 85) !important;
             border: 1px solid rgb(70, 115, 85) !important;
             font-family: 'GmarketSansBold' !important;
@@ -561,6 +562,35 @@
     p {
         margin: 1rem 0 0 0;
     }
+    
+    .facLabel{
+    	margin-right: 15px
+    }
+    
+    .logo-wrap{
+        width: 100%;
+        height:100px;
+        display:flex;   
+        flex-direction: column;
+        /* align-items: center; */
+        background-color: #467355;
+    }
+    
+    .logo-wrap label {
+        font-size: 45px;
+        height: 100%;
+        color: white;
+    }
+    
+    #small_view_morebtn {
+            float: right;
+            color:black;
+            margin-right: 3%;
+            border: 0;
+            outline: 0;
+            background: none;
+        }
+    
     </style>
 
 </head>
@@ -572,15 +602,28 @@
     <section id="main-container">
         <!-- 상세페이지 헤더 -->
         <div id="ho_header">
+        	<div class="logo-wrap" id="logo-div">
+                <label class="title_img" onclick="location.href='${ contextPath }/main'">
+                <img src="../resources/images/image_main/logo_w.png" style="width:100px; height:100px;">삼다도
+                </label>
+            </div>
             <div class="title_area">
                 <div class="title_area">
+                	<c:if test="${ tour.bus_classify eq 'P' }">
                     <img src="../resources/images/image_listpage/premium.png"><br>
+                    </c:if>
                     <label id="ho_title" class="title_tag">${ tour.bus_name }</label>
                     <br>
                 </div>
-                <label id="ho_address">${ tour.bus_address.substring(6) }</label>
+                <label id="ho_address">
+                <c:set var="add" value="${fn:split(tour.bus_address, ',') }"/>
+                <c:forEach var="add" items="${add}" varStatus="a">
+                <c:if test="${a.count == 2}">주소 : ${add}</c:if>
+                </c:forEach>
+                </label><br>
+                <label>영업시간 : 오픈 ${ tour.bus_opening.substring(0, 5) } ~ 마감 ${ tour.bus_opening.substring(6) }</label>&nbsp;
             </div>
-
+			
             <div id="ho_info">
                 <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
@@ -592,7 +635,7 @@
 		<!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-            	<c:forEach var="a" items="${ att }">
+            	<c:forEach var="a" items="${ att }" varStatus="status">
             	<c:if test="${ a.file_lv eq '0' }">
                 <img id="bigPic" class="mainimage" src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }">
 				</c:if>
@@ -625,30 +668,53 @@
                 <div class="col2">
                     <div id="map" style="width: 555px; height:330px;">
                     <button type="button" id="mapBtn" 
-                    onclick="window.open('https://map.kakao.com/link/search/${tour.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
+                    onclick="window.open('https://map.kakao.com/link/search/${tour.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">길찾기</button>
                     </div>
                 </div>
                 
                 <!-- 구글지도 api -->
                 <script>
-	             // 이미지 지도에 표시할 마커입니다
-	             // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
-	             var markers = [
-	                 {
-	                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
-	                     text: '${tour.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
-	                 }
-	             ];
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };  
+
+	            // 지도를 생성합니다    
+	            var map = new kakao.maps.Map(mapContainer, mapOption); 
 	
-	             var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div  
-	                 staticMapOption = { 
-	                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
-	                     level: 3, // 이미지 지도의 확대 레벨
-	                     marker: markers // 이미지 지도에 표시할 마커 
-	                 };    
+	            // 주소-좌표 변환 객체를 생성합니다
+	            var geocoder = new kakao.maps.services.Geocoder();
+	            
+	            var add = "<c:out value='${ tour.bus_address}'/>";
+	            var splitadd = add.split(',');
+	            
+
+	            
+	            // 주소로 좌표를 검색합니다
+	            geocoder.addressSearch(splitadd[1], function(result, status) {
 	
-	             // 이미지 지도를 생성합니다
-	             var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+	                // 정상적으로 검색이 완료됐으면 
+	                 if (status === kakao.maps.services.Status.OK) {
+	
+	                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+	                    // 결과값으로 받은 위치를 마커로 표시합니다
+	                    var marker = new kakao.maps.Marker({
+	                        map: map,
+	                        position: coords
+	                    });
+	
+	                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+	                    var infowindow = new kakao.maps.InfoWindow({
+	                        content: '<div style="width:150px;text-align:center;padding:6px 0;">${ tour.bus_name }</div>'
+	                    });
+	                    infowindow.open(map, marker);
+	
+	                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	                    map.setCenter(coords);
+	                } 
+	            });    
 				</script>
 				
                 <!-- 작은 리뷰 -->
@@ -756,8 +822,8 @@
 						            </div>
 						        </div>
 						        <div class="modal-footer">
-						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						            <button type="button" class="btn btn-primary">Understood</button>
+						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						            <button type="button" class="btn btn-primary">전체리뷰보기</button>
 						        </div>
 					        </div>
 					    </div>
@@ -767,11 +833,23 @@
         </div>
         <div class="checktable">
             <h2>주변 편의 시설</h2><br>
-            <label><img src="../resources/images/image_listpage/check.png">테라스</label>
-            <label><img src="../resources/images/image_listpage/check.png">편의점</label>
-            <label><img src="../resources/images/image_listpage/check.png">주차</label><br>
-
+			<c:set var="fac" value="${fn:split(tour.pro_fac, ',') }"/>
+			<c:forEach var="fac" items="${fac}">
+			<c:if test="${ fac eq 'park' }">
+            	<label class="facLabel"><img src="../resources/images/image_listpage/check.png">주차장</label>
+            </c:if>
+            <c:if test="${ fac eq 'com' }">
+            	<label class="facLabel"><img src="../resources/images/image_listpage/check.png">편의점</label>
+            </c:if>
+            <c:if test="${ fac eq 'rest' }">
+            	<label class="facLabel"><img src="../resources/images/image_listpage/check.png">휴게시설</label>
+            </c:if>
+            <c:if test="${ fac eq 'res' }">
+            	<label class="facLabel"><img src="../resources/images/image_listpage/check.png">음식점</label>
+            </c:if>
+			</c:forEach>
         </div>
+        
 
         <hr class="boundary">
 
@@ -785,23 +863,25 @@
 
         <div class="detail">
             <div class="imgArea">
-                <img src="../resources/images/image_listpage/tour3_5.png" class="detailImg">
+            	<c:forEach var="a" items="${ att }">
+            	<c:if test="${ a.file_lv eq '0' }">
+                <img src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }" class="detailImg">
+          		</c:if>
+          		</c:forEach>
             </div>
-            <div class="detailView">
+            <div class="detailView" id="detailView">
                 <b>상품명 : ${ tour.pro_name }</b><br><br>
-                <label>어른 : ${ tour.pro_adult }원</label><br>
-                <label>청소년 : ${ tour.pro_youth }원</label><br>
-                <label>${ tour.pro_child }</label>
-
-
+                <label id="adult">어른 : ${ tour.pro_adult }원</label><br>
+                <label id="youth">청소년 : ${ tour.pro_youth }원</label><br>
+                <label id="child">어린이 : ${ tour.pro_child }원</label>
             </div>
+
             <div class="btnArea">
                 <br>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" id="bookingBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     예약하기
                 </button>
             </div>
-
         </div>
 
         <!-- 후기 -->
@@ -882,6 +962,11 @@
         $( function() {
           $( ".datepicker" ).datepicker();
         } );
+        
+        $(function(){
+        	
+            
+        });
     </script>
 
     <!-- Modal -->
@@ -988,6 +1073,7 @@
 	  	  document.getElementById('startDateResult').innerText
 	  	    = value;	
 	  	}
+
 	</script>
     
     <script>    
@@ -1063,6 +1149,44 @@
         </div>
         </div>
     </div>
+
+	<script>
+		$(document).ready(function(){
+			var adult = '<c:out value="${tour.pro_adult}"/>';
+			var youth = '<c:out value="${tour.pro_youth}"/>';
+			var child = '<c:out value="${tour.pro_child}"/>';
+			
+			//console.log(adult);
+			
+			if(adult == ""){
+				var element = document.getElementById("adult");
+				// 요소의 콘텐츠를 변경
+				$(element).attr('style', 'display:none;');
+			}
+			if(youth == ""){
+				var element = document.getElementById("youth");
+				$(element).attr('style', 'display:none;');
+			}
+			if(child == ""){
+				var element = document.getElementById("child");
+				$(element).attr('style', 'display:none;');
+			}
+		});
+		
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <footer>
           <jsp:include page="../../common/footer.jsp"/>

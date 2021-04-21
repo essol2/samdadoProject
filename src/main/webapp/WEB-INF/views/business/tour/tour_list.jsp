@@ -530,37 +530,25 @@
 
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                    <div class='profile' onclick="location.href='${ contextPath }/business/tour_detail'">
+                <c:forEach var="p" items="${ tourList }">
+                <c:if test="${ p.bus_classify eq 'P' && p.file_lv eq '0' }">
+                    <div class='profile'>
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/tour1.png">
+                        <img class="image" src="../resources/busUploadFiles/${ p.file_rename }" onclick="selectRes(${p.bus_code})">
                         <b>★4.90(후기 99+개)</b>
-                        <b>김녕미로공원</b>
-                        <b>입장료 : 3000</b>
+                        <b>${ p.bus_name }</b>
+                        <b>${ p.pro_adult }</b>
                         <p><img src="../resources/images/image_listpage/heart.png"></p>
                     </div>
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/tour2.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>서핑페스티벌</b>
-                        <b>입장료 : 3000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/tour3.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>서광승마장</b>
-                        <b>입장료 : 3000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
+                </c:if>    
+                </c:forEach>
                 </div>
 
                 <div id="secondlist">
                 <c:forEach var="t" items="${ tourList }">
                     <div class='profile'>
                     	<input type="hidden" id="busCode" value="${ t.bus_code }">
-                    	<c:if test="${ t.file_lv eq '0'}">
+                    	<c:if test="${ t.bus_classify eq 'G' && t.file_lv eq '0'}">
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                     	</c:if>
                         <b>★4.90(후기 99+개)</b>

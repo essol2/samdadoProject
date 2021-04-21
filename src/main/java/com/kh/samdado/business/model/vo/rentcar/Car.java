@@ -40,6 +40,6 @@ public class Car {
 	private String car_price;
 	private Date car_date;
 	private Date car_modify;
-	
+	private List<CarAtt> carList;
 
 }
