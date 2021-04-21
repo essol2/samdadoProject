@@ -589,7 +589,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				PBALANCE = #{pbalance}
 		WHERE
 				US_NO = #{usno}
-
+	</update>
+	
 	<select id="selectAlertList" resultMap="AlertResultSet">
 		SELECT *
 		FROM NEWS
