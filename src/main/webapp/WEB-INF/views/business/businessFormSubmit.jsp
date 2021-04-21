@@ -108,7 +108,7 @@
 					    <h5 class="card-title">${ loginUser.usname }님께서 배너 광고로 등록할 수 있는 사업장이 없습니다.</h5>
 					    <p class="card-text"><b style="color: red;">관리자 승인 대기중인 사업장 또는 현재 배너 광고 중인 사업장은 목록에서 불러올 수 없습니다.</b></p>
 					  </div>
-					  <div class="card-footer bg-transparent border-success"><a href="${ contextPath }/mypage/buserinfo">마이페이지 가기</a></div>
+					  <div class="card-footer bg-transparent border-success"><a href="${ contextPath }/mypage/buss">마이페이지 가기</a></div>
 					</div>
 	            </div>   	
 	            </c:otherwise>

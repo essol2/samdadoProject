@@ -553,4 +553,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '회원님의 사업장에대한 신고가 3회 누적되었습니다.', 'N', 'R', #{nkeyno})
 		</if>
 	</insert>
+	
+	<update id="updatePbalance" parameterType="Point">
+		UPDATE
+				"USER"
+			SET
+				PBALANCE = #{pbalance}
+		WHERE
+				US_NO = #{usno}
+	</update>
 </mapper>

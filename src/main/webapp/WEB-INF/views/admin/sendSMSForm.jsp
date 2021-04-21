@@ -213,6 +213,7 @@
             }
         }
 
+        returnurl = "";
         out.println("<script>location.href='"+returnurl+"';</script>");
     }
     %>

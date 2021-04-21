@@ -677,8 +677,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 							     WHERE
                                  ALLIANCE.US_NO = "USER".US_NO
                                  AND ALLIANCE.US_NO = #{usno}
-                                 AND "USER".PBALANCE <![CDATA[<>]]> 0 <!-- 포인트가 0이 아닌것 -->
-                                 AND ALSTATUS <![CDATA[<>]]> 'Y') <!-- 현재 광고 진행중이 아닌 것 -->
+                                 AND ALSTATUS = 'Y' 	  <!-- 현재 광고 진행중이 아닌 것 -->
+                                 AND "USER".PBALANCE = 0) <!-- 포인트가 0이 아닌것 -->
 		  AND	US_NO = #{usno}
 	</select>  
 	
@@ -1096,12 +1096,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , '배너광고 포인트 차감'
 		  , (SELECT *
                 FROM(SELECT 
-                			 POINT.PBALANCE
+                			 "POINT".PBALANCE
                        FROM 
                        		 "POINT"
                        WHERE 
                              US_NO = #{us_no}
-                    ORDER BY PBALANCE)
+                    ORDER BY PNO DESC)
               WHERE ROWNUM <![CDATA[<=]]> 1) - 100
 		  , 100
 		  , #{us_no}
@@ -1162,7 +1162,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                        		           POINT
                                   WHERE 
                                   US_NO = #{us_no}
-                    		      ORDER BY PBALANCE)
+                    		      ORDER BY PNO DESC)
               WHERE ROWNUM <![CDATA[<=]]> 1)
 		WHERE
 		US_NO = #{us_no}
