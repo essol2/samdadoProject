@@ -11,7 +11,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="bus_intro" column="BUS_INTRO" />
 		<result property="bus_date" column="BUS_DATE" />
 		<result property="bus_modify" column="BUS_MODIFY" />
-		
 		<result property="ad_count" column="AD_COUNT" />
 		<result property="bus_classify" column="BUS_CLASSIFY" />
 		<result property="bus_category" column="BUS_CATEGORY" />
@@ -23,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="tour_tema" column="TOUR_TEMA" />
 		<result property="al_no" column="AL_NO" />
 		<result property="bus_opening" column="BUS_OPENING" />
+		<result property="hotel_facility" column="HOTEL_FACILITY" />
 		<result property="file_rename" column="FILE_RENAME" />	<!-- 비즈니스ATT 대한 JOIN -->
 		<result property="file_lv" column="FILE_LV" />
 		<!-- USER 테이블 조인을 위한 필드 -->
@@ -127,6 +127,28 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usno" column="US_NO" />
 	</resultMap>
 	
+	<resultMap type="Room" id="RoomResultSet">
+		<id property="room_no" column="ROOM_NO" />
+		<result property="bus_code" column="BUS_CODE" />
+		<result property="room_name" column="ROOM_NAME" />
+		<result property="room_price" column="ROOM_PRICE" />
+		<result property="room_date" column="ROOM_DATE" />
+		<result property="room_modify" column="ROOM_MODIFY" />
+		<result property="room_people" column="ROOM_PEOPLE" />
+		<result property="room_amenity" column="ROOM_AMENITY" />
+		<result property="room_state" column="ROOM_STATE" />
+	</resultMap>
+	
+	<resultMap type="RoomAtt" id="RoomAttResultSet">
+		<id property="file_no" column="FILE_NO" />
+		<result property="file_name" column="FILE_NAME" />
+		<result property="file_root" column="FILE_ROOT" />
+		<result property="file_status" column="FILE_STATUS" />
+		<result property="file_rename" column="FILE_RENAME" />
+		<result property="file_lv" column="FILE_LV" />
+		<result property="room_no" column="ROOM_NO" />
+	</resultMap>
+	
 	<insert id="insertBusiness" parameterType="Business">
 		INSERT
 		  INTO BUSINESS
@@ -145,6 +167,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , BUS_PHONE
 		  , RES_CATEGORY
 		  , BUS_OPENING
+		  , HOTEL_FACILITY
+		  , TOUR_CATEGORY
+		  , TOUR_TEMA
+		  , HOTEL_CATEGORY
 		  )
 		  VALUES
 		  (
@@ -162,7 +188,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{bus_phone}
 		  , #{res_category}
 		  , #{bus_opening}
-		  
+		  , #{hotel_facility}
+		  , #{tour_category}
+		  , #{tour_tema}
+		  , #{hotel_category}
 		  )
 	</insert>
 	<insert id="insertBusAtt" parameterType="java.util.List">
@@ -464,6 +493,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_STATUS
 		     , BUS_PHONE
 		     , BUS_OPENING
+		     , HOTEL_FACILITY
 		  FROM
 		       BUSINESS
 		 WHERE
@@ -680,8 +710,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 							     WHERE
                                  ALLIANCE.US_NO = "USER".US_NO
                                  AND ALLIANCE.US_NO = #{usno}
-                                 AND "USER".PBALANCE <![CDATA[<>]]> 0 <!-- 포인트가 0이 아닌것 -->
-                                 AND ALSTATUS <![CDATA[<>]]> 'Y') <!-- 현재 광고 진행중이 아닌 것 -->
+                                 AND ALSTATUS = 'Y' 	  <!-- 현재 광고 진행중이 아닌 것 -->
+                                 AND "USER".PBALANCE = 0) <!-- 포인트가 0이 아닌것 -->
 		  AND	US_NO = #{usno}
 	</select>  
 	
@@ -1050,6 +1080,34 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE 
 				ROWNUM = 1
 	</select>
+	
+	<select id="selectRoom" resultMap="RoomResultSet">
+		SELECT
+		       ROOM_NO
+		     , BUS_CODE
+		     , ROOM_NAME
+		     , ROOM_PRICE
+		     , ROOM_PEOPLE
+		     , ROOM_AMENITY
+		     , ROOM_STATE
+		  FROM
+		       ROOM
+		 WHERE
+		       BUS_CODE = #{ bus_code }
+		   AND ROOM_STATE = 'Y'
+	</select>
+	
+	<select id="selectRoomAtt" resultMap="RoomAttResultSet">
+		SELECT
+		       FILE_RENAME
+		     , R.ROOM_NO
+		  FROM
+		       ROOM_ATT RA, ROOM R, BUSINESS B
+		 WHERE
+		       B.BUS_CODE = R.BUS_CODE
+		   AND R.ROOM_NO = RA.ROOM_NO
+		   AND B.BUS_CODE = #{ bus_code }
+	</select>
    
    <!-- 지혜 -->
    <select id="selectBannerAdImgList" resultMap="AllianceResultSet">
@@ -1114,12 +1172,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , '배너광고 포인트 차감'
 		  , (SELECT *
                 FROM(SELECT 
-                			 POINT.PBALANCE
+                			 "POINT".PBALANCE
                        FROM 
                        		 "POINT"
                        WHERE 
                              US_NO = #{us_no}
-                    ORDER BY PBALANCE)
+                    ORDER BY PNO DESC)
               WHERE ROWNUM <![CDATA[<=]]> 1) - 100
 		  , 100
 		  , #{us_no}
@@ -1180,7 +1238,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                        		           POINT
                                   WHERE 
                                   US_NO = #{us_no}
-                    		      ORDER BY PBALANCE)
+                    		      ORDER BY PNO DESC)
               WHERE ROWNUM <![CDATA[<=]]> 1)
 		WHERE
 		US_NO = #{us_no}

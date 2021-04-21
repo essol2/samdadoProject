@@ -126,6 +126,10 @@ public interface businessService {
 
 	int insertMain(BusinessAtt bat);
 
+	List<Room> selectRoom(int bus_code);
+
+	List<RoomAtt> selectRoomAtt(int bus_code);
+
 	
 
 	

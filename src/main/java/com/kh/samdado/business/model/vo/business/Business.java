@@ -54,6 +54,7 @@ public class Business {
 	private String tour_tema;
 	private int al_no;
 	private String bus_opening;
+	private String hotel_facility;
 	private String file_rename;  // 비즈니스 첨부파일경로 join
 	private String file_lv;
 	private String usname; // user 테이블 조인
