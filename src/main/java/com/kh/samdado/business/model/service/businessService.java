@@ -99,6 +99,8 @@ public interface businessService {
 	
 	int insertBookingTour(Booking b);
 	
+	Booking selectTourProduct(int pro_no);
+	
 	int insertBookingCar(Booking b);
 
 	int insertPoint(Point p);

@@ -15,6 +15,9 @@
     <title>samdado</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+	var $j1124 = jQuery.noConflict();
+	</script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -857,7 +860,7 @@
         
     </section>
     <script>
-	    $.datepicker.setDefaults({
+	    $j1124.datepicker.setDefaults({
 	        dateFormat: 'yy-mm-dd',
 	        prevText: '이전 달',
 	        nextText: '다음 달',
@@ -870,8 +873,8 @@
 	        yearSuffix: '년'
 	    });
     
-        $( function() {
-          $( ".datepicker" ).datepicker();
+        $j1124( function() {
+          $j1124( ".datepicker" ).datepicker();
         } );
     </script>
 
@@ -916,7 +919,7 @@
                     <div class="modal-book2">
                         <div class="people">
                             <label>인원 : </label>
-                            <label id ="result"></label>                            
+                            <label><input type="text" id="personNumber" style="border:none;width:20px;" readonly>명</label>                            
                         </div>
                         <div class="people2">
                             <select id="selectBox" onchange="handleOnChange(this)">
@@ -935,7 +938,7 @@
                     <label>박</label>
                     <br>
                     <b>총 합계 : </b>
-                    <b><input type="text" id="payResult" style="border:none;width:80px" readonly></b>
+                    <b><input type="text" id="payResult" style="border:none;width:70px" readonly></b>
                     <b>원</b>
                     <button class="payBtn">결제하기</button>
                 </div>
@@ -952,8 +955,8 @@
   		
   		var name = document.getElementById('roomName').value;
   		var payResult = document.getElementById('payResult').value;
-  		var startDate = document.getElementById("startDate").value;  		
-  	 	var phone = ${ hotel.bus_phone };
+  		var startDate = document.getElementById("startDate").value;
+  	 	var personNumber = document.getElementById("personNumber").value;
   	    var bookingLv = 1;
   		// var amount = payResult;
   		var amount = 100;
@@ -970,13 +973,13 @@
 	        buyer_tel : "${loginUser.usphone}",
 	        buyer_addr : '',
 	        buyer_postcode : ''
-	    }, function(rsp) {
+	    }, function(rsp) {console.log(rsp);
 	        if ( rsp.success ) {
 	            var msg = '결제가 완료되었습니다!';
 	            msg += '결제 금액 : ' + rsp.paid_amount;
-	            location.href = '${contextPath}/business/pay?amount='+amount+'&item='+name+'&usno='+${loginUser.usno}
+	            location.href = '${contextPath}/business/pay?usno='+${loginUser.usno}+'&r_booking_number='+personNumber
 					            +'&r_bus_code='+${ hotel.bus_code }+'&r_booking_trv='+startDate+'&bookingLv='+bookingLv
-					            +'&r_booking_phone='+phone+'&r_booking_product='+name+'&r_booking_pay='+amount;
+					            +'&r_booking_pay='+amount+'&room_no='+${ hotel.room_no }+'&r_booking_product='+name;
 	            				
 	        } else {
 	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
@@ -1034,7 +1037,7 @@
 
 	    function handleOnChange(e) {
 	    	  const value = e.value;	    	  
-	    	  document.getElementById('result').innerText
+	    	  document.getElementById('personNumber').value
 	    	    = value;
 	    	}
     </script>
