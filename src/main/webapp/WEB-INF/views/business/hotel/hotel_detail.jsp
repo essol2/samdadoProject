@@ -18,7 +18,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-    
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -499,13 +499,16 @@
         <!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-                <img id="bigPic" class="mainimage" src="../resources/busUploadFiles/${ hotel.file_rename }">
+
+            	<c:forEach var="h" items="${ att }">
+            	<c:if test="${ h.file_lv eq '0' }">
+                <img id="bigPic" class="mainimage" src="${ contextPath }/resources/busUploadFiles/${ h.file_rename }">
+                </c:if>
+                </c:forEach>
                 <div class="other">
-                	<img id="smallPic" class="otherimage" src="../resources/busUploadFiles/${ hotel.file_rename }">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour1.png">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/tour3.png">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/list9.png">
-                    <img id="smallPic" class="otherimage" src="../resources/images/image_listpage/restaurant2_4.png">                   
+                	<c:forEach var="h" items="${ att }">
+                	<img id="smallPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ h.file_rename }">
+                	</c:forEach>
                 </div>
             </div>
          	   

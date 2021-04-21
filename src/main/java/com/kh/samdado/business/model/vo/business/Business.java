@@ -63,6 +63,7 @@ public class Business {
 	private String pro_adult;
 	private String pro_youth;
 	private String pro_child;
+	private String pro_fac;
 	// 차 조인
 	private String car_name;
 	private String car_type;

@@ -38,6 +38,7 @@ import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
 import com.kh.samdado.business.model.vo.hotel.Room;
 import com.kh.samdado.business.model.vo.hotel.RoomAtt;
+import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.hotel.RoomList;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
@@ -67,14 +68,14 @@ public class businessController {
 	@GetMapping("/hotel_detail")
 	public String hotelDetail(@RequestParam int bus_code,
 				Model model) {
-
-		System.out.println("나와라" + bus_code);
 	
 		Business b = bService.selectHotel(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
-	
+//		List<Room> roomList = bService.selectRoom(bus_code);
+		// List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
 		if(b != null) {
-			System.out.println("디테일 : " + b);
+			// System.out.println("디테일 : " + b);
+			// System.out.println("사진 뭐가져옴 : " + attList);
 			model.addAttribute("hotel", b);
 			model.addAttribute("att" + attList);
 		return "business/hotel/hotel_detail";
@@ -97,9 +98,6 @@ public class businessController {
 							  @RequestParam(value = "room") List<MultipartFile> roomFile, 
 							  @RequestParam(value = "mainFile") MultipartFile mainFile,
 							  HttpServletRequest request, Map map) {
-								
-		// System.out.println("roomFile : " + roomFile);
-		// System.out.println("roomFile : " + roomFile);
 		
 		// 유저넘버 인컴에 담아주기
 		i.setUsno(b.getUs_no());
@@ -110,7 +108,6 @@ public class businessController {
 		
 		List<Room> rooms = new ArrayList<>();
 		rooms = rl.getRoomList();
-		
 		
 		// 가져온 bfiles 돌리기
 		for(MultipartFile mf : rfile) {
@@ -135,10 +132,15 @@ public class businessController {
 			}
 		}
 		
-	
+		// 가져온 파일 리네임 할 떄 마다 카운트
+	    int cnt = 0;
+	    // 등록 될 방 갯수만큼 카운트
+	    int arrayCnt = 0;
 		for(MultipartFile mf : roomFile) {
 			MultipartFile file = mf;
-			
+			System.out.println(cnt);
+			System.out.println(file);
+			cnt++;
 			if (!file.getOriginalFilename().equals("")) {
 				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
 				Map<String, String> files = busSaveFile(file, request);
@@ -153,8 +155,17 @@ public class businessController {
 					ra.setFile_root((String) files.get("path"));
 					
 					raList.add(ra);
+					
 				}
 			}
+			if(cnt % 5 == 0) {
+				// n번째 방바다 5개의 사진파일이 돌면 담아주기
+				rooms.get(arrayCnt).setRoomAtt(raList);
+				arrayCnt++;
+				cnt = 0;		
+				raList = new ArrayList<RoomAtt>();
+			}
+			
 		}
 		
 		// 업로드 파일 서버에 저장
@@ -187,7 +198,7 @@ public class businessController {
 		}
 		
 		int result = bService.insertBusiness(b, list);
-		int result3 = bService.insertRoom(rooms, raList);
+		int result3 = bService.insertRoom(rooms);
 		int result4 = bService.insertMain(bat);
 		
 		if (result > 0 && result3 > 0) {
@@ -204,7 +215,7 @@ public class businessController {
 		List<Business> hotelList = bService.selectHotelList();
 			
 		if(hotelList != null) {
-			System.out.println("hotelList : " + hotelList);
+			// System.out.println("hotelList : " + hotelList);
 			mv.addObject("hotelList", hotelList);
 			mv.setViewName("business/hotel/hotel_list");
 		}
@@ -335,10 +346,14 @@ public class businessController {
 		
 		
 		Business b = bService.selectRestaurant(bus_code);
+		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		
 		if(b != null) {
 			// System.out.println("디테일 : " + b);
+			// System.out.println("사진들 : " + attList);
+			
 			model.addAttribute("res", b);
+			model.addAttribute("att" + attList);
 			return "business/restaurant/restaurant_detail";
 		} else {
 			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
@@ -461,13 +476,16 @@ public class businessController {
 
 
 		Business b = bService.selectCar(bus_code);
-		
+		List<BusinessAtt> attList = bService.selectAtt(bus_code);
+		// List<Car> CarList = bService.selectCar(bus_code);
+		// List<CarAtt> CarAtt = bService.selectCarAtt(bus_code); 
 		if(b != null) {
-			// System.out.println("디테일 : " + b);
+
 			model.addAttribute("car", b);
+			model.addAttribute("att" + attList);
 			return "business/rentcar/car_detail";
 		} else {
-			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
+			model.addAttribute("msg", "렌트카 보기에 실패했습니다.");
 		return "business/rentcar/car_list";
 		}
 	}
@@ -496,7 +514,6 @@ public class businessController {
 		
 		List<Car> cars = new ArrayList<>(); 
 		cars = c.getCarList();
-		System.out.println("car객체 배열 : " + cars);
 
 		// 가져온 bfiles 돌리기
 		for(MultipartFile mf : bfiles) {
@@ -524,9 +541,12 @@ public class businessController {
 			}
 		}
 		
+		int cnt = 0;
+		int arrcnt = 0;
+		
 		for(MultipartFile mf : carFiles) {
 			MultipartFile file = mf;
-			
+			cnt ++;
 			if (!file.getOriginalFilename().equals("")) {
 				Map<String, String> files = busSaveFile(file, request);
 	
@@ -539,6 +559,12 @@ public class businessController {
 					
 					carList.add(ca);
 				}
+			}
+			if(cnt % 5 == 0) {
+				cars.get(arrcnt).setCarList(carList);
+				arrcnt++;
+				carList = new ArrayList<CarAtt>();
+				cnt = 0;
 			}
 		}
 		
@@ -572,7 +598,7 @@ public class businessController {
 		}
 		
 		int result = bService.insertBusiness(b, list);
-		int result2 = bService.insertCar(cars, carList);
+		int result2 = bService.insertCar(cars);
 		int result4 = bService.insertMain(bat);
 		
 		if (result > 0  && result2 > 0) {

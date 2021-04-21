@@ -17,7 +17,6 @@ import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
-import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
@@ -70,9 +69,8 @@ public class businessServiceImpl implements businessService {
 	
 	// 렌트카 등록
 	@Override
-	public int insertCar(List<Car> cars, List<CarAtt> carList) {
-		bDao.insertCar(cars);
-		return bDao.insertCarAtt(carList);
+	public int insertCar(List<Car> cars) {
+		return bDao.insertCar(cars);
 	}
 
 	// 렌트카 디테일
@@ -88,9 +86,8 @@ public class businessServiceImpl implements businessService {
 
 	// 호텔 등록
 	@Override
-	public int insertRoom(List<Room> rooms, List<RoomAtt> raList) {
-		bDao.insertRoom(rooms);
-		return bDao.insertRoomAtt(raList);
+	public int insertRoom(List<Room> rooms) {
+		return bDao.insertRoom(rooms);
 	}
 	// 호텔리스트
 	@Override

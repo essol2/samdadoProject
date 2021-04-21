@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="bus_intro" column="BUS_INTRO" />
 		<result property="bus_date" column="BUS_DATE" />
 		<result property="bus_modify" column="BUS_MODIFY" />
+		
 		<result property="ad_count" column="AD_COUNT" />
 		<result property="bus_classify" column="BUS_CLASSIFY" />
 		<result property="bus_category" column="BUS_CATEGORY" />
@@ -32,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="pro_adult" column="PRO_ADULT" />
 		<result property="pro_youth" column="PRO_YOUTH" />
 		<result property="pro_child" column="PRO_CHILD" />
+		<result property="pro_fac" column="PRO_FAC" />
 		<!-- 차조인 -->
 		<result property="car_name" column="CAR_NAME" />
 		<result property="car_type" column="CAR_TYPE" />
@@ -207,8 +209,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , BUS_SEQ_NO.CURRVAL
 		  )
 	</insert>
-	<insert id="insertCar" parameterType="java.util.List">
-		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+	<insert id="insertCar" parameterType="Car">
+		INSERT ALL
 		  INTO CAR
 		  (
 		  	CAR_NO
@@ -223,20 +225,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	get_car_seq
+		  	CAR_SEQ_NO.NEXTVAL
 		  , BUS_SEQ_NO.CURRVAL
-		  , #{item.car_name}
-		  , #{item.car_type}
-		  , #{item.car_producer}
-		  , #{item.car_fuel}
-		  , #{item.car_price}
+		  , #{car_name}
+		  , #{car_type}
+		  , #{car_producer}
+		  , #{car_fuel}
+		  , #{car_price}
 		  , SYSDATE
 		  , SYSDATE
 		  )
-		</foreach>
-	</insert>
-	<insert id="insertCarAtt" parameterType="CarAtt">
-		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+		  <foreach collection="_parameter.getCarList()" item="item" separator=" " close="SELECT * FROM DUAL">
 		  INTO CAR_ATT
 		  (
 		  	FILE_NO
@@ -260,9 +259,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</foreach>
 	</insert>
   
-	<insert id="insertRoom" parameterType="java.util.List">
-		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
-		  INTO ROOM
+	<insert id="insertRoom" parameterType="Room">
+          INSERT ALL	  
+ 			INTO ROOM
 		  (
 		  	ROOM_NO
 		  , BUS_CODE
@@ -276,21 +275,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	get_room_seq
+		  	ROOM_SEQ_NO.NEXTVAL
 		  , BUS_SEQ_NO.CURRVAL
-		  , #{item.room_name}
-		  , #{item.room_price}
+		  , #{room_name}
+		  , #{room_price}
 		  , SYSDATE
 		  , SYSDATE
-		  , #{item.room_people}
-		  , #{item.room_amenity}
+		  , #{room_people}
+		  , #{room_amenity}
 		  , DEFAULT
 		  )
-		</foreach>
-	</insert>
-	
-	<insert id="insertRoomAtt" parameterType="RoomAtt">
-		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+		  <foreach collection="_parameter.getRoomAtt()" item="item" separator=" " close="SELECT * FROM DUAL">
 		  INTO ROOM_ATT
 		  (
 		  	FILE_NO
@@ -311,9 +306,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , DEFAULT
 		  , ROOM_SEQ_NO.CURRVAL
 		  )
-		</foreach>
+		  </foreach>
 	</insert>
-	
+
 	<insert id="insertTour" parameterType="TourProduct">
 		INSERT
 		  INTO TOUR_PRODUCT
@@ -393,6 +388,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , TP.PRO_ADULT
 		     , TP.PRO_YOUTH
 		     , TP.PRO_CHILD
+		     , TP.PRO_FAC
 		  FROM
 		       BUSINESS B, TOUR_PRODUCT TP
 		 WHERE
@@ -412,8 +408,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  	   BUSINESS_ATT
 		 WHERE
 			   BUS_CODE = #{bus_code}
-      ORDER BY
-               FILE_LV		       
+	  ORDER BY
+	  		   FILE_LV		       
 	</select>
 	<!-- 렌트카디테일 -->
 	<select id="selectCar" resultMap="BusinessResultSet">
@@ -452,7 +448,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<!-- 호텔 디테일 -->
 	<select id="selectHotel" resultMap="BusinessResultSet">
 		SELECT 
-		       B.BUS_CODE
+		       BUS_CODE
 		     , US_NO
 		     , BUS_NAME
 		     , BUS_ADDRESS
@@ -465,22 +461,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_STATUS
 		     , BUS_PHONE
 		     , BUS_OPENING
-		     , BT.FILE_RENAME
-		     , ROOM_NAME
-             , ROOM_PRICE
-             , ROOM_PEOPLE
-             , ROOM_AMENITY
-             , RT.FILE_RENAME
 		  FROM
-		       BUSINESS B, BUSINESS_ATT BT, ROOM R, ROOM_ATT RT
+		       BUSINESS
 		 WHERE
-		       B.BUS_CODE = BT.BUS_CODE 
-           AND B.BUS_CODE = R.BUS_CODE
-           AND R.ROOM_NO = RT.ROOM_NO
-           AND B.BUS_CODE = #{bus_code}
+               BUS_CODE = #{bus_code}
 		   AND BUS_CATEGORY = 'H'
 		   AND BUS_STATUS = 'Y'
-	  ORDER BY R.ROOM_NO DESC		
 	</select>
 	<!-- 관광지리스트 -->
 	<select id="selectTourList" resultMap="BusinessResultSet">
