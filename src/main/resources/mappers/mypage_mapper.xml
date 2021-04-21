@@ -426,7 +426,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SELECT *
 		FROM BUSINESS B, BUSINESS_ATT BA 
 		WHERE B.BUS_CODE = BA.BUS_CODE
-		AND B.US_NO = #{bus_code}
+		AND B.US_NO = #{usno}
 	</select>
 	
 	<!-- 제휴회원 - 진행중인 광고 목록 리스트 -->
