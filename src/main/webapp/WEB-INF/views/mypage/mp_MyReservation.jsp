@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -172,12 +175,9 @@
     }
 </style>
 <body>
-
-    <div id="back">
          <!-- navi.jsp include -->
        <jsp:include page="../common/navi.jsp"/>
-        
-        <section class="page-start">
+
             <div id="topMenu">
                 <div id="countDday"> <p>${ loginUser.usname }님의 <br> 여행까지 <br>D-100</p> </div>
                 <div class="menuBox" id="menuBox">
@@ -196,78 +196,96 @@
                 	<br>
                     <h3 style="color: #467355; text-align: center;">숙박 예약 내역</h3>
                     <hr style="background-color: #467355; width : 90%; height: 2px;">
-                    <h5>제주 신라 호텔</h5>
-                    <div class="reservDetail">
-                        <div class="reserveContainer">
-
-                            <img src="${contextPath}/resources/images/image_mp/calendar.png" alt="" class="reservIcon">&nbsp 21.05.04 ~ 21.05.07 (3박 4일)<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon">&nbsp 스탠다드 트윈룸, 정원 전망<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/credit_card.png" alt="" class="reservIcon">&nbsp 134,400 (결제완료)<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/location_outline.png" alt="" class="reservIcon">&nbsp 제주특별자치도 석귀포시 색달동 중문관광로 72번길 75<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/phone_outline.png" alt="" class="reservIcon">&nbsp 064) 735-5114<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/warning_outline.png" alt="" class="reservIcon">&nbsp 조식미포함<br>
-
-                        </div>
-                        <div class="reserveBtnArea">
-                            <button class="reserveBtn" id="cancleResv">예약 취소</button>
-                            <button class="reserveBtn" id="detailResv">상세페이지</button><br>
-                        </div>
-                    </div>
+                    <c:forEach items="${ hotelList }" var="hl" varStatus="hlNum">
+                    	<h5 id="bookTitle">${ hl.r_bus_name }</h5>
+                    	<div class="reservDetail">
+	                        <div class="reserveContainer">
+	                            <img src="${contextPath}/resources/images/image_mp/calendar.png" alt="" class="reservIcon">&nbsp ${ hl.r_booking_trv }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon">&nbsp ${ hl.r_booking_product }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/credit_card.png" alt="" class="reservIcon">&nbsp ${ hl.r_booking_pay }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/location_outline.png" alt="" class="reservIcon">&nbsp ${ hl.r_booking_address }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/phone_outline.png" alt="" class="reservIcon">&nbsp ${  hl.r_booking_phone }<br><br>
+	                            <%-- <img src="${contextPath}/resources/images/image_mp/warning_outline.png" alt="" class="reservIcon">&nbsp ${ hl.r_bus_name }<br> --%>
+	                            <input type="hidden" id="bus_code" value="${ hl.r_bus_code }">
+	                            <input type="hidden" id="category" value="room">
+	                        </div>
+	                        <div class="reserveBtnArea">
+	                            <button class="reserveBtn" id="cancleResv" onclick="goToCancel(${ hl.r_booking_no }, 'room', '${ hl.r_bus_name }');">예약 취소</button>
+	                            <button class="reserveBtn" id="detailResv" onclick="goToDetail(${ hl.r_bus_code});">상세페이지</button><br>
+                        	</div>
+                    	</div>
+                    </c:forEach>
                 </div>
+			
 
                 <div id="middleBox" class="reservBox">
                 	<br>
                     <h3 style="color: #467355; text-align: center;">렌트카 예약 내역</h3>
                     <hr style="background-color: #467355; width : 90%; height: 2px;">
-                    <h5>SK렌트카</h5>
-                    <div class="reservDetail">
-                        <div class="reserveContainer">
-
-                            <img src="${contextPath}/resources/images/image_mp/calendar.png" alt="" class="reservIcon">&nbsp 21.05.04 ~ 21.05.07 (3박 4일)<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon">&nbsp 스탠다드 트윈룸, 정원 전망<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/credit_card.png" alt="" class="reservIcon">&nbsp 134,400 (결제완료)<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/location_outline.png" alt="" class="reservIcon">&nbsp 제주특별자치도 석귀포시 색달동 중문관광로 72번길 75<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/phone_outline.png" alt="" class="reservIcon">&nbsp 064) 735-5114<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/warning_outline.png" alt="" class="reservIcon">&nbsp 조식미포함<br>
-
-                        </div>
-                        <div class="reserveBtnArea">
-                            <button class="reserveBtn" id="cancleResv">예약 취소</button>
-                            <button class="reserveBtn" id="detailResv">상세페이지</button><br>
-                        </div>
-                    </div>
+                    <c:forEach items="${ carList }" var="cl" varStatus="clNum">
+                    	<h5>${ cl.c_bus_name }</h5>
+                    	<div class="reservDetail">
+	                        <div class="reserveContainer">
+	                            <img src="${contextPath}/resources/images/image_mp/calendar.png" alt="" class="reservIcon">&nbsp ${ cl.c_booking_trv }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon">&nbsp ${ cl.c_booking_product }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/credit_card.png" alt="" class="reservIcon">&nbsp ${ cl.c_booking_pay }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/location_outline.png" alt="" class="reservIcon">&nbsp ${ cl.c_booking_address }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/phone_outline.png" alt="" class="reservIcon">&nbsp ${  cl.c_booking_phone }<br><br>
+	                            <%-- <img src="${contextPath}/resources/images/image_mp/warning_outline.png" alt="" class="reservIcon">&nbsp ${ hl.r_bus_name }<br> --%>
+	                        	<input type="hidden" name="whatKind" value="car">
+	                        </div>
+	                        <div class="reserveBtnArea">
+	                            <button class="reserveBtn" id="cancleResv" onclick="goToCancel(${cl.c_bus_code}, 'car', '${ cl.c_bus_name }');">예약 취소</button>
+	                            <button class="reserveBtn" id="detailResv" onclick="goToDetail(${cl.c_bus_code});">상세페이지</button><br>
+                        	</div>
+                    	</div>
+                    </c:forEach>
                 </div>
 
                 <div id="rightBox" class="reservBox">
                 	<br>
                     <h3 style="color: #467355; text-align: center;">입장권&체험권 예약 내역</h3>
                     <hr style="background-color: #467355; width : 90%; height: 2px;">
-                    <h5>서귀포 감귤농장 체험장</h5>
-                    <div class="reservDetail">
-                        <div class="reserveContainer">
-
-                            <img src="${contextPath}/resources/images/image_mp/calendar.png" alt="" class="reservIcon">&nbsp 21.05.04 ~ 21.05.07 (3박 4일)<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon">&nbsp 스탠다드 트윈룸, 정원 전망<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/credit_card.png" alt="" class="reservIcon">&nbsp 134,400 (결제완료)<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/location_outline.png" alt="" class="reservIcon">&nbsp 제주특별자치도 석귀포시 색달동 중문관광로 72번길 75<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/phone_outline.png" alt="" class="reservIcon">&nbsp 064) 735-5114<br><br>
-                            <img src="${contextPath}/resources/images/image_mp/warning_outline.png" alt="" class="reservIcon">&nbsp 조식미포함<br>
-
-                        </div>
-                        <div class="reserveBtnArea">
-                            <button class="reserveBtn" id="cancleResv">예약 취소</button>
-                            <button class="reserveBtn" id="detailResv">상세페이지</button><br>
-                        </div>
-                    </div>
-                </div>
+                    
+                 	<c:forEach items="${ tourList }" var="tl" varStatus="tlNum">
+                    	<h5>${ tl.t_bus_name }</h5>
+                    	<div class="reservDetail">
+	                        <div class="reserveContainer">
+	                            <img src="${contextPath}/resources/images/image_mp/calendar.png" alt="" class="reservIcon">&nbsp ${ tl.t_booking_trv }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon">&nbsp ${ tl.t_booking_product }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/credit_card.png" alt="" class="reservIcon">&nbsp ${ tl.t_booking_pay }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/location_outline.png" alt="" class="reservIcon">&nbsp ${ tl.t_booking_address }<br><br>
+	                            <img src="${contextPath}/resources/images/image_mp/phone_outline.png" alt="" class="reservIcon">&nbsp ${  tl.t_booking_phone }<br><br>
+	                            <%-- <img src="${contextPath}/resources/images/image_mp/warning_outline.png" alt="" class="reservIcon">&nbsp ${ hl.r_bus_name }<br> --%>
+	                        	<input type="hidden" name="whatKind" value="tour">
+	                        </div>
+	                        <div class="reserveBtnArea">
+	                            <button class="reserveBtn" id="cancleResv" onclick="goToCancel(${tl.t_bus_code}, 'tour', '${ tl.t_bus_name }');">예약 취소</button>
+	                            <button class="reserveBtn" id="detailResv" onclick="goToDetail(${tl.t_bus_code});">상세페이지</button><br>
+                        	</div>
+                    	</div>
+                    </c:forEach>
+            	</div>
             </div>
-        </section>
-    </div>
  <script>
     function goToWallet(){
 		/* console.log("jsp안에서 usno확인 : " + usno); */
 		location.href='${contextPath}/mypage/wallet?usno='+${loginUser.usno};
 	};
+	
+	function goToDetail(bus_code){
+		location.href='${contextPath}/business/detail?bus_code='+bus_code;
+	}
+	
+	function goToCancel(bookingLv, category, bus_name){
+
+		var result = confirm(bus_name + "의 예약을 정말 취소하시겠습니까?");
+		
+		if(result){
+			location.href='${contextPath}/mypage/canbook?bookingLv=' + bookingLv + '&category=' + category + '&usno=' + ${loginUser.usno};
+		}
+		
+	}
     </script>
 </body>
 </html>
