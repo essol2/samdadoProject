@@ -46,7 +46,7 @@
                 <thead>
                     <tr>
                         <th>신고 번호</th>
-                        <th>신고자</th>
+                        <th>피신고자</th>
                         <th>신고 내용</th>
                         <th>첨부 파일</th>
                         <th>사업장 코드</th>
@@ -90,7 +90,7 @@
 								    <input type="text" class="form-control" id="report_num" aria-describedby="emailHelp" value="${ status.current.report_no }" readonly>
 								  </div>
 								  <div class="mb-3">
-								    <label for="report_user" class="form-label">신고자</label>
+								    <label for="report_user" class="form-label">피신고자</label>
 								    <input type="text" class="form-control" id="report_user" value="${ status.current.usname }" readonly>
 								  </div>
 								  <div class="mb-3">

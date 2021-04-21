@@ -891,100 +891,7 @@
             });
         });
     </script>
-    
-    <!-- 회원가입 제출 전 유효성검사 -->
-	<script>
-		function joinValidate(){
-			
-			// 이름 유효성검사
-			if(!(/^[가-힣]{2,5}$/).test($("#name").val())){
-				alert('이름은 한글로 2~5글자 사이만 가능합니다.');
-				$("#name").select();
-				return false;
-			}
-			
-            // 아이디 유효성검사
-			if(!(/^[a-z][a-z0-9]{3,15}$/.test($("#id").val()))){
-				alert('영소문자로 시작하는 4~16글자 입력(숫자 포함 가능)');
-				$("#id").select();		
-				return false;
-			}
-            // 아이디 중복검사
-			if(/.중복 아이디로 사용할 수 없습니다./.test($("#test_id_label").text())){
-				console.log($("#test_id_label").text());
-				alert('중복된 아이디입니다.');
-				$("#id").select();
-				return false;
-			}
 
-			// 비밀번호 유효성검사
-			if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#pwd").val()))){
-				alert('영어대소문자/숫자/특수문자를 포함한 8~16자리 입력');
-				$("#pwd").select();
-				return false;
-			}
-			
-            // 비밀번호일치 검사
-			if($("#pwd2").val() != $("#pwd").val()){
-				alert('비밀번호가 일치하지 않습니다.');
-				$("#pwd2").select();
-				return false;
-			}
-			
-			var date = new Date;
-			var inputbirth = new Date($("#birth").val());
-			
-            // 생년월일 형식 검사
-			if(inputbirth > date){
-				alert('생년월일을 정확하게 입력하세요.');
-				$("#birth").select();
-				return false;
-			}
-			
-			// 이메일 유효성검사
-			if(!((/^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i).test($("#email").val()))){
-				alert('이메일주소를 확인해주세요.');
-				$("#email").select();
-				return false;
-			}
-			
-			// 이메일 중복검사
-			if(/.중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
-				console.log($("#test_email_label").text());
-				alert('중복된 이메일입니다.');
-				$("#email").select();
-				return false;
-			}
-			
-			// 전화번호 유효성검사
-			if(!(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/).test($("#phone").val())){
-				alert('전화번호를 확인해주세요.');
-				$("#phone").select();
-				return false;
-			}
-			
-			// 전화번호 중복검사
-			if(/.중복 휴대전화로 사용할 수 없습니다./.test($("#test_phone_label").text())){
-				console.log($("#test_phone_label").text());
-				alert('중복된 전화번호입니다.');
-				$("#phone").select();
-				return false;
-			}
-			
-			// 사업자등록번호 유효성검사
-			var bizNum = $("#business_no").val();
-			if(bizNum != "" && !(/\d{3}[-]\d{2}[-]\d{5}/).test(bizNum)){
-				alert('사업자등록번호를 확인해주세요.');
-				$("#business_no").select();
-				return false;
-			}
-
-			return true;
-		}
-	
-	</script>
-    
-    
     <!-- 회원가입폼 유효성검사 -->
     <script>
     	$("#name").change(function () {
@@ -1021,10 +928,11 @@
        			}).fail(function(){
        				console.log("ajax response fail..");
        			}).always(function(){
-       				console.log("always is done..!");
+       				console.log("always done..!");
        			});
             } else {
                 $("#test_id_label").html("아이디를 다시 입력해주세요.").css("color", "red");
+                $("#id").select();
             }
   
         });
@@ -1051,10 +959,11 @@
        			}).fail(function(){
        				console.log("ajax response fail..");
        			}).always(function(){
-       				console.log("always is done..!");
+       				console.log("always done..!");
        			});
             } else {
                 $("#test_phone_label").html("휴대전화를 다시 입력해주세요.").css("color", "red");
+                $("#phone").select();
             }
   
         });
@@ -1096,10 +1005,11 @@
       			}).fail(function(){
       				console.log("ajax response fail..");
       			}).always(function(){
-      				console.log("always is done..!");
+      				console.log("always done..!");
       			});
            } else {
                $("#test_email_label").html("이메일을 다시 입력해주세요.").css("color", "red");
+               $("#email").select();
            }
  
        });
@@ -1156,6 +1066,99 @@
         });
 	
     </script>
+    
+     <!-- 회원가입 제출 전 유효성검사 -->
+	<script>
+		function joinValidate(){
+			
+			// 이름 유효성검사
+			if(!(/^[가-힣]{2,5}$/).test($("#name").val())){
+				alert('이름은 한글로 2~5글자 사이만 가능합니다.');
+				$("#name").select();
+				return false;
+			}
+			
+            // 아이디 유효성검사
+			if(!(/^[a-z][a-z0-9]{3,15}$/.test($("#id").val()))){
+				alert('영소문자로 시작하는 4~16글자 입력(숫자 포함 가능)');
+				$("#id").select();		
+				return false;
+			}
+            // 아이디 중복검사
+			if(/.중복 아이디로 사용할 수 없습니다./.test($("#test_id_label").text())){
+				console.log($("#test_id_label").text());
+				alert('중복된 아이디입니다.');
+				$("#id").select();
+				return false;
+			}
+
+			// 비밀번호 유효성검사
+			if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#pwd").val()))){
+				alert('영어대소문자/숫자/특수문자를 포함한 8~16자리 입력');
+				$("#pwd").select();
+				return false;
+			}
+			
+            // 비밀번호일치 검사
+			if($("#pwd2").val() != $("#pwd").val()){
+				alert('비밀번호가 일치하지 않습니다.');
+				$("#pwd2").select();
+				return false;
+			}
+			
+			var date = new Date;
+			var inputbirth = new Date($("#birth").val());
+			
+            // 생년월일 형식 검사
+			if(inputbirth > date){
+				alert('생년월일을 정확하게 입력하세요.');
+				$("#birth").select();
+				return false;
+			}
+			
+			// 이메일 유효성검사
+			if(!((/^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i).test($("#email").val()))){
+				alert('이메일주소를 확인해주세요.');
+				$("#email").select();
+				return false;
+			}
+				
+			// 이메일 중복검사
+			if(/.중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
+				console.log($("#test_email_label").text());
+				alert('중복된 이메일입니다.');
+				$("#email").select();
+				return false;
+			}
+			
+			// 전화번호 유효성검사
+			if(!(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/).test($("#phone").val())){
+				alert('전화번호를 확인해주세요.');
+				$("#phone").select();
+				return false;
+			}
+			
+			
+			
+			if(/.중복 휴대전화로 사용할 수 없습니다./.test($("#test_phone_label").text())){
+				console.log($("#test_phone_label").text());
+				alert('중복된 전화번호입니다.');
+				$("#phone").select();
+				return false;
+			}
+			
+			// 사업자등록번호 유효성검사
+			var bizNum = $("#business_no").val();
+			if(bizNum != "" && !(/\d{3}[-]\d{2}[-]\d{5}/).test(bizNum)){
+				alert('사업자등록번호를 확인해주세요.');
+				$("#business_no").select();
+				return false;
+			}
+
+			return true;
+		}
+	
+	</script>
     
     
     <!-- 네이버아디디로로그인 초기화 Script -->

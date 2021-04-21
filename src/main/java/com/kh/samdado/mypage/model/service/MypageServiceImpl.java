@@ -205,6 +205,7 @@ public class MypageServiceImpl implements MypageService{
 	public int updatePbalance(Point po) {
 		// TODO Auto-generated method stub
 		return mDao.updatePbalance(po);
+	}
 
 	// 제휴회원 - Report 승인시 알림 등록
 	@Override
