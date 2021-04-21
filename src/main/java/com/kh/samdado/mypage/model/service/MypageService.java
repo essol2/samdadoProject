@@ -21,8 +21,17 @@ public interface MypageService {
 	// 이메일, 전화번호 변경 메소드
 	public int updateUserInfo(User u);
 	
-	// 알림 select 메소드	
+	// 안읽은 알림 select 메소드	
 	public List<Alert> selectAlertList(String usno);
+	
+	// 읽은 알림 select 메소드	
+	public List<Alert> selectYAlertList(String usno);
+	
+	// 알림 상세보기 객체 찾아오는 메소드
+	public Alert selectDetailAlert(Alert al);
+	
+	// 알림 nstatus update
+	public int updateNstatus(Alert al);
 	
 	// 제휴회원 - 광고 관리 메소드
 	public List<Alliance> selectAdvertList(String usno);

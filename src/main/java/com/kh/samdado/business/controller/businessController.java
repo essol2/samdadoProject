@@ -71,13 +71,16 @@ public class businessController {
 	
 		Business b = bService.selectHotel(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
-//		List<Room> roomList = bService.selectRoom(bus_code);
-		// List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
-		if(b != null) {
-			// System.out.println("디테일 : " + b);
-			// System.out.println("사진 뭐가져옴 : " + attList);
+		List<Room> roomList = bService.selectRoom(bus_code);
+		List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
+		
+		if(b != null && roomList != null) {
+
 			model.addAttribute("hotel", b);
 			model.addAttribute("att" + attList);
+			model.addAttribute("room", roomList);
+			model.addAttribute("roomAtt" + roomAtt);
+			
 		return "business/hotel/hotel_detail";
 		} else {
 			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
@@ -97,7 +100,7 @@ public class businessController {
 							  @RequestParam(value = "uploadFile") List<MultipartFile> rfile,
 							  @RequestParam(value = "room") List<MultipartFile> roomFile, 
 							  @RequestParam(value = "mainFile") MultipartFile mainFile,
-							  HttpServletRequest request, Map map) {
+							  HttpServletRequest request, Map map, Model model) {
 		
 		// 유저넘버 인컴에 담아주기
 		i.setUsno(b.getUs_no());
@@ -201,8 +204,12 @@ public class businessController {
 		int result3 = bService.insertRoom(rooms);
 		int result4 = bService.insertMain(bat);
 		
+		// --- 은솔 : usno
+		String usno = i.getUsno();
+		
 		if (result > 0 && result3 > 0) {
-			return "redirect:/main";
+			model.addAttribute("usno", usno);
+			return "redirect:/mypage/buss";
 		} else {
 			throw new businessException("사업 등록에 실패하였습니다.");
 		}
@@ -253,7 +260,7 @@ public class businessController {
 	public String tourInsert(Business b, TourProduct tp, Income i, BusinessAtt bat, @RequestParam int primonth,
 							 @RequestParam(value = "uploadFile") List<MultipartFile> tfiles,
 							 @RequestParam(value = "mainFile") MultipartFile mainFile,
-							 HttpServletRequest request, Map map) {
+							 HttpServletRequest request, Map map, Model model) {
 
 		// 유저넘버 인컴에 담아주기
 		i.setUsno(b.getUs_no());
@@ -318,8 +325,12 @@ public class businessController {
 		int result3 = bService.insertTour(tp);
 		int result4 = bService.insertMain(bat);
 		
+		// --- 은솔 : Usno 빼가기
+		String usno = i.getUsno();
+		
 		if (result > 0 && result3 > 0) {
-			return "redirect:/main";
+			model.addAttribute("usno", usno);
+			return "redirect:/mypage/buss";
 		} else {
 			throw new businessException("사업 등록에 실패하였습니다.");
 		}
@@ -372,7 +383,7 @@ public class businessController {
 	public String restaurantInsert(Business b, @RequestParam int primonth, Income i, BusinessAtt bat,
 							  @RequestParam(value="uploadFile") List<MultipartFile> bfiles,
 							  @RequestParam(value = "mainFile") MultipartFile mainFile,
-							  HttpServletRequest request, Map map) {
+							  HttpServletRequest request, Map map, Model model) {
 		// 유저넘버 인컴에 담아주기
 		i.setUsno(b.getUs_no());
 		
@@ -441,9 +452,12 @@ public class businessController {
 		int result = bService.insertBusiness(b, list);
 		int result2 = bService.insertMain(bat);
 		
+		//  ---  은솔 : usno 빼갈게여
+		String usno = i.getUsno();
+		
 		if(result > 0) {
-			
-			return "/mypage/buss";
+			model.addAttribute("usno", usno);
+			return "redirect:/mypage/buss";
 		} else {
 			throw new businessException("사업 등록에 실패하였습니다.");
 		}
@@ -503,7 +517,7 @@ public class businessController {
 								@RequestParam(value = "uploadFile") List<MultipartFile> bfiles,
 								@RequestParam(value = "mainFile") MultipartFile mainFile,
 								@RequestParam(value = "car") List<MultipartFile> carFiles, 
-								HttpServletRequest request, Map map) {
+								HttpServletRequest request, Map map, Model model) {
 		
 		// System.out.println("car : " + c.getList());
 		// 유저넘버 인컴에 담아주기
@@ -601,8 +615,12 @@ public class businessController {
 		int result2 = bService.insertCar(cars);
 		int result4 = bService.insertMain(bat);
 		
+		//--- 은솔 : usno빼가기
+		String usno = i.getUsno();
+		
 		if (result > 0  && result2 > 0) {
-			return "redirect:/main";
+			model.addAttribute("usno", usno);
+			return "redirect:/mypage/buss";
 		} else {
 			throw new businessException("사업 등록에 실패하였습니다.");
 		}
@@ -712,7 +730,7 @@ public class businessController {
 	
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\busUploadFiles\\alliance";
+		String savePath = root + "/busUploadFiles/alliance";
 		File folder = new File(savePath);
 		if(!folder.exists()) folder.mkdirs();
 
@@ -722,7 +740,7 @@ public class businessController {
 							+ (int)(Math.random() * 100000) 
 							+ originalFileName.substring(originalFileName.lastIndexOf("."));
 		
-		String renamePath = folder + "\\" + renameFileName;
+		String renamePath = folder + "/" + renameFileName;
 		
 		try {
 			file.transferTo(new File(renamePath));
@@ -802,6 +820,9 @@ public class businessController {
 		Business sbd = bService.selectBannerAdDetail(selectBusCodeUser, !flagbuscode);
 		//System.out.println("sbd : " + sbd);
 		
+		// --- 은솔 : 포인트가 얼마 남지 않았을 때 News 테이블에 알람 insert 하기
+		// 1. 해당 사업장의 주인의 pbalance 찾아오기
+		//int thisPbalance = mService.findThisPB(sbd);
 		
 		if (sbd != null) {
 			if (sbd.getBus_category().equals("R")) { // 음식점
@@ -908,7 +929,7 @@ public class businessController {
 	// 첨부파일 리네임 메소드 (공용)
 	public Map<String, String> busSaveFile(MultipartFile file, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\busUploadFiles";
+		String savePath = root + "/busUploadFiles";
 		File folder = new File(savePath);
 		if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
 		
@@ -920,7 +941,7 @@ public class businessController {
 							+ (int)(Math.random() * 100000) 
 							+ originalFileName.substring(originalFileName.lastIndexOf("."));
 		
-		String renamePath = folder + "\\" + renameFileName; // 저장하고자하는 경로 + 파일명
+		String renamePath = folder + "/" + renameFileName; // 저장하고자하는 경로 + 파일명
 	
 		Map<String, String> map = new HashMap<>();
 		map.put("rename", renameFileName);

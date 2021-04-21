@@ -130,6 +130,33 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="nstatus" column="NSTATUS"/>
 		<result property="ncate" column="NCATE"/>
 		<result property="nkeyno" column="NKEYNO"/>
+		
+		<!-- QNA Join -->
+		<result property="qno" column="QNA_NO"/>
+		<result property="qcont" column="QCONT"/>
+		<result property="qdate" column="QDATE"/>
+		<result property="qreply" column="QREPLY"/>
+		
+		<!-- ALLIANCE Join -->
+		<result property="alno" column="AL_NO"/>
+		<result property="alSubDate" column="AL_SUBDATE"/>
+		<result property="alStartDate" column="START_DATE"/>
+		<result property="almessage" column="A_MASSAGE"/>
+		<result property="bus_code" column="BUS_CODE"/>
+		
+		<!-- REPORT Join -->
+		<result property="reno" column="REPORT_NO"/>
+		<result property="rdate" column="RDATE"/>
+		<result property="rexdate" column="REXDATE"/>
+		<result property="rimgcname" column="R_IMG_CNAME"/>
+		<result property="rcount" column="R_COUNT"/>
+		
+		<!-- POINT Join -->
+		<result property="pno" column="PNO"/>
+		<result property="pbalance" column="PBALANCE"/>
+		
+		<!-- BUSINUESS Join -->
+		<result property="bus_name" column="BUS_NAME"/>
 	</resultMap>
 	
 	
@@ -399,7 +426,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SELECT *
 		FROM BUSINESS B, BUSINESS_ATT BA 
 		WHERE B.BUS_CODE = BA.BUS_CODE
-		AND B.US_NO = #{bus_code}
+		AND B.US_NO = #{usno}
 	</select>
 	
 	<!-- 제휴회원 - 진행중인 광고 목록 리스트 -->
@@ -468,7 +495,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<insert id="insertAlliNews" parameterType="Alert">
 		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO)
-		VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '배너 광고 신청이 완료되었습니다.', 'N', 'A', #{nkeyno})
+		VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '배너 광고 신청이 완료되었습니다.', 'N', 'AA', #{nkeyno})
 	</insert>
 	
 	<select id="findAlliUsno" resultType="string">
@@ -554,6 +581,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</if>
 	</insert>
 	
+
 	<update id="updatePbalance" parameterType="Point">
 		UPDATE
 				"USER"
@@ -561,5 +589,38 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				PBALANCE = #{pbalance}
 		WHERE
 				US_NO = #{usno}
+
+	<select id="selectAlertList" resultMap="AlertResultSet">
+		SELECT *
+		FROM NEWS
+		WHERE US_NO = #{usno}
+		AND NSTATUS = 'N'
+		ORDER BY NNO DESC
+	</select>
+	
+	<select id="selectYAlertList" resultMap="AlertResultSet">
+		SELECT *
+		FROM NEWS
+		WHERE US_NO = #{usno}
+		AND NSTATUS = 'Y'
+		ORDER BY NNO DESC
+	</select>
+	
+	<select id="selectDetailAlert" resultMap="AlertResultSet">
+		SELECT *
+		FROM NEWS N, POINT P, REPORT R, "QnA" Q, ALLIANCE A, BUSINESS B
+		WHERE A.BUS_CODE = B.BUS_CODE(+)
+		AND N.NKEYNO = P.PNO(+)
+		AND N.NKEYNO = R.REPORT_NO(+)
+		AND N.NKEYNO = Q.QNA_NO(+)
+		AND N.NKEYNO = A.AL_NO(+)
+		AND N.NNO = #{nno}
+	</select>
+	
+	<update id="updateNstatus" parameterType="Alert">
+		UPDATE NEWS
+		SET NSTATUS = 'Y'
+		WHERE NNO = #{nno}
+
 	</update>
 </mapper>

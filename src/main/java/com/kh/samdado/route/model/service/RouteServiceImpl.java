@@ -1,5 +1,6 @@
 package com.kh.samdado.route.model.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,17 @@ public class RouteServiceImpl implements RouteService {
 	}
 	
 	@Override
+	public List<TourSpot> spotSearch(String sTitle) {
+		return rDao.spotSearch(sTitle);
+	}
+	
+	@Override
+	public List<TourSpot> clearChange(String[] chlist) {
+		return rDao.clearChange(chlist);
+	}
+	
+	
+	@Override
 	public int spotDelete() {
 		// TODO Auto-generated method stub
 		return rDao.spotDelete();
@@ -33,12 +45,7 @@ public class RouteServiceImpl implements RouteService {
 		// TODO Auto-generated method stub
 		return rDao.spotAdd();
 	}
-	
-	@Override
-	public int routeChange() {
-		// TODO Auto-generated method stub
-		return rDao.routeChange();
-	}
+
 	
 	@Override
 	public int routeAdd() {
@@ -46,10 +53,9 @@ public class RouteServiceImpl implements RouteService {
 		return rDao.routeAdd();
 	}
 
-	@Override
-	public List<TourSpot> spotSearch(String sTitle) {
-		return rDao.spotSearch(sTitle);
-	}
+	
+
+	
  
    
 }
