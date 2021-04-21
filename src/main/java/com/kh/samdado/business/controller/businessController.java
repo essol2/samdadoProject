@@ -776,6 +776,9 @@ public class businessController {
 		Business sbd = bService.selectBannerAdDetail(selectBusCodeUser, !flagbuscode);
 		//System.out.println("sbd : " + sbd);
 		
+		// --- 은솔 : 포인트가 얼마 남지 않았을 때 News 테이블에 알람 insert 하기
+		// 1. 해당 사업장의 주인의 pbalance 찾아오기
+		//int thisPbalance = mService.findThisPB(sbd);
 		
 		if (sbd != null) {
 			if (sbd.getBus_category().equals("R")) { // 음식점
