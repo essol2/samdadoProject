@@ -159,6 +159,52 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="bus_name" column="BUS_NAME"/>
 	</resultMap>
 	
+	<resultMap type="Booking" id="BookingResultSet">
+		<id property="usno" column="USNO"/>
+		
+		<!-- rentcar -->
+		<result property="c_booking_no" column="C_BOOKING_NO"/>
+		<result property="c_bus_name" column="C_BUS_NAME"/>
+		<result property="c_booking_product" column="C_PRODUCT_NAME"/>
+		<result property="c_booking_date" column="C_BOOKING_DATE"/>
+		<result property="c_booking_modify" column="C_BOOKING_MODIFY"/>
+		<result property="c_booking_address" column="C_BOOKING_ADDRESS"/>
+		<result property="c_booking_pay" column="C_BOOKING_PAY"/>
+		<result property="c_booking_number" column="C_BOOKING_NUMBER"/>
+		<result property="c_booking_phone" column="C_BOOKING_PHONE"/>
+		<result property="c_booking_trv" column="C_TOUR_DATE"/>
+		<result property="rent_no" column="RENT_NO"/>
+		<result property="c_bus_code" column="BUS_CODE"/>
+		
+		<!-- hotel -->
+		<result property="r_booking_no" column="R_BOOKING_NO"/>
+		<result property="r_bus_name" column="BUS_NAME"/>
+		<result property="r_booking_product" column="R_PRODUCT_NAME"/>
+		<result property="r_booking_date" column="R_BOOKING_DATE"/>
+		<result property="r_booking_modify" column="R_BOOKING_MODIFY"/>
+		<result property="r_booking_address" column="R_BOOKING_ADDRESS"/>
+		<result property="r_booking_pay" column="R_BOOKING_PAY"/>
+		<result property="r_booking_number" column="R_BOOKING_NUMBER"/>
+		<result property="r_booking_phone" column="R_BOOKING_PHONE"/>
+		<result property="r_booking_trv" column="R_TOUR_DATE"/>
+		<result property="room_no" column="HOTEL_NO"/>
+		<result property="r_bus_code" column="BUS_CODE"/>
+		
+		<!-- tour -->
+		<result property="t_booking_no" column="T_BOOKING_NO"/>
+		<result property="t_bus_name" column="T_BUS_NAME"/>
+		<result property="t_booking_product" column="T_PRODUCT_NAME"/>
+		<result property="t_booking_date" column="T_BOOKING_DATE"/>
+		<result property="t_booking_modify" column="T_BOOKING_MODIFY"/>
+		<result property="t_booking_address" column="T_BOOKING_ADDRESS"/>
+		<result property="t_booking_pay" column="T_BOOKING_PAY"/>
+		<result property="t_booking_number" column="T_BOOKING_NUMBER"/>
+		<result property="t_booking_phone" column="T_BOOKING_PHONE"/>
+		<result property="t_booking_trv" column="T_TOUR_DATE"/>
+		<result property="pro_no" column="PRO_NO"/>
+		<result property="t_bus_code" column="BUS_CODE"/>
+	</resultMap>
+	
 	
 	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
@@ -624,4 +670,40 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE NNO = #{nno}
 
 	</update>
+	
+	<select id="selectHotelBookList" resultMap="BookingResultSet">
+		SELECT *
+		FROM ROOM_BOOKING
+		WHERE US_NO = #{usno}
+	</select>
+	
+	<select id="selectTourBookList" resultMap="BookingResultSet">
+		SELECT *
+		FROM TOUR_BOOKING
+		WHERE US_NO = #{usno}
+	</select>
+	
+	<select id="selectCarBookList" resultMap="BookingResultSet">
+		SELECT *
+		FROM CAR_BOOKING
+		WHERE US_NO = #{usno}
+	</select>
+	
+	<delete id="deleteBooking" parameterType="Booking">
+		<if test="category == 'room'">
+			DELETE 
+			FROM ROOM_BOOKING
+			WHERE R_BOOKING_NO = #{bookingLv}
+		</if>
+		<if test="category == 'car'">
+			DELETE 
+			FROM CAR_BOOKING
+			WHERE C_BOOKING_NO = #{bookingLv}
+		</if>
+		<if test="category == 'tour'">
+			DELETE 
+			FROM TOUR_BOOKING
+			WHERE T_BOOKING_NO = #{bookingLv}
+		</if>
+	</delete>
 </mapper>

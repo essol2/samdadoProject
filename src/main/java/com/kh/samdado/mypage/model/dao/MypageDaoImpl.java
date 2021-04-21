@@ -141,13 +141,7 @@ public class MypageDaoImpl implements MypageDao{
 	public List<Jjim> selctJjimList(String usno) {
 		return sqlSession.selectList("mypageMapper.selctJjimList", usno);
 	}
-	
-	// 일반회원 - 내 예약 목록 출력 메소드
-	@Override
-	public List<Booking> selectBookList(String usno) {
-		return sqlSession.selectList("mypageMapper.selectBookList", usno);
-	}
-	
+
 	// 일반회원 - 가계부 조회 메소드
 	@Override
 	public List<AccountBook> selectAccountList(AccountBook ab) {
@@ -232,6 +226,30 @@ public class MypageDaoImpl implements MypageDao{
 	public int insertNewReport(Alert a) {
 		return sqlSession.insert("mypageMapper.insertNewReport", a);
 
+	}
+
+	// 일반회원 - hotel book list 찾아오기
+	@Override
+	public List<Booking> selectHotelBookList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectHotelBookList", usno);
+	}
+
+	// 일반회원 - tour book list 찾아오기
+	@Override
+	public List<Booking> selectTourBookList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectTourBookList", usno);
+	}
+
+	// 일반회원 - car book list 찾아오기
+	@Override
+	public List<Booking> selectCarBookList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectCarBookList", usno);
+	}
+
+	// 일반회원 - 내예약 취소
+	@Override
+	public int deleteBooking(Booking b) {
+		return sqlSession.delete("mypageMapper.deleteBooking", b);
 	}
 
 	

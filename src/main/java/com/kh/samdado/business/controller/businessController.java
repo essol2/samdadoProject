@@ -680,7 +680,6 @@ public class businessController {
 		return "redirect:/main";
 		
 	}
-
 	// ************* 지혜 *************
 
 	@PostMapping("/insert/bannerAd")

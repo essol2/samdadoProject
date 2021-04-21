@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,6 +28,7 @@ import com.kh.samdado.mypage.model.vo.AccountBook;
 import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.ApplyPagination;
+import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
@@ -489,11 +489,36 @@ public class MypageController {
 	 
 	 // 일반회원 - 내예약목록 페이지 이동
 	 @GetMapping("/booking")
-	 public String goToBooking(@RequestParam(name="usno") String usno) {
+	 public ModelAndView goToBooking(@RequestParam(name="usno") String usno,
+			 						 Booking b,
+			 						 ModelAndView mv) {
+		 
+		 List<Booking> hotelBookList = mService.selectHotelBookList(usno);
+		 List<Booking> tourBookList = mService.selectTourBookList(usno);
+		 List<Booking> carBookList = mService.selectCarBookList(usno);
 		 
 		 
 		 
-		 return "/mypage/mp_MyReservation";
+//		 System.out.println("hotelBookList : " + hotelBookList);
+//		 System.out.println("tourBookList : " + tourBookList);
+//		 System.out.println("carBookList : " + carBookList);
+		 
+//		 if(hotelBookList != null) {
+//			 mv.addObject("hotelList", hotelBookList);
+//		 } 
+//		 if(tourBookList != null) {
+//			 mv.addObject("tourList", tourBookList);
+//		 }
+//		 if(carBookList != null) {
+//			 mv.addObject("carList", carBookList);
+//		 }
+		 
+		 mv.addObject("hotelList", hotelBookList);
+		 mv.addObject("tourList", tourBookList);
+		 mv.addObject("carList", carBookList);
+		 
+		 mv.setViewName("/mypage/mp_MyReservation");		 
+		 return mv;
 	 }
 
 	 // 일반회원 - 가계부 페이지로 이동
@@ -686,6 +711,27 @@ public class MypageController {
 			 return "redirect:/mypage/wallet";
 		 }
 
+	 }
+	 
+	 // 내예약 - 예약 취소
+	 @GetMapping("/canbook")
+	 public String cancelBooking(@ModelAttribute() Booking b,
+			 					 Model model){
+	 
+		 // DB에서 예약 내역 삭제하기
+		 int result = mService.deleteBooking(b);
+		 //System.out.println("canbook에 잘 들어옴! : " +b);
+		
+		 if(result > 0) {
+			 model.addAttribute("usno", b.getUsno());
+			 model.addAttribute("msg", "예약이 취소되었습니다. 환불은 대체적으로 3일 소요됩니다. 문제발생시 관리자에게 문의하세요!");
+			 return "redirect:/mypage/booking";
+		 } else {
+			 model.addAttribute("usno", b.getUsno());
+			 model.addAttribute("msg", "예약취소에 문제가 발생했습니다. 다시 시도해주세요!");
+			 return "redirect:/mypage/booking";
+		 }
+		 
 	 }
 	 
 }

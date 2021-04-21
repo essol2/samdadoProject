@@ -141,12 +141,6 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selctJjimList(usno);
 	}
 
-	// 일반회원 - 내 예약 목록 출력 메소드
-	@Override
-	public List<Booking> selectBookList(String usno) {
-		return mDao.selectBookList(usno);
-	}
-
 	// 일반회원 - 가계부
 	@Override
 	public List<AccountBook> selectAccountList(AccountBook ab) {
@@ -231,6 +225,30 @@ public class MypageServiceImpl implements MypageService{
 	public int insertNewReport(Alert a) {
 		return mDao.insertNewReport(a);
 
+	}
+
+	// 일반회원 - hotel book list 찾아오기
+	@Override
+	public List<Booking> selectHotelBookList(String usno) {
+		return mDao.selectHotelBookList(usno);
+	}
+
+	// 일반회원 - tour book list 찾아오기
+	@Override
+	public List<Booking> selectTourBookList(String usno) {
+		return mDao.selectTourBookList(usno);
+	}
+
+	// 일반회원 - car book list 찾아오기
+	@Override
+	public List<Booking> selectCarBookList(String usno) {
+		return mDao.selectCarBookList(usno);
+	}
+
+	// 일반회원 - 내예약 취소
+	@Override
+	public int deleteBooking(Booking b) {
+		return mDao.deleteBooking(b);
 	}
 
 	

@@ -75,9 +75,6 @@ public interface MypageService {
 	// 일반회원 - 찜목록 출력 메소드
 	public List<Jjim> selctJjimList(String usno);
 	
-	// 일반회원 - 내 예약 목록 출력 메소드
-	public List<Booking> selectBookList(String usno);
-	
 	// 일반회원 - 가계부 조회 메소드
 	public List<AccountBook> selectAccountList(AccountBook ab);
 
@@ -114,14 +111,22 @@ public interface MypageService {
 	// 제휴회원 - Alliance 승인시 새로운 알림 등록
 	public int insertNewApprove(Alert alert);
 
-
+	// 배너광고 클릭시 update -100 user table에 update
 	public int updatePbalance(Point po);
-
-
 
 	// 제휴회원 - Report 승인시 알림 등록
 	public int insertNewReport(Alert a);
 
+	// 일반회원 - hotel book list 찾아오기
+	public List<Booking> selectHotelBookList(String usno);
+	
+	// 일반회원 - tour book list 찾아오기
+	public List<Booking> selectTourBookList(String usno);
+	
+	// 일반회원 - car book list 찾아오기
+	public List<Booking> selectCarBookList(String usno);
 
+	// 일반회원 - 내예약 취소
+	public int deleteBooking(Booking b);
 	
 }
