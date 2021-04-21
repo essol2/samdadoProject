@@ -737,7 +737,7 @@
             </div>
             <div class="btnArea">
                 <br>
-                <b>90,000원</b><br>
+                <b>${ r.room_price }원</b><br>
                 <b>1박당 객실 요금</b><br><br>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     예약하기
@@ -830,6 +830,7 @@
     </script>
 
     <!-- Modal -->
+    <c:forEach var="r" items="${ room }">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -854,9 +855,10 @@
                 </div>
 
                 <div class="modal-body2">
-                	<label><input type="text" id="roomName" style="border:none;width:50px;" readonly value="방이름"></label><br>
-                    <label>80,000원 / 박</label><br>
-                    <input type="hidden" id="cAmount" name="cAmount" value="80000">
+                	<label><input type="text" id="roomName" style="border:none;width:200px;" readonly value="${ r.room_name }"></label><br>
+                    <label>${ r.room_price }원 / 박</label><br>
+                    <input type="hidden" id="cAmount" name="cAmount" value="${ r.room_price }">                    
+                    <input type="hidden" id="roomNo" name="roomNo" value="${ r.room_no }">
                     <div class="modal-book">
                         <div class="checkin">
                             <label>체크인</label><br>
@@ -884,7 +886,7 @@
                             </select>
                         </div>
                     </div>
-                    <label>80,000원 * </label>
+                    <label>${ r.room_price }원 * </label>
                     <label><input type="text" id="days" style="border:none;width:20px;" readonly></label>
                     <label>박</label>
                     <br>
@@ -899,12 +901,13 @@
             </div>
         </div>
     </div>
-    
+    </c:forEach>
       <script>
 
   	$(".payBtn").click(function() {
   		
   		var name = document.getElementById('roomName').value;
+  		var roomNo = document.getElementById('roomNo').value;
   		var payResult = document.getElementById('payResult').value;
   		var startDate = document.getElementById("startDate").value;
   	 	var personNumber = document.getElementById("personNumber").value;
@@ -930,7 +933,7 @@
 	            msg += '결제 금액 : ' + rsp.paid_amount;
 	            location.href = '${contextPath}/business/pay?usno='+${loginUser.usno}+'&r_booking_number='+personNumber
 					            +'&r_bus_code='+${ hotel.bus_code }+'&r_booking_trv='+startDate+'&bookingLv='+bookingLv
-					            +'&r_booking_pay='+amount+'&room_no='+${ hotel.room_no }+'&r_booking_product='+name;
+					            +'&r_booking_pay='+amount+'&room_no='+roomNo+'&r_booking_product='+name;
 	            				
 	        } else {
 	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';

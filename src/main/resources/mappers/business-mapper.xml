@@ -991,7 +991,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{r_booking_phone}
 		  , #{r_booking_trv}
 		  , #{usno}
-		  , '1'	<!-- 방등록 되면 방 번호 따오기 -->
+		  , #{room_no}
 		  , #{r_bus_code}
 		  , #{r_bus_name}
 		  )
