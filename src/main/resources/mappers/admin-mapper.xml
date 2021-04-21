@@ -269,6 +269,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>	
 
 	<select id="adminbannerAdSelect" resultMap="AllianceResultSet">
+		
+		<!-- 
 		 SELECT
                  ALLIANCE.AL_NO,
                  "USER".US_NAME,
@@ -290,6 +292,42 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
         AND      "POINT".US_NO(+) = ALLIANCE.US_NO
 		AND      ALSTATUS = 'N'
+		 -->
+		SELECT
+                 ALLIANCE.AL_NO,
+                 "USER".US_NAME,
+                 "USER".PBALANCE,
+                 BUSINESS.BUS_CATEGORY,
+                 BUSINESS.BUS_CODE,
+                 AL_INTRO,
+                 AL_SUBDATE,
+                 ALSTATUS,
+                 START_DATE,
+                 A_IMG_PATH,
+                 A_IMG_NAME,
+                 A_IMG_CNAME,
+                 A_MASSAGE,
+                 ALLIANCE.US_NO
+		FROM    
+                 ALLIANCE,  "USER", BUSINESS
+        WHERE 	 ALLIANCE.US_NO = "USER".US_NO
+        AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
+		AND      ALSTATUS = 'N' <!-- 그룹바이??? -->
+		GROUP BY 
+				 ALLIANCE.AL_NO,
+                 "USER".US_NAME,
+                 "USER".PBALANCE,
+                 BUSINESS.BUS_CATEGORY,
+                 BUSINESS.BUS_CODE,
+                 AL_INTRO,
+                 AL_SUBDATE,
+                 ALSTATUS,
+                 START_DATE,
+                 A_IMG_PATH,
+                 A_IMG_NAME,
+                 A_IMG_CNAME,
+                 A_MASSAGE,
+                 ALLIANCE.US_NO
 	</select>
 	
 	<update id="updateAdmitBannerAdStatus" parameterType="Alliance">

@@ -31,10 +31,28 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.update("mypageMapper.updateUserInfo", u);
 	}
 	
-	// 알림 select 메소드
+	// 안읽은 알림 select 메소드
 	@Override
-	public List<Alert> selectAlertLis(String usno) {
-		return sqlSession.selectList("mypageMapper.selectAlertLis", usno);
+	public List<Alert> selectAlertList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectAlertList", usno);
+	}
+	
+	// 읽은 알림 select 메소드
+	@Override
+	public List<Alert> selectYAlertList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectYAlertList", usno);
+	}
+
+	// 알림 상세보기 객체 찾아오는 메소드
+	@Override
+	public Alert selectDetailAlert(Alert al) {
+		return sqlSession.selectOne("mypageMapper.selectDetailAlert", al);
+	}
+	
+	// 알림 nstatus update
+	@Override
+	public int updateNstatus(Alert al) {
+		return sqlSession.update("mypageMapper.updateNstatus", al);
 	}
 	
 	// 제휴회원 - 광고 관리 메소드
@@ -208,11 +226,15 @@ public class MypageDaoImpl implements MypageDao{
 		// TODO Auto-generated method stub
 		return sqlSession.update("mypageMapper.updatePbalance", po);
 	}
+
 	// 제휴회원 - Report 승인시 알림 등록
 	@Override
 	public int insertNewReport(Alert a) {
 		return sqlSession.insert("mypageMapper.insertNewReport", a);
 
 	}
+
+	
+
 
 }

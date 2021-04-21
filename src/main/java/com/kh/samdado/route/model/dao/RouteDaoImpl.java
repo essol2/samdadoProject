@@ -1,5 +1,6 @@
 package com.kh.samdado.route.model.dao;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,25 +21,25 @@ public class RouteDaoImpl implements RouteDao {
 	public List<Route> routeSearch(rSearch search) {
 		return sqlSession.selectList("routeMapper.routeSearch", search);
 	}
-
-	@Override
-	public int spotDelete() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	@Override
 	public List<TourSpot> spotSearch(String sTitle) {
 		return sqlSession.selectList("routeMapper.spotSearch", sTitle);
 	}
+	
+	@Override
+	public List<TourSpot> clearChange(String[] chlist) {
+		return sqlSession.selectList("routeMapper.clearChange", chlist);
+	}
+	
 	@Override
 	public int spotAdd() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	@Override
-	public int routeChange() {
+	public int spotDelete() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -48,6 +49,8 @@ public class RouteDaoImpl implements RouteDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 	
 

@@ -32,11 +32,30 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.updateUserInfo(u);
 	}
 
-	// 알림 select 메소드
+	// 안읽은 알림 select 메소드
 	@Override	
 	public List<Alert> selectAlertList(String usno) {
-		return mDao.selectAlertLis(usno);
+		return mDao.selectAlertList(usno);
 	}
+	
+	// 읽은 알림 select 메소드
+	@Override	
+	public List<Alert> selectYAlertList(String usno) {
+		return mDao.selectYAlertList(usno);
+	}
+	
+	// 알림 상세보기 객체 찾아오는 메소드
+	@Override
+	public Alert selectDetailAlert(Alert al) {
+		return mDao.selectDetailAlert(al);
+	}
+	
+	// 알림 nstatus update
+	@Override
+	public int updateNstatus(Alert al) {
+		return mDao.updateNstatus(al);
+	}
+
 
 	// 제휴회원 - 광고 관리 메소드
 	@Override
@@ -206,6 +225,7 @@ public class MypageServiceImpl implements MypageService{
 		// TODO Auto-generated method stub
 		return mDao.updatePbalance(po);
 	}
+
 	// 제휴회원 - Report 승인시 알림 등록
 	@Override
 	public int insertNewReport(Alert a) {
@@ -213,4 +233,6 @@ public class MypageServiceImpl implements MypageService{
 
 	}
 
+	
+	
 }

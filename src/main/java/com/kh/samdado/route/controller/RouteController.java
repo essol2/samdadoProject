@@ -1,6 +1,7 @@
 package com.kh.samdado.route.controller;
 
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -38,6 +39,7 @@ public class RouteController {
 	
 	@GetMapping("/search")
 	public String searchRoute(Model model, 
+			HttpSession session,
 							@ModelAttribute rSearch search,
 							@RequestParam("area") String area, 
 							@RequestParam("thema") String thema, 
@@ -54,7 +56,7 @@ public class RouteController {
 	}
 	
 	@GetMapping("/changeRoute")
-	public String changeRoutePage(HttpSession session, Model model, @ModelAttribute rSearch search) {	// 여행지 순서 바꾸기 페이지로 이동
+	public String changeRoutePage(HttpSession session, @ModelAttribute rSearch search) {	// 여행지 순서 바꾸기 페이지로 이동
 		String area = (String)session.getAttribute("area");
 		String thema = (String)session.getAttribute("thema");
 		Date routeDate = (Date)session.getAttribute("routeDate");
@@ -87,10 +89,22 @@ public class RouteController {
 		return "";
 	}
 	
-	
-	
-	public String changeRoute() {		// 여행지 순서 바꾸기 완료
-		return "";
+	@PostMapping("/clearChange")
+	public String clearChange(HttpSession session, Model model, String[] chlist) {		// 여행지 순서 바꾸기 완료
+		String area = (String)session.getAttribute("area");
+		String thema = (String)session.getAttribute("thema");
+		Date routeDate = (Date)session.getAttribute("routeDate");
+		
+		/* System.out.println(Arrays.toString(chlist)); */
+		
+		List<TourSpot> clist = rService.clearChange(chlist);
+		
+		/* System.out.println(clist); */
+		
+		model.addAttribute("list", clist);
+		
+		/* return "redirect:/route/search"; */
+		return "route/route_result";
 	}
 	
 	public String addRoute() {			// 루트 저장하기
