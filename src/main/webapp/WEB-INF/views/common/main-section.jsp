@@ -86,15 +86,16 @@
                 <h3 style="margin-left : 3%;"> 이제, 여행은 가까운 곳에서.</h3>
                 <br>
                 
-                <div class="tableArea" style="margin-left : 3%;">
+     			<div class="tableArea" style="margin-left : 3%; width: 1920px;">
 					<table id="bannerAdImglistTable">
 						<thead>
-							<tr>
-							</tr>
+							<tr></tr>
 					    </thead>
 						<tbody></tbody>
 					</table>
 				</div>
+                
+               
             </div>
         </div>
         </section>
@@ -119,13 +120,13 @@
 					tableBody.html("");
 					
 					for (var i in data) {
-				
+						
 						var tr = $("<tr onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
 						
 						//var alno = $("<td>").text(data[i].alno); 
 						//var bus_code = $("<td>").text(data[i].bus_code); 
 						var aimgcname = $("<td>");
-						aimgcname.html("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 500px;'>");
+						aimgcname.html("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 700px;'>");
 						
 						tr.append(aimgcname);
 						tableBody.append(tr);
