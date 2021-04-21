@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <html lang="en">
@@ -694,94 +695,40 @@
         </div>
 
         <hr class="boundary">
-
+		<c:forEach var="r" items="${ room }">
         <div class="detail">
             <div class="imgArea">
-                <img src="../resources/images/image_listpage/room1.png" class="detailImg">
-            </div>
-            <div class="detailView">
-                <b>디럭스 마운틴 패밀리 트윈</b><br><br>
-                <label><img src="../resources/images/image_listpage/tiles.png">26.64M</label>
-                <label><img src="../resources/images/image_listpage/shower.png">개별 샤워룸</label>
-                <label><img src="../resources/images/image_listpage/aircon.png">에어컨</label>
-                <label><img src="../resources/images/image_listpage/balcony.png">발코니</label>
-                <label><img src="../resources/images/image_listpage/refrigerator.png">냉장고</label>
-                <label><img src="../resources/images/image_listpage/breakfast.png">조식</label><br><br>
-                <img src="../resources/images/image_listpage/usericon.png">
-                <img src="../resources/images/image_listpage/usericon.png">
-                <img src="../resources/images/image_listpage/usericon.png">
-                <img src="../resources/images/image_listpage/usericon.png"><br><br>
-                <label><img src="../resources/images/image_listpage/doublebed.png">더블침대</label>
-                <label><img src="../resources/images/image_listpage/singlebed.png">싱글침대</label>
-
-
-            </div>
-            <div class="btnArea">
-                <br>
-                <b>80,000원</b><br>
-                <b>1박당 객실 요금</b><br><br>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    예약하기
-                </button>
-            </div>
-
-        </div>
-
-        <div class="detail">
-            <div class="imgArea">
-
-                <img src="../resources/images/image_listpage/room2.png" class="detailImg">
-
-            </div>
-
-
-            <div class="detailView">
-                <b>디럭스 마운틴 트윈</b><br><br>
-                <label><img src="../resources/images/image_listpage/tiles.png">26.64M</label>
-                <label><img src="../resources/images/image_listpage/shower.png">개별 샤워룸</label>
-                <label><img src="../resources/images/image_listpage/aircon.png">에어컨</label>
-                <label><img src="../resources/images/image_listpage/balcony.png">발코니</label>
-                <label><img src="../resources/images/image_listpage/refrigerator.png">냉장고</label>
-                <label><img src="../resources/images/image_listpage/breakfast.png">조식</label><br><br>
-                <img src="../resources/images/image_listpage/usericon.png">
-                <img src="../resources/images/image_listpage/usericon.png">
-                <img src="../resources/images/image_listpage/usericon.png"><br><br>
-                <label><img src="../resources/images/image_listpage/doublebed.png">더블침대</label>
-
-
-
-            </div>
-            <div class="btnArea">
-                <br>
-                <b>110,000원</b><br>
-                <b>1박당 객실 요금</b><br><br>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                    예약하기
-                </button>
-            </div>
-        </div>
-
-        <div class="detail">
-            <div class="imgArea">
-
                 <img src="../resources/images/image_listpage/room3.png" class="detailImg">
-
             </div>
 
-
             <div class="detailView">
-                <b>디럭스 마운틴 패밀리 싱글</b><br><br>
-                <label><img src="../resources/images/image_listpage/tiles.png">26.64M</label>
-                <label><img src="../resources/images/image_listpage/shower.png">개별 샤워룸</label>
+                <b>${ r.room_name }</b><br><br>
+                <c:set var="ame" value="${fn:split(r.room_amenity, ',') }"/>
+                <c:forEach var="ame" items="${ ame }">
+                <c:if test="${ ame eq 'shower' }">
+                <label><img src="../resources/images/image_listpage/shower.png"></label>
+                </c:if>
+                <c:if test="${ ame eq 'aircon' }">
                 <label><img src="../resources/images/image_listpage/aircon.png">에어컨</label>
+                </c:if>
+                <c:if test="${ ame eq 'balcony' }">
                 <label><img src="../resources/images/image_listpage/balcony.png">발코니</label>
+                </c:if>
+                <c:if test="${ ame eq 'ref' }">
                 <label><img src="../resources/images/image_listpage/refrigerator.png">냉장고</label>
+                </c:if>
+                <c:if test="${ ame eq 'breakfast' }">
                 <label><img src="../resources/images/image_listpage/breakfast.png">조식</label><br><br>
+                </c:if>
                 <img src="../resources/images/image_listpage/usericon.png">
                 <img src="../resources/images/image_listpage/usericon.png"><br><br>
+				<c:if test="${ ame eq 'single' }">
                 <label><img src="../resources/images/image_listpage/singlebed.png">싱글침대</label>
-
-
+				</c:if>
+				<c:if test="${ ame eq 'double' }">
+				<label><img src="../resources/images/image_listpage/doublebed.png">더블침대</label>
+				</c:if>
+				</c:forEach>
             </div>
             <div class="btnArea">
                 <br>
@@ -792,6 +739,8 @@
                 </button>
             </div>
         </div>
+		</c:forEach>
+		        
         <div class="btnArea">
             <button class="moreBtn">더보기</button>
         </div>
