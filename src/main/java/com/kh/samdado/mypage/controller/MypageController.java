@@ -1,9 +1,11 @@
 package com.kh.samdado.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,12 +21,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.mypage.model.vo.AccountBook;
+import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.ApplyPagination;
 import com.kh.samdado.mypage.model.vo.Point;
@@ -327,17 +329,71 @@ public class MypageController {
 		 return mv;
 	 }
 	 
-	 // 제휴회원 내소식
+	 // 제휴회원 내소식 - 첫 로딩
 	 @GetMapping("/alert")
 	 public ModelAndView selectAlertList(ModelAndView mv,
 			 							  @RequestParam(name="usno") String usno,
 			 							  @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
 		 
 		 // DB에서 가져와야 할 알림 내역들 : 문의하기, 신고 받은 내역, 포인트 충전 알림, 배너광고 신청, 승인, 반려(사유), 포인트 얼마 안남음
+		 // 안읽은 리스트
+		 List<Alert> alertNList = mService.selectAlertList(usno);
+		 // 읽은 리스트
+		 List<Alert> alertYList = mService.selectYAlertList(usno);
 		 
+		 mv.addObject("alertNList", alertNList);
+		 mv.addObject("alertYList", alertYList);
 		 mv.setViewName("mypage/mp_news");
 		 return mv;
 	 }
+	 
+	 // 제휴회원 내소식 - ajax
+	 @RequestMapping("/alertajax")
+	 @ResponseBody
+	 public List<Alert> selectNewAlertList(@RequestBody Alert al,
+			 							   Model model){
+		 
+		// 안읽은 리스트
+		List<Alert> alertNList = mService.selectAlertList(al.getUsno());
+		// 읽은 리스트
+		List<Alert> alertYList = mService.selectYAlertList(al.getUsno());
+		
+		// 두개의 리스트 합치기
+		List<Alert> newDataList = new ArrayList<>();
+		
+		//newDataList = ListUtils.union(alertNList, alertYList);
+		
+		newDataList.addAll(alertNList);
+		newDataList.addAll(alertYList);
+		
+		System.out.println(newDataList);
+		
+		return newDataList;
+
+		
+	 }
+	 
+	 
+	 // 제휴회원 내소식 디테일
+	 @RequestMapping("detail")
+	 @ResponseBody
+	 public Alert findDetailNews(@RequestBody Alert al) {
+		 
+		 // 1. 해당 nno에 대한 detail 찾아오기
+		 Alert deAlert = mService.selectDetailAlert(al);
+		 //System.out.println("컨트롤러에서 deAlert 확인 : " + deAlert);
+		 
+		 //  2. 읽음으로 처리해주기
+		 int result =  mService.updateNstatus(al);
+		 
+		 if(deAlert != null) {
+			 return deAlert;
+		 } else {
+			 return null;
+		 }
+		 
+	 }
+	 
 /*=====================================================================================================*/
 	 
 	// 일반회원 마이페이지로 이동
