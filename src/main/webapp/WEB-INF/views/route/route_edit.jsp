@@ -193,7 +193,7 @@
 											<td>
 												<div class="parent">
 													<div class="spot_border">
-														<p class="spot_title">${ r.spot_title }</p>
+														<p class="spot_title" id="spotTitle">${ r.spot_title }</p>
 														<button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
 													</div>
 													<div class="spot_chnge">
@@ -221,7 +221,7 @@
                                    
                                    <tr>
                                         <td colspan="2"> 
-                                            <button class="_btn" id="ch_btn">순서 바꾸기</button>
+                                            <button class="_btn" id="ch_btn">변경 완료</button>
                                             <button class="_btn" id="add_btn">추가하기</button>
                                         </td>
                                    </tr>
@@ -417,10 +417,30 @@
 	            </div>
 	        </div>
 	    </div>
+	    <form id="clist" action="${contextPath}/route/clearChange" method="post">
+	   
+	    </form>
+	<!-- 변경 완료 -->
+	<script>
+		$("#ch_btn").on("click", function(){
+			/* var arr = new Array(); */
+			
+			$("#clist").html("");
+			
+			$("#tr1 #spotTitle").each(function(index, element){
+				/* arr.push($(this).text()); */
+				$("#clist").append("<input type='hidden' name='chlist' value='" + $(this).text() + "'/>");
+			}); 
+			
+			/* console.log(arr); */
+			
+			$("#clist").submit();
+		});
+		
+	</script>
 	    
 	<!-- 순서 변경 -->
 	<script>
-
 	 function moveUp(el) {
 		var $tr1 = $(el).closest('tr');
 	 	
@@ -443,8 +463,6 @@
 			$tr2.prev().before($tr2);		
 		}
 	}
-	
-	
 	</script>
 	    
 	<!-- 검색 모달창 -->

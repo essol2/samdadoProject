@@ -15,10 +15,11 @@ public interface RouteService {
 	public List<TourSpot> spotSearch(String sTitle);	// 여행지 검색
 	
 	public int spotAdd();				// 여행지 추가
-	
-	public int routeChange();			// 루트 수정
-	
+
 	public int routeAdd();				// 루트 저장
+
+	List<TourSpot> clearChange(String[] chlist);	// 순서 변경 완료
+
 
 
 	

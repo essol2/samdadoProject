@@ -101,5 +101,27 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			SPOT_TITLE LIKE #{st}
 	</select>
 	
+	<select id="clearChange" parameterType="String" resultMap="TourSpotResultSet">
+	<bind name="st" value="'%' + _parameter + '%'"/>
+		SELECT
+	    		*
+		FROM
+	    	TOUR_SPOT
+		WHERE
+			SPOT_TITLE IN (
+			<foreach collection="array" item="st" separator=",">
+				#{st}
+			</foreach>
+	    	)
+	    	ORDER BY (
+	    		CASE SPOT_TITLE
+		    	<foreach collection="array" item="st" index="idx">
+		    	WHEN #{st} THEN #{idx}
+		    	
+		    	</foreach>
+		    	END
+	    	)
+	</select>
+	
 
 </mapper>

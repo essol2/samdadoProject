@@ -64,29 +64,29 @@
 
                 <div id="route_select">
                 	<br>
-                	<c:if test="${ param.area == 'east' }">
+                	<c:if test="${ area == 'east' }">
                 		<c:set var="check1" value="checked"/>
                 	</c:if>
-                	<c:if test="${ param.area == 'west' }">
+                	<c:if test="${ area == 'west' }">
                 		<c:set var="check2" value="checked"/>
                 	</c:if>
-                	<c:if test="${ param.area == 'south' }">
+                	<c:if test="${ area == 'south' }">
                 		<c:set var="check3" value="checked"/>
                 	</c:if>
-                	<c:if test="${ param.area == 'north' }">
+                	<c:if test="${ area == 'north' }">
                 		<c:set var="check4" value="checked"/>
                 	</c:if>
                 	
-                	<c:if test="${ param.thema == 'sightseeing' }">
+                	<c:if test="${ thema == 'sightseeing' }">
                 		<c:set var="check5" value="checked"/>
                 	</c:if>
-                	<c:if test="${ param.thema == 'break' }">
+                	<c:if test="${ thema == 'break' }">
                 		<c:set var="check6" value="checked"/>
                 	</c:if>
-                	<c:if test="${ param.thema == 'beach' }">
+                	<c:if test="${ thema == 'beach' }">
                 		<c:set var="check7" value="checked"/>
                 	</c:if>
-                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get" onsubmint="return searchForm();">
+                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get" onsubmit="return searchForm();">
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 		<input type="radio" name="area" id="east" value="east" ${ check1 }>
                 		<label for="east">  동부</label>
