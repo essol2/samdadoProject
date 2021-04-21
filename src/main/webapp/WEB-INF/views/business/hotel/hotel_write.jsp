@@ -283,15 +283,15 @@
 		        <!-- 편의시설 -->
 		        <div class="join-wrap" >
 		            <h3><label>편의시설</label></h3>           
-	                <input type="checkbox" name="facility" value="주차">
+	                <input type="checkbox" name="hotel_facility" value="주차">
 	                <label for = "주차">주차</label>&nbsp;
-	                <input type="checkbox" name="facility" value="편의점">
+	                <input type="checkbox" name="hotel_facility" value="편의점">
 	                <label for = "편의점">편의점</label>&nbsp;
-	                <input type="checkbox" name="facility" value="무료인터넷">
+	                <input type="checkbox" name="hotel_facility" value="무료인터넷">
 	                <label for = "무료인터넷">무료인터넷</label>&nbsp;
-	                <input type="checkbox" name="facility" value="조식">
+	                <input type="checkbox" name="hotel_facility" value="조식">
 	                <label for = "조식">조식</label>&nbsp;
-	                <input type="checkbox" name="facility" value="TV">
+	                <input type="checkbox" name="hotel_facility" value="TV">
 	                <label for = "TV">TV</label>&nbsp;
 		        </div>
 		        

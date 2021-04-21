@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -534,7 +534,7 @@
                 <div class="col2">
                     <div id="map" style="width: 555px; height:330px;">
                     <button type="button" id="mapBtn" 
-                    onclick="window.open('https://map.kakao.com/link/search/호텔','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
+                    onclick="window.open('https://map.kakao.com/link/search/호텔','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">길찾기</button>
                     </div>
                     
                     <!-- 구글지도 api -->
@@ -677,6 +677,7 @@
         <!-- 편의시설 -->
         <div class="checktable">
             <h2>주요 편의 시설</h2><br>
+            <c:set var="w" value="${fn:split(hotel.hotel_facility, ',')}"/>
             <label><img src="../resources/images/image_listpage/check.png">무료 인터넷</label>
             <label><img src="../resources/images/image_listpage/check.png">테라스</label>
             <label><img src="../resources/images/image_listpage/check.png">편의점</label>
@@ -684,6 +685,7 @@
             <label><img src="../resources/images/image_listpage/check.png">TV</label>
             <label><img src="../resources/images/image_listpage/check.png">컴퓨터</label>
             <label><img src="../resources/images/image_listpage/check.png">조식</label>
+			
         </div>
 
         <hr class="boundary">

@@ -75,7 +75,7 @@ public class businessController {
 		List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
 		
 		if(b != null && roomList != null) {
-
+//			System.out.println("att : " + attList);
 			model.addAttribute("hotel", b);
 			model.addAttribute("att" + attList);
 			model.addAttribute("room", roomList);
@@ -83,7 +83,7 @@ public class businessController {
 			
 		return "business/hotel/hotel_detail";
 		} else {
-			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
+			model.addAttribute("msg", "숙박 보기에 실패했습니다.");
 		return "business/hotel/hotel_list";
 		}
 	}
@@ -445,9 +445,9 @@ public class businessController {
 			int result3 = bService.insertIncome1(i);
 		}
 		
-		System.out.println("b : " + b);
-		System.out.println("list :"  + list);
-		System.out.println("list :"  + bat);
+		//System.out.println("b : " + b);
+		//System.out.println("list :"  + list);
+		//System.out.println("list :"  + bat);
 		
 		int result = bService.insertBusiness(b, list);
 		int result2 = bService.insertMain(bat);
@@ -669,7 +669,7 @@ public class businessController {
 			b.setT_bus_name(selectUser.getBus_name());
 			b.setT_booking_address(selectUser.getBus_address());
 			b.setT_booking_phone(selectUser.getBus_phone());
-			System.out.println("b:" + b);
+			// System.out.println("b:" + b);
 			int bookingHotel = bService.insertBookingHotel(b);
 		} else if(b.getBookingLv() == 2) {
 			int bookingTour = bService.insertBookingTour(b);
