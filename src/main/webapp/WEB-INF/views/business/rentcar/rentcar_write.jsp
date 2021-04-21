@@ -417,7 +417,7 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="car" class="content" required>
+				        <input type="file" name="car" class="content">
 				    </span>
 				</div>
 				<!-- 차량사진 -->

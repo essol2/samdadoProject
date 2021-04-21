@@ -783,8 +783,7 @@
             <form action="${ contextPath }/business/report" id="writeForm" method="post" enctype="multipart/form-data">
             <div class="modal-body">
             
-            <input type="hidden" name="rep_res" value="허위매물">
-            <input type="hidden" name="usno" value="${ loginUser.usno }">
+            <input type="hidden" name="rep_res" value="허위매물">            
              <input type="hidden" name="bus_code" value="${ res.bus_code }">
                       
                 <!--신고대상-->

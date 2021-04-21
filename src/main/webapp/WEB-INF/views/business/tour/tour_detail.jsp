@@ -985,7 +985,7 @@
                 </div>
                 <div class="modal-body2">
                 	<label><input type="text" id="tourName" style="border:none;width:80px;" readonly value="${ tour.pro_name }"></label><br>
-                    <h4 id="startDateResult"></h4>
+                    <h4 id="startDateResult"></h4>                    
                     <div id="table">
                         <div class="rows">
                             <span class="cell cols1">성인입장권</span>
@@ -1035,9 +1035,13 @@
 
   	$(".payBtn").click(function() {
   		
-  		var name = ${ tour.pro_name };
+  		var name = document.getElementById('tourName').value;  		
   		var payResult = document.getElementById('payResult').value;
   		var startDate = document.getElementById("startDate").value;
+  		var num1 = document.getElementById("adultNumber").value;
+  		var num2 = document.getElementById("youthNumber").value;
+  		var num3 = document.getElementById("childNumber").value;
+  		var personNumber = parseInt(num1) + parseInt(num2) + parseInt(num3);
   	    var bookingLv = 2;
   		// var amount = payResult;
   		var amount = 100;
@@ -1058,9 +1062,10 @@
 	        if ( rsp.success ) {
 	            var msg = '결제가 완료되었습니다!';
 	            msg += '결제 금액 : ' + rsp.paid_amount;
-	            location.href = '${contextPath}/business/pay?amount='+amount+'&item='+name+'&usno='+${loginUser.usno}
-	            				+'&pro_no='+${ tour.pro_no }+'&t_bus_code='+${ tour.bus_code }
-	            				+'&t_booking_trv='+startDate+'&bookingLv='+bookingLv+'&t_booking_pay='+amount;
+	            location.href = '${contextPath}/business/pay?&usno='+${loginUser.usno}+'&amount='+amount
+	            				+'&bus_code='+${ tour.bus_code }+'&t_booking_product='+name
+	            				+'&t_booking_trv='+startDate+'&bookingLv='+bookingLv+'&t_booking_pay='+payResult
+	            				+'&t_booking_number='+personNumber;
 	            				
 	        } else {
 	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
@@ -1138,8 +1143,7 @@
             <form action="${ contextPath }/business/report" id="writeForm" method="post" enctype="multipart/form-data">
             <div class="modal-body">
             
-            <input type="hidden" name="rep_res" value="허위매물">
-            <input type="hidden" name="usno" value="${ loginUser.usno }">
+            <input type="hidden" name="rep_res" value="허위매물">            
              <input type="hidden" name="bus_code" value="${ t.bus_code }">
                       
                 <!--신고대상-->

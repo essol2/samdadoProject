@@ -197,8 +197,8 @@ public class businessDaoImpl implements businessDao {
 		}
 		
 		@Override
-		public Booking selectTourProduct(int pro_no) {			
-			return sqlSession.selectOne("businessMapper.selectTourProduct", pro_no);
+		public TourProduct selectTourProduct(int bus_code) {			
+			return sqlSession.selectOne("businessMapper.selectTourProduct", bus_code);
 		}
 		
 		@Override

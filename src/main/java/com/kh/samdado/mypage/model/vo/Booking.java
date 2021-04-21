@@ -67,7 +67,9 @@ BUS_CODE	NUMBER
 	
 	private String usno;
 	private int bookingLv;	// 예약종류(호텔:1/투어:2/렌트카:3)
+	private int bus_code;	// 한번에 퉁쳐서 사용하기
 	private String category;
+
 	
 	private int c_booking_no;
 	private String c_bus_name;
@@ -94,6 +96,7 @@ BUS_CODE	NUMBER
 	private Date r_booking_trv;
 	private int room_no;
 	private int r_bus_code;
+	private Date r_booking_trvEnd;
 	
 	private int t_booking_no;			// 예약번호
 	private String t_bus_name;			// 사업장이름
@@ -105,7 +108,7 @@ BUS_CODE	NUMBER
 	private int t_booking_number;		// 인원
 	private String t_booking_phone;		// 전화번호
 	private Date t_booking_trv;			// 여행날짜	
-	private String pro_no;				// 상품번호
+	private int pro_no;					// 상품번호
 	private int t_bus_code;				// 사업장고유번호
 	
 }

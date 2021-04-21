@@ -910,6 +910,7 @@
   		var roomNo = document.getElementById('roomNo').value;
   		var payResult = document.getElementById('payResult').value;
   		var startDate = document.getElementById("startDate").value;
+  		var endDate = document.getElementById("endDate").value;
   	 	var personNumber = document.getElementById("personNumber").value;
   	    var bookingLv = 1;
   		// var amount = payResult;
@@ -932,8 +933,9 @@
 	            var msg = '결제가 완료되었습니다!';
 	            msg += '결제 금액 : ' + rsp.paid_amount;
 	            location.href = '${contextPath}/business/pay?usno='+${loginUser.usno}+'&r_booking_number='+personNumber
-					            +'&r_bus_code='+${ hotel.bus_code }+'&r_booking_trv='+startDate+'&bookingLv='+bookingLv
-					            +'&r_booking_pay='+amount+'&room_no='+roomNo+'&r_booking_product='+name;
+					            +'&bus_code='+${ hotel.bus_code }+'&r_booking_trv='+startDate+'&bookingLv='+bookingLv
+					            +'&r_booking_pay='+payResult+'&room_no='+roomNo+'&r_booking_product='+name+'&amount='+amount
+					            +'&r_booking_trvEnd='+endDate;
 	            				
 	        } else {
 	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
