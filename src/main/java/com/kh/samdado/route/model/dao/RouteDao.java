@@ -10,15 +10,12 @@ public interface RouteDao {
 
 	List<Route> routeSearch(rSearch search);
 
-	int spotDelete();
-
 	List<TourSpot> spotSearch(String sTitle);
-
-	int spotAdd();
-
-	int routeChange();
-
-	int routeAdd();
 	
-
+	List<TourSpot> clearChange(String[] chlist);
+	
+	
+	int spotDelete();
+	int spotAdd();
+	int routeAdd();
 }
