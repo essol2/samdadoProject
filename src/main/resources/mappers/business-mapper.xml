@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="tour_tema" column="TOUR_TEMA" />
 		<result property="al_no" column="AL_NO" />
 		<result property="bus_opening" column="BUS_OPENING" />
+		<result property="hotel_facility" column="HOTEL_FACILITY" />
 		<result property="file_rename" column="FILE_RENAME" />	<!-- 비즈니스ATT 대한 JOIN -->
 		<result property="file_lv" column="FILE_LV" />
 		<!-- USER 테이블 조인을 위한 필드 -->
@@ -163,6 +164,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , BUS_PHONE
 		  , RES_CATEGORY
 		  , BUS_OPENING
+		  , HOTEL_FACILITY
+		  , TOUR_CATEGORY
+		  , TOUR_TEMA
+		  , HOTEL_CATEGORY
 		  )
 		  VALUES
 		  (
@@ -180,7 +185,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{bus_phone}
 		  , #{res_category}
 		  , #{bus_opening}
-		  
+		  , #{hotel_facility}
+		  , #{tour_category}
+		  , #{tour_tema}
+		  , #{hotel_category}
 		  )
 	</insert>
 	<insert id="insertBusAtt" parameterType="java.util.List">
@@ -482,6 +490,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_STATUS
 		     , BUS_PHONE
 		     , BUS_OPENING
+		     , HOTEL_FACILITY
 		  FROM
 		       BUSINESS
 		 WHERE
