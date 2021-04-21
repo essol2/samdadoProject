@@ -34,17 +34,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="pro_youth" column="PRO_YOUTH" />
 		<result property="pro_child" column="PRO_CHILD" />
 		<result property="pro_fac" column="PRO_FAC" />
+		<result property="pro_no" column="PRO_NO" />
 		<!-- 차조인 -->
 		<result property="car_name" column="CAR_NAME" />
 		<result property="car_type" column="CAR_TYPE" />
 		<result property="car_producer" column="CAR_PRODUCER" />
 		<result property="car_fuel" column="CAR_FUEL" />
 		<result property="car_price" column="CAR_PRICE" />
+		<result property="rent_no" column="CAR_NO" />
 		<!-- 방 조인 -->
 		<result property="room_name" column="ROOM_NAME" />
 		<result property="room_price" column="ROOM_PRICE" />
 		<result property="room_people" column="ROOM_PEOPLE" />
 		<result property="room_amenity" column="ROOM_AMENITY" />
+		<result property="room_no" column="ROOM_NO" />
 	</resultMap>
 	
 	<resultMap type="BusinessAtt" id="BusinessAttResultSet">
@@ -942,6 +945,21 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usno}
 		)
 	</insert>
+	
+	<select id="selectTourProduct" parameterType="Business" resultMap="BusinessResultSet">
+		SELECT
+			    PRO_NO
+			  , BUS_CODE
+			  , PRO_NAME
+			  , PRO_ADULT
+			  , PRO_YOUTH
+			  , PRO_CHILD
+			  , PRO FAC			  
+		  FROM
+			   TOUR_PRODUCT
+	     WHERE
+	     	   PRO_NO = #{pro_no}
+	</select>
 	 
 	 <insert id="insertBookingHotel">
 		INSERT
@@ -967,15 +985,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{r_booking_product}
 		  , SYSDATE
 		  , NULL
-		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{r_booking_address}
 		  , #{r_booking_pay}
-		  , '3'	<!-- 인원 -->
-		  , #{r_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{r_booking_number}
+		  , #{r_booking_phone}
 		  , #{r_booking_trv}
 		  , #{usno}
 		  , '1'	<!-- 방등록 되면 방 번호 따오기 -->
 		  , #{r_bus_code}
-		  , '사업장이름' <!-- 왜안됨 -->
+		  , #{r_bus_name}
 		  )
 	</insert>
 	
@@ -1000,17 +1018,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  VALUES
 		  (
 		  	BOOKING_NO.NEXTVAL
-		  , '사업장이름' <!-- 왜안됨 -->
-		  , #{t_booking_product}
+		  , #{T_bus_name}
+		  , #{T_booking_product}
 		  , SYSDATE
 		  , DEFAULT
-		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{T_booking_address}
 		  , #{t_booking_pay}
 		  , '3'	<!-- 인원 -->
-		  , #{t_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{T_booking_phone} <!-- 수식으로계산되는 문제 -->
 		  , #{t_booking_trv}
 		  , #{usno}
-		  , '1'	<!-- 상품번호 따오기 -->
+		  , #{pro_no}
 		  , #{t_bus_code}
 		  )
 	</insert>
