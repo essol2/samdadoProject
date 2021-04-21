@@ -39,7 +39,7 @@ public class EmailSender {
         	String htmlStr = "<h1 style=\"font-family: 'Jeju Myeongjo', serif;\">[비밀번호 찾기]</h1>"
         			+ "<br> <span style=\"font-family: 'Jeju Myeongjo', serif; font-size: 15px;\">여러분의 제주 여행 동반자, 삼다도입니다.</span>"
         			+ "<br> <span style=\"font-family: 'Jeju Myeongjo', serif; font-size: 15px;\">아래 링크를 클릭하여 <strong style=\"color: darkred; font-size: 15px;\">비밀번호를 변경</strong>해주세요!</span>"
-        			+ "<br><br> <a style=\"font-size: 15px;\" href='http://localhost:8897/samdado/user/email/changePwd?authKey="
+        			+ "<br><br> <a style=\"font-size: 15px;\" href='http://localhost:8896/samdado/user/email/changePwd?authKey="
         			+ email.getContent().substring(0, 6) + "&usemail="
         			+ email.getContent().substring(6) + "' target='_blank'>비밀번호 변경하러 가기</a>";
         	messageHelper.setText(htmlStr, true);

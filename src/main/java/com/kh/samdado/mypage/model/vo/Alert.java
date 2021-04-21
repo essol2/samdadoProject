@@ -51,10 +51,25 @@ public class Alert {
 	REP_CONT	VARCHAR2(50 BYTE)
 	DATE	DATE
 	STATUS	CHAR(1 BYTE)
-	EXDATE	DATE
+	REXDATE	DATE
+	
+	* ALERT
+	NNO	NUMBER
+	US_NO	NUMBER
+	NTITLE	VARCHAR2(1000 BYTE)
+	NSTATUS	VARCHAR2(5 BYTE)
+	NCATE	VARCHAR2(10 BYTE)
+	NKEYNO	NUMBER
 	*/
 	
+	private int nno;
 	private String usno;
+	private String ntitle;
+	private String nstatus;
+	private String ncate;
+	private int nkeyno;
+
+	
 	private int qno;
 	private String qcont;
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
@@ -64,7 +79,7 @@ public class Alert {
 	private int alno;
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date aldate;
-	private char alstatus;
+	private String alstatus;
 	private String almassage;
 	private int pno;
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
@@ -83,6 +98,6 @@ public class Alert {
 	private Date rdate;
 	private char rstatus;
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
-	private Date exdate;
+	private Date rexdate;
 	
 }

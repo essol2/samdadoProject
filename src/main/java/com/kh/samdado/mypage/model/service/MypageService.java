@@ -90,7 +90,29 @@ public interface MypageService {
 	// 일반회원 - 가계부 차트 조회
 	public List<AccountBook> selectChartList(AccountBook ab);
 
-	
+	// 제휴회원 - QnA 새로운 알림 등록
+	public int insertQnANews(Alert a);
+
+	// 제휴회원 - Alliance 새로운 알림 등록을 위한 alno 찾아오기.
+	public int findAlno(Alliance a);
+
+	// 제휴회원 - Alliance 새로운 알림 등록
+	public int insertAlliNews(Alert al);
+
+	// 제휴회원 - Alliance 배너 광고 승인시 usno 찾아오기
+	public String findAlliUsno(Alliance alliance);
+
+	// 제휴회원 - Alliance 승인시 새로운 알림 등록
+	public int insertNewApprove(Alert alert);
+
+
+	public int updatePbalance(Point po);
+
+
+
+	// 제휴회원 - Report 승인시 알림 등록
+	public int insertNewReport(Alert a);
+
 
 	
 }

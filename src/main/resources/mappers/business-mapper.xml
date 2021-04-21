@@ -115,6 +115,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="pbalance" column="PBALANCE" />
 	</resultMap>
 	
+	<resultMap type="Point" id="pointResultSet">
+		<id property="pno" column="PNO" />
+		<result property="pdate" column="PDATE" />
+		<result property="pdetail" column="PDETAIL" />
+		<result property="pbalance" column="PBALANCE" />
+		<result property="pamount" column="PAMOUNT" />
+		<result property="usno" column="US_NO" />
+	</resultMap>
+	
 	<insert id="insertBusiness" parameterType="Business">
 		INSERT
 		  INTO BUSINESS
@@ -602,7 +611,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 										BUS_CODE
 							     FROM   
 							     		ALLIANCE
-							     WHERE  US_NO = #{usno})
+							     WHERE  US_NO = #{usno}
+							     AND    ALSTATUS <![CDATA[<>]]> 'Y')
 		  AND	US_NO = #{usno}
 		 -->
 		 
@@ -634,7 +644,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 							     WHERE
                                  ALLIANCE.US_NO = POINT.US_NO
                                  AND ALLIANCE.US_NO = #{usno}
-                                 AND POINT.PBALANCE <![CDATA[<>]]> 0)
+                                 AND POINT.PBALANCE <![CDATA[<>]]> 0
+                                 AND ALSTATUS <![CDATA[<>]]> 'Y')
 		  AND	US_NO = #{usno}
 		  
 	</select>  
@@ -691,15 +702,95 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         , #{rep_cont}
         , DEFAULT
         , DEFAULT
-        , NULL
+        , DEFAULT
         , #{r_img_path}
         , #{r_img_name}
         , #{r_img_cname}
         , #{usno}
-        , NULL
+        , DEFAULT
         , #{bus_code}
         )
    </insert>
+   
+   <insert id="insertReport2" parameterType="Report">
+      INSERT
+        INTO Report
+        (
+          REPORT_NO
+        , REP_RES
+        , REP_CONT
+        , RDATE
+        , RSTATUS
+        , REXDATE
+        , R_IMG_PATH
+        , R_IMG_NAME
+        , R_IMG_CNAME
+        , US_NO
+        , R_COUNT
+        , REF_BUS_CODE
+        )
+        VALUES
+        (
+           REP_SEQ_NO.NEXTVAL
+        , #{rep_res}
+        , #{rep_cont}
+        , DEFAULT
+        , DEFAULT
+        , DEFAULT
+        , #{r_img_path}
+        , #{r_img_name}
+        , #{r_img_cname}
+        , #{usno}
+        , (SELECT *
+                FROM(SELECT 
+                             REPORT.R_COUNT
+                       FROM 
+                             "REPORT"
+                       WHERE 
+                             REF_BUS_CODE = #{ bus_code}
+                             ORDER BY R_COUNT DESC)
+            WHERE ROWNUM = 1
+           )
+        , #{bus_code}
+        )
+   </insert>
+   
+   <update id="updateReport" parameterType="Report">
+		UPDATE
+				Report
+			SET
+				REP_CONT = #{rep_cont}
+			  , R_COUNT = R_COUNT + 1
+			  , RDATE = SYSDATE
+			  , RSTATUS = 'N'
+			  , R_IMG_PATH = #{r_img_path}
+        	  , R_IMG_NAME = #{r_img_name}
+              , R_IMG_CNAME = #{r_img_cname}
+		  WHERE
+		  		REF_BUS_CODE = #{bus_code}
+	</update>
+	
+	<select id ="findUsno">
+		SELECT
+				    BUS_CODE
+				  , US_NO
+				  , BUS_NAME
+				  , BUS_ADDRESS
+				  , BUS_INTRO
+				  , BUS_DATE
+				  , BUS_MODIFY
+				  , AD_COUNT
+				  , BUS_CLASSIFY
+				  , BUS_CATEGORY
+				  , BUS_STATUS
+				  , BUS_PHONE
+				  , RES_CATEGORY
+				  , BUS_OPENING
+			  FROM
+				   BUSINESS
+		     WHERE
+		     	   BUS_CODE = #{bus_code}
+	</select>
   
    <select id="findReportStatus" parameterType="Report" resultMap="ReportResultSet">
       SELECT 
@@ -716,9 +807,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	        , R_COUNT
 	        , REF_BUS_CODE
         FROM 
-              REPORT
-       WHERE 
-             REF_BUS_CODE = #{bus_code}
+             (SELECT *
+                FROM "REPORT"
+               WHERE 
+                     REF_BUS_CODE = #{ bus_code}          
+                     ORDER BY REPORT_NO DESC)
+       WHERE  ROWNUM = 1
    </select>
 
 	<insert id="insertIncome1" parameterType="Income">
@@ -786,44 +880,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usno}
 		)
 	</insert>
-	
-	<!-- 
-	<insert id="insertBookingHotel" parameterType="TourProduct">
-		INSERT
-		  INTO ROOM_BOOKING
-		  (
-		  	R_BOOKING_NO
-		  , R_PRODUCT_NAME
-		  , R_BOOKING_DATE
-		  , R_BOOKING_MODIFY
-		  , R_BOOKING_ADDRESS
-		  , R_BOOKING_PAY
-		  , R_BOOKING_NUMBER
-		  , R_BOOKING_PHONE
-		  , R_TOUR_DATE
-		  , US_NO
-		  , HOTEL_NO
-		  , BUS_CODE
-		  , BUS_NAME
-		  )
-		  VALUES
-		  (
-		  	BOOKING_NO.NEXTVAL
-		  , #{r.name}
-		  , SYSDATE
-		  , NULL
-		  , #{r.address}
-		  , #{amount}
-		  , #{number}
-		  , #{r.phone}
-		  , #{startDate}
-		  , #{usno}
-		  , ROOM_SEQ_NO.CURVAL
-		  , BUS_SEQ_NO.CURVAL
-		  , #{h.name}
-		  )
-	</insert>
-	 -->
 	 
 	 <insert id="insertBookingHotel">
 		INSERT
@@ -846,44 +902,116 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  VALUES
 		  (
 		  	BOOKING_NO.NEXTVAL
-		  , '방이름'
+		  , #{r_booking_product}
 		  , SYSDATE
 		  , NULL
-		  , '경기도'
-		  , '80000'
-		  , '3'
-		  , '010-3949-3736'
-		  , '21/04/15'
-		  , '2'
-		  , ROOM_SEQ_NO.CURVAL
-		  , BUS_SEQ_NO.CURVAL
-		  , '사업장이름'
+		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{r_booking_pay}
+		  , '3'	<!-- 인원 -->
+		  , #{r_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{r_booking_trv}
+		  , #{usno}
+		  , '1'	<!-- 방등록 되면 방 번호 따오기 -->
+		  , #{r_bus_code}
+		  , '사업장이름' <!-- 왜안됨 -->
 		  )
 	</insert>
+	
+	<insert id="insertBookingTour">
+		INSERT
+		  INTO TOUR_BOOKING
+		  (
+		  	T_BOOKING_NO
+		  ,	T_BUS_NAME
+		  , T_PRODUCT_NAME
+		  , T_BOOKING_DATE
+		  , T_BOOKING_MODIFY
+		  , T_BOOKING_ADDRESS
+		  , T_BOOKING_PAY
+		  , T_BOOKING_NUMBER
+		  , T_BOOKING_PHONE
+		  , T_TOUR_DATE
+		  , US_NO
+		  , PRO_NO
+		  , BUS_CODE		  
+		  )
+		  VALUES
+		  (
+		  	BOOKING_NO.NEXTVAL
+		  , '사업장이름' <!-- 왜안됨 -->
+		  , #{t_booking_product}
+		  , SYSDATE
+		  , DEFAULT
+		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{t_booking_pay}
+		  , '3'	<!-- 인원 -->
+		  , #{t_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{t_booking_trv}
+		  , #{usno}
+		  , '1'	<!-- 상품번호 따오기 -->
+		  , #{t_bus_code}
+		  )
+	</insert>
+	
+	<insert id="insertBookingCar">
+		INSERT
+		  INTO TOUR_BOOKING
+		  (
+		  	C_BOOKING_NO
+		  ,	C_BUS_NAME
+		  , C_PRODUCT_NAME
+		  , C_BOOKING_DATE
+		  , C_BOOKING_MODIFY
+		  , C_BOOKING_ADDRESS
+		  , C_BOOKING_PAY
+		  , C_BOOKING_NUMBER
+		  , C_BOOKING_PHONE
+		  , C_TOUR_DATE
+		  , US_NO
+		  , RENT_NO
+		  , BUS_CODE		  
+		  )
+		  VALUES
+		  (
+		  	BOOKING_NO.NEXTVAL
+		  , '사업장이름' <!-- 왜안됨 -->
+		  , #{C_booking_product}
+		  , SYSDATE
+		  , NULL
+		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{C_booking_pay}
+		  , '3'	<!-- 인원 -->
+		  , #{C_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{C_booking_trv}
+		  , #{usno}
+		  , '1'	<!-- 상품번호 따오기 -->
+		  , #{C_bus_code}
+		  )
+	</insert>
+	
+	<select id="findPoint" parameterType="Point" resultMap="pointResultSet">
+		SELECT *
+		FROM (
+		        SELECT *
+		        FROM POINT
+		        WHERE US_NO = #{usno}
+		        ORDER BY PDATE DESC
+      		 )
+		WHERE 
+				ROWNUM = 1
+	</select>
    
    <!-- 지혜 -->
    <select id="selectBannerAdImgList" resultMap="AllianceResultSet">
-   	   <!--  
-   	   SELECT
-                 ALLIANCE.AL_NO,
-                 BUSINESS.BUS_CATEGORY,
-                 BUSINESS.BUS_CODE,
-                 A_IMG_CNAME
-		FROM    
-                 ALLIANCE, BUSINESS
-        WHERE 	 
-        		 BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
-		AND      ALSTATUS = 'Y'
-		-->
 		SELECT
-                 AL_NO, ALSTATUS, BUS_CODE, A_IMG_CNAME
+                        AL_NO, BUS_CODE, A_IMG_CNAME
 		FROM    
-		                 ALLIANCE, POINT
+				         ALLIANCE, "USER"
 		WHERE 	 
-		                "POINT".US_NO = ALLIANCE.US_NO
-		AND      ALSTATUS = 'Y'
-		AND      POINT.PBALANCE <![CDATA[<>]]> 0
-		GROUP BY AL_NO, ALSTATUS, BUS_CODE, A_IMG_CNAME
+				          "USER".US_NO = ALLIANCE.US_NO
+		AND               "USER".PBALANCE <![CDATA[<>]]> 0
+		AND              ALSTATUS = 'Y'
+		GROUP BY AL_NO, BUS_CODE, A_IMG_CNAME
    </select>
    
    <select id="selectBannerAdDetail" parameterType="_int" resultMap="BusinessResultSet">
@@ -935,11 +1063,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , SYSDATE
 		  , '배너광고 포인트 차감'
 		  , (SELECT *
-                FROM(SELECT POINT.PBALANCE
-                       FROM "POINT"
-                       WHERE US_NO = #{us_no}
-                       ORDER BY PBALANCE)
-                       WHERE ROWNUM <![CDATA[<=]]> 1) - 100
+                FROM(SELECT 
+                			 POINT.PBALANCE
+                       FROM 
+                       		 "POINT"
+                       WHERE 
+                             US_NO = #{us_no}
+                    ORDER BY PBALANCE)
+              WHERE ROWNUM <![CDATA[<=]]> 1) - 100
 		  , 100
 		  , #{us_no}
 		)
@@ -988,5 +1119,23 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	     WHERE
 	     	   BUS_CODE = #{bus_code}
 	</select>
+	
+	<update id="insertPointColumn" parameterType="Business">
+		UPDATE
+				"USER"
+			SET
+				PBALANCE = (SELECT *
+                			 FROM(SELECT POINT.PBALANCE 
+                          		  FROM 
+                       		           POINT
+                                  WHERE 
+                                  US_NO = #{us_no}
+                    		      ORDER BY PBALANCE)
+              WHERE ROWNUM <![CDATA[<=]]> 1)
+		WHERE
+		US_NO = #{us_no}
+	</update>
+
+	
 	
 </mapper>

@@ -159,9 +159,20 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.insert("businessMapper.insertReview", review);
 	}
 
+	// 신고하기
 	@Override
 	public int insertReport(Report r) {		
 		return sqlSession.insert("businessMapper.insertReport", r);
+	}
+	
+	@Override
+	public int insertReport2(Report r) {
+		return sqlSession.insert("businessMapper.insertReport2", r);
+	}
+	
+	@Override
+	public int updateReport(Report r) {		
+		return sqlSession.update("businessMapper.updateReport", r);
 	}
 	
 	@Override
@@ -169,20 +180,36 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.insert("businessMapper.jjim", jjim);
 	}
 	
-	// 일반결제 메소드 3개
+	// 일반결제 메소드
 	  @Override
 		public int insertIncome(Income i) {
 		  return sqlSession.insert("businessMapper.insertIncome", i);
 		}
 
 		@Override
-		public int insertBooking(Booking b) {
+		public int insertBookingHotel(Booking b) {
 			return sqlSession.insert("businessMapper.insertBookingHotel", b);
+		}
+		
+		@Override
+		public int insertBookingTour(Booking b) {
+			return sqlSession.insert("businessMapper.insertBookingTour", b);
+		}
+		
+		@Override
+		public int insertBookingCar(Booking b) {
+			return sqlSession.insert("businessMapper.insertBookingCar", b);
 		}
 
 		@Override
 		public int insertPoint(Point p) {
 			return sqlSession.insert("businessMapper.insertPoint", p);
+		}
+		
+		@Override
+		public Point findPoint(Point p) {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne("businessMapper.findPoint", p);
 		}
 
 	@Override
@@ -263,10 +290,17 @@ public class businessDaoImpl implements businessDao {
 	}
 
 	@Override
+	public int insertPointColumn(Business selectBusCodeUser) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("businessMapper.insertPointColumn", selectBusCodeUser);
+	}
+
+  @Override
 	public int insertMain(BusinessAtt bat) {
 		return sqlSession.insert("businessMapper.insertMain", bat);
 	}
+  
+ 
 
-	
 	
 }

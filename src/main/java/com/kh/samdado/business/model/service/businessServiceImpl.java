@@ -155,6 +155,16 @@ public class businessServiceImpl implements businessService {
 	public int insertReport(Report r) {			
 		return bDao.insertReport(r);
 	}
+	
+	@Override
+	public int insertReport2(Report r) {		
+		return bDao.insertReport2(r);
+	}
+	
+	@Override
+	public int updateReport(Report r) {		
+		return bDao.updateReport(r);
+	}
 
 
 	@Override
@@ -163,23 +173,37 @@ public class businessServiceImpl implements businessService {
 		return 0;
   }
 	
-	// 일반결제 메소드 3개
+	// 일반결제 메소드
 	@Override
-	public int insertIncome(Income i) {
-		// TODO Auto-generated method stub
+	public int insertIncome(Income i) {		
 		return bDao.insertIncome(i);
 	}
 
 	@Override
-	public int insertBooking(Booking b) {
-		// TODO Auto-generated method stub
-		return bDao.insertBooking(b);
+	public int insertBookingHotel(Booking b) {		
+		return bDao.insertBookingHotel(b);
+	}
+	
+	@Override
+	public int insertBookingTour(Booking b) {		
+		return bDao.insertBookingTour(b);
+	}
+	
+	@Override
+	public int insertBookingCar(Booking b) {		
+		return bDao.insertBookingCar(b);
 	}
 
 	@Override
 	public int insertPoint(Point p) {
 		// TODO Auto-generated method stub
 		return bDao.insertPoint(p);
+	}
+	
+	@Override
+	public Point findPoint(Point p) {
+		// TODO Auto-generated method stub
+		return bDao.findPoint(p);
 	}
 
 	// 지혜
@@ -223,6 +247,7 @@ public class businessServiceImpl implements businessService {
 			if(flag) {
 				bDao.updateReadCount(selectBusCodeUser);		// 배너 조회수 카운트 업데이트
 				bDao.insertPointDeduction(selectBusCodeUser);	// 포인트 컬럽 인서트
+				bDao.insertPointColumn(selectBusCodeUser);
 			}
 			
 		return bDao.selectBannerAdDetail(selectBusCodeUser);
@@ -246,6 +271,8 @@ public class businessServiceImpl implements businessService {
 	public int insertMain(BusinessAtt bat) {
 		return bDao.insertMain(bat);
 	}
+
+	
 
 	
 

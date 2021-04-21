@@ -300,7 +300,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			   START_DATE = SYSDATE + 3
 	     WHERE
 	     	   AL_NO = #{ alno }
-	       AND BUS_CODE = #{ bus_code }
+	      
+	       <!-- AND BUS_CODE = #{ bus_code }
+	       AND AL_INTRO = #{ alintro } -->
 	</update>
 	
 	<update id="updateRejectBannerAdStatusRI" parameterType="Alliance">
@@ -311,7 +313,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			   A_MASSAGE = #{ amassage }
 	     WHERE
 	     	   AL_NO = #{ alno }
-	       AND BUS_CODE = #{ bus_code }
+	     <!--  AND BUS_CODE = #{ bus_code }-->
 	</update>
 	
 	<update id="updateRejectBannerAdStatusRP" parameterType="Alliance">
@@ -322,7 +324,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			   A_MASSAGE = #{ amassage }
 	     WHERE
 	     	   AL_NO = #{ alno }
-	       AND BUS_CODE = #{ bus_code }
+	      <!--   AND BUS_CODE = #{ bus_code }-->
 	</update>
 	
 	<select id="searchReportList" parameterType="aSearch" resultMap="reportResultSet">
@@ -336,6 +338,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				, TO_CHAR(REXDATE,'YYYY-MM-DD') RETODATE
 				, US_NAME
 				, REF_BUS_CODE
+				, R_COUNT
 				, R_IMG_PATH
 				, R_IMG_NAME
 				, R_IMG_CNAME
@@ -365,6 +368,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				<when test="searchCondition == 'bus_code'">
 					AND REF_BUS_CODE LIKE #{sv}
 				</when>
+				<when test="searchCondition == 'r_count'">
+					AND R_COUNT LIKE #{sv}
+				</when>
 				<when test="searchCondition == 'usname'">
 					AND US_NAME LIKE #{sv}
 				</when>
@@ -377,6 +383,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 						 OR REXDATE LIKE #{sv}
 						 OR US_NAME LIKE #{sv}
 						 OR REF_BUS_CODE LIKE #{sv})
+						 OR R_COUNT LIKE #{sv})
 				</otherwise>	
 			</choose>
 		</where>
@@ -391,15 +398,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		       , US_NAME
 		       , BUS_CATEGORY
 		       , ALLIANCE.BUS_CODE
-		       , PBALANCE
+		       , "USER".PBALANCE
 		       , TO_CHAR(AL_SUBDATE, 'YYYY-MM-DD') AS ALTODATE
 		       , ALSTATUS
+		       , A_IMG_CNAME
+		       , AL_INTRO
 		  FROM
-		       "USER", BUSINESS, ALLIANCE, "POINT"
+		       "USER", BUSINESS, ALLIANCE
 		<where>
 			ALLIANCE.US_NO = "USER".US_NO
 		AND BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
-		AND "POINT".US_NO(+) = ALLIANCE.US_NO
+		AND "USER".US_NO = ALLIANCE.US_NO
 			<choose>
 				<when test="searchCondition == 'alno'">
 					AND ALLIANCE.AL_NO LIKE #{sv}
@@ -414,7 +423,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 					AND ALLIANCE.BUS_CODE LIKE #{sv}
 				</when>
 				<when test="searchCondition == 'pbalance'">
-					AND PBALANCE LIKE #{sv}
+					AND "USER".PBALANCE LIKE #{sv}
 				</when>
 				<when test="searchCondition == 'alsubdate'">
 					AND AL_SUBDATE LIKE #{sv}
@@ -427,7 +436,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 						 OR US_NAME LIKE #{sv}
 						 OR BUS_CATEGORY LIKE #{sv}
 						 OR ALLIANCE.BUS_CODE LIKE #{sv}
-						 OR PBALANCE LIKE #{sv}
+						 OR "USER".PBALANCE LIKE #{sv}
 						 OR AL_SUBDATE LIKE #{sv}
 						 OR ALSTATUS LIKE #{sv})
 				</otherwise>	
@@ -437,11 +446,11 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="admitbannerAdListSelect" resultMap="AllianceResultSet">
-		<!--  
+
 		SELECT
                  ALLIANCE.AL_NO,
                  "USER".US_NAME,
-                 "POINT".PBALANCE,
+                 "USER".PBALANCE,
                  BUSINESS.BUS_CATEGORY,
                  BUSINESS.BUS_CODE,
                  AL_INTRO,
@@ -454,68 +463,29 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                  A_MASSAGE,
                  ALLIANCE.US_NO
 		FROM    
-                 ALLIANCE,  "USER", BUSINESS, "POINT"
+                        ALLIANCE,  "USER", BUSINESS, "POINT" 
         WHERE 	 
-        		 ALLIANCE.US_NO = "USER".US_NO
-        AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
-        AND      "POINT".US_NO(+) = ALLIANCE.US_NO
-		AND      ALSTATUS = 'Y'
-		-->
-		
-		SELECT
-                 ALLIANCE.AL_NO,
-                 "USER".US_NAME,
-                 "POINT".PBALANCE,
-                 BUSINESS.BUS_CATEGORY,
-                 BUSINESS.BUS_CODE,
-                 AL_INTRO,
-                 AL_SUBDATE,
-                 ALSTATUS,
-                 START_DATE,
-                 A_IMG_PATH,
-                 A_IMG_NAME,
-                 A_IMG_CNAME,
-                 A_MASSAGE,
-                 ALLIANCE.US_NO
-		FROM    
-                 ALLIANCE,  "USER", BUSINESS, "POINT" 
-        WHERE 	 
-        		 ALLIANCE.US_NO = "USER".US_NO
+        		        ALLIANCE.US_NO = "USER".US_NO
         AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
         AND      "POINT".US_NO(+) = ALLIANCE.US_NO
 		AND      ALSTATUS = 'Y'
         AND      "POINT".PBALANCE <![CDATA[<>]]> 0
-        
-        <!--
-        SELECT * 
-			FROM (SELECT
-                        ALLIANCE.AL_NO,
-                        "USER".US_NAME,
-                        "POINT".PBALANCE,
-                        BUSINESS.BUS_CATEGORY,
-                        BUSINESS.BUS_CODE,
-                        AL_INTRO,
-                        AL_SUBDATE,
-                        ALSTATUS,
-                        START_DATE,
-                        A_IMG_PATH,
-                        A_IMG_NAME,
-                        A_IMG_CNAME,
-                        A_MASSAGE,
-                        ALLIANCE.US_NO
-           FROM    
-                        ALLIANCE,  "USER", BUSINESS, "POINT"  
-           WHERE 	 
-                           ALLIANCE.US_NO = "USER".US_NO
-           AND      BUSINESS.BUS_CODE = ALLIANCE.BUS_CODE
-           AND      "POINT".US_NO = ALLIANCE.US_NO
-           AND      ALSTATUS = 'Y'
-           AND      "POINT".PBALANCE <![CDATA[<>]]> 0
-           AND      "POINT".US_NO = #{usno}
-           ORDER BY PBALANCE)
-	 WHERE ROWNUM <![CDATA[<=]]> 1
-	 -->
-	 
+		GROUP BY 
+		ALLIANCE.AL_NO,
+		                 "USER".US_NAME,
+		                 "USER".PBALANCE,
+		                 BUSINESS.BUS_CATEGORY,
+		                 BUSINESS.BUS_CODE,
+		                 AL_INTRO,
+		                 AL_SUBDATE,
+		                 ALSTATUS,
+		                 START_DATE,
+		                 A_IMG_PATH,
+		                 A_IMG_NAME,
+		                 A_IMG_CNAME,
+		                 A_MASSAGE,
+		                 ALLIANCE.US_NO
+ 
 	</select>
 	
 	<select id="countAd2" resultType="_int">	
@@ -599,13 +569,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			  ORDER BY PAY_NO
 	</select>
 	
-	<select id="getPointList" resultMap="pointResultSet">
-		SELECT 
-				*
-		FROM
-			     POINT
-	</select>
-	
 	<select id="selectGetProfit" resultType="_int">
 		SELECT 
 				<!-- 
@@ -621,7 +584,61 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		ORDER BY 
 		        EXTRACT(YEAR  FROM PDATE)
 	</select>
-
-
+	
+	<select id="selectReport" resultType="Report">
+		SELECT
+			REPORT_NO
+		  , REP_RES
+		  , REP_CONT
+		  , RDATE
+		  , RSTATUS
+		  , REXDATE
+		  , R_IMG_PATH
+		  , R_IMG_NAME
+		  , R_IMG_CNAME
+		  , US_NO
+		  , R_COUNT
+		  , REF_BUS_CODE
+		  , CHECK_NEWS
+	     FROM 
+	        REPORT
+	     WHERE
+	     	REPORT_NO = #{ report_no }
+	     AND
+	        REXDATE IS NULL 
+	</select>
+	
+	<update id="updateRstatusToYAndNoRcount" parameterType="Report">
+		UPDATE REPORT
+		   SET
+			   RSTATUS = 'Y'
+	     WHERE
+	     	   REPORT_NO = #{report_no}
+	       AND REF_BUS_CODE = #{bus_code}
+	</update>
+	
+	<select id="selectReportRexdate">
+		SELECT
+			REPORT_NO
+		  , REP_RES
+		  , REP_CONT
+		  , RDATE
+		  , RSTATUS
+		  , REXDATE
+		  , R_IMG_PATH
+		  , R_IMG_NAME
+		  , R_IMG_CNAME
+		  , US_NO
+		  , R_COUNT
+		  , REF_BUS_CODE
+		  , CHECK_NEWS
+	     FROM 
+	        REPORT
+	     WHERE
+	     	REPORT_NO = #{report_no}
+	     AND ROWNUM <![CDATA[<=]]> 1 
+	</select>
+	
+	
 
 </mapper>

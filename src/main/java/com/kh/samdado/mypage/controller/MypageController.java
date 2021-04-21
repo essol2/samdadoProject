@@ -171,7 +171,7 @@ public class MypageController {
 		 return mv;
 	 }
 	 
-	 // 제휴회원 - 포인트 충전 후 Income DB에 insert.
+	 // 제휴회원 - 포인트 충전 후 Income, Point, News에 insert.
 	 @GetMapping("/payment")
 	 public String goToPayment(@ModelAttribute Income ic,
 			 				   @ModelAttribute Point po,
@@ -190,20 +190,24 @@ public class MypageController {
 		 Point prePoint = mService.prePoint(po);
 //		 System.out.println("prePoint 확인 : " + prePoint);
 //		 System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
-		 
+		  
+
 		 if(prePoint != null) {
 			 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
 			 po.setPbalance(prePoint.getPbalance()+ic.getAmount());
+			 
 		 } else {
 			 // 2. prePoint가 null이라면 그냥 Amount를 넣어주기
-			 po.setPbalance(ic.getAmount());
+			 po.setPbalance(ic.getAmount());	
 		 }
 		 
-		 //System.out.println("Point객체 확인 : " + po);
+		 System.out.println("Point객체 확인 : " + po);
 		 
+		 mService.updatePbalance(po);
+
 		 // Point DB에 포인트 넣어주기
 		 int result2 = mService.insertNewPoint(po);
-		 
+
 		 if(result>0 || result2>0) {
 			 model.addAttribute("usno", po.getUsno());
 			return "redirect:point";
@@ -320,6 +324,18 @@ public class MypageController {
 		 mv.addObject("chartList", chartDataList);
 		 mv.setViewName("mypage/mp_Advertisement");
 		 
+		 return mv;
+	 }
+	 
+	 // 제휴회원 내소식
+	 @GetMapping("/alert")
+	 public ModelAndView selectAlertList(ModelAndView mv,
+			 							  @RequestParam(name="usno") String usno,
+			 							  @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
+		 
+		 // DB에서 가져와야 할 알림 내역들 : 문의하기, 신고 받은 내역, 포인트 충전 알림, 배너광고 신청, 승인, 반려(사유), 포인트 얼마 안남음
+		 
+		 mv.setViewName("mypage/mp_news");
 		 return mv;
 	 }
 /*=====================================================================================================*/

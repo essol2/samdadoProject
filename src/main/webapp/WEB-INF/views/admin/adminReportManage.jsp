@@ -58,6 +58,7 @@
                 
                 <tbody>        
                 <c:forEach var="rpl" items="${ reportList }" varStatus="status"> 
+                   <input type="hidden" id="hiddenUsno" value="${ rpl.usno }">
                    <tr>
                        <th id="report_no">${ rpl.report_no }</th>
                        <td>${ rpl.usname }</td>
@@ -69,7 +70,7 @@
                        </td>
                        <td id="bus_code">${ rpl.bus_code }</td>
                        <td><fmt:formatDate value='${ rpl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
-                       <td><button class="btn btn-secondary" id="admitReportBtn">승인</button></td> <!-- db 상태 y -->
+                       <td><button class="btn btn-secondary" id	="admitReportBtn">승인</button></td> <!-- db 상태 y -->
                        <td><button class="btn btn-success" id="rejectReport">반려</button></td> <!-- db 상태 r -->
                    </tr>
                    
@@ -135,8 +136,9 @@
 	
 		         		var report_no = $("#report_no").text();
 		         		var bus_code = $("#bus_code").text();
+		         		var usno = $("#hiddenUsno").val();
 		         		
-		         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code;
+		         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code + "&usno=" + usno;
 	             });
          	</script>
          	
@@ -223,11 +225,11 @@
 	                    <select id="searchCondition" name="searchCondition" class="form-select" aria-label="Default select example">
 	                        <option selected>-------</option>
 	                        <option value="report_no" <c:if test="${ param.searchCondition == 'report_no' }">selected</c:if>>신고 번호</option>
-		                    <option value="rep_cont" <c:if test="${ param.searchCondition == 'rep_cont' }">selected</c:if>>신고 내용</option> <!-- like 조회 -->
+		                    <option value="rep_cont" <c:if test="${ param.searchCondition == 'rep_cont' }">selected</c:if>>신고 내용</option>
 		                    <option value="rdate" <c:if test="${ param.searchCondition == 'rdate' }">selected</c:if>>신고 날짜</option>
 		                    <option value="rexdate" <c:if test="${ param.searchCondition == 'rexdate' }">selected</c:if>>신고 만기 날짜</option>
-		                    <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option> <!-- 회원 이름으로 바꾸기 -->
-		                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원 이름</option> <!-- 회원 이름으로 바꾸기 -->
+		                    <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
+		                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원 이름</option>
 		                    <option value="bus_code" <c:if test="${ param.searchCondition == 'bus_code' }">selected</c:if>>사업장 코드</option>
 		                    <option value="r_count" <c:if test="${ param.searchCondition == 'r_count' }">selected</c:if>>신고 누적 횟수</option>
 		                    <option value="rstatus" <c:if test="${ param.searchCondition == 'rstatus' }">selected</c:if>>처리 상태(승인)</option>
@@ -260,8 +262,64 @@
                   </table>
                </div>
                <br><hr>
-               
+               <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#searchModal' style="display:none;">보기</button>
+            	   
+            	   
+             <!-- 모달 -->
+	         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">신고 파일 첨부내역</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+	                  <div>
+	                  	<form>
+						  <div class="mb-3">
+						    <label for="report_num" class="form-label">신고 번호</label>
+						    <input type="text" class="form-control" id="report_num" aria-describedby="emailHelp" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="report_user" class="form-label">피신고자</label>
+						    <input type="text" class="form-control" id="report_user" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="report_content" class="form-label">신고 내용</label>
+						    <textarea class="form-control" id="report_content" style="height: 100px; resize: none;" readonly></textarea>
+						  </div>
+						  <div class="mb-3">
+						    <label for="report_bus_code" class="form-label">사업장 코드</label>
+						    <input type="text" class="form-control" id="report_bus_code" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="report_date" class="form-label">신고 날짜</label>
+						    <input type="text" class="form-control" id="report_date" readonly>
+						  </div>
+						  <div class="mb-3">
+						    <label for="report_atta" class="form-label">첨부파일</label> <br>
+						    <div class="row row-cols-1 row-cols-md-2">
+							  <div class="col">
+							    <div class="card" style="width: 470px;" id="reportSearchAjaxModalImgDiv">
+
+							    </div>
+							  </div> 
+							</div>
+						  </div>
+						</form>
+	                  </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+            	
+            
+	
               <script>
+              
 				$(function() {
 					$("#search_report_form button[type=button]").on("click", function() {
 		         		
@@ -295,26 +353,43 @@
 									var bus_code = $("<td>").text(data[i].bus_code);
 									var r_count = $("<td>").text(data[i].r_count);
 									var rstatus = $("<td>").text(data[i].rstatus);
-									//var showAtta = $("<td> <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#exampleModal + " + data[i]"'>보기</button>");
+									var r_img_cname = $("<td style='display: none;'>").text(data[i].r_img_cname);
+									var showAtta = $("<td> <button type='button' class='btn btn-secondary' onclick='test(this);'>보기</button>");
 									
-									tr.append(report_no, rep_cont, rtodate, retodate, usno, usname, bus_code, r_count, rstatus); // 테이블 행에 추가
-									tableBody.append(tr); // 테이블에 추가
+									tr.append(report_no, rep_cont, rtodate, retodate, usno, usname, bus_code, r_count, rstatus, showAtta, r_img_cname);
+									tableBody.append(tr);
+									
+									
 								}
-								
-								
+
 							},
 							error : function(e) {
-								alert("error code : " + e.status + "\n"
-										+ "message : " + e.responseText);
+								alert("정보를 찾을 수 없습니다.");
 							}
 						});
 					});
 				});
-			</script>
+				
+				function test(data){
+					
+					 $(document).ready(function() {
+						    $('#reportSearchAjaxModalImgDiv').html(""); // 이미지 지우기
+				            $('#searchModal').modal("show");
+				        });
+					
+					 console.log($(data).parent().parent().children('td').eq(9).text());
+					 
+					 $("#report_num").val($(data).parent().parent().children('th').text());
+					 $("#report_user").val($(data).parent().parent().children('td').eq(4).text());
+					 $("#report_content").val($(data).parent().parent().children('td').eq(0).text());
+					 $("#report_bus_code").val($(data).parent().parent().children('td').eq(5).text());
+					 $("#report_date").val($(data).parent().parent().children('td').eq(2).text());
+					 $("#reportSearchAjaxModalImgDiv").append("<img id='reportSearchAjaxModalImg' src='${ contextPath }/resources/busUploadFiles/" + $(data).parent().parent().children('td').eq(9).text() + "' class='card-img-top'>");
 
-        
-            
-       
+				}
+			</script>
+			
+			
         </div>
    
     </div>

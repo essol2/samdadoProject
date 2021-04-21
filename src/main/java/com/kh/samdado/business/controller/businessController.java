@@ -36,7 +36,6 @@ import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
-
 import com.kh.samdado.business.model.vo.hotel.Room;
 import com.kh.samdado.business.model.vo.hotel.RoomAtt;
 import com.kh.samdado.business.model.vo.hotel.RoomBooking;
@@ -46,13 +45,12 @@ import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
-
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
+import com.kh.samdado.mypage.model.service.MypageService;
+import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
-
-import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.user.model.vo.User;
 
 
@@ -60,7 +58,8 @@ import com.kh.samdado.user.model.vo.User;
 @RequestMapping("/business")
 @SessionAttributes({ "loginUser", "msg" })
 public class businessController {
-
+	@Autowired
+	private MypageService mService;
 
 	@Autowired
 	businessService bService;
@@ -434,12 +433,17 @@ public class businessController {
 			}
 			int result3 = bService.insertIncome1(i);
 		}
+		
+		System.out.println("b : " + b);
+		System.out.println("list :"  + list);
+		System.out.println("list :"  + bat);
+		
 		int result = bService.insertBusiness(b, list);
 		int result2 = bService.insertMain(bat);
 		
 		if(result > 0) {
 			
-			return "mypage/mp_StoreList";
+			return "/mypage/buss";
 		} else {
 			throw new businessException("사업 등록에 실패하였습니다.");
 		}
@@ -620,20 +624,40 @@ public class businessController {
 	// 예약결제 성공 시 insert
 	
 	@GetMapping("/pay")
-	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, Model model) {
+	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code) {
+		// 포인트에 amount 넣어주기
 		p.setPamount(i.getAmount());
+		// income에  들어갈 원가 10퍼센트 셋팅
 		i.setAmount(i.getAmount() * 1/10);
-		p.setPbalance(i.getAmount() * 9);
-		System.out.println("income 확인 : " + i);
-		System.out.println("point 확인 : " + p);
-		System.out.println("booking 확인 : " + b);
-		int income = bService.insertIncome(i);
-		int point = bService.insertPoint(p);
-		int booking = bService.insertBooking(b);
-		System.out.println("income 확인 : " + income);
-		System.out.println("point 확인 : " + point);
-		System.out.println("booking 확인 : " + booking);
 		
+		int income = bService.insertIncome(i);
+		
+		Point findPoint = bService.findPoint(p);
+		
+		 if(findPoint != null) {
+			 // 이미 포인트가 있으면 기존 포인트 + 결제금액의 90% 적립
+			 p.setPbalance(findPoint.getPbalance()+i.getAmount() * 9);
+		 } else {
+			 // 첫 결제면 그대로 결제금액 90% 셋팅
+			 p.setPbalance(i.getAmount() * 9);
+		 }
+		 // p에 예약하는 사업장주인 usno 넣기
+		 Business selectUser = bService.selectBusCodeUser(bus_code);
+		 p.setUsno(selectUser.getUs_no());
+		 // 포인트 넣기
+		int point = bService.insertPoint(p);		
+		// 예약정보 insert
+		if(b.getBookingLv() == 1) {			
+			b.setT_bus_name(selectUser.getBus_name());
+			b.setT_booking_address(selectUser.getBus_address());
+			b.setT_booking_phone(selectUser.getBus_phone());
+			System.out.println("b:" + b);
+			int bookingHotel = bService.insertBookingHotel(b);
+		} else if(b.getBookingLv() == 2) {
+			int bookingTour = bService.insertBookingTour(b);
+		} else if(b.getBookingLv() == 3) {
+			int bookingCar = bService.insertBookingCar(b);
+		}
 		
 		return "redirect:/main";
 		
@@ -644,9 +668,10 @@ public class businessController {
 	@PostMapping("/insert/bannerAd")
 	public String boardInsert(Alliance a, Model model,
 							  @RequestParam(value="uploadFile") MultipartFile file,
-							  HttpServletRequest request) {
+							  HttpServletRequest request,
+							  Alert al) {
 		
-		// System.out.println("a : " + a);
+		 System.out.println("a : " + a);
 		// System.out.println("file : " + file);
 		
 		// 업로드 파일 서버에 저장
@@ -663,10 +688,20 @@ public class businessController {
 		}
 		
 		int result = bService.insertBannerAd(a);
-		
 		String usno = a.getUsno();
 		
-		if(result > 0) {
+		// 알림 기능 ---은솔---
+		// 1. alno 찾아오기
+		int nkeyno = mService.findAlno(a);
+		
+		// News 테이블에 담을 객체 - usno, nkeyno
+		al.setUsno(usno);
+		al.setNkeyno(nkeyno);
+		
+		// News에 Insert하기
+		int newsInsert = mService.insertAlliNews(al);
+		
+		if(result > 0 && newsInsert > 0) {
 			model.addAttribute("usno", usno);
 			model.addAttribute("msg", "배너 광고 신청이 완료되었습니다. 마이페이지에서 확인하세요!");
 			return "redirect:/mypage/buss";
@@ -811,7 +846,7 @@ public class businessController {
   
   	// 신고하기	
 	@PostMapping("/report")
-	public String reportInsert(Report r,
+	public String reportInsert(Report r, int bus_code,
 							  @RequestParam(value="uploadFile") MultipartFile file,
 							  HttpServletRequest request, Map map) {
 		
@@ -830,16 +865,18 @@ public class businessController {
 			}
 		}
 		
+		Business selectUser = bService.selectBusCodeUser(bus_code);
+		r.setUsno(selectUser.getUs_no());
 		Report findReportStatus = bService.findReportStatus(r);
-		// System.out.println("r : " + r);
-		// System.out.println("frs : " + findReportStatus);
+		 System.out.println("r : " + r);
+		 System.out.println("frs : " + findReportStatus);
 		
 		// 해당 업체가 신고기록이 없을 때 insert
 		if(findReportStatus == null) {					
-			int result = bService.insertReport(r);					
+			int result = bService.insertReport(r);
 								
 			if(result > 0) {						
-				return "redirect:/main";
+				return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
 			} else {
 				throw new businessException("신고에 실패하였습니다.");
 			}
@@ -848,14 +885,18 @@ public class businessController {
 		} else {
 			// Rstatus가 n일 경우
 			if(findReportStatus.getRstatus().equals("N")) {
-				return "redirect:/main";
+				return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
 				
 			// Rstatus가 n이 아닐 경우	
 			} else {
-				int result = bService.insertReport(r);						
+
+				// 기존 rcount를 가져와서 insert하기
+				System.out.println("r2 : " + r);
+				int result = bService.insertReport2(r);
 									
+
 				if(result > 0) {							
-					return "redirect:/business/restaurant/restaurant_detail";
+					return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
 				} else {
 					throw new businessException("신고에 실패하였습니다.");
 				}

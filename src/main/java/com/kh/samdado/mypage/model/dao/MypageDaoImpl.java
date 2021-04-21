@@ -172,4 +172,47 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.selectList("mypageMapper.selectChartList", ab);
 	}
 
+	// 제휴회원 - QnA 새로운 알림 등록
+	@Override
+	public int insertQnANews(Alert a) {
+		return sqlSession.insert("mypageMapper.insertQnANews", a);
+	}
+
+	// 제휴회원 - Alliance 새로운 알림 등록을 위한 alno 찾아오기.
+	@Override
+	public int findAlno(Alliance a) {
+		return sqlSession.selectOne("mypageMapper.findAlno", a);
+	}
+
+	// 제휴회원 - Alliance 새로운 알림 등록
+	@Override
+	public int insertAlliNews(Alert al) {
+		return sqlSession.insert("mypageMapper.insertAlliNews", al);
+	}
+	
+	// 제휴회원 - Alliance 배너 광고 승인시 usno 찾아오기
+	@Override
+	public String findAlliUsno(Alliance alliance) {
+		return sqlSession.selectOne("mypageMapper.findAlliUsno", alliance);
+	}
+
+	// 제휴회원 - Alliance 승인시 새로운 알림 등록
+	@Override
+	public int insertNewApprove(Alert alert) {
+		return sqlSession.insert("mypageMapper.insertNewApprove", alert);
+	}
+
+
+	@Override
+	public int updatePbalance(Point po) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("mypageMapper.updatePbalance", po);
+
+	// 제휴회원 - Report 승인시 알림 등록
+	@Override
+	public int insertNewReport(Alert a) {
+		return sqlSession.insert("mypageMapper.insertNewReport", a);
+
+	}
+
 }

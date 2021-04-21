@@ -1,14 +1,10 @@
 package com.kh.samdado.admin.controller;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.kh.samdado.admin.model.exception.AdminException;
 import com.kh.samdado.admin.model.service.AdminService;
 import com.kh.samdado.admin.model.vo.PageInfo;
@@ -33,18 +28,17 @@ import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
-import com.kh.samdado.mypage.model.vo.Point;
+import com.kh.samdado.mypage.model.service.MypageService;
+import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
-
 
 @Controller
 @RequestMapping("/admin")
 @SessionAttributes({"loginUser", "msg"})
 public class AdminController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	@Autowired
 	private UserService uService;
@@ -54,6 +48,9 @@ public class AdminController {
 	
 	@Autowired
 	private businessService bService;
+	
+	@Autowired
+	private MypageService mService;
 	
 	// 1. 관리자 홈 페이지로
 	@GetMapping("/home")
@@ -78,18 +75,6 @@ public class AdminController {
 		
 		// 1_6. 관리자 메인 페이지에서 신규 QnA 신청 카운트 select
 		int countQnAResult = aService.countQnA();
-		
-		// -----------------------------------------------------
-		
-		// 1_7. 관리자 메인 페이지에서 총 매출 차트 select
-		
-		// 1_8. 관리자 메인 페이지에서 각 광고별 매출 차트 select
-		
-		// -----------------------------------------------------
-		
-		// 1_9. 상단바 오른쪽 달력 파트
-		
-		// -----------------------------------------------------
 
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("countQnAResult", countQnAResult);
@@ -111,8 +96,9 @@ public class AdminController {
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		List<Alliance> bannerAdList = aService.adminbannerAdSelect(pi);
-		
+	
 		List<Alliance> admitbannerAdList = aService.admitbannerAdListSelect();
+		
 
 		model.addAttribute("bannerAdList", bannerAdList);
 		model.addAttribute("admitbannerAdList", admitbannerAdList);
@@ -206,11 +192,19 @@ public class AdminController {
 	}
 	
 	@PostMapping("/insertReplyQna")
-	public String insertReplyQna(QnA q, Model model) {
-	
+	public String insertReplyQna(QnA q, Model model, Alert a) {
+
 		int result = aService.insertQnaReply(q); // update
 		
-		if (result > 0) {
+		String usno = q.getUsno();
+		
+		a.setUsno(usno);
+		a.setNkeyno(q.getQnano());
+		
+		
+		int newNews = mService.insertQnANews(a);
+		
+		if (result > 0 && newNews  > 0) {
 			model.addAttribute("msg", "답변 완료!");
 			return "redirect:/admin/qna";
 		} else {
@@ -226,7 +220,7 @@ public class AdminController {
 		List<QnA> searchQnaList = aService.searchQnaList(search);
 		
 		for (QnA q : searchQnaList) {
-			if (q.getQreply().equals(null)) {
+			if (q.getQreply() == (null)) {
 				q.setQreply("미답변");
 			}
 		}
@@ -249,6 +243,10 @@ public class AdminController {
 			} else {
 				r.setRstatus("승인 완료");				
 			}
+			
+			if (r.getRetodate() == null) {
+				r.setRetodate("해당 없음");
+			} 
 		}
 		
 		return searchReportList;
@@ -293,7 +291,7 @@ public class AdminController {
 		List<User> searchUserList = uService.searchUserList(search);
 		
 		for (User u : searchUserList) {
-			if (u.getBusno().equals(null)) {
+			if (u.getBusno() == (null)) {
 				u.setBusno("없음");
 			}
 		}
@@ -342,21 +340,67 @@ public class AdminController {
 	// 신고 승인
 	@GetMapping("/admitReport")
 	public String admitReport(@ModelAttribute Report report,
-							Model model) {
+							Model model, Alert a) {
 		
 		int result = 0;
+		System.out.println("report 확인 : " + report);
+		
+		// 같은 신고 객체 셀렉트
+		Report selectReoprt = aService.selectReport(report);
+		
+		System.out.println("selectReoprt 출력 : " + selectReoprt);
+		// 조건 rexdate == null && usno 동일  r_count가 3이면 
+		
+		a.setNkeyno(report.getReport_no());
+		a.setUsno(report.getUsno());
 		
 		// 1. 신고 누적 횟수 비교
-		if (report.getR_count() < 2) {
+		if (selectReoprt.getR_count() < 2) {
 			// 2_1. rstatus y로 업데이트, r_count + 1
 			result = aService.updateRstatusToY(report);
-		} else {
-			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가
+			System.out.println("신고 362 result : " + result);
+		} else if (selectReoprt.getR_count() == 2) {
+			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가 -> 신고 3회 먹었을 때 rexdate 추가해줌 -> rcount -> 0
 			result = aService.updateRstatusToYAndRexdate(report);
-			System.out.println("신고 else result : " + result);
-		}	
+			System.out.println("신고 366 result : " + result);
+      a.setNtitle("block");
+		}
+    //else {
+//				
+//			Report selectReportRexdate = aService.selectReportRexdate(report);
+//				
+//				System.out.println("여기 확인 ");
+//				Date today = new Date(); // 오늘날짜
+//				Date exday = selectReportRexdate.getRexdate(); // 만기일
+//				
+//				String day1 = null;
+//				String day2 = null;
+//			
+//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//				
+//					try {
+//						day1 = sdf.format(today); // 오늘
+//						day2 = sdf.format(exday); // 만기	
+//					} catch(Exception e) {
+//						e.printStackTrace();
+//					}
+//					
+//				int compare = day1.compareTo(day2);
+//				
+//				if (compare > 0) { // 만기날짜 넘음
+//					result = aService.updateRstatusToY(report);
+//					System.out.println("만기일 넘음 result : " + result);
+//				} else if (compare <= 0) { // 만기날짜 남음
+//					result = aService.updateRstatusToYAndNoRcount(report); // status -> y / count -> x
+//					System.out.println("만기일 남음 result : " + result);
+//				}
+//
+//		}
 
-		if (result > 0) model.addAttribute("msg", "신고 승인 처리가 완료되었습니다.");	
+   // --- 은솔 --- News에 신고 받은거 알리기
+		int newReport = mService.insertNewReport(a);
+    
+		if (result > 0 && newReport > 0) model.addAttribute("msg", "신고 승인 처리가 완료되었습니다.");	
 		else throw new AdminException("신고 승인 처리에 실패하였습니다.");
 
 		return "redirect:/admin/report";
@@ -379,11 +423,23 @@ public class AdminController {
 	// 배너 광고 승인
 	@GetMapping("/admitBannerAd")
 	public String admitBannerAd(@ModelAttribute Alliance alliance,
-							Model model) {
+							    Model model, Alert alert) {
 		
 		int result = aService.updateAdmitBannerAdStatus(alliance); // Y, STARTDATE + 3
 		
-		if (result > 0) model.addAttribute("msg", "배너광고 승인 처리가 완료되었습니다.");	
+		// --- 은솔 --- 배너신고 승인시 알림주기
+		// 1. bus_code을 소유하고있는 회원의 usno 알아오기
+		String usno = mService.findAlliUsno(alliance);
+		
+		alert.setNkeyno(alliance.getAlno());
+		alert.setUsno(usno);
+		alert.setAlstatus("Y");
+		
+		// 2. News테이블에 insert
+		int insertNew = mService.insertNewApprove(alert);
+		
+		
+		if (result > 0 && insertNew > 0) model.addAttribute("msg", "배너광고 승인 처리가 완료되었습니다.");	
 		else throw new AdminException("배너광고 승인 처리에 실패하였습니다.");
 
 		return "redirect:/admin/advertise1";
@@ -392,16 +448,26 @@ public class AdminController {
 	// 배너 광고 거절
 	@GetMapping("/rejectBannerAd")
 	public String rejectBannerAd(@ModelAttribute Alliance alliance,
-							Model model) {
+							Model model, Alert alert) {
 		int result = 0;
+		String usno = alliance.getUsno();
+				
+		alert.setNkeyno(alliance.getAlno());
+		alert.setUsno(usno);
+		int insertNew = 0;
 		
 		if (alliance.getAmassage().equals("이미지 불일치")) {
 			result = aService.updateRejectBannerAdStatusRI(alliance); // RI
+			//int insertNews = mService.insertAlliNews(usno);
+			alert.setAlstatus("RI");
+			insertNew = mService.insertNewApprove(alert);
 		} else { // 포인트 미충전
 			result = aService.updateRejectBannerAdStatusRP(alliance); // RP
+			alert.setAlstatus("RP");
+			insertNew = mService.insertNewApprove(alert);
 		}
 		
-		if (result > 0) model.addAttribute("msg", "배너광고 반려 처리가 완료되었습니다.");	
+		if (result > 0 && insertNew > 0) model.addAttribute("msg", "배너광고 반려 처리가 완료되었습니다.");	
 		else throw new AdminException("배너광고 반려 처리에 실패하였습니다.");
 
 		return "redirect:/admin/advertise1";

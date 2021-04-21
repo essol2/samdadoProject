@@ -20,13 +20,12 @@
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_modal.css" type="text/css">
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css">
 	<style>
-	
-	.modal-body div {
-		margin: 0px;
-	}
+		.modal-body div {
+			margin: 0px;
+		}
 	        .top_div {
             display: flex;
-            margin-bottom: 10%;
+           /*  margin-bottom: 10%; */
         }
 
         .bottom_div {
@@ -41,7 +40,6 @@
         .right_div {
             text-align: center;
             width: 100%;
-            
         }
 
         .detail_img {
@@ -275,25 +273,9 @@
                 <class class="_modal-body" id="modal-body" style="max-height: 420px; overflow: auto; overflow-x: hidden;">
                     	<input type="text" id="search_input" placeholder="관광지를 검색하세요.">
                     	<button id="search_btn">검색</button>
-                    <!-- </form> -->
-                    <br><br>
+                   		<br><br>
                     
                     <div id="search_list"></div>
-                    
-                   <%--  <c:forEach var="s" items="${ list }">
-	                    <div class="zzim_list">
-	                        <p class="zzim_content_title">${ s.spot_title }</p>
-	                        
-	                        <p class="zzim_content">
-	                        	${ s.spot_address }
-	                            
-	                        </p>
-	                        <button id="addbtn">
-	                                <img src="../resources/images/image_route/download.png">추가하기
-	                            </button>
-	                    </div>
-	                    <br>
-                    </c:forEach> --%>
                     
                     <c:if test="${ !empty loginUser }">
                     <p id="zzim">${ loginUser.usname } 님이 찜하신 관광지</p>
@@ -321,7 +303,7 @@
                         <p class="zzim_content_title" >제주김만복 본점</p>
                         <p class="zzim_content">제주 제주시 오라로 41</p>
                         <p class="zzim_content">
-                            오라 3동 2250-1
+                            	오라 3동 2250-1
                             <button id="addbtn">
                                 <img src="../resources/images/image_route/download.png">추가하기
                             </button>

@@ -79,6 +79,10 @@ public interface businessService {
 	// 신고하기
 	int insertReport(Report r);
 	
+	int insertReport2(Report r);
+	
+	int updateReport(Report r);
+	
 	// 찜하기
 	public int jjim(Jjim jjim);
 
@@ -88,12 +92,18 @@ public interface businessService {
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
 	
-	// 일반결제 메소드 3개
+	// 일반결제 메소드
 	public int insertIncome(Income i);
 
-	int insertBooking(Booking b);
+	int insertBookingHotel(Booking b);
+	
+	int insertBookingTour(Booking b);
+	
+	int insertBookingCar(Booking b);
 
 	int insertPoint(Point p);
+	
+	public Point findPoint(Point p);
 
 	// 배너 광고 등록 폼, 본인 사업장 가져오기
 	List<Business> selectMyBusinessCategory(User loginUser);
@@ -113,6 +123,10 @@ public interface businessService {
 	Business getBusDetail(int bus_code);
 
 	int insertMain(BusinessAtt bat);
+
+	
+
+	
 
 	
 
