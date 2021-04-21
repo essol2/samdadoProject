@@ -692,7 +692,6 @@ public class businessController {
 		return "redirect:/main"; // 마이페이지로 매핑하기
 		
 	}
-
 	// ************* 지혜 *************
 
 	@PostMapping("/insert/bannerAd")
