@@ -294,7 +294,7 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="uploadFile" class="content" required>
+				        <input type="file" name="uploadFile" class="content" >
 				    </span>   
 				</div>
 				
@@ -302,7 +302,7 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="uploadFile" class="content" required>
+				        <input type="file" name="uploadFile" class="content" >
 				    </span>   
 				</div>
 				
@@ -310,14 +310,14 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="uploadFile" class="content" required>
+				        <input type="file" name="uploadFile" class="content" >
 				    </span>   
 				</div>
 			
 				<!-- 소개글 -->
 				<div class="join-wrap">
 				    <h3><label>소개글</label></h3>
-				    <textarea id="intArea" class="textArea-con" name="bus_intro" rows="10" cols="64" style="resize:none;"></textarea>
+				    <textarea id="intArea" class="textArea-con" name="bus_intro" rows="10" cols="64" style="resize:none;" required></textarea>
 				</div>	
 			</div>
 		</div>
@@ -417,7 +417,7 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="car" class="content">
+				        <input type="file" name="car" class="content" required>
 				    </span>
 				</div>
 				<!-- 차량사진 -->

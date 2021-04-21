@@ -535,8 +535,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<select id="findAlno" resultType="_int">
 		SELECT AL_NO
-		FROM ALLIANCE
-		WHERE BUS_CODE = #{bus_code}
+		FROM (
+		        SELECT AL_NO
+				FROM ALLIANCE
+				WHERE BUS_CODE = 94
+		        AND ALSTATUS = 'N'
+		        ORDER BY AL_SUBDATE DESC)
+		WHERE ROWNUM = 1
 	</select>
 	
 	<insert id="insertAlliNews" parameterType="Alert">
@@ -546,8 +551,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<select id="findAlliUsno" resultType="string">
 		SELECT US_NO
-		FROM ALLIANCE
-		WHERE BUS_CODE = #{bus_code}
+		FROM (SELECT US_NO
+				FROM ALLIANCE
+				WHERE BUS_CODE = 96
+				AND ALSTATUS = 'Y'
+		        ORDER BY START_DATE DESC)
+		WHERE ROWNUM = 1
 	</select>
 	
 	<insert id="insertNewApprove" parameterType="Alert">
@@ -670,7 +679,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE NNO = #{nno}
 
 	</update>
-	
+  
 	<select id="selectHotelBookList" resultMap="BookingResultSet">
 		SELECT *
 		FROM ROOM_BOOKING
@@ -706,4 +715,47 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			WHERE T_BOOKING_NO = #{bookingLv}
 		</if>
 	</delete>
+
+	<select id="findThisPB" resultType="_int">
+		SELECT PBALANCE
+		FROM (
+		    SELECT U.PBALANCE
+		    FROM BUSINESS B, "USER" U
+		    WHERE  B.US_NO = U.US_NO(+)
+		    AND U.US_NO = #{us_no}
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<insert id="insertPointAlert" parameterType="Point">
+		INSERT 
+		INTO
+			 NEWS
+			(
+				NNO
+			  , US_NO
+			  , NTITLE
+			  , NSTATUS
+			  , NCATE
+			  , NKEYNO
+			)
+			VALUES
+			(
+				NEWS_SEQ_NO.NEXTVAL
+			  , #{usno}
+			  , '포인트의 잔액이 얼마 남지 않았습니다.'
+			  , 'N'
+			  , 'P'
+			  , #{pno}
+			)
+	</insert>
+	
+	<select id="findNewPno" resultType="_int">
+		SELECT PNO
+		FROM (  SELECT P.PNO
+		        FROM POINT P
+		        WHERE US_NO = #{us_no}
+		        ORDER BY PNO DESC)
+		WHERE ROWNUM = 1
+  </select>
 </mapper>

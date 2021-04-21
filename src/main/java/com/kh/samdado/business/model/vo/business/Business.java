@@ -54,6 +54,7 @@ public class Business {
 	private String tour_tema;
 	private int al_no;
 	private String bus_opening;
+	private String hotel_facility;
 	private String file_rename;  // 비즈니스 첨부파일경로 join
 	private String file_lv;
 	private String usname; // user 테이블 조인
@@ -64,17 +65,20 @@ public class Business {
 	private String pro_youth;
 	private String pro_child;
 	private String pro_fac;
+	private int pro_no;
 	// 차 조인
 	private String car_name;
 	private String car_type;
 	private String car_producer;
 	private String car_fuel;
 	private String car_price;
+	private int rent_no;
 	// 방 조인
 	private String room_name;
 	private int room_price;
 	private String room_people;
 	private String room_amenity;
+	private int room_no;
 	
 	// 파일 한번에 리스트로 담기위한 객체속성!
 	private String file_root;	// 파일경로

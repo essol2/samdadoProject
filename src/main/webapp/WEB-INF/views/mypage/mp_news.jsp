@@ -387,7 +387,7 @@
 						var blankTd = $("<td colspan='4' style='height : 30px;'>").text(" ");
 						
 						var tr2 = $("<tr>");
-						var tcontent2 = $("<td colspan='4'>").text(deAlert.almessage+"로 인한 배너광고 신청 반려입니다.");
+						var tcontent2 = $("<td colspan='4'>").text("'" + deAlert.bus_name + "' 사업장에 대한 " +deAlert.almessage+"로 인한 배너광고 신청 반려입니다.");
 
 						var tr3 = $("<tr>");
 						var tcontent3 = $("<td colspan='4'>").text("이는 1. 사진 규격이 일치하지 않거나, 2. 건강하지 못한 내용을 담은 배너 이미지 등록시 발생합니다.");
@@ -409,7 +409,7 @@
 						var blankTd = $("<td colspan='4' style='height : 30px;'>").text(" ");
 						
 						var tr2 = $("<tr>");
-						var tcontent2 = $("<td colspan='4'>").text(deAlert.almessage+"로 인한 배너광고 신청 반려입니다.");
+						var tcontent2 = $("<td colspan='4'>").text("'" + deAlert.bus_name + "' 사업장에 대한 " + deAlert.almessage+"로 인한 배너광고 신청 반려입니다.");
 
 						var tr3 = $("<tr>");
 						var tcontent3 = $("<td colspan='4'>").text("이는 포인트 잔액이 부족하여 발생합니다.");
@@ -431,7 +431,7 @@
 						var blankTd = $("<td colspan='4' style='height : 30px;'>").text(" ");
 						
 						var tr2 = $("<tr>");
-						var tcontent2 = $("<td colspan='4'>").text(deAlert.bus_code+"의 배너광고가 승인되었습니다!");
+						var tcontent2 = $("<td colspan='4'>").text(deAlert.bus_name+"의 배너광고가 승인되었습니다!");
 
 						var asdateFormat = new Date(deAlert.alStartDate);
 						asdateFormat = getFormatDate(asdateFormat);
@@ -572,26 +572,21 @@
 					} else if(deAlert.ncate == 'P'){ // 포인트 얼마남지않음
 						var tncate = $("<th style='width : 10%; text-align : right;'>").text("유형 : ");
 						var tncateData = $("<td style='width : 60%; text-align : left;'>").text(deAlert.ncate + "포인트");
-						
-						var tr2 = $("<tr>");
-						var tqdate = $("<th style='width : 10%; text-align : right;'>").text("잔여 포인트 : ");
-						var tqdateData = $("<td colspan='3' style='text-align : left;'>").text(deAlert.qbalance);
 
 						var blankTr2 = $("<tr>");
 						var blankTd2 = $("<td colspan='4' style='height : 30px;'>").text(" ");
 						
 						var tr3 = $("<tr>");
-						var tqcont = $("<th style='width : 10%;'>").text("잔여 포인트가 얼마 남지 않았습니다.");
+						var tqcont = $("<th colspan='4'>").text("잔여 포인트는 " + deAlert.pbalance + "입니다.");
 						
 						var tr4 = $("<tr>");
-						var tqreply = $("<th style='width : 10%;'>").text("배너광고를 지속하기 위해서는 포인트 충전이 필요합니다.");
+						var tqreply = $("<th colspan='4'>").text("배너광고를 지속하기 위해서는 포인트 충전이 필요합니다.");
 						
 						tr1.append(tnno, tnnoData, tncate, tncateData);
-						tr2.append(tqdate, tqdateData);
 						tr3.append(tqcont);
 						tr4.append(tqreply);
 						blankTr2.append(blankTd2);
-						table.append(tr1, tr2, blankTr2, tr3, tr4);
+						table.append(tr1, blankTr2, tr3, tr4);
 					}
 				
 					

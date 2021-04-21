@@ -32,6 +32,15 @@ public interface MypageDao {
 	
 	// 알림 nstatus update
 	public int updateNstatus(Alert al);
+	
+	// 제휴회원 - 알람을 위한 포인트 찾아오기
+	public int findThisPB(Business selectBusCodeUser);
+	
+	// 제휴회원 - 포인트가 500보다 아래라고 알림주기
+	public int insertPointAlert(Point fdp);
+	
+	// 제휴회언 알림 -100 될 때 마다 new pno 알아오기
+	public int findNewPno(Business selectBusCodeUser);
 
 	// 제휴회원 - 광고 관리 메소드
 	public List<Alliance> selectAdvertList(String usno);
@@ -111,7 +120,7 @@ public interface MypageDao {
 	// 제휴회원 - Alliance 승인시 새로운 알림 등록
 	public int insertNewApprove(Alert alert);
 
-
+	// 제휴회원 - 포인트 충전 시 user DB에 update
 	public int updatePbalance(Point po);
 
 	// 제휴회원 - Report 승인시 알림 등록
@@ -128,5 +137,4 @@ public interface MypageDao {
 
 	// 일반회원 - 내예약 취소
 	public int deleteBooking(Booking b);
-
 }

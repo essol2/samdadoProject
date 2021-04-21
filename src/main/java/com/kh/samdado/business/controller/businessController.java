@@ -75,7 +75,7 @@ public class businessController {
 		List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
 		
 		if(b != null && roomList != null) {
-
+//			System.out.println("att : " + attList);
 			model.addAttribute("hotel", b);
 			model.addAttribute("att" + attList);
 			model.addAttribute("room", roomList);
@@ -83,7 +83,7 @@ public class businessController {
 			
 		return "business/hotel/hotel_detail";
 		} else {
-			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
+			model.addAttribute("msg", "숙박 보기에 실패했습니다.");
 		return "business/hotel/hotel_list";
 		}
 	}
@@ -445,9 +445,9 @@ public class businessController {
 			int result3 = bService.insertIncome1(i);
 		}
 		
-		System.out.println("b : " + b);
-		System.out.println("list :"  + list);
-		System.out.println("list :"  + bat);
+		//System.out.println("b : " + b);
+		//System.out.println("list :"  + list);
+		//System.out.println("list :"  + bat);
 		
 		int result = bService.insertBusiness(b, list);
 		int result2 = bService.insertMain(bat);
@@ -642,7 +642,8 @@ public class businessController {
 	// 예약결제 성공 시 insert
 	
 	@GetMapping("/pay")
-	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code) {
+	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int r_bus_code) {
+				
 		// 포인트에 amount 넣어주기
 		p.setPamount(i.getAmount());
 		// income에  들어갈 원가 10퍼센트 셋팅
@@ -659,25 +660,31 @@ public class businessController {
 			 // 첫 결제면 그대로 결제금액 90% 셋팅
 			 p.setPbalance(i.getAmount() * 9);
 		 }
-		 // p에 예약하는 사업장주인 usno 넣기
-		 Business selectUser = bService.selectBusCodeUser(bus_code);
+		 // p에 예약받는 사업장주인 usno 넣기
+		 System.out.println("bus_code : " + r_bus_code);
+		 Business selectUser = bService.selectBusCodeUser(r_bus_code);
 		 p.setUsno(selectUser.getUs_no());
+		 System.out.println("p : " + p);
 		 // 포인트 넣기
 		int point = bService.insertPoint(p);		
-		// 예약정보 insert
-		if(b.getBookingLv() == 1) {			
-			b.setT_bus_name(selectUser.getBus_name());
-			b.setT_booking_address(selectUser.getBus_address());
-			b.setT_booking_phone(selectUser.getBus_phone());
-			System.out.println("b:" + b);
+
+		// 예약정보 insert	
+		if(b.getBookingLv() == 1) {
+			b.setR_bus_name(selectUser.getBus_name());
+			b.setR_booking_address(selectUser.getBus_address());
+			b.setR_booking_phone(selectUser.getBus_phone());
 			int bookingHotel = bService.insertBookingHotel(b);
 		} else if(b.getBookingLv() == 2) {
+			//Booking selectTourProduct = bService.selectTourProduct(pro_no);
+			//b.setT_booking_product(selectTourProduct.getT_booking_product());
+			System.out.println("b2 : " + b);
 			int bookingTour = bService.insertBookingTour(b);
+			System.out.println("bookingTour : " + bookingTour);
 		} else if(b.getBookingLv() == 3) {
 			int bookingCar = bService.insertBookingCar(b);
 		}
 		
-		return "redirect:/main";
+		return "redirect:/main"; // 마이페이지로 매핑하기
 		
 	}
 	// ************* 지혜 *************
@@ -766,6 +773,8 @@ public class businessController {
 	public @ResponseBody String selectBannerAdImgList() {
 		
 		List<Alliance> bannerImglist = bService.selectBannerAdImgList();
+		
+		
 
 		Gson gson = new GsonBuilder()
 				        .setDateFormat("yyyy-MM-dd")
@@ -821,7 +830,25 @@ public class businessController {
 		
 		// --- 은솔 : 포인트가 얼마 남지 않았을 때 News 테이블에 알람 insert 하기
 		// 1. 해당 사업장의 주인의 pbalance 찾아오기
-		//int thisPbalance = mService.findThisPB(sbd);
+		int thisPbalance = mService.findThisPB(selectBusCodeUser);
+		//System.out.println(thisPbalance);
+		
+		// 2. 방금 빠진 클릭건 100원 pno 알아오기
+		int pno = mService.findNewPno(selectBusCodeUser);
+		//System.out.println(pno);
+		
+		// 3. Point로 객체로 검색할 값 set 해주기
+		Point fdp = new Point();
+		fdp.setPno(pno);
+		fdp.setPbalance(thisPbalance);
+		fdp.setUsno(selectBusCodeUser.getUs_no());
+		//System.out.println(fdp);
+		
+		// 4. 만약 thisPbalance가 500보다 작으면 알람 데이터 넣기
+		if(thisPbalance <= 500 && thisPbalance > 400) {
+			mService.insertPointAlert(fdp);
+		}
+		
 		
 		if (sbd != null) {
 			if (sbd.getBus_category().equals("R")) { // 음식점

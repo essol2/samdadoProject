@@ -203,7 +203,7 @@ public class MypageController {
 			 po.setPbalance(ic.getAmount());	
 		 }
 		 
-		 System.out.println("Point객체 확인 : " + po);
+		 //System.out.println("Point객체 확인 : " + po);
 		 
 		 mService.updatePbalance(po);
 

@@ -55,8 +55,25 @@ public class MypageServiceImpl implements MypageService{
 	public int updateNstatus(Alert al) {
 		return mDao.updateNstatus(al);
 	}
+	
+	// 제휴회원 - 알람을 위한 포인트 찾아오기
+	@Override
+	public int findThisPB(Business selectBusCodeUser) {
+		return mDao.findThisPB(selectBusCodeUser);
+	}
 
-
+	// 제휴회원 - 포인트가 500보다 아래라고 알림주기
+	@Override
+	public int insertPointAlert(Point fdp) {
+		return mDao.insertPointAlert(fdp);
+	}
+	
+	// 제휴회언 알림 -100 될 때 마다 new pno 알아오기
+	@Override
+	public int findNewPno(Business selectBusCodeUser) {
+		return mDao.findNewPno(selectBusCodeUser);
+	}
+	
 	// 제휴회원 - 광고 관리 메소드
 	@Override
 	public List<Alliance> selectAdvertList(String usno) {
@@ -213,7 +230,7 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.insertNewApprove(alert);
 	}
 
-
+	// 제휴회원 - 포인트 충전 시 user DB에 update
 	@Override
 	public int updatePbalance(Point po) {
 		// TODO Auto-generated method stub
@@ -251,6 +268,5 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.deleteBooking(b);
 	}
 
-	
 	
 }

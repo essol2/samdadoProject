@@ -53,12 +53,12 @@ public class businessDaoImpl implements businessDao {
 	public int selectResListCount() {
 		return sqlSession.selectOne("businessMapper.selectResListCount");
 	}
+	
 	// 사업장 사진
 	@Override
 	public List<BusinessAtt> selectAtt(int bus_code) {
 		return sqlSession.selectList("businessMapper.selectAtt", bus_code);
 	}
-
 	
 	// 음식점 디테일
 	@Override
@@ -194,6 +194,11 @@ public class businessDaoImpl implements businessDao {
 		@Override
 		public int insertBookingTour(Booking b) {
 			return sqlSession.insert("businessMapper.insertBookingTour", b);
+		}
+		
+		@Override
+		public Booking selectTourProduct(int pro_no) {			
+			return sqlSession.selectOne("businessMapper.selectTourProduct", pro_no);
 		}
 		
 		@Override
