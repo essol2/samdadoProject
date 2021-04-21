@@ -14,17 +14,13 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <title>samdado</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script>
-        function display() {
-            var control = document.getElementById("bussiness_no_div");
-            if (control.style.display != 'block') {
-                control.style.display = 'block';
-            } else {
-                control.style.display = 'none'
-            }
-        }
-    </script>
+	var $j1124 = jQuery.noConflict();
+	</script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -737,9 +733,27 @@
                     <label class="review_date_label">2020.04.05</label>
                 </div>
             </div>
-        </div>
-        </div>
+        </div>        
     </section>
+    
+    <script>
+	    $j1124.datepicker.setDefaults({
+	        dateFormat: 'yy-mm-dd',
+	        prevText: '이전 달',
+	        nextText: '다음 달',
+	        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+	        showMonthAfterYear: true,
+	        yearSuffix: '년'
+	    });
+    
+        $j1124( function() {
+          $j1124( ".datepicker" ).datepicker();
+        } );
+    </script>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -754,12 +768,12 @@
                     <!--체크인날짜-->
                     <div class="start-div">
                         <label for="startDate">예약일</label>
-                        <input type="date" id="startDate" name="startDate">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
                     </div>                    
                 </div>
 
                 <div class="modalcarimage">
-                    <h4>2021년 3월 2일</h4>
+                    <b id="startDateResult"></b>
                     <h4>BMW</h4>
                     <img class="mordalmainimage" src="../resources/images/image_listpage/car1.png">
                     <div class="other">
@@ -784,6 +798,58 @@
             </div>
         </div>
     </div>
+    
+    <script>
+	    function startDate(e) {	  	  
+	  	  const value = e.value;	  	  
+	  	  document.getElementById('startDateResult').innerText
+	  	    = value;	
+	  	}
+
+	</script>
+    
+    <script>
+
+  	$(".payBtn").click(function() {
+  		
+  		var name = document.getElementById('carName').value;
+  		var rentNo = document.getElementById('rentNo').value;
+  		var payResult = document.getElementById('payResult').value;
+  		var startDate = document.getElementById("startDate").value;  		
+  	 	var personNumber = document.getElementById("personNumber").value;
+  	    var bookingLv = 3;
+  		// var amount = payResult;
+  		var amount = 100;
+	    var IMP = window.IMP;
+	    IMP.init('imp34313892');
+	    IMP.request_pay({
+	        pg : 'html5_inicis',
+	        pay_method : 'card',
+	        merchant_uid : 'merchant_' + new Date().getTime(),
+	        name : name,
+	        amount : amount,
+	        buyer_email : "${loginUser.usemail}",
+	        buyer_name : "${loginUser.usname}",
+	        buyer_tel : "${loginUser.usphone}",
+	        buyer_addr : '',
+	        buyer_postcode : ''
+	    }, function(rsp) {console.log(rsp);
+	        if ( rsp.success ) {
+	            var msg = '결제가 완료되었습니다!';
+	            msg += '결제 금액 : ' + rsp.paid_amount;
+	            location.href = '${contextPath}/business/pay?usno='+${loginUser.usno}+'&c_booking_number='+personNumber
+					            +'&bus_code='+${ c.bus_code }+'&c_booking_trv='+startDate+'&bookingLv='+bookingLv
+					            +'&c_booking_pay='+payResult+'&rent_no='+rentNo+'&c_booking_product='+name+'&amount='+amount
+					            ;
+	            				
+	        } else {
+	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
+	        }
+	    
+	        alert(msg);
+	    });
+  	});
+    </script>
     
     <!-- 신고Modal -->
     <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

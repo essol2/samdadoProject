@@ -190,8 +190,8 @@ public class businessServiceImpl implements businessService {
 	}
 	
 	@Override
-	public Booking selectTourProduct(int pro_no) {		
-		return bDao.selectTourProduct(pro_no);
+	public TourProduct selectTourProduct(int bus_code) {		
+		return bDao.selectTourProduct(bus_code);
 	}
 	
 	@Override

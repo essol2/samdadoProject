@@ -642,8 +642,8 @@ public class businessController {
 	// 예약결제 성공 시 insert
 	
 	@GetMapping("/pay")
-	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int r_bus_code) {
-				
+	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code) {
+		System.out.println("i : " + i);		
 		// 포인트에 amount 넣어주기
 		p.setPamount(i.getAmount());
 		// income에  들어갈 원가 10퍼센트 셋팅
@@ -651,8 +651,12 @@ public class businessController {
 		
 		int income = bService.insertIncome(i);
 		
+		// p에 예약받는 사업장주인 usno 넣기		 
+		Business selectUser = bService.selectBusCodeUser(bus_code);
+		p.setUsno(selectUser.getUs_no());
+		System.out.println("p : " + p);
 		Point findPoint = bService.findPoint(p);
-		
+		System.out.println(findPoint);
 		 if(findPoint != null) {
 			 // 이미 포인트가 있으면 기존 포인트 + 결제금액의 90% 적립
 			 p.setPbalance(findPoint.getPbalance()+i.getAmount() * 9);
@@ -660,14 +664,9 @@ public class businessController {
 			 // 첫 결제면 그대로 결제금액 90% 셋팅
 			 p.setPbalance(i.getAmount() * 9);
 		 }
-		 // p에 예약받는 사업장주인 usno 넣기
-		 System.out.println("bus_code : " + r_bus_code);
-		 Business selectUser = bService.selectBusCodeUser(r_bus_code);
-		 p.setUsno(selectUser.getUs_no());
-		 System.out.println("p : " + p);
 		 // 포인트 넣기
 		int point = bService.insertPoint(p);		
-
+		System.out.println(b);
 		// 예약정보 insert	
 		if(b.getBookingLv() == 1) {
 			b.setR_bus_name(selectUser.getBus_name());
@@ -675,12 +674,18 @@ public class businessController {
 			b.setR_booking_phone(selectUser.getBus_phone());
 			int bookingHotel = bService.insertBookingHotel(b);
 		} else if(b.getBookingLv() == 2) {
-			//Booking selectTourProduct = bService.selectTourProduct(pro_no);
-			//b.setT_booking_product(selectTourProduct.getT_booking_product());
-			System.out.println("b2 : " + b);
+			TourProduct selectTourProduct = bService.selectTourProduct(bus_code);
+			System.out.println(selectTourProduct);
+			b.setPro_no(selectTourProduct.getPro_no());
+			b.setT_bus_name(selectUser.getBus_name());
+			b.setT_booking_address(selectUser.getBus_address());
+			b.setT_booking_phone(selectUser.getBus_phone());
 			int bookingTour = bService.insertBookingTour(b);
 			System.out.println("bookingTour : " + bookingTour);
-		} else if(b.getBookingLv() == 3) {
+		} else if(b.getBookingLv() == 3) {			
+			b.setC_bus_name(selectUser.getBus_name());
+			b.setC_booking_address(selectUser.getBus_address());
+			b.setC_booking_phone(selectUser.getBus_phone());
 			int bookingCar = bService.insertBookingCar(b);
 		}
 		

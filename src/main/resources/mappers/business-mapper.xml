@@ -149,6 +149,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="room_no" column="ROOM_NO" />
 	</resultMap>
 	
+	<resultMap type="TourProduct" id="TourProductResultSet">
+		<id property="pro_no" column="PRO_NO" />
+		<result property="bus_code" column="BUS_CODE" />
+		<result property="pro_name" column="PRO_NAME" />
+		<result property="pro_adult" column="PRO_ADULT" />
+		<result property="pro_youth" column="PRO_YOUTH" />
+		<result property="pro_child" column="PRO_CHILD" />
+		<result property="pro_fac" column="PRO_FAC" />
+	</resultMap>
+	
 	<insert id="insertBusiness" parameterType="Business">
 		INSERT
 		  INTO BUSINESS
@@ -946,7 +956,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		)
 	</insert>
 	
-	<select id="selectTourProduct" parameterType="Business" resultMap="BusinessResultSet">
+	<select id="selectTourProduct" parameterType="TourProduct" resultMap="TourProductResultSet">
 		SELECT
 			    PRO_NO
 			  , BUS_CODE
@@ -954,11 +964,11 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			  , PRO_ADULT
 			  , PRO_YOUTH
 			  , PRO_CHILD
-			  , PRO FAC			  
+			  , PRO_FAC			  
 		  FROM
 			   TOUR_PRODUCT
 	     WHERE
-	     	   PRO_NO = #{pro_no}
+	     	   BUS_CODE = #{bus_code}
 	</select>
 	 
 	 <insert id="insertBookingHotel">
@@ -978,6 +988,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , HOTEL_NO
 		  , BUS_CODE
 		  , BUS_NAME
+		  , R_TOUREND_DATE
 		  )
 		  VALUES
 		  (
@@ -992,8 +1003,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{r_booking_trv}
 		  , #{usno}
 		  , #{room_no}
-		  , #{r_bus_code}
+		  , #{bus_code}
 		  , #{r_bus_name}
+		  , #{r_booking_trvEnd}
 		  )
 	</insert>
 	
@@ -1018,18 +1030,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  VALUES
 		  (
 		  	BOOKING_NO.NEXTVAL
-		  , #{T_bus_name}
-		  , #{T_booking_product}
+		  , #{t_bus_name}
+		  , #{t_booking_product}
 		  , SYSDATE
 		  , DEFAULT
-		  , #{T_booking_address}
+		  , #{t_booking_address}
 		  , #{t_booking_pay}
-		  , '3'	<!-- 인원 -->
-		  , #{T_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{t_booking_number}
+		  , #{t_booking_phone} 
 		  , #{t_booking_trv}
 		  , #{usno}
 		  , #{pro_no}
-		  , #{t_bus_code}
+		  , #{bus_code}
 		  )
 	</insert>
 	

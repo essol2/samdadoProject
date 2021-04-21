@@ -99,7 +99,7 @@ public interface businessService {
 	
 	int insertBookingTour(Booking b);
 	
-	Booking selectTourProduct(int pro_no);
+	TourProduct selectTourProduct(int bus_code);
 	
 	int insertBookingCar(Booking b);
 
