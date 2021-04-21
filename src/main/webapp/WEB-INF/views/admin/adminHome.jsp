@@ -96,7 +96,7 @@
 		                          </tr>
 		                          <tr>
 		                          	<td>
-		                              	<input class="form-control" type="text" name="rphone" value="" placeholder="받는 번호를 입력하세요.(010-0000-0000)">
+		                              	<input class="form-control" type="text" name="rphone" value="" placeholder="받는 번호를 입력하세요.(-없이)">
 		                             </td>
 		                          </tr>
 	                              <tr>

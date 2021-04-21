@@ -722,7 +722,7 @@ public class businessController {
 		if(result > 0 && newsInsert > 0) {
 			model.addAttribute("usno", usno);
 			model.addAttribute("msg", "배너 광고 신청이 완료되었습니다. 마이페이지에서 확인하세요!");
-			return "redirect:/mypage/buss";
+			return "redirect:/mypage/advert";
 		} else {
 			throw new businessException("배너 광고 신청에 실패하였습니다.");
 		}

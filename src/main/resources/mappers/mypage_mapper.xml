@@ -581,6 +581,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</if>
 	</insert>
 	
+
+	<update id="updatePbalance" parameterType="Point">
+		UPDATE
+				"USER"
+			SET
+				PBALANCE = #{pbalance}
+		WHERE
+				US_NO = #{usno}
+
 	<select id="selectAlertList" resultMap="AlertResultSet">
 		SELECT *
 		FROM NEWS
@@ -612,5 +621,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		UPDATE NEWS
 		SET NSTATUS = 'Y'
 		WHERE NNO = #{nno}
+
 	</update>
 </mapper>

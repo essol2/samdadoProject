@@ -844,7 +844,7 @@
 			                               <a href="${ contextPath }/user/easyLogin/google"><img src="resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
 			                            </div>
 			                              <div class="col-sm">
-			                               <a id="naver_id_login" href="${ contextPath }/user/easyLogin/naver"><img src="resources/images/image_user/naver.png" alt=""> 네이버</a>
+			                               <a id="naver_id_login"><img src="resources/images/image_user/naver.png" alt=""> 네이버</a>
 			                              </div>
 			                              <div class="col-sm">
 			                                <a href="${ contextPath }/user/easyLogin/kakao"><img src="resources/images/image_user/kakao.png" alt=""> 카카오</a>
@@ -1165,7 +1165,7 @@
 	<script type="text/javascript">
 		var naver_id_login = new naver_id_login("bwz0ZV165D8RHBEFHdF6", "http://localhost:8896/samdado/main");
 		var state = naver_id_login.getUniqState();
-		naver_id_login.setButton("white", 2,40);
+		//naver_id_login.setButton("white", 2,40);
 		naver_id_login.setDomain(".service.com");
 		naver_id_login.setState(state);
 		naver_id_login.setPopup();
@@ -1179,7 +1179,9 @@
 		// naver_id_login.getProfileData('프로필항목명');
 		// 프로필 항목은 개발가이드를 참고하시기 바랍니다.
 		alert(naver_id_login.getProfileData('email'));
-		//alert(naver_id_login.getSession());
+		alert(naver_id_login.getProfileData('name'));
+		//alert(naver_id_login.getProfileData('birthday'));
+		//alert(naver_id_login.getProfileData('mobile'));
 	}
 
 
