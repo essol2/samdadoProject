@@ -53,12 +53,12 @@ public class businessDaoImpl implements businessDao {
 	public int selectResListCount() {
 		return sqlSession.selectOne("businessMapper.selectResListCount");
 	}
+	
 	// 사업장 사진
 	@Override
 	public List<BusinessAtt> selectAtt(int bus_code) {
 		return sqlSession.selectList("businessMapper.selectAtt", bus_code);
 	}
-
 	
 	// 음식점 디테일
 	@Override
