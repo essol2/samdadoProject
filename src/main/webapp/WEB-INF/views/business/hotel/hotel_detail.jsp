@@ -353,7 +353,7 @@
             width: 100px;
         }
 
-        #closeBtn {
+        #closeBtn, #reportBtn {
             border-style: none;
             background-color: white;
         }
@@ -470,6 +470,12 @@
         #agreement_checkbox {
             margin-left: -118%;
         } */
+        
+        #reportImage_container img{
+	    	width:455px;
+	    	height:420px;
+    	}
+    
     </style>
 
 </head>
@@ -1027,7 +1033,8 @@
                 <!--파일첨부-->
                 <div class="reportimg_div">
                     <label for="reportimg">파일첨부</label>                    
-                    <input type="file" id="reportimg" name="uploadFile">
+                    <input type="file" id="reportimg" name="uploadFile" onchange="setThumbnail(event);">
+                    <div id="reportImage_container" style="width:500px; hegiht:500px;"></div>
                 </div>
                 
             </div>
@@ -1039,6 +1046,23 @@
         </div>
         </div>
     </div>
+    
+    <script> 
+    	function reportAlert(){ 
+    		alert('신고가 완료되었습니다.'); 
+    	}
+    	
+    	function setThumbnail(event) { 
+    		var reader = new FileReader(); 
+    		reader.onload = function(event) { 
+    			var img = document.createElement("img"); 
+    			img.setAttribute("src", event.target.result); 
+    			document.querySelector("div#reportImage_container").appendChild(img); 
+    		}; 
+    		reader.readAsDataURL(event.target.files[0]); 
+    	}
+    	
+    </script>
         
     <footer>
             <div id="footer_left">
