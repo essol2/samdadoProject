@@ -477,6 +477,11 @@
     p {
         margin: 1rem 0 0 0;
     }
+    
+    #reportImage_container img{
+    	width:455px;
+    	height:420px;
+    }
     </style>
 
 </head>
@@ -800,7 +805,7 @@
                 <div class="reportimg_div">
                     <label for="reportimg">파일첨부</label>                    
                     <input type="file" id="reportimg" name="uploadFile" onchange="setThumbnail(event);">
-                    <div id="image_container"></div>
+                    <div id="reportImage_container" style="width:500px; hegiht:500px;"></div>
                 </div>
                 
             </div>
@@ -823,7 +828,7 @@
     		reader.onload = function(event) { 
     			var img = document.createElement("img"); 
     			img.setAttribute("src", event.target.result); 
-    			document.querySelector("div#image_container").appendChild(img); 
+    			document.querySelector("div#reportImage_container").appendChild(img); 
     		}; 
     		reader.readAsDataURL(event.target.files[0]); 
     	}

@@ -927,8 +927,16 @@ public class businessController {
 		if(findReportStatus == null) {					
 			int result = bService.insertReport(r);
 								
-			if(result > 0) {						
-				return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
+			if(result > 0) {
+				if(selectUser.getBus_category().equals("R")) {
+					return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("H")) {
+					return "redirect:/business/hotel_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("T")) {
+					return "redirect:/business/tour_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("C")) {
+					return "redirect:/business/car_detail?bus_code=" + r.getBus_code();					
+				}
 			} else {
 				throw new businessException("신고에 실패하였습니다.");
 			}
@@ -937,7 +945,15 @@ public class businessController {
 		} else {
 			// Rstatus가 n일 경우
 			if(findReportStatus.getRstatus().equals("N")) {
-				return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
+				if(selectUser.getBus_category().equals("R")) {
+					return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("H")) {
+					return "redirect:/business/hotel_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("T")) {
+					return "redirect:/business/tour_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("C")) {
+					return "redirect:/business/car_detail?bus_code=" + r.getBus_code();					
+				}
 				
 			// Rstatus가 n이 아닐 경우	
 			} else {
@@ -948,12 +964,21 @@ public class businessController {
 									
 
 				if(result > 0) {							
-					return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
+					if(selectUser.getBus_category().equals("R")) {
+						return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();					
+					} else if(selectUser.getBus_category().equals("H")) {
+						return "redirect:/business/hotel_detail?bus_code=" + r.getBus_code();					
+					} else if(selectUser.getBus_category().equals("T")) {
+						return "redirect:/business/tour_detail?bus_code=" + r.getBus_code();					
+					} else if(selectUser.getBus_category().equals("C")) {
+						return "redirect:/business/car_detail?bus_code=" + r.getBus_code();					
+					}
 				} else {
 					throw new businessException("신고에 실패하였습니다.");
 				}
 			}
 		}
+		return null;
 	
 	}
 	
