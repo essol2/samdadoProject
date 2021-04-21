@@ -71,13 +71,16 @@ public class businessController {
 	
 		Business b = bService.selectHotel(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
-//		List<Room> roomList = bService.selectRoom(bus_code);
-		// List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
-		if(b != null) {
-			// System.out.println("디테일 : " + b);
-			// System.out.println("사진 뭐가져옴 : " + attList);
+		List<Room> roomList = bService.selectRoom(bus_code);
+		List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
+		
+		if(b != null && roomList != null) {
+
 			model.addAttribute("hotel", b);
 			model.addAttribute("att" + attList);
+			model.addAttribute("room", roomList);
+			model.addAttribute("roomAtt" + roomAtt);
+			
 		return "business/hotel/hotel_detail";
 		} else {
 			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");

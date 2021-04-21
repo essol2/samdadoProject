@@ -272,6 +272,16 @@ public class businessServiceImpl implements businessService {
 		return bDao.insertMain(bat);
 	}
 
+	@Override
+	public List<Room> selectRoom(int bus_code) {
+		return bDao.selectRoom(bus_code);
+	}
+
+	@Override
+	public List<RoomAtt> selectRoomAtt(int bus_code) {
+		return bDao.selectRoomAtt(bus_code);
+	}
+
 	
 
 	
