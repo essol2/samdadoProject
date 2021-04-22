@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
@@ -137,5 +138,15 @@ public interface MypageService {
 
 	// 일반회원 - 내예약 취소
 	public int deleteBooking(Booking b);
+
+	// 일반회원 - 후기등록
+	public int insertReview(Review r);
+
+	// 일반회원 - 후기작성 표기
+	public int updateCheck(Review r);
+
+	// 일반회원 - 후기 수정 디테일 가져오기
+	public Review selectReview(Review r);
+
 
 }

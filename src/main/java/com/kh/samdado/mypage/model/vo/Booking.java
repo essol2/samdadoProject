@@ -108,4 +108,15 @@ BUS_CODE	NUMBER
 	private String pro_no;				// 상품번호
 	private int t_bus_code;				// 사업장고유번호
 	
+	private String file_no;
+	private String file_name;
+	private String file_root;
+	private String file_status;
+	private String file_rename;
+	private String file_lv;
+	
+	// review 썼나 확인
+	private String r_review_check;
+	private String c_review_check;
+	private String t_review_check;
 }
