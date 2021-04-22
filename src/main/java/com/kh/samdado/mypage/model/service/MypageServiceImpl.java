@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
@@ -266,6 +267,24 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int deleteBooking(Booking b) {
 		return mDao.deleteBooking(b);
+	}
+
+	// 일반회원 - 후기등록
+	@Override
+	public int insertReview(Review r) {
+		return mDao.insertReview(r);
+	}
+
+	// 일반회원 - 후기작성 표기
+	@Override
+	public int updateCheck(Review r) {
+		return mDao.updateCheck(r);
+	}
+
+	// 일반회원 - 후기 수정 디테일 가져오기
+	@Override
+	public Review selectReview(Review r) {
+		return mDao.selectReview(r);
 	}
 
 	

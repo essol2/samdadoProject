@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
@@ -267,5 +268,24 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public int deleteBooking(Booking b) {
 		return sqlSession.delete("mypageMapper.deleteBooking", b);
+	}
+
+	// 일반회원 - 후기등록
+	@Override
+	public int insertReview(Review r) {
+		sqlSession.insert("mypageMapper.insertReview", r);
+		return sqlSession.selectOne("mypageMapper.selectThisNo", r);
+	}
+
+	// 일반회원 - 후기작성 표기
+	@Override
+	public int updateCheck(Review r) {
+		return sqlSession.update("mypageMapper.updateCheck", r);
+	}
+
+	// 일반회원 - 후기 수정 디테일 가져오기
+	@Override
+	public Review selectReview(Review r) {
+		return sqlSession.selectOne("mypageMapper.selectReview", r);
 	}
 }

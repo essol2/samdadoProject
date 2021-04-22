@@ -33,6 +33,7 @@
 		<typeAlias type="com.kh.samdado.business.model.vo.hotel.Room" alias="Room"/>
    		<typeAlias type="com.kh.samdado.business.model.vo.hotel.RoomAtt" alias="RoomAtt"/>
    		<typeAlias type="com.kh.samdado.business.model.vo.tour.TourProduct" alias="TourProduct"/>
+   		<typeAlias type="com.kh.samdado.business.model.vo.Review" alias="Review"/>
 		<typeAlias type="com.kh.samdado.common.model.vo.Income" alias="Income"/>
 	</typeAliases>
 

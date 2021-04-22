@@ -203,6 +203,84 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="t_booking_trv" column="T_TOUR_DATE"/>
 		<result property="pro_no" column="PRO_NO"/>
 		<result property="t_bus_code" column="BUS_CODE"/>
+		
+		<!-- BUSINESS_ATT Join -->
+		<result property="file_no" column="FILE_NO"/>
+		<result property="file_name" column="FILE_NAME"/>
+		<result property="file_root" column="FILE_ROOT"/>
+		<result property="file_status" column="FILE_STATUS"/>
+		<result property="file_rename" column="FILE_RENAME"/>
+		<result property="file_lv" column="FILE_LV"/>
+	</resultMap>
+	
+	<resultMap type="REVIEW" id="ReviewResultSet">
+		<id property="rev_no" column="REV_NO"/>
+
+		<result property="rev_comment" column="REV_COMMENT"/>
+		<result property="rev_date" column="REV_DATE"/>
+		<result property="rev_modify" column="REV_MODIFY"/>
+		<result property="rev_status" column="REV_STATUS"/>
+		<result property="rev_lv" column="REV_LV"/>
+		<result property="img_path" column="IMG_PATH"/>
+		<result property="img_name1" column="IMG_NAME1"/>
+		<result property="img_name2" column="IMG_NAME2"/>
+		<result property="img_name3" column="IMG_NAME3"/>
+		<result property="img_rename1" column="IMG_RENAME1"/>
+		<result property="img_rename2" column="IMG_RENAME2"/>
+		<result property="img_rename3" column="IMG_RENAME3"/>
+		<result property="us_no" column="US_NO"/>
+		<result property="bus_code" column="BUS_CODE"/>
+		<result property="re_star" column="RE_STAR"/>
+		<result property="rev_hct" column="REV_HCT"/>
+		<!-- rentcar -->
+		<result property="c_booking_no" column="C_BOOKING_NO"/>
+		<result property="c_bus_name" column="C_BUS_NAME"/>
+		<result property="c_booking_product" column="C_PRODUCT_NAME"/>
+		<result property="c_booking_date" column="C_BOOKING_DATE"/>
+		<result property="c_booking_modify" column="C_BOOKING_MODIFY"/>
+		<result property="c_booking_address" column="C_BOOKING_ADDRESS"/>
+		<result property="c_booking_pay" column="C_BOOKING_PAY"/>
+		<result property="c_booking_number" column="C_BOOKING_NUMBER"/>
+		<result property="c_booking_phone" column="C_BOOKING_PHONE"/>
+		<result property="c_booking_trv" column="C_TOUR_DATE"/>
+		<result property="rent_no" column="RENT_NO"/>
+		<result property="c_bus_code" column="BUS_CODE"/>
+		
+		<!-- hotel -->
+		<result property="r_booking_no" column="R_BOOKING_NO"/>
+		<result property="r_bus_name" column="BUS_NAME"/>
+		<result property="r_booking_product" column="R_PRODUCT_NAME"/>
+		<result property="r_booking_date" column="R_BOOKING_DATE"/>
+		<result property="r_booking_modify" column="R_BOOKING_MODIFY"/>
+		<result property="r_booking_address" column="R_BOOKING_ADDRESS"/>
+		<result property="r_booking_pay" column="R_BOOKING_PAY"/>
+		<result property="r_booking_number" column="R_BOOKING_NUMBER"/>
+		<result property="r_booking_phone" column="R_BOOKING_PHONE"/>
+		<result property="r_booking_trv" column="R_TOUR_DATE"/>
+		<result property="room_no" column="HOTEL_NO"/>
+		<result property="r_bus_code" column="BUS_CODE"/>
+		
+		<!-- tour -->
+		<result property="t_booking_no" column="T_BOOKING_NO"/>
+		<result property="t_bus_name" column="T_BUS_NAME"/>
+		<result property="t_booking_product" column="T_PRODUCT_NAME"/>
+		<result property="t_booking_date" column="T_BOOKING_DATE"/>
+		<result property="t_booking_modify" column="T_BOOKING_MODIFY"/>
+		<result property="t_booking_address" column="T_BOOKING_ADDRESS"/>
+		<result property="t_booking_pay" column="T_BOOKING_PAY"/>
+		<result property="t_booking_number" column="T_BOOKING_NUMBER"/>
+		<result property="t_booking_phone" column="T_BOOKING_PHONE"/>
+		<result property="t_booking_trv" column="T_TOUR_DATE"/>
+		<result property="pro_no" column="PRO_NO"/>
+		<result property="t_bus_code" column="BUS_CODE"/>
+		
+		<!-- BUSINESS_ATT Join -->
+		<result property="file_rename" column="FILE_RENAME"/>
+		<result property="file_lv" column="FILE_LV"/>
+		
+		<!-- Bsusiness Table 조인 -->
+		<result property="bus_name" column="BUS_NAME" />
+	
 	</resultMap>
 	
 	
@@ -677,25 +755,30 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		UPDATE NEWS
 		SET NSTATUS = 'Y'
 		WHERE NNO = #{nno}
-
 	</update>
   
 	<select id="selectHotelBookList" resultMap="BookingResultSet">
 		SELECT *
-		FROM ROOM_BOOKING
-		WHERE US_NO = #{usno}
+		FROM ROOM_BOOKING RB, BUSINESS_ATT BA
+		WHERE RB.BUS_CODE = BA.BUS_CODE
+		AND RB.US_NO = #{usno}
+		AND BA.FILE_LV = 0
 	</select>
 	
 	<select id="selectTourBookList" resultMap="BookingResultSet">
 		SELECT *
-		FROM TOUR_BOOKING
-		WHERE US_NO = #{usno}
+		FROM TOUR_BOOKING TB, BUSINESS_ATT BA
+		WHERE TB.BUS_CODE = BA.BUS_CODE
+		AND BA.FILE_LV = 0
+		AND TB.US_NO = #{usno}
 	</select>
 	
 	<select id="selectCarBookList" resultMap="BookingResultSet">
 		SELECT *
-		FROM CAR_BOOKING
-		WHERE US_NO = #{usno}
+		FROM CAR_BOOKING CB, BUSINESS_ATT BA
+		WHERE CB.BUS_CODE = BA.BUS_CODE
+		AND BA.FILE_LV = 0
+		AND CB.US_NO = #{usno}
 	</select>
 	
 	<delete id="deleteBooking" parameterType="Booking">
@@ -757,5 +840,108 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		        WHERE US_NO = #{us_no}
 		        ORDER BY PNO DESC)
 		WHERE ROWNUM = 1
+  </select>
+   
+  <insert id="insertReview" parameterType="Review">
+  		INSERT 
+  		INTO REVIEW
+  		(
+  			REV_NO
+  		  , REV_COMMENT
+  		  , REV_DATE
+  		  , REV_MODIFY
+  		  , REV_STATUS
+  		  , REV_LV
+  		  , IMG_NAME1
+  		  , IMG_NAME2
+  		  , IMG_NAME3
+  		  , IMG_RENAME1
+  		  , IMG_RENAME2
+  		  , IMG_RENAME3
+  		  , US_NO
+  		  , BUS_CODE
+  		  , RE_STAR
+  		  , REV_HCT
+  		  )
+  		
+  		VALUES
+  		(
+  			RE_SEQ_NO.NEXTVAL
+  		  , #{rev_comment}
+  		  , SYSDATE
+  		  , SYSDATE
+  		  , DEFAULT
+  		  , 'rev'
+  		  , #{ img_name1 }
+  		  , #{ img_name2 }
+  		  ,#{ img_name3 }
+  		  ,#{ img_rename1 }
+  		  ,#{ img_rename2 }
+  		  ,#{ img_rename3 }
+  		  , #{us_no}
+  		  , #{bus_code}
+  		  , #{re_star}
+  		  , #{rev_hct}
+  		  ) 
+  </insert>
+  
+  <select id="selectThisNo" resultType="_int" parameterType="Review">
+  		SELECT REV_NO
+  		FROM
+  		(
+	  		SELECT REV_NO
+	  		FROM REVIEW
+	  		WHERE US_NO = #{us_no}
+	  		ORDER BY REV_NO DESC
+  		)
+  		WHERE ROWNUM = 1
+  </select>
+  
+  <update id="updateCheck" parameterType="Review">
+  		<if test='rev_hct eq "h".toString()'>
+  			UPDATE ROOM_BOOKING
+  			SET R_REVIEW_CHECK = #{rev_no}
+  			WHERE R_BOOKING_NO = #{booking_no}
+  		</if>
+  		<if test='rev_hct eq "c".toString()'>
+  			UPDATE CAR_BOOKING
+  			SET C_REVIEW_CHECK = #{rev_no}
+  			WHERE C_BOOKING_NO = #{booking_no}
+  		</if>
+  		<if test='rev_hct eq "t".toString()'>
+  			UPDATE TOUR_BOOKING
+  			SET T_REVIEW_CHECK = #{rev_no}
+  			WHERE T_BOOKING_NO = #{booking_no}
+  		</if>
+  </update>
+  
+  <select id="selectReview" resultMap="ReviewResultSet">
+	  	<if test='rev_hct eq "h".toString()'>
+	  		SELECT *
+	  		FROM REVIEW R, ROOM_BOOKING RB, BUSINESS_ATT BA, BUSINESS B
+	  		WHERE R.REV_NO = RB.R_REVIEW_CHECK
+	  		AND RB.BUS_CODE = BA.BUS_CODE
+	  		AND BA.BUS_CODE = B.BUS_CODE
+	  		AND BA.FILE_LV = 0
+	  		AND R.REV_NO = #{rev_no}
+	  	</if>
+	  	<if test='rev_hct eq "c".toString()'>
+  			SELECT *
+	  		FROM REVIEW R, CAR_BOOKING CB, BUSINESS_ATT BA, BUSINESS B
+	  		WHERE R.REV_NO = CB.C_REVIEW_CHECK
+	  		AND CB.BUS_CODE = BA.BUS_CODE
+	  		AND BA.BUS_CODE = B.BUS_CODE
+	  		AND BA.FILE_LV = 0
+	  		AND R.REV_NO = #{rev_no}
+  		</if>
+  		<if test='rev_hct eq "t".toString()'>
+  			SELECT *
+	  		FROM REVIEW R, TOUR_BOOKING TB, BUSINESS_ATT BA, BUSINESS B
+	  		WHERE R.REV_NO = TB.T_REVIEW_CHECK
+	  		AND TB.BUS_CODE = BA.BUS_CODE
+	  		AND BA.BUS_CODE = B.BUS_CODE
+	  		AND BA.FILE_LV = 0
+	  		AND R.REV_NO = #{rev_no}
+  		</if>
   </select>
 </mapper>
