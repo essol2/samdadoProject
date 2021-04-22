@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usstatus" column="US_STATUS" />
 		<result property="usstop" column="US_STOP" />
 		<result property="authKey" column="AUTH_KEY" />
+		<result property="pbalance" column="PBALANCE" />
 	</resultMap>
 	
 	<!-- 로그인 -->
@@ -33,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			  , US_PART
 			  , US_STATUS
 			  , US_STOP
+			  , PBALANCE
 		   FROM
 		   		"USER"
 		  WHERE
@@ -55,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , BUS_NO
 		  , US_PART
 		  , US_STATUS
+		  , PBALANCE
 		)
 		VALUES
 		(
@@ -67,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usphone}
 		  , #{busno} <!-- 일반 회원일시 NULL -->
 		  , #{uspart}
+		  , DEFAULT
 		  , DEFAULT
 		)
 	</insert>
@@ -264,6 +268,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			  , US_STATUS
 			  , US_STOP
 			  , AUTH_KEY
+			  , PBALANCE
 		   FROM
 		   		"USER"
 		  WHERE US_STOP IS NULL	
@@ -282,6 +287,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				,BUS_NO
 				,US_PART
 				,US_STATUS
+				,PBALANCE
 		  FROM
 		        "USER"	
 		<where>
@@ -313,6 +319,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				<when test="searchCondition == 'usstatus'">
 					AND US_STATUS LIKE #{sv}
 				</when>
+				<when test="searchCondition == 'pbalance'">
+					AND PBALANCE LIKE #{sv}
+				</when>
 				<otherwise>
 					AND (US_NO LIKE #{sv}
 						 OR US_ID LIKE #{sv}
@@ -323,6 +332,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 						 OR BUS_NO LIKE #{sv}
 						 OR US_PART LIKE #{sv})
 						 OR US_STATUS LIKE #{sv})
+						 OR PBALANCE LIKE #{sv})
 				</otherwise>	
 			</choose>
 		</where>
