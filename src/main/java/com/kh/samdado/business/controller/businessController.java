@@ -51,6 +51,7 @@ import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
+import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 
 
@@ -60,6 +61,9 @@ import com.kh.samdado.user.model.vo.User;
 public class businessController {
 	@Autowired
 	private MypageService mService;
+	
+	@Autowired
+	private UserService uService;
 
 	@Autowired
 	businessService bService;
@@ -352,7 +356,7 @@ public class businessController {
 
 	// 음식점 디테일
 	@GetMapping("/restaurant_detail")
-	public String restaurantDetail(@RequestParam int bus_code,
+	public String restaurantDetail(@RequestParam int bus_code, String usno,
 			   					   Model model) {
 		
 		
@@ -369,8 +373,8 @@ public class businessController {
 			// 찜하기			
 		    Map<String,Object> idxMap = new HashMap<>();
 		    int bbsidx = bus_code;
-		    int useridx = 21;
-	        
+		    int useridx = Integer.parseInt(usno);
+		    
 	        idxMap.put("bbsidx", bbsidx);
 	        idxMap.put("useridx", useridx);
 	        System.out.println("idxMap : " + idxMap);
