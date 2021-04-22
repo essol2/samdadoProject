@@ -287,5 +287,17 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectReview(r);
 	}
 
+	// 일반회원 - 찜목록 넣기
+	@Override
+	public int insertJjim(Jjim j) {
+		return mDao.insertJjim(j);
+	}
+
+	// 일반회원 - 찜목록 삭제
+	@Override
+	public int deleteJjim(Jjim j) {
+		return mDao.deleteJjim(j);
+	}
+
 	
 }

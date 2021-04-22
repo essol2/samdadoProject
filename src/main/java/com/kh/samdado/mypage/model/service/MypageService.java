@@ -148,5 +148,11 @@ public interface MypageService {
 	// 일반회원 - 후기 수정 디테일 가져오기
 	public Review selectReview(Review r);
 
+	// 일반회원 - 찜목록 넣기
+	public int insertJjim(Jjim j);
+
+	// 일반회원 - 찜목록 삭제
+	public int deleteJjim(Jjim j);
+
 
 }

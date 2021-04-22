@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
@@ -841,5 +840,33 @@ public class MypageController {
 			
 			return renameFileName;
 		}
+	 
+	 // 일반회원 - 찜하기 On
+	 @RequestMapping("/jjimon")
+	 @ResponseBody
+	 public String toggleJjimOn(@RequestBody Jjim j) {
+		 
+		int result = mService.insertJjim(j);
+		 
+		if(result >0) 
+			return "success";
+		else 
+			return "error";
+		 
+	 }
+	 
+	// 일반회원 - 찜하기 Off
+		 @RequestMapping("/jjimoff")
+		 @ResponseBody
+		 public String toggleJjimOff(@RequestBody Jjim j) {
+
+			int result = mService.deleteJjim(j);
+			 
+			if(result >0) 
+				return "success";
+			else 
+				return "error";
+			 
+		 }
 	 
 }

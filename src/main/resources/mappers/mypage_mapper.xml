@@ -281,6 +281,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<!-- Bsusiness Table 조인 -->
 		<result property="bus_name" column="BUS_NAME" />
 	
+	
+		
 	</resultMap>
 	
 	
@@ -944,4 +946,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	  		AND R.REV_NO = #{rev_no}
   		</if>
   </select>
+  
+  <insert id="insertJjim" parameterType="Jjim">
+		INSERT INTO JJIM(JJIM_NO, JJIM_DATE, JJIM_STATUS, BUS_CODE, US_NO)
+		VALUES (JJIM_NO.NEXTVAL, SYSDATE, 'Y', #{bus_code}, #{us_no})
+  </insert>
+  
+  <update id="deleteJjim" parameterType="Jjim">
+  		UPDATE JJIM
+  		SET JJIM_STATUS = 'N'
+  		WHERE US_NO = #{us_no}
+  		AND BUS_CODE = #{bus_code}
+  </update>
 </mapper>
