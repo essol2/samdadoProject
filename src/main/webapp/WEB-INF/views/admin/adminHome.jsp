@@ -83,35 +83,30 @@
 
                     <!-- SMS -->
                     <div class="row" style="padding-top: 4%; padding-right: 7%;">
-                    <h1>SMS</h1>
-                	 <h6>삼다도 회원들에게 메세지를 보낼 수 있습니다.</h6>
-                	 <br><br>
-                        <form method="post" name="smsForm" action="${ contextPath }/admin/sendSMS">
-	                        <table class="table table-hover">
-	                           <tbody>
-		                          <tr>
-		                              <td>
-		                              	<textarea class="form-control" maxlength="45" name="msg" style="resize: none;" placeholder="보낼 내용을 입력하세요."></textarea>
-		                              </td>
-		                          </tr>
-		                          <tr>
-		                          	<td>
-		                              	<input class="form-control" type="text" name="rphone" value="" placeholder="받는 번호를 입력하세요.(-없이)">
-		                             </td>
-		                          </tr>
-	                              <tr>
-	                              <td>
-		                              	<input type="submit" class="btn btn-secondary" value="전송" style="margin-left: 88%;">
-		                              	<input type="hidden" name="action" value="go">
-				  						<input type="hidden" name="sphone1" value="010">
-								        <input type="hidden" name="sphone2" value="8234">
-								        <input type="hidden" name="sphone3" value="2105">
-	                              </td>
-	                              </tr>
-	                          </tbody>
-	                      </table>
-                       </form>
-                  </div>
+                    	<div class="col" id="G">
+			                <h1>News</h1>
+			                <h6>새로운 공지 및 소식이 노출됩니다.</h6>
+			                <br>
+			                    <table class="table table-hover" id="qnaTable" style="table-layout: fixed;">
+			                        <thead>
+			                        <tr>
+			                            <th>No</th>
+			                            <th>작성자</th>
+			                            <th>내용</th>
+			                        </tr>
+			                        </thead>
+			                        <tbody>
+			                        <c:forEach var="q" items="${ qnaList }">
+				                        <tr onclick='showQnA();' style="cursor: pointer;">
+				                            <th>${ q.qnano }</th>
+				                            <td>${ q.usname }</td>
+				                            <td style="overflow: hidden; white-space : nowrap; text-overflow: ellipsis;">${ q.qcont }</td>
+				                        </tr>
+			                        </c:forEach>                     
+			                        </tbody>
+			                    </table>
+			                </div>
+                     </div>
 					<br><br>
                     <!--막대 그래프(총 매출)-->
                      <div class="row" style="padding-top: 4%; padding-right: 7%; padding-bottom: 5%;">
