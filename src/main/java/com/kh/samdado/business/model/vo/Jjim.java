@@ -15,6 +15,14 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
+
+/*
+ *  JJIM_NO	VARCHAR2(10 BYTE)
+	JJIM_DATE	DATE
+	JJIM_STATUS	VARCHAR2(1 BYTE)
+	BUS_CODE	NUMBER
+	US_NO	VARCHAR2(15 BYTE)
+ * */
 public class Jjim {
 	private String jjim_no;		// 찜시퀀스번호
 	private	Date jjim_date;		// 찜한날짜

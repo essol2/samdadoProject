@@ -288,4 +288,16 @@ public class MypageDaoImpl implements MypageDao{
 	public Review selectReview(Review r) {
 		return sqlSession.selectOne("mypageMapper.selectReview", r);
 	}
+
+	// 일반회원 - 찜목록 넣기
+	@Override
+	public int insertJjim(Jjim j) {
+		return sqlSession.insert("mypageMapper.insertJjim", j);
+	}
+
+	// 일반회원 - 찜목록 삭제
+	@Override
+	public int deleteJjim(Jjim j) {
+		return sqlSession.update("mypageMapper.deleteJjim", j);
+	}
 }
