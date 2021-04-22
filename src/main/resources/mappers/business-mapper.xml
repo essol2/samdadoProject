@@ -1120,7 +1120,54 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		   AND R.ROOM_NO = RA.ROOM_NO
 		   AND B.BUS_CODE = #{ bus_code }
 	</select>
+	
+	<select id="selectJjim" resultType="map">
+	    SELECT 
+	    		JJIM_NO
+	    	  , JJIM_DATE
+	    	  , JJIM_STATUS
+	    	  , BUS_CODE
+	    	  , US_NO
+	      FROM 
+	    	    JJIM
+	     WHERE 
+	     		BUS_CODE = #{bbsidx} 
+	       AND 
+	            US_NO = #{useridx}
+	</select>	
+	
+	<insert id="insertJjim" parameterType="map">
+      INSERT
+        INTO JJIM
+        (
+          JJIM_NO
+        , JJIM_DATE
+        , JJIM_STATUS
+        , BUS_CODE
+        , US_NO        
+        )
+        VALUES
+        (
+           JJIM_NO.NEXTVAL
+        , SYSDATE
+        , DEFAULT
+        , #{bbsidx}
+        , #{useridx}
+        )
+   </insert>
    
+   <update id="udpateJjim" parameterType="map">
+		UPDATE
+				JJIM
+			SET
+				JJIM_DATE = DEFAULT
+			  , JJIM_STATUS = #{jjimcheck}
+		  WHERE
+		  		BUS_CODE = #{bbsidx}
+		    AND
+		        US_NO = #{useridx}
+	</update>
+
    <!-- 지혜 -->
    <select id="selectBannerAdImgList" resultMap="AllianceResultSet">
 		SELECT

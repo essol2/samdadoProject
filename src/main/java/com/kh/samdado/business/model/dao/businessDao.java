@@ -1,6 +1,7 @@
 package com.kh.samdado.business.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
@@ -84,6 +85,12 @@ public interface businessDao {
 		  
 	// 찜하기
 	public int jjim(Jjim jjim);
+	
+	Map<String, Object> selectJjim(Map<String, Object> idxMap);
+	
+	Object insertJjim(Map<String, Object> commandMap);
+
+	public int updateJjim(Map<String, Object> commandMap);
 
 	// ************************** 지혜
 	// 신고 카운트
@@ -136,6 +143,8 @@ public interface businessDao {
 
 	List<Room> selectRoom(int bus_code);
 	List<RoomAtt> selectRoomAtt(int bus_code);
+
+	
 
 	
 
