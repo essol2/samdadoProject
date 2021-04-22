@@ -365,6 +365,29 @@ public class businessController {
 			
 			model.addAttribute("res", b);
 			model.addAttribute("att" + attList);
+			
+			// 찜하기			
+		    Map<String,Object> idxMap = new HashMap<>();
+		    int bbsidx = bus_code;
+		    int useridx = 21;
+	        
+	        idxMap.put("bbsidx", bbsidx);
+	        idxMap.put("useridx", useridx);
+	        System.out.println("idxMap : " + idxMap);
+	        
+	        //jjim 테이블 에서 찜하기유무 확인하기
+			 Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
+			 System.out.println("jjimcheckMap : " + jjimcheckMap);
+			 //찜 누른 기록이 없다면
+		        if(jjimcheckMap == null) {
+		            model.addAttribute("jjimcheck",0);
+		        } else {
+		        	// 찜 누른 기록이 있다면		        	
+		            model.addAttribute("jjimcheck",jjimcheckMap.get("JJIM_STATUS"));
+		        }
+		        model.addAttribute("bbsidx",bbsidx);
+		        model.addAttribute("useridx",useridx);
+			
 			return "business/restaurant/restaurant_detail";
 		} else {
 			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
@@ -692,6 +715,57 @@ public class businessController {
 		return "redirect:/main"; // 마이페이지로 매핑하기
 		
 	}
+	
+	//찜하기 ajax받기	
+    @RequestMapping("/jjim")
+    @ResponseBody
+    public Map<String,Object> jjim(@RequestParam Map<String,Object> commandMap){        
+        int resultCode = 1;
+        int jjimcheck = 1;
+        System.out.println("찜컨트롤러들어옴");
+        Map<String,Object> map = new HashMap<>();        
+        Map<String,Object> resultMap = new HashMap<>();
+        try {
+            map = bService.jjimcheck(commandMap);
+            System.out.println("commandMap : " + commandMap);
+            System.out.println("map : " + map);
+            if(map == null) {
+                //처음 찜하기 누른것. jjimcheck=1, 빨강하트.
+            	System.out.println("찜하기인서트옴");
+                bService.insertJjim(commandMap); // 찜하기 테이블 인서트                
+                resultCode = 1;
+            }
+            else if(Integer.parseInt(map.get("JJIM_STATUS").toString()) == 0) {
+                //찜하기 처음은 아니고 취소했다가 다시 눌렀을때 jjimcheck=1, 빨강하트.
+            	System.out.println("찜하기업데이트옴");
+                commandMap.put("jjimcheck",jjimcheck);
+                bService.updateJjim(commandMap); //찜하기 테이블 업데이트                
+                resultCode = 1;
+            }
+            else {
+                //찜하기 취소하면 jjimcheck=0, 빈 하트.
+            	System.out.println("찜하기업데이트2옴");
+                jjimcheck = 0;
+                commandMap.put("jjimcheck", jjimcheck);
+                int result = bService.updateJjim(commandMap);                
+                if(result > 0) {
+                	System.out.println("여기까지");
+                	resultCode = 0;                	
+                }
+            }            
+            resultMap.put("jjimcheck", jjimcheck);
+        } catch (Exception e) {            
+            resultCode = -1;
+            System.out.println("찜에러옴");
+        }
+        
+        resultMap.put("resultCode", resultCode);
+        //resultCode가 1이면 빨간하트 0이면 빈하트
+        System.out.println("resultMap : " + resultMap);
+        return resultMap;
+    }
+	
+	
 	// ************* 지혜 *************
 
 	@PostMapping("/insert/bannerAd")

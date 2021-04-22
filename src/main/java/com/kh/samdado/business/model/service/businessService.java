@@ -1,6 +1,7 @@
 package com.kh.samdado.business.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.Booking;
@@ -85,6 +86,12 @@ public interface businessService {
 	
 	// 찜하기
 	public int jjim(Jjim jjim);
+	
+	Map<String, Object> jjimcheck(Map<String, Object> idxMap);
+	
+	Object insertJjim(Map<String, Object> commandMap);	
+	
+	public int updateJjim(Map<String, Object> commandMap);
 
 	// 신고 카운트
 	int countReport();  
@@ -128,7 +135,9 @@ public interface businessService {
 
 	List<Room> selectRoom(int bus_code);
 
-	List<RoomAtt> selectRoomAtt(int bus_code);
+	List<RoomAtt> selectRoomAtt(int bus_code);	
+
+	
 
 	
 
