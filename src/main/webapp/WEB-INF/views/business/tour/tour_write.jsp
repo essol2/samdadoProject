@@ -285,10 +285,10 @@
                     <span class="box">
                     <select class="content" name="tour_tema">
                         <option value="select" selected>선택</option>
-                        <option value="신혼">신혼</option>
-                        <option value="졸업">졸업</option>
-                        <option value="일상">일상</option>
-                        <option value="기타">기타</option>
+                        <option value="wedding">신혼</option>
+                        <option value="gradu">졸업</option>
+                        <option value="life">일상</option>
+                        <option value="etc">기타</option>
                     </select>
                     </span>
                 </div>
@@ -323,21 +323,6 @@
 	                </span>
 	            </div>
 	            
-                <!-- 인원 -->
-                <div class="join-wrap">
-                    <h3><label>인원</label></h3>
-                    <span class="box">
-                    <select class="content" id="category" name="res_category">
-	                    <option value="select" selected>명</option>
-	                    <option value="1">1</option>
-	                    <option value="2">2</option>
-	                    <option value="3">3</option>
-	                    <option value="4">4</option>
-	                    <option value="etc">5</option>
-                	</select>
-                	</span>
-                </div>
-                
                 <!-- 영업시간 -->
 	            <div class="join-wrap">
 	                <h3><label for="opening">영업시간</label></h3>

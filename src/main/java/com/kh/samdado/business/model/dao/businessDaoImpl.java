@@ -349,6 +349,12 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.selectCarAtt", bus_code);
 	}
+
+	@Override
+	public List<Review> selectReview(int bus_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectReview", bus_code);
+	}
   
  
 

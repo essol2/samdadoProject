@@ -308,7 +308,7 @@
 
         .reivew {
             border: 1px solid black;
-            width: 70%;
+            width: 90%;
             border-radius: 6px;
         }
 
@@ -893,63 +893,35 @@
 
         <!-- 후기 -->
         <div id="review_area">
-            <label>후기</label>&nbsp;&nbsp;<label>★ 4.5(후기 99개)</label><br>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
+            <label>후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:yellow;">★</a>(후기 ${ review.size() }개)</label><br>
+            <c:if test="${ empty review }">
+            <div class="reviewBox">
+            <p style="font-size:60px">리뷰가 없습니다!!!</p>
             </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
+            </c:if>
+            <c:forEach var="r" items="${ review }">
+            <div class="reviewBox">
+	            <div class="review_img_area">
+	            	<c:if test="${ r.img_rename1 ne '미입력'  }">
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename1 }" class="review_img">
+	                </c:if>
+					<c:if test="${ r.img_rename2 ne '미입력'  }">
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename2 }" class="review_img">
+	                </c:if>
+	                <c:if test="${ r.img_rename3 ne '미입력'  }">
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename3 }" class="review_img">
+	                </c:if>
+	            </div>
+	            <div class="review_writer">
+	                <label>${ r.us_name }</label>
+	                <div class="reivew">
+	                    <a>${ r.rev_comment }</a>
+	                    <label class="review_date_label">${ r.rev_date }</label>
+	                </div>
+	            </div>
             </div>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-            </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
-            </div>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-            </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                        최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서
-                        매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
-            </div>
+            </c:forEach>
         </div>
-        
     </section>
     
     <script>  
@@ -1217,6 +1189,7 @@
 				$(element).attr('style', 'display:none;');
 			}
 		});
+		
 		
 	</script>
 	 

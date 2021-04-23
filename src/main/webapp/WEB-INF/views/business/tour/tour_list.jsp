@@ -563,14 +563,21 @@
 		    	              data : {"kinds" : kinds},
 		    	              success : function(data){
 		    	            	  var cate = document.getElementById("secondlist");
-		    	            	  var div = document.createElement("div");
+		    	            	  var list = "";
 		    	            	  for(var i in data){
-		    	              		cate.innerHTML=
-		    	              			data[i].bus_code;
-		    	              			
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";
+		                            str += "<b>입장료 : 입장료 없음</b>";
+		                            str += "<div id='frm_read'>"
+		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+		                            str += "</div>";               
+		                            str += "</div>";
+		                            
+		                            list += str;
 		    	              		}
-		    	              		
-		    	              	
+		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
 		    	            	 alert('error');
@@ -581,7 +588,9 @@
 		    });//ready
 			</script>
             <!-- 관광지목록 div -->
-
+			
+			<!-- 렌트카 메인사진 넣기 -->
+			<!-- 프리미엄 profile > mainprofile로 변경 -->
             <div class="list">
                 <div id="firstlist" class="gradient-border">
                 <c:forEach var="p" items="${ tourList }">
@@ -600,8 +609,9 @@
 
                 <div id="secondlist">
                 <c:forEach var="t" items="${ tourList }">
+                <c:if test="${t.bus_classify eq 'G' }">
                     <div class='profile'>
-                    	<c:if test="${ t.bus_classify eq 'G' && t.file_lv eq '0'}">
+                    	<c:if test="${t.file_lv eq '0'}">
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                     	</c:if>
                         <b>★4.90(후기 99+개)</b>
@@ -611,6 +621,7 @@
                         <a href='javascript: like_func();'><img src="../resources/images/image_listpage/heart.png"></a>
                         </div>
                     </div>
+                </c:if>
                 </c:forEach>
                 </div>        
 			</div>

@@ -36,6 +36,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
+import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
 import com.kh.samdado.business.model.vo.hotel.Room;
@@ -81,7 +82,7 @@ public class businessController {
 		List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
 		
 		if(b != null && roomList != null) {
-			System.out.println("호텔사진  : " + attList);
+			//System.out.println("호텔사진  : " + attList);
 			model.addAttribute("hotel", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("room", roomList);
@@ -147,8 +148,8 @@ public class businessController {
 	    int arrayCnt = 0;
 		for(MultipartFile mf : roomFile) {
 			MultipartFile file = mf;
-			System.out.println(cnt);
-			System.out.println(file);
+			//System.out.println(cnt);
+			//System.out.println(file);
 			cnt++;
 			if (!file.getOriginalFilename().equals("")) {
 				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
@@ -239,15 +240,17 @@ public class businessController {
 	@GetMapping("/tour_detail")
 	public String tourDetail(@RequestParam int bus_code,
 			   				Model model) {
-
-		//System.out.println("나와라 : " + bus_code);
 	
 		Business b = bService.selectTour(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
+		List<Review> reviewList = bService.selectReview(bus_code);
+		
+		
 		if(b != null) {
 			model.addAttribute("tour", b);
 			model.addAttribute("att", attList);
-			// System.out.println(model);
+			model.addAttribute("review", reviewList);
+			System.out.println("review : " + reviewList);
 			return "business/tour/tour_detail";
 		} else {
 			model.addAttribute("msg", "관광지 보기에 실패했습니다.");
@@ -326,10 +329,11 @@ public class businessController {
 			}
 			int result3 = bService.insertIncome1(i);
 		}
-		
+		System.out.println(b);
 		int result = bService.insertBusiness(b, list);
 		int result3 = bService.insertTour(tp);
 		int result4 = bService.insertMain(bat);
+		System.out.println(b);
 		
 		// --- 은솔 : Usno 빼가기
 		String usno = i.getUsno();
@@ -734,12 +738,10 @@ public class businessController {
 	@ResponseBody
 	public List<Business> cateList(HttpServletResponse response, @RequestBody String kinds) {
 		
-		System.out.println("kinds : " + kinds);
 		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
-		System.out.println("kind : " + kind);
 		List<Business> cateList = bService.cateList(kind);
 		
-		System.out.println("cateList : " + cateList);
+		System.out.println("cateList : " + cateList.size());
 		return cateList;
 		
 	}

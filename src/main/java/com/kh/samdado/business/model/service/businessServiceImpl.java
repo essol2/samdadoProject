@@ -324,6 +324,12 @@ public class businessServiceImpl implements businessService {
 		return bDao.selectCarAtt(bus_code);
 	}
 
+	@Override
+	public List<Review> selectReview(int bus_code) {
+		// TODO Auto-generated method stub
+		return bDao.selectReview(bus_code);
+	}
+
 	
 
 	
