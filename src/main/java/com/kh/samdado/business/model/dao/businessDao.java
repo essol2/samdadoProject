@@ -135,6 +135,8 @@ public interface businessDao {
 	List<Room> selectRoom(int bus_code);
 	List<RoomAtt> selectRoomAtt(int bus_code);
 
+	List<Business> cateList(String kind);
+
 	
 
 

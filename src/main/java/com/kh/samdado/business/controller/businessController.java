@@ -23,7 +23,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -75,7 +77,7 @@ public class businessController {
 		List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
 		
 		if(b != null && roomList != null) {
-//			System.out.println("att : " + attList);
+			System.out.println("att : " + attList);
 			model.addAttribute("hotel", b);
 			model.addAttribute("att" + attList);
 			model.addAttribute("room", roomList);
@@ -598,6 +600,7 @@ public class businessController {
 				bat.setFile_root((String)file.get("path"));
 			}
 		}
+		System.out.println("primonth");
 		
 		if(primonth != 0) {
 			// 넘어온 개월수에 따라 amount값 주기
@@ -609,6 +612,7 @@ public class businessController {
 				i.setAmount(180);
 			}
 			int result3 = bService.insertIncome1(i);
+			System.out.println("result3 : " + result3);
 		}
 		
 		int result = bService.insertBusiness(b, list);
@@ -678,6 +682,20 @@ public class businessController {
 		}
 		
 		return "redirect:/main";
+		
+	}
+	
+	@RequestMapping(value="cateList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> cateList(HttpServletResponse response, @RequestBody String kinds) {
+		
+		System.out.println("kinds : " + kinds);
+		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
+		System.out.println("kind : " + kind);
+		List<Business> cateList = bService.cateList(kind);
+		
+		System.out.println("cateList : " + cateList);
+		return cateList;
 		
 	}
 

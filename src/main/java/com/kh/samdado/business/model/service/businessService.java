@@ -128,6 +128,8 @@ public interface businessService {
 
 	List<RoomAtt> selectRoomAtt(int bus_code);
 
+	List<Business> cateList(String kind);
+
 	
 
 	
