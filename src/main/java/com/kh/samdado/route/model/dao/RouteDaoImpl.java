@@ -1,5 +1,6 @@
 package com.kh.samdado.route.model.dao;
 
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.samdado.route.model.vo.Route;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.route.model.vo.TourSpot;
 import com.kh.samdado.route.model.vo.rSearch;
+import com.kh.samdado.user.model.vo.User;
 
 @Repository 
 public class RouteDaoImpl implements RouteDao {
@@ -50,6 +53,14 @@ public class RouteDaoImpl implements RouteDao {
 		System.out.println("dao: " + Arrays.toString(slist));
 		
 		return sqlSession.insert("routeMapper.addRoute", slist);
+	}
+
+	@Override
+	public int finalRoute(RouteFinal rf) {
+		
+		System.out.println("dao: " + rf);
+		
+		return sqlSession.insert("routeMapper.finalRoute", rf);
 	}
 
 	

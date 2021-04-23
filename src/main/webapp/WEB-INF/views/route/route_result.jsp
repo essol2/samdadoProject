@@ -160,6 +160,7 @@
                                    <tr>
                                         <td colspan="2"> 
                                             <button class="_btn" id="ch_btn" onclick="location.href='${ contextPath }/route/changeRoute'">순서 바꾸기</button>
+                                            
                                             <button class="_btn" id="add_btn">추가하기</button>
                                         </td>
                                    </tr>
@@ -181,7 +182,7 @@
                                       	</c:forEach>
                                     	
                                         <tr> 
-                                            <td id="cost-content" style="text-align: right;" >총 <fmt:formatNumber value="${ totalPrice }" pattern="#,###"/>원&nbsp;</td>
+                                            <td id="tcost-content" style="text-align: right;" >총 <pre id="totalPrice"><fmt:formatNumber value="${ totalPrice }" pattern="#,###"/></pre>원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -361,13 +362,23 @@
 	<!-- 루트 저장 -->
 	<script>
 		$("#add_btn").on("click", function(){
-			$("#saveList").html("");
+			<c:if test="${ !empty loginUser }">
+				$("#saveList").html("");
+				
+				$("#tr1 #spotTitle").each(function(index, element){
+					$("#saveList").append("<input type='hidden' name='slist' value='" + $(this).text() + "'/>");
+				});
+				
+				console.log($("#totalPrice").text());
+				
+				$("#saveList").append("<input type='hidden' name='tprice' value='" + $("#totalPrice").text() + "'/>");
+				
+				$("#saveList").submit();
+			</c:if>
 			
-			$("#tr1 #spotTitle").each(function(index, element){
-				$("#saveList").append("<input type='hidden' name='slist' value='" + $(this).text() + "'/>");
-			});
-			
-			$("#saveList").submit();
+			<c:if test ="${ empty loginUser }">
+				alert("로그인 후 저장해 주세요!");
+			</c:if>
 		});
 	</script>
 	    
