@@ -236,6 +236,7 @@
 	
 	.businessImg{
 		width : 100%;
+		/* border  :  1px solid blue; */
 	}
 	
 	.moreBtn{
@@ -290,13 +291,9 @@
 
             <div id="mainBox">
             <br>
-          	<c:if test="${bussList} == null">
-            	<h1>등록된 사업장이 없습니다!</h1>
-            	<button>테스트다 이눔아!</button>
-            </c:if>
-            
-             <c:if test="${ bussList ne null }">
-	            
+            <c:choose>
+            <c:when test="${!empty bussList}">
+			   
 	            <c:forEach items="${bussList}" var="bl" varStatus="blStatus">
 	            
 	                <div class="more">
@@ -344,11 +341,16 @@
 	                    </div>
 	               
 	                    </c:forEach>
+	                    </c:when>
+	                    <c:otherwise>
+				            <img src="${ contextPath }/resources/images/image_main/logo_g.png"><br>
+			            	<h1 style="color : #467355; font-size : 30px; text-align : center;">등록된 사업장이 없습니다!</h1>
+			           </c:otherwise>
+			           </c:choose>
 	                    <div id="forAlign">
 	                    	<p style="color  : #bfbfbf; margin : 0px; padding:0px;">더보기</p>
 		                    <img src="${contextPath}/resources/images/image_mp/moreBtn.png" id="moreBtn">
-		                    </div>
-	                    </c:if>
+		                 </div>
 	                    
                     <div id="newBusiBtnArea">
                         <button id="newBusiBtn">사업장 추가하기</button>

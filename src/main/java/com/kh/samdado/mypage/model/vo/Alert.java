@@ -107,6 +107,7 @@ public class Alert {
 	private String nstatus;
 	private String ncate;
 	private int nkeyno;
+	private Date ndate;
 
 	
 	private int qno;

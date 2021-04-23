@@ -110,7 +110,7 @@
         background-color:rgba( 255, 255, 255, 0.8 );
         border : 5px solid white;
         width : 77%;
-        height: 600px;
+        height: fit-content;
         margin-top : 5%;
         margin-left : 3%;
     }
@@ -254,6 +254,8 @@
                 <div id="alertBox">
 		            <h2 style='margin : 3%; overflow:auto;'>내 소식</h2>
 		            <table id="alertTable"> 
+		            <c:choose>
+		            <c:when test="${ !empty alertNList || !empty alertYList}">
 			            <c:forEach var="ab" items="${ alertNList }" varStatus="abStatus">
 			                <tr style="cursor : pointer;" onclick="detailNAlert(${ab.nno})" class="newList">
 			                    <th class="nno" style="color : #467355;">new</th>
@@ -271,6 +273,8 @@
 			                    <c:if test="${ab.ncate == 'A' || ab.ncate == 'AA'}">
 			                    	<td>배너광고</td>
 			                    </c:if>
+			                    
+			                    <td><fmt:formatDate value="${ ab.ndate }" type="date" pattern="yyyy-MM-dd" /></td>
 			                    
 			                </tr>
 			             </c:forEach>
@@ -290,8 +294,17 @@
 			                    <c:if test="${ay.ncate == 'A' || ay.ncate == 'AA'}">
 			                    	<td>배너광고</td>
 			                    </c:if>
+			                    <td><fmt:formatDate value="${ ay.ndate }" type="date" pattern="yyyy-MM-dd" /></td>
 			                </tr>
 			             </c:forEach>
+			             </c:when>
+			             <c:otherwise>
+			             	<td colspan="4" style="color : #467355; font-size : 30px; text-align : center;"> 
+			             	<img src="${ contextPath }/resources/images/image_main/logo_g.png"><br>
+			             	소식이 없습니다!
+			             	</td>
+			             </c:otherwise>
+			             </c:choose>
 		            </table>
 	       		</div>
             </div>
@@ -635,7 +648,9 @@
 								var ajncate = $("<td>").text("배너광고");
 							}
 							
-							tr1.append(ajnno, ajntitle, ajncate);
+							var ajndate =  $("<td>").text(data[i].ndate);
+							
+							tr1.append(ajnno, ajntitle, ajncate, ajndate);
 							
 						} else if(data[i].nstatus == 'Y'){
 							var tr2 = $("<tr onclick='detailYAlert("+data[i].nno+")' style='cursor : pointer;' class='readList'>");
@@ -652,7 +667,9 @@
 								var ajncate = $("<td>").text("배너광고");
 							}
 							
-							tr2.append(ajnno, ajntitle, ajncate);
+							var ajndate =  $("<td>").text(data[i].ndate);
+							
+							tr2.append(ajnno, ajntitle, ajncate, ajndate);
 						}
 						table.append(tr1, tr2);
 					}

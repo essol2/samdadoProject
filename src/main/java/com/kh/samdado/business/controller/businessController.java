@@ -1098,8 +1098,8 @@ public class businessController {
 		Business selectUser = bService.selectBusCodeUser(bus_code);
 		r.setUsno(selectUser.getUs_no());
 		Report findReportStatus = bService.findReportStatus(r);
-		 System.out.println("r : " + r);
-		 System.out.println("frs : " + findReportStatus);
+		 //System.out.println("r : " + r);
+		 //System.out.println("frs : " + findReportStatus);
 		
 		// 해당 업체가 신고기록이 없을 때 insert
 		if(findReportStatus == null) {					

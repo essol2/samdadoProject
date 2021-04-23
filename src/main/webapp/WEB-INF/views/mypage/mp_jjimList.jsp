@@ -298,7 +298,7 @@
 			
 			$this.find("#jjimIcon").attr("src", function(index, attr){
 				if(attr.match('_on')){
-					console.log(" on 들어오니?");
+					//console.log(" on 들어오니?");
 					$.ajax({
 					url : "${contextPath}/mypage/jjimoff",
 					data : JSON.stringify(jjimOb),
@@ -316,7 +316,7 @@
 					return attr.replace("_on.png", "_off.png");
 					
 				} else {
-					console.log("off 들어오니?");
+					//console.log("off 들어오니?");
 					$.ajax({
 					url : "${contextPath}/mypage/jjimon",
 					data : JSON.stringify(jjimOb),
