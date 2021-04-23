@@ -85,16 +85,20 @@
                 <!-- 은솔 : 배너광고 구간 -->
                 <h3 style="margin-left : 3%;"> 이제, 여행은 가까운 곳에서.</h3>
                 <br>
-                
+                            
+                <div style="margin-left : 3%;">
+				  <div class="row" id="bannerAdImglistDiv" style='height: fill;'>
+				    
+				  </div>
+				</div>
+               
+               <!--  
      			<div class="tableArea" style="margin-left : 3%; width: 1920px;">
 					<table id="bannerAdImglistTable">
-						<thead>
-							<tr></tr>
-					    </thead>
 						<tbody></tbody>
 					</table>
 				</div>
-                
+                -->
                
             </div>
         </div>
@@ -116,20 +120,24 @@
 				success : function(data) {
 					console.log(data);
 					
-					tableBody = $("#bannerAdImglistTable tbody");
-					tableBody.html("");
+					badiv = $("#bannerAdImglistDiv");
+					badiv.html("");
+
+					//tableBody = $("#bannerAdImglistTable tbody");
+					//tableBody.html("");
 					
 					for (var i in data) {
 						
-						var tr = $("<tr onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
+						var div = $("<div class='col-5' style='height: fill;' onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
 						
 						//var alno = $("<td>").text(data[i].alno); 
 						//var bus_code = $("<td>").text(data[i].bus_code); 
-						var aimgcname = $("<td>");
-						aimgcname.html("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 700px;'>");
+						//var aimgcname = $("<td>");
 						
-						tr.append(aimgcname);
-						tableBody.append(tr);
+						div.html("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 660px;'>");
+
+						//tr.append(aimgcname);
+						badiv.append(div);
 					}
 				},
 				error : function(e) {

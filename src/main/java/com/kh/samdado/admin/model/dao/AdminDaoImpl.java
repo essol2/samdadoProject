@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.samdado.admin.model.vo.A_board;
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -183,6 +184,18 @@ public class AdminDaoImpl implements AdminDao {
 	public Report selectReportRexdate(Report report) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("adminMapper.selectReportRexdate", report);
+	}
+
+	@Override
+	public int insertAboard(A_board aboard) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("adminMapper.insertAboard", aboard);
+	}
+
+	@Override
+	public List<A_board> adminMainselectAboardList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("adminMapper.adminMainselectAboardList");
 	}
 
 

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.google.gson.Gson;
 import com.kh.samdado.admin.model.exception.AdminException;
 import com.kh.samdado.admin.model.service.AdminService;
+import com.kh.samdado.admin.model.vo.A_board;
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.Pagination;
 import com.kh.samdado.admin.model.vo.aSearch;
@@ -75,6 +76,9 @@ public class AdminController {
 		
 		// 1_6. 관리자 메인 페이지에서 신규 QnA 신청 카운트 select
 		int countQnAResult = aService.countQnA();
+		
+		// 1_7. 괸리자 메인 페이지에서 등록한 공지사항 불러오기 select
+		List<A_board> selectAboardList = aService.adminMainselectAboardList();
 
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("countQnAResult", countQnAResult);
@@ -82,6 +86,7 @@ public class AdminController {
 		model.addAttribute("countReportResult", countReportResult);
 		model.addAttribute("businessList", businessList);
 		model.addAttribute("countAd1Result", countAd1Result);
+		model.addAttribute("selectAboardList", selectAboardList);
 		
 		return "admin/adminHome";
 	}
@@ -484,6 +489,23 @@ public class AdminController {
 		List<Integer> profits = aService.selectGetProfit();
 	
 		return new Gson().toJson(profits);
+	}
+	
+	@PostMapping("/sendAboard")
+	public String sendAboard(A_board aboard, Model model) {
+		
+		//System.out.println("aboard : " + aboard);
+		
+		int insertAboard = aService.insertAboard(aboard);
+		
+		if (insertAboard > 0) {
+			System.out.println("insertAboard 결과 : " + insertAboard);
+			model.addAttribute("msg", "공지글 등록에 성공하였습니다.");
+			return "redirect:/admin/home";
+		} else {
+			throw new AdminException("공지글 등록에 실패하였습니다.");
+		}
+		
 	}
 
 	

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.samdado.admin.model.dao.AdminDao;
+import com.kh.samdado.admin.model.vo.A_board;
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -175,6 +176,18 @@ public class AdminServiceImpl implements AdminService {
 	public Report selectReportRexdate(Report report) {
 		// TODO Auto-generated method stub
 		return aDao.selectReportRexdate(report);
+	}
+
+	@Override
+	public int insertAboard(A_board aboard) {
+		// TODO Auto-generated method stub
+		return aDao.insertAboard(aboard);
+	}
+
+	@Override
+	public List<A_board> adminMainselectAboardList() {
+		// TODO Auto-generated method stub
+		return aDao.adminMainselectAboardList();
 	}
 
 
