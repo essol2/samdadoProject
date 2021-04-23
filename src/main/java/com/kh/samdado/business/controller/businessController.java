@@ -529,7 +529,7 @@ public class businessController {
 			model.addAttribute("car", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("cars", carList);
-			model.addAttribute("att", carAtt);
+			model.addAttribute("carAtt", carAtt);
 			System.out.println(model);
 			return "business/rentcar/car_detail";
 		} else {
@@ -717,15 +717,16 @@ public class businessController {
 			b.setT_booking_address(selectUser.getBus_address());
 			b.setT_booking_phone(selectUser.getBus_phone());
 			int bookingTour = bService.insertBookingTour(b);
-			System.out.println("bookingTour : " + bookingTour);
+			
 		} else if(b.getBookingLv() == 3) {			
 			b.setC_bus_name(selectUser.getBus_name());
 			b.setC_booking_address(selectUser.getBus_address());
 			b.setC_booking_phone(selectUser.getBus_phone());
+			
 			int bookingCar = bService.insertBookingCar(b);
 		}
 		
-		return "redirect:/main"; // 마이페이지로 매핑하기
+		return "redirect:/mypage/booking";
 		
 	}
 	

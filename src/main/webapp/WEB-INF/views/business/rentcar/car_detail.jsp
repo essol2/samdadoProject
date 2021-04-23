@@ -400,6 +400,23 @@
         .modal-body {
             padding: 10%;
         }
+        
+        .modal-book {
+            display: flex;
+            border: 1px solid gray;
+            border-radius: 0.8rem;
+            width: 98%;
+        }
+        
+        .checkin,
+        .checkout {
+            width: 50%;
+            text-align: center;
+        }
+
+        .checkin {
+            border-right: 1px solid black;
+        }
 
         .modalcarimage{
             text-align: center;
@@ -604,79 +621,28 @@
                 <input type="checkbox" name="rno" id="rno"><label for="rno">르노</label><br>
                 <input type="checkbox" name="diesel" id="diesel"><label for="diesel">디젤</label>
                 <input type="checkbox" name="gasoline" id="gasoline"><label for="gasoline">가솔린</label>
-            </div>
-
+            </div>S
+			<c:forEach var="c" items="${ cars }">
             <div class="list">
                 <div id="firstlist">
                     <div class='profile'>
-                        
-                        <img class="image" src="../resources/images/image_listpage/car1.png">
-                        <b>기아 K7</b>
-                        <b>가솔린</b>
-                        <b>50,000원</b>
+                        <c:forEach var="ca" items="${ carAtt }">
+                        <c:if test="${ ca.file_lv eq '0' }">
+                        <img class="image" src="${ contextPath }/resources/busUploadFiles/" ${ ca.file_rename }>
+                        </c:if>
+                        </c:forEach>
+                        <b>${ c.car_name }</b><br>
+                        <b>${ c.car_fuel }</b><br>
+                        <b>${ c.car_price }원</b><br>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             예약하기
                         </button>
                         
-                    </div>
-                    <div class='profile'>
-                        
-                        <img class="image" src="../resources/images/image_listpage/car2.png">
-                        <b>BMW5</b>
-                        <b>가솔린</b>
-                        <b>150,000원</b>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            예약하기
-                        </button>
-                        
-                    </div>
-                    <div class='profile'>
-                        
-                        <img class="image" src="../resources/images/image_listpage/car3.png">
-                        <b>BENZ C200</b>
-                        <b>가솔린</b>
-                        <b>150,000원</b>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            예약하기
-                        </button>
-                        
-                    </div>
-                </div>
-
-                <div id="secondlist">
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/car1.png">
-                        <b>기아 K7</b>
-                        <b>가솔린</b>
-                        <b>50,000원</b>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            예약하기
-                        </button>
-                        
-                    </div>
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/car2.png">
-                        <b>BMW5</b>
-                        <b>가솔린</b>
-                        <b>150,000원</b>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            예약하기
-                        </button>
-                        
-                    </div>
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/car3.png">
-                        <b>BENZ C200</b>
-                        <b>가솔린</b>
-                        <b>150,000원</b>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            예약하기
-                        </button>
-                        
-                    </div>
-                </div>                     
+                    </div>                    
+                    
+                </div>                               
             </div>
-           
+            </c:forEach>
             <div class="btnArea">
                 <button class="moreBtn">더보기</button>
             </div>
@@ -763,6 +729,7 @@
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
+        <c:forEach var="c" items="${ cars }">
             <div class="modal-content">
                 <div class="modal-header">
                     <img src="../resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
@@ -770,28 +737,57 @@
                     <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                 </div>
                 <div class="modal-body">
-                    <!--체크인날짜-->
+                    <!--렌트대여날짜-->
                     <div class="start-div">
                         <label for="startDate">예약일</label>
                         <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
-                    </div>                    
+                    </div>
+                    <!--렌트반납날짜-->
+                    <div class="end-div">
+                        <label for="endDate">반납일</label>
+                        <label id="error" class="error">반납날짜는 예약날짜 이전 일 수 없습니다.</label>
+                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)">
+                    </div>                                       
                 </div>
-
-                <div class="modalcarimage">
-                    <b id="startDateResult"></b>
-                    <h4>BMW</h4>
-                    <img class="mordalmainimage" src="../resources/images/image_listpage/car1.png">
+				<input type="hidden" id="carNo" name="carNo" value="${ c.car_no }">
+				<input type="hidden" id="carName" name="carName" value="${ c.car_name }">
+				<input type="hidden" id="cAmount" name="cAmount" value="${ c.car_price }">
+                <div class="modalcarimage">                    
+                    <h4>${ c.car_name }</h4>
+                    <c:forEach var="ca" items="${ carAtt }">
+                        <c:if test="${ ca.file_lv eq '0' }">
+                        <img class="mordalmainimage" src="${ contextPath }/resources/busUploadFiles/" ${ ca.file_rename }>
+                        </c:if>
+                        </c:forEach>
                     <div class="other">
+                    
+                    
                         <img class="otherimage" src="../resources/images/image_listpage/car1.png">
                         <img class="otherimage" src="../resources/images/image_listpage/car2.png">
                         <img class="otherimage" src="../resources/images/image_listpage/car3.png">
                         <img class="otherimage" src="../resources/images/image_listpage/car2.png">
                         <img class="otherimage" src="../resources/images/image_listpage/car3.png">
-                                           
-    
+                             
+    				
                     </div>
-                    <label>80,000원 * 8박</label><br>
-                    <b>총 합계 : 640,000원</b>
+                <div class="modal-book">
+                        <div class="checkin">
+                            <label>대여일</label><br>
+                            <b id="startDateResult"></b>
+                        </div>
+                        <div class="checkout">
+                            <label>반납일</label><br>
+                            <b id="endDateResult"></b>
+                        </div>
+                </div>
+                	<label>${ c.car_price }원 * </label>
+                    <label><input type="text" id="days" style="border:none;width:20px;" readonly></label>
+                    <label>일</label>
+                    <br>
+                    <b>총 합계 : </b>
+                    <b><input type="text" id="payResult" style="border:none;width:70px" readonly></b>
+                    <b>원</b>
+                    
                     <button class="payBtn">결제하기</button>
                 </div>
 
@@ -801,27 +797,71 @@
                     <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
+            </c:forEach>
         </div>
     </div>
     
-    <script>
+   	<script>
 	    function startDate(e) {	  	  
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('startDateResult').innerText
-	  	    = value;	
+	  	    = value;
+	  	  
+		  	var sdd = document.getElementById("startDate").value;
+		    var edd = document.getElementById("endDate").value;
+		    var amount = document.getElementById("cAmount").value;
+		    var ar1 = sdd.split('-');
+		    var ar2 = edd.split('-');
+		    var da1 = new Date(ar1[0], ar1[1], ar1[2]);
+		    var da2 = new Date(ar2[0], ar2[1], ar2[2]);
+		    var dif = da2 - da1;
+		    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+		    if(sdd && edd){		        
+		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
+		        document.getElementById('payResult').value = amount * days
+		     }
 	  	}
+	    
+	    function endDate(e) {
+		  	  const value = e.value;		  	  
+		  	  document.getElementById('endDateResult').innerText
+		  	    = value;
+		  	  
+			  	var sdd = document.getElementById("startDate").value;
+			    var edd = document.getElementById("endDate").value;
+			    var amount = document.getElementById("cAmount").value;
+			    var ar1 = sdd.split('-');
+			    var ar2 = edd.split('-');
+			    var da1 = new Date(ar1[0], ar1[1], ar1[2]);
+			    var da2 = new Date(ar2[0], ar2[1], ar2[2]);
+			    var dif = da2 - da1;			    
+			    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+			    
+			    if(sdd && edd){		        
+			        var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
+			        document.getElementById('payResult').value = amount * days
+			     }
+			    if(sdd >= edd){
+			    	alert('체크아웃날짜를 다시 체크해주세요.');
+			    }
+		  	}
 
-	</script>
+	    function handleOnChange(e) {
+	    	  const value = e.value;	    	  
+	    	  document.getElementById('personNumber').value
+	    	    = value;
+	    	}
+    </script>
     
     <script>
 
   	$(".payBtn").click(function() {
   		
   		var name = document.getElementById('carName').value;
-  		var rentNo = document.getElementById('rentNo').value;
+  		var carNo = document.getElementById('carNo').value;
   		var payResult = document.getElementById('payResult').value;
   		var startDate = document.getElementById("startDate").value;  		
-  	 	var personNumber = document.getElementById("personNumber").value;
+  		var endDate = document.getElementById("endDate").value;
   	    var bookingLv = 3;
   		// var amount = payResult;
   		var amount = 100;
@@ -842,9 +882,9 @@
 	        if ( rsp.success ) {
 	            var msg = '결제가 완료되었습니다!';
 	            msg += '결제 금액 : ' + rsp.paid_amount;
-	            location.href = '${contextPath}/business/pay?usno='+${loginUser.usno}+'&c_booking_number='+personNumber
-					            +'&bus_code='+${ c.bus_code }+'&c_booking_trv='+startDate+'&bookingLv='+bookingLv
-					            +'&c_booking_pay='+payResult+'&rent_no='+rentNo+'&c_booking_product='+name+'&amount='+amount
+	            location.href = '${contextPath}/business/pay?usno='+${loginUser.usno}+'&c_booking_trvEnd='+endDate
+					            +'&bus_code='+${ car.bus_code }+'&c_booking_trv='+startDate+'&bookingLv='+bookingLv
+					            +'&c_booking_pay='+payResult+'&rent_no='+carNo+'&c_booking_product='+name+'&amount='+amount
 					            ;
 	            				
 	        } else {
@@ -912,7 +952,7 @@
     			document.querySelector("div#reportImage_container").appendChild(img); 
     		}; 
     		reader.readAsDataURL(event.target.files[0]); 
-    	}
+    	};
     	
     </script>
 
