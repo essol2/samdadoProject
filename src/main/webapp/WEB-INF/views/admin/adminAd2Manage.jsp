@@ -57,29 +57,29 @@
                     </tr>
                 </thead>
                 <tbody>
-	                <c:forEach var="apa" items="${ adminPremiumAd }">
+	                <c:forEach var="apane" items="${ adminPremiumAdnotEnd }">
 	                   <tr>
-	                       <th>${ apa.payno }</th>
-	                       <td>${ apa.usno }</td>
-	                       <td>${ apa.usname }</td>
-	                       <td id="bus_code">${ apa.bus_code }</td>
+	                       <th>${ apane.payno }</th>
+	                       <td>${ apane.usno }</td>
+	                       <td>${ apane.usname }</td>
+	                       <td id="bus_code">${ apane.bus_code }</td>
 	                       <c:choose>
-			                  <c:when test="${ apa.bus_category eq 'R' }">
+			                  <c:when test="${ apane.bus_category eq 'R' }">
                             	<td>음식점</td>
                               </c:when>
-                              <c:when test="${ apa.bus_category eq 'H' }">
+                              <c:when test="${ apane.bus_category eq 'H' }">
                             	<td>숙박</td>
                               </c:when>
-                              <c:when test="${ apa.bus_category eq 'T' }">
+                              <c:when test="${ apane.bus_category eq 'T' }">
                             	<td>관광지</td>
                               </c:when>
                               <c:otherwise>
                               	<td>렌트</td>
                               </c:otherwise>
 	                       </c:choose>
-	                       <td>${ apa.pdate }</td>
-	                       <td>${ apa.exdate }</td>
-	                       <td><a class="btn btn-info" id="goDetailPre2Btn" onclick='goToPre2Detail("${ apa.bus_code }")'>보러가기</a></td>
+	                       <td>${ apane.pdate }</td>
+	                       <td>${ apane.exdate }</td>
+	                       <td><a class="btn btn-info" id="goDetailPre2Btn" onclick='goToPre2Detail("${ apane.bus_code }")'>보러가기</a></td>
 	                   </tr>
 	                 </c:forEach>                      
                 </tbody>

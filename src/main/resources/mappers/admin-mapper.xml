@@ -93,6 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usname" column="US_NAME" />
 		<!-- BUSINESS 테이블 조인을 위한 필드 -->
 		<result property="bus_code" column="BUS_CODE" />
+		<result property="istatus" column="ISTATUS" />
 	</resultMap>
 	
 	<resultMap type="Point" id="pointResultSet">
@@ -554,7 +555,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				INCOME.US_NO,
 				US_NAME,
 				BUSINESS.BUS_CATEGORY,
-				BUSINESS.BUS_CODE
+				BUSINESS.BUS_CODE,
+                ISTATUS
 		   FROM
 				INCOME, "USER", BUSINESS
 		  WHERE
@@ -562,6 +564,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  	AND "USER".US_NO = BUSINESS.US_NO
 			AND ITEM = '프리미엄'
             AND BUS_CLASSIFY = 'P'
+            AND ISTATUS IS NULL
 	   ORDER BY PDATE DESC
 	</select>
 	
@@ -576,6 +579,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				, US_NAME
 				, BUSINESS.BUS_CATEGORY
 				, BUSINESS.BUS_CODE
+				, ISTATUS
 		  FROM
 			    INCOME, "USER", BUSINESS
 	   <where>  
@@ -722,6 +726,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	        A_BOARD
 	     ORDER BY BDATE DESC
 	</select>
+	
+	<update id="updateRstatusToEnd" parameterType="Income">
+		UPDATE 
+			   INCOME
+		   SET
+			   ISTATUS = 'E'
+	     WHERE
+	     	   PAY_NO = #{ payno }
+	</update>
 	
 	
 

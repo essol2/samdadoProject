@@ -198,6 +198,12 @@ public class AdminDaoImpl implements AdminDao {
 		return sqlSession.selectList("adminMapper.adminMainselectAboardList");
 	}
 
+	@Override
+	public int updateRstatusToEnd(Income adminPremiumAd) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("adminMapper.updateRstatusToEnd", adminPremiumAd);
+	}
+
 
 
 }
