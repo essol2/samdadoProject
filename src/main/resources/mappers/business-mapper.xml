@@ -456,7 +456,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<!-- 렌트카디테일 -->
 	<select id="selectCar" resultMap="BusinessResultSet">
 		SELECT 
-		       B.BUS_CODE
+		       BUS_CODE
 		     , US_NO
 		     , BUS_NAME
 		     , BUS_ADDRESS
@@ -469,23 +469,43 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_STATUS
 		     , BUS_PHONE
 		     , BUS_OPENING
-		     , BT.FILE_RENAME
-		     , C.CAR_NAME
-             , C.CAR_TYPE
-             , C.CAR_PRODUCER
-             , C.CAR_FUEL
-             , C.CAR_PRICE
-             , CA.FILE_RENAME
 		  FROM
-		       BUSINESS B, BUSINESS_ATT BT, CAR C, CAR_ATT CA
+		       BUSINESS
 		 WHERE
-		       B.BUS_CODE = BT.BUS_CODE 
-           AND B.BUS_CODE = C.BUS_CODE
-           AND C.CAR_NO = CA.CAR_NO
-           AND B.BUS_CODE = #{bus_code}
+		       BUS_CODE = #{bus_code}
 		   AND BUS_CATEGORY = 'C'
 		   AND BUS_STATUS = 'Y'
-	  ORDER BY C.CAR_NO DESC
+	</select>
+	<select id="selectCars" resultMap="CarResultSet">
+		SELECT
+		       CAR_NO
+		     , BUS_CODE
+		     , CAR_NAME
+		     , CAR_TYPE
+		     , CAR_PRODUCER
+		     , CAR_FUEL
+		     , CAR_PRICE
+		     , CAR_DATE
+		     , CAR_MODIFY
+		  FROM
+		       CAR
+		 WHERE
+		       BUS_CODE = #{bus_code}
+	</select>
+	<select id="selectCarAtt" resultMap="CarAttResultSet">
+		SELECT
+		  	   FILE_NO
+			 , FILE_NAME
+             , FILE_STATUS
+             , FILE_RENAME
+             , FILE_LV 
+             , BUS_CODE
+		  FROM 
+		  	   BUSINESS_ATT
+		 WHERE
+			   BUS_CODE = #{bus_code}
+	  ORDER BY
+	  		   FILE_LV
 	</select>
 	<!-- 호텔 디테일 -->
 	<select id="selectHotel" resultMap="BusinessResultSet">

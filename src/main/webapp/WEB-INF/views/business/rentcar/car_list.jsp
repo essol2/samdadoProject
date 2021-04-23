@@ -549,7 +549,7 @@
                 <c:forEach var="c" items="${ carList }">
                     <div class='profile'>
                     	<c:if test="${ c.file_lv eq '0' }">
-                        <img class="image" src="${ contextPath }/resources/images/image_listpage/rentcar2.png" onclick="selectRes(${c.bus_code})">
+                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }" onclick="selectRes(${c.bus_code})">
                         </c:if>
                         <b>★4.90(후기 99+개)</b>
                         <b>${ c.bus_name }</b>

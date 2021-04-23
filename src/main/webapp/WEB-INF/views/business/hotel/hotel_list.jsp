@@ -575,7 +575,7 @@
 	                    <div class='profile'>
 	                    	<c:if test="${ h.file_lv eq '0' }">
 	                    	<input type="hidden" id="bus_code" name="bus_code" value="${ h.bus_code }">
-	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/ ${ h.file_rename }" onclick="selectRes(${h.bus_code})">
+	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
 	                        </c:if>
 	                        <b>★4.90(후기 99+개)</b>
 	                        <b>${ h.bus_name }</b>

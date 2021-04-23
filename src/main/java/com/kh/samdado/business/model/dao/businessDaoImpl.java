@@ -337,6 +337,18 @@ public class businessDaoImpl implements businessDao {
 	public List<Business> cateList(String kind) {
 		return sqlSession.selectList("businessMapper.cateList", kind);
 	}
+
+	@Override
+	public List<Car> selectCars(int bus_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectCars", bus_code);
+	}
+
+	@Override
+	public List<CarAtt> selectCarAtt(int bus_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectCarAtt", bus_code);
+	}
   
  
 

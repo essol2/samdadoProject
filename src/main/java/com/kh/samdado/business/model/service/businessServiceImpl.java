@@ -312,6 +312,18 @@ public class businessServiceImpl implements businessService {
 		return bDao.cateList(kind);
 	}
 
+	@Override
+	public List<Car> selectCars(int bus_code) {
+		// TODO Auto-generated method stub
+		return bDao.selectCars(bus_code);
+	}
+
+	@Override
+	public List<CarAtt> selectCarAtt(int bus_code) {
+		// TODO Auto-generated method stub
+		return bDao.selectCarAtt(bus_code);
+	}
+
 	
 
 	
