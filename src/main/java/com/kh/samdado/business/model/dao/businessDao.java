@@ -150,6 +150,8 @@ public interface businessDao {
 
 	List<CarAtt> selectCarAtt(int bus_code);
 
+	List<Review> selectReview(int bus_code);
+
 	
 
 	

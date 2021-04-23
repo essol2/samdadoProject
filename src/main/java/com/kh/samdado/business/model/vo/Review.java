@@ -122,4 +122,6 @@ public class Review {
 	private String usname; // user 테이블 조인
 	
 	private int booking_no;
+	
+	private String us_name;
 }
