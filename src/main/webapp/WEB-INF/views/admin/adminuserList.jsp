@@ -97,7 +97,7 @@
 								   </div>
 								   <div class="mb-3">
 									    <label for="userPhone" class="form-label">발신번호</label>
-									    <input type="text" class="form-control" id="userPhone" name="rphone" value="${ status.current.usphone }" aria-describedby="emailHelp">
+									    <input type="text" class="form-control" id="userPhone" name="rphone" value="${ status.current.usphone }" aria-describedby="emailHelp" readonly>
 								   </div>
 			                       <div class="mb-3">
 			                       <input type="submit" class="btn btn-secondary" value="전송" style="margin-left: 88%;">
@@ -187,6 +187,44 @@
            <!-- 검색 추가 -->
            
             <br> <br>
+            
+           		 <!-- 모달 -->
+                   <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">SMS 발송</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+		                   <div>
+		                   		<form method="post" name="smsForm" action="${ contextPath }/admin/sendSMS">
+			                       <div class="mb-3">
+									    <label for="message_content" class="form-label">메세지 내용  <span id="counter">0</span>/45</label>
+									    <textarea class="form-control" maxlength="45" style="resize: none;" name="msg" placeholder="최대 45자 이내" id="message_content" aria-describedby="emailHelp">[삼다도]</textarea>
+								   </div>
+								   <div class="mb-3">
+									    <label for="userPhone" class="form-label">발신번호</label>
+									    <input type="text" class="form-control" id="SearchuserPhone" name="rphone" aria-describedby="emailHelp" readonly>
+								   </div>
+			                       <div class="mb-3">
+			                       <input type="submit" class="btn btn-secondary" value="전송" style="margin-left: 88%;">
+		                              	<input type="hidden" name="action" value="go">
+				  						<input type="hidden" name="sphone1" value="010">
+								        <input type="hidden" name="sphone2" value="8234">
+								        <input type="hidden" name="sphone3" value="2105">
+			                       </div>
+		                       	</form>
+		                   </div>
+					      	
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+            
 
                <div class="find_user">
                 <h3>회원<span style="color: seagreen;"> 조회 </span>하기</h3>
@@ -262,7 +300,7 @@
 										//var usbirth = $("<td>").text(data[i].usbirth);
 										var utodate = $("<td>").text(data[i].utodate);
 										var usemail = $("<td>").text(data[i].usemail);
-										var usphone = $("<td>").text(data[i].usphone);
+										var usphone = $("<td><button type='button' class='btn btn-secondary' onclick='test(this);'>" + data[i].usphone + "</button>");
 										var uspart = $("<td>").text(data[i].uspart);
 										var busno = $("<td>").text(data[i].busno);
 										var usstatus = $("<td>").text(data[i].usstatus);
@@ -275,12 +313,23 @@
 									
 								},
 								error : function(e) {
-									alert("error code : " + e.status + "\n"
-											+ "message : " + e.responseText);
+									alert("정보를 찾을 수 없습니다.");
 								}
 							});
 						});
 					});
+					
+					function test(data){
+						
+						 $(document).ready(function() {
+					            $('#searchModal').modal("show");
+					        });
+						 
+						 //console.log($(data).parent().parent().children('td').eq(4).text());
+						 $("#SearchuserPhone").val($(data).parent().parent().children('td').eq(4).text());
+
+					}
+					
 				</script>
 				
 				<script>

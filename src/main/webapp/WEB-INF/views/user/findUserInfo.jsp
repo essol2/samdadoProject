@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="${ contextPath }/resources/css/user/findUserInfo.css">
     <!-- css 파일 경로 이동하기 -->
 
-    <title>아이디/비밀번호 찾기</title>
+    <title>아이디 찾기/비밀번호 변경</title>
   </head>
   <body>
   
@@ -79,7 +79,7 @@
               <!--비밀번호 찾기-->
               <div class="col">
                 <div>
-                    <h4>- 비밀번호 찾기</h4>
+                    <h4>- 비밀번호 변경</h4>
 
                     <form action="${ contextPath }/user/findPwd" method="POST">
                       <div class="row g-3">

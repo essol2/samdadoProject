@@ -239,9 +239,9 @@
 						});
 					});
 					
-					// 해당 게시글 하나를 누르면 상세페이지가 보여지게 하는 컨트롤러 호출
+	
 					function goToPre2Detail(bus_code) {
-						location.href='${ contextPath }/business/pre2Detail?bus_code=' + bus_code;
+						location.href='${ contextPath }/business/adminToDetail?bus_code=' + bus_code;
 					}
 				</script>
 				

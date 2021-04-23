@@ -42,7 +42,7 @@
             <h3>관리자 <span style="color: red;">정보 수정</span></h3>
             <br>
 			<h6>* 아이디와 생년월일은 수정이 불가합니다.</h6>
-			<h6>* 비밀번호는  <b>'변경하기'</b>를 클릭하시면 아이디/비밀번호 찾기 페이지로 이동하셔서 수정 가능합니다.</h6>
+			<h6>* 비밀번호는  <b>'수정하기'</b>를 클릭하시면 아이디 찾기/비밀번호 변경 페이지로 이동하셔서 수정 가능합니다.</h6>
 			<form action="${ contextPath }/admin/updateAdminInfo" method="post" id="adminUpdateInfoForm" onsubmit="return submitValidate();">
 				<div class="row">
 	            	<div id="box-container" class="col">

@@ -2,6 +2,7 @@ package com.kh.samdado.admin.model.dao;
 
 import java.util.List;
 
+import com.kh.samdado.admin.model.vo.A_board;
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -64,6 +65,10 @@ public interface AdminDao {
 	int updateRstatusToYAndNoRcount(Report report);
 
 	Report selectReportRexdate(Report report);
+
+	int insertAboard(A_board aboard);
+
+	List<A_board> adminMainselectAboardList();
 
 
 
