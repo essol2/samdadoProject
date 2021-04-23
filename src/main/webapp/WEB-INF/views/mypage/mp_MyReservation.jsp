@@ -342,7 +342,7 @@ body {
 							</c:when>
 							
 							<c:when test="${hl.r_booking_trv < now && hl.r_review_check ne null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ hl.r_bus_name}', '${ hl.r_booking_trv }', ${ hl.r_booking_no }, '${ hl.file_rename }','h', '${hl.r_bus_code }', '${hl.r_review_check}');">후기수정</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ hl.r_bus_name}', '${ hl.r_booking_trv }', ${ hl.r_booking_no }, '${ hl.file_rename }','h', '${hl.r_bus_code }');">후기수정</button>
 							</c:when>
 							
 							<c:when test="${hl.r_booking_trv < now && hl.r_review_check eq null}">
@@ -396,7 +396,7 @@ body {
 							</c:when>
 							
 							<c:when test="${cl.c_booking_trv < now && cl.c_review_check ne null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ cl.c_bus_name}', '${ cl.c_booking_trv }', ${ cl.c_booking_no }, '${ cl.file_rename }','c', '${cl.c_bus_code }', '${cl.c_review_check}');">후기수정</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ cl.c_bus_name}', '${ cl.c_booking_trv }', ${ cl.c_booking_no }, '${ cl.file_rename }','c','${hl.c_bus_code }');">후기수정</button>
 							</c:when>
 							
 							<c:when test="${cl.c_booking_trv < now && cl.c_review_check eq null}">
@@ -449,7 +449,7 @@ body {
 							</c:when>
 							
 							<c:when test="${tl.t_booking_trv < now && tl.t_review_check ne null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ tl.t_bus_name}', '${ tl.t_booking_trv }', ${ tl.t_booking_no }, '${ tl.file_rename }','t', '${tl.t_bus_code }', '${tl.t_review_check}');">후기수정</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ tl.t_bus_name}', '${ tl.t_booking_trv }', ${ tl.t_booking_no }, '${ tl.file_rename }','t', '${tl.t_bus_code }');">후기수정</button>
 							</c:when>
 							
 							<c:when test="${tl.t_booking_trv < now && tl.t_review_check eq null}">
@@ -603,6 +603,8 @@ body {
 
 		function goToReview(bus_name, goingDate, booking_no, file_rename, rev_hct, bus_code, inup, rev_no){
 			
+			$('#reviewContent').empty();
+			
 			if(inup == 'I'){
 				$('#inup').val("I");
 				$('#rev_no').val(rev_no);
@@ -645,14 +647,14 @@ body {
 		    });
 		});
 		
-		function goToReWrite(bus_name, goingDate, booking_no, file_rename, rev_hct, bus_code, rev_no){
+		function goToReWrite(bus_name, goingDate, booking_no, file_rename, rev_hct, bus_code){
 			
 			var searchR = new Object();
 			searchR.usno = ${loginUser.usno};
-			searchR.rev_no = rev_no;
 			searchR.rev_hct = rev_hct;
+			searchR.booking_no = booking_no;
 			
-			console.log(searchR);
+			//console.log(searchR);
 			
 			$.ajax({
 				url : "rewrite",
@@ -663,7 +665,7 @@ body {
 					console.log(data);
 					//console.log("<img src='${ contextPath }/resources/busUploadFiles/"+ data.img_rename1 + "' alt='사진영역' style='width: 100%; height: 100%;'>");
 					
-					var rdateFormat = new Date(data.r_booking_trv);
+					var rdateFormat = new Date(data.r_booking_trv); // null
 					rdateFormat = getFormatDate(rdateFormat);
 					var cdateFormat = new Date(data.c_booking_trv);
 					cdateFormat = getFormatDate(cdateFormat);

@@ -166,8 +166,5 @@ public interface MypageService {
 	// 일반회원 - 찜목록 찾아오기
 	public List<Jjim> selectJjimList(String usno);
 
-	
-
-	
 
 }

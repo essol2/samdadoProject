@@ -740,8 +740,8 @@ public class MypageController {
 //		 System.out.println(file3);
 		 r.setRe_star(re_star);
 		 
-		// System.out.println("r 확인 1 : " + r);
-		 // System.out.println("inup 확인 : " + inup);
+		//System.out.println("r 확인 1 : " + r);
+		//System.out.println("inup 확인 : " + inup);
 
 		 if(!file1.getOriginalFilename().equals("")) {
 				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
@@ -784,19 +784,22 @@ public class MypageController {
 		 
 		 int result = 0;
 		 int result2 = 1;
+		 
 		 //System.out.println("r 확인 2 : " + r);
+		 
 		 	if(inup.equals("I")) {
 		 		result = mService.insertReview(r);
-				System.out.println("insert result 확인 : " + result);
+				//System.out.println("insert result 확인 : " + result);
 				
 				r.setRev_no(result);
-				System.out.println("r.getRev_no() : " + r.getRev_no());
+				//System.out.println("r.getRev_no() : " + r.getRev_no());
 				
 				result2 = mService.updateCheck(r);
 				System.out.println("insert result2 확인 : " + result2);
-		 	} else if(inup == "U") {
+		 	} else if(inup.equals("U")) {
+		 		//System.out.println("update result 확인 : " + result2);
 		 		result = mService.updateReview(r);
-		 		System.out.println("update result 확인 : " + result2);
+		 		//System.out.println("update result 확인 : " + result2);
 		 	}
 			
 			
@@ -816,6 +819,7 @@ public class MypageController {
 	 @ResponseBody
 	 public Review rewriteReview(@RequestBody Review r) {
 		 
+		 //System.out.println("가기전에 r 확인 : " + r);
 		 Review reviewDetail = mService.selectReview(r);
 		 //System.out.println("reviewDetail 확인 : " + reviewDetail);
 		 
