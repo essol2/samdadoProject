@@ -78,9 +78,9 @@ BUS_CODE	NUMBER
 	private Date c_booking_modify;
 	private String c_booking_address;	
 	private String c_booking_pay;		
-	private int c_booking_number;		
+	private Date c_booking_trvEnd;
 	private String c_booking_phone;
-	private Date c_booking_trv;	
+	private Date c_booking_trv;
 	private int rent_no;			
 	private int c_bus_code;
 	
