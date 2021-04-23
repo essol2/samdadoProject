@@ -180,15 +180,13 @@ public class businessServiceImpl implements businessService {
 	}
 	
 	@Override
-	public Object insertJjim(Map<String, Object> commandMap) {
-		System.out.println("서비스인서트commandMap : " + commandMap);		
+	public Object insertJjim(Map<String, Object> commandMap) {			
 		return bDao.insertJjim(commandMap);
 		
 	}
 	
 	@Override
 	public int updateJjim(Map<String, Object> commandMap) {
-		System.out.println("서비스업데이트commandMap : " + commandMap);
 		return bDao.updateJjim(commandMap);
 		
 	}
