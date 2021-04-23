@@ -79,13 +79,13 @@
 		              <div id="box-container-label" class="col">              
 			                <label id="test_name_label" class="test_div"></label> <br><br><br><br><br>
 			                <label id="test_email_label" class="test_div"></label> <br><br>          
-			                <label id="test_bussiness_no_label" class="test_div"></label><br><br>
+			                <label id="test_business_no_label" class="test_div"></label><br><br>
 			                <label id="test_phone_label" class="test_div"></label>	                  
 		              </div>
 	             </div>
 	             <input type="hidden" name="uspart" value="${ loginUser.uspart }">
 	             <br>
-              <button class="btn btn-secondary" id="updateInfoBtn" onclick="location.href='${ contextPath }/admin/updateAdminInfo'">수정하기</button>
+              <button class="btn btn-secondary" id="updateInfoBtn">수정하기</button>
           
 			</form>
           
@@ -95,62 +95,7 @@
     </div>
 </div>
 
-	 <!-- 수정폼 제출 전 유효성검사 -->
-	<script>
-		function submitValidate(){
-			
-			// 이름 유효성검사
-			if(!(/^[가-힣]{2,5}$/).test($("#name").val())){
-				alert('이름은 한글로 2~5글자 사이만 가능합니다.');
-				$("#name").select();
-				return false;
-			}
-			
-			// 이메일 유효성검사
-			if(!((/^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i).test($("#email").val()))){
-				alert('이메일주소를 확인해주세요.');
-				$("#email").select();
-				return false;
-			}
-			
-			// 이메일 중복검사
-			if(/.중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
-				console.log($("#test_email_label").text());
-				alert('중복된 이메일입니다.');
-				$("#email").select();
-				return false;
-			}
-			
-			// 사업자등록번호 유효성검사
-			var bizNum = $("#business_no").val();
-			if(bizNum != "" && !(/\d{3}[-]\d{2}[-]\d{5}/).test(bizNum)){
-				alert('사업자등록번호를 확인해주세요.');
-				$("#business_no").select();
-				return false;
-			}
-			
-			// 전화번호 유효성검사
-			if(!(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/).test($("#phone").val())){
-				alert('전화번호를 확인해주세요.');
-				$("#phone").select();
-				return false;
-			}
-			
-			// 전화번호 중복검사
-			if(/.중복 휴대전화로 사용할 수 없습니다./.test($("#test_phone_label").text())){
-				console.log($("#test_phone_label").text());
-				alert('중복된 전화번호입니다.');
-				$("#phone").select();
-				return false;
-			}
-			
-			return true;
-		}
-	
-	</script>
-    
-    
-    <!-- 입력폼 유효성검사 -->
+	<!-- 입력폼 유효성검사 -->
     <script>
     	$("#name").change(function () {
             var regname = /^[가-힣]{2,5}$/;
@@ -233,6 +178,65 @@
         });
     	
     </script>
+
+	 <!-- 수정폼 제출 전 유효성검사 -->
+	<script>
+		function submitValidate(){
+			
+			alert('dfdfdf');
+			
+			// 이름 유효성검사
+			if(!(/^[가-힣]{2,5}$/).test($("#name").val())){
+				alert('이름은 한글로 2~5글자 사이만 가능합니다.');
+				$("#name").select();
+				return false;
+			}
+			
+			// 이메일 유효성검사
+			if(!((/^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i).test($("#email").val()))){
+				alert('이메일주소를 확인해주세요.');
+				$("#email").select();
+				return false;
+			}
+			
+			// 이메일 중복검사
+			if(/중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
+				console.log($("#test_email_label").text());
+				alert('중복된 이메일입니다.');
+				$("#email").select();
+				return false;
+			}
+			
+			// 사업자등록번호 유효성검사
+			var bizNum = $("#business_no").val();
+			if(bizNum != "" && !(/\d{3}[-]\d{2}[-]\d{5}/).test(bizNum)){
+				alert('사업자등록번호를 확인해주세요.');
+				$("#business_no").select();
+				return false;
+			}
+			
+			// 전화번호 유효성검사
+			if(!(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/).test($("#phone").val())){
+				alert('전화번호를 확인해주세요.');
+				$("#phone").select();
+				return false;
+			}
+			
+			// 전화번호 중복검사
+			if(/중복 휴대전화로 사용할 수 없습니다./.test($("#test_phone_label").text())){
+				console.log($("#test_phone_label").text());
+				alert('중복된 전화번호입니다.');
+				$("#phone").select();
+				return false;
+			}
+			
+			return true;
+		}
+	
+	</script>
+    
+    
+    
 
 
 

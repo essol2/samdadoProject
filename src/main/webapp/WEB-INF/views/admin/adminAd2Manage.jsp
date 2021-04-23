@@ -79,7 +79,7 @@
 	                       </c:choose>
 	                       <td>${ apa.pdate }</td>
 	                       <td>${ apa.exdate }</td>
-	                       <td><a class="btn btn-info" id="goDetailPre2Btn">보러가기</a></td>
+	                       <td><a class="btn btn-info" id="goDetailPre2Btn" onclick='goToPre2Detail("${ apa.bus_code }")'>보러가기</a></td>
 	                   </tr>
 	                 </c:forEach>                      
                 </tbody>
@@ -246,19 +246,7 @@
 				</script>
 				
 				
-				<script>
-		             $("#goDetailPre2Btn").click(function(){
-		
-		         		var bus_code = $("#bus_code").text();
-		         		
-		         		location.href="${ contextPath }/business/adminToDetail?bus_code=" + bus_code;
-		         		
-		             });
-         	   </script>
-				
-				
-				
-        </div>
+        </div> 
    
     </div>
 </div>
