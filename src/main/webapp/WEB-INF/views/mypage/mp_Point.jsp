@@ -489,9 +489,18 @@
                     <div id="leftArea">
                         <div id="topArea">
                             <h2 class="titles">현재 잔여 포인트</h2>
-                            <div id="showPoint">
-                                <h1 style="text-align: center;">${pList.get(0).getPbalance()}</h1>
-                            </div>
+                            <c:choose>
+                            <c:when test="${ !empty pList }">
+	                            <div id="showPoint">
+	                                <h1 style="text-align: center;">${pList.get(0).getPbalance()}</h1>
+	                            </div>
+                            </c:when>
+                            <c:otherwise>
+	                            <div id="showPoint">
+	                                <h1 style="text-align: center;">0</h1>
+	                            </div>
+                            </c:otherwise>
+                            </c:choose>
                         </div>
                         <div id="bottomArea">
                             <h2 class="titles">포인트 충전</h2><br>
@@ -534,11 +543,11 @@
 			                                <td style="color : #467355">${ p.pamount }</td>
 			                            </tr>
 		                            </c:forEach>
-		                         <%-- <c:if test=" ${pList }.size() <= 0">
+		                         <c:if test=" ${ empty pList}">
 		                         	<tr>
 		                         		<td colspan="3">조회된 정보가 없습니다.</td>
 		                         	</tr>
-		                         </c:if> --%>
+		                         </c:if>
 								</tbody>
 	                        </table> 
                         </div>

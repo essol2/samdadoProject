@@ -101,6 +101,7 @@
 								   </div>
 			                       <div class="mb-3">
 			                       <input type="submit" class="btn btn-secondary" value="전송" style="margin-left: 88%;">
+			                            <input type="hidden" name="returnurl" maxlength="64" value="http://localhost:8896/samdado/admin/userList" >
 		                              	<input type="hidden" name="action" value="go">
 				  						<input type="hidden" name="sphone1" value="010">
 								        <input type="hidden" name="sphone2" value="8234">

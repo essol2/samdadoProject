@@ -236,7 +236,38 @@
 	
 	.businessImg{
 		width : 100%;
+		/* border  :  1px solid blue; */
 	}
+	
+	.moreBtn{
+		width : 100px;
+		height : 50px;
+		align-items : center;
+	}
+	
+	#forAlign{
+		align-items : center;
+		text-align : center;
+	}
+  
+  #moreBtn{
+  	text-align : center;
+  	border-style : none;
+  	width  : 50px;
+  	height : 20px;
+  	margin-left : 0;
+  	margin-right :0;
+  }
+  
+  .more{
+  	display: none;
+  	flex-direction: column;
+  }
+  
+  .moremore{
+  	display: flex;
+  	flex-direction: column;
+  }
   
 </style>
 <body>
@@ -260,14 +291,12 @@
 
             <div id="mainBox">
             <br>
-           <%--  <c:if test="${bussList} == null">
-            	<h1>등록된 사업장이 없습니다!</h1>
-            	<button>테스트다 이눔아!</button>
-            </c:if>
-            <c:if test="${bussList} != null "> --%>
+            <c:choose>
+            <c:when test="${!empty bussList}">
+			   
 	            <c:forEach items="${bussList}" var="bl" varStatus="blStatus">
 	            
-	                <div id="businessSplit"></div>
+	                <div class="more">
 	                    <br>
 	                    
 	                    <h3 style="text-align: center;">${ bl.bus_name }</h3>
@@ -309,11 +338,24 @@
 	                        </div>
 	                    </div>
 	                    <br>
+	                    </div>
+	               
 	                    </c:forEach>
-                    <%-- </c:if> --%>
+	                    </c:when>
+	                    <c:otherwise>
+				            <img src="${ contextPath }/resources/images/image_main/logo_g.png"><br>
+			            	<h1 style="color : #467355; font-size : 30px; text-align : center;">등록된 사업장이 없습니다!</h1>
+			           </c:otherwise>
+			           </c:choose>
+	                    <div id="forAlign">
+	                    	<p style="color  : #bfbfbf; margin : 0px; padding:0px;">더보기</p>
+		                    <img src="${contextPath}/resources/images/image_mp/moreBtn.png" id="moreBtn">
+		                 </div>
+	                    
                     <div id="newBusiBtnArea">
                         <button id="newBusiBtn">사업장 추가하기</button>
                     </div>
+                    
                 </div>
               </div>
 
@@ -387,6 +429,18 @@
 		   $("#storeModal").fadeOut();
 		});      
 	</script>
-    
+
+	<script>				
+	$(document).ready(function(){
+		size_div = $('.more').length;
+							
+		x = 1;
+		$('.more:lt('+x+')').addClass('moremore');
+		$('#moreBtn').click(function(){
+			x= (x+2 <= size_div)? x+2 : size_div;
+			$('.more:lt('+x+')').addClass('moremore');	
+		});
+	});
+	</script>
 </body>
 </html>

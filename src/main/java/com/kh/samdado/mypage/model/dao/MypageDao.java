@@ -148,6 +148,9 @@ public interface MypageDao {
 	// 일반회원 - 후기 수정 디테일 가져오기
 	public Review selectReview(Review r);
 	
+	// 일반회원 - 후기수정 업데이트
+	public int updateReview(Review r);
+
 	// 일반회원 - 찜목록 넣기 전에 이미 있는지 확인하기
 	public Jjim findJjimNo(Jjim j);
 	
@@ -163,6 +166,7 @@ public interface MypageDao {
 	// 일반회원 - 찜목록 찾아오
 	public List<Jjim> selectJjimList(String usno);
 
+	
 	
 
 	

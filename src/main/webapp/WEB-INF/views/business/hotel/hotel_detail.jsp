@@ -491,7 +491,9 @@
         <div id="ho_header">
             <div class="title_area">
                 <div class="title_area">
+                    <c:if test="${ hotel.bus_classify eq 'P' }">
                     <img src="../resources/images/image_listpage/premium.png"><br>
+                    </c:if>
                     <label id="ho_title" class="title_tag">${ hotel.bus_name }</label>
                     <label id="ho_grade" class="title_tag">4성급</label><br>
                 </div>
@@ -499,12 +501,61 @@
             </div>
 
             <div id="ho_info">
-                <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
+                <label id="jjim_btn">
+			        <c:choose>
+					    <c:when test="${jjimcheck eq '0' or empty jjimcheck}"> <!-- jjimcheck가 0이면 빈하트-->
+					        <img src="../resources/images/image_listpage/noheart.png" 
+					             id="btn_like">
+					    </c:when>
+					    <c:otherwise> <!-- jjimcheck가 1면 빨간 하트-->
+					        <img src="../resources/images/image_listpage/heart.png" 
+					              id="btn_like">
+					    </c:otherwise>
+					</c:choose>찜하기</label>
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="report_btn"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">${ hotel.bus_phone }</label>
             </div>
         </div>
+        
+        <!-- 찜하기 -->
+        <script>
+        var bbsidx = ${hotel.bus_code};
+        var useridx = ${loginUser.usno};
+         
+        var btn_like = document.getElementById("btn_like");
+         btn_like.onclick = function(){ changeHeart(); }
+         
+        /* 찜하기 버튼 눌렀을때 */
+         function changeHeart(){ 
+             $.ajax({
+                    type : "POST",  
+                    url : "${ contextPath }/business/jjim",
+                    dataType : "json",
+                    data : "bbsidx="+bbsidx+"&useridx="+useridx,
+                    error : function(){
+                        Rnd.alert("통신 에러","error","확인",function(){});
+                    },
+                    success : function(jdata) {
+                        if(jdata.resultCode == -1){
+                            Rnd.alert("찜하기 오류","error","확인",function(){});
+                        }
+                        else{
+                            if(jdata.jjimcheck == 1){
+                                $("#btn_like").attr("src","../resources/images/image_listpage/heart.png");
+                                
+                               
+                            }
+                            else if (jdata.jjimcheck == 0){
+                                $("#btn_like").attr("src","../resources/images/image_listpage/noheart.png");
+                                
+                                
+                            }
+                        }
+                    }
+                });
+         }
+        </script>
 
         <!-- 매장사진 -->
         <div class="colsmom">

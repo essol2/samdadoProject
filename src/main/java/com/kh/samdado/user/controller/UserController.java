@@ -196,7 +196,7 @@ public class UserController {
 		   // 임의 인증키 생성
 	       String authKey = getAuthCode();
 	       
-	       System.out.println("175 리턴 된 authKey : " + authKey);
+	       //System.out.println("175 리턴 된 authKey : " + authKey);
 	       
 	       findUser.setAuthKey(authKey);
 	       
@@ -248,11 +248,11 @@ public class UserController {
    @PostMapping(value="/emailCheck")
    public @ResponseBody String emailCheck(User u) {
 	   
-	   System.out.println("이메일 넘어오는지 확인~ u : " + u.toString());
+	   //System.out.println("이메일 넘어오는지 확인~ u : " + u.toString());
 	   
 	   User emailCheckUser = uService.selectEmailCheckUser(u);
 	   
-	   System.out.println("emailCheckUser : " + emailCheckUser);
+	   //System.out.println("emailCheckUser : " + emailCheckUser);
 	   
 	   if (emailCheckUser != null) {
 		   return "fail"; // 중복된 유저가 있으면 실패
@@ -265,11 +265,11 @@ public class UserController {
    @PostMapping(value="/phoneCheck")
    public @ResponseBody String phoneCheck(User u) {
 	   
-	   System.out.println("휴대전화 넘어오는지 확인~ u : " + u.toString());
+	  // System.out.println("휴대전화 넘어오는지 확인~ u : " + u.toString());
 
 	   User phoneCheckUser = uService.selectPhoneCheckUser(u);
 	   
-	    System.out.println("phoneCheckUser : " + phoneCheckUser);
+	   // System.out.println("phoneCheckUser : " + phoneCheckUser);
 	   
 	   if (phoneCheckUser != null) {
 		   return "fail"; // 중복된 유저가 있으면 실패
@@ -284,9 +284,9 @@ public class UserController {
 		                    @RequestParam(value="usemail") String usemail,
 		                    Model model) {	
 	   
-	   System.out.println("링크에서 넘어온거 확인~!!@!@@!!@");
+	   //System.out.println("링크에서 넘어온거 확인~!!@!@@!!@");
 	   
-	   System.out.println("authKey: " + authKey + " usemail: " + usemail);
+	   //System.out.println("authKey: " + authKey + " usemail: " + usemail);
 	   
 	   User u = new User();
 	   u.setAuthKey(authKey);
@@ -295,7 +295,7 @@ public class UserController {
 	   // 3) 이메일과 인증키가 일치하는지 확인 (DB 셀렉)
 	   User selectChangePwdUser = uService.selectChangePwdUser(u);
 	   
-	   System.out.println("selectChangePwdUser 결과는..?? : " + selectChangePwdUser);
+	   //System.out.println("selectChangePwdUser 결과는..?? : " + selectChangePwdUser);
 	   
 	   if (selectChangePwdUser != null) { // 일치한다는 뜻
 		   return "user/updatepwd";
@@ -312,7 +312,7 @@ public class UserController {
 		                    Model model,
 		                    RedirectAttributes rd) {
 	   
-	   System.out.println("u : 누구냐 " + u.toString());
+	   //System.out.println("u : 누구냐 " + u.toString());
 	   
 	   // 4) 비밀번호 변경 값 받아서 암호화
 	   String encPwd = bcryptPasswordEncoder.encode(u.getUspwd()); // 암호화
@@ -325,7 +325,7 @@ public class UserController {
 	   if (result > 0) {
 		   User successChangePwdUser = uService.loginUser(u); // 유저 셀렉
 		   
-		   System.out.println("successChangePwdUser : " + successChangePwdUser.toString());
+		   //System.out.println("successChangePwdUser : " + successChangePwdUser.toString());
 		   
 		   rd.addFlashAttribute("successChangePwdUser", successChangePwdUser);
 		   
@@ -351,7 +351,7 @@ public class UserController {
            buffer.append(num);
        }
        
-       System.out.println("231번째줄 난수 발생 되는지 확인차 : buffer.toString()" + buffer.toString());
+       //System.out.println("231번째줄 난수 발생 되는지 확인차 : buffer.toString()" + buffer.toString());
 
        return buffer.toString(); // 리턴타입 스트링
    }

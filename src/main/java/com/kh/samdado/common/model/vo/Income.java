@@ -27,6 +27,7 @@ public class Income {
 //	PDATE	DATE                결제 날짜
 //	EXDATE	DATE			        배너 제외 프리미엄 광고 만기일
 //	US_NO	VARCHAR2(15 BYTE)   회원번호
+//  ISTATUS VARCHAR2(5)			광고진행상태(끝나면E)
 	
 	private int payno;
 	private String item;
@@ -36,6 +37,7 @@ public class Income {
 	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date exdate;
 	private String usno;
+	private String istatus;
  
 	private int primonth;
 

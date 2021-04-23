@@ -128,7 +128,7 @@
 					
 					for (var i in data) {
 						
-						var div = $("<div class='col-5' style='height: fill;' onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
+						var div = $("<div class='col-5' style='min-content;' onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
 						
 						//var alno = $("<td>").text(data[i].alno); 
 						//var bus_code = $("<td>").text(data[i].bus_code); 

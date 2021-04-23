@@ -296,8 +296,8 @@
                     <table class="table table-hover" id="qnaTable" style="table-layout: fixed;">
                         <thead>
                         <tr>
-                            <th>No</th>
-                            <th>작성자</th>
+                            <th style="width: 10%;">No</th>
+                            <th style="width: 15%;">작성자</th>
                             <th>내용</th>
                         </tr>
                         </thead>

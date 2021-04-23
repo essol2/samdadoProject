@@ -190,6 +190,12 @@ public class AdminServiceImpl implements AdminService {
 		return aDao.adminMainselectAboardList();
 	}
 
+	@Override
+	public int updateRstatusToEnd(Income adminPremiumAd) {
+		// TODO Auto-generated method stub
+		return aDao.updateRstatusToEnd(adminPremiumAd);
+	}
+
 
 	
 

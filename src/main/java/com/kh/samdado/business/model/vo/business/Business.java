@@ -88,5 +88,8 @@ public class Business {
 	private String thisMonth;
 	private String totalCount;
 	private Alliance alliance;
+	
+	// 신고기록 조인
+	private Date rexdate;
 
 }

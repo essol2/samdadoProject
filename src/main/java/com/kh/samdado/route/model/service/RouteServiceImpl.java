@@ -1,5 +1,6 @@
 package com.kh.samdado.route.model.service;
 
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.kh.samdado.route.model.dao.RouteDao;
 import com.kh.samdado.route.model.vo.Route;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.route.model.vo.TourSpot;
 import com.kh.samdado.route.model.vo.rSearch;
+import com.kh.samdado.user.model.vo.User;
 
 @Service
 public class RouteServiceImpl implements RouteService {
@@ -19,6 +22,9 @@ public class RouteServiceImpl implements RouteService {
 	
 	@Override
 	public List<Route> routeSearch(rSearch search) {
+		
+		/* System.out.println("service - search: " + search); */
+		
 		return rDao.routeSearch(search);
 	}
 	
@@ -51,6 +57,14 @@ public class RouteServiceImpl implements RouteService {
 	public int routeAdd() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int finalRoute(RouteFinal rf) {
+		
+		System.out.println("서비스: " + rf);
+		
+		return rDao.finalRoute(rf);
 	}
 
 	

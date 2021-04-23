@@ -74,7 +74,7 @@ public class businessController {
 	// 호텔디테일
 	@GetMapping("/hotel_detail")
 	public String hotelDetail(@RequestParam int bus_code,
-				Model model) {
+				Model model, HttpSession session) {
 	
 		Business b = bService.selectHotel(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
@@ -87,6 +87,30 @@ public class businessController {
 			model.addAttribute("att", attList);
 			model.addAttribute("room", roomList);
 			model.addAttribute("roomAtt", roomAtt);
+			
+			// 찜하기			
+			if(session.getAttribute("loginUser") != null) {
+				User loginUser = (User)session.getAttribute("loginUser");
+				Map<String,Object> idxMap = new HashMap<>();
+				int bbsidx = bus_code;
+				int useridx = Integer.parseInt(loginUser.getUsno());		    
+				idxMap.put("bbsidx", bbsidx);
+				idxMap.put("useridx", useridx);
+				System.out.println("idxMap : " + idxMap);
+				
+				//jjim 테이블 에서 찜하기유무 확인하기
+				Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
+				System.out.println("jjimcheckMap : " + jjimcheckMap);
+				//찜 누른 기록이 없다면
+				if(jjimcheckMap == null) {
+					model.addAttribute("jjimcheck",0);
+				} else {
+					// 찜 누른 기록이 있다면		        	
+					model.addAttribute("jjimcheck",jjimcheckMap.get("JJIM_STATUS"));
+				}
+				model.addAttribute("bbsidx",bbsidx);
+				model.addAttribute("useridx",useridx);
+			}
 			
 		return "business/hotel/hotel_detail";
 		} else {
@@ -240,6 +264,9 @@ public class businessController {
 	@GetMapping("/tour_detail")
 	public String tourDetail(@RequestParam int bus_code,
 			   				Model model) {
+			   				Model model, HttpSession session) {
+
+		//System.out.println("나와라 : " + bus_code);
 	
 		Business b = bService.selectTour(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
@@ -250,7 +277,32 @@ public class businessController {
 			model.addAttribute("tour", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("review", reviewList);
-			System.out.println("review : " + reviewList);
+			//System.out.println("review : " + reviewList);
+
+						// 찜하기			
+						if(session.getAttribute("loginUser") != null) {
+							User loginUser = (User)session.getAttribute("loginUser");
+							Map<String,Object> idxMap = new HashMap<>();
+							int bbsidx = bus_code;
+							int useridx = Integer.parseInt(loginUser.getUsno());		    
+							idxMap.put("bbsidx", bbsidx);
+							idxMap.put("useridx", useridx);
+							System.out.println("idxMap : " + idxMap);
+							
+							//jjim 테이블 에서 찜하기유무 확인하기
+							Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
+							System.out.println("jjimcheckMap : " + jjimcheckMap);
+							//찜 누른 기록이 없다면
+							if(jjimcheckMap == null) {
+								model.addAttribute("jjimcheck",0);
+							} else {
+								// 찜 누른 기록이 있다면		        	
+								model.addAttribute("jjimcheck",jjimcheckMap.get("JJIM_STATUS"));
+							}
+							model.addAttribute("bbsidx",bbsidx);
+							model.addAttribute("useridx",useridx);
+						}
+
 			return "business/tour/tour_detail";
 		} else {
 			model.addAttribute("msg", "관광지 보기에 실패했습니다.");
@@ -362,8 +414,8 @@ public class businessController {
 
 	// 음식점 디테일
 	@GetMapping("/restaurant_detail")
-	public String restaurantDetail(@RequestParam int bus_code, String usno,
-			   					   Model model) {
+	public String restaurantDetail(@RequestParam int bus_code,
+			   					   Model model, HttpSession session) {
 		
 		
 		Business b = bService.selectRestaurant(bus_code);
@@ -377,26 +429,28 @@ public class businessController {
 			model.addAttribute("att", attList);
 			
 			// 찜하기			
-		    Map<String,Object> idxMap = new HashMap<>();
-		    int bbsidx = bus_code;
-		    int useridx = Integer.parseInt(usno);
-		    
-	        idxMap.put("bbsidx", bbsidx);
-	        idxMap.put("useridx", useridx);
-	        System.out.println("idxMap : " + idxMap);
-	        
-	        //jjim 테이블 에서 찜하기유무 확인하기
-			 Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
-			 System.out.println("jjimcheckMap : " + jjimcheckMap);
-			 //찜 누른 기록이 없다면
-		        if(jjimcheckMap == null) {
-		            model.addAttribute("jjimcheck",0);
-		        } else {
-		        	// 찜 누른 기록이 있다면		        	
-		            model.addAttribute("jjimcheck",jjimcheckMap.get("JJIM_STATUS"));
-		        }
-		        model.addAttribute("bbsidx",bbsidx);
-		        model.addAttribute("useridx",useridx);
+			if(session.getAttribute("loginUser") != null) {
+				User loginUser = (User)session.getAttribute("loginUser");
+				Map<String,Object> idxMap = new HashMap<>();
+				int bbsidx = bus_code;
+				int useridx = Integer.parseInt(loginUser.getUsno());		    
+				idxMap.put("bbsidx", bbsidx);
+				idxMap.put("useridx", useridx);
+				System.out.println("idxMap : " + idxMap);
+				
+				//jjim 테이블 에서 찜하기유무 확인하기
+				Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
+				System.out.println("jjimcheckMap : " + jjimcheckMap);
+				//찜 누른 기록이 없다면
+				if(jjimcheckMap == null) {
+					model.addAttribute("jjimcheck",0);
+				} else {
+					// 찜 누른 기록이 있다면		        	
+					model.addAttribute("jjimcheck",jjimcheckMap.get("JJIM_STATUS"));
+				}
+				model.addAttribute("bbsidx",bbsidx);
+				model.addAttribute("useridx",useridx);
+			}
 			
 			return "business/restaurant/restaurant_detail";
 		} else {
@@ -507,7 +561,7 @@ public class businessController {
 	public ModelAndView resList(ModelAndView mv) {
 		
 		List<Business> resList = bService.selectResList();
-		
+		System.out.println(resList);
 		if(resList != null) {
 			mv.addObject("resList", resList);
 			mv.setViewName("business/restaurant/restaurant_list");
@@ -519,7 +573,7 @@ public class businessController {
 	// 렌트카 디테일
 	@GetMapping("/car_detail")
 	public String carDetail(@RequestParam int bus_code,
-			   			    Model model) {
+			   			    Model model, HttpSession session) {
 
 
 		Business b = bService.selectCar(bus_code);
@@ -533,8 +587,33 @@ public class businessController {
 			model.addAttribute("car", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("cars", carList);
-			model.addAttribute("att", carAtt);
+			model.addAttribute("carAtt", carAtt);
 			System.out.println(model);
+			
+						// 찜하기			
+						if(session.getAttribute("loginUser") != null) {
+							User loginUser = (User)session.getAttribute("loginUser");
+							Map<String,Object> idxMap = new HashMap<>();
+							int bbsidx = bus_code;
+							int useridx = Integer.parseInt(loginUser.getUsno());		    
+							idxMap.put("bbsidx", bbsidx);
+							idxMap.put("useridx", useridx);
+							System.out.println("idxMap : " + idxMap);
+							
+							//jjim 테이블 에서 찜하기유무 확인하기
+							Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
+							System.out.println("jjimcheckMap : " + jjimcheckMap);
+							//찜 누른 기록이 없다면
+							if(jjimcheckMap == null) {
+								model.addAttribute("jjimcheck",0);
+							} else {
+								// 찜 누른 기록이 있다면		        	
+								model.addAttribute("jjimcheck",jjimcheckMap.get("JJIM_STATUS"));
+							}
+							model.addAttribute("bbsidx",bbsidx);
+							model.addAttribute("useridx",useridx);
+						}
+						
 			return "business/rentcar/car_detail";
 		} else {
 			model.addAttribute("msg", "렌트카 보기에 실패했습니다.");
@@ -721,15 +800,16 @@ public class businessController {
 			b.setT_booking_address(selectUser.getBus_address());
 			b.setT_booking_phone(selectUser.getBus_phone());
 			int bookingTour = bService.insertBookingTour(b);
-			System.out.println("bookingTour : " + bookingTour);
+			
 		} else if(b.getBookingLv() == 3) {			
 			b.setC_bus_name(selectUser.getBus_name());
 			b.setC_booking_address(selectUser.getBus_address());
 			b.setC_booking_phone(selectUser.getBus_phone());
+			
 			int bookingCar = bService.insertBookingCar(b);
 		}
 		
-		return "redirect:/main"; // 마이페이지로 매핑하기
+		return "redirect:/mypage/booking";
 		
 	}
 	
@@ -752,29 +832,29 @@ public class businessController {
     public Map<String,Object> jjim(@RequestParam Map<String,Object> commandMap){        
         int resultCode = 1;
         int jjimcheck = 1;
-        System.out.println("찜컨트롤러들어옴");
+        //System.out.println("찜컨트롤러들어옴");
         Map<String,Object> map = new HashMap<>();        
         Map<String,Object> resultMap = new HashMap<>();
         try {
             map = bService.jjimcheck(commandMap);
-            System.out.println("commandMap : " + commandMap);
-            System.out.println("map : " + map);
+            //System.out.println("commandMap : " + commandMap);
+            //System.out.println("map : " + map);
             if(map == null) {
                 //처음 찜하기 누른것. jjimcheck=1, 빨강하트.
-            	System.out.println("찜하기인서트옴");
+            	//System.out.println("찜하기인서트옴");
                 bService.insertJjim(commandMap); // 찜하기 테이블 인서트                
                 resultCode = 1;
             }
             else if(Integer.parseInt(map.get("JJIM_STATUS").toString()) == 0) {
                 //찜하기 처음은 아니고 취소했다가 다시 눌렀을때 jjimcheck=1, 빨강하트.
-            	System.out.println("찜하기업데이트옴");
+            	//System.out.println("찜하기업데이트옴");
                 commandMap.put("jjimcheck",jjimcheck);
                 bService.updateJjim(commandMap); //찜하기 테이블 업데이트                
                 resultCode = 1;
             }
             else {
                 //찜하기 취소하면 jjimcheck=0, 빈 하트.
-            	System.out.println("찜하기업데이트2옴");
+            	//System.out.println("찜하기업데이트2옴");
                 jjimcheck = 0;
                 commandMap.put("jjimcheck", jjimcheck);
                 int result = bService.updateJjim(commandMap);                
@@ -786,12 +866,12 @@ public class businessController {
             resultMap.put("jjimcheck", jjimcheck);
         } catch (Exception e) {            
             resultCode = -1;
-            System.out.println("찜에러옴");
+            //System.out.println("찜에러옴");
         }
         
         resultMap.put("resultCode", resultCode);
         //resultCode가 1이면 빨간하트 0이면 빈하트
-        System.out.println("resultMap : " + resultMap);
+        //System.out.println("resultMap : " + resultMap);
         return resultMap;
     }
 	
@@ -893,7 +973,6 @@ public class businessController {
 	}
 	
 	
-	// 게시글 상세 페이지
 	@GetMapping("/detail")
 	public String bannerAdBusinessDetail(int bus_code,
 							  HttpServletRequest request,
@@ -1025,8 +1104,8 @@ public class businessController {
 		Business selectUser = bService.selectBusCodeUser(bus_code);
 		r.setUsno(selectUser.getUs_no());
 		Report findReportStatus = bService.findReportStatus(r);
-		 System.out.println("r : " + r);
-		 System.out.println("frs : " + findReportStatus);
+		 //System.out.println("r : " + r);
+		 //System.out.println("frs : " + findReportStatus);
 		
 		// 해당 업체가 신고기록이 없을 때 insert
 		if(findReportStatus == null) {					
