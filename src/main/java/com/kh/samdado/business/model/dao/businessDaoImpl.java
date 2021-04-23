@@ -188,14 +188,12 @@ public class businessDaoImpl implements businessDao {
 	}
 	
 	@Override
-	public Object insertJjim(Map<String, Object> commandMap) {
-		System.out.println("다오인서트commandMap : " + commandMap);		
+	public Object insertJjim(Map<String, Object> commandMap) {			
 		return sqlSession.insert("businessMapper.insertJjim", commandMap);
 	}
 
 	@Override
 	public int updateJjim(Map<String, Object> commandMap) {
-		System.out.println("다오업데이트commandMap : " + commandMap);
 		return sqlSession.update("businessMapper.udpateJjim", commandMap);
 	}
 	

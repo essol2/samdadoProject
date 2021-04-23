@@ -21,6 +21,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -193,7 +194,7 @@
             height: 100%;
         }
 
-        .mapBtn {
+        #mapBtn {
             position: absolute;
             background-color: white;
             border-radius: 6px;
@@ -509,40 +510,135 @@
         <div id="ho_header">
             <div class="title_area">
                 <div class="title_area">
+                    <c:if test="${ res.bus_classify eq 'P' }">
                     <img src="../resources/images/image_listpage/premium.png"><br>
-                    <label id="ho_title" class="title_tag">SK렌트카</label>
+                    </c:if>
+                    <label id="ho_title" class="title_tag">${car.bus_name }</label>
                     <br>
                 </div>
-                <label id="ho_address">제주특별차치도 서귀포시 </label>
+                <label id="ho_address">${ car.bus_address.substring(6) }</label><br>
+                <label>영업시간 : ${ car.bus_opening.substring(0, 5) } ~ ${ car.bus_opening.substring(6) }</label>&nbsp;
             </div>
 
             <div id="ho_info">
-                <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
+                <label id="jjim_btn">
+			        <c:choose>
+					    <c:when test="${jjimcheck eq '0' or empty jjimcheck}"> <!-- jjimcheck가 0이면 빈하트-->
+					        <img src="../resources/images/image_listpage/noheart.png" 
+					             id="btn_like">
+					    </c:when>
+					    <c:otherwise> <!-- jjimcheck가 1면 빨간 하트-->
+					        <img src="../resources/images/image_listpage/heart.png" 
+					              id="btn_like">
+					    </c:otherwise>
+					</c:choose>찜하기</label>
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="report_btn"><img id="report" class="report_img"
-                        src="../resources/images/image_listpage/phone.png">064-738-7060</label>
+                        src="../resources/images/image_listpage/phone.png">${ car.bus_phone }</label>
             </div>
         </div>
+        
+        <!-- 찜하기 -->
+        <script>
+        var bbsidx = ${car.bus_code};
+        var useridx = ${loginUser.usno};
+         
+        var btn_like = document.getElementById("btn_like");
+         btn_like.onclick = function(){ changeHeart(); }
+         
+        /* 찜하기 버튼 눌렀을때 */
+         function changeHeart(){ 
+             $.ajax({
+                    type : "POST",  
+                    url : "${ contextPath }/business/jjim",
+                    dataType : "json",
+                    data : "bbsidx="+bbsidx+"&useridx="+useridx,
+                    error : function(){
+                        Rnd.alert("통신 에러","error","확인",function(){});
+                    },
+                    success : function(jdata) {
+                        if(jdata.resultCode == -1){
+                            Rnd.alert("찜하기 오류","error","확인",function(){});
+                        }
+                        else{
+                            if(jdata.jjimcheck == 1){
+                                $("#btn_like").attr("src","../resources/images/image_listpage/heart.png");
+                                
+                               
+                            }
+                            else if (jdata.jjimcheck == 0){
+                                $("#btn_like").attr("src","../resources/images/image_listpage/noheart.png");
+                                
+                                
+                            }
+                        }
+                    }
+                });
+         }
+        </script>
 
+        <!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-                <img class="mainimage" src="../resources/images/image_listpage/rentcar1.png">
+            	<c:forEach var="a" items="${ att }">
+            	<c:if test="${ a.file_lv eq '0' }">
+                <img id="bigPic" class="mainimage" src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }">
+              </c:if>
+              </c:forEach>
                 <div class="other">
-                    <img class="otherimage" src="../resources/images/image_listpage/car1.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/car2.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/car3.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/car2.png">
-                    <img class="otherimage" src="../resources/images/image_listpage/car3.png">
-                                       
-
+					<c:forEach var="a" items="${ att }">
+                    <img id="smallPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }">
+	                </c:forEach>
                 </div>
             </div>
+         	   
+            <!-- 매장 사진 클릭 시 변경 스크립트 -->
+			<script>
+                var bigPic = document.querySelector("#bigPic");
+                var smallPic = document.querySelectorAll("#smallPic")
+
+                for(var i = 0; i < smallPic.length; i++){
+                    smallPic[i].addEventListener("click", changepic);
+                    
+                }
+                function changepic(){
+                    var smallPicAttribute = this.getAttribute("src");
+                    bigPic.setAttribute("src", smallPicAttribute);
+
+                }
+            </script>
 
             <div class="col3">
+	            <!-- 구글지도 -->
                 <div class="col2">
-                    <button class="mapBtn">지도에서 보기</button>
-                    <img src="../resources/images/image_listpage/map.png" class="map">
+                    <div id="map" style="width: 555px; height:330px;">
+                    <button type="button" id="mapBtn" 
+                    onclick="window.open('https://map.kakao.com/link/search/${car.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
+                    </div>
                 </div>
+                
+                <!-- 구글지도 api -->
+                <script>
+	             // 이미지 지도에 표시할 마커입니다
+	             // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
+	             var markers = [
+	                 {
+	                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
+	                     text: '${car.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
+	                 }
+	             ];
+	
+	             var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div  
+	                 staticMapOption = { 
+	                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
+	                     level: 3, // 이미지 지도의 확대 레벨
+	                     marker: markers // 이미지 지도에 표시할 마커 
+	                 };    
+	
+	             // 이미지 지도를 생성합니다
+	             var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+				</script>
+				
                 <!-- 작은 리뷰 -->
                 <div class="col2" id="small_view_area">
                     <button type="button" class="small_view_btn">후기</button><br>
@@ -596,14 +692,7 @@
 
             <div class="introduce">
                 <h2>소개</h2><br>
-                <p>
-                    안녕하세요.
-
-                    25년간 신뢰를 쌓아온 SK렌터카 입니다!!
-                    
-                </p>
-
-
+                <p>${ car.bus_intro }</p>
             </div>
 
             <hr class="boundary">
@@ -621,7 +710,7 @@
                 <input type="checkbox" name="rno" id="rno"><label for="rno">르노</label><br>
                 <input type="checkbox" name="diesel" id="diesel"><label for="diesel">디젤</label>
                 <input type="checkbox" name="gasoline" id="gasoline"><label for="gasoline">가솔린</label>
-            </div>S
+            </div>
 			<c:forEach var="c" items="${ cars }">
             <div class="list">
                 <div id="firstlist">
@@ -910,12 +999,12 @@
             
             <input type="hidden" name="rep_res" value="허위매물">
             <input type="hidden" name="usno" value="${ loginUser.usno }">
-             <input type="hidden" name="bus_code" value="${ c.bus_code }">
+             <input type="hidden" name="bus_code" value="${ car.bus_code }">
                       
                 <!--신고대상-->
                 <div class="name_div">
                     <label for="id">신고대상</label>                   
-                    <input type="text" id="name" name="bus_name" value="${ c.bus_name }" readonly>
+                    <input type="text" id="name" name="bus_name" value="${ car.bus_name }" readonly>
                 </div>
                 <!--신고사유-->
                 <div class="reason_div">

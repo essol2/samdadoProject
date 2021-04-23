@@ -559,7 +559,7 @@
                     }
                 });
          }
-        </script>        
+        </script>
 
 		<!-- 매장사진 -->
         <div class="colsmom">

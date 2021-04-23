@@ -575,7 +575,7 @@
 			<!-- 디테일 이동 -->
 			<script>
 				function selectRes(bus_code){
-					location.href='${contextPath}/business/restaurant_detail?bus_code=' + bus_code+'&usno=' + ${loginUser.usno};
+					location.href='${contextPath}/business/restaurant_detail?bus_code=' + bus_code
 				}
 			</script>
 
