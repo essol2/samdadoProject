@@ -263,7 +263,6 @@ public class businessController {
 	// 관광지디테일
 	@GetMapping("/tour_detail")
 	public String tourDetail(@RequestParam int bus_code,
-			   				Model model) {
 			   				Model model, HttpSession session) {
 
 		//System.out.println("나와라 : " + bus_code);
