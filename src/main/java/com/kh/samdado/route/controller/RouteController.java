@@ -23,12 +23,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.kh.samdado.route.model.exception.RouteException;
 import com.kh.samdado.route.model.service.RouteService;
 import com.kh.samdado.route.model.vo.Route;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.route.model.vo.TourSpot;
 import com.kh.samdado.route.model.vo.rSearch;
+import com.kh.samdado.user.model.vo.User;
 
 @Controller
 @RequestMapping("/route")
-@SessionAttributes({"area", "thema", "routeDate", "list"})
+@SessionAttributes({"area", "thema", "routeDate", "list", "loginUser"})
 public class RouteController {
 	@Autowired
 	private RouteService rService;
@@ -40,7 +42,7 @@ public class RouteController {
 	
 	@GetMapping("/search")
 	public String searchRoute(Model model, 
-			HttpSession session,
+							HttpSession session,
 							@ModelAttribute rSearch search,
 							@RequestParam("area") String area, 
 							@RequestParam("thema") String thema, 
@@ -103,11 +105,34 @@ public class RouteController {
 	}
 	
 	@PostMapping("/addRoute")
-	public String addRoute(Model model, String[] slist) {			// 루트 저장하기
+	public String addRoute(HttpSession session, Model model, String[] slist, String tprice) {			// 루트 저장하기
 		
-		System.out.println(Arrays.toString(slist));
+		session.setAttribute("price", tprice);
 		
 		int result = rService.addRoute(slist);
+		
+		if(result > 0) {
+			/* model.addAttribute("msg", "저장되었습니다. 내 정보에서 확인하세요!"); */
+			return "redirect:/route/finalRoute";
+		} else {
+			throw new RouteException("저장에 실패하였습니다.");
+		}
+		
+	}
+	
+	@GetMapping("/finalRoute")
+	public String finalRoute(HttpSession session, Model model, RouteFinal rf) {
+		Date routeDate = (Date)session.getAttribute("routeDate");
+		User loginUser = (User)session.getAttribute("loginUser");
+		String price = (String)session.getAttribute("price");
+		
+		rf.setRoute_date(routeDate);
+		rf.setUs_no(loginUser.getUsno());
+		rf.setRoute_price(price);
+		
+		/* System.out.println(rf); */
+		
+		int result = rService.finalRoute(rf);
 		
 		if(result > 0) {
 			model.addAttribute("msg", "저장되었습니다. 내 정보에서 확인하세요!");

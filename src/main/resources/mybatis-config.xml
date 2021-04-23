@@ -36,6 +36,7 @@
    		<typeAlias type="com.kh.samdado.business.model.vo.Review" alias="Review"/>
    		<typeAlias type="com.kh.samdado.business.model.vo.Jjim" alias="Jjim"/>
 		<typeAlias type="com.kh.samdado.common.model.vo.Income" alias="Income"/>
+		<typeAlias type="com.kh.samdado.route.model.vo.RouteFinal" alias="RouteFinal"/>
 	</typeAliases>
 
 	 <!-- mappers -->
