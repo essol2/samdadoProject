@@ -227,21 +227,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
               "USER"
          <set>
 	         <if test="usname != null">
-				US_NAME = #{usname}, 
+				US_NAME = #{usname},
 			 </if>
 			 <if test="usemail != null">
-				US_EMAIL = #{usemail}, 
+				US_EMAIL = #{usemail},
 			 </if>
 			 <if test="busno != null">
-				BUS_NO = #{busno}, 
+				BUS_NO = #{busno},
 			 </if>
 			 <if test="usphone != null">
-				US_PHONE = #{usphone}
+				US_PHONE = #{usphone},
 			 </if>
 		 </set>
 		 WHERE
-			    US_PART = #{uspart}
-		   AND  US_ID = #{usid}
+			    US_PART = '관리자'
    </update>
    
    <select id="countUser" resultType="_int">

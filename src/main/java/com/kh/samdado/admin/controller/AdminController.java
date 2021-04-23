@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -180,8 +181,10 @@ public class AdminController {
 	}
 	
 	@PostMapping("/updateAdminInfo")
-	public String updateAdminInfo(User u, Model model) {
+	public String updateAdminInfo(@ModelAttribute User u, Model model) {
 
+		//System.out.println("u : " + u);
+		
 		int result = uService.updateAdminUser(u);
 		
 		User loginUser = uService.loginUser(u);
@@ -348,12 +351,12 @@ public class AdminController {
 							Model model, Alert a) {
 		
 		int result = 0;
-		System.out.println("report 확인 : " + report);
+		//System.out.println("report 확인 : " + report);
 		
 		// 같은 신고 객체 셀렉트
 		Report selectReoprt = aService.selectReport(report);
 		
-		System.out.println("selectReoprt 출력 : " + selectReoprt);
+		//System.out.println("selectReoprt 출력 : " + selectReoprt);
 		// 조건 rexdate == null && usno 동일  r_count가 3이면 
 		
 		a.setNkeyno(report.getReport_no());
@@ -363,11 +366,11 @@ public class AdminController {
 		if (selectReoprt.getR_count() < 2) {
 			// 2_1. rstatus y로 업데이트, r_count + 1
 			result = aService.updateRstatusToY(report);
-			System.out.println("신고 362 result : " + result);
+			//System.out.println("신고 362 result : " + result);
 		} else if (selectReoprt.getR_count() == 2) {
 			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가 -> 신고 3회 먹었을 때 rexdate 추가해줌 -> rcount -> 0
 			result = aService.updateRstatusToYAndRexdate(report);
-			System.out.println("신고 366 result : " + result);
+			//System.out.println("신고 366 result : " + result);
       a.setNtitle("block");
 		}
     //else {
@@ -478,7 +481,7 @@ public class AdminController {
 		return "redirect:/admin/advertise1";
 	}
 	
-	@PostMapping("/sendSMS")
+	@RequestMapping(value="/sendSMS", method = {RequestMethod.GET, RequestMethod.POST})
 	public String sendSMS() {
 		return "admin/sendSMSForm";
 	}
@@ -499,7 +502,7 @@ public class AdminController {
 		int insertAboard = aService.insertAboard(aboard);
 		
 		if (insertAboard > 0) {
-			System.out.println("insertAboard 결과 : " + insertAboard);
+			//System.out.println("insertAboard 결과 : " + insertAboard);
 			model.addAttribute("msg", "공지글 등록에 성공하였습니다.");
 			return "redirect:/admin/home";
 		} else {
