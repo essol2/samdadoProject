@@ -237,6 +237,36 @@
 	.businessImg{
 		width : 100%;
 	}
+	
+	.moreBtn{
+		width : 100px;
+		height : 50px;
+		align-items : center;
+	}
+	
+	#forAlign{
+		align-items : center;
+		text-align : center;
+	}
+  
+  #moreBtn{
+  	text-align : center;
+  	border-style : none;
+  	width  : 50px;
+  	height : 20px;
+  	margin-left : 0;
+  	margin-right :0;
+  }
+  
+  .more{
+  	display: none;
+  	flex-direction: column;
+  }
+  
+  .moremore{
+  	display: flex;
+  	flex-direction: column;
+  }
   
 </style>
 <body>
@@ -260,14 +290,16 @@
 
             <div id="mainBox">
             <br>
-           <%--  <c:if test="${bussList} == null">
+          	<c:if test="${bussList} == null">
             	<h1>등록된 사업장이 없습니다!</h1>
             	<button>테스트다 이눔아!</button>
             </c:if>
-            <c:if test="${bussList} != null "> --%>
+            
+             <c:if test="${ bussList ne null }">
+	            
 	            <c:forEach items="${bussList}" var="bl" varStatus="blStatus">
 	            
-	                <div id="businessSplit"></div>
+	                <div class="more">
 	                    <br>
 	                    
 	                    <h3 style="text-align: center;">${ bl.bus_name }</h3>
@@ -309,11 +341,19 @@
 	                        </div>
 	                    </div>
 	                    <br>
+	                    </div>
+	               
 	                    </c:forEach>
-                    <%-- </c:if> --%>
+	                    <div id="forAlign">
+	                    	<p style="color  : #bfbfbf; margin : 0px; padding:0px;">더보기</p>
+		                    <img src="${contextPath}/resources/images/image_mp/moreBtn.png" id="moreBtn">
+		                    </div>
+	                    </c:if>
+	                    
                     <div id="newBusiBtnArea">
                         <button id="newBusiBtn">사업장 추가하기</button>
                     </div>
+                    
                 </div>
               </div>
 
@@ -387,6 +427,18 @@
 		   $("#storeModal").fadeOut();
 		});      
 	</script>
-    
+
+	<script>				
+	$(document).ready(function(){
+		size_div = $('.more').length;
+							
+		x = 1;
+		$('.more:lt('+x+')').addClass('moremore');
+		$('#moreBtn').click(function(){
+			x= (x+2 <= size_div)? x+2 : size_div;
+			$('.more:lt('+x+')').addClass('moremore');	
+		});
+	});
+	</script>
 </body>
 </html>
