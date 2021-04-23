@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.kh.samdado.route.model.exception.RouteException;
 import com.kh.samdado.route.model.service.RouteService;
 import com.kh.samdado.route.model.vo.Route;
 import com.kh.samdado.route.model.vo.TourSpot;
@@ -68,10 +69,7 @@ public class RouteController {
 		return "route/route_edit";
 	}
 	
-	public String deleteSpot() {		// 여행지 삭제
-		
-		return "";
-	}
+	
 	
 	@PostMapping(value="/searchSpot", produces="application/json; charset=utf-8")
 	public @ResponseBody List<TourSpot> searchSpot(String sTitle, HttpSession session) {		// 여행지 검색
@@ -85,9 +83,6 @@ public class RouteController {
 		return tlist;
 	}
 	
-	public String addSpot() {			// 여행지 추가
-		return "";
-	}
 	
 	@PostMapping("/clearChange")
 	public String clearChange(HttpSession session, Model model, String[] chlist) {		// 여행지 순서 바꾸기 완료
@@ -107,7 +102,28 @@ public class RouteController {
 		return "route/route_result";
 	}
 	
-	public String addRoute() {			// 루트 저장하기
+	@PostMapping("/addRoute")
+	public String addRoute(Model model, String[] slist) {			// 루트 저장하기
+		
+		System.out.println(Arrays.toString(slist));
+		
+		int result = rService.addRoute(slist);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "저장되었습니다. 내 정보에서 확인하세요!");
+			return "route/route_main";
+		} else {
+			throw new RouteException("저장에 실패하였습니다.");
+		}
+		
+	}
+	
+	public String deleteSpot() {		// 여행지 삭제
+		
+		return "";
+	}
+	
+	public String addSpot() {			// 여행지 추가
 		return "";
 	}
 	

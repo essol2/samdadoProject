@@ -132,13 +132,13 @@
 							<div class="c_border" id="left-border">
 								<table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
 									<c:forEach var="r" items="${ list }" varStatus="index">
-										<tr>
+										<tr id="tr1">
 											<td>
 												<img src="${ r.spot_path }${ r.spot_oname }">
 											</td>
 											<td>
 												<div class="spot_border">
-													<p class="spot_title">${ r.spot_title }</p>
+													<p class="spot_title" name="title" id="spotTitle">${ r.spot_title }</p>
 													<button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
 												</div>
 											</td>
@@ -355,6 +355,21 @@
 	            </div>
 	        </div>
 	    </div>
+	    
+	    <form id="saveList" action="${ contextPath }/route/addRoute" method="post"></form>
+	    
+	<!-- 루트 저장 -->
+	<script>
+		$("#add_btn").on("click", function(){
+			$("#saveList").html("");
+			
+			$("#tr1 #spotTitle").each(function(index, element){
+				$("#saveList").append("<input type='hidden' name='slist' value='" + $(this).text() + "'/>");
+			});
+			
+			$("#saveList").submit();
+		});
+	</script>
 	    
 	<!-- 검색 모달창 -->
 	<script language=JavaScript>
