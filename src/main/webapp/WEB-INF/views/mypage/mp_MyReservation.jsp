@@ -294,44 +294,12 @@ body {
 		</div>
 		<div class="menuBox" id="menuBox">
 
-			<button class="menuButton" id="myInfo"
-				onclick="location.href='${ contextPath }/mypage/userinfo'">
-				<div class="menuBoxEle">
-					<br> <img
-						src="${contextPath}/resources/images/image_mp/mp_userB.png"
-						class="btnImg"> <br> 내 정보
-				</div>
-			</button>
-			<button class="menuButton" id="myInfo">
-				<div class="menuBoxEle">
-					<br> <img
-						src="${contextPath}/resources/images/image_mp/mp_jjimB.png"
-						class="btnImg"> <br> 찜목록
-				</div>
-			</button>
-			<button class="clickedBtn" id="myInfo" onclick="goToBooking();'">
-				<div class="menuBoxEle">
-					<br> <img
-						src="${contextPath}/resources/images/image_mp/mp_bookingW.png"
-						class="btnImg"> <br> 내 예약
-				</div>
-			</button>
-			<button class="menuButton" id="myInfo">
-				<div class="menuBoxEle">
-					<br> <img
-						src="${contextPath}/resources/images/image_mp/mp_tripB.png"
-						class="btnImg"> <br> 나만의 여행
-				</div>
-			</button>
-			<button class="menuButton" id="myInfo" onclick="goToWallet();">
-				<div class="menuBoxEle">
-					<br> <img
-						src="${contextPath}/resources/images/image_mp/mp_walletB.png"
-						class="btnImg"> <br> 내 지갑
-				</div>
-			</button>
-
-		</div>
+                    <button class="clickedBtn" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userW.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록<br><br> </div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle" onclick="location.href='${contextPath}/mypage/booking'"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약<br> <br></div></button>
+                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행<br> <br></div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑<br><br></div></button>
+        </div>
 	</div>
 
 	
@@ -600,6 +568,10 @@ body {
 		/* console.log("jsp안에서 usno확인 : " + usno); */
 		location.href='${contextPath}/mypage/wallet?usno='+${loginUser.usno};
 	};
+	
+	function goToJjim(){
+		location.href='${contextPath}/mypage/jjimlist?usno='+${loginUser.usno};
+	}
 	
 	function goToDetail(bus_code){
 		location.href='${contextPath}/business/detail?bus_code='+bus_code;

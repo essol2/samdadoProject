@@ -286,17 +286,35 @@ public class MypageServiceImpl implements MypageService{
 	public Review selectReview(Review r) {
 		return mDao.selectReview(r);
 	}
+	
+	// 일반회원 - 찜목록 넣기 전에 이미 있는지 확인하기
+	@Override
+	public Jjim findJjimNo(Jjim j) {
+		return mDao.findJjimNo(j);
+	}
 
 	// 일반회원 - 찜목록 넣기
 	@Override
 	public int insertJjim(Jjim j) {
 		return mDao.insertJjim(j);
 	}
+	
+	//일반회원 - 다시 찜하기
+	@Override
+	public int updateJjim(String jjim_no) {
+		return mDao.updateJjim(jjim_no);
+	}
 
 	// 일반회원 - 찜목록 삭제
 	@Override
 	public int deleteJjim(Jjim j) {
 		return mDao.deleteJjim(j);
+	}
+
+	// 일반회원 - 찜목록 찾아오기
+	@Override
+	public List<Jjim> selectJjimList(String usno) {
+		return mDao.selectJjimList(usno);
 	}
 
 	
