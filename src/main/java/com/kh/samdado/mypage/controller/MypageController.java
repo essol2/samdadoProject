@@ -846,7 +846,19 @@ public class MypageController {
 	 @ResponseBody
 	 public String toggleJjimOn(@RequestBody Jjim j) {
 		 
-		int result = mService.insertJjim(j);
+		 //System.out.println(j);
+		 
+		 Jjim jjim = mService.findJjimNo(j);
+
+		 int result = 0;
+		 
+		 if(jjim != null) {
+			 String jjim_no = jjim.getJjim_no();
+			 result = mService.updateJjim(jjim_no);
+			 
+		 }else {
+			 result = mService.insertJjim(j);
+		 }
 		 
 		if(result >0) 
 			return "success";
@@ -860,13 +872,25 @@ public class MypageController {
 		 @ResponseBody
 		 public String toggleJjimOff(@RequestBody Jjim j) {
 
-			int result = mService.deleteJjim(j);
-			 
+			 System.out.println(j);
+				int result = mService.deleteJjim(j);
+
 			if(result >0) 
 				return "success";
 			else 
 				return "error";
 			 
+		}
+		 
+		 @GetMapping("/jjimlist")
+		 public ModelAndView goToJjim(@RequestParam(value="usno") String usno,
+				 				 	  ModelAndView mv) {
+			 
+			 List<Jjim> jjimList = mService.selectJjimList(usno);
+			 
+			 mv.addObject("jjimList", jjimList);
+			 mv.setViewName("mypage/mp_jjimList");
+			 return mv;
 		 }
 	 
 }

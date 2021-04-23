@@ -285,7 +285,37 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		
 	</resultMap>
 	
-	
+	<resultMap type="JJIM" id="JjimResultSet">
+		<id property="jjim_no" column="JJIM_NO"/>
+
+		<result property="jjim_date" column="JJIM_DATE"/>
+		<result property="jjim_status" column="JJIM_STATUS"/>
+		<result property="bus_code" column="BUS_CODE"/>
+		<result property="us_no" column="US_NO"/>
+		
+		<!-- Business Join -->
+		<result property="bus_name" column="BUS_NAME" />
+		<result property="bus_address" column="BUS_ADDRESS" />
+		<result property="bus_intro" column="BUS_INTRO" />
+		<result property="bus_date" column="BUS_DATE" />
+		<result property="bus_modify" column="BUS_MODIFY" />
+		<result property="ad_count" column="AD_COUNT" />
+		<result property="bus_classify" column="BUS_CLASSIFY" />
+		<result property="bus_category" column="BUS_CATEGORY" />
+		<result property="bus_status" column="BUS_STATUS" />
+		<result property="bus_phone" column="BUS_PHONE" />
+		<result property="res_category" column="RES_CATEGORY"/>
+		<result property="hotel_category" column="HOTEL_CATEGORY" />
+		<result property="tour_category" column="TOUR_CATEGORY" />
+		<result property="tour_tema" column="TOUR_TEMA" />
+		<result property="al_no" column="AL_NO" />
+		<result property="bus_opening" column="BUS_OPENING" />
+		
+		<!-- 비즈니스ATT 대한 JOIN -->
+		<result property="file_rename" column="FILE_RENAME" />
+		<result property="file_lv" column="FILE_LV" />
+	</resultMap>
+		
 	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
 	<!-- 1. 이메일, 전화번호 변경 메소드 -->
@@ -947,15 +977,39 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
   		</if>
   </select>
   
+  <select id="findJjimNo" resultMap="JjimResultSet">
+  		SELECT *
+  		FROM JJIM
+  		WHERE US_NO =  #{us_no}
+  		AND BUS_CODE = #{ bus_code }
+  </select>
+  
   <insert id="insertJjim" parameterType="Jjim">
 		INSERT INTO JJIM(JJIM_NO, JJIM_DATE, JJIM_STATUS, BUS_CODE, US_NO)
-		VALUES (JJIM_NO.NEXTVAL, SYSDATE, 'Y', #{bus_code}, #{us_no})
+		VALUES (JJIM_NO.NEXTVAL, SYSDATE, '1', #{bus_code}, #{us_no})
   </insert>
+  
+  <update id="updateJjim" parameterType="string">
+  		UPDATE JJIM
+  		SET JJIM_STATUS = '1'
+  		WHERE JJIM_NO = #{ jjim_no }
+  </update>
   
   <update id="deleteJjim" parameterType="Jjim">
   		UPDATE JJIM
-  		SET JJIM_STATUS = 'N'
+  		SET JJIM_STATUS = '0'
   		WHERE US_NO = #{us_no}
   		AND BUS_CODE = #{bus_code}
   </update>
+  
+  <select  id="selectJjimList" resultMap="JjimResultSet">
+  		SELECT *
+  		FROM JJIM J, BUSINESS B, BUSINESS_ATT BA
+  		WHERE J.BUS_CODE = B.BUS_CODE
+  		AND B.BUS_CODE = BA.BUS_CODE
+  		AND J.JJIM_STATUS = '1'
+  		AND J.US_NO = #{ usno }
+  		AND BA.FILE_LV = 0
+  </select>
+  
 </mapper>

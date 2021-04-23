@@ -514,7 +514,7 @@
                         </div>
                     </div>
                     <div id="rightArea">
-                    	<div id="rtopArea">
+                    	<div id="rtopArea" style="overflow:auto;">
                     	<br>
 	                        <h2 style="color:#467355; text-align : center; margin-top : 4%;">포인트 사용내역</h2>
 	                        <hr style="background-color: #467355; width : 100%; "> 

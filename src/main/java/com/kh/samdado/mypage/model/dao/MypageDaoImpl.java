@@ -288,11 +288,23 @@ public class MypageDaoImpl implements MypageDao{
 	public Review selectReview(Review r) {
 		return sqlSession.selectOne("mypageMapper.selectReview", r);
 	}
+	
+	// 일반회원 - 찜목록 넣기 전에 이미 있는지 확인하기
+	@Override
+	public Jjim findJjimNo(Jjim j) {
+		return sqlSession.selectOne("mypageMapper.findJjimNo", j);
+	}
 
 	// 일반회원 - 찜목록 넣기
 	@Override
 	public int insertJjim(Jjim j) {
 		return sqlSession.insert("mypageMapper.insertJjim", j);
+	}
+	
+	//일반회원 - 다시 찜하기
+	@Override
+	public int updateJjim(String jjim_no) {
+		return sqlSession.insert("mypageMapper.updateJjim", jjim_no);
 	}
 
 	// 일반회원 - 찜목록 삭제
@@ -300,4 +312,13 @@ public class MypageDaoImpl implements MypageDao{
 	public int deleteJjim(Jjim j) {
 		return sqlSession.update("mypageMapper.deleteJjim", j);
 	}
+
+	// 일반회원 - 찜목록 찾아오기
+	@Override
+	public List<Jjim> selectJjimList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectJjimList", usno);
+	}
+
+	
+	
 }

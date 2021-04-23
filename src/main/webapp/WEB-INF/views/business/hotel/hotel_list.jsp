@@ -643,6 +643,10 @@
 		
 		var $this = $(this);
 		var bus_code = $(this).parent().eq(0).children().val();
+		var check=$this.find(">img");
+		
+		console.log($this);
+		console.log(check);
 		
 		var jjimOb = new Object();
 		jjimOb.bus_code = bus_code;
