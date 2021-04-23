@@ -1,6 +1,7 @@
 package com.kh.samdado.business.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -173,6 +174,25 @@ public class businessServiceImpl implements businessService {
 		return 0;
   }
 	
+	@Override
+	public Map<String, Object> jjimcheck(Map<String, Object> idxMap) {			
+		return bDao.selectJjim(idxMap);
+	}
+	
+	@Override
+	public Object insertJjim(Map<String, Object> commandMap) {
+		System.out.println("서비스인서트commandMap : " + commandMap);		
+		return bDao.insertJjim(commandMap);
+		
+	}
+	
+	@Override
+	public int updateJjim(Map<String, Object> commandMap) {
+		System.out.println("서비스업데이트commandMap : " + commandMap);
+		return bDao.updateJjim(commandMap);
+		
+	}
+	
 	// 일반결제 메소드
 	@Override
 	public int insertIncome(Income i) {		
@@ -187,6 +207,11 @@ public class businessServiceImpl implements businessService {
 	@Override
 	public int insertBookingTour(Booking b) {		
 		return bDao.insertBookingTour(b);
+	}
+	
+	@Override
+	public TourProduct selectTourProduct(int bus_code) {		
+		return bDao.selectTourProduct(bus_code);
 	}
 	
 	@Override
@@ -286,6 +311,8 @@ public class businessServiceImpl implements businessService {
 	public List<Business> cateList(String kind) {
 		return bDao.cateList(kind);
 	}
+
+	
 
 	
 

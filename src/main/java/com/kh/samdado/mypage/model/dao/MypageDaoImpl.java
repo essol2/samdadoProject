@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
@@ -159,13 +160,7 @@ public class MypageDaoImpl implements MypageDao{
 	public List<Jjim> selctJjimList(String usno) {
 		return sqlSession.selectList("mypageMapper.selctJjimList", usno);
 	}
-	
-	// 일반회원 - 내 예약 목록 출력 메소드
-	@Override
-	public List<Booking> selectBookList(String usno) {
-		return sqlSession.selectList("mypageMapper.selectBookList", usno);
-	}
-	
+
 	// 일반회원 - 가계부 조회 메소드
 	@Override
 	public List<AccountBook> selectAccountList(AccountBook ab) {
@@ -251,5 +246,58 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.insert("mypageMapper.insertNewReport", a);
 
 	}
+	// 일반회원 - hotel book list 찾아오기
+	@Override
+	public List<Booking> selectHotelBookList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectHotelBookList", usno);
+	}
 
+	// 일반회원 - tour book list 찾아오기
+	@Override
+	public List<Booking> selectTourBookList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectTourBookList", usno);
+	}
+
+	// 일반회원 - car book list 찾아오기
+	@Override
+	public List<Booking> selectCarBookList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectCarBookList", usno);
+	}
+
+	// 일반회원 - 내예약 취소
+	@Override
+	public int deleteBooking(Booking b) {
+		return sqlSession.delete("mypageMapper.deleteBooking", b);
+	}
+
+	// 일반회원 - 후기등록
+	@Override
+	public int insertReview(Review r) {
+		sqlSession.insert("mypageMapper.insertReview", r);
+		return sqlSession.selectOne("mypageMapper.selectThisNo", r);
+	}
+
+	// 일반회원 - 후기작성 표기
+	@Override
+	public int updateCheck(Review r) {
+		return sqlSession.update("mypageMapper.updateCheck", r);
+	}
+
+	// 일반회원 - 후기 수정 디테일 가져오기
+	@Override
+	public Review selectReview(Review r) {
+		return sqlSession.selectOne("mypageMapper.selectReview", r);
+	}
+
+	// 일반회원 - 찜목록 넣기
+	@Override
+	public int insertJjim(Jjim j) {
+		return sqlSession.insert("mypageMapper.insertJjim", j);
+	}
+
+	// 일반회원 - 찜목록 삭제
+	@Override
+	public int deleteJjim(Jjim j) {
+		return sqlSession.update("mypageMapper.deleteJjim", j);
+	}
 }

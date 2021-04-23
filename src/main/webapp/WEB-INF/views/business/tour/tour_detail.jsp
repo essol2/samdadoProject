@@ -13,14 +13,16 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <title>samdado</title>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+    <title>samdado</title>    
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+	var $j1124 = jQuery.noConflict();
+	</script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-    
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -361,7 +363,7 @@
             width: 100px;
         }
 
-        #closeBtn {
+        #closeBtn, #reportBtn {
             border-style: none;
             background-color: white;
         }
@@ -590,6 +592,11 @@
             outline: 0;
             background: none;
         }
+        
+        #reportImage_container img{
+	    	width:455px;
+	    	height:420px;
+    	}
     
     </style>
 
@@ -945,8 +952,8 @@
         
     </section>
     
-    <script>
-	    $.datepicker.setDefaults({
+    <script>  
+    	$j1124.datepicker.setDefaults({
 	        dateFormat: 'yy-mm-dd',
 	        prevText: '이전 달',
 	        nextText: '다음 달',
@@ -959,14 +966,10 @@
 	        yearSuffix: '년'
 	    });
     
-        $( function() {
-          $( ".datepicker" ).datepicker();
+    	$j1124( function() {
+    		$j1124( ".datepicker" ).datepicker();
         } );
         
-        $(function(){
-        	
-            
-        });
     </script>
 
     <!-- Modal -->
@@ -987,7 +990,7 @@
                 </div>
                 <div class="modal-body2">
                 	<label><input type="text" id="tourName" style="border:none;width:80px;" readonly value="${ tour.pro_name }"></label><br>
-                    <h4 id="startDateResult"></h4>
+                    <h4 id="startDateResult"></h4>                    
                     <div id="table">
                         <div class="rows">
                             <span class="cell cols1">성인입장권</span>
@@ -1037,10 +1040,13 @@
 
   	$(".payBtn").click(function() {
   		
-  		var name = document.getElementById('tourName').value;
+  		var name = document.getElementById('tourName').value;  		
   		var payResult = document.getElementById('payResult').value;
-  		var startDate = document.getElementById("startDate").value;  		
-  	 	var phone = ${ tour.bus_phone };
+  		var startDate = document.getElementById("startDate").value;
+  		var num1 = document.getElementById("adultNumber").value;
+  		var num2 = document.getElementById("youthNumber").value;
+  		var num3 = document.getElementById("childNumber").value;
+  		var personNumber = parseInt(num1) + parseInt(num2) + parseInt(num3);
   	    var bookingLv = 2;
   		// var amount = payResult;
   		var amount = 100;
@@ -1061,12 +1067,14 @@
 	        if ( rsp.success ) {
 	            var msg = '결제가 완료되었습니다!';
 	            msg += '결제 금액 : ' + rsp.paid_amount;
-	            location.href = '${contextPath}/business/pay?amount='+amount+'&item='+name+'&usno='+${loginUser.usno}
-					            +'&t_bus_code='+${ tour.bus_code }+'&t_booking_trv='+startDate+'&bookingLv='+bookingLv
-					            +'&t_booking_product='+name+'&t_booking_pay='+amount;
+	            location.href = '${contextPath}/business/pay?&usno='+${loginUser.usno}+'&amount='+amount
+	            				+'&bus_code='+${ tour.bus_code }+'&t_booking_product='+name
+	            				+'&t_booking_trv='+startDate+'&bookingLv='+bookingLv+'&t_booking_pay='+payResult
+	            				+'&t_booking_number='+personNumber;
 	            				
 	        } else {
 	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
+	            console.log(rsp);
 	        }
 	    
 	        alert(msg);
@@ -1140,14 +1148,13 @@
             <form action="${ contextPath }/business/report" id="writeForm" method="post" enctype="multipart/form-data">
             <div class="modal-body">
             
-            <input type="hidden" name="rep_res" value="허위매물">
-            <input type="hidden" name="usno" value="${ loginUser.usno }">
-             <input type="hidden" name="bus_code" value="${ t.bus_code }">
+            <input type="hidden" name="rep_res" value="허위매물">            
+             <input type="hidden" name="bus_code" value="${ tour.bus_code }">
                       
                 <!--신고대상-->
                 <div class="name_div">
                     <label for="id">신고대상</label>                   
-                    <input type="text" id="name" name="bus_name" value="${ t.bus_name }" readonly>
+                    <input type="text" id="name" name="bus_name" value="${ tour.bus_name }" readonly>
                 </div>
                 <!--신고사유-->
                 <div class="reason_div">
@@ -1157,7 +1164,8 @@
                 <!--파일첨부-->
                 <div class="reportimg_div">
                     <label for="reportimg">파일첨부</label>                    
-                    <input type="file" id="reportimg" name="uploadFile">
+                    <input type="file" id="reportimg" name="uploadFile" onchange="setThumbnail(event);">
+                    <div id="reportImage_container" style="width:500px; hegiht:500px;"></div>
                 </div>
                 
             </div>
@@ -1169,7 +1177,24 @@
         </div>
         </div>
     </div>
-
+    
+    <script> 
+    	function reportAlert(){ 
+    		alert('신고가 완료되었습니다.'); 
+    	}
+    	
+    	function setThumbnail(event) { 
+    		var reader = new FileReader(); 
+    		reader.onload = function(event) { 
+    			var img = document.createElement("img"); 
+    			img.setAttribute("src", event.target.result); 
+    			document.querySelector("div#reportImage_container").appendChild(img); 
+    		}; 
+    		reader.readAsDataURL(event.target.files[0]); 
+    	}
+    	
+    </script>
+	
 	<script>
 		$(document).ready(function(){
 			var adult = '<c:out value="${tour.pro_adult}"/>';
@@ -1194,7 +1219,7 @@
 		});
 		
 	</script>
-
+	 
 
 
 

@@ -1,6 +1,7 @@
 package com.kh.samdado.business.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,9 +176,27 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.update("businessMapper.updateReport", r);
 	}
 	
+	// 찜하기
 	@Override
 	public int jjim(Jjim jjim) {
 		return sqlSession.insert("businessMapper.jjim", jjim);
+	}
+	
+	@Override
+	public Map<String, Object> selectJjim(Map<String, Object> idxMap) {		
+		return sqlSession.selectOne("businessMapper.selectJjim", idxMap);
+	}
+	
+	@Override
+	public Object insertJjim(Map<String, Object> commandMap) {
+		System.out.println("다오인서트commandMap : " + commandMap);		
+		return sqlSession.insert("businessMapper.insertJjim", commandMap);
+	}
+
+	@Override
+	public int updateJjim(Map<String, Object> commandMap) {
+		System.out.println("다오업데이트commandMap : " + commandMap);
+		return sqlSession.update("businessMapper.udpateJjim", commandMap);
 	}
 	
 	// 일반결제 메소드
@@ -197,6 +216,11 @@ public class businessDaoImpl implements businessDao {
 		}
 		
 		@Override
+		public TourProduct selectTourProduct(int bus_code) {			
+			return sqlSession.selectOne("businessMapper.selectTourProduct", bus_code);
+		}
+		
+		@Override
 		public int insertBookingCar(Booking b) {
 			return sqlSession.insert("businessMapper.insertBookingCar", b);
 		}
@@ -207,8 +231,7 @@ public class businessDaoImpl implements businessDao {
 		}
 		
 		@Override
-		public Point findPoint(Point p) {
-			// TODO Auto-generated method stub
+		public Point findPoint(Point p) {			
 			return sqlSession.selectOne("businessMapper.findPoint", p);
 		}
 

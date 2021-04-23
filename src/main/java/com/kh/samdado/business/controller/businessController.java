@@ -53,6 +53,7 @@ import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
+import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 
 
@@ -62,6 +63,9 @@ import com.kh.samdado.user.model.vo.User;
 public class businessController {
 	@Autowired
 	private MypageService mService;
+	
+	@Autowired
+	private UserService uService;
 
 	@Autowired
 	businessService bService;
@@ -354,7 +358,7 @@ public class businessController {
 
 	// 음식점 디테일
 	@GetMapping("/restaurant_detail")
-	public String restaurantDetail(@RequestParam int bus_code,
+	public String restaurantDetail(@RequestParam int bus_code, String usno,
 			   					   Model model) {
 		
 		
@@ -367,6 +371,29 @@ public class businessController {
 			
 			model.addAttribute("res", b);
 			model.addAttribute("att" + attList);
+			
+			// 찜하기			
+		    Map<String,Object> idxMap = new HashMap<>();
+		    int bbsidx = bus_code;
+		    int useridx = Integer.parseInt(usno);
+		    
+	        idxMap.put("bbsidx", bbsidx);
+	        idxMap.put("useridx", useridx);
+	        System.out.println("idxMap : " + idxMap);
+	        
+	        //jjim 테이블 에서 찜하기유무 확인하기
+			 Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
+			 System.out.println("jjimcheckMap : " + jjimcheckMap);
+			 //찜 누른 기록이 없다면
+		        if(jjimcheckMap == null) {
+		            model.addAttribute("jjimcheck",0);
+		        } else {
+		        	// 찜 누른 기록이 있다면		        	
+		            model.addAttribute("jjimcheck",jjimcheckMap.get("JJIM_STATUS"));
+		        }
+		        model.addAttribute("bbsidx",bbsidx);
+		        model.addAttribute("useridx",useridx);
+			
 			return "business/restaurant/restaurant_detail";
 		} else {
 			model.addAttribute("msg", "공지사항 게시글 보기에 실패했습니다.");
@@ -647,6 +674,7 @@ public class businessController {
 	
 	@GetMapping("/pay")
 	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code) {
+		System.out.println("i : " + i);		
 		// 포인트에 amount 넣어주기
 		p.setPamount(i.getAmount());
 		// income에  들어갈 원가 10퍼센트 셋팅
@@ -654,8 +682,12 @@ public class businessController {
 		
 		int income = bService.insertIncome(i);
 		
+		// p에 예약받는 사업장주인 usno 넣기		 
+		Business selectUser = bService.selectBusCodeUser(bus_code);
+		p.setUsno(selectUser.getUs_no());
+		System.out.println("p : " + p);
 		Point findPoint = bService.findPoint(p);
-		
+		System.out.println(findPoint);
 		 if(findPoint != null) {
 			 // 이미 포인트가 있으면 기존 포인트 + 결제금액의 90% 적립
 			 p.setPbalance(findPoint.getPbalance()+i.getAmount() * 9);
@@ -663,28 +695,36 @@ public class businessController {
 			 // 첫 결제면 그대로 결제금액 90% 셋팅
 			 p.setPbalance(i.getAmount() * 9);
 		 }
-		 // p에 예약하는 사업장주인 usno 넣기
-		 Business selectUser = bService.selectBusCodeUser(bus_code);
-		 p.setUsno(selectUser.getUs_no());
 		 // 포인트 넣기
 		int point = bService.insertPoint(p);		
-		// 예약정보 insert
-		if(b.getBookingLv() == 1) {			
+		System.out.println(b);
+		// 예약정보 insert	
+		if(b.getBookingLv() == 1) {
+			b.setR_bus_name(selectUser.getBus_name());
+			b.setR_booking_address(selectUser.getBus_address());
+			b.setR_booking_phone(selectUser.getBus_phone());
+			int bookingHotel = bService.insertBookingHotel(b);
+		} else if(b.getBookingLv() == 2) {
+			TourProduct selectTourProduct = bService.selectTourProduct(bus_code);
+			System.out.println(selectTourProduct);
+			b.setPro_no(selectTourProduct.getPro_no());
 			b.setT_bus_name(selectUser.getBus_name());
 			b.setT_booking_address(selectUser.getBus_address());
 			b.setT_booking_phone(selectUser.getBus_phone());
-			// System.out.println("b:" + b);
-			int bookingHotel = bService.insertBookingHotel(b);
-		} else if(b.getBookingLv() == 2) {
 			int bookingTour = bService.insertBookingTour(b);
-		} else if(b.getBookingLv() == 3) {
+			System.out.println("bookingTour : " + bookingTour);
+		} else if(b.getBookingLv() == 3) {			
+			b.setC_bus_name(selectUser.getBus_name());
+			b.setC_booking_address(selectUser.getBus_address());
+			b.setC_booking_phone(selectUser.getBus_phone());
 			int bookingCar = bService.insertBookingCar(b);
 		}
 		
-		return "redirect:/main";
+		return "redirect:/main"; // 마이페이지로 매핑하기
 		
 	}
 	
+
 	@RequestMapping(value="cateList", method=RequestMethod.POST)
 	@ResponseBody
 	public List<Business> cateList(HttpServletResponse response, @RequestBody String kinds) {
@@ -699,6 +739,56 @@ public class businessController {
 		
 	}
 
+	//찜하기 ajax받기	
+    @RequestMapping("/jjim")
+    @ResponseBody
+    public Map<String,Object> jjim(@RequestParam Map<String,Object> commandMap){        
+        int resultCode = 1;
+        int jjimcheck = 1;
+        System.out.println("찜컨트롤러들어옴");
+        Map<String,Object> map = new HashMap<>();        
+        Map<String,Object> resultMap = new HashMap<>();
+        try {
+            map = bService.jjimcheck(commandMap);
+            System.out.println("commandMap : " + commandMap);
+            System.out.println("map : " + map);
+            if(map == null) {
+                //처음 찜하기 누른것. jjimcheck=1, 빨강하트.
+            	System.out.println("찜하기인서트옴");
+                bService.insertJjim(commandMap); // 찜하기 테이블 인서트                
+                resultCode = 1;
+            }
+            else if(Integer.parseInt(map.get("JJIM_STATUS").toString()) == 0) {
+                //찜하기 처음은 아니고 취소했다가 다시 눌렀을때 jjimcheck=1, 빨강하트.
+            	System.out.println("찜하기업데이트옴");
+                commandMap.put("jjimcheck",jjimcheck);
+                bService.updateJjim(commandMap); //찜하기 테이블 업데이트                
+                resultCode = 1;
+            }
+            else {
+                //찜하기 취소하면 jjimcheck=0, 빈 하트.
+            	System.out.println("찜하기업데이트2옴");
+                jjimcheck = 0;
+                commandMap.put("jjimcheck", jjimcheck);
+                int result = bService.updateJjim(commandMap);                
+                if(result > 0) {
+                	System.out.println("여기까지");
+                	resultCode = 0;                	
+                }
+            }            
+            resultMap.put("jjimcheck", jjimcheck);
+        } catch (Exception e) {            
+            resultCode = -1;
+            System.out.println("찜에러옴");
+        }
+        
+        resultMap.put("resultCode", resultCode);
+        //resultCode가 1이면 빨간하트 0이면 빈하트
+        System.out.println("resultMap : " + resultMap);
+        return resultMap;
+    }
+	
+	
 	// ************* 지혜 *************
 
 	@PostMapping("/insert/bannerAd")
@@ -934,8 +1024,16 @@ public class businessController {
 		if(findReportStatus == null) {					
 			int result = bService.insertReport(r);
 								
-			if(result > 0) {						
-				return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
+			if(result > 0) {
+				if(selectUser.getBus_category().equals("R")) {
+					return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("H")) {
+					return "redirect:/business/hotel_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("T")) {
+					return "redirect:/business/tour_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("C")) {
+					return "redirect:/business/car_detail?bus_code=" + r.getBus_code();					
+				}
 			} else {
 				throw new businessException("신고에 실패하였습니다.");
 			}
@@ -944,7 +1042,15 @@ public class businessController {
 		} else {
 			// Rstatus가 n일 경우
 			if(findReportStatus.getRstatus().equals("N")) {
-				return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
+				if(selectUser.getBus_category().equals("R")) {
+					return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("H")) {
+					return "redirect:/business/hotel_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("T")) {
+					return "redirect:/business/tour_detail?bus_code=" + r.getBus_code();					
+				} else if(selectUser.getBus_category().equals("C")) {
+					return "redirect:/business/car_detail?bus_code=" + r.getBus_code();					
+				}
 				
 			// Rstatus가 n이 아닐 경우	
 			} else {
@@ -955,12 +1061,21 @@ public class businessController {
 									
 
 				if(result > 0) {							
-					return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();
+					if(selectUser.getBus_category().equals("R")) {
+						return "redirect:/business/restaurant_detail?bus_code=" + r.getBus_code();					
+					} else if(selectUser.getBus_category().equals("H")) {
+						return "redirect:/business/hotel_detail?bus_code=" + r.getBus_code();					
+					} else if(selectUser.getBus_category().equals("T")) {
+						return "redirect:/business/tour_detail?bus_code=" + r.getBus_code();					
+					} else if(selectUser.getBus_category().equals("C")) {
+						return "redirect:/business/car_detail?bus_code=" + r.getBus_code();					
+					}
 				} else {
 					throw new businessException("신고에 실패하였습니다.");
 				}
 			}
 		}
+		return null;
 	
 	}
 	

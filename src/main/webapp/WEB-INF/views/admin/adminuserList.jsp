@@ -57,10 +57,11 @@
                         <th>구분(일반|제휴)</th>
                         <th>사업자등록번호</th>
                         <th>상태</th>
+                        <th>포인트</th>
                     </tr>
                 </thead>
                 <tbody>
-        		 <c:forEach var="aul" items="${ allUserList }">
+        		 <c:forEach var="aul" items="${ allUserList }" varStatus="status">
         		  <c:if test="${ aul.uspart ne '관리자' }">
 	                 <tr>
 	                     <th>${ aul.usno }</th>
@@ -68,11 +69,54 @@
 	                     <td>${ aul.usid }</td>           
 	                     <td><fmt:formatDate value='${ aul.usbirth }' type='both' pattern='yyyy-MM-dd' /></td>
 	                     <td>${ aul.usemail }</td>
-	                     <td>${ aul.usphone }</td>
+	                     <td>
+	                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal${ status.count }">
+			  				${ aul.usphone }
+					    </button>			
+	                     </td>
 	                     <td>${ aul.uspart }</td>
 	                     <td>${ aul.busno }</td>
 	                     <td>${ aul.usstatus }</td>
+	                     <td>${ aul.pbalance }</td>
 	                 </tr>
+	                 
+	               <!-- 모달 -->
+                   <div class="modal fade" id="exampleModal${ status.count }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">SMS 발송</h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+		                   <div>
+		                   		<form method="post" name="smsForm" action="${ contextPath }/admin/sendSMS">
+			                       <div class="mb-3">
+									    <label for="message_content" class="form-label">메세지 내용  <span id="counter">0</span>/45</label>
+									    <textarea class="form-control" maxlength="45" style="resize: none;" name="msg" placeholder="최대 45자 이내" id="message_content" aria-describedby="emailHelp">[삼다도]</textarea>
+								   </div>
+								   <div class="mb-3">
+									    <label for="userPhone" class="form-label">발신번호</label>
+									    <input type="text" class="form-control" id="userPhone" name="rphone" value="${ status.current.usphone }" aria-describedby="emailHelp">
+								   </div>
+			                       <div class="mb-3">
+			                       <input type="submit" class="btn btn-secondary" value="전송" style="margin-left: 88%;">
+		                              	<input type="hidden" name="action" value="go">
+				  						<input type="hidden" name="sphone1" value="010">
+								        <input type="hidden" name="sphone2" value="8234">
+								        <input type="hidden" name="sphone3" value="2105">
+			                       </div>
+		                       	</form>
+		                   </div>
+					      	
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+	                 
 	              </c:if>
                 </c:forEach>              
                 </tbody>
@@ -181,6 +225,7 @@
                             <th>회원 구분</th>
                             <th>사업자등록번호</th>
                             <th>회원 상태</th>
+                            <th>포인트</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -221,8 +266,9 @@
 										var uspart = $("<td>").text(data[i].uspart);
 										var busno = $("<td>").text(data[i].busno);
 										var usstatus = $("<td>").text(data[i].usstatus);
+										var pbalance = $("<td>").text(data[i].pbalance);
 										
-										tr.append(usno, usname, usid, utodate, usemail, usphone, uspart, busno, usstatus); // 테이블 행에 추가
+										tr.append(usno, usname, usid, utodate, usemail, usphone, uspart, busno, usstatus, pbalance); // 테이블 행에 추가
 										tableBody.append(tr); // 테이블에 추가
 									}
 									
@@ -236,6 +282,25 @@
 						});
 					});
 				</script>
+				
+				<script>
+						$(document).ready(function() {
+							//textarea에서 keyup 이벤트 발생했을 경우
+							$("#message_content").keyup(function() {
+								//textarea의 길이 값 저장
+								var inputLength = $(this).val().length;
+								//카운터 안에 inputLength가 들어갈 수 있도록 지정
+								$("#counter").html(inputLength);
+
+								var remain = 45 - inputLength;
+
+								if (remain > 0) 
+									$("#counter").css("color", "black");
+								else
+									$("#counter").css("color", "red"); // 45자가 되었을 때 빨간색
+							});
+						});
+					</script>
                
                
                

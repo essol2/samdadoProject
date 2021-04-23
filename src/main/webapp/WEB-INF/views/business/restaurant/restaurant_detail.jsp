@@ -14,7 +14,6 @@
     <title>samdado</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -477,6 +476,11 @@
     p {
         margin: 1rem 0 0 0;
     }
+    
+    #reportImage_container img{
+    	width:455px;
+    	height:420px;
+    }
     </style>
 
 </head>
@@ -501,12 +505,61 @@
             </div>
 
             <div id="ho_info">
-                <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
+                <label id="jjim_btn">
+			        <c:choose>
+					    <c:when test="${jjimcheck eq '0' or empty jjimcheck}"> <!-- jjimcheck가 0이면 빈하트-->
+					        <img src="../resources/images/image_listpage/noheart.png" 
+					             id="btn_like">
+					    </c:when>
+					    <c:otherwise> <!-- jjimcheck가 1면 빨간 하트-->
+					        <img src="../resources/images/image_listpage/heart.png" 
+					              id="btn_like">
+					    </c:otherwise>
+					</c:choose>찜하기</label>
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">${ res.bus_phone }</label>
             </div>
         </div>
+        
+        <!-- 찜하기 -->
+        <script>
+        var bbsidx = ${res.bus_code};
+        var useridx = ${loginUser.usno};
+         
+        var btn_like = document.getElementById("btn_like");
+         btn_like.onclick = function(){ changeHeart(); }
+         
+        /* 찜하기 버튼 눌렀을때 */
+         function changeHeart(){ 
+             $.ajax({
+                    type : "POST",  
+                    url : "${ contextPath }/business/jjim",
+                    dataType : "json",
+                    data : "bbsidx="+bbsidx+"&useridx="+useridx,
+                    error : function(){
+                        Rnd.alert("통신 에러","error","확인",function(){});
+                    },
+                    success : function(jdata) {
+                        if(jdata.resultCode == -1){
+                            Rnd.alert("찜하기 오류","error","확인",function(){});
+                        }
+                        else{
+                            if(jdata.jjimcheck == 1){
+                                $("#btn_like").attr("src","../resources/images/image_listpage/heart.png");
+                                
+                               
+                            }
+                            else if (jdata.jjimcheck == 0){
+                                $("#btn_like").attr("src","../resources/images/image_listpage/noheart.png");
+                                
+                                
+                            }
+                        }
+                    }
+                });
+         }
+        </script>        
 
 		<!-- 매장사진 -->
         <div class="colsmom">
@@ -783,8 +836,7 @@
             <form action="${ contextPath }/business/report" id="writeForm" method="post" enctype="multipart/form-data">
             <div class="modal-body">
             
-            <input type="hidden" name="rep_res" value="허위매물">
-            <input type="hidden" name="usno" value="${ loginUser.usno }">
+            <input type="hidden" name="rep_res" value="허위매물">            
              <input type="hidden" name="bus_code" value="${ res.bus_code }">
                       
                 <!--신고대상-->
@@ -801,7 +853,7 @@
                 <div class="reportimg_div">
                     <label for="reportimg">파일첨부</label>                    
                     <input type="file" id="reportimg" name="uploadFile" onchange="setThumbnail(event);">
-                    <div id="image_container"></div>
+                    <div id="reportImage_container" style="width:500px; hegiht:500px;"></div>
                 </div>
                 
             </div>
@@ -824,7 +876,7 @@
     		reader.onload = function(event) { 
     			var img = document.createElement("img"); 
     			img.setAttribute("src", event.target.result); 
-    			document.querySelector("div#image_container").appendChild(img); 
+    			document.querySelector("div#reportImage_container").appendChild(img); 
     		}; 
     		reader.readAsDataURL(event.target.files[0]); 
     	}

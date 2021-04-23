@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
@@ -158,12 +159,6 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selctJjimList(usno);
 	}
 
-	// 일반회원 - 내 예약 목록 출력 메소드
-	@Override
-	public List<Booking> selectBookList(String usno) {
-		return mDao.selectBookList(usno);
-	}
-
 	// 일반회원 - 가계부
 	@Override
 	public List<AccountBook> selectAccountList(AccountBook ab) {
@@ -248,6 +243,60 @@ public class MypageServiceImpl implements MypageService{
 	public int insertNewReport(Alert a) {
 		return mDao.insertNewReport(a);
 
+	}
+
+	// 일반회원 - hotel book list 찾아오기
+	@Override
+	public List<Booking> selectHotelBookList(String usno) {
+		return mDao.selectHotelBookList(usno);
+	}
+
+	// 일반회원 - tour book list 찾아오기
+	@Override
+	public List<Booking> selectTourBookList(String usno) {
+		return mDao.selectTourBookList(usno);
+	}
+
+	// 일반회원 - car book list 찾아오기
+	@Override
+	public List<Booking> selectCarBookList(String usno) {
+		return mDao.selectCarBookList(usno);
+	}
+
+	// 일반회원 - 내예약 취소
+	@Override
+	public int deleteBooking(Booking b) {
+		return mDao.deleteBooking(b);
+	}
+
+	// 일반회원 - 후기등록
+	@Override
+	public int insertReview(Review r) {
+		return mDao.insertReview(r);
+	}
+
+	// 일반회원 - 후기작성 표기
+	@Override
+	public int updateCheck(Review r) {
+		return mDao.updateCheck(r);
+	}
+
+	// 일반회원 - 후기 수정 디테일 가져오기
+	@Override
+	public Review selectReview(Review r) {
+		return mDao.selectReview(r);
+	}
+
+	// 일반회원 - 찜목록 넣기
+	@Override
+	public int insertJjim(Jjim j) {
+		return mDao.insertJjim(j);
+	}
+
+	// 일반회원 - 찜목록 삭제
+	@Override
+	public int deleteJjim(Jjim j) {
+		return mDao.deleteJjim(j);
 	}
 
 	

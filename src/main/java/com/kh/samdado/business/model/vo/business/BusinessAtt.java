@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
+//@EqualsAndHashCode
 public class BusinessAtt {
 	private String file_no;		// 파일코드
 	private String file_name;	// 파일명
