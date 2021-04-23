@@ -503,7 +503,7 @@ public class businessController {
 	public ModelAndView resList(ModelAndView mv) {
 		
 		List<Business> resList = bService.selectResList();
-		
+		System.out.println(resList);
 		if(resList != null) {
 			mv.addObject("resList", resList);
 			mv.setViewName("business/restaurant/restaurant_list");
