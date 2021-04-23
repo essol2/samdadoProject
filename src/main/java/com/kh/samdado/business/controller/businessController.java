@@ -81,11 +81,11 @@ public class businessController {
 		List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
 		
 		if(b != null && roomList != null) {
-			System.out.println("att : " + attList);
+			System.out.println("호텔사진  : " + attList);
 			model.addAttribute("hotel", b);
-			model.addAttribute("att" + attList);
+			model.addAttribute("att", attList);
 			model.addAttribute("room", roomList);
-			model.addAttribute("roomAtt" + roomAtt);
+			model.addAttribute("roomAtt", roomAtt);
 			
 		return "business/hotel/hotel_detail";
 		} else {
@@ -370,7 +370,7 @@ public class businessController {
 			// System.out.println("사진들 : " + attList);
 			
 			model.addAttribute("res", b);
-			model.addAttribute("att" + attList);
+			model.addAttribute("att", attList);
 			
 			// 찜하기			
 		    Map<String,Object> idxMap = new HashMap<>();
@@ -520,12 +520,17 @@ public class businessController {
 
 		Business b = bService.selectCar(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
+		List<Car> carList = bService.selectCars(bus_code);
+		List<CarAtt> carAtt = bService.selectCarAtt(bus_code);
 		// List<Car> CarList = bService.selectCar(bus_code);
 		// List<CarAtt> CarAtt = bService.selectCarAtt(bus_code); 
 		if(b != null) {
 
 			model.addAttribute("car", b);
-			model.addAttribute("att" + attList);
+			model.addAttribute("att", attList);
+			model.addAttribute("cars", carList);
+			model.addAttribute("att", carAtt);
+			System.out.println(model);
 			return "business/rentcar/car_detail";
 		} else {
 			model.addAttribute("msg", "렌트카 보기에 실패했습니다.");

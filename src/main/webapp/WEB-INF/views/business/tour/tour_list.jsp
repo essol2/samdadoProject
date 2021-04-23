@@ -561,16 +561,16 @@
 		    				 url : '${contextPath}/business/cateList', 
 		    	              type : "post", 
 		    	              data : {"kinds" : kinds},
-		    	              success : function(data){ 
-		    	                 
-		    	                 
-		    	                 if(data != null){
-		    	                	 cateList = $("#secondlist");
-		    	                	 cateList.html("");
-		    	                 	
-		    	                 	 
-		    	                 }
-		    	                 
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var div = document.createElement("div");
+		    	            	  for(var i in data){
+		    	              		cate.innerHTML=
+		    	              			data[i].bus_code;
+		    	              			
+		    	              		}
+		    	              		
+		    	              	
 		    	              },
 		    	              error : function(data){
 		    	            	 alert('error');
@@ -601,7 +601,6 @@
                 <div id="secondlist">
                 <c:forEach var="t" items="${ tourList }">
                     <div class='profile'>
-                    	<input type="hidden" id="busCode" value="${ t.bus_code }">
                     	<c:if test="${ t.bus_classify eq 'G' && t.file_lv eq '0'}">
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                     	</c:if>
@@ -665,44 +664,6 @@
             <hr>
             <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
         </footer>
-
-<script>
-function like_func(){
-	var d = $('#busCode').val();
-	var frm_read = $('#frm_read');
-	var busCode = $('#busCode', frm_read).val();
-	var mno = $('${loginUesr.usno}', frm_read).val();
-	console.log("busCode, mno : " + busCode +","+ mno + "," + d);
-	
-	/*
-	$.ajax({
-	  url: "../liketo/like.do",
-	  type: "GET",
-	  cache: false,
-	  dataType: "json",
-	  data: 'boardno=' +boardno,
-	  success: function(data) {
-	    var msg = '';
-	    var like_img = '';
-	    msg += data.msg;
-	    alert(msg);
-	    
-	    if(data.like_check == 0){
-	      like_img = "./images/dislike.png";
-	    } else {
-	      like_img = "./images/like.png";
-	    }      
-	    $('#like_img', frm_read).attr('src', like_img);
-	    $('#like_cnt').html(data.like_cnt);
-	    $('#like_check').html(data.like_check);
-	  },
-	  error: function(request, status, error){
-	    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	  }
-	}); */
-}
-
-</script>
 
 </body>
 

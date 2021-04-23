@@ -146,6 +146,10 @@ public interface businessDao {
 
 	List<Business> cateList(String kind);
 
+	List<Car> selectCars(int bus_code);
+
+	List<CarAtt> selectCarAtt(int bus_code);
+
 	
 
 	
