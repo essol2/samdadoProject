@@ -967,7 +967,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	  		AND RB.BUS_CODE = BA.BUS_CODE
 	  		AND BA.BUS_CODE = B.BUS_CODE
 	  		AND BA.FILE_LV = 0
-	  		AND R.REV_NO = #{rev_no}
+	  		AND RB.R_BOOKING_NO = #{ booking_no }
 	  	</if>
 	  	<if test='rev_hct eq "c".toString()'>
   			SELECT *
@@ -976,7 +976,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	  		AND CB.BUS_CODE = BA.BUS_CODE
 	  		AND BA.BUS_CODE = B.BUS_CODE
 	  		AND BA.FILE_LV = 0
-	  		AND R.REV_NO = #{rev_no}
+	  		AND CB.C_BOOKING_NO = #{ booking_no }
   		</if>
   		<if test='rev_hct eq "t".toString()'>
   			SELECT *
@@ -985,7 +985,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	  		AND TB.BUS_CODE = BA.BUS_CODE
 	  		AND BA.BUS_CODE = B.BUS_CODE
 	  		AND BA.FILE_LV = 0
-	  		AND R.REV_NO = #{rev_no}
+	  		AND TB.T_BOOKING_NO = #{ booking_no }
   		</if>
   </select>
   
@@ -995,12 +995,11 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
   		SET 
   				REV_COMMENT = #{rev_comment},
   				REV_MODIFY = SYSDATE,
-  				REV_STATUS = 'mod',
+  				REV_STATUS = 'm',
   				RE_STAR = #{re_star},
   				IMG_RENAME1 = #{img_rename1},
   				IMG_RENAME2 = #{img_rename2},
-  				IMG_RENAME3= #{img_rename3},
-  				
+  				IMG_RENAME3= #{img_rename3}
   		WHERE 
   				REV_NO = #{rev_no}
   </update>
