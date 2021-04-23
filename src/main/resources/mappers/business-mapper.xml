@@ -48,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="room_people" column="ROOM_PEOPLE" />
 		<result property="room_amenity" column="ROOM_AMENITY" />
 		<result property="room_no" column="ROOM_NO" />
+		<result property="rexdate" column="REXDATE" />
 	</resultMap>
 	
 	<resultMap type="BusinessAtt" id="BusinessAttResultSet">
