@@ -497,14 +497,13 @@ public class MypageController {
 	 
 	 // 일반회원 - 내예약목록 페이지 이동
 	 @GetMapping("/booking")
-	 public ModelAndView goToBooking(@RequestParam(name="usno") String usno,
-			 						 Booking b,
-			 						 ModelAndView mv,
-			 						 Review r) {
+	 public ModelAndView goToBooking(@ModelAttribute User u,
+			 						 ModelAndView mv) {
+		 //System.out.println("usno1 : " + u.getUsno());
 		 
-		 List<Booking> hotelBookList = mService.selectHotelBookList(usno);
-		 List<Booking> tourBookList = mService.selectTourBookList(usno);
-		 List<Booking> carBookList = mService.selectCarBookList(usno);
+		 List<Booking> hotelBookList = mService.selectHotelBookList(u.getUsno());
+		 List<Booking> tourBookList = mService.selectTourBookList(u.getUsno());
+		 List<Booking> carBookList = mService.selectCarBookList(u.getUsno());
 
 		 mv.addObject("hotelList", hotelBookList);
 		 mv.addObject("tourList", tourBookList);
@@ -734,13 +733,15 @@ public class MypageController {
 							   @RequestParam( value = "rimg2", required=false) MultipartFile file2,
 							   @RequestParam( value = "rimg3", required=false) MultipartFile file3,
 							   @RequestParam( value = "re_star", required=false, defaultValue="0.5") String re_star,
+							   @RequestParam( value = "inup", required=false) String inup,
 							   HttpServletRequest request, Model model ) {
 //		 System.out.println(file1);
 //		 System.out.println(file2);
 //		 System.out.println(file3);
 		 r.setRe_star(re_star);
 		 
-		 //System.out.println("r 확인 1 : " + r);
+		// System.out.println("r 확인 1 : " + r);
+		 // System.out.println("inup 확인 : " + inup);
 
 		 if(!file1.getOriginalFilename().equals("")) {
 				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
@@ -779,20 +780,28 @@ public class MypageController {
 			 r.setImg_rename3("미입력");
 		 }
 		 
+		//System.out.println("inup 확인 : " + inup);
+		 
+		 int result = 0;
+		 int result2 = 1;
 		 //System.out.println("r 확인 2 : " + r);
-	
-			int result = mService.insertReview(r);
+		 	if(inup.equals("I")) {
+		 		result = mService.insertReview(r);
+				System.out.println("insert result 확인 : " + result);
+				
+				r.setRev_no(result);
+				System.out.println("r.getRev_no() : " + r.getRev_no());
+				
+				result2 = mService.updateCheck(r);
+				System.out.println("insert result2 확인 : " + result2);
+		 	} else if(inup == "U") {
+		 		result = mService.updateReview(r);
+		 		System.out.println("update result 확인 : " + result2);
+		 	}
 			
-			System.out.println("result 확인 : " + result);
 			
-			r.setRev_no(result);
-			System.out.println("r.getRev_no() : " + r.getRev_no());
-			
-			int result2 = mService.updateCheck(r);
-			System.out.println("result2 확인 : " + result2);
-			
-			if(result > 0 && result2>0) {
- 			model.addAttribute("usno", r.getUs_no());
+			if(result > 0 && result2 == 1) {
+				model.addAttribute("usno", r.getUs_no());
 				model.addAttribute("msg", "후기가 성공적으로 게시되었습니다!");
 				return "redirect:/mypage/booking";
 			} else {

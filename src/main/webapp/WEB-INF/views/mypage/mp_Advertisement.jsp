@@ -131,11 +131,13 @@
         margin-top : 10px;
         margin-bottom: 10px;
         margin-right : 10px;
+        height : 82
+        0px;
     }
 
     #adverContainer{
         background-color: white;
-        height : 815px;
+        height : 100%;
         width : 100%;
         /* border : 1px solid red; */
     }
@@ -176,7 +178,7 @@
         order : 2;
         width : 53%;
         margin : 10px;
-        hight : 300px;
+        hight : 800px;
         /* border:1px solid blue; */
     }
 
@@ -278,66 +280,87 @@
             </div>
 
             <div id="mainBox">
-                <div id="adverBox">
-                    <div id="leftAdverBox">
-                        <div id="adverContainer">
-                            <br>
-                            <h3 style="color: #467355; margin-left : 10%; padding-top : 2%;"> 진행중인 광고</h3>
-                            <br>
-                            <hr>
-                            <div style="overflow:auto">
-                            <h3 style="color: #467355; text-align:center;"> 메인페이지 배너광고</h3> 
-                            
-                            <c:forEach items="${ allList }" var="al" varStatus="alStatus">
-                            
-                            <c:if test="${allList} == null">
-                            	<div id="bannerAdverBox">
-                            		<p style="color: #467355; text-align:center;">광고중인 사업장이 없어요!</p>
-                            	</div>
-                            </c:if>
-	                            <div id="bannerAdverBox1">
-	                                <p style="text-align: center; font-size: small;"> 사업장 이름 : ${ al.bus_name }</p>
-	                                <p style="text-align: center; font-size: small;"> 신청일 : <fmt:formatDate value="${ al.alsubdate }" type="date" pattern="yyyy-MM-dd"/></p>
-	                                <p style="text-align: center; font-size: small;"> 승인일 : <fmt:formatDate value="${ al.startdate }" type="date" pattern="yyyy-MM-dd"/></p>
-	                               
-	                            </div>
-                            </c:forEach>
-                            </div>
-                            <br>
-                            <hr>
-                            <br>
-                            <div style="overflow:auto">
-                            <h3 style="color: #467355; text-align:center;"> 프리미엄 광고</h3> 
-                            <c:forEach items="${ pbusList }" var="pb" varStatus="pbStatus">
-                            
-                            <c:if test="${ pbList } == null">
-                            	<div id="bannerAdverBox">
-                            		<p style="color: #467355; text-align:center;">광고중인 사업장이 없어요!</p>
-                            	</div>
-                            </c:if>
-	                            <div id="bannerAdverBox1">
-	                                <p style="text-align: center; font-size: small;"> 사업장 이름 : ${ pb.bus_name }</p>
-	                                <p style="text-align: center; font-size: small;"> 등록일 : <fmt:formatDate value="${ pb.bus_date }" type="date" pattern="yyyy-MM-dd"/></p>	                               
-	                            </div>
-                            </c:forEach>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="rightAdverBox">
-                        <div id="topAdverBox">
-                            <h2 style="color: #467355;">배너광고 실시간 누적 클릭 수 : &nbsp; <b id="boldText">${ clCount }</b> 회</h2>
-                        </div>
-                        <div id="bottomAdverBox">
-                            <div class="container"> 
-                                <canvas id="myChart"></canvas> 
-                            </div>
-						    <script>
+			<div id="adverBox">
+				<div id="leftAdverBox">
+					<div id="adverContainer">
+						<br>
+						<div style="overflow: auto;" >
+							<c:choose>
+								<c:when test="${ !empty allList && empty pbusList}">
+								<h3 style="color: #467355; text-align: center;">배너광고</h3>
+									<c:forEach items="${ allList }" var="al" varStatus="alStatus">
+		
+										<div id="bannerAdverBox1">
+											<p style="text-align: center; font-size: small;">사업장 이름 :
+												${ al.bus_name }</p>
+											<p style="text-align: center; font-size: small;">
+												신청일 :
+												<fmt:formatDate value="${ al.alsubdate }" type="date" pattern="yyyy-MM-dd" />
+											</p>
+											<p style="text-align: center; font-size: small;">
+												승인일 :
+												<fmt:formatDate value="${ al.startdate }" type="date"
+													pattern="yyyy-MM-dd" />
+											</p>
+		
+										</div>
+									</c:forEach>
+									<hr>
+									<h3 style="color: #467355; text-align: center;">프리미엄 광고</h3>
+									<div style="text-align : center; margin-left : auto; margin-right : auto;">
+										<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
+				            			<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">삼다도와 프리미엄 광고해보세요!</h1>
+		 							</div>
+								</c:when>
+								<c:when test="${empty allList && !empty pbusList}">
+									<h3 style="color: #467355; text-align: center;">배너광고</h3>
+									<div style="text-align : center; margin-left : auto; margin-right : auto;">
+										<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
+			            				<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">삼다도와 배너 광고해보세요!</h1>
+	 								</div>
+	 								<hr>
+	 								<h3 style="color: #467355; text-align: center;">프리미엄 광고</h3>
+	 								<c:forEach items="${ pbusList }" var="pb" varStatus="pbStatus">
+										<div id="bannerAdverBox1">
+											<p style="text-align: center; font-size: small;">사업장 이름 :
+												${ pb.bus_name }</p>
+											<p style="text-align: center; font-size: small;">
+												등록일 :
+												<fmt:formatDate value="${ pb.bus_date }" type="date"
+													pattern="yyyy-MM-dd" />
+											</p>
+										</div>
+									</c:forEach>
+								</c:when>
+							<c:otherwise>
+								<div style="text-align : center; margin-left : auto; margin-right : auto;">
+									<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
+ 		            				<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">광고 중인 사업장이 없습니다!</h1>
+								</div>
+							</c:otherwise>
+							</c:choose>
+						</div>
+						
+					</div>
+				</div>
+				<div id="rightAdverBox">
+					<div id="topAdverBox">
+						<h2 style="color: #467355;">
+							배너광고 실시간 누적 클릭 수 : &nbsp; <b id="boldText">${ clCount }</b> 회
+						</h2>
+					</div>
+					<div id="bottomAdverBox">
+						<div class="container">
+							<canvas id="myChart"></canvas>
+						</div>
+						<script>
 						    
 						    var arr = new Array();
+						    
+						    //console.log(${charList});
 		                	
 		                	<c:forEach items="${chartList}" var="item">
-		                		arr.push({thisMonth:"${item.thisMonth}"
-		                				, totalCount : "${item.totalCount}"});
+		                		arr.push({thisMonth:"${item.thisMonth}", totalCount : "${item.totalCount}"});
 		                	</c:forEach>
 		                	
 		                	if(arr.length == 1){
@@ -362,6 +385,9 @@
 		                		}
 		                	} else{
 		                		console.log(arr);
+		                		for(var j=0; j<6; j++){
+		                			arr.push({thisMonth : '', totalCount : 0});
+		                		}
 		                	}
 		                	
 		                	console.log(arr);
@@ -385,51 +411,59 @@
 						    		} 
 						    	}); 
 						    </script>
-    
-                        </div>
-                        <div id='ingBox'>
-                        	<br>
-                        	<div class="previous">
-                        	<c:if test="${ api.currentPage <= 1 }">
-                        		<h1 style="color : #467355;, text-align : center; font-size:20px;"> &lt; </h1>
-                        	</c:if>
-                        	<c:if test="${ api.currentPage > 1 }">
-                        		<c:url var="before" value="/mypage/advert" >
-                        			<c:param name="page" value="${ api.currentPage -1 }"/>
-                        			<c:param name="usno" value="${ loginUser.usno }"/>
-                        		</c:url>
-                        		<a href="${ before }" style="color : #467355;, text-align : center; font-size:20px;"> &lt; </a>
-                        	</c:if>
-                        	</div>
-                        	<div class="content">
-                        	<br>
-	                            <h3 style="color: #467355; text-align : center;">배너광고 신청 사업장</h3>
-	                            <br>
-	                             <c:forEach items="${ applyList }" var="ap" varStatus="apStatus">
-		                            <div id="bannerAdverBox">
-		                                <p style="text-align: center; font-size: 20px;">사업장 이름 : ${ ap.bus_name }</p>
-		                                <p style="text-align: center; font-size: 20px;">신청일 : <fmt:formatDate value="${ ap.alsubdate }" type="date" pattern="yyyy-MM-dd"/> </p>
-		                                <p style="text-align: center; font-size: 20px;;">상태 : 승인 검토중</p>
-		                            </div>
-                            	</c:forEach>
-                            </div>
-                            <div class="next">
-                            <c:if test="${ api.currentPage >= api.maxPage }">
-                            	<h1 style="color : #467355;, text-align : center; font-size:20px;" > &gt; </h1>
-                            </c:if>
-                            <c:if test="${ api.currentPage < api.maxPage }">
-                            	<c:url var="after" value="/mypage/advert">
-                            		<c:param name="page" value="${ api.currentPage + 1}"/>
-                            		<c:param name="usno" value="${ loginUser.usno }"/>
-                            	</c:url>
-                            	<a href="${ after }" style="color : #467355;, text-align : center; font-size:20px;"> &gt; </a>
-                            </c:if>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
+					</div>
+					<div id='ingBox'>
+					<c:choose>
+						<c:when test="${!empty applyList}">
+							<br>
+							<div class="previous">
+								<c:if test="${ api.currentPage <= 1 }">
+									<h1 style="color: #467355; , text-align: center; font-size: 20px;">&lt;</h1>
+								</c:if>
+								<c:if test="${ api.currentPage > 1 }">
+									<c:url var="before" value="/mypage/advert">
+										<c:param name="page" value="${ api.currentPage -1 }" />
+										<c:param name="usno" value="${ loginUser.usno }" />
+									</c:url>
+									<a href="${ before }" style="color: #467355; , text-align: center; font-size: 20px;"> &lt; </a>
+								</c:if>
+							</div>
+							<div class="content">
+								
+								<c:forEach items="${ applyList }" var="ap" varStatus="apStatus">
+									<div id="bannerAdverBox">
+										<p style="text-align: center; font-size: 20px;">사업장 이름 : ${ ap.bus_name }</p>
+										<p style="text-align: center; font-size: 20px;">신청일 :<fmt:formatDate value="${ ap.alsubdate }" type="date" pattern="yyyy-MM-dd" /></p>
+										<p style="text-align: center; font-size: 20px;">상태 : 승인검토중</p>
+									</div>
+								</c:forEach>
+							</div>
+							<div class="next">
+								<c:if test="${ api.currentPage >= api.maxPage }">
+									<h1 style="color: #467355; , text-align: center; font-size: 20px;"> &gt;</h1>
+								</c:if>
+								<c:if test="${ api.currentPage < api.maxPage }">
+									<c:url var="after" value="/mypage/advert">
+										<c:param name="page" value="${ api.currentPage + 1}" />
+										<c:param name="usno" value="${ loginUser.usno }" />
+									</c:url>
+									<a href="${ after }" style="color: #467355; , text-align: center; font-size: 20px;"> &gt; </a>
+								</c:if>
+							</div>
+						</c:when>
+						<c:otherwise>
+						<div style="text-align : center; margin-left : auto; margin-right : auto;">
+							<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
+            				<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">배너 광고 신청 승인 대기중인 사업장이 없습니다!</h1>
+						</div>
+						</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</div>
+
+		</div>
 
             </div>
    

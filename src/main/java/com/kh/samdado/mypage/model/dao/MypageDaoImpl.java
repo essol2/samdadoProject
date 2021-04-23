@@ -289,6 +289,12 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.selectOne("mypageMapper.selectReview", r);
 	}
 	
+	// 일반회원 - 후기수정 업데이트
+	@Override
+	public int updateReview(Review r) {
+		return sqlSession.update("mypageMapper.updateReview", r);
+	}
+	
 	// 일반회원 - 찜목록 넣기 전에 이미 있는지 확인하기
 	@Override
 	public Jjim findJjimNo(Jjim j) {
@@ -319,6 +325,4 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.selectList("mypageMapper.selectJjimList", usno);
 	}
 
-	
-	
 }

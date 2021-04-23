@@ -287,6 +287,12 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectReview(r);
 	}
 	
+	// 일반회원 - 후기수정 업데이트
+	@Override
+	public int updateReview(Review r) {
+		return mDao.updateReview(r);
+	}
+	
 	// 일반회원 - 찜목록 넣기 전에 이미 있는지 확인하기
 	@Override
 	public Jjim findJjimNo(Jjim j) {

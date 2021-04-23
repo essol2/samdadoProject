@@ -294,9 +294,9 @@ body {
 		</div>
 		<div class="menuBox" id="menuBox">
 
-                    <button class="clickedBtn" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userW.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
+                    <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
                     <button class="menuButton" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록<br><br> </div></button>
-                    <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle" onclick="location.href='${contextPath}/mypage/booking'"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약<br> <br></div></button>
+                    <button class="clickedBtn" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle" onclick="location.href='${contextPath}/mypage/booking'"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingW.png" class="btnImg"> <br> 내 예약<br> <br></div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행<br> <br></div></button>
                     <button class="menuButton" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑<br><br></div></button>
         </div>
@@ -346,7 +346,7 @@ body {
 							</c:when>
 							
 							<c:when test="${hl.r_booking_trv < now && hl.r_review_check eq null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ hl.r_bus_name}', '${ hl.r_booking_trv }', ${ hl.r_booking_no }, '${ hl.file_rename }', 'h', '${hl.r_bus_code }');">후기작성</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ hl.r_bus_name}', '${ hl.r_booking_trv }', ${ hl.r_booking_no }, '${ hl.file_rename }', 'h', '${hl.r_bus_code }', 'I', 0);">후기작성</button>
 							</c:when>
 							
 							<c:otherwise>
@@ -400,7 +400,7 @@ body {
 							</c:when>
 							
 							<c:when test="${cl.c_booking_trv < now && cl.c_review_check eq null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ cl.c_bus_name}', '${ cl.c_booking_trv }', ${ cl.c_booking_no }, '${ cl.file_rename }', 'c', '${cl.c_bus_code }');">후기작성</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ cl.c_bus_name}', '${ cl.c_booking_trv }', ${ cl.c_booking_no }, '${ cl.file_rename }', 'c', '${cl.c_bus_code }', 'I', 0);">후기작성</button>
 							</c:when>
 							
 							<c:otherwise>
@@ -453,7 +453,7 @@ body {
 							</c:when>
 							
 							<c:when test="${tl.t_booking_trv < now && tl.t_review_check eq null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ tl.t_bus_name}', '${ tl.t_booking_trv }', ${ tl.t_booking_no }, '${ tl.file_rename }', 't', '${tl.t_bus_code }');">후기작성</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ tl.t_bus_name}', '${ tl.t_booking_trv }', ${ tl.t_booking_no }, '${ tl.file_rename }', 't', '${tl.t_bus_code }', 'I', 0);">후기작성</button>
 							</c:when>
 							
 							<c:otherwise>
@@ -478,7 +478,11 @@ body {
 						<tr>
 							<td style="display:none;"><input type="hidden" id="bus_code" name="bus_code"></td>
 							<td style="display:none;"><input type="hidden" id="us_no" name="us_no" value="${loginUser.usno}">
-							<input type="hidden" id="rev_lv" name="rev_lv" value="review"></td>
+							<input type="hidden" id="rev_lv" name="rev_lv" value="review">
+							<input type="hidden" id="inup" name="inup">
+							<input type="hidden" id="rev_no" name="rev_no">
+							</td>
+							
 						</tr>
 						<tr>
 							<td rowspan="4" style="width: 45%; height: auto;" id="imgTd"></td>
@@ -597,7 +601,15 @@ body {
 
 	<script>
 
-		function goToReview(bus_name, goingDate, booking_no, file_rename, rev_hct, bus_code){
+		function goToReview(bus_name, goingDate, booking_no, file_rename, rev_hct, bus_code, inup, rev_no){
+			
+			if(inup == 'I'){
+				$('#inup').val("I");
+				$('#rev_no').val(rev_no);
+			} else if(inup  = 'U'){
+				$('#inup').val("U");
+				$('#rev_no').val(rev_no);
+			}
 			
 			$('#bus_code').val(bus_code);
 			$('#bus_name').text(bus_name);
@@ -640,7 +652,7 @@ body {
 			searchR.rev_no = rev_no;
 			searchR.rev_hct = rev_hct;
 			
-			//console.log(searchR);
+			console.log(searchR);
 			
 			$.ajax({
 				url : "rewrite",
@@ -648,7 +660,7 @@ body {
 				type : "POST",
 				contentType : "application/json; charset=utf-8",
 				success : function(data){
-					//console.log(data);
+					console.log(data);
 					//console.log("<img src='${ contextPath }/resources/busUploadFiles/"+ data.img_rename1 + "' alt='사진영역' style='width: 100%; height: 100%;'>");
 					
 					var rdateFormat = new Date(data.r_booking_trv);
@@ -674,11 +686,11 @@ body {
 					}
 					
 					if(rev_hct == "h"){
-						goToReview(data.r_bus_name, rdateFormat, data.r_booking_no, data.file_rename, data.rev_hct, data.bus_code);
+						goToReview(data.r_bus_name, rdateFormat, data.r_booking_no, data.file_rename, data.rev_hct, data.bus_code, 'U', data.rev_no);
 					} else if(rev_hct == "c"){
-						goToReview(data.c_bus_name, cdateFormat, data.c_booking_no, data.file_rename, data.rev_hct, data.bus_code);
+						goToReview(data.c_bus_name, cdateFormat, data.c_booking_no, data.file_rename, data.rev_hct, data.bus_code, 'U', data.rev_no);
 					} else{
-						goToReview(data.t_bus_name, tdateFormat, data.t_booking_no, data.file_rename, data.rev_hct, data.bus_code);
+						goToReview(data.t_bus_name, tdateFormat, data.t_booking_no, data.file_rename, data.rev_hct, data.bus_code, 'U', data.rev_no);
 					}
 
 				},
