@@ -1085,9 +1085,9 @@
 				return false;
 			}
             // 아이디 중복검사
-			if(/.중복 아이디로 사용할 수 없습니다./.test($("#test_id_label").text())){
+			if(/아이디를 다시 입력해주세요./&&/중복 아이디로 사용할 수 없습니다./.test($("#test_id_label").text())){
 				console.log($("#test_id_label").text());
-				alert('중복된 아이디입니다.');
+				alert('아이디를 다시 입력해주세요.');
 				$("#id").select();
 				return false;
 			}
@@ -1124,7 +1124,7 @@
 			}
 				
 			// 이메일 중복검사
-			if(/.중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
+			if(/중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
 				console.log($("#test_email_label").text());
 				alert('중복된 이메일입니다.');
 				$("#email").select();
@@ -1140,9 +1140,9 @@
 			
 			
 			
-			if(/.중복 휴대전화로 사용할 수 없습니다./.test($("#test_phone_label").text())){
+			if(/중복 휴대전화로 사용할 수 없습니다./&&/휴대전화를 다시 입력해주세요./.test($("#test_phone_label").text())){
 				console.log($("#test_phone_label").text());
-				alert('중복된 전화번호입니다.');
+				alert('휴대전화를 다시 입력해주세요.');
 				$("#phone").select();
 				return false;
 			}
@@ -1155,7 +1155,7 @@
 				return false;
 			}
 
-			return true;
+			return false;
 		}
 	
 	</script>

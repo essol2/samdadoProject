@@ -41,7 +41,7 @@
         <div class="col-10" id="B">
             <br>
             <!--신규 프리미엄 내역 -->
-            <h3>신규 <span style="color: red;">프리미엄</span>  내역</h3>
+            <h3><span style="color: red;">프리미엄 진행</span>  내역</h3>
             <br>
             <table class="table table-borderless">
                 <thead>
