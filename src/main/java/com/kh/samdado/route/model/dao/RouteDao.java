@@ -17,5 +17,6 @@ public interface RouteDao {
 	
 	int spotDelete();
 	int spotAdd();
-	int routeAdd();
+	
+	int addRoute(String[] slist);
 }

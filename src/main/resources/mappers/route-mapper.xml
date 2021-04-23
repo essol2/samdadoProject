@@ -17,7 +17,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="spot_rename" column="SPOT_RENAME" />
 		<result property="spot_content" column="SPOT_CONTENT" />
 	</resultMap>
-	
+<!-- 	<resultMap type="RouteDetail" id="RouteDetailResultSet">
+		<id property="route_no" column="ROUTE_NO"/>
+		<id property="detail_no" column="DETAIL_NO"/>
+		<result property="spot_no" column="SPOT_NO"/>
+		<result property="bus_code" column="BUS_CODE"/>
+	</resultMap>
+	 -->
 	<select id="routeSearch" parameterType="rSearch" resultMap="TourSpotResultSet">
 		SELECT 
 		    OR_NO
@@ -116,12 +122,38 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	    	ORDER BY (
 	    		CASE SPOT_TITLE
 		    	<foreach collection="array" item="st" index="idx">
-		    	WHEN #{st} THEN #{idx}
-		    	
+		    		WHEN #{st} THEN #{idx}
 		    	</foreach>
 		    	END
 	    	)
 	</select>
 	
+	<insert id="addRoute" parameterType="String">
+	<bind name="st" value="'%' + _parameter + '%'"/>
+		<foreach collection="array" item="st" index="idx" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+		
+    		INTO ROUTE_DETAIL
+    		(
+        		ROUTE_NO
+        		, DETAIL_NO
+        		, SPOT_NO
+		    )
+		    VALUES
+		    (
+        		ROU_FIN_SEQ_NO.NEXTVAL
+        		, #{idx}
+        		, (
+        			SELECT
+	                	SPOT_NO
+	            	FROM
+	                	TOUR_SPOT
+	            	WHERE
+	                	SPOT_TITLE IN (
+	                		#{st}
+	                	)
+        			)
+    			)
+    		</foreach>
+	</insert>
 
 </mapper>

@@ -38,19 +38,19 @@ public class RouteServiceImpl implements RouteService {
 		// TODO Auto-generated method stub
 		return rDao.spotDelete();
 	}
-	
-	
+
 	@Override
-	public int spotAdd() {
-		// TODO Auto-generated method stub
-		return rDao.spotAdd();
+	public int addRoute(String[] slist) {
+		
+		System.out.println("서비스: " + Arrays.toString(slist));
+		
+		return rDao.addRoute(slist);
 	}
 
-	
 	@Override
 	public int routeAdd() {
 		// TODO Auto-generated method stub
-		return rDao.routeAdd();
+		return 0;
 	}
 
 	

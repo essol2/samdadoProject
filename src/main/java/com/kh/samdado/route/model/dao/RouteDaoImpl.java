@@ -45,9 +45,11 @@ public class RouteDaoImpl implements RouteDao {
 	}
 
 	@Override
-	public int routeAdd() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int addRoute(String[] slist) {
+		
+		System.out.println("dao: " + Arrays.toString(slist));
+		
+		return sqlSession.insert("routeMapper.addRoute", slist);
 	}
 
 	
