@@ -967,7 +967,6 @@ public class businessController {
 	}
 	
 	
-	// 게시글 상세 페이지
 	@GetMapping("/detail")
 	public String bannerAdBusinessDetail(int bus_code,
 							  HttpServletRequest request,
