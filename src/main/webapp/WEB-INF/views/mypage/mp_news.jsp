@@ -110,7 +110,7 @@
         background-color:rgba( 255, 255, 255, 0.8 );
         border : 5px solid white;
         width : 77%;
-        height: fit-content;
+        height: 600px;
         margin-top : 5%;
         margin-left : 3%;
     }
@@ -252,7 +252,7 @@
 
             <div id="mainBox">
                 <div id="alertBox">
-		            <h2 style='margin : 3%;'>내 소식</h2>
+		            <h2 style='margin : 3%; overflow:auto;'>내 소식</h2>
 		            <table id="alertTable"> 
 			            <c:forEach var="ab" items="${ alertNList }" varStatus="abStatus">
 			                <tr style="cursor : pointer;" onclick="detailNAlert(${ab.nno})" class="newList">

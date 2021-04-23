@@ -309,7 +309,13 @@ body {
 			<br>
 			<h3 style="color: #467355; text-align: center;">숙박 예약 내역</h3>
 			<hr style="background-color: #467355; width: 90%; height: 2px;">
+			
+			<c:if test="${ hotelList} eq null">
+				<div> 소유하고 계신 사업장이 없습니다!</div>
+			</c:if>
+			
 			<c:forEach items="${ hotelList }" var="hl" varStatus="hlNum">
+			<div id="moremore">
 				<h5 id="bookTitle">${ hl.r_bus_name }</h5>
 				<div class="reservDetail">
 					<div class="reserveContainer">
@@ -353,6 +359,7 @@ body {
 					</div>
 				</div>
 				<br>
+				</div>
 			</c:forEach>
 		</div>
 
@@ -757,7 +764,19 @@ body {
         return year + '-' + month + '-' + day;
 	}
 	</script>
-
+	
+	<script>				
+	$(document).ready(function(){
+		size_div = $('.moremore').length;
+							
+		x = 3;
+		$('.moremore:lt('+x+')').addClass('moreProfile');
+		$('.moreBtn').click(function(){
+			x= (x+3 <= size_div)? x+3 : size_div;
+			$('.profile:lt('+x+')').addClass('moreProfile');	
+		});
+	});
+	</script>
 
 </body>
 </html>
