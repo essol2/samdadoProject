@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Samadado</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <style>
@@ -400,6 +401,24 @@
             font-family: 'GmarketSansBold' !important;
             line-height:0px;
         }
+        
+        .cateSelect {
+       	    width: 70px;
+		    height: 33px;
+		    border: 1px solid black;
+		    border-radius: 20%;
+		    /* -webkit-appearance: none; */
+		    appearance: none;
+		    padding-left: 5px;
+		    
+        }
+        
+        .cateSelect a, .cateSelect label {
+            text-decoration: none;
+            color: black;
+            font-family: 'GmarketSansBold' !important;
+            line-height:0px;
+        }
 
         .moreBtn {
             background-color: rgb(70, 115, 85);
@@ -511,7 +530,14 @@
             <nav id="choise2-nav">
                 <ul id="choise2">
                     <li>
-                        <div class="cover"><label>테마별</label></div>
+                        <div class="cover">
+							<select id="cateSelect"class="cateSelect">
+                                <option value="tema">테마별</option>
+                                <option value="wedding">신혼</option>
+                                <option value="gradu">졸업</option>
+                                <option value="trip">여행</option>
+                            </select>
+						</div>
                     </li>
                     <li>
                         <div class="cover"><label>유형별</label></div>
@@ -525,7 +551,35 @@
                 </ul>
 
             </nav>
+			
+			<script>	
+		    $(function(){
+		    	$("#cateSelect").change(function(){
+		    			var kinds = $(this).val(); 
 
+		    			$.ajax({
+		    				 url : '${contextPath}/business/cateList', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){ 
+		    	                 
+		    	                 
+		    	                 if(data != null){
+		    	                	 cateList = $("#secondlist");
+		    	                	 cateList.html("");
+		    	                 	
+		    	                 	 
+		    	                 }
+		    	                 
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+			</script>
             <!-- 관광지목록 div -->
 
             <div class="list">

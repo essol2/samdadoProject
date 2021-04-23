@@ -139,6 +139,8 @@ public interface businessService {
 
 	
 
+	List<Business> cateList(String kind);
+
 	
 
 	

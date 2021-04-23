@@ -258,7 +258,7 @@ public class businessServiceImpl implements businessService {
   	// 프리미엄 등록 시 만료일
 	@Override
 	public int insertIncome1(Income i) {
-		return bDao.insertIncome(i);
+		return bDao.insertIncome1(i);
 	}
 
 	@Override
@@ -305,6 +305,11 @@ public class businessServiceImpl implements businessService {
 	@Override
 	public List<RoomAtt> selectRoomAtt(int bus_code) {
 		return bDao.selectRoomAtt(bus_code);
+	}
+
+	@Override
+	public List<Business> cateList(String kind) {
+		return bDao.cateList(kind);
 	}
 
 	

@@ -332,6 +332,11 @@ public class businessDaoImpl implements businessDao {
 	public List<RoomAtt> selectRoomAtt(int bus_code) {
 		return sqlSession.selectList("businessMapper.selectRoomAtt", bus_code);
 	}
+
+	@Override
+	public List<Business> cateList(String kind) {
+		return sqlSession.selectList("businessMapper.cateList", kind);
+	}
   
  
 

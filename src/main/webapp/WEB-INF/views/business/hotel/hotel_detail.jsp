@@ -686,15 +686,27 @@
         <!-- 편의시설 -->
         <div class="checktable">
             <h2>주요 편의 시설</h2><br>
-            <c:set var="w" value="${fn:split(hotel.hotel_facility, ',')}"/>
-            <label><img src="../resources/images/image_listpage/check.png">무료 인터넷</label>
-            <label><img src="../resources/images/image_listpage/check.png">테라스</label>
+            <c:forTokens var="w" items="${ hotel.hotel_facility }" delims=",">
+            <c:if test="${ w eq '주차' }">
+            <label><img src="../resources/images/image_listpage/check.png">주차</label>
+            </c:if>
+            <c:if test="${ w eq '편의점' }">
             <label><img src="../resources/images/image_listpage/check.png">편의점</label>
-            <label><img src="../resources/images/image_listpage/check.png">주차</label><br>
+            </c:if>
+            <c:if test="${ w eq 'TV' }">
             <label><img src="../resources/images/image_listpage/check.png">TV</label>
+            </c:if>
+            <c:if test="${ w eq '테라스' }">
+            <label><img src="../resources/images/image_listpage/check.png">테라스</label>
+            </c:if>
+            <c:if test="${ w eq '테슬라' }">
+            <label><img src="../resources/images/image_listpage/check.png">테라스</label>
+            </c:if>
+            </c:forTokens>
+           <!--  
+            <label><img src="../resources/images/image_listpage/check.png">주차</label><br>
             <label><img src="../resources/images/image_listpage/check.png">컴퓨터</label>
-            <label><img src="../resources/images/image_listpage/check.png">조식</label>
-			
+            <label><img src="../resources/images/image_listpage/check.png">조식</label> -->
         </div>
 
         <hr class="boundary">
@@ -709,15 +721,16 @@
 		<c:forEach var="r" items="${ room }">
         <div class="detail">
             <div class="imgArea">
-                <img src="../resources/images/image_listpage/room3.png" class="detailImg">
+            	<c:forEach var="ra" items="${ roomAtt }">
+                <img src="${ contextPath }/resources/busUploadFiles/" ${ ra.file_rename } class="detailImg">
+                </c:forEach>
             </div>
 
             <div class="detailView">
                 <b>${ r.room_name }</b><br><br>
-                <c:set var="ame" value="${fn:split(r.room_amenity, ',') }"/>
-                <c:forEach var="ame" items="${ ame }">
+                <c:forTokens var="ame" items="${ r.room_amenity }" delims=",">
                 <c:if test="${ ame eq 'shower' }">
-                <label><img src="../resources/images/image_listpage/shower.png"></label>
+                <label><img src="../resources/images/image_listpage/shower.png">샤워</label>
                 </c:if>
                 <c:if test="${ ame eq 'aircon' }">
                 <label><img src="../resources/images/image_listpage/aircon.png">에어컨</label>
@@ -731,15 +744,26 @@
                 <c:if test="${ ame eq 'breakfast' }">
                 <label><img src="../resources/images/image_listpage/breakfast.png">조식</label><br><br>
                 </c:if>
-                <img src="../resources/images/image_listpage/usericon.png">
-                <img src="../resources/images/image_listpage/usericon.png"><br><br>
 				<c:if test="${ ame eq 'single' }">
                 <label><img src="../resources/images/image_listpage/singlebed.png">싱글침대</label>
 				</c:if>
 				<c:if test="${ ame eq 'double' }">
 				<label><img src="../resources/images/image_listpage/doublebed.png">더블침대</label>
 				</c:if>
-				</c:forEach>
+                
+				</c:forTokens>
+				<c:if test="${ r.room_people eq 'two' }">	
+					<img src="../resources/images/image_listpage/usericon.png">
+	                <img src="../resources/images/image_listpage/usericon.png">
+				</c:if>
+				<c:if test="${ r.room_people eq 'four' }">	
+					<img src="../resources/images/image_listpage/usericon.png">
+	                <img src="../resources/images/image_listpage/usericon.png">
+				</c:if>
+				<c:if test="${ r.room_people eq 'six' }">	
+					<img src="../resources/images/image_listpage/usericon.png">
+	                <img src="../resources/images/image_listpage/usericon.png">
+				</c:if>
             </div>
             <div class="btnArea">
                 <br>
