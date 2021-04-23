@@ -136,7 +136,7 @@ public class AdminController {
 		for (Income i : adminPremiumAd) {
 			exdate = i.getExdate();
 			
-			System.out.println("i : " + i);
+			//System.out.println("i : " + i);
 		
 				try {
 					day1 = sdf.format(today); // 오늘
