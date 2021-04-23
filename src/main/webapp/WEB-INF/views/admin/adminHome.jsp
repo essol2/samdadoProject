@@ -112,13 +112,13 @@
 										</div>
 										<br>
 										<div class="form-floating">
-										  <input type="text" class="form-control" placeholder="Leave a comment here" name="btitle" style=" height: 100px;" id="floatingTextarea">
-										  <label for="floatingTextarea">공지글을 입력하세요.</label>
+										  <input type="text" class="form-control" placeholder="Leave a comment here" name="btitle" id="floatingTextarea">
+										  <label for="floatingTextarea">제목을 입력하세요.</label>
 										</div>
 										<br>
 										<div class="form-floating">
-										  <textarea class="form-control" placeholder="Leave a comment here" name="bcontent" id="floatingTextarea" style="resize: none;"></textarea>
-										  <label for="floatingTextarea">제목을 입력하세요.</label>
+										  <textarea class="form-control" placeholder="Leave a comment here" name="bcontent" id="floatingTextarea" style="resize: none; height: 100px;"></textarea>
+										  <label for="floatingTextarea">내용을 입력하세요.</label>
 										</div>
 										<div class="modal-footer">
 									        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
