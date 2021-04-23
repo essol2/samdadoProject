@@ -70,6 +70,8 @@ public interface AdminDao {
 
 	List<A_board> adminMainselectAboardList();
 
+	int updateRstatusToEnd(Income adminPremiumAd);
+
 
 
 

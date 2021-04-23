@@ -76,4 +76,6 @@ public interface AdminService {
 
 	List<A_board> adminMainselectAboardList();
 
+	int updateRstatusToEnd(Income i);
+
 }

@@ -1,5 +1,7 @@
 package com.kh.samdado.admin.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -122,11 +124,46 @@ public class AdminController {
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		List<Income> adminPremiumAd = aService.adminPremiumAdSelect(pi);
+		List<Income> adminPremiumAdnotEnd = null;
+			
+		Date today = new Date(); // 오늘날짜
+		Date exdate = null; // 비교날짜 변수선언
+		String day1 = null; // 오늘날짜 스트링타입
+		String day2 = null; // 비교날짜 스트링타입
 		
-		model.addAttribute("adminPremiumAd", adminPremiumAd);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (Income i : adminPremiumAd) {
+			exdate = i.getExdate();
+			
+			System.out.println("i : " + i);
+		
+				try {
+					day1 = sdf.format(today); // 오늘
+					day2 = sdf.format(exdate); // 만기	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			
+				//System.out.println("day1 : " + day1);
+				//System.out.println("day2 : " + day2);
+				
+			int compare = day1.compareTo(day2);
+			
+			//System.out.println("compare : " + compare);
+			
+			if (compare >= 0) { // 만기날짜 넘음 (양수 리턴 : 파라미터가 작음)
+				aService.updateRstatusToEnd(i); // status : E
+				adminPremiumAdnotEnd = aService.adminPremiumAdSelect(pi);
+			} else if (compare < 0) { // 만기날짜 남음 (음수 리턴 : 파라미터가 큼)
+				adminPremiumAdnotEnd = aService.adminPremiumAdSelect(pi);
+			}
+		}
+
+		model.addAttribute("adminPremiumAdnotEnd", adminPremiumAdnotEnd);
 		model.addAttribute("pi", pi);
-		
 		return "admin/adminAd2Manage";
+		
 	}
 	
 	// 3. 관리자 홈 신고관리 페이지로
@@ -182,8 +219,6 @@ public class AdminController {
 	
 	@PostMapping("/updateAdminInfo")
 	public String updateAdminInfo(@ModelAttribute User u, Model model) {
-
-		//System.out.println("u : " + u);
 		
 		int result = uService.updateAdminUser(u);
 		
@@ -371,41 +406,11 @@ public class AdminController {
 			// 2_2. rstatus y로 업데이트, r_count + 1, rexdate 추가 -> 신고 3회 먹었을 때 rexdate 추가해줌 -> rcount -> 0
 			result = aService.updateRstatusToYAndRexdate(report);
 			//System.out.println("신고 366 result : " + result);
-      a.setNtitle("block");
+            a.setNtitle("block");
 		}
-    //else {
-//				
-//			Report selectReportRexdate = aService.selectReportRexdate(report);
-//				
-//				System.out.println("여기 확인 ");
-//				Date today = new Date(); // 오늘날짜
-//				Date exday = selectReportRexdate.getRexdate(); // 만기일
-//				
-//				String day1 = null;
-//				String day2 = null;
-//			
-//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//				
-//					try {
-//						day1 = sdf.format(today); // 오늘
-//						day2 = sdf.format(exday); // 만기	
-//					} catch(Exception e) {
-//						e.printStackTrace();
-//					}
-//					
-//				int compare = day1.compareTo(day2);
-//				
-//				if (compare > 0) { // 만기날짜 넘음
-//					result = aService.updateRstatusToY(report);
-//					System.out.println("만기일 넘음 result : " + result);
-//				} else if (compare <= 0) { // 만기날짜 남음
-//					result = aService.updateRstatusToYAndNoRcount(report); // status -> y / count -> x
-//					System.out.println("만기일 남음 result : " + result);
-//				}
-//
-//		}
+   
 
-   // --- 은솔 --- News에 신고 받은거 알리기
+        // --- 은솔 --- News에 신고 받은거 알리기
 		int newReport = mService.insertNewReport(a);
     
 		if (result > 0 && newReport > 0) model.addAttribute("msg", "신고 승인 처리가 완료되었습니다.");	
