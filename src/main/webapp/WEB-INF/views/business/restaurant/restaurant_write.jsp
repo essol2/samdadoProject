@@ -232,7 +232,7 @@
 				        <div style="display:none">
 				            <div class="join-wrap">
 				                <div id="pricont" class="box" style="height:300px">
-				                   <textarea style="width: 100%; height:100%; text-align:left;">① “공급사업자”라 함은 본 서비스를 제공하는 사업자를 말한다.
+				                   <textarea style="width: 100%; height:100%; text-align:left; resize:none;" >① “공급사업자”라 함은 본 서비스를 제공하는 사업자를 말한다.
 				                   ② “이용사업자”라 함은 본 서비스를 무료로 이용하는 자 및 공급사업자와 본 서비스 이용계약을 체결한 자로서 본 서비스를 이용하는 개인, 법인 또는 개인사업자 혹은 개인을 말한다.
 				                   ③ “신청사업자"라 함은 본 서비스를 유료로 이용하기 위해 이용신청을 하는 자를 말한다.
 								④ "이용계약"이라 함은 이용사업자가 본 서비스 이용을 개시하며 공급사업자와 상호 동의한 요금제 및 개별 계약을 말한다.
@@ -349,6 +349,22 @@
 					    <h3><label>추가사진</label></h3>
 					    <span class="box">
 					        <input type="file" name="uploadFile" class="content">
+					    </span>   
+					</div>
+					
+					<!-- 메뉴판 -->
+					<div class="join-wrap">
+					    <h3><label>메뉴판</label></h3>
+					    <span class="box">
+					        <input multiple="multiple" type="file" name="menuFile" class="content" required="required">
+					    </span>   
+					</div>
+					
+					<!-- 메뉴판 -->
+					<div class="join-wrap">
+					    <h3><label>메뉴판</label></h3>
+					    <span class="box">
+					        <input type="file" name="menuFile" class="content">
 					    </span>   
 					</div>
 		

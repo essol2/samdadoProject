@@ -328,6 +328,12 @@ public class businessServiceImpl implements businessService {
 		return bDao.selectReview(bus_code);
 	}
 
+	@Override
+	public int insertMenu(List<BusinessAtt> menus) {
+		// TODO Auto-generated method stub
+		return bDao.insertMenu(menus);
+	}
+
 	
 
 	
