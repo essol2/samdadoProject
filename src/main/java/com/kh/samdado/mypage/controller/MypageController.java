@@ -406,7 +406,16 @@ public class MypageController {
 	 
 	// 일반회원 마이페이지로 이동
 	 @GetMapping("/userinfo")
-	 public String mypageUserFirstView() { 
+	 public String mypageUserFirstView(ModelAndView mv, 
+			 							@ModelAttribute User u) { 
+		 
+		 List<Alert> alertNList = mService.selectAlertList(u.getUsno());
+		 // 읽은 리스트
+		 List<Alert> alertYList = mService.selectYAlertList(u.getUsno());
+		 
+		 mv.addObject("alertNList", alertNList);
+		 mv.addObject("alertYList", alertYList);
+		 
 			return "mypage/mp_UserInfo";
 	}
 	 

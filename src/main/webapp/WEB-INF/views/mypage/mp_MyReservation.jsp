@@ -329,7 +329,7 @@ body {
 		</div>
 		<div class="menuBox" id="menuBox">
 
-                    <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
                     <button class="menuButton" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록<br><br> </div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle" onclick="location.href='${contextPath}/mypage/booking'"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingW.png" class="btnImg"> <br> 내 예약<br> <br></div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행<br> <br></div></button>
@@ -652,6 +652,9 @@ body {
 
 
 	<script>
+	function goToInfo(){
+		location.href='${contextPath}/mypage/userinfo?usno=' + ${loginUser.usno};
+	}
  	function goToBooking(){
 		location.href='${contextPath}/mypage/booking?usno='+${loginUser.usno};
 	}

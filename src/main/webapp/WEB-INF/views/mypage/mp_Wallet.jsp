@@ -486,7 +486,7 @@
             <div id="topMenu">
 				<div id="countDday"> <p>${ loginUser.usname }님의 <br> 여행까지 <br>D-100</p> </div>
                 <div class="menuBox" id="menuBox">
-                    <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행</div></button>
@@ -579,18 +579,19 @@
                         <th class="walletName">이름</th>
                         <th class="walletCate">구분</th>
                         <th class="walletPrice">가격</th>
-                        <th class="walletPayDate">결제일자(예정일)</th>
+                        <th class="walletPayDate">결제일자</th>
                         <th class="walletStatus">상태</th>
                         <th class="walletTouch">더치페이</th>
                         <th class="walletPerson">1인 가격</th>
                         <th class="walletAccompany">인원</th> 
                         <th class="walletWhoPay">결제인</th>
+                        <th class="delete">삭제</th>
                       </tr>
                     </thead>
                     <tbody >
                    
                     <c:forEach var="ab" items="${ abList }" varStatus="abStatus">
-                      <tr id="forChageAjax${abStatus.index}" class="listTableTr" onclick="deleteClick(${abStatus.index})">
+                      <tr id="forChageAjax${abStatus.index}" class="listTableTr" >
                         <td class="walletName" id='deleteClick' >${ ab.accName }</td>
                         <td class="walletCate"> ${ ab.accClassify }</td>
                         <td class="walletPrice"><fmt:formatNumber value="${ ab.accWon }" pattern="#,###"/></td>
@@ -617,6 +618,7 @@
 		          				<td class="walletWhoPay" id="payPerson${abStatus.index}">${ab.whopay}</td>
 		          			</c:when>
 	          			</c:choose>
+	          			<td><img src="${contextPath}/resources/images/image_mp/delete.png" style="width : 20px;" onclick="deleteClick(${abStatus.index})"></td>
                     </c:forEach>
                     </tbody>
                   </table>
@@ -743,6 +745,9 @@
 	
 	function goToJjim(){
 		location.href='${contextPath}/mypage/jjimlist?usno='+${loginUser.usno};
+	}
+	function goToInfo(){
+		location.href='${contextPath}/mypage/userinfo?usno='+${loginUser.usno};
 	}
     </script>
 	
