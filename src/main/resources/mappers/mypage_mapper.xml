@@ -1098,4 +1098,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
   		)
   		WHERE ROWNUM = 1
   </select>
+  
+  <update id="updateUserStatus" parameterType="User">
+  		UPDATE "USER"
+  		SET US_STATUS = 'N'
+  		WHERE US_NO = #{usno}
+  </update>
 </mapper>

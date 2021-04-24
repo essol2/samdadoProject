@@ -467,7 +467,8 @@
 
             <div id="mainBox">
                 <div id="leftBox">
-                <form action="${ contextPath }/mypage/updateInfo" method="POST" onsubmit="return submitValidate();">
+                
+                    <input type="hidden" name="uspart" id="uspart" value="${loginUser.uspart }">
                     <table id="memInfoTable">
                         <tr>
                             <th>이름, 아이디</th>
@@ -477,31 +478,34 @@
                             <th>비밀번호 수정</th>
                             <td colspan="3" > <button type="button" id="changePwdBtn" onclick="">비밀번호 수정하기</button></td>
                         </tr>
-                        
+                       
 						<tr>
-							
 	                            <th>이메일, 전화번호 수정</th>
-	                            <td>이메일 <input type="text" class="chInfoTag" id="email" name="email" value="${ loginUser.usemail }">
+	                            <td>이메일 <input type="text" class="chInfoTag" id="newEmail" name="email" value="${ loginUser.usemail }">
 	                                </td>
-	                            <td>전화번호 <input type="text" class="chInfoTag" id="phone" name="phone" value="${ loginUser.usphone }">
+	                            <td>전화번호 <input type="text" class="chInfoTag" id="newPhone" name="phone" value="${ loginUser.usphone }">
 	                                <input type="hidden" name="usid" id="usid" value="${ loginUser.usid }"></td>
-	                            <td><button id="changeInfo" type="submit">수정하기</button></td>
-                        	
+	                            <td><button id="changeInfo" onclick="goToChange();">수정하기</button></td>
                         </tr>
-                      
+                     
                         <tr>
                             <th >회원 탈퇴</th>
-                            <td colspan="3"><p id="specificCon">회원 탈퇴 시 저장되어 있는 회원 정보는 3개월간 보관 후 영구적으로 삭제됩니다. <br>
+                            <td colspan="3">
+                            <form action="${contextPath}/mypage/userout" method="post">
+                            <p id="specificCon">회원 탈퇴 시 저장되어 있는 회원 정보는 3개월간 보관 후 영구적으로 삭제됩니다. <br>
                                 3개월 이내에는 복구가 가능하며 관리자에게 문의주세요.<br>
                                 삭제시 모든 예약 정보, 길 정보를 찾을 수 없습니다.<br>
                                 탈퇴를 원하시면 아래 동의 후 비밀번호 확인을 통해 탈퇴하실 수 있습니다.<br></p>
                                 <input type="checkbox" name="check" value="위의 안내사항에 대해 동의합니다.">위의 안내사항에 대해 동의합니다.<br>
                                 <label style="font-size: small;">비밀번호 확인 :</label>
-                                <input type="password" id="checkPwd" name="checkPwd">
-                                <button id="memOut">탈퇴</button></td>
+                                <input type="password" id="uspwd" name="uspwd">
+                                <input type="hidden" id="usno" name="usno" value="${loginUser.usno }">
+                                <input type="hidden" id="uspart" name="uspart" value="${loginUser.uspart}">
+                                <input type="hidden" id="usid" name="usid" value="${loginUser.usid}">
+                                <button id="memOut" type="submit">탈퇴</button></form></td>
                         </tr>
                     </table>
-                    </form>
+                    
                 </div>
                 <div id="rightBox">
                     <div id="alertBox">
@@ -574,7 +578,7 @@
 
                     <form action="${ contextPath }/mypage/updatepwd" method="POST" onsubmit="return submitValidate();">
                       <div class="row g-3">
-
+						<input type="hidden" name="uspart" id="uspart" value="${loginUser.uspart }">
                         <div class="col-12">
                             <label for="_id" class="form-label">현재 비밀변호 </label>
                             <input type="password" class="form-control" id="checkPwd" name="currentPwd" required>                           
@@ -714,6 +718,20 @@
 	
 	function goToRoute(){
 		location.href="${contextPath}/mypage/myroute?usno=" + ${loginUser.usno};
+	}
+	function goToChange(){
+		var uspart = "일반";
+		var usid=$('#usid').val();
+		var usemail = document.getElementById('newEmail').value;
+		/* var usemail=$('#email').val(); */
+		var usphone=$('#newPhone').val();
+	/* 	
+		console.log(uspart);
+		console.log(usid);
+		console.log(usemail);
+		console.log(usphone); */
+		
+		location.href="${contextPath}/mypage/updateInfo?usno=" + ${loginUser.usno} + "&uspart" + uspart + "&usid=" + usid + "&usemail=" + usemail + "&usphone=" + usphone;
 	}
 	
 	function detailNAlert(nno){

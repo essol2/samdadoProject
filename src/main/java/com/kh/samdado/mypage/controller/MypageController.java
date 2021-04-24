@@ -419,20 +419,23 @@ public class MypageController {
 	 
 	// 일반회원 마이페이지로 이동
 	 @GetMapping("/userinfo")
-	 public String mypageUserFirstView(ModelAndView mv, 
-			 							@ModelAttribute User u) { 
+	 public ModelAndView mypageUserFirstView(ModelAndView mv, 
+			 								 @ModelAttribute User user) { 
+		 //System.out.println(user);
 		 
-		 List<Alert> alertNList = mService.selectAlertList(u);
+		 List<Alert> alertNList = mService.selectAlertList(user);
 		 // 읽은 리스트
-		 List<Alert> alertYList = mService.selectYAlertList(u);
+		 List<Alert> alertYList = mService.selectYAlertList(user);
 		 
 		 //System.out.println(alertNList);
 		 //System.out.println(alertYList);
 		 
 		 mv.addObject("alertNList", alertNList);
 		 mv.addObject("alertYList", alertYList);
-		 
-			return "mypage/mp_UserInfo";
+		 //mv.addObject("usno", user.getUsno());
+		 //mv.addObject("uspart",user.getUspart());
+		 mv.setViewName("mypage/mp_UserInfo");
+		return mv;
 	}
 	 
 	 // 일반회원 -  비밀번호 수정 메소드
@@ -446,7 +449,7 @@ public class MypageController {
 		 
 		 
 		 
-		// System.out.println(u);
+		//System.out.println("change안에서 u : " + u);
 		 
 		 User loginUser = uService.loginUser(u);
 		 
@@ -458,17 +461,27 @@ public class MypageController {
 				   
 		    // 5) db에 update 후
 			int result = uService.updatePwdUser(u);	// 암호화 한 비번 db에 update
-				   
+			u.setUspart("일반");
+			 List<Alert> alertNList = mService.selectAlertList(u);
+			 // 읽은 리스트
+			 List<Alert> alertYList = mService.selectYAlertList(u);
+			
 		    // 6) 마이페이지로 돌아가기
 			if (result > 0) {
+				 model.addAttribute("alertNList", alertNList);
+				 model.addAttribute("alertYList", alertYList);
 				model.addAttribute("msg", "비밀번호가 수정되었습니다.");
 				return "/mypage/mp_UserInfo";
 			} else {
+				 model.addAttribute("alertNList", alertNList);
+				 model.addAttribute("alertYList", alertYList);
 			    model.addAttribute("msg", "비밀번호 변경에 실패하였습니다. 다시 시도해주세요.");
-				return "/mypage/mp_UserInfo";
+			    return "/mypage/mp_UserInfo";
 			}
 			 
 		 } else {
+			 model.addAttribute("usno", u.getUsno());
+			 model.addAttribute("uspart", u.getUspart());
 			 model.addAttribute("msg", "현재 비밀번호가 틀립니다.");
 			 return "/mypage/mp_UserInfo";
 		 }
@@ -476,43 +489,51 @@ public class MypageController {
 	 }	 
 	 
 	 // 일반회원 - 이메일, 전화번호 수정 메소드
-	 @PostMapping("/updateInfo")
+	 @GetMapping("/updateInfo")
 	 public String updateInfo(@ModelAttribute("loginUser") User u,
 				              Model model,
 				              HttpSession session,
 				              RedirectAttributes rd,
-				              @RequestParam(name="email", defaultValue="null") String email,
-				              @RequestParam(name="phone", defaultValue="null") String phone,
+				              @RequestParam(name="usemail", defaultValue="null") String email,
+				              @RequestParam(name="usphone", defaultValue="null") String phone,
 				              @RequestParam(name="usid") String usid) {
+//		 System.out.println(u);
+		 
+//		 User loginUser = uService.loginUser(u);
 		 
 		 
-		 User loginUser = uService.loginUser(u);
-		 
-		 
-		 if(email==null) {
-			 u.setUsemail(loginUser.getUsemail());
-		 } else {
-			 u.setUsemail(email);
-		 }
-		 
-		 if(phone==null) {
-			 u.setUsphone(loginUser.getUsphone());
-		 } else {
-			 u.setUsphone(phone);
-		 }
-		 
+//		 if(email==null) {
+//			 u.setUsemail(loginUser.getUsemail());
+//		 } else {
+//			 u.setUsemail(email);
+//		 }
+//		 
+//		 if(phone==null) {
+//			 u.setUsphone(loginUser.getUsphone());
+//		 } else {
+//			 u.setUsphone(phone);
+//		 }
+		 System.out.println("changeEP안에서 u : " + u);
 		// DB에 UPDATE_이메일, 전화번호 변경 메소드
 		int result = mService.updateUserInfo(u);	// 암호화 한 비번 db에 update
 		
 		//변경 값 다시 loginUser에 넣어주기
-		loginUser = uService.loginUser(u);
+		User loginUser = uService.loginUser(u);
+		
+		//System.out.println("loginUser가 변경 되었는지 확인해보쟈 : " + loginUser);
+		 u.setUspart("일반");
+		 List<Alert> alertNList = mService.selectAlertList(u);
+		 // 읽은 리스트
+		 List<Alert> alertYList = mService.selectYAlertList(u);
 		 
 		if (result > 0) {
-			//System.out.println("loginUser가 변경 되었는지 확인해보쟈 : " + loginUser);
-			
+			model.addAttribute("alertNList", alertNList);
+			model.addAttribute("alertYList", alertYList);
 			model.addAttribute("msg", "수정이 완료되었습니다!");
-			return "redirect:/mypage/userinfo";
+			return "/mypage/mp_UserInfo";
 		} else {
+			model.addAttribute("alertNList", alertNList);
+			model.addAttribute("alertYList", alertYList);
 		    model.addAttribute("msg", "수정에 실패했습니다. 다시 시도해주세요.");
 			return "/mypage/mp_UserInfo";
 		}
@@ -940,4 +961,59 @@ public class MypageController {
 			 
 			 return mv;
 		 }
+		 
+	
+		 
+	// 회원 탈퇴
+	@PostMapping("/userout")
+	public String memberOut(@ModelAttribute User u, Model model) {
+		
+		System.out.println("out u : " + u);
+		//System.out.println(memoutPwd);
+		User loginUser = uService.loginUser(u);
+		System.out.println("out loginUser" + loginUser);
+		
+		List<Alert> alertNList = mService.selectAlertList(u);
+		 // 읽은 리스트
+		 List<Alert> alertYList = mService.selectYAlertList(u);
+		
+		
+		if(bcryptPasswordEncoder.matches(u.getUspwd(), loginUser.getUspwd())) {
+
+			int result = mService.updateUserStatus(u);
+			
+			
+			if(result>0) {
+				model.addAttribute("msg", "상다도에서 다시 만나는 그 날을 기다릴게요..ㅠㅠ!");
+				return "redirect:/main";
+			} else {
+				if(u.getUspart() == "일반") {
+					model.addAttribute("alertNList", alertNList);
+					 model.addAttribute("alertYList", alertYList);
+					model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
+					return "/mypage/mp_UserInfo";
+				} else {
+					model.addAttribute("alertNList", alertNList);
+					 model.addAttribute("alertYList", alertYList);
+					model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
+					return "/mypage/mp_UserInfo";
+				}
+				
+			}
+		} else {
+			if(u.getUspart() == "일반") {
+				model.addAttribute("alertNList", alertNList);
+				 model.addAttribute("alertYList", alertYList);
+				model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
+				return "/mypage/mp_UserInfo";
+			} else {
+				model.addAttribute("alertNList", alertNList);
+				 model.addAttribute("alertYList", alertYList);
+				model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
+				return "/mypage/mp_UserInfo";
+			}
+		 }
+
+	 }	 
+		
 }

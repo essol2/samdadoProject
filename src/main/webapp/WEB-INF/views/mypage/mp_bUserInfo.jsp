@@ -276,8 +276,8 @@
                                 <br>탈퇴를 원하시면 아래 동의 후 비밀번호 확인을 통해 탈퇴하실 수 있습니다.<br></p>
                                 <input type="checkbox" name="check" value="위의 안내사항에 대해 동의합니다.">위의 안내사항에 대해 동의합니다.<br><br>
                                 <label style="font-size: small;">비밀번호 확인 :</label>
-                                <input type="password" id="checkPwd" name="checkPwd">
-                                <button id="memOut">탈퇴</button></td>
+                                <input type="password" id="memoutPwd" name="memoutPwd">
+                                <button id="memOut" onclick="goToMemout();">탈퇴</button></td>
                         </tr>
                     </table>
                     </form>
@@ -397,6 +397,12 @@
 	function goToAlert(){
 		var uspart = "제휴";
 		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno} +"&uspart=" + uspart;
+	}
+	
+	function goToMemout(){
+		var memoutPwd = $('#memoutPwd').val();
+		var uspart = "일반";
+		location.href="${contextPath}/mypage/userout?usno="+${loginUser.usno}+"&memoutPwd="+memoutPwd+"&uspart="+uspart;
 	}
 	</script>
 	

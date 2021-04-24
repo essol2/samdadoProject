@@ -342,5 +342,11 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.findNewBno(aboard);
 	}
 
+	// 회원 탈퇴
+	@Override
+	public int updateUserStatus(User u) {
+		return mDao.updateUserStatus(u);
+	}
+
 	
 }
