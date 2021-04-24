@@ -257,7 +257,7 @@
                 <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
                 <div class="menuBox" id="menuBox">
 
-                    <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimW.png" class="btnImg"> <br> 찜목록</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
                     <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행</div></button>
@@ -326,6 +326,10 @@
 			
 			function goToDetail(bus_code){
 				location.href='${contextPath}/business/detail?bus_code='+bus_code;
+			}
+			
+			function goToInfo(){
+				location.href='${contextPath}/mypage/userinfo?usno='+${loginUser.usno};
 			}
 	    </script>
 		<script>
