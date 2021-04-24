@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.samdado.business.model.dao.businessDao;
+import com.kh.samdado.business.model.vo.BusinessSearch;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -191,6 +192,27 @@ public class businessServiceImpl implements businessService {
 		
 	}
 	
+	// 리스트에서 사업장검색
+	@Override
+	public List<Business> searchTourList(BusinessSearch search) {		
+		return bDao.searchTourList(search);
+	}
+	
+	@Override
+	public List<Business> searchHotelList(BusinessSearch search) {		
+		return bDao.searchHotelList(search);
+	}
+
+	@Override
+	public List<Business> searchResList(BusinessSearch search) {
+		return bDao.searchResList(search);
+	}
+
+	@Override
+	public List<Business> searchCarList(BusinessSearch search) {
+		return bDao.searchCarList(search);
+	}
+	
 	// 일반결제 메소드
 	@Override
 	public int insertIncome(Income i) {		
@@ -333,6 +355,8 @@ public class businessServiceImpl implements businessService {
 		// TODO Auto-generated method stub
 		return bDao.insertMenu(menus);
 	}
+
+	
 
 	
 
