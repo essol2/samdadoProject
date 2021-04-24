@@ -231,6 +231,14 @@
    	padding-left : 2%;
    	padding-right : 2%;
    }
+   
+   #reddot{
+		position: absolute;
+	    top: 13%;
+	    left: 27%;
+	    width : 30px;
+	    height : 30px;
+	}
 </style>
 <body>
 
@@ -242,6 +250,7 @@
 
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/buserinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToAlert();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/bellW.png" class="btnImg"> <br> 내 소식</div></button>
+                    <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
                     <button class="menuButton" id="myInfo" onclick="goToBuss();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToAdvert();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/adverB.png" class="btnImg"> <br> 광고관리</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToPoint();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 포인트</div></button>
@@ -273,6 +282,9 @@
 			                    <c:if test="${ab.ncate == 'A' || ab.ncate == 'AA'}">
 			                    	<td>배너광고</td>
 			                    </c:if>
+			                     <c:if test="${ab.ncate == 'B'}">
+			                    	<td>공지사항</td>
+			                    </c:if>
 			                    
 			                    <td><fmt:formatDate value="${ ab.ndate }" type="date" pattern="yyyy-MM-dd" /></td>
 			                    
@@ -293,6 +305,9 @@
 			                    </c:if>
 			                    <c:if test="${ay.ncate == 'A' || ay.ncate == 'AA'}">
 			                    	<td>배너광고</td>
+			                    </c:if>
+			                     <c:if test="${ay.ncate == 'B'}">
+			                    	<td>공지사항</td>
 			                    </c:if>
 			                    <td><fmt:formatDate value="${ ay.ndate }" type="date" pattern="yyyy-MM-dd" /></td>
 			                </tr>
@@ -453,7 +468,7 @@
 						var tcontent3 = $("<td colspan='4'>").text(asdateFormat + "에 배너광고가 시작됩니다.");
 						
 						var tr4 = $("<tr>");
-						var tcontent4 = $("<td colspan='4'>").text("내 포인트에서 포인트 충전 후 다시 신청해주세요!");
+						var tcontent4 = $("<td colspan='4'>").text("삼다도와 함께 번창하세요!!");
 						
 						tr1.append(tnno, tnnoData, tncate, tncateData);
 						tr2.append(tcontent2);
@@ -617,6 +632,8 @@
 			
 			var searchUsno = new Object();
 			searchUsno.usno = usno;
+			var uspart = "제휴"
+			searchUsno.uspart = uspart;
 			
 			$.ajax({
 				url : "${contextPath}/mypage/alertajax",
@@ -631,7 +648,12 @@
 					table = $("#alertTable");
 					table.html("");
 					
+					
 					for(var i in data){
+						
+						var fNdate = new Date(data[i].ndate);
+						fNdate = getFormatDate(fNdate);
+						
 
 						if(data[i].nstatus == 'N'){
 							var tr1 = $("<tr style='cursor : pointer;' onclick='detailNAlert("+data[i].nno+")' class='newList'>");
@@ -644,11 +666,13 @@
 								var ajncate = $("<td>").text("신고접수");
 							} else if(data[i].ncate == 'P'){
 								var ajncate = $("<td>").text("포인트");
+							} else if(data[i] = 'B'){
+								var ajncate = $("<td>").text("공지사항");
 							} else{
 								var ajncate = $("<td>").text("배너광고");
 							}
 							
-							var ajndate =  $("<td>").text(data[i].ndate);
+							var ajndate =  $("<td>").text(fNdate);
 							
 							tr1.append(ajnno, ajntitle, ajncate, ajndate);
 							
@@ -663,11 +687,13 @@
 								var ajncate = $("<td>").text("신고접수");
 							} else if(data[i].ncate == 'P'){
 								var ajncate = $("<td>").text("포인트");
+							} else if(data[i] = 'B'){
+								var ajncate = $("<td>").text("공지사항");
 							} else{
 								var ajncate = $("<td>").text("배너광고");
 							}
 							
-							var ajndate =  $("<td>").text(data[i].ndate);
+							var ajndate =  $("<td>").text(fNdate);
 							
 							tr2.append(ajnno, ajntitle, ajncate, ajndate);
 						}
@@ -698,7 +724,8 @@
 	}
 	
 	function goToAlert(){
-		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno};
+		var uspart = "제휴";
+		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno} +"&uspart=" + uspart;
 	}
 	</script>
 	
@@ -712,5 +739,43 @@
 	        return year + '-' + month + '-' + day;
 		}
 	</script>
+	<script>
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty sessionScope.loginUser}){
+	 			if(${loginUser.uspart eq "일반"}){
+	 				var uspart = "일반";
+	 			} else if(${loginUser.uspart eq "제휴"}){
+	 				var uspart = "제휴";
+	 			} else {
+	 				var uspart = " ";
+	 			}
+	 			
+	 			var searchU = new Object();
+				searchU.usno = ${loginUser.usno};
+				searchU.uspart = uspart;
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
+	
 </body>
 </html>

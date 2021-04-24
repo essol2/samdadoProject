@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.samdado.admin.model.vo.A_board;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -34,14 +35,14 @@ public class MypageDaoImpl implements MypageDao{
 	
 	// 안읽은 알림 select 메소드
 	@Override
-	public List<Alert> selectAlertList(String usno) {
-		return sqlSession.selectList("mypageMapper.selectAlertList", usno);
+	public List<Alert> selectAlertList(User u) {
+		return sqlSession.selectList("mypageMapper.selectAlertList", u);
 	}
 	
 	// 읽은 알림 select 메소드
 	@Override
-	public List<Alert> selectYAlertList(String usno) {
-		return sqlSession.selectList("mypageMapper.selectYAlertList", usno);
+	public List<Alert> selectYAlertList(User u) {
+		return sqlSession.selectList("mypageMapper.selectYAlertList", u);
 	}
 
 	// 알림 상세보기 객체 찾아오는 메소드
@@ -267,9 +268,9 @@ public class MypageDaoImpl implements MypageDao{
 	// 일반회원 - 내예약 취소
 	@Override
 	public int deleteBooking(Booking b) {
+		System.out.println("dao까지는 잘 오니?");
 		return sqlSession.delete("mypageMapper.deleteBooking", b);
 	}
-
 	// 일반회원 - 후기등록
 	@Override
 	public int insertReview(Review r) {
@@ -323,6 +324,24 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public List<Jjim> selectJjimList(String usno) {
 		return sqlSession.selectList("mypageMapper.selectJjimList", usno);
+	}
+
+	// 제휴회원 - 로그인시 내소식 확인하기
+	@Override
+	public int findNewNews(User u) {
+		return sqlSession.selectOne("mypageMapper.findNewNews", u);
+	}
+
+	// 관리자 공지사항 news에 insert
+	@Override
+	public int insertNewBoard(A_board aboard) {
+		return sqlSession.insert("mypageMapper.insertNewBoard", aboard);
+	}
+
+	// 관리자 공지사항 bno 찾아오기
+	@Override
+	public int findNewBno(A_board aboard) {
+		return sqlSession.selectOne("mypageMapper.findNewBno", aboard);
 	}
 
 }

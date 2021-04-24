@@ -128,7 +128,7 @@
         height : 500px;
     }
 
-    .reservBox{
+    #reservBox{
         width : 31.5%;
         height : fit-content;
         background-color: white;
@@ -217,7 +217,44 @@
         margin-bottom : 0;
         align-items: right;
     }
+    
+    .moreBtn{
+		width : 100px;
+		height : 50px;
+		align-items : center;
+	}
+	
+	#forAlign{
+		align-items : center;
+		text-align : center;
+	}
+  
+  #moreBtn{
+  	text-align : center;
+  	border-style : none;
+  	width  : 50px;
+  	height : 20px;
+  	margin-left : 0;
+  	margin-right :0;
+  }
+  
+  .more{
+  	display: none;
+  	flex-direction: column;
+  }
+  
+  .moremore{
+  	display: flex;
+  	flex-direction: column;
+  }
 
+#reddot{
+		position: absolute;
+	    top: 8%;
+	    left: 18%;
+	    width : 20px;
+	    height : 20px;
+	}
 </style>
 <body>
        <!-- navi.jsp include -->
@@ -227,18 +264,21 @@
                 <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
                 <div class="menuBox" id="menuBox">
 
-                    <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
+                    <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
                     <button class="clickedBtn" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimW.png" class="btnImg"> <br> 찜목록</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToRoute();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑</div></button>
 
                 </div>
             </div>
 
             <div id="mainBox">
+            <c:choose>
+            <c:when test="${ !empty jjimList }">
              <c:forEach var="jl" items="${jjimList}" varStatus="jlNumber">
-                <div id="middleBox" class="reservBox">
+                <div id="reservBox" class="more">
                 	<br>
                     <h5>${ jl.bus_name }</h5>
                     <div class="reservDetail">
@@ -252,7 +292,6 @@
                                 <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon"><br> ${ jl.bus_category }<br><br>
                                 <img src="${contextPath}/resources/images/image_mp/location_outline.png" alt="" class="reservIcon"><br> ${ jl.bus_address }<br><br>
                                 <img src="${contextPath}/resources/images/image_mp/phone_outline.png" alt="" class="reservIcon"><br> ${ jl.bus_phone }<br><br>
-
                             </div>
                             <div class="reserveBtnArea">
                                 <button class="reserveBtn" id="detailResv" onclick="goToDetail(${ jl.bus_code});">상세페이지</button><br>
@@ -262,7 +301,23 @@
                     </div>
                 </div>
                 </c:forEach>
+                <div id="forAlign">
+	              <p style="color  : #bfbfbf; margin : 0px; padding:0px;">더보기</p>
+		          <img src="${contextPath}/resources/images/image_mp/moreBtn.png" id="moreBtn">
+		     </div>
+                </c:when>
+                <c:otherwise>
+                	<div style="text-align : center; margin-left : auto; margin-right : auto; margin-top:8%; margin-bottom:auto;">
+							<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
+ 		            		<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">찜이 한개도 없네요<br>삼다도엔 좋은 여행지들이 한가득!!</h1>
+ 		            		<button onclick="location.href='${ contextPath }/business/hotel_list'" id="goList" style="border-style:none; background-color : #467355; color : white; margin-left : auto; margin-right:auto; padding : 2%;">삼다도 여행상품들 보러가기!</button>
+					</div>
+                </c:otherwise>
+                </c:choose>
+                
 			</div>
+			
+			 
         <script>
 		    function goToWallet(){
 				/* console.log("jsp안에서 usno확인 : " + usno); */
@@ -279,6 +334,15 @@
 			
 			function goToDetail(bus_code){
 				location.href='${contextPath}/business/detail?bus_code='+bus_code;
+			}
+			
+			function goToInfo(){
+				var uspart = "일반";
+				location.href='${contextPath}/mypage/userinfo?usno='+${loginUser.usno} + '&uspart='+uspart;
+			}
+			
+			function goToRoute(){
+				location.href="${contextPath}/mypage/myroute?usno=" + ${loginUser.usno};
 			}
 	    </script>
 		<script>
@@ -336,6 +400,57 @@
 			});
 		});
 		</script>
+		
+		<script>				
+	$(document).ready(function(){
+		size_div = $('.more').length;
+							
+		x = 1;
+		$('.more:lt('+x+')').addClass('moremore');
+		$('#moreBtn').click(function(){
+			x= (x+2 <= size_div)? x+2 : size_div;
+			$('.more:lt('+x+')').addClass('moremore');	
+		});
+	});
+	</script>
+	
+	<script>
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty sessionScope.loginUser}){
+	 			if(${loginUser.uspart eq "일반"}){
+	 				var uspart = "일반";
+	 			} else if(${loginUser.uspart eq "제휴"}){
+	 				var uspart = "제휴";
+	 			} else {
+	 				var uspart = " ";
+	 			}
+	 			
+	 			var searchU = new Object();
+				searchU.usno = ${loginUser.usno};
+				searchU.uspart = uspart;
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
  
 </body>
 </html>

@@ -217,98 +217,16 @@
         margin-left : auto;
         margin-right : auto;
     }
+    
+    #reddot{
+		position: absolute;
+	    top: 8%;
+	    left: 18%;
+	    width : 20px;
+	    height : 20px;
+	}
 
-    @media (max-width:1650px){
-         /* 마이페이지 css */
-            body{
-                background-image: url('${contextPath}/resources/images/image_mp/backgroundImg.png');
-                background-repeat: no-repeat;
-                background-size: 100%;
-            }
-            #topMenu{
-                align-items: center;
-                width : 80%;
-                height : 150px;
-                /* border : 1px solid black; */
-            }
-            #countDday{
-                /* border : 1px solid pink; */
-                display : inline-block;
-                position : absolute;
-                width : 20%;
-                height : 150px;
-                color : white;
-                text-align : center;
-                font-size: 30px;
-                margin-left : 3%;
-            }
-            .menuBox{
-                width : 70%;
-                height : 150px;
-                /* border : 1px solid blue; */
-                display : inline-block;
-                position:relative;
-                top : 0;
-                left : 25%;
-                margin-left : 3%;
-                align-items: center;
-            }
-            .menuButton{
-                width : 130px;
-                height : 110px;
-                border : 1px solid white;
-                background-color: white;
-                color : #bfbfbf;
-                text-align : center;
-                display : inline-block;
-                margin-top : 2%;
-                margin-left : 2.5%;
-                border-radius: 2px;
-                align-items: center;
-                /* -webkit-transition-duration : 0.4s;
-                transition-duration: 0.4s; */
-            }
-
-            .menuButton:hover{
-                box-shadow: 6px 6px gray;
-                cursor: pointer;
-            }
-
-            .menuBoxEle{
-                /* border : 1px solid red; */
-                width : 110px;
-                height : 110px;
-                text-align: center;
-                margin-left : 3%;
-            }
-
-            .btnImg{
-                width: 60px;
-                height : 60px;
-                /* border : 1px solid yellow; */
-            }
-
-            .clickedBtn{
-                box-shadow: 3px 3px gray;
-                width : 130px;
-                height : 110px;
-                border : 1px solid #467355;
-                background-color:#467355;
-                color : white;
-                text-align : center;
-                display : inline-block;
-                margin-top : 2%;
-                margin-left : 2.5%;
-                border-radius: 2px;
-                align-items: center;
-            }
-
-            .clickedBtn:hover{
-                box-shadow: 6px 6px gray;
-                cursor: pointer;
-            }
-
-        }
+  
 </style>
 <body>
 
@@ -321,11 +239,12 @@
                 <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
                 <div class="menuBox" id="menuBox">
 
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
-                    <button class="clickedBtn" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripW.png" class="btnImg"> <br> 나만의 여행</div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
+                    <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
+                    <button class="menuButton" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingW.png" class="btnImg"> <br> 내 예약</div></button>
+                    <button class="clickedBtn" id="myInfo" onclick="goToRoute();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/walletB.png" class="btnImg"> <br> 내 지갑</div></button>
 
                 </div>
             </div>
@@ -537,6 +456,65 @@
             </div>
         </section>
     </div>
+     <script>
+    function goToWallet(){
+		/* console.log("jsp안에서 usno확인 : " + usno); */
+		location.href='${contextPath}/mypage/wallet?usno='+${loginUser.usno};
+	};
+	
+	function goToBooking(){
+		location.href='${contextPath}/mypage/booking?usno='+${loginUser.usno};
+	}
+	
+	function goToJjim(){
+		location.href='${contextPath}/mypage/jjimlist?usno='+${loginUser.usno};
+	}
+	function goToInfo(){
+		var uspart = "일반";
+		location.href='${contextPath}/mypage/userinfo?usno='+${loginUser.usno} + '&uspart='+uspart;
+	}
+	function goToRoute(){
+		location.href='${contextPath}/mypage/myroute?usno='+${loginUser.usno};	
+	}
+	</script>
+    
+    <script>
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty sessionScope.loginUser}){
+	 			if(${loginUser.uspart eq "일반"}){
+	 				var uspart = "일반";
+	 			} else if(${loginUser.uspart eq "제휴"}){
+	 				var uspart = "제휴";
+	 			} else {
+	 				var uspart = " ";
+	 			}
+	 			
+	 			var searchU = new Object();
+				searchU.usno = ${loginUser.usno};
+				searchU.uspart = uspart;
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
  
 </body>
 </html>

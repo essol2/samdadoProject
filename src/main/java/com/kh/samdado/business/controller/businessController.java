@@ -58,6 +58,7 @@ import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
+import com.sun.mail.handlers.multipart_mixed;
 
 
 @Controller
@@ -471,12 +472,14 @@ public class businessController {
 	public String restaurantInsert(Business b, @RequestParam int primonth, Income i, BusinessAtt bat,
 							  @RequestParam(value="uploadFile") List<MultipartFile> bfiles,
 							  @RequestParam(value = "mainFile") MultipartFile mainFile,
+							  @RequestParam(value = "menuFile") List<MultipartFile> menuFile,
 							  HttpServletRequest request, Map map, Model model) {
 		// 유저넘버 인컴에 담아주기
 		i.setUsno(b.getUs_no());
 		
 		// 첨부파일 리스트 객체 생성
 		List <BusinessAtt> list = new ArrayList<>(); 
+		List <BusinessAtt> menus = new ArrayList<>(); 
 		
 		// 가져온 bfiles 돌리기
 		for(MultipartFile mf : bfiles) {
@@ -500,6 +503,30 @@ public class businessController {
 					ba.setFile_root((String)files.get("path"));
 					
 					list.add(ba);
+				}
+			}
+		}
+		
+		for(MultipartFile mf : menuFile) {
+			MultipartFile file = mf;
+			
+			// 업로드 파일 서버에 저장
+			// 파일이 첨부 되었다면
+			if(!file.getOriginalFilename().equals("")) {
+				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+				Map<String, String> files = busSaveFile(file, request);
+				
+				// DB에 저장하기 위한 파일명 세팅
+				if(files != null) {
+					BusinessAtt menu = new BusinessAtt();
+					menu.setFile_name(file.getOriginalFilename());
+					
+					// 맵에 담겨져있는 값의 키 불러오기
+					menu.setFile_rename((String)files.get("rename"));
+					menu.setFile_root((String)files.get("path"));
+					
+					
+					menus.add(menu);
 				}
 			}
 		}
@@ -533,12 +560,9 @@ public class businessController {
 			int result3 = bService.insertIncome1(i);
 		}
 		
-		//System.out.println("b : " + b);
-		//System.out.println("list :"  + list);
-		//System.out.println("list :"  + bat);
-		
 		int result = bService.insertBusiness(b, list);
 		int result2 = bService.insertMain(bat);
+		int result3 = bService.insertMenu(menus);
 		
 		//  ---  은솔 : usno 빼갈게여
 		String usno = i.getUsno();
@@ -716,7 +740,7 @@ public class businessController {
 				bat.setFile_root((String)file.get("path"));
 			}
 		}
-		System.out.println("primonth");
+		//System.out.println("primonth");
 		
 		if(primonth != 0) {
 			// 넘어온 개월수에 따라 amount값 주기
@@ -728,7 +752,7 @@ public class businessController {
 				i.setAmount(180);
 			}
 			int result3 = bService.insertIncome1(i);
-			System.out.println("result3 : " + result3);
+			//System.out.println("result3 : " + result3);
 		}
 		
 		int result = bService.insertBusiness(b, list);

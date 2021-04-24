@@ -316,6 +316,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="file_rename" column="FILE_RENAME" />
 		<result property="file_lv" column="FILE_LV" />
 	</resultMap>
+	
+	<resultMap type="A_board" id="ABoardResultSet">
+		<id property="bno" column="BNO"/>
+		<result property="btitle" column="BTITLE"/>
+		<result property="bdate" column="BDATE"/>
+		<result property="bcontent" column="BCONTENT"/>
+		<result property="bstatus" column="BSTATUS"/>
+		<result property="usno" column="US_NO"/>
+		<result property="uspart" column="US_PART"/>
+	</resultMap>
 		
 	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
@@ -584,6 +594,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM BUSINESS B, BUSINESS_ATT BA 
 		WHERE B.BUS_CODE = BA.BUS_CODE
 		AND B.US_NO = #{usno}
+		 AND BA.FILE_LV = 0
 		ORDER BY B.BUS_CODE DESC
 	</select>
 	
@@ -651,7 +662,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM (
 		        SELECT AL_NO
 				FROM ALLIANCE
-				WHERE BUS_CODE = 94
+				WHERE BUS_CODE = #{bus_code}
 		        AND ALSTATUS = 'N'
 		        ORDER BY AL_SUBDATE DESC)
 		WHERE ROWNUM = 1
@@ -666,7 +677,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SELECT US_NO
 		FROM (SELECT US_NO
 				FROM ALLIANCE
-				WHERE BUS_CODE = 96
+				WHERE BUS_CODE = #{bus_code}
 				AND ALSTATUS = 'Y'
 		        ORDER BY START_DATE DESC)
 		WHERE ROWNUM = 1
@@ -766,11 +777,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</update>
 	
 	<select id="selectAlertList" resultMap="AlertResultSet">
-		SELECT *
-		FROM NEWS
-		WHERE US_NO = #{usno}
-		AND NSTATUS = 'N'
-		ORDER BY NNO DESC
+		<if test="uspart eq '제휴'.toString()">
+			SELECT *
+			FROM NEWS
+			WHERE (US_NO = #{usno} OR US_NO = 'b' OR US_NO = 'all')
+			AND NSTATUS = 'N'
+			ORDER BY NNO DESC
+		</if>
+		<if test="uspart eq '일반'.toString()">
+			SELECT *
+			FROM NEWS
+			WHERE (US_NO = #{usno} OR US_NO = 'u' OR US_NO = 'all')
+			AND NSTATUS = 'N'
+			ORDER BY NNO DESC
+		</if>
 	</select>
 	
 	<select id="selectYAlertList" resultMap="AlertResultSet">
@@ -831,7 +851,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			FROM ROOM_BOOKING
 			WHERE R_BOOKING_NO = #{bookingLv}
 		</if>
-		<if test="category == 'car'">
+		<if test="category eq 'car'">
 			DELETE 
 			FROM CAR_BOOKING
 			WHERE C_BOOKING_NO = #{bookingLv}
@@ -1039,4 +1059,43 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
   		AND BA.FILE_LV = 0
   </select>
   
+  <select id="findNewNews" resultType="_int">
+  		<if test="uspart eq '제휴'.toString()">
+			SELECT COUNT(*)
+			FROM NEWS
+			WHERE (US_NO = #{usno} OR US_NO = 'b' OR US_NO = 'all')
+			AND NSTATUS = 'N'
+		</if>
+		<if test="uspart eq '일반'.toString()">
+			SELECT COUNT(*)
+			FROM NEWS
+			WHERE (US_NO = #{usno} OR US_NO = 'u' OR US_NO = 'all')
+			AND NSTATUS = 'N'
+		</if>
+  </select>
+  
+  <insert id="insertNewBoard" parameterType="A_board">
+  		<if test='uspart == "전체"'>
+	  		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO, N_DATE)
+			VALUES (NEWS_SEQ_NO.NEXTVAL, 'all', #{btitle}, 'N', 'B', #{bno}, SYSDATE)
+		</if>
+		<if test='uspart == "제휴"'>
+	  		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO, N_DATE)
+			VALUES (NEWS_SEQ_NO.NEXTVAL, 'b', #{btitle}, 'N', 'B', #{bno}, SYSDATE)
+		</if>
+		<if test='uspart == "일반"'>
+	  		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO, N_DATE)
+			VALUES (NEWS_SEQ_NO.NEXTVAL, 'u', #{btitle}, 'N', 'B', #{bno}, SYSDATE)
+		</if>
+  </insert>
+  
+  <select id="findNewBno" resultMap="ABoardResultSet">
+  		SELECT BNO
+  		FROM (
+  			SELECT BNO
+  			FROM A_BOARD
+  			ORDER BY BNO DESC
+  		)
+  		WHERE ROWNUM = 1
+  </select>
 </mapper>

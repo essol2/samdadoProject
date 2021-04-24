@@ -501,7 +501,7 @@
                     <br>
                 </div>
                 <label id="ho_address">${ res.bus_address.substring(6) }</label><br>
-                <label>영업시간 : ${ res.bus_opening.substring(0, 5) } ~ ${ res.bus_opening.substring(6) }</label>&nbsp;
+                <label>영업시간 : 오픈  ${ res.bus_opening.substring(0, 5) } ~ 마감  ${ res.bus_opening.substring(6) }</label>&nbsp;
             </div>
 
             <div id="ho_info">
@@ -571,7 +571,9 @@
               </c:forEach>
                 <div class="other">
 					<c:forEach var="a" items="${ att }">
+					<c:if test="${ a.file_lv ne '1' }">
                     <img id="smallPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }">
+	                </c:if>
 	                </c:forEach>
                 </div>
             </div>
@@ -748,16 +750,15 @@
             <hr class="boundary">
 
             <div class="list">
+            	<h2>메뉴판</h2>
                 <div id="firstlist">
+                <c:forEach var="m" items="${ att }">
+                <c:if test="${ m.file_lv eq '1' }">
                     <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/menu1.png">
+                        <img class="image" src="../resources/busUploadFiles/${ m.file_rename }">
                     </div>
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/menu2.png">
-                    </div>
-                    <div class='profile'>
-                        <img class="image" src="../resources/images/image_listpage/menu3.png">                        
-                    </div>
+                </c:if>
+                </c:forEach>    
                 </div>
             </div>
             

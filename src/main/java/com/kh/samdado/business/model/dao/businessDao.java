@@ -162,6 +162,8 @@ public interface businessDao {
 
 	List<Review> selectReview(int bus_code);
 
+	int insertMenu(List<BusinessAtt> menus);
+
 	
 
 	

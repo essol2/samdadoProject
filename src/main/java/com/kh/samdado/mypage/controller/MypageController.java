@@ -56,6 +56,19 @@ public class MypageController {
 	   
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	// 로그인 후 페이지 이동 때 마다 새로운 알람 확인하고 띄우기
+	@RequestMapping("/new")
+	@ResponseBody
+	public int findNew(@RequestBody User u){
+		
+		//System.out.println("User확인 : " + u);
+		// --은솔 : 새로운 알림 있는지 확인하기
+		  int newNews = mService.findNewNews(u);
+		  //System.out.println("mpcontroller newNews : " + newNews);
+		
+		return newNews;
+	}
 	 
 	// 제휴회원 마이페이지로 이동
 	 @GetMapping("/buserinfo")
@@ -247,7 +260,7 @@ public class MypageController {
 		 if(searchPPList != null) {
 			 return searchPPList;
 		 }else {
-			 System.out.println("List 못가져옴");
+			 //System.out.println("List 못가져옴");
 			 return null;
 		 }
 		  
@@ -340,14 +353,14 @@ public class MypageController {
 	 // 제휴회원 내소식 - 첫 로딩
 	 @GetMapping("/alert")
 	 public ModelAndView selectAlertList(ModelAndView mv,
-			 							  @RequestParam(name="usno") String usno,
+			 							  @ModelAttribute User u,
 			 							  @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
 		 
 		 // DB에서 가져와야 할 알림 내역들 : 문의하기, 신고 받은 내역, 포인트 충전 알림, 배너광고 신청, 승인, 반려(사유), 포인트 얼마 안남음
 		 // 안읽은 리스트
-		 List<Alert> alertNList = mService.selectAlertList(usno);
+		 List<Alert> alertNList = mService.selectAlertList(u);
 		 // 읽은 리스트
-		 List<Alert> alertYList = mService.selectYAlertList(usno);
+		 List<Alert> alertYList = mService.selectYAlertList(u);
 		 
 		 mv.addObject("alertNList", alertNList);
 		 mv.addObject("alertYList", alertYList);
@@ -358,13 +371,13 @@ public class MypageController {
 	 // 제휴회원 내소식 - ajax
 	 @RequestMapping("/alertajax")
 	 @ResponseBody
-	 public List<Alert> selectNewAlertList(@RequestBody Alert al,
+	 public List<Alert> selectNewAlertList(@RequestBody User u,
 			 							   Model model){
 		 
 		// 안읽은 리스트
-		List<Alert> alertNList = mService.selectAlertList(al.getUsno());
+		List<Alert> alertNList = mService.selectAlertList(u);
 		// 읽은 리스트
-		List<Alert> alertYList = mService.selectYAlertList(al.getUsno());
+		List<Alert> alertYList = mService.selectYAlertList(u);
 		
 		// 두개의 리스트 합치기
 		List<Alert> newDataList = new ArrayList<>();
@@ -406,7 +419,19 @@ public class MypageController {
 	 
 	// 일반회원 마이페이지로 이동
 	 @GetMapping("/userinfo")
-	 public String mypageUserFirstView() { 
+	 public String mypageUserFirstView(ModelAndView mv, 
+			 							@ModelAttribute User u) { 
+		 
+		 List<Alert> alertNList = mService.selectAlertList(u);
+		 // 읽은 리스트
+		 List<Alert> alertYList = mService.selectYAlertList(u);
+		 
+		 //System.out.println(alertNList);
+		 //System.out.println(alertYList);
+		 
+		 mv.addObject("alertNList", alertNList);
+		 mv.addObject("alertYList", alertYList);
+		 
 			return "mypage/mp_UserInfo";
 	}
 	 
@@ -710,9 +735,10 @@ public class MypageController {
 	 public String cancelBooking(@ModelAttribute() Booking b,
 			 					 Model model){
 	 
+		 //System.out.println("canbook에 잘 들어옴! : " +b);
 		 // DB에서 예약 내역 삭제하기
 		 int result = mService.deleteBooking(b);
-		 //System.out.println("canbook에 잘 들어옴! : " +b);
+		 //System.out.println("딜리트 결과 result! : " + result);
 		
 		 if(result > 0) {
 			 model.addAttribute("usno", b.getUsno());
@@ -795,7 +821,7 @@ public class MypageController {
 				//System.out.println("r.getRev_no() : " + r.getRev_no());
 				
 				result2 = mService.updateCheck(r);
-				System.out.println("insert result2 확인 : " + result2);
+				//System.out.println("insert result2 확인 : " + result2);
 		 	} else if(inup.equals("U")) {
 		 		//System.out.println("update result 확인 : " + result2);
 		 		result = mService.updateReview(r);
@@ -848,7 +874,7 @@ public class MypageController {
 				file.transferTo(new File(renamePath));
 				// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
 			} catch (IllegalStateException | IOException e) {
-				System.out.println("파일 업로드 에러 : " + e.getMessage());
+				//System.out.println("파일 업로드 에러 : " + e.getMessage());
 			} 
 			
 			return renameFileName;
@@ -906,4 +932,12 @@ public class MypageController {
 			 return mv;
 		 }
 	 
+	// 일반회원 - 내 루트
+		 @GetMapping("/myroute")
+		 public ModelAndView goToMyroute(@ModelAttribute User u, ModelAndView mv) {
+			 
+			 
+			 
+			 return mv;
+		 }
 }

@@ -131,8 +131,7 @@
         margin-top : 10px;
         margin-bottom: 10px;
         margin-right : 10px;
-        height : 82
-        0px;
+        height : 855px;
     }
 
     #adverContainer{
@@ -221,8 +220,8 @@
     
     #ingBox{
     	padding : 0px;
-    	height : 310px;
-    	display : flex;
+    	height : 350px;
+    	/* display : flex; */
     	align-items : center;
     }
     
@@ -256,6 +255,13 @@
     	padding-top : 25%;
     	margin-right : auto;
     }
+    #reddot{
+		position: absolute;
+	    top: 13%;
+	    left: 27%;
+	    width : 30px;
+	    height : 30px;
+	}
 </style>
 <body>
     <!--부트스트랩-->
@@ -271,6 +277,7 @@
 
                     <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/buserinfo'"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToAlert();"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
+                    <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
                     <button class="menuButton" id="myInfo" onclick="goToBuss();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToAdvert();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/adverW.png" class="btnImg"> <br> 광고관리</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToPoint();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 포인트</div></button>
@@ -306,14 +313,12 @@
 										</div>
 									</c:forEach>
 									<hr>
-									<h3 style="color: #467355; text-align: center;">프리미엄 광고</h3>
 									<div style="text-align : center; margin-left : auto; margin-right : auto;">
 										<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
 				            			<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">삼다도와 프리미엄 광고해보세요!</h1>
 		 							</div>
 								</c:when>
 								<c:when test="${empty allList && !empty pbusList}">
-									<h3 style="color: #467355; text-align: center;">배너광고</h3>
 									<div style="text-align : center; margin-left : auto; margin-right : auto;">
 										<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
 			            				<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">삼다도와 배너 광고해보세요!</h1>
@@ -414,9 +419,10 @@
 
 					</div>
 					<div id='ingBox'>
+					<br>
+					<h1 style="color:#467355; text-align : center;">배너광고 승인 대기 중</h1>
 					<c:choose>
 						<c:when test="${!empty applyList}">
-							<br>
 							<div class="previous">
 								<c:if test="${ api.currentPage <= 1 }">
 									<h1 style="color: #467355; , text-align: center; font-size: 20px;">&lt;</h1>
@@ -451,6 +457,7 @@
 									<a href="${ after }" style="color: #467355; , text-align: center; font-size: 20px;"> &gt; </a>
 								</c:if>
 							</div>
+							<br>
 						</c:when>
 						<c:otherwise>
 						<div style="text-align : center; margin-left : auto; margin-right : auto;">
@@ -481,8 +488,47 @@
 		location.href="${contextPath}/mypage/advert?usno="+${loginUser.usno};
 	}
 	function goToAlert(){
-		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno};
+		var uspart = "제휴";
+		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno} +"&uspart=" + uspart;
 	}
 	</script>
+	
+	<script>
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty sessionScope.loginUser}){
+	 			if(${loginUser.uspart eq "일반"}){
+	 				var uspart = "일반";
+	 			} else if(${loginUser.uspart eq "제휴"}){
+	 				var uspart = "제휴";
+	 			} else {
+	 				var uspart = " ";
+	 			}
+	 			
+	 			var searchU = new Object();
+				searchU.usno = ${loginUser.usno};
+				searchU.uspart = uspart;
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
 </body>
 </html>

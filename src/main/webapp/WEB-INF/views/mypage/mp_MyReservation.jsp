@@ -131,7 +131,6 @@ body {
 	border: 5px solid white;
 	width: 77%;
 	height: fit-content;
-	display: flex;
 }
 
 /*     #mainBox2{
@@ -278,6 +277,50 @@ body {
 }
 .starR1.on{background-position: -10px 0;}
 .starR2.on{background-position:-25px 0;}
+
+ .nooo{
+	text-align : center;
+	color : #467355;
+	font-size : 20px;
+}
+.forAlign{
+		align-items : center;
+		text-align : center;
+	}
+  
+  .moreBtn{
+  	text-align : center;
+  	border-style : none;
+  	width  : 50px;
+  	height : 20px;
+  	margin-left : 0;
+  	margin-right :0;
+  }
+
+/* .moreBtn{
+		width : 100px;
+		height : 50px;
+		align-items : center;
+	} */
+	
+	.moreH, .moreC, .moreT{
+  	display: none;
+  	flex-direction: column;
+  }
+  
+  .moremoreH, .moremoreC, .moremoreT{
+  	display: flex;
+  	flex-direction: column;
+  }
+  
+  #reddot{
+		position: absolute;
+	    top: 8%;
+	    left: 18%;
+	    width : 20px;
+	    height : 20px;
+	}
+
 </style>
 <body>
 	<!-- navi.jsp include -->
@@ -294,10 +337,11 @@ body {
 		</div>
 		<div class="menuBox" id="menuBox">
 
-                    <button class="menuButton" id="myInfo" onclick="location.href='${ contextPath }/mypage/userinfo'"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
+                    <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
                     <button class="menuButton" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록<br><br> </div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle" onclick="location.href='${contextPath}/mypage/booking'"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingW.png" class="btnImg"> <br> 내 예약<br> <br></div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행<br> <br></div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToRoute();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행<br> <br></div></button>
                     <button class="menuButton" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑<br><br></div></button>
         </div>
 	</div>
@@ -305,19 +349,18 @@ body {
 	
 
 	<div id="mainBox">
+	<div style="display:flex;">
 		<div id="leftBox" class="reservBox">
 			<br>
 			<h3 style="color: #467355; text-align: center;">숙박 예약 내역</h3>
-			<hr style="background-color: #467355; width: 90%; height: 2px;">
-			
-			<c:if test="${ hotelList} eq null">
-				<div> 소유하고 계신 사업장이 없습니다!</div>
-			</c:if>
-			
+			<hr>
+			<c:choose>
+			<c:when test="${ !empty hotelList}">
 			<c:forEach items="${ hotelList }" var="hl" varStatus="hlNum">
-			<div id="moremore">
+			<div class="moreH">
 				<h5 id="bookTitle">${ hl.r_bus_name }</h5>
 				<div class="reservDetail">
+				<div >
 					<div class="reserveContainer">
 						<img src="${contextPath}/resources/images/image_mp/calendar.png"
 							alt="" class="reservIcon">&nbsp ${ hl.r_booking_trv }<br>
@@ -326,7 +369,7 @@ body {
 							alt="" class="reservIcon">&nbsp ${ hl.r_booking_product }<br>
 						<br> <img
 							src="${contextPath}/resources/images/image_mp/credit_card.png"
-							alt="" class="reservIcon">&nbsp ${ hl.r_booking_pay }<br>
+							alt="" class="reservIcon">&nbsp <fmt:formatNumber value="${ hl.r_booking_pay }" pattern="#,###"/><br>
 						<br> <img
 							src="${contextPath}/resources/images/image_mp/location_outline.png"
 							alt="" class="reservIcon">&nbsp ${ hl.r_booking_address }<br>
@@ -358,19 +401,34 @@ body {
 						<br>
 					</div>
 				</div>
+				</div>
 				<br>
 				</div>
 			</c:forEach>
+			<div class="forAlign"  id="moreBtnH">
+				<p style="color : #bfbfbf; margin : 0px; padding:0px;">더보기</p>
+				<img src="${contextPath}/resources/images/image_mp/moreBtn.png" class="moreBtn">
+			</div>
+			</c:when>
+			<c:otherwise>
+				<div class="nooo"> 예약 내역이 없습니다!</div>
+			</c:otherwise>
+			</c:choose>
+			
 		</div>
+		
 
 
 		<div id="middleBox" class="reservBox">
 			<br>
 			<h3 style="color: #467355; text-align: center;">렌트카 예약 내역</h3>
-			<hr style="background-color: #467355; width: 90%; height: 2px;">
-			<c:forEach items="${ carList }" var="cl" varStatus="clNum">
+			<hr>
+			<c:choose>
+			<c:when test="${!empty carList }">
+				<c:forEach items="${ carList }" var="cl" varStatus="clNum">
+				<div class="moreC">
 				<h5>${ cl.c_bus_name }</h5>
-				<div class="reservDetail">
+				<div class="reservDetail" >
 					<div class="reserveContainer">
 						<img src="${contextPath}/resources/images/image_mp/calendar.png"
 							alt="" class="reservIcon">&nbsp ${ cl.c_booking_trv }<br>
@@ -379,7 +437,7 @@ body {
 							alt="" class="reservIcon">&nbsp ${ cl.c_booking_product }<br>
 						<br> <img
 							src="${contextPath}/resources/images/image_mp/credit_card.png"
-							alt="" class="reservIcon">&nbsp ${ cl.c_booking_pay }<br>
+							alt="" class="reservIcon">&nbsp <fmt:formatNumber value="${ cl.c_booking_pay }" pattern="#,###"/><br>
 						<br> <img
 							src="${contextPath}/resources/images/image_mp/location_outline.png"
 							alt="" class="reservIcon">&nbsp ${ cl.c_booking_address }<br>
@@ -392,7 +450,7 @@ body {
 					<div class="reserveBtnArea">
 						<c:choose>
 							<c:when test="${cl.c_booking_trv > now}">
-								<button class="reserveBtn" id="cancleResv" onclick="goToCancel(${ cl.c_booking_no }, 'room', '${ cl.c_bus_name }');">예약취소</button>
+								<button class="reserveBtn" id="cancleResv" onclick="goToCancel(${ cl.c_booking_no }, 'car', '${ cl.c_bus_name }');">예약취소</button>
 							</c:when>
 							
 							<c:when test="${cl.c_booking_trv < now && cl.c_review_check ne null}">
@@ -412,16 +470,29 @@ body {
 						<br>
 					</div>
 				</div>
+				</div>
 				<br>
 			</c:forEach>
+			<div class="forAlign" id="moreBtnC">
+				<p style="color : #bfbfbf; margin : 0px; padding:0px;">더보기</p>
+				<img src="${contextPath}/resources/images/image_mp/moreBtn.png" class="moreBtn">
+			</div>
+			</c:when>
+				<c:otherwise>
+					<div class="nooo"> 예약 내역이 없습니다!</div>
+				</c:otherwise>
+			</c:choose>
+			
 		</div>
 
 		<div id="rightBox" class="reservBox">
 			<br>
 			<h3 style="color: #467355; text-align: center;">입장권&체험권 예약 내역</h3>
-			<hr style="background-color: #467355; width: 90%; height: 2px;">
-
+			<hr>
+			<c:choose>
+			<c:when test="${ !empty tourList }">
 			<c:forEach items="${ tourList }" var="tl" varStatus="tlNum">
+			<div class="moreT">
 				<h5>${ tl.t_bus_name }</h5>
 				<div class="reservDetail">
 					<div class="reserveContainer">
@@ -432,7 +503,7 @@ body {
 							alt="" class="reservIcon">&nbsp ${ tl.t_booking_product }<br>
 						<br> <img
 							src="${contextPath}/resources/images/image_mp/credit_card.png"
-							alt="" class="reservIcon">&nbsp ${ tl.t_booking_pay }<br>
+							alt="" class="reservIcon">&nbsp <fmt:formatNumber value="${ tl.t_booking_pay }" pattern="#,###"/><br>
 						<br> <img
 							src="${contextPath}/resources/images/image_mp/location_outline.png"
 							alt="" class="reservIcon">&nbsp ${ tl.t_booking_address }<br>
@@ -445,7 +516,7 @@ body {
 					<div class="reserveBtnArea">
 						<c:choose>
 							<c:when test="${tl.t_booking_trv > now}">
-								<button class="reserveBtn" id="cancleResv" onclick="goToCancel(${ tl.t_booking_no }, 'room', '${ tl.t_bus_name }');">예약취소</button>
+								<button class="reserveBtn" id="cancleResv" onclick="goToCancel(${ tl.t_booking_no }, 'tour', '${ tl.t_bus_name }');">예약취소</button>
 							</c:when>
 							
 							<c:when test="${tl.t_booking_trv < now && tl.t_review_check ne null}">
@@ -466,9 +537,28 @@ body {
 					</div>
 				</div>
 				<br>
+				</div>
+				
 			</c:forEach>
+			<div class="forAlign" id="moreBtnT">
+				<p style="color : #bfbfbf; margin : 0px; padding:0px;">더보기</p>
+				<img src="${contextPath}/resources/images/image_mp/moreBtn.png"  class="moreBtn">
+			</div>
+			</c:when>
+			<c:otherwise>
+				<div class="nooo"> 예약 내역이 없습니다!</div>
+			</c:otherwise>
+			</c:choose>
+			
 		</div>
+		
+		
+		
 	</div>
+	
+	</div>
+	
+	
 
 	<div id="modalRoom">
 		<div class="modal_content">
@@ -571,6 +661,10 @@ body {
 
 
 	<script>
+	function goToInfo(){
+		var uspart = "일반";
+		location.href='${contextPath}/mypage/userinfo?usno='+${loginUser.usno} + '&uspart='+uspart;
+	}
  	function goToBooking(){
 		location.href='${contextPath}/mypage/booking?usno='+${loginUser.usno};
 	}
@@ -588,6 +682,10 @@ body {
 		location.href='${contextPath}/business/detail?bus_code='+bus_code;
 	}
 	
+	function goToRoute(){
+		location.href="${contextPath}/mypage/myroute?usno="+${loginUser.usno};
+	}
+	
 	function goToCancel(bookingLv, category, bus_name){
 
 		var result = confirm(bus_name + "의 예약을 정말 취소하시겠습니까?");
@@ -603,7 +701,7 @@ body {
 
 		function goToReview(bus_name, goingDate, booking_no, file_rename, rev_hct, bus_code, inup, rev_no){
 			
-			$('#reviewContent').empty();
+			//console.log(inup);
 			
 			if(inup == 'I'){
 				$('#inup').val("I");
@@ -626,6 +724,7 @@ body {
 		
 		$("#modal_close_btn").click(function(){
 			$('#imgTd*').empty();
+			$('#reviewContent*').val('');
 			$('#image_preview').empty();
 			$('#image_preview2').empty();
 			$('#image_preview3').empty();
@@ -662,7 +761,7 @@ body {
 				type : "POST",
 				contentType : "application/json; charset=utf-8",
 				success : function(data){
-					console.log(data);
+					//console.log(data);
 					//console.log("<img src='${ contextPath }/resources/busUploadFiles/"+ data.img_rename1 + "' alt='사진영역' style='width: 100%; height: 100%;'>");
 					
 					var rdateFormat = new Date(data.r_booking_trv); // null
@@ -781,16 +880,82 @@ body {
 	
 	<script>				
 	$(document).ready(function(){
-		size_div = $('.moremore').length;
+		h_size_div = $('.moreH').length;
+		x = 1;
+		$('.moreH:lt('+x+')').addClass('moremoreH');
+		$('#moreBtnH').click(function(){
+			x= (x+1 <= h_size_div)? x+1: h_size_div;
+			$('.moreH:lt('+x+')').addClass('moremoreH');
+			if(x == h_size_div){
+				$('#moreBtnH').css("display", "none");
+			}
+		});
+	});
+	
+	$(document).ready(function(){
+		c_size_div = $('.moreC').length;
 							
-		x = 3;
-		$('.moremore:lt('+x+')').addClass('moreProfile');
-		$('.moreBtn').click(function(){
-			x= (x+3 <= size_div)? x+3 : size_div;
-			$('.profile:lt('+x+')').addClass('moreProfile');	
+		y = 1;
+		$('.moreC:lt('+x+')').addClass('moremoreC');
+		$('#moreBtnC').click(function(){
+			y= (y+1 <= c_size_div)? y+1 : c_size_div;
+			$('.moreC:lt('+y+')').addClass('moremoreC');	
+			if(y == t_size_div){
+				$('#moreBtnC').css("display", "none");
+			}
+		});
+	});
+	
+	$(document).ready(function(){
+		t_size_div = $('.moreT').length;
+		z = 1;
+		$('.moreT:lt('+x+')').addClass('moremoreT');
+		$('#moreBtnT').click(function(){
+			z= (z+1 <= t_size_div)? z+1 : t_size_div;
+			$('.moreT:lt('+z+')').addClass('moremoreT');
+			if(z == t_size_div){
+				$('#moreBtnT').css("display", "none");
+			}
 		});
 	});
 	</script>
+	<script>
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty sessionScope.loginUser}){
+	 			if(${loginUser.uspart eq "일반"}){
+	 				var uspart = "일반";
+	 			} else if(${loginUser.uspart eq "제휴"}){
+	 				var uspart = "제휴";
+	 			} else {
+	 				var uspart = " ";
+	 			}
+	 			
+	 			var searchU = new Object();
+				searchU.usno = ${loginUser.usno};
+				searchU.uspart = uspart;
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
 
 </body>
 </html>

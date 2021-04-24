@@ -814,7 +814,32 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                                  AND ALSTATUS = 'Y' 	  <!-- 현재 광고 진행중이 아닌 것 -->
                                  AND "USER".PBALANCE = 0) <!-- 포인트가 0이 아닌것 -->
 		  AND	US_NO = #{usno}
-	</select>  
+	</select>
+	
+	<insert id="insertMenu" parameterType="java.util.List">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+		  INTO BUSINESS_ATT
+		  (
+		  	FILE_NO
+		  ,	FILE_NAME
+		  ,	FILE_ROOT
+		  ,	FILE_STATUS
+		  ,	FILE_RENAME
+		  ,	FILE_LV
+		  ,	BUS_CODE
+		  )
+		  VALUES
+		  (
+		  	BUSATT_SEQ_NO.NEXTVAL
+		  , #{item.file_name}
+		  , #{item.file_root}
+		  , DEFAULT
+		  , #{item.file_rename}
+		  , '1'
+		  , BUS_SEQ_NO.CURRVAL
+		  )
+		</foreach>
+	</insert>  
 	
 	<insert id="insertBannerAd" parameterType="Alliance">
 		INSERT
