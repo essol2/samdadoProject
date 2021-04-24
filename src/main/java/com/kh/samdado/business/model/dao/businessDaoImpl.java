@@ -353,6 +353,11 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.selectReview", bus_code);
 	}
+
+	@Override
+	public int insertMenu(List<BusinessAtt> menus) {
+		return sqlSession.insert("businessMapper.insertMenu", menus);
+	}
   
  
 

@@ -71,12 +71,12 @@
 
         /* 컨테이너 */
         #main-container {
-            height: 100%;
-            width: 85%;
-            display: flex;
-            flex-direction: column;
-            /* padding-top: 5%; */
-            padding-left: 6.3%;
+	        height: 100%;
+		    width: 85%;
+		    display: flex;
+		    flex-direction: column;
+		    padding-top: 5%;
+		    padding-left: 6.3%;
 
         }
 
@@ -598,6 +598,8 @@
 	    	height:420px;
     	}
     
+    	
+    	
     </style>
 
 </head>
@@ -609,11 +611,11 @@
     <section id="main-container">
         <!-- 상세페이지 헤더 -->
         <div id="ho_header">
-        	<div class="logo-wrap" id="logo-div">
+        	<%-- <div class="logo-wrap" id="logo-div">
                 <label class="title_img" onclick="location.href='${ contextPath }/main'">
                 <img src="../resources/images/image_main/logo_w.png" style="width:100px; height:100px;">삼다도
                 </label>
-            </div>
+            </div> --%>
             <div class="title_area">
                 <div class="title_area">
                 	<c:if test="${ tour.bus_classify eq 'P' }">
@@ -973,7 +975,11 @@
         </div>
     </section>
     
-    <script>  
+    <script>
+    	function(){
+    		
+    	}
+    
     	$j1124.datepicker.setDefaults({
 	        dateFormat: 'yy-mm-dd',
 	        prevText: '이전 달',
