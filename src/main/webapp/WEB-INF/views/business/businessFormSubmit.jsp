@@ -10,7 +10,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Insert title here</title>
+<title>삼다도 배너광고 신청</title>
 
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
@@ -59,22 +59,23 @@
          
                 <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                    <div class="modal-content">
+                    <div class="modal-content" style=" padding : 7%;">
                         <div class="modal-header">
-                        <h4 class="modal-title" id="staticBackdropLabel">잠깐! 먼저 읽어주세요.</h4>
+                        <h4 class="modal-title" id="staticBackdropLabel">신청 전 주의사항</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <h5 id="mymodal_caution_text">배너 광고에 대해 숙지 부탁드립니다.</h5> <br>
                             <h6 id="modal_inner_text">
-				                                삼다도 배너 광고는 <b>관리자에 의해 승인</b>이 이루어지면 <br>
-				                                신청 순서에 따라 삼다도 메인페이지에 순서대로 노출됩니다. <br>
-				                                자세한 사항은 <a href="${ contextPath }/mypage/userinfo"><b>‘삼다도에 대해서’</b></a> 페이지에서 확인 해 주세요! <!-- 페이지 링크 연결-->
-				                                <br><br>
+				                                삼다도 배너 광고는 <b>관리자의 승인</b>이 필수이며 관리자 승인
+				                                여부에 따라 <b>삼다도 메인페이지 하단에 리스팅 형식으로 노출</b>됩니다.
+				                                자세한 사항은 <a href="${ contextPath }/mypage/userinfo"><b>‘삼다도에 대해서’</b></a>페이지에서 확인 해 주세요! <!-- 페이지 링크 연결-->
+				                
+				                <br><br>              
 				                                배너 광고는 <b style="color: red;">포인트 충전</b>이 필요한 서비스입니다. <br>
 				                                포인트 충전은 잊지 않으셨죠?
                              </h6>             
-                        <br>
+                        <br><br>
                         <div class="goToPayBtn_div">
                             <a href="${ contextPath }/mypage/userinfo" id="goMyPageBtn" class="btn btn-secondary" style="color: white; text-decoration: none;">동의 후 포인트 충전하러 가기</a> 
                         </div>    
@@ -101,30 +102,42 @@
 	            </c:when>
 	            <c:otherwise>
 	            <div class="nonSelectCategory" style="text-align: center; padding: 20%;">
-	            	<h3>--- ${ loginUser.usname }님께서 배너 광고로 등록할 수 있는 사업장이 없습니다. ---</h3>
-	            	<br>
-	            	<h5>* 관리자 승인 대기중인 사업장 또는 이미 배너 광고 중인 사업장은 목록에서 불러올 수 없습니다.</h5>
-	            	<h5><a href="${ contextPath }/mypage/buserinfo">[마이페이지 가기]</a></h5>
-	            	<h5>[사업장 등록하러 가기]</h5>  
-	                <br>
-                    <a href='${ contextPath }/business/hotel_write'>호텔 등록</a> | 
-	                <a href='${ contextPath }/business/rentcar_write'>렌트카 등록</a> | 
-	                <a href='${ contextPath }/business/restaurant_write'>음식점 등록</a> | 
-	                <a href='${ contextPath }/business/tour_write'>관광지 등록</a>
+		            <div class="card border-success mb-3" style="max-width: 18rem;">
+					  <div class="card-header bg-transparent border-success">삼다도에서 알려드립니다.</div>
+					  <div class="card-body text-success">
+					    <h5 class="card-title">${ loginUser.usname }님께서 배너 광고로 등록할 수 있는 사업장이 없습니다.</h5>
+					    <p class="card-text"><b style="color: red;">관리자 승인 대기중인 사업장 또는 현재 배너 광고 중인 사업장은 목록에서 불러올 수 없습니다.</b></p>
+					  </div>
+					  <div class="card-footer bg-transparent border-success"><a href="${ contextPath }/mypage/buss">마이페이지 가기</a></div>
+					</div>
 	            </div>   	
 	            </c:otherwise>
             </c:choose>
             	<c:if test="${ !empty selectMyBusinessCategory }">
                 <div class="inner_content">
-                    <h4>2. 배너 이미지를 등록해주세요.</h4> <br>
+                    <h4>2. 배너 이미지를 등록해주세요.</h4> 
+					 <br>
                     <div class="mb-3">
                         <input class="form-control" type="file" id="formFile" name="uploadFile" required>
                         <br>
                         <!-- 업로드한 이미지가 노출되는 부분 -->
-                        <div class="img_div_part">
-							<img id="exp_img_part">
-	  					</div>
-                    
+                		<div style="display: flex;">
+						    <div class="img_div_part">
+								<img id="exp_img_part">
+						    </div>
+						    &nbsp;
+						      <div class="img_div_part">
+			  					<div class="card text-dark bg-light mb-3" style="max-width: 30rem;" id="imgCautionText">
+								  <div class="card-header">이미지 업로드 규격</div>
+								  <div class="card-body">
+								    <p class="card-text">* 정해진 픽셀은 없으나, 노출시 가로 규격은 일정한 사이즈 &nbsp;(700px)를 기준으로 노출되므로 제출시 <b>최대한 가로 사이즈 &nbsp;가 넓은 이미지</b>로 업로드 하시는 것을 권유 드립니다.
+									                            <br>&nbsp;<font style="color: red;">(지나치게 사이즈가 작은 이미지나 큰 사진은 반려될 수 있음)</font></p>
+									<p class="card-text">* 등록하시는 사업장 카테고리 및 배너 이벤트 내용과 <b><br>&nbsp;이미지가 일치하지 않으면 반려처리</b> 될 수 있으니 이 점 <br>&nbsp;유의 바랍니다.
+									    					    <br>&nbsp;<font style="color: red;">(허위광고 및 욕설/음란 이미지는 반려됨)</font></p>
+								  </div>
+								</div>
+		  					</div>
+						</div>
                     </div>
                 </div>
                 </c:if>
@@ -142,7 +155,7 @@
               	
               	<c:if test="${ !empty selectMyBusinessCategory }">
                 <div class="inner_content">               
-                    <button type="submit" class="btn btn-secondary" id="submit_bannerBtn">신청하기</button> 
+                    <button type="submit" class="btn btn-secondary" id="submit_bannerBtn" style="margin-left: 50%;">신청하기</button> 
                 </div>
                 </c:if>
                 
@@ -178,6 +191,10 @@
       $(document).ready(function() {
             $('#myModal').modal("show");
         });
+      
+      $('#imgCaution').mouseover(function() {
+    	  ('#imgCautionText').display("block")
+      });
  </script>
  
  <!-- 업로드한 첨부파일 아래에 출력되도록 -->
@@ -201,7 +218,7 @@
 				switch(element.name) {
 				case "uploadFile" :
 					selector = "#exp_img_part";
-					size = {width:"800px", height:"1000px"};
+					//size = {width:"800px", height:"1000px"};
 					break;
 				}
 				

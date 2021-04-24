@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usstatus" column="US_STATUS" />
 		<result property="usstop" column="US_STOP" />
 		<result property="authKey" column="AUTH_KEY" />
+		<result property="pbalance" column="PBALANCE" />
 	</resultMap>
 	
 	<!-- 로그인 -->
@@ -33,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			  , US_PART
 			  , US_STATUS
 			  , US_STOP
+			  , PBALANCE
 		   FROM
 		   		"USER"
 		  WHERE
@@ -55,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , BUS_NO
 		  , US_PART
 		  , US_STATUS
+		  , PBALANCE
 		)
 		VALUES
 		(
@@ -67,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usphone}
 		  , #{busno} <!-- 일반 회원일시 NULL -->
 		  , #{uspart}
+		  , DEFAULT
 		  , DEFAULT
 		)
 	</insert>
@@ -223,21 +227,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
               "USER"
          <set>
 	         <if test="usname != null">
-				US_NAME = #{usname}, 
+				US_NAME = #{usname},
 			 </if>
 			 <if test="usemail != null">
-				US_EMAIL = #{usemail}, 
+				US_EMAIL = #{usemail},
 			 </if>
 			 <if test="busno != null">
-				BUS_NO = #{busno}, 
+				BUS_NO = #{busno},
 			 </if>
 			 <if test="usphone != null">
-				US_PHONE = #{usphone}
+				US_PHONE = #{usphone},
 			 </if>
 		 </set>
 		 WHERE
-			    US_PART = #{uspart}
-		   AND  US_ID = #{usid}
+			    US_PART = '관리자'
    </update>
    
    <select id="countUser" resultType="_int">
@@ -264,6 +267,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			  , US_STATUS
 			  , US_STOP
 			  , AUTH_KEY
+			  , PBALANCE
 		   FROM
 		   		"USER"
 		  WHERE US_STOP IS NULL	
@@ -282,6 +286,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				,BUS_NO
 				,US_PART
 				,US_STATUS
+				,PBALANCE
 		  FROM
 		        "USER"	
 		<where>
@@ -313,6 +318,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				<when test="searchCondition == 'usstatus'">
 					AND US_STATUS LIKE #{sv}
 				</when>
+				<when test="searchCondition == 'pbalance'">
+					AND PBALANCE LIKE #{sv}
+				</when>
 				<otherwise>
 					AND (US_NO LIKE #{sv}
 						 OR US_ID LIKE #{sv}
@@ -323,6 +331,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 						 OR BUS_NO LIKE #{sv}
 						 OR US_PART LIKE #{sv})
 						 OR US_STATUS LIKE #{sv})
+						 OR PBALANCE LIKE #{sv})
 				</otherwise>	
 			</choose>
 		</where>

@@ -1,6 +1,7 @@
 package com.kh.samdado.business.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,6 @@ import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
-import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
@@ -70,9 +70,8 @@ public class businessServiceImpl implements businessService {
 	
 	// 렌트카 등록
 	@Override
-	public int insertCar(List<Car> cars, List<CarAtt> carList) {
-		bDao.insertCar(cars);
-		return bDao.insertCarAtt(carList);
+	public int insertCar(List<Car> cars) {
+		return bDao.insertCar(cars);
 	}
 
 	// 렌트카 디테일
@@ -88,9 +87,8 @@ public class businessServiceImpl implements businessService {
 
 	// 호텔 등록
 	@Override
-	public int insertRoom(List<Room> rooms, List<RoomAtt> raList) {
-		bDao.insertRoom(rooms);
-		return bDao.insertRoomAtt(raList);
+	public int insertRoom(List<Room> rooms) {
+		return bDao.insertRoom(rooms);
 	}
 	// 호텔리스트
 	@Override
@@ -158,6 +156,16 @@ public class businessServiceImpl implements businessService {
 	public int insertReport(Report r) {			
 		return bDao.insertReport(r);
 	}
+	
+	@Override
+	public int insertReport2(Report r) {		
+		return bDao.insertReport2(r);
+	}
+	
+	@Override
+	public int updateReport(Report r) {		
+		return bDao.updateReport(r);
+	}
 
 
 	@Override
@@ -165,6 +173,23 @@ public class businessServiceImpl implements businessService {
   // TODO Auto-generated method stub
 		return 0;
   }
+	
+	@Override
+	public Map<String, Object> jjimcheck(Map<String, Object> idxMap) {			
+		return bDao.selectJjim(idxMap);
+	}
+	
+	@Override
+	public Object insertJjim(Map<String, Object> commandMap) {			
+		return bDao.insertJjim(commandMap);
+		
+	}
+	
+	@Override
+	public int updateJjim(Map<String, Object> commandMap) {
+		return bDao.updateJjim(commandMap);
+		
+	}
 	
 	// 일반결제 메소드
 	@Override
@@ -180,6 +205,16 @@ public class businessServiceImpl implements businessService {
 	@Override
 	public int insertBookingTour(Booking b) {		
 		return bDao.insertBookingTour(b);
+	}
+	
+	@Override
+	public TourProduct selectTourProduct(int bus_code) {		
+		return bDao.selectTourProduct(bus_code);
+	}
+	
+	@Override
+	public int insertBookingCar(Booking b) {		
+		return bDao.insertBookingCar(b);
 	}
 
 	@Override
@@ -221,7 +256,7 @@ public class businessServiceImpl implements businessService {
   	// 프리미엄 등록 시 만료일
 	@Override
 	public int insertIncome1(Income i) {
-		return bDao.insertIncome(i);
+		return bDao.insertIncome1(i);
 	}
 
 	@Override
@@ -259,6 +294,49 @@ public class businessServiceImpl implements businessService {
 	public int insertMain(BusinessAtt bat) {
 		return bDao.insertMain(bat);
 	}
+
+	@Override
+	public List<Room> selectRoom(int bus_code) {
+		return bDao.selectRoom(bus_code);
+	}
+
+	@Override
+	public List<RoomAtt> selectRoomAtt(int bus_code) {
+		return bDao.selectRoomAtt(bus_code);
+	}
+
+	@Override
+	public List<Business> cateList(String kind) {
+		return bDao.cateList(kind);
+	}
+
+	@Override
+	public List<Car> selectCars(int bus_code) {
+		// TODO Auto-generated method stub
+		return bDao.selectCars(bus_code);
+	}
+
+	@Override
+	public List<CarAtt> selectCarAtt(int bus_code) {
+		// TODO Auto-generated method stub
+		return bDao.selectCarAtt(bus_code);
+	}
+
+	@Override
+	public List<Review> selectReview(int bus_code) {
+		// TODO Auto-generated method stub
+		return bDao.selectReview(bus_code);
+	}
+
+	@Override
+	public int insertMenu(List<BusinessAtt> menus) {
+		// TODO Auto-generated method stub
+		return bDao.insertMenu(menus);
+	}
+
+	
+
+	
 
 	
 

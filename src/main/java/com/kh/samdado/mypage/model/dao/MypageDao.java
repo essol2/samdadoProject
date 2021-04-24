@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
@@ -21,8 +22,26 @@ public interface MypageDao {
 	// 이메일, 전화번호 변경 메소드
 	public int updateUserInfo(User u);
 
-	// 알림 select 메소드
-	public List<Alert> selectAlertLis(String usno);
+	// 안읽은 알림 select 메소드
+	public List<Alert> selectAlertList(String usno);
+	
+	// 읽은 알림 select 메소드
+	public List<Alert> selectYAlertList(String usno);
+	
+	// 알림 상세보기 객체 찾아오는 메소드
+	public Alert selectDetailAlert(Alert al);
+	
+	// 알림 nstatus update
+	public int updateNstatus(Alert al);
+	
+	// 제휴회원 - 알람을 위한 포인트 찾아오기
+	public int findThisPB(Business selectBusCodeUser);
+	
+	// 제휴회원 - 포인트가 500보다 아래라고 알림주기
+	public int insertPointAlert(Point fdp);
+	
+	// 제휴회언 알림 -100 될 때 마다 new pno 알아오기
+	public int findNewPno(Business selectBusCodeUser);
 
 	// 제휴회원 - 광고 관리 메소드
 	public List<Alliance> selectAdvertList(String usno);
@@ -66,9 +85,6 @@ public interface MypageDao {
 	// 일반회원 - 찜목록 출력 메소드
 	public List<Jjim> selctJjimList(String usno);
 
-	// 일반회원 - 내 예약 목록 출력 메소드
-	public List<Booking> selectBookList(String usno);
-
 	// 일반회원 - 가계부
 	public List<AccountBook> selectAccountList(AccountBook ab);
 
@@ -90,7 +106,71 @@ public interface MypageDao {
 	// 일반회원 - 차트 조회 메소드
 	public List<AccountBook> selectChartList(AccountBook ab);
 
-	// 제휴회원 - 새로운 알림 등록
-	public int insertQnANews(String usno);
+	// 제휴회원 - QnA 새로운 알림 등록
+	public int insertQnANews(Alert a);
 
+	// 제휴회원 - Alliance 새로운 알림 등록을 위한 alno 찾아오기.
+	public int findAlno(Alliance a);
+
+	// 제휴회원 - Alliance 새로운 알림 등록
+	public int insertAlliNews(Alert al);
+
+	// 제휴회원 - Alliance 배너 광고 승인시 usno 찾아오기
+	public String findAlliUsno(Alliance alliance);
+
+	// 제휴회원 - Alliance 승인시 새로운 알림 등록
+	public int insertNewApprove(Alert alert);
+
+	// 제휴회원 - 포인트 충전 시 user DB에 update
+	public int updatePbalance(Point po);
+
+	// 제휴회원 - Report 승인시 알림 등록
+	public int insertNewReport(Alert a);
+
+	// 일반회원 - hotel book list 찾아오기
+	public List<Booking> selectHotelBookList(String usno);
+
+	// 일반회원 - tour book list 찾아오기
+	public List<Booking> selectTourBookList(String usno);
+		
+	// 일반회원 - car book list 찾아오기
+	public List<Booking> selectCarBookList(String usno);
+
+	// 일반회원 - 내예약 취소
+	public int deleteBooking(Booking b);
+
+	// 일반회원 - 후기등록
+	public int insertReview(Review r);
+
+	// 일반회원 - 후기작성 표기
+	public int updateCheck(Review r);
+
+	// 일반회원 - 후기 수정 디테일 가져오기
+	public Review selectReview(Review r);
+	
+	// 일반회원 - 후기수정 업데이트
+	public int updateReview(Review r);
+
+	// 일반회원 - 찜목록 넣기 전에 이미 있는지 확인하기
+	public Jjim findJjimNo(Jjim j);
+	
+	// 일반회원 - 찜목록 넣기
+	public int insertJjim(Jjim j);
+	
+	//일반회원 - 다시 찜하기
+	public int updateJjim(String jjim_no);
+
+	// 일반회원 - 찜목록 삭제
+	public int deleteJjim(Jjim j);
+	
+	// 일반회원 - 찜목록 찾아오
+	public List<Jjim> selectJjimList(String usno);
+
+	// 제휴회원 - 로그인시 내소식 확인하기
+	public int findNewNews(User u);
+
+	
+	
+
+	
 }

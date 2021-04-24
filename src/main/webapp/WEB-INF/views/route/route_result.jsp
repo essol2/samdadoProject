@@ -64,29 +64,29 @@
 
                 <div id="route_select">
                 	<br>
-                	<c:if test="${ param.area == 'east' }">
+                	<c:if test="${ area == 'east' }">
                 		<c:set var="check1" value="checked"/>
                 	</c:if>
-                	<c:if test="${ param.area == 'west' }">
+                	<c:if test="${ area == 'west' }">
                 		<c:set var="check2" value="checked"/>
                 	</c:if>
-                	<c:if test="${ param.area == 'south' }">
+                	<c:if test="${ area == 'south' }">
                 		<c:set var="check3" value="checked"/>
                 	</c:if>
-                	<c:if test="${ param.area == 'north' }">
+                	<c:if test="${ area == 'north' }">
                 		<c:set var="check4" value="checked"/>
                 	</c:if>
                 	
-                	<c:if test="${ param.thema == 'sightseeing' }">
+                	<c:if test="${ thema == 'sightseeing' }">
                 		<c:set var="check5" value="checked"/>
                 	</c:if>
-                	<c:if test="${ param.thema == 'break' }">
+                	<c:if test="${ thema == 'break' }">
                 		<c:set var="check6" value="checked"/>
                 	</c:if>
-                	<c:if test="${ param.thema == 'beach' }">
+                	<c:if test="${ thema == 'beach' }">
                 		<c:set var="check7" value="checked"/>
                 	</c:if>
-                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get" onsubmint="return searchForm();">
+                 	<form id="routeSearchForm" action="${ contextPath }/route/search" method="get" onsubmit="return searchForm();">
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">지역</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 		<input type="radio" name="area" id="east" value="east" ${ check1 }>
                 		<label for="east">  동부</label>
@@ -132,13 +132,13 @@
 							<div class="c_border" id="left-border">
 								<table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
 									<c:forEach var="r" items="${ list }" varStatus="index">
-										<tr>
+										<tr id="tr1">
 											<td>
 												<img src="${ r.spot_path }${ r.spot_oname }">
 											</td>
 											<td>
 												<div class="spot_border">
-													<p class="spot_title">${ r.spot_title }</p>
+													<p class="spot_title" name="title" id="spotTitle">${ r.spot_title }</p>
 													<button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
 												</div>
 											</td>
@@ -160,6 +160,7 @@
                                    <tr>
                                         <td colspan="2"> 
                                             <button class="_btn" id="ch_btn" onclick="location.href='${ contextPath }/route/changeRoute'">순서 바꾸기</button>
+                                            
                                             <button class="_btn" id="add_btn">추가하기</button>
                                         </td>
                                    </tr>
@@ -181,7 +182,7 @@
                                       	</c:forEach>
                                     	
                                         <tr> 
-                                            <td id="cost-content" style="text-align: right;" >총 <fmt:formatNumber value="${ totalPrice }" pattern="#,###"/>원&nbsp;</td>
+                                            <td id="tcost-content" style="text-align: right;" >총 <pre id="totalPrice"><fmt:formatNumber value="${ totalPrice }" pattern="#,###"/></pre>원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -355,6 +356,31 @@
 	            </div>
 	        </div>
 	    </div>
+	    
+	    <form id="saveList" action="${ contextPath }/route/addRoute" method="post"></form>
+	    
+	<!-- 루트 저장 -->
+	<script>
+		$("#add_btn").on("click", function(){
+			<c:if test="${ !empty loginUser }">
+				$("#saveList").html("");
+				
+				$("#tr1 #spotTitle").each(function(index, element){
+					$("#saveList").append("<input type='hidden' name='slist' value='" + $(this).text() + "'/>");
+				});
+				
+				console.log($("#totalPrice").text());
+				
+				$("#saveList").append("<input type='hidden' name='tprice' value='" + $("#totalPrice").text() + "'/>");
+				
+				$("#saveList").submit();
+			</c:if>
+			
+			<c:if test ="${ empty loginUser }">
+				alert("로그인 후 저장해 주세요!");
+			</c:if>
+		});
+	</script>
 	    
 	<!-- 검색 모달창 -->
 	<script language=JavaScript>

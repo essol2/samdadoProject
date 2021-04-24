@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
@@ -31,10 +32,46 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.update("mypageMapper.updateUserInfo", u);
 	}
 	
-	// 알림 select 메소드
+	// 안읽은 알림 select 메소드
 	@Override
-	public List<Alert> selectAlertLis(String usno) {
-		return sqlSession.selectList("mypageMapper.selectAlertLis", usno);
+	public List<Alert> selectAlertList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectAlertList", usno);
+	}
+	
+	// 읽은 알림 select 메소드
+	@Override
+	public List<Alert> selectYAlertList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectYAlertList", usno);
+	}
+
+	// 알림 상세보기 객체 찾아오는 메소드
+	@Override
+	public Alert selectDetailAlert(Alert al) {
+		return sqlSession.selectOne("mypageMapper.selectDetailAlert", al);
+	}
+	
+	// 알림 nstatus update
+	@Override
+	public int updateNstatus(Alert al) {
+		return sqlSession.update("mypageMapper.updateNstatus", al);
+	}
+	
+	// 제휴회원 - 알람을 위한 포인트 찾아오기
+	@Override
+	public int findThisPB(Business selectBusCodeUser) {
+		return sqlSession.selectOne("mypageMapper.findThisPB", selectBusCodeUser);
+	}
+
+	// 제휴회원 - 포인트가 500보다 아래라고 알림주기
+	@Override
+	public int insertPointAlert(Point fdp) {
+		return sqlSession.insert("mypageMapper.insertPointAlert", fdp);
+	}
+	
+	// 제휴회언 알림 -100 될 때 마다 new pno 알아오기
+	@Override
+	public int findNewPno(Business selectBusCodeUser) {
+		return sqlSession.selectOne("mypageMapper.findNewPno", selectBusCodeUser);
 	}
 	
 	// 제휴회원 - 광고 관리 메소드
@@ -123,13 +160,7 @@ public class MypageDaoImpl implements MypageDao{
 	public List<Jjim> selctJjimList(String usno) {
 		return sqlSession.selectList("mypageMapper.selctJjimList", usno);
 	}
-	
-	// 일반회원 - 내 예약 목록 출력 메소드
-	@Override
-	public List<Booking> selectBookList(String usno) {
-		return sqlSession.selectList("mypageMapper.selectBookList", usno);
-	}
-	
+
 	// 일반회원 - 가계부 조회 메소드
 	@Override
 	public List<AccountBook> selectAccountList(AccountBook ab) {
@@ -172,10 +203,132 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.selectList("mypageMapper.selectChartList", ab);
 	}
 
-	// 제휴회원 - 새로운 알림 등록
+	// 제휴회원 - QnA 새로운 알림 등록
 	@Override
-	public int insertQnANews(String usno) {
-		return sqlSession.insert("mypageMapper.insertQnANews", usno);
+	public int insertQnANews(Alert a) {
+		return sqlSession.insert("mypageMapper.insertQnANews", a);
+	}
+
+	// 제휴회원 - Alliance 새로운 알림 등록을 위한 alno 찾아오기.
+	@Override
+	public int findAlno(Alliance a) {
+		return sqlSession.selectOne("mypageMapper.findAlno", a);
+	}
+
+	// 제휴회원 - Alliance 새로운 알림 등록
+	@Override
+	public int insertAlliNews(Alert al) {
+		return sqlSession.insert("mypageMapper.insertAlliNews", al);
+	}
+	
+	// 제휴회원 - Alliance 배너 광고 승인시 usno 찾아오기
+	@Override
+	public String findAlliUsno(Alliance alliance) {
+		return sqlSession.selectOne("mypageMapper.findAlliUsno", alliance);
+	}
+
+	// 제휴회원 - Alliance 승인시 새로운 알림 등록
+	@Override
+	public int insertNewApprove(Alert alert) {
+		return sqlSession.insert("mypageMapper.insertNewApprove", alert);
+	}
+
+	// 제휴회원 - 포인트 충전 시 user DB에 update
+	@Override
+	public int updatePbalance(Point po) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("mypageMapper.updatePbalance", po);
+	}
+
+	// 제휴회원 - Report 승인시 알림 등록
+	@Override
+	public int insertNewReport(Alert a) {
+		return sqlSession.insert("mypageMapper.insertNewReport", a);
+
+	}
+	// 일반회원 - hotel book list 찾아오기
+	@Override
+	public List<Booking> selectHotelBookList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectHotelBookList", usno);
+	}
+
+	// 일반회원 - tour book list 찾아오기
+	@Override
+	public List<Booking> selectTourBookList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectTourBookList", usno);
+	}
+
+	// 일반회원 - car book list 찾아오기
+	@Override
+	public List<Booking> selectCarBookList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectCarBookList", usno);
+	}
+
+	// 일반회원 - 내예약 취소
+	@Override
+	public int deleteBooking(Booking b) {
+		System.out.println("dao까지는 잘 오니?");
+		return sqlSession.delete("mypageMapper.deleteBooking", b);
+	}
+	// 일반회원 - 후기등록
+	@Override
+	public int insertReview(Review r) {
+		sqlSession.insert("mypageMapper.insertReview", r);
+		return sqlSession.selectOne("mypageMapper.selectThisNo", r);
+	}
+
+	// 일반회원 - 후기작성 표기
+	@Override
+	public int updateCheck(Review r) {
+		return sqlSession.update("mypageMapper.updateCheck", r);
+	}
+
+	// 일반회원 - 후기 수정 디테일 가져오기
+	@Override
+	public Review selectReview(Review r) {
+		return sqlSession.selectOne("mypageMapper.selectReview", r);
+	}
+	
+	// 일반회원 - 후기수정 업데이트
+	@Override
+	public int updateReview(Review r) {
+		return sqlSession.update("mypageMapper.updateReview", r);
+	}
+	
+	// 일반회원 - 찜목록 넣기 전에 이미 있는지 확인하기
+	@Override
+	public Jjim findJjimNo(Jjim j) {
+		return sqlSession.selectOne("mypageMapper.findJjimNo", j);
+	}
+
+	// 일반회원 - 찜목록 넣기
+	@Override
+	public int insertJjim(Jjim j) {
+		return sqlSession.insert("mypageMapper.insertJjim", j);
+	}
+	
+	//일반회원 - 다시 찜하기
+	@Override
+	public int updateJjim(String jjim_no) {
+		return sqlSession.insert("mypageMapper.updateJjim", jjim_no);
+	}
+
+	// 일반회원 - 찜목록 삭제
+	@Override
+	public int deleteJjim(Jjim j) {
+		return sqlSession.update("mypageMapper.deleteJjim", j);
+	}
+
+	// 일반회원 - 찜목록 찾아오기
+	@Override
+	public List<Jjim> selectJjimList(String usno) {
+		return sqlSession.selectList("mypageMapper.selectJjimList", usno);
+	}
+
+	// 제휴회원 - 로그인시 내소식 확인하기
+	@Override
+	public int findNewNews(User u) {
+		return sqlSession.selectOne("mypageMapper.findNewNews", u);
 	}
 
 }

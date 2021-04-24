@@ -18,6 +18,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<result property="authKey" column="AUTH_KEY" />
 	</resultMap>
 	
+	<resultMap type="QnA" id="qnaResultSet">
+		<id property="qnano" column="QNA_NO" />
+		<result property="qcont" column="QCONT" />
+		<result property="qdate" column="QDATE" />
+		<result property="qtodate" column="QTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
+		<result property="qreply" column="QREPLY" />
+		<result property="qstatus" column="QSTATUS" />
+		<result property="usno" column="US_NO" />	
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />	
+	</resultMap>
+	
 	<resultMap type="Point" id="pointResultSet">
 	<id property="pno" column="PNO" />
 	<result property="pdate" column="PDATE" />
@@ -111,7 +123,200 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<collection property="alliance" resultMap="AllianceResultSet"/>
 	</resultMap>
 	
+	<resultMap type="Alert" id="AlertResultSet">
+		<id property="nno" column="NNO"/>
+		<result property="usno" column="US_NO"/>
+		<result property="ntitle" column="NTITLE"/>
+		<result property="nstatus" column="NSTATUS"/>
+		<result property="ncate" column="NCATE"/>
+		<result property="nkeyno" column="NKEYNO"/>
+		<result property="ndate" column="N_DATE"/>
+		
+		<!-- QNA Join -->
+		<result property="qno" column="QNA_NO"/>
+		<result property="qcont" column="QCONT"/>
+		<result property="qdate" column="QDATE"/>
+		<result property="qreply" column="QREPLY"/>
+		
+		<!-- ALLIANCE Join -->
+		<result property="alno" column="AL_NO"/>
+		<result property="alSubDate" column="AL_SUBDATE"/>
+		<result property="alStartDate" column="START_DATE"/>
+		<result property="almessage" column="A_MASSAGE"/>
+		<result property="bus_code" column="BUS_CODE"/>
+		
+		<!-- REPORT Join -->
+		<result property="reno" column="REPORT_NO"/>
+		<result property="rdate" column="RDATE"/>
+		<result property="rexdate" column="REXDATE"/>
+		<result property="rimgcname" column="R_IMG_CNAME"/>
+		<result property="rcount" column="R_COUNT"/>
+		
+		<!-- POINT Join -->
+		<result property="pno" column="PNO"/>
+		<result property="pbalance" column="PBALANCE"/>
+		
+		<!-- BUSINUESS Join -->
+		<result property="bus_name" column="BUS_NAME"/>
+	</resultMap>
 	
+	<resultMap type="Booking" id="BookingResultSet">
+		<id property="usno" column="US_NO"/>
+		
+		<!-- rentcar -->
+		<result property="c_booking_no" column="C_BOOKING_NO"/>
+		<result property="c_bus_name" column="C_BUS_NAME"/>
+		<result property="c_booking_product" column="C_PRODUCT_NAME"/>
+		<result property="c_booking_date" column="C_BOOKING_DATE"/>
+		<result property="c_booking_modify" column="C_BOOKING_MODIFY"/>
+		<result property="c_booking_address" column="C_BOOKING_ADDRESS"/>
+		<result property="c_booking_pay" column="C_BOOKING_PAY"/>
+		<result property="c_booking_number" column="C_BOOKING_NUMBER"/>
+		<result property="c_booking_phone" column="C_BOOKING_PHONE"/>
+		<result property="c_booking_trv" column="C_TOUR_DATE"/>
+		<result property="rent_no" column="RENT_NO"/>
+		<result property="c_bus_code" column="BUS_CODE"/>
+		
+		<!-- hotel -->
+		<result property="r_booking_no" column="R_BOOKING_NO"/>
+		<result property="r_bus_name" column="BUS_NAME"/>
+		<result property="r_booking_product" column="R_PRODUCT_NAME"/>
+		<result property="r_booking_date" column="R_BOOKING_DATE"/>
+		<result property="r_booking_modify" column="R_BOOKING_MODIFY"/>
+		<result property="r_booking_address" column="R_BOOKING_ADDRESS"/>
+		<result property="r_booking_pay" column="R_BOOKING_PAY"/>
+		<result property="r_booking_number" column="R_BOOKING_NUMBER"/>
+		<result property="r_booking_phone" column="R_BOOKING_PHONE"/>
+		<result property="r_booking_trv" column="R_TOUR_DATE"/>
+		<result property="room_no" column="HOTEL_NO"/>
+		<result property="r_bus_code" column="BUS_CODE"/>
+		
+		<!-- tour -->
+		<result property="t_booking_no" column="T_BOOKING_NO"/>
+		<result property="t_bus_name" column="T_BUS_NAME"/>
+		<result property="t_booking_product" column="T_PRODUCT_NAME"/>
+		<result property="t_booking_date" column="T_BOOKING_DATE"/>
+		<result property="t_booking_modify" column="T_BOOKING_MODIFY"/>
+		<result property="t_booking_address" column="T_BOOKING_ADDRESS"/>
+		<result property="t_booking_pay" column="T_BOOKING_PAY"/>
+		<result property="t_booking_number" column="T_BOOKING_NUMBER"/>
+		<result property="t_booking_phone" column="T_BOOKING_PHONE"/>
+		<result property="t_booking_trv" column="T_TOUR_DATE"/>
+		<result property="pro_no" column="PRO_NO"/>
+		<result property="t_bus_code" column="BUS_CODE"/>
+		
+		<!-- BUSINESS_ATT Join -->
+		<result property="file_no" column="FILE_NO"/>
+		<result property="file_name" column="FILE_NAME"/>
+		<result property="file_root" column="FILE_ROOT"/>
+		<result property="file_status" column="FILE_STATUS"/>
+		<result property="file_rename" column="FILE_RENAME"/>
+		<result property="file_lv" column="FILE_LV"/>
+	</resultMap>
+	
+	<resultMap type="REVIEW" id="ReviewResultSet">
+		<id property="rev_no" column="REV_NO"/>
+
+		<result property="rev_comment" column="REV_COMMENT"/>
+		<result property="rev_date" column="REV_DATE"/>
+		<result property="rev_modify" column="REV_MODIFY"/>
+		<result property="rev_status" column="REV_STATUS"/>
+		<result property="rev_lv" column="REV_LV"/>
+		<result property="img_path" column="IMG_PATH"/>
+		<result property="img_name1" column="IMG_NAME1"/>
+		<result property="img_name2" column="IMG_NAME2"/>
+		<result property="img_name3" column="IMG_NAME3"/>
+		<result property="img_rename1" column="IMG_RENAME1"/>
+		<result property="img_rename2" column="IMG_RENAME2"/>
+		<result property="img_rename3" column="IMG_RENAME3"/>
+		<result property="us_no" column="US_NO"/>
+		<result property="bus_code" column="BUS_CODE"/>
+		<result property="re_star" column="RE_STAR"/>
+		<result property="rev_hct" column="REV_HCT"/>
+		<!-- rentcar -->
+		<result property="c_booking_no" column="C_BOOKING_NO"/>
+		<result property="c_bus_name" column="C_BUS_NAME"/>
+		<result property="c_booking_product" column="C_PRODUCT_NAME"/>
+		<result property="c_booking_date" column="C_BOOKING_DATE"/>
+		<result property="c_booking_modify" column="C_BOOKING_MODIFY"/>
+		<result property="c_booking_address" column="C_BOOKING_ADDRESS"/>
+		<result property="c_booking_pay" column="C_BOOKING_PAY"/>
+		<result property="c_booking_number" column="C_BOOKING_NUMBER"/>
+		<result property="c_booking_phone" column="C_BOOKING_PHONE"/>
+		<result property="c_booking_trv" column="C_TOUR_DATE"/>
+		<result property="rent_no" column="RENT_NO"/>
+		<result property="c_bus_code" column="BUS_CODE"/>
+		
+		<!-- hotel -->
+		<result property="r_booking_no" column="R_BOOKING_NO"/>
+		<result property="r_bus_name" column="BUS_NAME"/>
+		<result property="r_booking_product" column="R_PRODUCT_NAME"/>
+		<result property="r_booking_date" column="R_BOOKING_DATE"/>
+		<result property="r_booking_modify" column="R_BOOKING_MODIFY"/>
+		<result property="r_booking_address" column="R_BOOKING_ADDRESS"/>
+		<result property="r_booking_pay" column="R_BOOKING_PAY"/>
+		<result property="r_booking_number" column="R_BOOKING_NUMBER"/>
+		<result property="r_booking_phone" column="R_BOOKING_PHONE"/>
+		<result property="r_booking_trv" column="R_TOUR_DATE"/>
+		<result property="room_no" column="HOTEL_NO"/>
+		<result property="r_bus_code" column="BUS_CODE"/>
+		
+		<!-- tour -->
+		<result property="t_booking_no" column="T_BOOKING_NO"/>
+		<result property="t_bus_name" column="T_BUS_NAME"/>
+		<result property="t_booking_product" column="T_PRODUCT_NAME"/>
+		<result property="t_booking_date" column="T_BOOKING_DATE"/>
+		<result property="t_booking_modify" column="T_BOOKING_MODIFY"/>
+		<result property="t_booking_address" column="T_BOOKING_ADDRESS"/>
+		<result property="t_booking_pay" column="T_BOOKING_PAY"/>
+		<result property="t_booking_number" column="T_BOOKING_NUMBER"/>
+		<result property="t_booking_phone" column="T_BOOKING_PHONE"/>
+		<result property="t_booking_trv" column="T_TOUR_DATE"/>
+		<result property="pro_no" column="PRO_NO"/>
+		<result property="t_bus_code" column="BUS_CODE"/>
+		
+		<!-- BUSINESS_ATT Join -->
+		<result property="file_rename" column="FILE_RENAME"/>
+		<result property="file_lv" column="FILE_LV"/>
+		
+		<!-- Bsusiness Table 조인 -->
+		<result property="bus_name" column="BUS_NAME" />
+	
+	
+		
+	</resultMap>
+	
+	<resultMap type="JJIM" id="JjimResultSet">
+		<id property="jjim_no" column="JJIM_NO"/>
+
+		<result property="jjim_date" column="JJIM_DATE"/>
+		<result property="jjim_status" column="JJIM_STATUS"/>
+		<result property="bus_code" column="BUS_CODE"/>
+		<result property="us_no" column="US_NO"/>
+		
+		<!-- Business Join -->
+		<result property="bus_name" column="BUS_NAME" />
+		<result property="bus_address" column="BUS_ADDRESS" />
+		<result property="bus_intro" column="BUS_INTRO" />
+		<result property="bus_date" column="BUS_DATE" />
+		<result property="bus_modify" column="BUS_MODIFY" />
+		<result property="ad_count" column="AD_COUNT" />
+		<result property="bus_classify" column="BUS_CLASSIFY" />
+		<result property="bus_category" column="BUS_CATEGORY" />
+		<result property="bus_status" column="BUS_STATUS" />
+		<result property="bus_phone" column="BUS_PHONE" />
+		<result property="res_category" column="RES_CATEGORY"/>
+		<result property="hotel_category" column="HOTEL_CATEGORY" />
+		<result property="tour_category" column="TOUR_CATEGORY" />
+		<result property="tour_tema" column="TOUR_TEMA" />
+		<result property="al_no" column="AL_NO" />
+		<result property="bus_opening" column="BUS_OPENING" />
+		
+		<!-- 비즈니스ATT 대한 JOIN -->
+		<result property="file_rename" column="FILE_RENAME" />
+		<result property="file_lv" column="FILE_LV" />
+	</resultMap>
+		
 	
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
 	<!-- 1. 이메일, 전화번호 변경 메소드 -->
@@ -378,7 +583,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SELECT *
 		FROM BUSINESS B, BUSINESS_ATT BA 
 		WHERE B.BUS_CODE = BA.BUS_CODE
-		AND B.US_NO = #{bus_code}
+		AND B.US_NO = #{usno}
+		 AND BA.FILE_LV = 0
+		ORDER BY B.BUS_CODE DESC
 	</select>
 	
 	<!-- 제휴회원 - 진행중인 광고 목록 리스트 -->
@@ -388,6 +595,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE B.BUS_CODE = A.BUS_CODE
 		AND (B.BUS_CLASSIFY = 'P' OR A.ALSTATUS = 'Y')
 		AND A.US_NO= #{usno}
+		ORDER BY A.AL_NO DESC
 	</select>
 	
 	<!-- 제휴회원 - 배너 광고 신청한 사업장 목록 조회 -->
@@ -432,9 +640,411 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		AND B.US_NO = #{usno}
 		GROUP BY  TO_CHAR(TO_DATE(A.START_DATE, 'YY-MM-DD'), 'MONTH')
 	</select>
+
 	
-	<insert id="insertQnANews">
-		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE)
-		VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '문의에 대한 답변이 등록되었습니다.', 'N', 'Q');
+	<insert id="insertQnANews" parameterType="Alert">
+		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO, N_DATE)
+		VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '문의에 대한 답변이 등록되었습니다.', 'N', 'Q', #{nkeyno}, SYSDATE)
 	</insert>
+	
+	<select id="findAlno" resultType="_int">
+		SELECT AL_NO
+		FROM (
+		        SELECT AL_NO
+				FROM ALLIANCE
+				WHERE BUS_CODE = #{bus_code}
+		        AND ALSTATUS = 'N'
+		        ORDER BY AL_SUBDATE DESC)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<insert id="insertAlliNews" parameterType="Alert">
+		INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO, N_DATE)
+		VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '배너 광고 신청이 완료되었습니다.', 'N', 'AA', #{nkeyno}, SYSDATE)
+	</insert>
+	
+	<select id="findAlliUsno" resultType="string">
+		SELECT US_NO
+		FROM (SELECT US_NO
+				FROM ALLIANCE
+				WHERE BUS_CODE = #{bus_code}
+				AND ALSTATUS = 'Y'
+		        ORDER BY START_DATE DESC)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<insert id="insertNewApprove" parameterType="Alert">
+		<if test='alstatus == "Y"'>
+			INSERT 
+			INTO 	NEWS
+			(
+				NNO
+			  , US_NO
+			  , NTITLE
+			  , NSTATUS
+			  , NCATE
+			  , NKEYNO
+			  , N_DATE
+			)
+			VALUES
+			(
+				NEWS_SEQ_NO.NEXTVAL
+			  , #{usno}
+			  , '배너 광고 신청이 승인되었습니다.'
+			  , 'N'
+			  , 'A'
+			  , #{nkeyno}
+			  , SYSDATE
+			)
+		</if>
+		<if test='alstatus == "RI"'>
+			INSERT 
+			INTO 	NEWS
+			(
+				NNO
+			  , US_NO
+			  , NTITLE
+			  , NSTATUS
+			  , NCATE
+			  , NKEYNO
+			  , N_DATE
+			)
+			VALUES
+			(
+				NEWS_SEQ_NO.NEXTVAL
+			  , #{usno}
+			  , '배너 광고가 첨부파일 문제로 반려되었습니다.'
+			  , 'N'
+			  , 'A'
+			  , #{nkeyno}
+			  , SYSDATE
+			)
+		</if>
+		<if test="alstatus == 'RP'">
+			INSERT 
+			INTO 	NEWS
+			(
+				NNO
+			  , US_NO
+			  , NTITLE
+			  , NSTATUS
+			  , NCATE
+			  , NKEYNO
+			  , N_DATE
+			)
+			VALUES
+			(
+				NEWS_SEQ_NO.NEXTVAL
+			  , #{usno}
+			  , '배너 광고가 포인트 문제로 반려되었습니다.'
+			  , 'N'
+			  , 'A'
+			  , #{nkeyno}
+			  , SYSDATE
+			)
+		</if>
+	</insert>
+	
+	<insert id="insertNewReport" parameterType="Alert">
+		<if test="ntitle == null">
+			INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO, N_DATE)
+			VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '회원님의 사업장에대한 신고가 접수되었습니다.', 'N', 'R', #{nkeyno}, SYSDATE)
+		</if>
+		<if test="ntitle == 'block'">
+			INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO, N_DATE)
+			VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '회원님의 사업장에대한 신고가 3회 누적되었습니다.', 'N', 'R', #{nkeyno}, SYADATE)
+		</if>
+	</insert>
+	
+
+	<update id="updatePbalance" parameterType="Point">
+		UPDATE
+				"USER"
+			SET
+				PBALANCE = #{pbalance}
+		WHERE
+				US_NO = #{usno}
+	</update>
+	
+	<select id="selectAlertList" resultMap="AlertResultSet">
+		SELECT *
+		FROM NEWS
+		WHERE US_NO = #{usno}
+		AND NSTATUS = 'N'
+		ORDER BY NNO DESC
+	</select>
+	
+	<select id="selectYAlertList" resultMap="AlertResultSet">
+		SELECT *
+		FROM NEWS
+		WHERE US_NO = #{usno}
+		AND NSTATUS = 'Y'
+		ORDER BY NNO DESC
+	</select>
+	
+	<select id="selectDetailAlert" resultMap="AlertResultSet">
+		SELECT *
+		FROM NEWS N, POINT P, REPORT R, "QnA" Q, ALLIANCE A, BUSINESS B
+		WHERE A.BUS_CODE = B.BUS_CODE(+)
+		AND N.NKEYNO = P.PNO(+)
+		AND N.NKEYNO = R.REPORT_NO(+)
+		AND N.NKEYNO = Q.QNA_NO(+)
+		AND N.NKEYNO = A.AL_NO(+)
+		AND N.NNO = #{nno}
+	</select>
+	
+	<update id="updateNstatus" parameterType="Alert">
+		UPDATE NEWS
+		SET NSTATUS = 'Y'
+		WHERE NNO = #{nno}
+	</update>
+  
+	<select id="selectHotelBookList" resultMap="BookingResultSet">
+		SELECT *
+		FROM ROOM_BOOKING RB, BUSINESS_ATT BA
+		WHERE RB.BUS_CODE = BA.BUS_CODE
+		AND RB.US_NO = #{usno}
+		AND BA.FILE_LV = 0
+		ORDER BY RB.R_TOUR_DATE DESC
+	</select>
+	
+	<select id="selectTourBookList" resultMap="BookingResultSet">
+		SELECT *
+		FROM TOUR_BOOKING TB, BUSINESS_ATT BA
+		WHERE TB.BUS_CODE = BA.BUS_CODE
+		AND BA.FILE_LV = 0
+		AND TB.US_NO = #{usno}
+		ORDER BY TB.T_TOUR_DATE DESC
+	</select>
+	
+	<select id="selectCarBookList" resultMap="BookingResultSet">
+		SELECT *
+		FROM CAR_BOOKING CB, BUSINESS_ATT BA
+		WHERE CB.BUS_CODE = BA.BUS_CODE
+		AND BA.FILE_LV = 0
+		AND CB.US_NO = #{usno}
+		ORDER BY CB.C_TOUR_DATE DESC
+	</select>
+	
+	<delete id="deleteBooking" parameterType="Booking">
+		<if test="category == 'room'">
+			DELETE 
+			FROM ROOM_BOOKING
+			WHERE R_BOOKING_NO = #{bookingLv}
+		</if>
+		<if test="category eq 'car'">
+			DELETE 
+			FROM CAR_BOOKING
+			WHERE C_BOOKING_NO = #{bookingLv}
+		</if>
+		<if test="category == 'tour'">
+			DELETE 
+			FROM TOUR_BOOKING
+			WHERE T_BOOKING_NO = #{bookingLv}
+		</if>
+	</delete>
+
+	<select id="findThisPB" resultType="_int">
+		SELECT PBALANCE
+		FROM (
+		    SELECT U.PBALANCE
+		    FROM BUSINESS B, "USER" U
+		    WHERE  B.US_NO = U.US_NO(+)
+		    AND U.US_NO = #{us_no}
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<insert id="insertPointAlert" parameterType="Point">
+		INSERT 
+		INTO
+			 NEWS
+			(
+				NNO
+			  , US_NO
+			  , NTITLE
+			  , NSTATUS
+			  , NCATE
+			  , NKEYNO
+			)
+			VALUES
+			(
+				NEWS_SEQ_NO.NEXTVAL
+			  , #{usno}
+			  , '포인트의 잔액이 얼마 남지 않았습니다.'
+			  , 'N'
+			  , 'P'
+			  , #{pno}
+			)
+	</insert>
+	
+	<select id="findNewPno" resultType="_int">
+		SELECT PNO
+		FROM (  SELECT P.PNO
+		        FROM POINT P
+		        WHERE US_NO = #{us_no}
+		        ORDER BY PNO DESC)
+		WHERE ROWNUM = 1
+  </select>
+   
+  <insert id="insertReview" parameterType="Review">
+  		INSERT 
+  		INTO REVIEW
+  		(
+  			REV_NO
+  		  , REV_COMMENT
+  		  , REV_DATE
+  		  , REV_MODIFY
+  		  , REV_STATUS
+  		  , REV_LV
+  		  , IMG_NAME1
+  		  , IMG_NAME2
+  		  , IMG_NAME3
+  		  , IMG_RENAME1
+  		  , IMG_RENAME2
+  		  , IMG_RENAME3
+  		  , US_NO
+  		  , BUS_CODE
+  		  , RE_STAR
+  		  , REV_HCT
+  		  )
+  		
+  		VALUES
+  		(
+  			RE_SEQ_NO.NEXTVAL
+  		  , #{rev_comment}
+  		  , SYSDATE
+  		  , SYSDATE
+  		  , DEFAULT
+  		  , 'rev'
+  		  , #{ img_name1 }
+  		  , #{ img_name2 }
+  		  ,#{ img_name3 }
+  		  ,#{ img_rename1 }
+  		  ,#{ img_rename2 }
+  		  ,#{ img_rename3 }
+  		  , #{us_no}
+  		  , #{bus_code}
+  		  , #{re_star}
+  		  , #{rev_hct}
+  		  ) 
+  </insert>
+  
+  <select id="selectThisNo" resultType="_int" parameterType="Review">
+  		SELECT REV_NO
+  		FROM
+  		(
+	  		SELECT REV_NO
+	  		FROM REVIEW
+	  		WHERE US_NO = #{us_no}
+	  		ORDER BY REV_NO DESC
+  		)
+  		WHERE ROWNUM = 1
+  </select>
+  
+  <update id="updateCheck" parameterType="Review">
+  		<if test='rev_hct eq "h".toString()'>
+  			UPDATE ROOM_BOOKING
+  			SET R_REVIEW_CHECK = #{rev_no}
+  			WHERE R_BOOKING_NO = #{booking_no}
+  		</if>
+  		<if test='rev_hct eq "c".toString()'>
+  			UPDATE CAR_BOOKING
+  			SET C_REVIEW_CHECK = #{rev_no}
+  			WHERE C_BOOKING_NO = #{booking_no}
+  		</if>
+  		<if test='rev_hct eq "t".toString()'>
+  			UPDATE TOUR_BOOKING
+  			SET T_REVIEW_CHECK = #{rev_no}
+  			WHERE T_BOOKING_NO = #{booking_no}
+  		</if>
+  </update>
+  
+  <select id="selectReview" resultMap="ReviewResultSet">
+	  	<if test='rev_hct eq "h".toString()'>
+	  		SELECT *
+	  		FROM REVIEW R, ROOM_BOOKING RB, BUSINESS_ATT BA, BUSINESS B
+	  		WHERE R.REV_NO = RB.R_REVIEW_CHECK
+	  		AND RB.BUS_CODE = BA.BUS_CODE
+	  		AND BA.BUS_CODE = B.BUS_CODE
+	  		AND BA.FILE_LV = 0
+	  		AND RB.R_BOOKING_NO = #{ booking_no }
+	  	</if>
+	  	<if test='rev_hct eq "c".toString()'>
+  			SELECT *
+	  		FROM REVIEW R, CAR_BOOKING CB, BUSINESS_ATT BA, BUSINESS B
+	  		WHERE R.REV_NO = CB.C_REVIEW_CHECK
+	  		AND CB.BUS_CODE = BA.BUS_CODE
+	  		AND BA.BUS_CODE = B.BUS_CODE
+	  		AND BA.FILE_LV = 0
+	  		AND CB.C_BOOKING_NO = #{ booking_no }
+  		</if>
+  		<if test='rev_hct eq "t".toString()'>
+  			SELECT *
+	  		FROM REVIEW R, TOUR_BOOKING TB, BUSINESS_ATT BA, BUSINESS B
+	  		WHERE R.REV_NO = TB.T_REVIEW_CHECK
+	  		AND TB.BUS_CODE = BA.BUS_CODE
+	  		AND BA.BUS_CODE = B.BUS_CODE
+	  		AND BA.FILE_LV = 0
+	  		AND TB.T_BOOKING_NO = #{ booking_no }
+  		</if>
+  </select>
+  
+  <update id="updateReview" parameterType='Review'>
+  		UPDATE 
+  				REVIEW
+  		SET 
+  				REV_COMMENT = #{rev_comment},
+  				REV_MODIFY = SYSDATE,
+  				REV_STATUS = 'm',
+  				RE_STAR = #{re_star},
+  				IMG_RENAME1 = #{img_rename1},
+  				IMG_RENAME2 = #{img_rename2},
+  				IMG_RENAME3= #{img_rename3}
+  		WHERE 
+  				REV_NO = #{rev_no}
+  </update>
+  
+  <select id="findJjimNo" resultMap="JjimResultSet">
+  		SELECT *
+  		FROM JJIM
+  		WHERE US_NO =  #{us_no}
+  		AND BUS_CODE = #{ bus_code }
+  </select>
+  
+  <insert id="insertJjim" parameterType="Jjim">
+		INSERT INTO JJIM(JJIM_NO, JJIM_DATE, JJIM_STATUS, BUS_CODE, US_NO)
+		VALUES (JJIM_NO.NEXTVAL, SYSDATE, '1', #{bus_code}, #{us_no})
+  </insert>
+  
+  <update id="updateJjim" parameterType="string">
+  		UPDATE JJIM
+  		SET JJIM_STATUS = '1'
+  		WHERE JJIM_NO = #{ jjim_no }
+  </update>
+  
+  <update id="deleteJjim" parameterType="Jjim">
+  		UPDATE JJIM
+  		SET JJIM_STATUS = '0'
+  		WHERE US_NO = #{us_no}
+  		AND BUS_CODE = #{bus_code}
+  </update>
+  
+  <select  id="selectJjimList" resultMap="JjimResultSet">
+  		SELECT *
+  		FROM JJIM J, BUSINESS B, BUSINESS_ATT BA
+  		WHERE J.BUS_CODE = B.BUS_CODE
+  		AND B.BUS_CODE = BA.BUS_CODE
+  		AND J.JJIM_STATUS = '1'
+  		AND J.US_NO = #{ usno }
+  		AND BA.FILE_LV = 0
+  </select>
+  
+  <select id="findNewNews" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM NEWS
+  		WHERE US_NO = #{usno}
+  		AND NSTATUS='N'
+  </select>
+  
 </mapper>

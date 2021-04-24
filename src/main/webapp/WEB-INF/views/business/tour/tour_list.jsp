@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Samadado</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <style>
@@ -400,6 +401,24 @@
             font-family: 'GmarketSansBold' !important;
             line-height:0px;
         }
+        
+        .cateSelect {
+       	    width: 70px;
+		    height: 33px;
+		    border: 1px solid black;
+		    border-radius: 20%;
+		    /* -webkit-appearance: none; */
+		    appearance: none;
+		    padding-left: 5px;
+		    
+        }
+        
+        .cateSelect a, .cateSelect label {
+            text-decoration: none;
+            color: black;
+            font-family: 'GmarketSansBold' !important;
+            line-height:0px;
+        }
 
         .moreBtn {
             background-color: rgb(70, 115, 85);
@@ -511,7 +530,14 @@
             <nav id="choise2-nav">
                 <ul id="choise2">
                     <li>
-                        <div class="cover"><label>테마별</label></div>
+                        <div class="cover">
+							<select id="cateSelect"class="cateSelect">
+                                <option value="tema">테마별</option>
+                                <option value="wedding">신혼</option>
+                                <option value="gradu">졸업</option>
+                                <option value="trip">여행</option>
+                            </select>
+						</div>
                     </li>
                     <li>
                         <div class="cover"><label>유형별</label></div>
@@ -525,42 +551,67 @@
                 </ul>
 
             </nav>
+			
+			<script>	
+		    $(function(){
+		    	$("#cateSelect").change(function(){
+		    			var kinds = $(this).val(); 
 
+		    			$.ajax({
+		    				 url : '${contextPath}/business/cateList', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";
+		                            str += "<b>입장료 : 입장료 없음</b>";
+		                            str += "<div id='frm_read'>"
+		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+		                            str += "</div>";               
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+			</script>
             <!-- 관광지목록 div -->
-
+			
+			<!-- 렌트카 메인사진 넣기 -->
+			<!-- 프리미엄 profile > mainprofile로 변경 -->
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                    <div class='profile' onclick="location.href='${ contextPath }/business/tour_detail'">
+                <c:forEach var="p" items="${ tourList }">
+                <c:if test="${ p.bus_classify eq 'P' && p.file_lv eq '0' }">
+                    <div class='profile'>
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/tour1.png">
+                        <img class="image" src="../resources/busUploadFiles/${ p.file_rename }" onclick="selectRes(${p.bus_code})">
                         <b>★4.90(후기 99+개)</b>
-                        <b>김녕미로공원</b>
-                        <b>입장료 : 3000</b>
+                        <b>${ p.bus_name }</b>
+                        <b>${ p.pro_adult }</b>
                         <p><img src="../resources/images/image_listpage/heart.png"></p>
                     </div>
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/tour2.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>서핑페스티벌</b>
-                        <b>입장료 : 3000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/tour3.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>서광승마장</b>
-                        <b>입장료 : 3000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
+                </c:if>    
+                </c:forEach>
                 </div>
 
                 <div id="secondlist">
                 <c:forEach var="t" items="${ tourList }">
+                <c:if test="${t.bus_classify eq 'G' }">
                     <div class='profile'>
-                    	<input type="hidden" id="busCode" value="${ t.bus_code }">
-                    	<c:if test="${ t.file_lv eq '0'}">
+                    	<c:if test="${t.file_lv eq '0'}">
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                     	</c:if>
                         <b>★4.90(후기 99+개)</b>
@@ -570,6 +621,7 @@
                         <a href='javascript: like_func();'><img src="../resources/images/image_listpage/heart.png"></a>
                         </div>
                     </div>
+                </c:if>
                 </c:forEach>
                 </div>        
 			</div>
@@ -623,44 +675,6 @@
             <hr>
             <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
         </footer>
-
-<script>
-function like_func(){
-	var d = $('#busCode').val();
-	var frm_read = $('#frm_read');
-	var busCode = $('#busCode', frm_read).val();
-	var mno = $('${loginUesr.usno}', frm_read).val();
-	console.log("busCode, mno : " + busCode +","+ mno + "," + d);
-	
-	/*
-	$.ajax({
-	  url: "../liketo/like.do",
-	  type: "GET",
-	  cache: false,
-	  dataType: "json",
-	  data: 'boardno=' +boardno,
-	  success: function(data) {
-	    var msg = '';
-	    var like_img = '';
-	    msg += data.msg;
-	    alert(msg);
-	    
-	    if(data.like_check == 0){
-	      like_img = "./images/dislike.png";
-	    } else {
-	      like_img = "./images/like.png";
-	    }      
-	    $('#like_img', frm_read).attr('src', like_img);
-	    $('#like_cnt').html(data.like_cnt);
-	    $('#like_check').html(data.like_check);
-	  },
-	  error: function(request, status, error){
-	    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	  }
-	}); */
-}
-
-</script>
 
 </body>
 

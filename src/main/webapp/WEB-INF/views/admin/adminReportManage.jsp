@@ -46,7 +46,7 @@
                 <thead>
                     <tr>
                         <th>신고 번호</th>
-                        <th>신고자</th>
+                        <th>피신고자</th>
                         <th>신고 내용</th>
                         <th>첨부 파일</th>
                         <th>사업장 코드</th>
@@ -58,6 +58,7 @@
                 
                 <tbody>        
                 <c:forEach var="rpl" items="${ reportList }" varStatus="status"> 
+                   <input type="hidden" id="hiddenUsno" value="${ rpl.usno }">
                    <tr>
                        <th id="report_no">${ rpl.report_no }</th>
                        <td>${ rpl.usname }</td>
@@ -69,7 +70,7 @@
                        </td>
                        <td id="bus_code">${ rpl.bus_code }</td>
                        <td><fmt:formatDate value='${ rpl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
-                       <td><button class="btn btn-secondary" id="admitReportBtn">승인</button></td> <!-- db 상태 y -->
+                       <td><button class="btn btn-secondary" id	="admitReportBtn">승인</button></td> <!-- db 상태 y -->
                        <td><button class="btn btn-success" id="rejectReport">반려</button></td> <!-- db 상태 r -->
                    </tr>
                    
@@ -89,7 +90,7 @@
 								    <input type="text" class="form-control" id="report_num" aria-describedby="emailHelp" value="${ status.current.report_no }" readonly>
 								  </div>
 								  <div class="mb-3">
-								    <label for="report_user" class="form-label">신고자</label>
+								    <label for="report_user" class="form-label">피신고자</label>
 								    <input type="text" class="form-control" id="report_user" value="${ status.current.usname }" readonly>
 								  </div>
 								  <div class="mb-3">
@@ -135,8 +136,9 @@
 	
 		         		var report_no = $("#report_no").text();
 		         		var bus_code = $("#bus_code").text();
+		         		var usno = $("#hiddenUsno").val();
 		         		
-		         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code;
+		         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code + "&usno=" + usno;
 	             });
          	</script>
          	
@@ -261,7 +263,9 @@
                </div>
                <br><hr>
                <button type='button' class='btn btn-secondary' data-bs-toggle='modal' data-bs-target='#searchModal' style="display:none;">보기</button>
-            	   <!-- 모달 -->
+            	   
+            	   
+             <!-- 모달 -->
 	         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
@@ -290,14 +294,14 @@
 						  </div>
 						  <div class="mb-3">
 						    <label for="report_date" class="form-label">신고 날짜</label>
-						    <input type="text" class="form-control" id="report_date" value="<fmt:formatDate value='${ data[i].rtodate }' type='both' pattern='yyyy-MM-dd' />" readonly>
+						    <input type="text" class="form-control" id="report_date" readonly>
 						  </div>
 						  <div class="mb-3">
 						    <label for="report_atta" class="form-label">첨부파일</label> <br>
 						    <div class="row row-cols-1 row-cols-md-2">
 							  <div class="col">
-							    <div class="card" style="width: 470px;">
-							      <img src="${ contextPath }/resources/busUploadFiles/${ data[i].r_img_cname }" class="card-img-top" alt="...">
+							    <div class="card" style="width: 470px;" id="reportSearchAjaxModalImgDiv">
+
 							    </div>
 							  </div> 
 							</div>
@@ -338,20 +342,21 @@
 								for (var i in data) {
 									var tr = $("<tr>");
 									
-									var report_no = $("<th id='ajaxReportno'>").text(data[i].report_no);
-									var rep_cont = $("<td id='ajaxReportcont'>").text(data[i].rep_cont);
+									var report_no = $("<th>").text(data[i].report_no);
+									var rep_cont = $("<td>").text(data[i].rep_cont);
 									//var rdate = $("<td>").text(data[i].rdate);
-									var rtodate = $("<td id='ajaxReportrtodate'>").text(data[i].rtodate);
+									var rtodate = $("<td>").text(data[i].rtodate);
 									//var rexdate = $("<td>").text(data[i].rexdate);
-									var retodate = $("<td id='ajaxReportretodate'>").text(data[i].retodate);
-									var usno = $("<td id='ajaxReportusno'>").text(data[i].usno);
-									var usname = $("<td id='ajaxReportusname'>").text(data[i].usname);
-									var bus_code = $("<td id='ajaxReportbus_code'>").text(data[i].bus_code);
-									var r_count = $("<td id='ajaxReportr_count'>").text(data[i].r_count);
-									var rstatus = $("<td id='ajaxReportrstatus'>").text(data[i].rstatus);
-									var showAtta = $("<td> <button type='button' class='btn btn-secondary' onclick='test("+data+");'>보기</button>");
-	
-									tr.append(report_no, rep_cont, rtodate, retodate, usno, usname, bus_code, r_count, rstatus, showAtta);
+									var retodate = $("<td>").text(data[i].retodate);
+									var usno = $("<td>").text(data[i].usno);
+									var usname = $("<td>").text(data[i].usname);
+									var bus_code = $("<td>").text(data[i].bus_code);
+									var r_count = $("<td>").text(data[i].r_count);
+									var rstatus = $("<td>").text(data[i].rstatus);
+									var r_img_cname = $("<td style='display: none;'>").text(data[i].r_img_cname);
+									var showAtta = $("<td> <button type='button' class='btn btn-secondary' onclick='test(this);'>보기</button>");
+									
+									tr.append(report_no, rep_cont, rtodate, retodate, usno, usname, bus_code, r_count, rstatus, showAtta, r_img_cname);
 									tableBody.append(tr);
 									
 									
@@ -359,38 +364,27 @@
 
 							},
 							error : function(e) {
-								alert("error code : " + e.status + "\n"
-										+ "message : " + e.responseText);
+								alert("정보를 찾을 수 없습니다.");
 							}
 						});
 					});
 				});
 				
 				function test(data){
-					var $data1 = $(data);
-					console.log($data1);
 					
 					 $(document).ready(function() {
+						    $('#reportSearchAjaxModalImgDiv').html(""); // 이미지 지우기
 				            $('#searchModal').modal("show");
 				        });
+					
+					 console.log($(data).parent().parent().children('td').eq(9).text());
 					 
-					var report_no = $("#ajaxReportno").text(data);
-					var rep_cont = $("#ajaxReportcont").text();
-					var rtodate = $("#ajaxReportrtodate").text();
-					var retodate = $("#ajaxReportretodate").text();
-					var usno = $("#ajaxReportusno").text();
-					var usname = $("#ajaxReportusname").text();
-					var bus_code = $("#ajaxReportbus_code").text();
-					var r_count = $("#ajaxReportr_count").text();
-					var rstatus = $("#ajaxReportrstatus").text();
-						
-					 
-					$("#report_num").val(report_no);
-		            $("#report_content").text(rep_cont);
-		            $("#report_date").val(rtodate);
-		            $("#report_bus_code").val(bus_code);
-		            $("#report_user").val(usname);
-		            $("#report_atta").val(report_atta);
+					 $("#report_num").val($(data).parent().parent().children('th').text());
+					 $("#report_user").val($(data).parent().parent().children('td').eq(4).text());
+					 $("#report_content").val($(data).parent().parent().children('td').eq(0).text());
+					 $("#report_bus_code").val($(data).parent().parent().children('td').eq(5).text());
+					 $("#report_date").val($(data).parent().parent().children('td').eq(2).text());
+					 $("#reportSearchAjaxModalImgDiv").append("<img id='reportSearchAjaxModalImg' src='${ contextPath }/resources/busUploadFiles/" + $(data).parent().parent().children('td').eq(9).text() + "' class='card-img-top'>");
 
 				}
 			</script>

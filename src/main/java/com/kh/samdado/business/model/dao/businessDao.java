@@ -1,6 +1,7 @@
 package com.kh.samdado.business.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
@@ -12,7 +13,6 @@ import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
-import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
@@ -39,17 +39,14 @@ public interface businessDao {
 	Business selectRestaurant(int bus_code);
 	// 사업장 리스트 가져오기
 	List<Business> selectResList();
-	
 	// 렌트카등록
 	int insertCar(List<Car> cars);
-	int insertCarAtt(List<CarAtt> carList);
 	// 렌트카 디테일
 	Business selectCar(int bus_code);
 	// 렌트카 리스트
 	List<Business> selectCarList();
 	
 	// 호텔등록
-	int insertRoomAtt(List<RoomAtt> raList);
 	int insertRoom(List<Room> rooms);
 	// 호텔리스트
 	List<Business> selectHotelList();
@@ -80,9 +77,20 @@ public interface businessDao {
 		  
 	// 신고하기
 	int insertReport(Report r);
+	
+	int insertReport2(Report r);
+	
+	int updateReport(Report r);
+
 		  
 	// 찜하기
 	public int jjim(Jjim jjim);
+	
+	Map<String, Object> selectJjim(Map<String, Object> idxMap);
+	
+	Object insertJjim(Map<String, Object> commandMap);
+
+	public int updateJjim(Map<String, Object> commandMap);
 
 	// ************************** 지혜
 	// 신고 카운트
@@ -97,6 +105,10 @@ public interface businessDao {
 	int insertBookingHotel(Booking b);
 	
 	int insertBookingTour(Booking b);
+	
+	TourProduct selectTourProduct(int bus_code);
+	
+	int insertBookingCar(Booking b);
 
 	int insertPoint(Point p);
 	
@@ -128,6 +140,21 @@ public interface businessDao {
 	int insertPointColumn(Business selectBusCodeUser);
 
 	int insertMain(BusinessAtt bat);
+
+	List<Room> selectRoom(int bus_code);
+	List<RoomAtt> selectRoomAtt(int bus_code);
+
+	List<Business> cateList(String kind);
+
+	List<Car> selectCars(int bus_code);
+
+	List<CarAtt> selectCarAtt(int bus_code);
+
+	List<Review> selectReview(int bus_code);
+
+	int insertMenu(List<BusinessAtt> menus);
+
+	
 
 	
 

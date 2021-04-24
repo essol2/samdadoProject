@@ -125,6 +125,7 @@
         border:1px solid #467355;
         border-radius: 8px;
         font-weight:bold;
+        margin-right: 5px;
     }
     
     .textArea-con{
@@ -156,6 +157,13 @@
     .textbtn{
     	font-size:20px; 
     	cursor:pointer;
+    }
+    
+    .opening-div{
+    	border: 1px solid black;
+	    border-radius: 8px;
+	    width: 108%;
+	    padding: 10px;
     }
 </style>
 </head>
@@ -258,13 +266,15 @@
 				<!-- 검색 버튼 클릭 시 팝업 레이어 열리도록 -->
 				<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
 			
-				<!-- 운영시간 -->
-				<div class="join-wrap">
-				    <h3><label>운영시간</label></h3>
-				    <span class="box">
-				        <input type="text" id="address" class="content" name="bus_opening">
-				    </span>
-				</div>
+				<!-- 영업시간 -->
+	            <div class="join-wrap">
+	                <h3><label for="opening">영업시간</label></h3>
+	                <div class="opening-div"> 
+	                    <input type="time" id="opening" name="bus_opening" class="content" required>
+	                    ~
+	                    <input type="time" id="opening" name="bus_opening" class="content" required>
+	                </div>
+	            </div>
 			
 				<!-- 전화번호 -->
 				<div class="join-wrap">
@@ -294,7 +304,7 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="uploadFile" class="content" required>
+				        <input type="file" name="uploadFile" class="content" >
 				    </span>   
 				</div>
 				
@@ -302,7 +312,7 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="uploadFile" class="content" required>
+				        <input type="file" name="uploadFile" class="content" >
 				    </span>   
 				</div>
 				
@@ -310,14 +320,14 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="uploadFile" class="content" required>
+				        <input type="file" name="uploadFile" class="content" >
 				    </span>   
 				</div>
 			
 				<!-- 소개글 -->
 				<div class="join-wrap">
 				    <h3><label>소개글</label></h3>
-				    <textarea id="intArea" class="textArea-con" name="bus_intro" rows="10" cols="64" style="resize:none;"></textarea>
+				    <textarea id="intArea" class="textArea-con" name="bus_intro" rows="10" cols="64" style="resize:none;" required></textarea>
 				</div>	
 			</div>
 		</div>
@@ -326,14 +336,15 @@
 			
 		<!-- 차량추가 버튼 -->
         <div class="addBtn-area">
-            <button type="button" class="addBtn" id="addBtn" onclick="addCar()">차량추가(몇개추가)</button>
+            <button type="button" class="addBtn" id="removeBtn" onclick="removeCar()">차량삭제</button>
+            <button type="button" class="addBtn" id="addBtn" onclick="addCar()">차량추가</button>
         </div>
 		
 		<!-- 렌트카 추가 -->
         <div class="car-main" id="car-main">
 			<div class="join-content" id="join-content">
 			
-				<div class="join-wrap"> 
+				<div class="join-wrap" style="margin-top: 50px; border-top: 1px solid black;"> 
 					<h3><label>제작사</label></h3>
 				    <span class="box">
 				        <input multiple="multiple" type="text" id="carPro" class="content" name="carList[0].car_producer">
@@ -359,52 +370,51 @@
 				<!-- 차종 -->
 		        <div class="join-wrap" >
 		            <h3><label>차종</label></h3>           
-	                <input multiple="multiple" type="checkbox" class="carType" name="carList[0].car_type" value="소형">
+	                <input multiple="multiple" type="checkbox" class="carType" name="carList[0].car_type" value="소형" onclick="checkOne(this)">
 	                <label for = "소형">소형</label>&nbsp;
-	                <input type="checkbox" class="carType" name="carList[0].car_type" value="중형">
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="중형" onclick="checkOne(this)">
 	                <label for = "중형">중형</label>&nbsp;
-	                <input type="checkbox" class="carType" name="carList[0].car_type" value="대형">
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="대형" onclick="checkOne(this)">
 	                <label for = "대형">대형</label>&nbsp;
-	                <input type="checkbox" class="carType" name="carList[0].car_type" value="스포츠">
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="스포츠" onclick="checkOne(this)">
 	                <label for = "스포츠">스포츠</label>&nbsp;
 		        </div>
-		        
+
 		        <!-- 연료 -->
 		        <div class="join-wrap" >
 		            <h3><label>연료</label></h3>           
-	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="디젤">
+	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="디젤" onclick="checkOne2(this)">
 	                <label for = "디젤">디젤</label>&nbsp;
-	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="가솔린">
+	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="가솔린" onclick="checkOne2(this)">
 	                <label for ="가솔린">가솔린</label>&nbsp;
 		        </div>
 				
-				 <!-- 차종 -->
-				<!--<div class="join-wrap">
-				    <h3><label>차종</label></h3>
-				    <span class="box">
-			        <select class="content" multiple="multiple" name="car_type">
-			            <option value="select" selected>선택</option>
-			            <option value="소형">소형</option>
-			            <option value="중형">중형</option>
-			            <option value="대형">대형</option>
-			            <option value="스포츠">스포츠</option>
-			        </select>
-			        </span> 
-				</div>
+				<!-- 체크박스 선택 하나만 되게함 -->
+				<script>
+				function checkOne(element) {
+					  
+					  const checkboxes 
+					      = document.getElementsByName("carList[0].car_type");
+					  
+					  checkboxes.forEach((cb) => {
+					    cb.checked = false;
+					  })
+					  
+					  element.checked = true;
+					}
 				
-				연료
-				<div class="join-wrap">
-				    <h3><label>연료</label></h3>
-				    <span class="box">
-			        <select class="content" multiple="multiple" name="car_fuel">
-			            <option value="select" selected>선택</option>
-			            <option value="디젤">디젤</option>
-			            <option value="가솔린">가솔린</option>
-			        </select>
-			        </span>                
-				</div> -->
-				
-				
+				function checkOne2(element) {
+					  
+					  const checkboxes 
+					      = document.getElementsByName("carList[0].car_fuel");
+					  
+					  checkboxes.forEach((cb) => {
+					    cb.checked = false;
+					  })
+					  
+					  element.checked = true;
+					}
+				</script>
 				
 				<!-- 차량사진 -->
 				<div class="join-wrap">
@@ -471,7 +481,13 @@
            $("#carInfoDiv-"+_cnt).children().find('#carPrice').attr('name', 'carList[' + _cnt + '].car_price');
            
            _cnt++;
+           
+           var addCnt = $("#addBtn").text('차량추가(' + _cnt + ')');
        }
+       
+       function removeCar(){
+
+    	   }
        
        $("#gen").change(function() {
     	    $("#hidenDiv").hide();

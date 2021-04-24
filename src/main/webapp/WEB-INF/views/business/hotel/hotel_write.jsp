@@ -159,6 +159,10 @@
     	font-size:20px; 
     	cursor:pointer;
     }
+    
+    #hotel_amenity > label{
+    	margin-right: 10px;
+    }
 </style>
 <body>
 	<!-- navi.jsp include -->
@@ -283,15 +287,15 @@
 		        <!-- 편의시설 -->
 		        <div class="join-wrap" >
 		            <h3><label>편의시설</label></h3>           
-	                <input type="checkbox" name="facility" value="주차">
+	                <input type="checkbox" name="hotel_facility" value="주차">
 	                <label for = "주차">주차</label>&nbsp;
-	                <input type="checkbox" name="facility" value="편의점">
+	                <input type="checkbox" name="hotel_facility" value="편의점">
 	                <label for = "편의점">편의점</label>&nbsp;
-	                <input type="checkbox" name="facility" value="무료인터넷">
+	                <input type="checkbox" name="hotel_facility" value="무료인터넷">
 	                <label for = "무료인터넷">무료인터넷</label>&nbsp;
-	                <input type="checkbox" name="facility" value="조식">
+	                <input type="checkbox" name="hotel_facility" value="조식">
 	                <label for = "조식">조식</label>&nbsp;
-	                <input type="checkbox" name="facility" value="TV">
+	                <input type="checkbox" name="hotel_facility" value="TV">
 	                <label for = "TV">TV</label>&nbsp;
 		        </div>
 		        
@@ -372,7 +376,7 @@
 			<div class="join-content" id="join-content">
 			
 		    	<!-- 객실명 -->
-		        <div class="join-wrap">
+		        <div class="join-wrap" style="margin-top: 50px; border-top: 1px solid black;">
 		        	<h3><label>객실명</label></h3>
 		            <span class="box">
 		                <input type="text" id="room_name" class="content" name="roomList[0].room_name">
@@ -411,7 +415,7 @@
 	                <input type="checkbox" id="room_amenity" name="roomList[0].room_amenity" value="shower">
 	                <label>샤워실</label>&nbsp;
 	                <input type="checkbox" id="room_amenity" name="roomList[0].room_amenity" value="ref">
-	                <label>냉장고</label>&nbsp;
+	                <label>냉장고</label><br>
 	                <input type="checkbox" id="room_amenity" name="roomList[0].room_amenity" value="aircon">
 	                <label>에어컨</label>&nbsp;
 	                <input type="checkbox" id="room_amenity" name="roomList[0].room_amenity" value="balcony">
@@ -483,6 +487,8 @@
         $("#carInfoDiv-"+_cnt).children().find('#room_amenity').attr('name', 'roomList[' + _cnt + '].room_amenity');
         
         _cnt++;
+        
+        var addCnt = $("#addBtn").text('방추가(' + _cnt + ')');
     }
     
     $("#gen").change(function() {

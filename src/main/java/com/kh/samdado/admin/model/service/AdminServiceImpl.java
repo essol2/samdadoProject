@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.samdado.admin.model.dao.AdminDao;
+import com.kh.samdado.admin.model.vo.A_board;
 import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -14,7 +15,6 @@ import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
-import com.kh.samdado.user.model.vo.User;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -158,6 +158,42 @@ public class AdminServiceImpl implements AdminService {
 	public List<Integer> selectGetProfit() {
 		// TODO Auto-generated method stub
 		return aDao.selectGetProfit();
+	}
+
+	@Override
+	public Report selectReport(Report report) {
+		// TODO Auto-generated method stub
+		return aDao.selectReport(report);
+	}
+
+	@Override
+	public int updateRstatusToYAndNoRcount(Report report) {
+		// TODO Auto-generated method stub
+		return aDao.updateRstatusToYAndNoRcount(report);
+	}
+
+	@Override
+	public Report selectReportRexdate(Report report) {
+		// TODO Auto-generated method stub
+		return aDao.selectReportRexdate(report);
+	}
+
+	@Override
+	public int insertAboard(A_board aboard) {
+		// TODO Auto-generated method stub
+		return aDao.insertAboard(aboard);
+	}
+
+	@Override
+	public List<A_board> adminMainselectAboardList() {
+		// TODO Auto-generated method stub
+		return aDao.adminMainselectAboardList();
+	}
+
+	@Override
+	public int updateRstatusToEnd(Income adminPremiumAd) {
+		// TODO Auto-generated method stub
+		return aDao.updateRstatusToEnd(adminPremiumAd);
 	}
 
 

@@ -1,6 +1,7 @@
 package com.kh.samdado.business.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import com.kh.samdado.business.model.vo.hotel.RoomBooking;
 import com.kh.samdado.business.model.vo.rentcar.Car;
 import com.kh.samdado.business.model.vo.rentcar.CarAtt;
 import com.kh.samdado.business.model.vo.rentcar.CarBooking;
-import com.kh.samdado.business.model.vo.rentcar.CarList;
 import com.kh.samdado.business.model.vo.tour.TourBooking;
 import com.kh.samdado.business.model.vo.tour.TourProduct;
 import com.kh.samdado.common.model.vo.Alliance;
@@ -54,12 +54,12 @@ public class businessDaoImpl implements businessDao {
 	public int selectResListCount() {
 		return sqlSession.selectOne("businessMapper.selectResListCount");
 	}
+	
 	// 사업장 사진
 	@Override
 	public List<BusinessAtt> selectAtt(int bus_code) {
 		return sqlSession.selectList("businessMapper.selectAtt", bus_code);
 	}
-
 	
 	// 음식점 디테일
 	@Override
@@ -75,11 +75,13 @@ public class businessDaoImpl implements businessDao {
 	// 렌트카 등록
 	@Override
 	public int insertCar(List<Car> cars) {
-		return sqlSession.insert("businessMapper.insertCar", cars);
-	}
-	@Override
-	public int insertCarAtt(List<CarAtt> carList) {
-		return sqlSession.insert("businessMapper.insertCarAtt", carList);
+		int result = 0;
+		
+		for(Car car : cars) {
+			 sqlSession.insert("businessMapper.insertCar", car);
+			 result ++;
+		}
+		return result;
 	}
 	// 렌트카 리스트
 	@Override
@@ -94,20 +96,13 @@ public class businessDaoImpl implements businessDao {
 
 	// 호텔등록
 	@Override
-	public int insertRoomAtt(List<RoomAtt> raList) {
-		/*
-		 * for(RoomAtt room : raList) { sqlSession.insert("", room); }
-		 */
-		return sqlSession.insert("businessMapper.insertRoomAtt", raList);
-	}
-	@Override
 	public int insertRoom(List<Room> rooms) {
-		/*
-		 * for(Room room : rooms) { sqlSession.insert("", room);
-		 * 
-		 * }
-		 */
-		return sqlSession.insert("businessMapper.insertRoom", rooms);
+		int result = 0;
+		 for(Room room : rooms) { 
+			 result += sqlSession.insert("businessMapper.insertRoom", room);
+		 }
+		 
+		return result;
 	}
 	// 호텔리스트
 	@Override
@@ -165,14 +160,41 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.insert("businessMapper.insertReview", review);
 	}
 
+	// 신고하기
 	@Override
 	public int insertReport(Report r) {		
 		return sqlSession.insert("businessMapper.insertReport", r);
 	}
 	
 	@Override
+	public int insertReport2(Report r) {
+		return sqlSession.insert("businessMapper.insertReport2", r);
+	}
+	
+	@Override
+	public int updateReport(Report r) {		
+		return sqlSession.update("businessMapper.updateReport", r);
+	}
+	
+	// 찜하기
+	@Override
 	public int jjim(Jjim jjim) {
 		return sqlSession.insert("businessMapper.jjim", jjim);
+	}
+	
+	@Override
+	public Map<String, Object> selectJjim(Map<String, Object> idxMap) {		
+		return sqlSession.selectOne("businessMapper.selectJjim", idxMap);
+	}
+	
+	@Override
+	public Object insertJjim(Map<String, Object> commandMap) {			
+		return sqlSession.insert("businessMapper.insertJjim", commandMap);
+	}
+
+	@Override
+	public int updateJjim(Map<String, Object> commandMap) {
+		return sqlSession.update("businessMapper.udpateJjim", commandMap);
 	}
 	
 	// 일반결제 메소드
@@ -190,6 +212,16 @@ public class businessDaoImpl implements businessDao {
 		public int insertBookingTour(Booking b) {
 			return sqlSession.insert("businessMapper.insertBookingTour", b);
 		}
+		
+		@Override
+		public TourProduct selectTourProduct(int bus_code) {			
+			return sqlSession.selectOne("businessMapper.selectTourProduct", bus_code);
+		}
+		
+		@Override
+		public int insertBookingCar(Booking b) {
+			return sqlSession.insert("businessMapper.insertBookingCar", b);
+		}
 
 		@Override
 		public int insertPoint(Point p) {
@@ -197,8 +229,7 @@ public class businessDaoImpl implements businessDao {
 		}
 		
 		@Override
-		public Point findPoint(Point p) {
-			// TODO Auto-generated method stub
+		public Point findPoint(Point p) {			
 			return sqlSession.selectOne("businessMapper.findPoint", p);
 		}
 
@@ -289,6 +320,46 @@ public class businessDaoImpl implements businessDao {
 	public int insertMain(BusinessAtt bat) {
 		return sqlSession.insert("businessMapper.insertMain", bat);
 	}
+
+	@Override
+	public List<Room> selectRoom(int bus_code) {
+		return sqlSession.selectList("businessMapper.selectRoom", bus_code);
+	}
+	
+	@Override
+	public List<RoomAtt> selectRoomAtt(int bus_code) {
+		return sqlSession.selectList("businessMapper.selectRoomAtt", bus_code);
+	}
+
+	@Override
+	public List<Business> cateList(String kind) {
+		return sqlSession.selectList("businessMapper.cateList", kind);
+	}
+
+	@Override
+	public List<Car> selectCars(int bus_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectCars", bus_code);
+	}
+
+	@Override
+	public List<CarAtt> selectCarAtt(int bus_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectCarAtt", bus_code);
+	}
+
+	@Override
+	public List<Review> selectReview(int bus_code) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectReview", bus_code);
+	}
+
+	@Override
+	public int insertMenu(List<BusinessAtt> menus) {
+		return sqlSession.insert("businessMapper.insertMenu", menus);
+	}
+  
+ 
 
 	
 }

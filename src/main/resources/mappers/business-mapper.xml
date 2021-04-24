@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="tour_tema" column="TOUR_TEMA" />
 		<result property="al_no" column="AL_NO" />
 		<result property="bus_opening" column="BUS_OPENING" />
+		<result property="hotel_facility" column="HOTEL_FACILITY" />
 		<result property="file_rename" column="FILE_RENAME" />	<!-- 비즈니스ATT 대한 JOIN -->
 		<result property="file_lv" column="FILE_LV" />
 		<!-- USER 테이블 조인을 위한 필드 -->
@@ -32,17 +33,22 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="pro_adult" column="PRO_ADULT" />
 		<result property="pro_youth" column="PRO_YOUTH" />
 		<result property="pro_child" column="PRO_CHILD" />
+		<result property="pro_fac" column="PRO_FAC" />
+		<result property="pro_no" column="PRO_NO" />
 		<!-- 차조인 -->
 		<result property="car_name" column="CAR_NAME" />
 		<result property="car_type" column="CAR_TYPE" />
 		<result property="car_producer" column="CAR_PRODUCER" />
 		<result property="car_fuel" column="CAR_FUEL" />
 		<result property="car_price" column="CAR_PRICE" />
+		<result property="rent_no" column="CAR_NO" />
 		<!-- 방 조인 -->
 		<result property="room_name" column="ROOM_NAME" />
 		<result property="room_price" column="ROOM_PRICE" />
 		<result property="room_people" column="ROOM_PEOPLE" />
 		<result property="room_amenity" column="ROOM_AMENITY" />
+		<result property="room_no" column="ROOM_NO" />
+		<result property="rexdate" column="REXDATE" />
 	</resultMap>
 	
 	<resultMap type="BusinessAtt" id="BusinessAttResultSet">
@@ -122,6 +128,109 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usno" column="US_NO" />
 	</resultMap>
 	
+	<resultMap type="Room" id="RoomResultSet">
+		<id property="room_no" column="ROOM_NO" />
+		<result property="bus_code" column="BUS_CODE" />
+		<result property="room_name" column="ROOM_NAME" />
+		<result property="room_price" column="ROOM_PRICE" />
+		<result property="room_date" column="ROOM_DATE" />
+		<result property="room_modify" column="ROOM_MODIFY" />
+		<result property="room_people" column="ROOM_PEOPLE" />
+		<result property="room_amenity" column="ROOM_AMENITY" />
+		<result property="room_state" column="ROOM_STATE" />
+	</resultMap>
+	
+	<resultMap type="RoomAtt" id="RoomAttResultSet">
+		<id property="file_no" column="FILE_NO" />
+		<result property="file_name" column="FILE_NAME" />
+		<result property="file_root" column="FILE_ROOT" />
+		<result property="file_status" column="FILE_STATUS" />
+		<result property="file_rename" column="FILE_RENAME" />
+		<result property="file_lv" column="FILE_LV" />
+		<result property="room_no" column="ROOM_NO" />
+	</resultMap>
+	
+	<resultMap type="TourProduct" id="TourProductResultSet">
+		<id property="pro_no" column="PRO_NO" />
+		<result property="bus_code" column="BUS_CODE" />
+		<result property="pro_name" column="PRO_NAME" />
+		<result property="pro_adult" column="PRO_ADULT" />
+		<result property="pro_youth" column="PRO_YOUTH" />
+		<result property="pro_child" column="PRO_CHILD" />
+		<result property="pro_fac" column="PRO_FAC" />
+	</resultMap>
+	
+	<resultMap type="REVIEW" id="ReviewResultSet">
+		<id property="rev_no" column="REV_NO"/>
+
+		<result property="rev_comment" column="REV_COMMENT"/>
+		<result property="rev_date" column="REV_DATE"/>
+		<result property="rev_modify" column="REV_MODIFY"/>
+		<result property="rev_status" column="REV_STATUS"/>
+		<result property="rev_lv" column="REV_LV"/>
+		<result property="img_path" column="IMG_PATH"/>
+		<result property="img_name1" column="IMG_NAME1"/>
+		<result property="img_name2" column="IMG_NAME2"/>
+		<result property="img_name3" column="IMG_NAME3"/>
+		<result property="img_rename1" column="IMG_RENAME1"/>
+		<result property="img_rename2" column="IMG_RENAME2"/>
+		<result property="img_rename3" column="IMG_RENAME3"/>
+		<result property="us_no" column="US_NO"/>
+		<result property="bus_code" column="BUS_CODE"/>
+		<result property="re_star" column="RE_STAR"/>
+		<result property="rev_hct" column="REV_HCT"/>
+		<!-- rentcar -->
+		<result property="c_booking_no" column="C_BOOKING_NO"/>
+		<result property="c_bus_name" column="C_BUS_NAME"/>
+		<result property="c_booking_product" column="C_PRODUCT_NAME"/>
+		<result property="c_booking_date" column="C_BOOKING_DATE"/>
+		<result property="c_booking_modify" column="C_BOOKING_MODIFY"/>
+		<result property="c_booking_address" column="C_BOOKING_ADDRESS"/>
+		<result property="c_booking_pay" column="C_BOOKING_PAY"/>
+		<result property="c_booking_number" column="C_BOOKING_NUMBER"/>
+		<result property="c_booking_phone" column="C_BOOKING_PHONE"/>
+		<result property="c_booking_trv" column="C_TOUR_DATE"/>
+		<result property="rent_no" column="RENT_NO"/>
+		<result property="c_bus_code" column="BUS_CODE"/>
+		
+		<!-- hotel -->
+		<result property="r_booking_no" column="R_BOOKING_NO"/>
+		<result property="r_bus_name" column="BUS_NAME"/>
+		<result property="r_booking_product" column="R_PRODUCT_NAME"/>
+		<result property="r_booking_date" column="R_BOOKING_DATE"/>
+		<result property="r_booking_modify" column="R_BOOKING_MODIFY"/>
+		<result property="r_booking_address" column="R_BOOKING_ADDRESS"/>
+		<result property="r_booking_pay" column="R_BOOKING_PAY"/>
+		<result property="r_booking_number" column="R_BOOKING_NUMBER"/>
+		<result property="r_booking_phone" column="R_BOOKING_PHONE"/>
+		<result property="r_booking_trv" column="R_TOUR_DATE"/>
+		<result property="room_no" column="HOTEL_NO"/>
+		<result property="r_bus_code" column="BUS_CODE"/>
+		
+		<!-- tour -->
+		<result property="t_booking_no" column="T_BOOKING_NO"/>
+		<result property="t_bus_name" column="T_BUS_NAME"/>
+		<result property="t_booking_product" column="T_PRODUCT_NAME"/>
+		<result property="t_booking_date" column="T_BOOKING_DATE"/>
+		<result property="t_booking_modify" column="T_BOOKING_MODIFY"/>
+		<result property="t_booking_address" column="T_BOOKING_ADDRESS"/>
+		<result property="t_booking_pay" column="T_BOOKING_PAY"/>
+		<result property="t_booking_number" column="T_BOOKING_NUMBER"/>
+		<result property="t_booking_phone" column="T_BOOKING_PHONE"/>
+		<result property="t_booking_trv" column="T_TOUR_DATE"/>
+		<result property="pro_no" column="PRO_NO"/>
+		<result property="t_bus_code" column="BUS_CODE"/>
+		
+		<!-- BUSINESS_ATT Join -->
+		<result property="file_rename" column="FILE_RENAME"/>
+		<result property="file_lv" column="FILE_LV"/>
+		
+		<!-- Bsusiness Table 조인 -->
+		<result property="bus_name" column="BUS_NAME" />
+	
+		<result property="us_name" column="US_NAME" />
+	</resultMap>
+	
 	<insert id="insertBusiness" parameterType="Business">
 		INSERT
 		  INTO BUSINESS
@@ -140,6 +249,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , BUS_PHONE
 		  , RES_CATEGORY
 		  , BUS_OPENING
+		  , HOTEL_FACILITY
+		  , TOUR_CATEGORY
+		  , TOUR_TEMA
+		  , HOTEL_CATEGORY
 		  )
 		  VALUES
 		  (
@@ -157,7 +270,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{bus_phone}
 		  , #{res_category}
 		  , #{bus_opening}
-		  
+		  , #{hotel_facility}
+		  , #{tour_category}
+		  , #{tour_tema}
+		  , #{hotel_category}
 		  )
 	</insert>
 	<insert id="insertBusAtt" parameterType="java.util.List">
@@ -207,8 +323,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , BUS_SEQ_NO.CURRVAL
 		  )
 	</insert>
-	<insert id="insertCar" parameterType="java.util.List">
-		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+	<insert id="insertCar" parameterType="Car">
+		INSERT ALL
 		  INTO CAR
 		  (
 		  	CAR_NO
@@ -223,20 +339,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	get_car_seq
+		  	CAR_SEQ_NO.NEXTVAL
 		  , BUS_SEQ_NO.CURRVAL
-		  , #{item.car_name}
-		  , #{item.car_type}
-		  , #{item.car_producer}
-		  , #{item.car_fuel}
-		  , #{item.car_price}
+		  , #{car_name}
+		  , #{car_type}
+		  , #{car_producer}
+		  , #{car_fuel}
+		  , #{car_price}
 		  , SYSDATE
 		  , SYSDATE
 		  )
-		</foreach>
-	</insert>
-	<insert id="insertCarAtt" parameterType="CarAtt">
-		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+		  <foreach collection="_parameter.getCarList()" item="item" separator=" " close="SELECT * FROM DUAL">
 		  INTO CAR_ATT
 		  (
 		  	FILE_NO
@@ -260,9 +373,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</foreach>
 	</insert>
   
-	<insert id="insertRoom" parameterType="java.util.List">
-		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
-		  INTO ROOM
+	<insert id="insertRoom" parameterType="Room">
+          INSERT ALL	  
+ 			INTO ROOM
 		  (
 		  	ROOM_NO
 		  , BUS_CODE
@@ -276,21 +389,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  )
 		  VALUES
 		  (
-		  	get_room_seq
+		  	ROOM_SEQ_NO.NEXTVAL
 		  , BUS_SEQ_NO.CURRVAL
-		  , #{item.room_name}
-		  , #{item.room_price}
+		  , #{room_name}
+		  , #{room_price}
 		  , SYSDATE
 		  , SYSDATE
-		  , #{item.room_people}
-		  , #{item.room_amenity}
+		  , #{room_people}
+		  , #{room_amenity}
 		  , DEFAULT
 		  )
-		</foreach>
-	</insert>
-	
-	<insert id="insertRoomAtt" parameterType="RoomAtt">
-		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+		  <foreach collection="_parameter.getRoomAtt()" item="item" separator=" " close="SELECT * FROM DUAL">
 		  INTO ROOM_ATT
 		  (
 		  	FILE_NO
@@ -311,9 +420,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , DEFAULT
 		  , ROOM_SEQ_NO.CURRVAL
 		  )
-		</foreach>
+		  </foreach>
 	</insert>
-	
+
 	<insert id="insertTour" parameterType="TourProduct">
 		INSERT
 		  INTO TOUR_PRODUCT
@@ -393,6 +502,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , TP.PRO_ADULT
 		     , TP.PRO_YOUTH
 		     , TP.PRO_CHILD
+		     , TP.PRO_FAC
 		  FROM
 		       BUSINESS B, TOUR_PRODUCT TP
 		 WHERE
@@ -412,13 +522,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  	   BUSINESS_ATT
 		 WHERE
 			   BUS_CODE = #{bus_code}
-      ORDER BY
-               FILE_LV		       
+	  ORDER BY
+	  		   FILE_LV		       
 	</select>
 	<!-- 렌트카디테일 -->
 	<select id="selectCar" resultMap="BusinessResultSet">
 		SELECT 
-		       B.BUS_CODE
+		       BUS_CODE
 		     , US_NO
 		     , BUS_NAME
 		     , BUS_ADDRESS
@@ -431,28 +541,48 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_STATUS
 		     , BUS_PHONE
 		     , BUS_OPENING
-		     , BT.FILE_RENAME
-		     , C.CAR_NAME
-             , C.CAR_TYPE
-             , C.CAR_PRODUCER
-             , C.CAR_FUEL
-             , C.CAR_PRICE
-             , CA.FILE_RENAME
 		  FROM
-		       BUSINESS B, BUSINESS_ATT BT, CAR C, CAR_ATT CA
+		       BUSINESS
 		 WHERE
-		       B.BUS_CODE = BT.BUS_CODE 
-           AND B.BUS_CODE = C.BUS_CODE
-           AND C.CAR_NO = CA.CAR_NO
-           AND B.BUS_CODE = #{bus_code}
+		       BUS_CODE = #{bus_code}
 		   AND BUS_CATEGORY = 'C'
 		   AND BUS_STATUS = 'Y'
-	  ORDER BY C.CAR_NO DESC
+	</select>
+	<select id="selectCars" resultMap="CarResultSet">
+		SELECT
+		       CAR_NO
+		     , BUS_CODE
+		     , CAR_NAME
+		     , CAR_TYPE
+		     , CAR_PRODUCER
+		     , CAR_FUEL
+		     , CAR_PRICE
+		     , CAR_DATE
+		     , CAR_MODIFY
+		  FROM
+		       CAR
+		 WHERE
+		       BUS_CODE = #{bus_code}
+	</select>
+	<select id="selectCarAtt" resultMap="CarAttResultSet">
+		SELECT
+		  	   FILE_NO
+			 , FILE_NAME
+             , FILE_STATUS
+             , FILE_RENAME
+             , FILE_LV 
+             , BUS_CODE
+		  FROM 
+		  	   BUSINESS_ATT
+		 WHERE
+			   BUS_CODE = #{bus_code}
+	  ORDER BY
+	  		   FILE_LV
 	</select>
 	<!-- 호텔 디테일 -->
 	<select id="selectHotel" resultMap="BusinessResultSet">
 		SELECT 
-		       B.BUS_CODE
+		       BUS_CODE
 		     , US_NO
 		     , BUS_NAME
 		     , BUS_ADDRESS
@@ -465,22 +595,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_STATUS
 		     , BUS_PHONE
 		     , BUS_OPENING
-		     , BT.FILE_RENAME
-		     , ROOM_NAME
-             , ROOM_PRICE
-             , ROOM_PEOPLE
-             , ROOM_AMENITY
-             , RT.FILE_RENAME
+		     , HOTEL_FACILITY
 		  FROM
-		       BUSINESS B, BUSINESS_ATT BT, ROOM R, ROOM_ATT RT
+		       BUSINESS
 		 WHERE
-		       B.BUS_CODE = BT.BUS_CODE 
-           AND B.BUS_CODE = R.BUS_CODE
-           AND R.ROOM_NO = RT.ROOM_NO
-           AND B.BUS_CODE = #{bus_code}
+               BUS_CODE = #{bus_code}
 		   AND BUS_CATEGORY = 'H'
 		   AND BUS_STATUS = 'Y'
-	  ORDER BY R.ROOM_NO DESC		
 	</select>
 	<!-- 관광지리스트 -->
 	<select id="selectTourList" resultMap="BusinessResultSet">
@@ -510,6 +631,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
 		   AND BUS_CATEGORY = 'T'
 		   AND BUS_STATUS = 'Y'
+		   AND BT.FILE_LV = '0'
 	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	<!-- 호텔리스트 -->
@@ -533,6 +655,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
  		 WHERE   
        		   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'H'
+       	   AND BT.FILE_LV = '0'
 	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	<!-- 음식점리스트 -->
@@ -556,7 +679,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
  		 WHERE   
        		   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'R'
-       	   AND BUS_CLASSIFY = 'G'
+       	   AND BT.FILE_LV = '0'
 	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	
@@ -585,6 +708,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE 
 		 	   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'C'
+       	   AND BT.FILE_LV = '0'
 	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	<!--지혜 -->
@@ -625,10 +749,11 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 										BUS_CODE
 							     FROM   
 							     		ALLIANCE
-							     WHERE  US_NO = #{usno})
+							     WHERE  US_NO = #{usno}
+							     AND    ALSTATUS <![CDATA[<>]]> 'Y')
 		  AND	US_NO = #{usno}
 		 -->
-		 
+		 <!--  
 		  SELECT
 				BUS_CODE,
 				US_NO,
@@ -660,8 +785,65 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                                  AND POINT.PBALANCE <![CDATA[<>]]> 0
                                  AND ALSTATUS <![CDATA[<>]]> 'Y')
 		  AND	US_NO = #{usno}
+		  -->
 		  
-	</select>  
+		  SELECT
+				BUS_CODE,
+				US_NO,
+				BUS_NAME,
+				BUS_ADDRESS,
+				BUS_INTRO,
+				BUS_DATE,
+				BUS_MODIFY,
+				AD_COUNT,
+				BUS_CLASSIFY,
+				BUS_CATEGORY,
+				BUS_STATUS,
+				BUS_PHONE,
+				HOTEL_CATEGORY,
+				TOUR_CATEGORY,
+				TOUR_TEMA,
+				AL_NO,
+				BUS_OPENING,
+				RES_CATEGORY
+		FROM    
+				SMBCVIEW
+		WHERE   BUS_CODE NOT IN (SELECT 
+										BUS_CODE
+							     FROM   
+							     		ALLIANCE, "USER"
+							     WHERE
+                                 ALLIANCE.US_NO = "USER".US_NO
+                                 AND ALLIANCE.US_NO = #{usno}
+                                 AND ALSTATUS = 'Y' 	  <!-- 현재 광고 진행중이 아닌 것 -->
+                                 AND "USER".PBALANCE = 0) <!-- 포인트가 0이 아닌것 -->
+		  AND	US_NO = #{usno}
+	</select>
+	
+	<insert id="insertMenu" parameterType="java.util.List">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+		  INTO BUSINESS_ATT
+		  (
+		  	FILE_NO
+		  ,	FILE_NAME
+		  ,	FILE_ROOT
+		  ,	FILE_STATUS
+		  ,	FILE_RENAME
+		  ,	FILE_LV
+		  ,	BUS_CODE
+		  )
+		  VALUES
+		  (
+		  	BUSATT_SEQ_NO.NEXTVAL
+		  , #{item.file_name}
+		  , #{item.file_root}
+		  , DEFAULT
+		  , #{item.file_rename}
+		  , '1'
+		  , BUS_SEQ_NO.CURRVAL
+		  )
+		</foreach>
+	</insert>  
 	
 	<insert id="insertBannerAd" parameterType="Alliance">
 		INSERT
@@ -724,6 +906,86 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         , #{bus_code}
         )
    </insert>
+   
+   <insert id="insertReport2" parameterType="Report">
+      INSERT
+        INTO Report
+        (
+          REPORT_NO
+        , REP_RES
+        , REP_CONT
+        , RDATE
+        , RSTATUS
+        , REXDATE
+        , R_IMG_PATH
+        , R_IMG_NAME
+        , R_IMG_CNAME
+        , US_NO
+        , R_COUNT
+        , REF_BUS_CODE
+        )
+        VALUES
+        (
+           REP_SEQ_NO.NEXTVAL
+        , #{rep_res}
+        , #{rep_cont}
+        , DEFAULT
+        , DEFAULT
+        , DEFAULT
+        , #{r_img_path}
+        , #{r_img_name}
+        , #{r_img_cname}
+        , #{usno}
+        , (SELECT *
+                FROM(SELECT 
+                             REPORT.R_COUNT
+                       FROM 
+                             "REPORT"
+                       WHERE 
+                             REF_BUS_CODE = #{ bus_code}
+                             ORDER BY R_COUNT DESC)
+            WHERE ROWNUM = 1
+           )
+        , #{bus_code}
+        )
+   </insert>
+   
+   <update id="updateReport" parameterType="Report">
+		UPDATE
+				Report
+			SET
+				REP_CONT = #{rep_cont}
+			  , R_COUNT = R_COUNT + 1
+			  , RDATE = SYSDATE
+			  , RSTATUS = 'N'
+			  , R_IMG_PATH = #{r_img_path}
+        	  , R_IMG_NAME = #{r_img_name}
+              , R_IMG_CNAME = #{r_img_cname}
+		  WHERE
+		  		REF_BUS_CODE = #{bus_code}
+	</update>
+	
+	<select id ="findUsno">
+		SELECT
+				    BUS_CODE
+				  , US_NO
+				  , BUS_NAME
+				  , BUS_ADDRESS
+				  , BUS_INTRO
+				  , BUS_DATE
+				  , BUS_MODIFY
+				  , AD_COUNT
+				  , BUS_CLASSIFY
+				  , BUS_CATEGORY
+				  , BUS_STATUS
+				  , BUS_PHONE
+				  , RES_CATEGORY
+				  , BUS_OPENING
+			  FROM
+				   BUSINESS
+		     WHERE
+		     	   BUS_CODE = #{bus_code}
+	</select>
   
    <select id="findReportStatus" parameterType="Report" resultMap="ReportResultSet">
       SELECT 
@@ -740,9 +1002,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	        , R_COUNT
 	        , REF_BUS_CODE
         FROM 
-              REPORT
-       WHERE 
-             REF_BUS_CODE = #{bus_code}
+             (SELECT *
+                FROM "REPORT"
+               WHERE 
+                     REF_BUS_CODE = #{ bus_code}          
+                     ORDER BY REPORT_NO DESC)
+       WHERE  ROWNUM = 1
    </select>
 
 	<insert id="insertIncome1" parameterType="Income">
@@ -810,6 +1075,21 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usno}
 		)
 	</insert>
+	
+	<select id="selectTourProduct" parameterType="TourProduct" resultMap="TourProductResultSet">
+		SELECT
+			    PRO_NO
+			  , BUS_CODE
+			  , PRO_NAME
+			  , PRO_ADULT
+			  , PRO_YOUTH
+			  , PRO_CHILD
+			  , PRO_FAC			  
+		  FROM
+			   TOUR_PRODUCT
+	     WHERE
+	     	   BUS_CODE = #{bus_code}
+	</select>
 	 
 	 <insert id="insertBookingHotel">
 		INSERT
@@ -828,6 +1108,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , HOTEL_NO
 		  , BUS_CODE
 		  , BUS_NAME
+		  , R_TOUREND_DATE
 		  )
 		  VALUES
 		  (
@@ -835,15 +1116,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{r_booking_product}
 		  , SYSDATE
 		  , NULL
-		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , #{r_booking_address}
 		  , #{r_booking_pay}
-		  , '3'	<!-- 인원 -->
-		  , #{r_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{r_booking_number}
+		  , #{r_booking_phone}
 		  , #{r_booking_trv}
 		  , #{usno}
-		  , '1'	<!-- 방등록 되면 방 번호 따오기 -->
-		  , #{r_bus_code}
-		  , '사업장이름' <!-- 왜안됨 -->
+		  , #{room_no}
+		  , #{bus_code}
+		  , #{r_bus_name}
+		  , #{r_booking_trvEnd}
 		  )
 	</insert>
 	
@@ -868,18 +1150,54 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  VALUES
 		  (
 		  	BOOKING_NO.NEXTVAL
-		  , '사업장이름' <!-- 왜안됨 -->
+		  , #{t_bus_name}
 		  , #{t_booking_product}
 		  , SYSDATE
-		  , NULL
-		  , '경기도' <!-- 주소값 안넘어감 -->
+		  , DEFAULT
+		  , #{t_booking_address}
 		  , #{t_booking_pay}
-		  , '3'	<!-- 인원 -->
-		  , #{t_booking_phone} <!-- 수식으로계산되는 문제 -->
+		  , #{t_booking_number}
+		  , #{t_booking_phone} 
 		  , #{t_booking_trv}
 		  , #{usno}
-		  , '1'	<!-- 상품번호 따오기 -->
-		  , #{t_bus_code}
+		  , #{pro_no}
+		  , #{bus_code}
+		  )
+	</insert>
+	
+	<insert id="insertBookingCar">
+		INSERT
+		  INTO CAR_BOOKING
+		  (
+		  	C_BOOKING_NO
+		  ,	C_BUS_NAME
+		  , C_PRODUCT_NAME
+		  , C_BOOKING_DATE
+		  , C_BOOKING_MODIFY
+		  , C_BOOKING_ADDRESS
+		  , C_BOOKING_PAY		  
+		  , C_BOOKING_PHONE
+		  , C_TOUR_DATE
+		  , US_NO
+		  , RENT_NO
+		  , BUS_CODE
+		  , C_TOUREND_DATE
+		  )
+		  VALUES
+		  (
+		  	BOOKING_NO.NEXTVAL
+		  , #{c_bus_name}
+		  , #{c_booking_product}
+		  , SYSDATE
+		  , DEFAULT
+		  , #{c_booking_address}
+		  , #{c_booking_pay}		  
+		  , #{c_booking_phone} 
+		  , #{c_booking_trv}
+		  , #{usno}
+		  , #{rent_no}
+		  , #{bus_code}
+		  , #{c_booking_trvEnd}
 		  )
 	</insert>
 	
@@ -894,18 +1212,152 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE 
 				ROWNUM = 1
 	</select>
-   
+	
+	<select id="selectRoom" resultMap="RoomResultSet">
+		SELECT
+		       ROOM_NO
+		     , BUS_CODE
+		     , ROOM_NAME
+		     , ROOM_PRICE
+		     , ROOM_PEOPLE
+		     , ROOM_AMENITY
+		     , ROOM_STATE
+		  FROM
+		       ROOM
+		 WHERE
+		       BUS_CODE = #{ bus_code }
+		   AND ROOM_STATE = 'Y'
+	</select>
+	
+	<select id="selectRoomAtt" resultMap="RoomAttResultSet">
+		SELECT
+		       FILE_RENAME
+		     , R.ROOM_NO
+		  FROM
+		       ROOM_ATT RA, ROOM R, BUSINESS B
+		 WHERE
+		       B.BUS_CODE = R.BUS_CODE
+		   AND R.ROOM_NO = RA.ROOM_NO
+		   AND B.BUS_CODE = #{ bus_code }
+	</select>
+	
+	<!-- 카테고리별 리스트 -->
+	<select id="cateList" resultMap="BusinessResultSet">
+		SELECT 
+		       B.BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+		     , PRO_ADULT
+		     , PRO_YOUTH
+		     , PRO_CHILD
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
+		   AND BUS_CATEGORY = 'T'
+		   AND BUS_CLASSIFY = 'G'
+		   AND BUS_STATUS = 'Y'
+           AND B.TOUR_TEMA = #{kind}
+           AND BT.FILE_LV = '0'
+	  ORDER BY DBMS_RANDOM.RANDOM
+	</select>
+	
+	<select id="selectReview" resultMap="ReviewResultSet">
+		SELECT
+		       REV_NO
+		     , REV_COMMENT
+		     , REV_DATE
+		     , REV_MODIFY
+		     , REV_STATUS
+		     , REV_LV
+		     , R.US_NO
+		     , BUS_CODE
+		     , RE_STAR
+		     , IMG_RENAME1
+		     , IMG_RENAME2
+		     , IMG_RENAME3
+		     , REV_HCT
+		     , U.US_NAME
+		  FROM 
+		       REVIEW R, "USER" U
+		 WHERE
+		 	   R.US_NO = U.US_NO
+		   AND BUS_CODE = #{bus_code}
+		   AND REV_STATUS = 'Y'
+	  ORDER BY REV_DATE DESC
+	</select>
+  
+	<select id="selectJjim" resultType="map">
+	    SELECT 
+	    		JJIM_NO
+	    	  , JJIM_DATE
+	    	  , JJIM_STATUS
+	    	  , BUS_CODE
+	    	  , US_NO
+	      FROM 
+	    	    JJIM
+	     WHERE 
+	     		BUS_CODE = #{bbsidx} 
+	       AND 
+	            US_NO = #{useridx}
+	</select>	
+	
+	<insert id="insertJjim" parameterType="map">
+      INSERT
+        INTO JJIM
+        (
+          JJIM_NO
+        , JJIM_DATE
+        , JJIM_STATUS
+        , BUS_CODE
+        , US_NO        
+        )
+        VALUES
+        (
+           JJIM_NO.NEXTVAL
+        , SYSDATE
+        , DEFAULT
+        , #{bbsidx}
+        , #{useridx}
+        )
+   </insert>
+ 
+   <update id="udpateJjim" parameterType="map">
+		UPDATE
+				JJIM
+			SET
+				JJIM_DATE = DEFAULT
+			  , JJIM_STATUS = #{jjimcheck}
+		  WHERE
+		  		BUS_CODE = #{bbsidx}
+		    AND
+		        US_NO = #{useridx}
+	</update>
+
    <!-- 지혜 -->
    <select id="selectBannerAdImgList" resultMap="AllianceResultSet">
 		SELECT
-                 AL_NO, ALSTATUS, BUS_CODE, A_IMG_CNAME
+                        AL_NO, BUS_CODE, A_IMG_CNAME
 		FROM    
-		                 ALLIANCE, POINT
+				         ALLIANCE, "USER"
 		WHERE 	 
-		                "POINT".US_NO = ALLIANCE.US_NO
-		AND      ALSTATUS = 'Y'
-		AND      POINT.PBALANCE <![CDATA[<>]]> 0
-		GROUP BY AL_NO, ALSTATUS, BUS_CODE, A_IMG_CNAME
+				          "USER".US_NO = ALLIANCE.US_NO
+		AND               "USER".PBALANCE <![CDATA[<>]]> 0
+		AND              ALSTATUS = 'Y'
+		GROUP BY AL_NO, BUS_CODE, A_IMG_CNAME
    </select>
    
    <select id="selectBannerAdDetail" parameterType="_int" resultMap="BusinessResultSet">
@@ -958,12 +1410,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , '배너광고 포인트 차감'
 		  , (SELECT *
                 FROM(SELECT 
-                			 POINT.PBALANCE
+                			 "POINT".PBALANCE
                        FROM 
                        		 "POINT"
                        WHERE 
                              US_NO = #{us_no}
-                    ORDER BY PBALANCE)
+                    ORDER BY PNO DESC)
               WHERE ROWNUM <![CDATA[<=]]> 1) - 100
 		  , 100
 		  , #{us_no}
@@ -1019,16 +1471,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				"USER"
 			SET
 				PBALANCE = (SELECT *
-                FROM(SELECT 
-                			 POINT.PBALANCE
-                       FROM 
-                       		POINT
-                       WHERE 
-                             US_NO = #{us_no}
-                    ORDER BY PBALANCE)
+                			 FROM(SELECT POINT.PBALANCE 
+                          		  FROM 
+                       		           POINT
+                                  WHERE 
+                                  US_NO = #{us_no}
+                    		      ORDER BY PNO DESC)
               WHERE ROWNUM <![CDATA[<=]]> 1)
 		WHERE
-		US_NO = #{us_no};
+		US_NO = #{us_no}
 	</update>
 
 	

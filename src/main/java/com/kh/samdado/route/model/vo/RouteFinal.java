@@ -22,7 +22,7 @@ public class RouteFinal {
 	private int route_no; 		// 루트 번호
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date route_date;	// 루트 날짜
-	private int route_price;	// 총 예상 예산
+	private String route_price;	// 총 예상 예산
 	private String us_no;		// 회원 번호
 	
 }

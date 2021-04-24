@@ -1,6 +1,7 @@
 package com.kh.samdado.route.controller;
 
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -19,14 +20,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.kh.samdado.route.model.exception.RouteException;
 import com.kh.samdado.route.model.service.RouteService;
 import com.kh.samdado.route.model.vo.Route;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.route.model.vo.TourSpot;
 import com.kh.samdado.route.model.vo.rSearch;
+import com.kh.samdado.user.model.vo.User;
 
 @Controller
 @RequestMapping("/route")
-@SessionAttributes({"area", "thema", "routeDate", "list"})
+@SessionAttributes({"area", "thema", "routeDate", "list", "loginUser"})
 public class RouteController {
 	@Autowired
 	private RouteService rService;
@@ -38,6 +42,7 @@ public class RouteController {
 	
 	@GetMapping("/search")
 	public String searchRoute(Model model, 
+							HttpSession session,
 							@ModelAttribute rSearch search,
 							@RequestParam("area") String area, 
 							@RequestParam("thema") String thema, 
@@ -54,7 +59,7 @@ public class RouteController {
 	}
 	
 	@GetMapping("/changeRoute")
-	public String changeRoutePage(HttpSession session, Model model, @ModelAttribute rSearch search) {	// 여행지 순서 바꾸기 페이지로 이동
+	public String changeRoutePage(HttpSession session, @ModelAttribute rSearch search) {	// 여행지 순서 바꾸기 페이지로 이동
 		String area = (String)session.getAttribute("area");
 		String thema = (String)session.getAttribute("thema");
 		Date routeDate = (Date)session.getAttribute("routeDate");
@@ -66,10 +71,7 @@ public class RouteController {
 		return "route/route_edit";
 	}
 	
-	public String deleteSpot() {		// 여행지 삭제
-		
-		return "";
-	}
+	
 	
 	@PostMapping(value="/searchSpot", produces="application/json; charset=utf-8")
 	public @ResponseBody List<TourSpot> searchSpot(String sTitle, HttpSession session) {		// 여행지 검색
@@ -83,17 +85,70 @@ public class RouteController {
 		return tlist;
 	}
 	
+	
+	@PostMapping("/clearChange")
+	public String clearChange(HttpSession session, Model model, String[] chlist) {		// 여행지 순서 바꾸기 완료
+		String area = (String)session.getAttribute("area");
+		String thema = (String)session.getAttribute("thema");
+		Date routeDate = (Date)session.getAttribute("routeDate");
+		
+		/* System.out.println(Arrays.toString(chlist)); */
+		
+		List<TourSpot> clist = rService.clearChange(chlist);
+		
+		/* System.out.println(clist); */
+		
+		model.addAttribute("list", clist);
+		
+		/* return "redirect:/route/search"; */
+		return "route/route_result";
+	}
+	
+	@PostMapping("/addRoute")
+	public String addRoute(HttpSession session, Model model, String[] slist, String tprice) {			// 루트 저장하기
+		
+		session.setAttribute("price", tprice);
+		
+		int result = rService.addRoute(slist);
+		
+		if(result > 0) {
+			/* model.addAttribute("msg", "저장되었습니다. 내 정보에서 확인하세요!"); */
+			return "redirect:/route/finalRoute";
+		} else {
+			throw new RouteException("저장에 실패하였습니다.");
+		}
+		
+	}
+	
+	@GetMapping("/finalRoute")
+	public String finalRoute(HttpSession session, Model model, RouteFinal rf) {
+		Date routeDate = (Date)session.getAttribute("routeDate");
+		User loginUser = (User)session.getAttribute("loginUser");
+		String price = (String)session.getAttribute("price");
+		
+		rf.setRoute_date(routeDate);
+		rf.setUs_no(loginUser.getUsno());
+		rf.setRoute_price(price);
+		
+		/* System.out.println(rf); */
+		
+		int result = rService.finalRoute(rf);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "저장되었습니다. 내 정보에서 확인하세요!");
+			return "route/route_main";
+		} else {
+			throw new RouteException("저장에 실패하였습니다.");
+		}
+		
+	}
+	
+	public String deleteSpot() {		// 여행지 삭제
+		
+		return "";
+	}
+	
 	public String addSpot() {			// 여행지 추가
-		return "";
-	}
-	
-	
-	
-	public String changeRoute() {		// 여행지 순서 바꾸기 완료
-		return "";
-	}
-	
-	public String addRoute() {			// 루트 저장하기
 		return "";
 	}
 	

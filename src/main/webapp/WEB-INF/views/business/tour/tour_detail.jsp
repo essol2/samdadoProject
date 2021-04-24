@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <html lang="en">
@@ -12,14 +13,16 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <title>samdado</title>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+    <title>samdado</title>    
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+	var $j1124 = jQuery.noConflict();
+	</script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -68,12 +71,12 @@
 
         /* 컨테이너 */
         #main-container {
-            height: 100%;
-            width: 85%;
-            display: flex;
-            flex-direction: column;
-            padding-top: 5%;
-            padding-left: 6.3%;
+	        height: 100%;
+		    width: 85%;
+		    display: flex;
+		    flex-direction: column;
+		    padding-top: 5%;
+		    padding-left: 6.3%;
 
         }
 
@@ -201,9 +204,9 @@
             cursor: pointer;
             color: skyblue;
             font-family: Arial;
-            font-size: 10px;
+            font-size: 15px;
             font-weight: bold;
-            padding: 6px 25px;
+            padding: 10px 35px;
             text-decoration: none;
         }
 
@@ -282,7 +285,7 @@
 
         }
 
-        .btn {
+        #bookingBtn {
             background-color: rgb(70, 115, 85) !important;
             border: 1px solid rgb(70, 115, 85) !important;
             font-family: 'GmarketSansBold' !important;
@@ -305,7 +308,7 @@
 
         .reivew {
             border: 1px solid black;
-            width: 70%;
+            width: 90%;
             border-radius: 6px;
         }
 
@@ -360,7 +363,7 @@
             width: 100px;
         }
 
-        #closeBtn {
+        #closeBtn, #reportBtn {
             border-style: none;
             background-color: white;
         }
@@ -561,6 +564,42 @@
     p {
         margin: 1rem 0 0 0;
     }
+    
+    .facLabel{
+    	margin-right: 15px
+    }
+    
+    .logo-wrap{
+        width: 100%;
+        height:100px;
+        display:flex;   
+        flex-direction: column;
+        /* align-items: center; */
+        background-color: #467355;
+    }
+    
+    .logo-wrap label {
+        font-size: 45px;
+        height: 100%;
+        color: white;
+    }
+    
+    #small_view_morebtn {
+            float: right;
+            color:black;
+            margin-right: 3%;
+            border: 0;
+            outline: 0;
+            background: none;
+        }
+        
+        #reportImage_container img{
+	    	width:455px;
+	    	height:420px;
+    	}
+    
+    	
+    	
     </style>
 
 </head>
@@ -572,27 +611,89 @@
     <section id="main-container">
         <!-- 상세페이지 헤더 -->
         <div id="ho_header">
+        	<%-- <div class="logo-wrap" id="logo-div">
+                <label class="title_img" onclick="location.href='${ contextPath }/main'">
+                <img src="../resources/images/image_main/logo_w.png" style="width:100px; height:100px;">삼다도
+                </label>
+            </div> --%>
             <div class="title_area">
                 <div class="title_area">
+                	<c:if test="${ tour.bus_classify eq 'P' }">
                     <img src="../resources/images/image_listpage/premium.png"><br>
+                    </c:if>
                     <label id="ho_title" class="title_tag">${ tour.bus_name }</label>
                     <br>
                 </div>
-                <label id="ho_address">${ tour.bus_address.substring(6) }</label>
+                <label id="ho_address">
+                <c:set var="add" value="${fn:split(tour.bus_address, ',') }"/>
+                <c:forEach var="add" items="${add}" varStatus="a">
+                <c:if test="${a.count == 2}">주소 : ${add}</c:if>
+                </c:forEach>
+                </label><br>
+                <label>영업시간 : 오픈 ${ tour.bus_opening.substring(0, 5) } ~ 마감 ${ tour.bus_opening.substring(6) }</label>&nbsp;
             </div>
-
+			
             <div id="ho_info">
-                <label id="jjim_btn"><img id="jjim" class="jjim_img" src="../resources/images/image_listpage/heart.png">찜하기</label>
+                <label id="jjim_btn">
+			        <c:choose>
+					    <c:when test="${jjimcheck eq '0' or empty jjimcheck}"> <!-- jjimcheck가 0이면 빈하트-->
+					        <img src="../resources/images/image_listpage/noheart.png" 
+					             id="btn_like">
+					    </c:when>
+					    <c:otherwise> <!-- jjimcheck가 1면 빨간 하트-->
+					        <img src="../resources/images/image_listpage/heart.png" 
+					              id="btn_like">
+					    </c:otherwise>
+					</c:choose>찜하기</label>
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="report_btn"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">${ tour.bus_phone }</label>
             </div>
         </div>
+        
+        <!-- 찜하기 -->
+        <script>
+        var bbsidx = ${tour.bus_code};
+        var useridx = ${loginUser.usno};
+         
+        var btn_like = document.getElementById("btn_like");
+         btn_like.onclick = function(){ changeHeart(); }
+         
+        /* 찜하기 버튼 눌렀을때 */
+         function changeHeart(){ 
+             $.ajax({
+                    type : "POST",  
+                    url : "${ contextPath }/business/jjim",
+                    dataType : "json",
+                    data : "bbsidx="+bbsidx+"&useridx="+useridx,
+                    error : function(){
+                        Rnd.alert("통신 에러","error","확인",function(){});
+                    },
+                    success : function(jdata) {
+                        if(jdata.resultCode == -1){
+                            Rnd.alert("찜하기 오류","error","확인",function(){});
+                        }
+                        else{
+                            if(jdata.jjimcheck == 1){
+                                $("#btn_like").attr("src","../resources/images/image_listpage/heart.png");
+                                
+                               
+                            }
+                            else if (jdata.jjimcheck == 0){
+                                $("#btn_like").attr("src","../resources/images/image_listpage/noheart.png");
+                                
+                                
+                            }
+                        }
+                    }
+                });
+         }
+        </script>
 		
 		<!-- 매장사진 -->
         <div class="colsmom">
             <div class="col">
-            	<c:forEach var="a" items="${ att }">
+            	<c:forEach var="a" items="${ att }" varStatus="status">
             	<c:if test="${ a.file_lv eq '0' }">
                 <img id="bigPic" class="mainimage" src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }">
 				</c:if>
@@ -625,30 +726,53 @@
                 <div class="col2">
                     <div id="map" style="width: 555px; height:330px;">
                     <button type="button" id="mapBtn" 
-                    onclick="window.open('https://map.kakao.com/link/search/${tour.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
+                    onclick="window.open('https://map.kakao.com/link/search/${tour.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">길찾기</button>
                     </div>
                 </div>
                 
                 <!-- 구글지도 api -->
                 <script>
-	             // 이미지 지도에 표시할 마커입니다
-	             // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
-	             var markers = [
-	                 {
-	                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
-	                     text: '${tour.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
-	                 }
-	             ];
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };  
+
+	            // 지도를 생성합니다    
+	            var map = new kakao.maps.Map(mapContainer, mapOption); 
 	
-	             var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div  
-	                 staticMapOption = { 
-	                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
-	                     level: 3, // 이미지 지도의 확대 레벨
-	                     marker: markers // 이미지 지도에 표시할 마커 
-	                 };    
+	            // 주소-좌표 변환 객체를 생성합니다
+	            var geocoder = new kakao.maps.services.Geocoder();
+	            
+	            var add = "<c:out value='${ tour.bus_address}'/>";
+	            var splitadd = add.split(',');
+	            
+
+	            
+	            // 주소로 좌표를 검색합니다
+	            geocoder.addressSearch(splitadd[1], function(result, status) {
 	
-	             // 이미지 지도를 생성합니다
-	             var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+	                // 정상적으로 검색이 완료됐으면 
+	                 if (status === kakao.maps.services.Status.OK) {
+	
+	                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+	                    // 결과값으로 받은 위치를 마커로 표시합니다
+	                    var marker = new kakao.maps.Marker({
+	                        map: map,
+	                        position: coords
+	                    });
+	
+	                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+	                    var infowindow = new kakao.maps.InfoWindow({
+	                        content: '<div style="width:150px;text-align:center;padding:6px 0;">${ tour.bus_name }</div>'
+	                    });
+	                    infowindow.open(map, marker);
+	
+	                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	                    map.setCenter(coords);
+	                } 
+	            });    
 				</script>
 				
                 <!-- 작은 리뷰 -->
@@ -756,8 +880,8 @@
 						            </div>
 						        </div>
 						        <div class="modal-footer">
-						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						            <button type="button" class="btn btn-primary">Understood</button>
+						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						            <button type="button" class="btn btn-primary">전체리뷰보기</button>
 						        </div>
 					        </div>
 					    </div>
@@ -767,11 +891,23 @@
         </div>
         <div class="checktable">
             <h2>주변 편의 시설</h2><br>
-            <label><img src="../resources/images/image_listpage/check.png">테라스</label>
-            <label><img src="../resources/images/image_listpage/check.png">편의점</label>
-            <label><img src="../resources/images/image_listpage/check.png">주차</label><br>
-
+			<c:set var="fac" value="${fn:split(tour.pro_fac, ',') }"/>
+			<c:forEach var="fac" items="${fac}">
+			<c:if test="${ fac eq 'park' }">
+            	<label class="facLabel"><img src="../resources/images/image_listpage/check.png">주차장</label>
+            </c:if>
+            <c:if test="${ fac eq 'com' }">
+            	<label class="facLabel"><img src="../resources/images/image_listpage/check.png">편의점</label>
+            </c:if>
+            <c:if test="${ fac eq 'rest' }">
+            	<label class="facLabel"><img src="../resources/images/image_listpage/check.png">휴게시설</label>
+            </c:if>
+            <c:if test="${ fac eq 'res' }">
+            	<label class="facLabel"><img src="../resources/images/image_listpage/check.png">음식점</label>
+            </c:if>
+			</c:forEach>
         </div>
+        
 
         <hr class="boundary">
 
@@ -785,88 +921,66 @@
 
         <div class="detail">
             <div class="imgArea">
-                <img src="../resources/images/image_listpage/tour3_5.png" class="detailImg">
+            	<c:forEach var="a" items="${ att }">
+            	<c:if test="${ a.file_lv eq '0' }">
+                <img src="${ contextPath }/resources/busUploadFiles/${ a.file_rename }" class="detailImg">
+          		</c:if>
+          		</c:forEach>
             </div>
-            <div class="detailView">
+            <div class="detailView" id="detailView">
                 <b>상품명 : ${ tour.pro_name }</b><br><br>
-                <label>어른 : ${ tour.pro_adult }원</label><br>
-                <label>청소년 : ${ tour.pro_youth }원</label><br>
-                <label>어린이 : ${ tour.pro_child }원</label>
-
-
+                <label id="adult">어른 : ${ tour.pro_adult }원</label><br>
+                <label id="youth">청소년 : ${ tour.pro_youth }원</label><br>
+                <label id="child">어린이 : ${ tour.pro_child }원</label>
             </div>
+
             <div class="btnArea">
                 <br>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" id="bookingBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     예약하기
                 </button>
             </div>
-
         </div>
 
         <!-- 후기 -->
         <div id="review_area">
-            <label>후기</label>&nbsp;&nbsp;<label>★ 4.5(후기 99개)</label><br>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
+            <label>후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:yellow;">★</a>(후기 ${ review.size() }개)</label><br>
+            <c:if test="${ empty review }">
+            <div class="reviewBox">
+            <p style="font-size:60px">리뷰가 없습니다!!!</p>
             </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
+            </c:if>
+            <c:forEach var="r" items="${ review }">
+            <div class="reviewBox">
+	            <div class="review_img_area">
+	            	<c:if test="${ r.img_rename1 ne '미입력'  }">
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename1 }" class="review_img">
+	                </c:if>
+					<c:if test="${ r.img_rename2 ne '미입력'  }">
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename2 }" class="review_img">
+	                </c:if>
+	                <c:if test="${ r.img_rename3 ne '미입력'  }">
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename3 }" class="review_img">
+	                </c:if>
+	            </div>
+	            <div class="review_writer">
+	                <label>${ r.us_name }</label>
+	                <div class="reivew">
+	                    <a>${ r.rev_comment }</a>
+	                    <label class="review_date_label">${ r.rev_date }</label>
+	                </div>
+	            </div>
             </div>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-            </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
-            </div>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-            </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                        최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서
-                        매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
-            </div>
+            </c:forEach>
         </div>
-        
     </section>
     
     <script>
-	    $.datepicker.setDefaults({
+    	function(){
+    		
+    	}
+    
+    	$j1124.datepicker.setDefaults({
 	        dateFormat: 'yy-mm-dd',
 	        prevText: '이전 달',
 	        nextText: '다음 달',
@@ -879,9 +993,10 @@
 	        yearSuffix: '년'
 	    });
     
-        $( function() {
-          $( ".datepicker" ).datepicker();
+    	$j1124( function() {
+    		$j1124( ".datepicker" ).datepicker();
         } );
+        
     </script>
 
     <!-- Modal -->
@@ -902,7 +1017,7 @@
                 </div>
                 <div class="modal-body2">
                 	<label><input type="text" id="tourName" style="border:none;width:80px;" readonly value="${ tour.pro_name }"></label><br>
-                    <h4 id="startDateResult"></h4>
+                    <h4 id="startDateResult"></h4>                    
                     <div id="table">
                         <div class="rows">
                             <span class="cell cols1">성인입장권</span>
@@ -952,10 +1067,13 @@
 
   	$(".payBtn").click(function() {
   		
-  		var name = document.getElementById('tourName').value;
+  		var name = document.getElementById('tourName').value;  		
   		var payResult = document.getElementById('payResult').value;
-  		var startDate = document.getElementById("startDate").value;  		
-  	 	var phone = ${ tour.bus_phone };
+  		var startDate = document.getElementById("startDate").value;
+  		var num1 = document.getElementById("adultNumber").value;
+  		var num2 = document.getElementById("youthNumber").value;
+  		var num3 = document.getElementById("childNumber").value;
+  		var personNumber = parseInt(num1) + parseInt(num2) + parseInt(num3);
   	    var bookingLv = 2;
   		// var amount = payResult;
   		var amount = 100;
@@ -976,12 +1094,14 @@
 	        if ( rsp.success ) {
 	            var msg = '결제가 완료되었습니다!';
 	            msg += '결제 금액 : ' + rsp.paid_amount;
-	            location.href = '${contextPath}/business/pay?amount='+amount+'&item='+name+'&usno='+${loginUser.usno}
-					            +'&t_bus_code='+${ tour.bus_code }+'&t_booking_trv='+startDate+'&bookingLv='+bookingLv
-					            +'&t_booking_phone='+phone+'&t_booking_product='+name+'&t_booking_pay='+amount;
+	            location.href = '${contextPath}/business/pay?&usno='+${loginUser.usno}+'&amount='+amount
+	            				+'&bus_code='+${ tour.bus_code }+'&t_booking_product='+name
+	            				+'&t_booking_trv='+startDate+'&bookingLv='+bookingLv+'&t_booking_pay='+payResult
+	            				+'&t_booking_number='+personNumber;
 	            				
 	        } else {
 	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
+	            console.log(rsp);
 	        }
 	    
 	        alert(msg);
@@ -995,6 +1115,7 @@
 	  	  document.getElementById('startDateResult').innerText
 	  	    = value;	
 	  	}
+
 	</script>
     
     <script>
@@ -1054,14 +1175,13 @@
             <form action="${ contextPath }/business/report" id="writeForm" method="post" enctype="multipart/form-data">
             <div class="modal-body">
             
-            <input type="hidden" name="rep_res" value="허위매물">
-            <input type="hidden" name="usno" value="${ loginUser.usno }">
-             <input type="hidden" name="bus_code" value="${ t.bus_code }">
+            <input type="hidden" name="rep_res" value="허위매물">            
+             <input type="hidden" name="bus_code" value="${ tour.bus_code }">
                       
                 <!--신고대상-->
                 <div class="name_div">
                     <label for="id">신고대상</label>                   
-                    <input type="text" id="name" name="bus_name" value="${ t.bus_name }" readonly>
+                    <input type="text" id="name" name="bus_name" value="${ tour.bus_name }" readonly>
                 </div>
                 <!--신고사유-->
                 <div class="reason_div">
@@ -1071,7 +1191,8 @@
                 <!--파일첨부-->
                 <div class="reportimg_div">
                     <label for="reportimg">파일첨부</label>                    
-                    <input type="file" id="reportimg" name="uploadFile">
+                    <input type="file" id="reportimg" name="uploadFile" onchange="setThumbnail(event);">
+                    <div id="reportImage_container" style="width:500px; hegiht:500px;"></div>
                 </div>
                 
             </div>
@@ -1083,6 +1204,62 @@
         </div>
         </div>
     </div>
+    
+    <script> 
+    	function reportAlert(){ 
+    		alert('신고가 완료되었습니다.'); 
+    	}
+    	
+    	function setThumbnail(event) { 
+    		var reader = new FileReader(); 
+    		reader.onload = function(event) { 
+    			var img = document.createElement("img"); 
+    			img.setAttribute("src", event.target.result); 
+    			document.querySelector("div#reportImage_container").appendChild(img); 
+    		}; 
+    		reader.readAsDataURL(event.target.files[0]); 
+    	}
+    	
+    </script>
+	
+	<script>
+		$(document).ready(function(){
+			var adult = '<c:out value="${tour.pro_adult}"/>';
+			var youth = '<c:out value="${tour.pro_youth}"/>';
+			var child = '<c:out value="${tour.pro_child}"/>';
+			
+			//console.log(adult);
+			
+			if(adult == ""){
+				var element = document.getElementById("adult");
+				// 요소의 콘텐츠를 변경
+				$(element).attr('style', 'display:none;');
+			}
+			if(youth == ""){
+				var element = document.getElementById("youth");
+				$(element).attr('style', 'display:none;');
+			}
+			if(child == ""){
+				var element = document.getElementById("child");
+				$(element).attr('style', 'display:none;');
+			}
+		});
+		
+		
+	</script>
+	 
+
+
+
+
+
+
+
+
+
+
+
+
 
     <footer>
           <jsp:include page="../../common/footer.jsp"/>

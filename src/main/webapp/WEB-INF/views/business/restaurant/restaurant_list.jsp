@@ -559,7 +559,7 @@
 	                <c:forEach var="r" items="${ resList }">
 	                    <div class='profile'>
 	                        <c:if test="${ r.file_lv eq '0' }">
-	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ r.file_rename }" onclick="selectRes(${r.bus_code})">
+	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${r.file_rename}" onclick="selectRes(${r.bus_code})">
 	                        </c:if>
 	                        <b>★4.90(후기 99+개)</b>
 	                        <b>${ r.bus_name }</b>
@@ -575,7 +575,7 @@
 			<!-- 디테일 이동 -->
 			<script>
 				function selectRes(bus_code){
-					location.href='${contextPath}/business/restaurant_detail?bus_code=' + bus_code;
+					location.href='${contextPath}/business/restaurant_detail?bus_code=' + bus_code
 				}
 			</script>
 

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- 메뉴바는 어떤 페이지이든 포함하고 있으므로 contextPath 변수 선언 후 application에서 모두 사용 -->
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
@@ -608,7 +608,7 @@
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 
-	                <p class="center" id="navi-menu">제주도 필수 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
             	</div>
                 
                 <div>
@@ -647,26 +647,35 @@
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
-	                
-	                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
-		                <ul class="ul-class">                
 
-			                <li><p class="center" id="navi-menu-bus-hotel" onclick="location.href='${ contextPath }/business/hotel_write'">호텔 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-bus-rent" onclick="location.href='${ contextPath }/business/rentcar_write'">렌트카 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-bus-restau" onclick="location.href='${ contextPath }/business/restaurant_write'">음식점 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-bus-attrac" onclick="location.href='${ contextPath }/business/tour_write'">관광지 등록하기</p></li>
-			                <li><p class="center" id="navi-menu-bus-banner" onclick="location.href='${ contextPath }/business/bannerAd'">배너(리스팅)광고</p><li>
-
-		                </ul>
-            		</li>
+		                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
+			                <ul class="ul-class">                
+	
+				                <li><p class="center" id="navi-menu-bus-hotel" onclick="location.href='${ contextPath }/business/hotel_write'">호텔 등록하기</p></li>
+				                <li><p class="center" id="navi-menu-bus-rent" onclick="location.href='${ contextPath }/business/rentcar_write'">렌트카 등록하기</p></li>
+				                <li><p class="center" id="navi-menu-bus-restau" onclick="location.href='${ contextPath }/business/restaurant_write'">음식점 등록하기</p></li>
+				                <li><p class="center" id="navi-menu-bus-attrac" onclick="location.href='${ contextPath }/business/tour_write'">관광지 등록하기</p></li>
+				                <li><p class="center" id="navi-menu-bus-banner" onclick="location.href='${ contextPath }/business/bannerAd'">배너(리스팅)광고</p><li>
+	
+			                </ul>
+	            		</li>
+            		
             	</div>
                 
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
-
-	                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">내 정보</p>
-				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			    
-
+                <fmt:formatNumber value="${newNews}" type="number" var="numberType" />
+ 					<c:choose>
+	                <c:when test=" ${newNews > 0}">
+	                	<img src="${contextPath}/resources/image_mp/dot.png">
+		                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">내 정보</p>
+					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			    
+					</c:when>
+					<c:otherwise>
+            			<p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">내 정보</p>
+					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>	
+            		</c:otherwise>
+            		</c:choose>
                 </div>
                 </c:if>
                
@@ -844,7 +853,7 @@
 			                               <a href="${ contextPath }/user/easyLogin/google"><img src="resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
 			                            </div>
 			                              <div class="col-sm">
-			                               <a id="naver_id_login" href="${ contextPath }/user/easyLogin/naver"><img src="resources/images/image_user/naver.png" alt=""> 네이버</a>
+			                               <a id="naver_id_login"><img src="resources/images/image_user/naver.png" alt=""> 네이버</a>
 			                              </div>
 			                              <div class="col-sm">
 			                                <a href="${ contextPath }/user/easyLogin/kakao"><img src="resources/images/image_user/kakao.png" alt=""> 카카오</a>
@@ -891,100 +900,7 @@
             });
         });
     </script>
-    
-    <!-- 회원가입 제출 전 유효성검사 -->
-	<script>
-		function joinValidate(){
-			
-			// 이름 유효성검사
-			if(!(/^[가-힣]{2,5}$/).test($("#name").val())){
-				alert('이름은 한글로 2~5글자 사이만 가능합니다.');
-				$("#name").select();
-				return false;
-			}
-			
-            // 아이디 유효성검사
-			if(!(/^[a-z][a-z0-9]{3,15}$/.test($("#id").val()))){
-				alert('영소문자로 시작하는 4~16글자 입력(숫자 포함 가능)');
-				$("#id").select();		
-				return false;
-			}
-            // 아이디 중복검사
-			if(/.중복 아이디로 사용할 수 없습니다./.test($("#test_id_label").text())){
-				console.log($("#test_id_label").text());
-				alert('중복된 아이디입니다.');
-				$("#id").select();
-				return false;
-			}
 
-			// 비밀번호 유효성검사
-			if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#pwd").val()))){
-				alert('영어대소문자/숫자/특수문자를 포함한 8~16자리 입력');
-				$("#pwd").select();
-				return false;
-			}
-			
-            // 비밀번호일치 검사
-			if($("#pwd2").val() != $("#pwd").val()){
-				alert('비밀번호가 일치하지 않습니다.');
-				$("#pwd2").select();
-				return false;
-			}
-			
-			var date = new Date;
-			var inputbirth = new Date($("#birth").val());
-			
-            // 생년월일 형식 검사
-			if(inputbirth > date){
-				alert('생년월일을 정확하게 입력하세요.');
-				$("#birth").select();
-				return false;
-			}
-			
-			// 이메일 유효성검사
-			if(!((/^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i).test($("#email").val()))){
-				alert('이메일주소를 확인해주세요.');
-				$("#email").select();
-				return false;
-			}
-			
-			// 이메일 중복검사
-			if(/.중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
-				console.log($("#test_email_label").text());
-				alert('중복된 이메일입니다.');
-				$("#email").select();
-				return false;
-			}
-			
-			// 전화번호 유효성검사
-			if(!(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/).test($("#phone").val())){
-				alert('전화번호를 확인해주세요.');
-				$("#phone").select();
-				return false;
-			}
-			
-			// 전화번호 중복검사
-			if(/.중복 휴대전화로 사용할 수 없습니다./.test($("#test_phone_label").text())){
-				console.log($("#test_phone_label").text());
-				alert('중복된 전화번호입니다.');
-				$("#phone").select();
-				return false;
-			}
-			
-			// 사업자등록번호 유효성검사
-			var bizNum = $("#business_no").val();
-			if(bizNum != "" && !(/\d{3}[-]\d{2}[-]\d{5}/).test(bizNum)){
-				alert('사업자등록번호를 확인해주세요.');
-				$("#business_no").select();
-				return false;
-			}
-
-			return true;
-		}
-	
-	</script>
-    
-    
     <!-- 회원가입폼 유효성검사 -->
     <script>
     	$("#name").change(function () {
@@ -1021,10 +937,11 @@
        			}).fail(function(){
        				console.log("ajax response fail..");
        			}).always(function(){
-       				console.log("always is done..!");
+       				console.log("always done..!");
        			});
             } else {
                 $("#test_id_label").html("아이디를 다시 입력해주세요.").css("color", "red");
+                $("#id").select();
             }
   
         });
@@ -1051,10 +968,11 @@
        			}).fail(function(){
        				console.log("ajax response fail..");
        			}).always(function(){
-       				console.log("always is done..!");
+       				console.log("always done..!");
        			});
             } else {
                 $("#test_phone_label").html("휴대전화를 다시 입력해주세요.").css("color", "red");
+                $("#phone").select();
             }
   
         });
@@ -1096,10 +1014,11 @@
       			}).fail(function(){
       				console.log("ajax response fail..");
       			}).always(function(){
-      				console.log("always is done..!");
+      				console.log("always done..!");
       			});
            } else {
                $("#test_email_label").html("이메일을 다시 입력해주세요.").css("color", "red");
+               $("#email").select();
            }
  
        });
@@ -1157,12 +1076,105 @@
 	
     </script>
     
+     <!-- 회원가입 제출 전 유효성검사 -->
+	<script>
+		function joinValidate(){
+			
+			// 이름 유효성검사
+			if(!(/^[가-힣]{2,5}$/).test($("#name").val())){
+				alert('이름은 한글로 2~5글자 사이만 가능합니다.');
+				$("#name").select();
+				return false;
+			}
+			
+            // 아이디 유효성검사
+			if(!(/^[a-z][a-z0-9]{3,15}$/.test($("#id").val()))){
+				alert('영소문자로 시작하는 4~16글자 입력(숫자 포함 가능)');
+				$("#id").select();		
+				return false;
+			}
+            // 아이디 중복검사
+			if(/아이디를 다시 입력해주세요./&&/중복 아이디로 사용할 수 없습니다./.test($("#test_id_label").text())){
+				console.log($("#test_id_label").text());
+				alert('아이디를 다시 입력해주세요.');
+				$("#id").select();
+				return false;
+			}
+
+			// 비밀번호 유효성검사
+			if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#pwd").val()))){
+				alert('영어대소문자/숫자/특수문자를 포함한 8~16자리 입력');
+				$("#pwd").select();
+				return false;
+			}
+			
+            // 비밀번호일치 검사
+			if($("#pwd2").val() != $("#pwd").val()){
+				alert('비밀번호가 일치하지 않습니다.');
+				$("#pwd2").select();
+				return false;
+			}
+			
+			var date = new Date;
+			var inputbirth = new Date($("#birth").val());
+			
+            // 생년월일 형식 검사
+			if(inputbirth > date){
+				alert('생년월일을 정확하게 입력하세요.');
+				$("#birth").select();
+				return false;
+			}
+			
+			// 이메일 유효성검사
+			if(!((/^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i).test($("#email").val()))){
+				alert('이메일주소를 확인해주세요.');
+				$("#email").select();
+				return false;
+			}
+				
+			// 이메일 중복검사
+			if(/중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
+				console.log($("#test_email_label").text());
+				alert('중복된 이메일입니다.');
+				$("#email").select();
+				return false;
+			}
+			
+			// 전화번호 유효성검사
+			if(!(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/).test($("#phone").val())){
+				alert('전화번호를 확인해주세요.');
+				$("#phone").select();
+				return false;
+			}
+			
+			
+			
+			if(/중복 휴대전화로 사용할 수 없습니다./&&/휴대전화를 다시 입력해주세요./.test($("#test_phone_label").text())){
+				console.log($("#test_phone_label").text());
+				alert('휴대전화를 다시 입력해주세요.');
+				$("#phone").select();
+				return false;
+			}
+			
+			// 사업자등록번호 유효성검사
+			var bizNum = $("#business_no").val();
+			if(bizNum != "" && !(/\d{3}[-]\d{2}[-]\d{5}/).test(bizNum)){
+				alert('사업자등록번호를 확인해주세요.');
+				$("#business_no").select();
+				return false;
+			}
+
+			return true;
+		}
+	
+	</script>
+    
     
     <!-- 네이버아디디로로그인 초기화 Script -->
 	<script type="text/javascript">
 		var naver_id_login = new naver_id_login("bwz0ZV165D8RHBEFHdF6", "http://localhost:8896/samdado/main");
 		var state = naver_id_login.getUniqState();
-		naver_id_login.setButton("white", 2,40);
+		//naver_id_login.setButton("white", 2,40);
 		naver_id_login.setDomain(".service.com");
 		naver_id_login.setState(state);
 		naver_id_login.setPopup();
@@ -1176,7 +1188,9 @@
 		// naver_id_login.getProfileData('프로필항목명');
 		// 프로필 항목은 개발가이드를 참고하시기 바랍니다.
 		alert(naver_id_login.getProfileData('email'));
-		//alert(naver_id_login.getSession());
+		alert(naver_id_login.getProfileData('name'));
+		//alert(naver_id_login.getProfileData('birthday'));
+		//alert(naver_id_login.getProfileData('mobile'));
 	}
 
 

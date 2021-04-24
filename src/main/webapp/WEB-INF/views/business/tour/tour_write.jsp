@@ -285,10 +285,10 @@
                     <span class="box">
                     <select class="content" name="tour_tema">
                         <option value="select" selected>선택</option>
-                        <option value="신혼">신혼</option>
-                        <option value="졸업">졸업</option>
-                        <option value="일상">일상</option>
-                        <option value="기타">기타</option>
+                        <option value="wedding">신혼</option>
+                        <option value="gradu">졸업</option>
+                        <option value="life">일상</option>
+                        <option value="etc">기타</option>
                     </select>
                     </span>
                 </div>
@@ -323,21 +323,6 @@
 	                </span>
 	            </div>
 	            
-                <!-- 인원 -->
-                <div class="join-wrap">
-                    <h3><label>인원</label></h3>
-                    <span class="box">
-                    <select class="content" id="category" name="res_category">
-	                    <option value="select" selected>명</option>
-	                    <option value="1">1</option>
-	                    <option value="2">2</option>
-	                    <option value="3">3</option>
-	                    <option value="4">4</option>
-	                    <option value="etc">5</option>
-                	</select>
-                	</span>
-                </div>
-                
                 <!-- 영업시간 -->
 	            <div class="join-wrap">
 	                <h3><label for="opening">영업시간</label></h3>
@@ -351,13 +336,13 @@
 	            <!-- 편의시설 -->
 		        <div class="join-wrap" >
 		            <h3><label>편의시설</label></h3>           
-	                <input type="checkbox" name="tour_fac" value="park">
+	                <input type="checkbox" name="pro_fac" value="park">
 	                <label>주차장</label>&nbsp;
-	                <input type="checkbox" name="tour_fac" value="com">
+	                <input type="checkbox" name="pro_fac" value="com">
 	                <label>편의점</label>&nbsp;
-	                <input type="checkbox" name="tour_fac" value="rest">
+	                <input type="checkbox" name="pro_fac" value="rest">
 	                <label>휴게실</label>&nbsp;
-	                <input type="checkbox" name="tour_fac" value="res">
+	                <input type="checkbox" name="pro_fac" value="res">
 	                <label>식당</label>&nbsp;
 		        </div>   
 
@@ -381,7 +366,7 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="uploadFile" class="content" required>
+				        <input type="file" name="uploadFile" class="content">
 				    </span>   
 				</div>
 				
@@ -389,7 +374,15 @@
 				<div class="join-wrap">
 				    <h3><label>추가사진</label></h3>
 				    <span class="box">
-				        <input type="file" name="uploadFile" class="content" required>
+				        <input type="file" name="uploadFile" class="content">
+				    </span>   
+				</div>
+				
+				<!-- 매장사진 -->
+				<div class="join-wrap">
+				    <h3><label>추가사진</label></h3>
+				    <span class="box">
+				        <input type="file" name="uploadFile" class="content">
 				    </span>   
 				</div>
                 

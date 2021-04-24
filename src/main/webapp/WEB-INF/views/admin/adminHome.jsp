@@ -83,39 +83,137 @@
 
                     <!-- SMS -->
                     <div class="row" style="padding-top: 4%; padding-right: 7%;">
-                    <h1>SMS</h1>
-                	 <h6>삼다도 회원들에게 메세지를 보낼 수 있습니다.</h6>
-                	 <br><br>
-                        <form method="post" name="smsForm" action="${ contextPath }/admin/sendSMS">
-	                        <table class="table table-hover">
-	                           <tbody>
-		                          <tr>
-		                              <td>
-		                              	<textarea class="form-control" maxlength="45" name="msg" style="resize: none;" placeholder="보낼 내용을 입력하세요."></textarea>
-		                              </td>
-		                          </tr>
-		                          <tr>
-		                          	<td>
-		                              	<input class="form-control" type="text" name="rphone" value="" placeholder="받는 번호를 입력하세요.(010-0000-0000)">
-		                             </td>
-		                          </tr>
-	                              <tr>
-	                              <td>
-		                              	<input type="submit" class="btn btn-secondary" value="전송" style="margin-left: 88%;">
-		                              	<input type="hidden" name="action" value="go">
-				  						<input type="hidden" name="sphone1" value="010">
-								        <input type="hidden" name="sphone2" value="8234">
-								        <input type="hidden" name="sphone3" value="2105">
-	                              </td>
-	                              </tr>
-	                          </tbody>
-	                      </table>
-                       </form>
-                  </div>
+                    	<div class="col" id="G">
+			                <h1>Board</h1>
+			                <h6>최근 등록한 날짜순으로 노출됩니다.</h6>
+			                <!-- Button trigger modal -->
+							<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-left: 85%; margin-top: -15%;">
+							  등록
+							</button>
+							
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">공지사항 등록</h5>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							        <div class="modal-body">
+								      <form action="${ contextPath }/admin/sendAboard" method="post">
+								      	<div class="form-floating">
+										  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="uspart">
+										    <option selected>회원 카테고리를 선택하세요.</option>
+										    <option value="전체">전체(일반+제휴)</option>
+										    <option value="일반">일반회원</option>
+										    <option value="제휴">제휴회원</option>
+										  </select>
+										  <label for="floatingSelect">회원 카테고리 선택</label>
+										</div>
+										<br>
+										<div class="form-floating">
+										  <input type="text" class="form-control" placeholder="Leave a comment here" name="btitle" id="floatingTextarea">
+										  <label for="floatingTextarea">제목을 입력하세요.</label>
+										</div>
+										<br>
+										<div class="form-floating">
+										  <textarea class="form-control" placeholder="Leave a comment here" name="bcontent" id="floatingTextarea" style="resize: none; height: 100px;"></textarea>
+										  <label for="floatingTextarea">내용을 입력하세요.</label>
+										</div>
+										<div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+									        <button type="submit" class="btn btn-primary">등록</button>
+								        </div>
+									  </form>
+							        </div>
+							    </div>
+							  </div>
+							</div>
+			                
+			                <br>
+				                <div style="overflow:auto; table-layout: fixed; height: 300px;">
+				                	
+				                	    <table class="table table-hover" id="aBoardTable" style="table-layout: fixed;">
+									        <thead>
+						                        <tr>
+						                            <th style="width: 10%;">No</th>
+						                            <th>제목</th>
+						                            <th style="width: 25%;">작성일</th>
+						                        </tr>
+					                        </thead>
+					                        <tbody>
+					                        <c:choose>
+												<c:when test="${ !empty selectAboardList }">
+						                            <c:forEach var="aboardList" items="${ selectAboardList }" varStatus="status">
+						                            
+							                        <tr>
+							                            <th>${ aboardList.bno }</th>
+							                            <td style="overflow: hidden; white-space : nowrap; text-overflow: ellipsis;">
+								                            <button type="button" style="background: none; border: none;" data-bs-toggle="modal" data-bs-target="#exampleModal${ status.count }">
+					  										   <b>${ aboardList.btitle }</b>
+							                                </button>
+							                            </td>
+							                            <td>${ aboardList.bdate }</td>
+							                        </tr>
+							                        
+							                        <!-- 모달 -->
+									                   <div class="modal fade" id="exampleModal${ status.count }" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														  <div class="modal-dialog">
+														    <div class="modal-content">
+															      <div class="modal-header">
+															        <h5 class="modal-title" id="exampleModalLabel">공지사항 등록</h5>
+															        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+															      </div>
+															        <div class="modal-body">
+																      <form action="${ contextPath }/admin/sendAboard" method="post">
+																      	<div class="form-floating">
+																		  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="uspart" disabled>
+																		    <option selected>${ status.current.uspart }</option>
+																		  </select>
+																		  <label for="floatingSelect">회원 카테고리</label>
+																		</div>
+																		<br>
+																		<div class="form-floating">
+																		  <input type="text" class="form-control" placeholder="Leave a comment here" value="${ status.current.btitle }" name="btitle" id="floatingTextarea" disabled>
+																		  <label for="floatingTextarea">공지글 제목</label>
+																		</div>
+																		<br>
+																		<div class="form-floating">
+																		  <textarea class="form-control" placeholder="Leave a comment here" name="bcontent" id="floatingTextarea" style="resize: none; height: 100px" disabled>${ status.current.bcontent }</textarea>
+																		  <label for="floatingTextarea">공지글 내용</label>
+																		</div>
+																		<br>
+																		<div class="form-floating">
+																		  <input type="text" class="form-control" placeholder="Leave a comment here" value="${ status.current.bdate }" name="bdate" id="floatingTextarea" disabled>
+																		  <label for="floatingTextarea">작성일</label>
+																		</div>
+																		<div class="modal-footer">
+																	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+																        </div>
+																	  </form>
+															        </div>
+															    </div>
+														  </div>
+														</div>
+							                        
+	                                     		   </c:forEach>  
+                                     		      </c:when>
+                                     		      <c:otherwise>
+                                     		      	<tr>
+                                     		      		<td colspan="3" style="text-align: center;">작성된 공지사항이 없습니다.</td>
+                                     		      	</tr>
+                                     		      </c:otherwise>
+                                     		   </c:choose>
+					                        </tbody>
+				                        </table>
+								</div>
+								
+			            </div>
+                     </div>
 					<br><br>
                     <!--막대 그래프(총 매출)-->
                      <div class="row" style="padding-top: 4%; padding-right: 7%; padding-bottom: 5%;">
-                     <h1>최근 6개월 매출</h1>
+                     <h1>최근 6개월 총 매출</h1>
                 	 <h6>최근 날짜 기준으로 6개월 간의 매출 내역이 보여집니다.</h6>
                 	 <br><br>
                         <!--차트 그려지는 영역-->
@@ -198,8 +296,8 @@
                     <table class="table table-hover" id="qnaTable" style="table-layout: fixed;">
                         <thead>
                         <tr>
-                            <th>No</th>
-                            <th>작성자</th>
+                            <th style="width: 10%;">No</th>
+                            <th style="width: 15%;">작성자</th>
                             <th>내용</th>
                         </tr>
                         </thead>

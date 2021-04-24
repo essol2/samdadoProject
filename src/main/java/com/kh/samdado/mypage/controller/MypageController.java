@@ -1,7 +1,13 @@
 package com.kh.samdado.mypage.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +22,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.samdado.admin.model.vo.PageInfo;
+import com.kh.samdado.business.model.vo.Jjim;
+import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.mypage.model.vo.AccountBook;
+import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.ApplyPagination;
+import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
@@ -171,7 +181,7 @@ public class MypageController {
 		 return mv;
 	 }
 	 
-	 // 제휴회원 - 포인트 충전 후 Income DB에 insert.
+	 // 제휴회원 - 포인트 충전 후 Income, Point, News에 insert.
 	 @GetMapping("/payment")
 	 public String goToPayment(@ModelAttribute Income ic,
 			 				   @ModelAttribute Point po,
@@ -190,20 +200,24 @@ public class MypageController {
 		 Point prePoint = mService.prePoint(po);
 //		 System.out.println("prePoint 확인 : " + prePoint);
 //		 System.out.println("기존 pbalance 확인 : " + prePoint.getPbalance());
-		 
+		  
+
 		 if(prePoint != null) {
 			 // 2. 기존 balance에 이번에 결제한 금액 넣어주기
 			 po.setPbalance(prePoint.getPbalance()+ic.getAmount());
+			 
 		 } else {
 			 // 2. prePoint가 null이라면 그냥 Amount를 넣어주기
-			 po.setPbalance(ic.getAmount());
+			 po.setPbalance(ic.getAmount());	
 		 }
 		 
 		 //System.out.println("Point객체 확인 : " + po);
 		 
+		 mService.updatePbalance(po);
+
 		 // Point DB에 포인트 넣어주기
 		 int result2 = mService.insertNewPoint(po);
-		 
+
 		 if(result>0 || result2>0) {
 			 model.addAttribute("usno", po.getUsno());
 			return "redirect:point";
@@ -323,22 +337,85 @@ public class MypageController {
 		 return mv;
 	 }
 	 
-	 // 제휴회원 내소식
+	 // 제휴회원 내소식 - 첫 로딩
 	 @GetMapping("/alert")
 	 public ModelAndView selectAlertList(ModelAndView mv,
 			 							  @RequestParam(name="usno") String usno,
 			 							  @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
 		 
 		 // DB에서 가져와야 할 알림 내역들 : 문의하기, 신고 받은 내역, 포인트 충전 알림, 배너광고 신청, 승인, 반려(사유), 포인트 얼마 안남음
+		 // 안읽은 리스트
+		 List<Alert> alertNList = mService.selectAlertList(usno);
+		 // 읽은 리스트
+		 List<Alert> alertYList = mService.selectYAlertList(usno);
 		 
+		 mv.addObject("alertNList", alertNList);
+		 mv.addObject("alertYList", alertYList);
 		 mv.setViewName("mypage/mp_news");
 		 return mv;
 	 }
+	 
+	 // 제휴회원 내소식 - ajax
+	 @RequestMapping("/alertajax")
+	 @ResponseBody
+	 public List<Alert> selectNewAlertList(@RequestBody Alert al,
+			 							   Model model){
+		 
+		// 안읽은 리스트
+		List<Alert> alertNList = mService.selectAlertList(al.getUsno());
+		// 읽은 리스트
+		List<Alert> alertYList = mService.selectYAlertList(al.getUsno());
+		
+		// 두개의 리스트 합치기
+		List<Alert> newDataList = new ArrayList<>();
+		
+		//newDataList = ListUtils.union(alertNList, alertYList);
+		
+		newDataList.addAll(alertNList);
+		newDataList.addAll(alertYList);
+		
+		System.out.println(newDataList);
+		
+		return newDataList;
+
+		
+	 }
+	 
+	 
+	 // 제휴회원 내소식 디테일
+	 @RequestMapping("detail")
+	 @ResponseBody
+	 public Alert findDetailNews(@RequestBody Alert al) {
+		 
+		 // 1. 해당 nno에 대한 detail 찾아오기
+		 Alert deAlert = mService.selectDetailAlert(al);
+		 //System.out.println("컨트롤러에서 deAlert 확인 : " + deAlert);
+		 
+		 //  2. 읽음으로 처리해주기
+		 int result =  mService.updateNstatus(al);
+		 
+		 if(deAlert != null) {
+			 return deAlert;
+		 } else {
+			 return null;
+		 }
+		 
+	 }
+	 
 /*=====================================================================================================*/
 	 
 	// 일반회원 마이페이지로 이동
 	 @GetMapping("/userinfo")
-	 public String mypageUserFirstView() { 
+	 public String mypageUserFirstView(ModelAndView mv, 
+			 							@ModelAttribute User u) { 
+		 
+		 List<Alert> alertNList = mService.selectAlertList(u.getUsno());
+		 // 읽은 리스트
+		 List<Alert> alertYList = mService.selectYAlertList(u.getUsno());
+		 
+		 mv.addObject("alertNList", alertNList);
+		 mv.addObject("alertYList", alertYList);
+		 
 			return "mypage/mp_UserInfo";
 	}
 	 
@@ -429,11 +506,20 @@ public class MypageController {
 	 
 	 // 일반회원 - 내예약목록 페이지 이동
 	 @GetMapping("/booking")
-	 public String goToBooking(@RequestParam(name="usno") String usno) {
+	 public ModelAndView goToBooking(@ModelAttribute User u,
+			 						 ModelAndView mv) {
+		 //System.out.println("usno1 : " + u.getUsno());
 		 
+		 List<Booking> hotelBookList = mService.selectHotelBookList(u.getUsno());
+		 List<Booking> tourBookList = mService.selectTourBookList(u.getUsno());
+		 List<Booking> carBookList = mService.selectCarBookList(u.getUsno());
+
+		 mv.addObject("hotelList", hotelBookList);
+		 mv.addObject("tourList", tourBookList);
+		 mv.addObject("carList", carBookList);
 		 
-		 
-		 return "/mypage/mp_MyReservation";
+		 mv.setViewName("/mypage/mp_MyReservation");		 
+		 return mv;
 	 }
 
 	 // 일반회원 - 가계부 페이지로 이동
@@ -627,5 +713,207 @@ public class MypageController {
 		 }
 
 	 }
+	 
+	 // 내예약 - 예약 취소
+	 @GetMapping("/canbook")
+	 public String cancelBooking(@ModelAttribute() Booking b,
+			 					 Model model){
+	 
+		 System.out.println("canbook에 잘 들어옴! : " +b);
+		 // DB에서 예약 내역 삭제하기
+		 int result = mService.deleteBooking(b);
+		 System.out.println("딜리트 결과 result! : " + result);
+		
+		 if(result > 0) {
+			 model.addAttribute("usno", b.getUsno());
+			 model.addAttribute("msg", "예약이 취소되었습니다. 환불은 대체적으로 3일 소요됩니다. 문제발생시 관리자에게 문의하세요!");
+			 return "redirect:/mypage/booking";
+		 } else {
+			 model.addAttribute("usno", b.getUsno());
+			 model.addAttribute("msg", "예약취소에 문제가 발생했습니다. 다시 시도해주세요!");
+			 return "redirect:/mypage/booking";
+		 }
+		 
+	 }
+	 
+	 // 내예약 - 후기작성
+	 @PostMapping("/review")
+	 public String writeReview(@ModelAttribute() Review r, 
+			 				   @RequestParam( value = "rimg1", required=false) MultipartFile file1,
+							   @RequestParam( value = "rimg2", required=false) MultipartFile file2,
+							   @RequestParam( value = "rimg3", required=false) MultipartFile file3,
+							   @RequestParam( value = "re_star", required=false, defaultValue="0.5") String re_star,
+							   @RequestParam( value = "inup", required=false) String inup,
+							   HttpServletRequest request, Model model ) {
+//		 System.out.println(file1);
+//		 System.out.println(file2);
+//		 System.out.println(file3);
+		 r.setRe_star(re_star);
+		 
+		//System.out.println("r 확인 1 : " + r);
+		//System.out.println("inup 확인 : " + inup);
+
+		 if(!file1.getOriginalFilename().equals("")) {
+				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+				String renameFileName = saveFile(file1, request);
+				// DB에 저장하기 위한 파일명 세팅
+				if(renameFileName != null) {
+					r.setImg_name1(file1.getOriginalFilename());
+					r.setImg_rename1(renameFileName);
+				}
+		 } else {
+			 r.setImg_name1("미입력");
+			 r.setImg_rename1("미입력");
+		 }
+		 if(!file2.getOriginalFilename().equals("")) {
+				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+				String renameFileName = saveFile(file2, request);
+				// DB에 저장하기 위한 파일명 세팅
+				if(renameFileName != null) {
+					r.setImg_name2(file1.getOriginalFilename());
+					r.setImg_rename2(renameFileName);
+				}
+		 } else {
+			 r.setImg_name2("미입력");
+			 r.setImg_rename2("미입력");
+		 }
+		 if(!file3.getOriginalFilename().equals("")) {
+				// 파일 저장 메소드 별도로 작성 - 리네임명 리턴
+				String renameFileName = saveFile(file3, request);
+				// DB에 저장하기 위한 파일명 세팅
+				if(renameFileName != null) {
+					r.setImg_name3(file1.getOriginalFilename());
+					r.setImg_rename3(renameFileName);
+				}
+		 } else {
+			 r.setImg_name3("미입력");
+			 r.setImg_rename3("미입력");
+		 }
+		 
+		//System.out.println("inup 확인 : " + inup);
+		 
+		 int result = 0;
+		 int result2 = 1;
+		 
+		 //System.out.println("r 확인 2 : " + r);
+		 
+		 	if(inup.equals("I")) {
+		 		result = mService.insertReview(r);
+				//System.out.println("insert result 확인 : " + result);
+				
+				r.setRev_no(result);
+				//System.out.println("r.getRev_no() : " + r.getRev_no());
+				
+				result2 = mService.updateCheck(r);
+				System.out.println("insert result2 확인 : " + result2);
+		 	} else if(inup.equals("U")) {
+		 		//System.out.println("update result 확인 : " + result2);
+		 		result = mService.updateReview(r);
+		 		//System.out.println("update result 확인 : " + result2);
+		 	}
+			
+			
+			if(result > 0 && result2 == 1) {
+				model.addAttribute("usno", r.getUs_no());
+				model.addAttribute("msg", "후기가 성공적으로 게시되었습니다!");
+				return "redirect:/mypage/booking";
+			} else {
+				model.addAttribute("usno", r.getUs_no());
+				model.addAttribute("msg", "문제발생! 다시 시도해주세요!");
+				return "redirect:/mypage/booking";
+			}
+	 }
+	 
+	 // 일반회원 - 후기수정
+	 @RequestMapping("/rewrite")
+	 @ResponseBody
+	 public Review rewriteReview(@RequestBody Review r) {
+		 
+		 //System.out.println("가기전에 r 확인 : " + r);
+		 Review reviewDetail = mService.selectReview(r);
+		 //System.out.println("reviewDetail 확인 : " + reviewDetail);
+		 
+		 return reviewDetail;
+		 
+	 }
+	 
+	 
+	 public String saveFile(MultipartFile file, HttpServletRequest request) {
+		 
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "/muploadFiles";
+			File folder = new File(savePath);
+			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
+			
+			// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String originalFileName = file.getOriginalFilename();
+			String renameFileName = sdf.format(new Date()) + "_"
+								+ (int)(Math.random() * 100000) 
+								+ originalFileName.substring(originalFileName.lastIndexOf("."));
+			
+			String renamePath = folder + "/" + renameFileName; // 저장하고자하는 경로 + 파일명
+			
+			try {
+				file.transferTo(new File(renamePath));
+				// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
+			} catch (IllegalStateException | IOException e) {
+				System.out.println("파일 업로드 에러 : " + e.getMessage());
+			} 
+			
+			return renameFileName;
+		}
+	 
+	 // 일반회원 - 찜하기 On
+	 @RequestMapping("/jjimon")
+	 @ResponseBody
+	 public String toggleJjimOn(@RequestBody Jjim j) {
+		 
+		 //System.out.println(j);
+		 
+		 Jjim jjim = mService.findJjimNo(j);
+
+		 int result = 0;
+		 
+		 if(jjim != null) {
+			 String jjim_no = jjim.getJjim_no();
+			 result = mService.updateJjim(jjim_no);
+			 
+		 }else {
+			 result = mService.insertJjim(j);
+		 }
+		 
+		if(result >0) 
+			return "success";
+		else 
+			return "error";
+		 
+	 }
+	 
+	// 일반회원 - 찜하기 Off
+		 @RequestMapping("/jjimoff")
+		 @ResponseBody
+		 public String toggleJjimOff(@RequestBody Jjim j) {
+
+			 System.out.println(j);
+				int result = mService.deleteJjim(j);
+
+			if(result >0) 
+				return "success";
+			else 
+				return "error";
+			 
+		}
+		 
+		 @GetMapping("/jjimlist")
+		 public ModelAndView goToJjim(@RequestParam(value="usno") String usno,
+				 				 	  ModelAndView mv) {
+			 
+			 List<Jjim> jjimList = mService.selectJjimList(usno);
+			 
+			 mv.addObject("jjimList", jjimList);
+			 mv.setViewName("mypage/mp_jjimList");
+			 return mv;
+		 }
 	 
 }
