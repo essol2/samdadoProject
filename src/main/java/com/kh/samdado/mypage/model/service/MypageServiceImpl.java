@@ -323,5 +323,11 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectJjimList(usno);
 	}
 
+	// 제휴회원 - 로그인시 내소식 확인하기
+	@Override
+	public int findNewNews(User u) {
+		return mDao.findNewNews(u);
+	}
+
 	
 }

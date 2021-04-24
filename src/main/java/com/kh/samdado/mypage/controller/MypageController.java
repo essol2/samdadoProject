@@ -710,9 +710,10 @@ public class MypageController {
 	 public String cancelBooking(@ModelAttribute() Booking b,
 			 					 Model model){
 	 
+		 System.out.println("canbook에 잘 들어옴! : " +b);
 		 // DB에서 예약 내역 삭제하기
 		 int result = mService.deleteBooking(b);
-		 //System.out.println("canbook에 잘 들어옴! : " +b);
+		 System.out.println("딜리트 결과 result! : " + result);
 		
 		 if(result > 0) {
 			 model.addAttribute("usno", b.getUsno());

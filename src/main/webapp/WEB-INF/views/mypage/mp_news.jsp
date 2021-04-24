@@ -453,7 +453,7 @@
 						var tcontent3 = $("<td colspan='4'>").text(asdateFormat + "에 배너광고가 시작됩니다.");
 						
 						var tr4 = $("<tr>");
-						var tcontent4 = $("<td colspan='4'>").text("내 포인트에서 포인트 충전 후 다시 신청해주세요!");
+						var tcontent4 = $("<td colspan='4'>").text("삼다도와 함께 번창하세요!!");
 						
 						tr1.append(tnno, tnnoData, tncate, tncateData);
 						tr2.append(tcontent2);
@@ -631,7 +631,12 @@
 					table = $("#alertTable");
 					table.html("");
 					
+					
 					for(var i in data){
+						
+						var fNdate = new Date(data[i].ndate);
+						fNdate = getFormatDate(fNdate);
+						
 
 						if(data[i].nstatus == 'N'){
 							var tr1 = $("<tr style='cursor : pointer;' onclick='detailNAlert("+data[i].nno+")' class='newList'>");
@@ -648,7 +653,7 @@
 								var ajncate = $("<td>").text("배너광고");
 							}
 							
-							var ajndate =  $("<td>").text(data[i].ndate);
+							var ajndate =  $("<td>").text(fNdate);
 							
 							tr1.append(ajnno, ajntitle, ajncate, ajndate);
 							
@@ -667,7 +672,7 @@
 								var ajncate = $("<td>").text("배너광고");
 							}
 							
-							var ajndate =  $("<td>").text(data[i].ndate);
+							var ajndate =  $("<td>").text(fNdate);
 							
 							tr2.append(ajnno, ajntitle, ajncate, ajndate);
 						}
@@ -712,5 +717,7 @@
 	        return year + '-' + month + '-' + day;
 		}
 	</script>
+	
+	
 </body>
 </html>

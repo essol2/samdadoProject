@@ -267,9 +267,9 @@ public class MypageDaoImpl implements MypageDao{
 	// 일반회원 - 내예약 취소
 	@Override
 	public int deleteBooking(Booking b) {
+		System.out.println("dao까지는 잘 오니?");
 		return sqlSession.delete("mypageMapper.deleteBooking", b);
 	}
-
 	// 일반회원 - 후기등록
 	@Override
 	public int insertReview(Review r) {
@@ -323,6 +323,12 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public List<Jjim> selectJjimList(String usno) {
 		return sqlSession.selectList("mypageMapper.selectJjimList", usno);
+	}
+
+	// 제휴회원 - 로그인시 내소식 확인하기
+	@Override
+	public int findNewNews(User u) {
+		return sqlSession.selectOne("mypageMapper.findNewNews", u);
 	}
 
 }

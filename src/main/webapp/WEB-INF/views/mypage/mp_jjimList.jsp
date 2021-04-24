@@ -128,7 +128,7 @@
         height : 500px;
     }
 
-    .reservBox{
+    #reservBox{
         width : 31.5%;
         height : fit-content;
         background-color: white;
@@ -217,6 +217,36 @@
         margin-bottom : 0;
         align-items: right;
     }
+    
+    .moreBtn{
+		width : 100px;
+		height : 50px;
+		align-items : center;
+	}
+	
+	#forAlign{
+		align-items : center;
+		text-align : center;
+	}
+  
+  #moreBtn{
+  	text-align : center;
+  	border-style : none;
+  	width  : 50px;
+  	height : 20px;
+  	margin-left : 0;
+  	margin-right :0;
+  }
+  
+  .more{
+  	display: none;
+  	flex-direction: column;
+  }
+  
+  .moremore{
+  	display: flex;
+  	flex-direction: column;
+  }
 
 </style>
 <body>
@@ -237,8 +267,10 @@
             </div>
 
             <div id="mainBox">
+            <c:choose>
+            <c:when test="${ !empty jjimList }">
              <c:forEach var="jl" items="${jjimList}" varStatus="jlNumber">
-                <div id="middleBox" class="reservBox">
+                <div id="reservBox" class="more">
                 	<br>
                     <h5>${ jl.bus_name }</h5>
                     <div class="reservDetail">
@@ -252,7 +284,6 @@
                                 <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon"><br> ${ jl.bus_category }<br><br>
                                 <img src="${contextPath}/resources/images/image_mp/location_outline.png" alt="" class="reservIcon"><br> ${ jl.bus_address }<br><br>
                                 <img src="${contextPath}/resources/images/image_mp/phone_outline.png" alt="" class="reservIcon"><br> ${ jl.bus_phone }<br><br>
-
                             </div>
                             <div class="reserveBtnArea">
                                 <button class="reserveBtn" id="detailResv" onclick="goToDetail(${ jl.bus_code});">상세페이지</button><br>
@@ -262,7 +293,23 @@
                     </div>
                 </div>
                 </c:forEach>
+                <div id="forAlign">
+	              <p style="color  : #bfbfbf; margin : 0px; padding:0px;">더보기</p>
+		          <img src="${contextPath}/resources/images/image_mp/moreBtn.png" id="moreBtn">
+		     </div>
+                </c:when>
+                <c:otherwise>
+                	<div style="text-align : center; margin-left : auto; margin-right : auto; margin-top:8%; margin-bottom:auto;">
+							<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
+ 		            		<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">찜이 한개도 없네요<br>삼다도엔 좋은 여행지들이 한가득!!</h1>
+ 		            		<button onclick="location.href='${ contextPath }/business/hotel_list'" id="goList" style="border-style:none; background-color : #467355; color : white; margin-left : auto; margin-right:auto; padding : 2%;">삼다도 여행상품들 보러가기!</button>
+					</div>
+                </c:otherwise>
+                </c:choose>
+                
 			</div>
+			
+			 
         <script>
 		    function goToWallet(){
 				/* console.log("jsp안에서 usno확인 : " + usno); */
@@ -336,6 +383,19 @@
 			});
 		});
 		</script>
+		
+		<script>				
+	$(document).ready(function(){
+		size_div = $('.more').length;
+							
+		x = 1;
+		$('.more:lt('+x+')').addClass('moremore');
+		$('#moreBtn').click(function(){
+			x= (x+2 <= size_div)? x+2 : size_div;
+			$('.more:lt('+x+')').addClass('moremore');	
+		});
+	});
+	</script>
  
 </body>
 </html>

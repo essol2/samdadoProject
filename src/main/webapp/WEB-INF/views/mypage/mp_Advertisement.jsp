@@ -131,8 +131,7 @@
         margin-top : 10px;
         margin-bottom: 10px;
         margin-right : 10px;
-        height : 82
-        0px;
+        height : 855px;
     }
 
     #adverContainer{
@@ -221,8 +220,8 @@
     
     #ingBox{
     	padding : 0px;
-    	height : 310px;
-    	display : flex;
+    	height : 350px;
+    	/* display : flex; */
     	align-items : center;
     }
     
@@ -306,14 +305,12 @@
 										</div>
 									</c:forEach>
 									<hr>
-									<h3 style="color: #467355; text-align: center;">프리미엄 광고</h3>
 									<div style="text-align : center; margin-left : auto; margin-right : auto;">
 										<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
 				            			<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">삼다도와 프리미엄 광고해보세요!</h1>
 		 							</div>
 								</c:when>
 								<c:when test="${empty allList && !empty pbusList}">
-									<h3 style="color: #467355; text-align: center;">배너광고</h3>
 									<div style="text-align : center; margin-left : auto; margin-right : auto;">
 										<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
 			            				<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">삼다도와 배너 광고해보세요!</h1>
@@ -414,9 +411,10 @@
 
 					</div>
 					<div id='ingBox'>
+					<br>
+					<h1 style="color:#467355; text-align : center;">배너광고 승인 대기 중</h1>
 					<c:choose>
 						<c:when test="${!empty applyList}">
-							<br>
 							<div class="previous">
 								<c:if test="${ api.currentPage <= 1 }">
 									<h1 style="color: #467355; , text-align: center; font-size: 20px;">&lt;</h1>
@@ -451,6 +449,7 @@
 									<a href="${ after }" style="color: #467355; , text-align: center; font-size: 20px;"> &gt; </a>
 								</c:if>
 							</div>
+							<br>
 						</c:when>
 						<c:otherwise>
 						<div style="text-align : center; margin-left : auto; margin-right : auto;">
