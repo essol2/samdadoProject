@@ -311,7 +311,7 @@ public class MypageDaoImpl implements MypageDao{
 	//일반회원 - 다시 찜하기
 	@Override
 	public int updateJjim(String jjim_no) {
-		return sqlSession.insert("mypageMapper.updateJjim", jjim_no);
+		return sqlSession.update("mypageMapper.updateJjim", jjim_no);
 	}
 
 	// 일반회원 - 찜목록 삭제
@@ -342,6 +342,12 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public int findNewBno(A_board aboard) {
 		return sqlSession.selectOne("mypageMapper.findNewBno", aboard);
+	}
+
+	// 회원 탈퇴
+	@Override
+	public int updateUserStatus(User u) {
+		return sqlSession.update("mypageMapper.updateUserStatus", u);
 	}
 
 }

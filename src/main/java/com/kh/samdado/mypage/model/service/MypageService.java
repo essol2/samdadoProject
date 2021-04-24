@@ -176,5 +176,8 @@ public interface MypageService {
 	// 관리자 공지사항 bno 찾아오기
 	public int findNewBno(A_board aboard);
 
+	// 회원 탈퇴
+	public int updateUserStatus(User u);
+
 
 }
