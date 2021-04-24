@@ -584,6 +584,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM BUSINESS B, BUSINESS_ATT BA 
 		WHERE B.BUS_CODE = BA.BUS_CODE
 		AND B.US_NO = #{usno}
+		 AND BA.FILE_LV = 0
 		ORDER BY B.BUS_CODE DESC
 	</select>
 	
@@ -651,7 +652,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM (
 		        SELECT AL_NO
 				FROM ALLIANCE
-				WHERE BUS_CODE = 94
+				WHERE BUS_CODE = #{bus_code}
 		        AND ALSTATUS = 'N'
 		        ORDER BY AL_SUBDATE DESC)
 		WHERE ROWNUM = 1
@@ -666,7 +667,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SELECT US_NO
 		FROM (SELECT US_NO
 				FROM ALLIANCE
-				WHERE BUS_CODE = 96
+				WHERE BUS_CODE = #{bus_code}
 				AND ALSTATUS = 'Y'
 		        ORDER BY START_DATE DESC)
 		WHERE ROWNUM = 1
@@ -831,7 +832,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			FROM ROOM_BOOKING
 			WHERE R_BOOKING_NO = #{bookingLv}
 		</if>
-		<if test="category == 'car'">
+		<if test="category eq 'car'">
 			DELETE 
 			FROM CAR_BOOKING
 			WHERE C_BOOKING_NO = #{bookingLv}
@@ -1037,6 +1038,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
   		AND J.JJIM_STATUS = '1'
   		AND J.US_NO = #{ usno }
   		AND BA.FILE_LV = 0
+  </select>
+  
+  <select id="findNewNews" resultType="_int">
+  		SELECT COUNT(*)
+  		FROM NEWS
+  		WHERE US_NO = #{usno}
+  		AND NSTATUS='N'
   </select>
   
 </mapper>

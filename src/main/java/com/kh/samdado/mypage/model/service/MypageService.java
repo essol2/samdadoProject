@@ -166,5 +166,8 @@ public interface MypageService {
 	// 일반회원 - 찜목록 찾아오기
 	public List<Jjim> selectJjimList(String usno);
 
+	// 제휴회원 - 로그인시 내소식 확인하기
+	public int findNewNews(User u);
+
 
 }
