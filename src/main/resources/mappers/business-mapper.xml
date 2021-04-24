@@ -632,7 +632,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		   AND BUS_CATEGORY = 'T'
 		   AND BUS_STATUS = 'Y'
 		   AND BT.FILE_LV = '0'
-	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
 	<!-- 호텔리스트 -->
 	<select id="selectHotelList" resultMap="BusinessResultSet">
@@ -655,8 +654,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
  		 WHERE   
        		   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'H'
-       	   AND BT.FILE_LV = '0'
-	  ORDER BY DBMS_RANDOM.RANDOM
+       	   AND BT.FILE_LV = '0'	  
 	</select>
 	<!-- 음식점리스트 -->
 	<select id="selectResList" resultMap="BusinessResultSet">
@@ -679,8 +677,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
  		 WHERE   
        		   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'R'
-       	   AND BT.FILE_LV = '0'
-	  ORDER BY DBMS_RANDOM.RANDOM
+       	   AND BT.FILE_LV = '0'	  
 	</select>
 	
 	<!-- 렌트카리스트 -->
@@ -708,8 +705,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE 
 		 	   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'C'
-       	   AND BT.FILE_LV = '0'
-	  ORDER BY DBMS_RANDOM.RANDOM
+       	   AND BT.FILE_LV = '0'	  
 	</select>
 	<!--지혜 -->
 
@@ -1321,6 +1317,122 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		    AND
 		        US_NO = #{useridx}
 	</update>
+	
+	<!-- 리스트에서 사업장검색 -->
+	<select id="searchHotelList" resultMap="BusinessResultSet">
+	<bind name="bus_name" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT 
+       		   B.BUS_CODE
+       		 , US_NO
+             , BUS_NAME
+     		 , BUS_ADDRESS
+     		 , BUS_INTRO
+     		 , BUS_CATEGORY
+     		 , BUS_PHONE
+     		 , BUS_OPENING
+     		 , HOTEL_CATEGORY
+     		 , BT.FILE_RENAME
+     		 , BT.FILE_LV
+  		  FROM 
+  		       BUSINESS B
+  		  JOIN 
+  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE
+ 		 WHERE   
+       		   BUS_STATUS = 'Y'
+       	   AND BUS_CATEGORY = 'H'
+       	   AND BT.FILE_LV = '0'
+       	   AND BUS_CLASSIFY = 'G'
+	  	   AND B.BUS_NAME like #{bus_name}
+	</select>
+	
+	<select id="searchTourList" resultMap="BusinessResultSet">
+	<bind name="bus_name" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT 
+		       B.BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+		     , PRO_ADULT
+		     , PRO_YOUTH
+		     , PRO_CHILD
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
+		   AND BUS_CATEGORY = 'T'
+		   AND BUS_CLASSIFY = 'G'
+		   AND BUS_STATUS = 'Y'
+           AND BT.FILE_LV = '0'
+           AND BUS_NAME like #{bus_name}
+	</select>
+	
+	<select id="searchResList" resultMap="BusinessResultSet">
+	<bind name="bus_name" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT 
+       		   B.BUS_CODE
+       		 , US_NO
+             , BUS_NAME
+     		 , BUS_ADDRESS
+     		 , BUS_INTRO
+     		 , BUS_CATEGORY
+     		 , BUS_PHONE
+     		 , BUS_OPENING
+     		 , RES_CATEGORY
+     		 , BT.FILE_RENAME
+     		 , BT.FILE_LV
+  		  FROM 
+  		       BUSINESS B
+  		  JOIN 
+  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE
+ 		 WHERE   
+       		   BUS_STATUS = 'Y'
+       	   AND BUS_CATEGORY = 'R'
+       	   AND BT.FILE_LV = '0'
+       	   AND BUS_CLASSIFY = 'G'
+	  	   AND BUS_NAME like #{bus_name}
+	</select>
+	
+	<select id="searchCarList" resultMap="BusinessResultSet">
+	<bind name="bus_name" value="'%' + _parameter.getSearchValue() + '%'"/>
+		SELECT
+			   B.BUS_CODE
+			 , US_NO
+			 , BUS_NAME
+			 , BUS_ADDRESS
+			 , BUS_INTRO
+			 , BUS_DATE
+			 , BUS_MODIFY
+			 , AD_COUNT
+			 , BUS_CLASSIFY
+			 , BUS_CATEGORY
+			 , BUS_STATUS
+			 , BUS_PHONE
+			 , BUS_OPENING
+			 , BT.FILE_RENAME
+			 , BT.FILE_LV
+		  FROM 
+  		       BUSINESS B
+  		  JOIN 
+  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE 
+		 WHERE 
+		 	   BUS_STATUS = 'Y'
+       	   AND BUS_CATEGORY = 'C'
+       	   AND BT.FILE_LV = '0'
+	  	   AND BUS_CLASSIFY = 'G'
+	  	   AND BUS_NAME like #{bus_name}
+	</select>
 
    <!-- 지혜 -->
    <select id="selectBannerAdImgList" resultMap="AllianceResultSet">

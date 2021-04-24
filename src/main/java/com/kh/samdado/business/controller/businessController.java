@@ -34,8 +34,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
+import com.kh.samdado.business.model.vo.BusinessSearch;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
@@ -873,7 +875,32 @@ public class businessController {
         //System.out.println("resultMap : " + resultMap);
         return resultMap;
     }
-	
+    
+    // 리스트에서 사업장이름검색
+    @RequestMapping(value="searchBusinessList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> searchBusinessList(HttpServletResponse response, @RequestBody BusinessSearch search) {
+		
+    	if(search.getSearchKind() == 1) {
+    		List<Business> searchHotelList = bService.searchHotelList(search);
+    		
+    		return searchHotelList;
+    	} else if(search.getSearchKind() == 2) {
+    		List<Business> searchTourList = bService.searchTourList(search);
+    		
+    		return searchTourList;
+    	} else if(search.getSearchKind() == 3) {
+    		List<Business> searchResList = bService.searchResList(search);
+    		
+    		return searchResList;
+    	} else if(search.getSearchKind() == 4) {
+    		List<Business> searchCarList = bService.searchCarList(search);
+    		
+    		return searchCarList;
+    	}
+		return null;
+    	
+	}
 	
 	// ************* 지혜 *************
 

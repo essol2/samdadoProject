@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.samdado.business.model.vo.BusinessSearch;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -197,6 +198,27 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.update("businessMapper.udpateJjim", commandMap);
 	}
 	
+	// 리스트에서 사업장검색
+	@Override
+	public List<Business> searchTourList(BusinessSearch search) {
+		return sqlSession.selectList("businessMapper.searchTourList", search);
+	}
+	
+	@Override
+	public List<Business> searchHotelList(BusinessSearch search) {
+		return sqlSession.selectList("businessMapper.searchHotelList", search);
+	}
+
+	@Override
+	public List<Business> searchResList(BusinessSearch search) {
+		return sqlSession.selectList("businessMapper.searchResList", search);
+	}
+
+	@Override
+	public List<Business> searchCarList(BusinessSearch search) {
+		return sqlSession.selectList("businessMapper.searchCarList", search);
+	}
+	
 	// 일반결제 메소드
 	  @Override
 		public int insertIncome(Income i) {
@@ -353,6 +375,8 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.selectReview", bus_code);
 	}
+
+	
   
  
 
