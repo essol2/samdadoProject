@@ -24,4 +24,6 @@ public interface RouteDao {
 	int addRoute(String[] slist);
 
 	int finalRoute(RouteFinal rf);
+
+	List<Route> changeRoute(String[] rrlist);
 }

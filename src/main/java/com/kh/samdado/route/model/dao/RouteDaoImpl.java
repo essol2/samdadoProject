@@ -63,6 +63,14 @@ public class RouteDaoImpl implements RouteDao {
 		return sqlSession.insert("routeMapper.finalRoute", rf);
 	}
 
+	@Override
+	public List<Route> changeRoute(String[] rrlist) {
+		
+		System.out.println("dao 루트: " + Arrays.toString(rrlist));
+		
+		return sqlSession.selectList("routeMapper.changeRoute", rrlist);
+	}
+
 	
 
 	
