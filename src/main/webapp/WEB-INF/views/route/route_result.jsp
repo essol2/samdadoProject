@@ -130,7 +130,7 @@
 						<th style="width: 50%;">
 							<label class="content-title" id="title1" >추천 길</label>
 							<div class="c_border" id="left-border">
-								<table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
+								<table id="routeTable" style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
 									<c:forEach var="r" items="${ list }" varStatus="index">
 										<tr id="tr1">
 											<td>
@@ -152,12 +152,13 @@
 		                                        </td>
 		                                    </tr>
 	                                    </c:if>
-                               </c:forEach>
-                                 
+                               	</c:forEach>
+                               	</table>
+                               	<table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                    <tr>
                                    	<td colspan="2">
 	                                   	<p style="text-align: center; margin-top: 10%; font-size: 16px;">
-	                                   		총 이동 거리 (소수점 제외)
+	                                   		총 이동 거리 
 	                                   		<span id="routeLength"></span>
 	                                   		Km
 	                                   	</p>
@@ -168,10 +169,9 @@
 	                                   	</p>
                                    	</td>
                                    </tr>
-                                  
                                    <tr>
-                                        <td colspan="2"> 
-                                            <button class="_btn" id="ch_btn" onclick="location.href='${ contextPath }/route/changeRoute'">변경하기</button>
+                                        <td style="width: 500px;" colspan="3"> 
+                                            <button class="_btn" id="ch_btn" <%-- onclick="location.href='${ contextPath }/route/changeRoute'" --%>>변경하기</button>
                                             
                                             <button class="_btn" id="add_btn">추가하기</button>
                                         </td>
@@ -369,8 +369,46 @@
 	        </div>
 	    </div>
 	    
-	    <form id="saveList" action="${ contextPath }/route/addRoute" method="post"></form>
-	    
+	   <form id="saveList" action="${ contextPath }/route/addRoute" method="post"></form>
+	   <input type="hidden" id="sPath">
+	   <input type="hidden" id="sOname">
+	   
+	   <form id="rlist" action="${ contextPath }/route/changeRoute" method="post"></form>
+	<!-- 변경하기 -->
+	<script>
+		$("#ch_btn").on("click", function(){
+			$("#rlist").html("");
+			
+			$("#tr1 #spotTitle").each(function(index, element){
+				$("#rlist").append("<input type='hidden' name='rrlist' value='" + $(this).text() +"'/>");
+			});
+			
+			$("#rlist").submit();
+			
+		})
+	</script> 
+	<!-- 추가하기  -->
+	<script>	
+		function addSpot(el) {
+			var $button = $(el).closest('button');
+			var title = $button.prev().prev().html();
+			var path = $("#sPath").val();
+			var name = $("#sOname").val();
+			
+			console.log(path);
+			console.log(name);
+			
+			var $tr = $("#routeTable tbody");
+			
+			$tr.append("<tr><td colspan='2'><img id='arrow' src='../resources/images/image_route/arrow.png'></td></tr>");
+			$tr.append("<tr id='tr1'><td><img src='" + path + name + "'></td><td class='spot_border'><p class='spot_title' name='title' id='spotTitle' style='margin-top: 50%; margin-bottom:50%;'>"+title+"</p></td></tr>");
+			
+			alert("추가되었습니다!");
+		}
+	</script>
+	
+
+	
 	<!-- 루트 저장 -->
 	<script>
 		$("#add_btn").on("click", function(){
@@ -395,7 +433,7 @@
 	</script>
 	    
 	<!-- 검색 모달창 -->
-	<script language=JavaScript>
+	<script>
 		$("#search_btn").on("click", function(){
 		var sTitle = $("#search_input").val();
 		var data = { sTitle : sTitle };
@@ -413,11 +451,13 @@
 				
 				for(var i in data) {
 					div = $("<div class='zzim_list'>");
-					title = $("<p class='zzim_content_title'>").text(data[i].spot_title);
+					title = $("<p class='zzim_content_title' id='searchSpotTitle'>").text(data[i].spot_title);
 					address = $("<p class='zzim_content'>").text(data[i].spot_address);
-					add = $("<button id='addbtn'><img src='../resources/images/image_route/download.png'>추가하기</button>");
+					add = $("<button id='addbtn' onclick='addSpot(this)'><img src='../resources/images/image_route/download.png'>추가하기</button>");
+					spot_path = $("#sPath").val(data[i].spot_path);
+					spot_oname = $("#sOname").val(data[i].spot_oname);
 					br = $("<br>");
-
+					
 					div.append(title, address, add);
 					sdiv.append(div, br);
 				}

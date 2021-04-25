@@ -58,16 +58,20 @@ public class RouteController {
 		return "route/route_result";
 	}
 	
-	@GetMapping("/changeRoute")
-	public String changeRoutePage(HttpSession session, @ModelAttribute rSearch search) {	// 여행지 순서 바꾸기 페이지로 이동
+	@PostMapping("/changeRoute")
+	public String changeRoutePage(HttpSession session, Model model, String[] rrlist) {	// 여행지 순서 바꾸기 페이지로 이동
 		String area = (String)session.getAttribute("area");
 		String thema = (String)session.getAttribute("thema");
 		Date routeDate = (Date)session.getAttribute("routeDate");
 		
-		List<Route> list = rService.routeSearch(search);
+		/* System.out.println("변경하기 루트 어레이: " + Arrays.toString(rrlist)); */
 		
-		session.setAttribute("list", list);
+		List<Route> rlist = rService.changeRoute(rrlist);
 		
+		System.out.println("rlist: " + rlist);
+		 
+		model.addAttribute("list", rlist);
+
 		return "route/route_edit";
 	}
 	

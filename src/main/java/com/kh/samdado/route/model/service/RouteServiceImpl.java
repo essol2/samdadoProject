@@ -48,7 +48,7 @@ public class RouteServiceImpl implements RouteService {
 	@Override
 	public int addRoute(String[] slist) {
 		
-		System.out.println("서비스: " + Arrays.toString(slist));
+		/* System.out.println("서비스: " + Arrays.toString(slist)); */
 		
 		return rDao.addRoute(slist);
 	}
@@ -65,6 +65,14 @@ public class RouteServiceImpl implements RouteService {
 		System.out.println("서비스: " + rf);
 		
 		return rDao.finalRoute(rf);
+	}
+
+	@Override
+	public List<Route> changeRoute(String[] rrlist) {
+		
+		System.out.println("변경하기 루트 어레이: " + Arrays.toString(rrlist));
+		
+		return rDao.changeRoute(rrlist);
 	}
 
 	

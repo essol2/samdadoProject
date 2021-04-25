@@ -417,7 +417,6 @@
 	        </div>
 	    </div>
 	    <form id="clist" action="${contextPath}/route/clearChange" method="post">
-	   
 	    </form>
 	    
 	<!-- 저장 버튼 -->
@@ -483,7 +482,7 @@
 	function moveDown(el) {
 		var $tr1 = $(el).closest('tr');
 		
-		if($tr1.next().next().next().next().html() != null) {
+		if($tr1.next().next().html() != null) {
 			$tr1.next().next().after($tr1);
 			
 			var $tr2 = $tr1.prev();
