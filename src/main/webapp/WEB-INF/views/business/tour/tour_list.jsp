@@ -544,7 +544,7 @@
                     <label class="topText">삼다도와 함께하는</label><br>
                     <label class="topText">제주도 지역의 관광지</label>
                 </div>
-                <form id="search_report_form">
+                <form id="search_business_form">
                     <div class="cover2">
                       	<input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" placeholder="관광지 이름">
                        	<button class="btn btn-secondary" id="searchBtn" type="button">검색</button>
@@ -573,10 +573,10 @@
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	                    str += "<b>★4.90(후기 99+개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>입장료 : 입장료 없음</b>";
-		                            str += "<div id='frm_read'>"
-		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
-		                            str += "</div>";               
+		                            str += "<b>"+ data[i].pro_adult +"</b>";
+		                            str += "<c:if test='${ loginUser.usno != null }'>"
+		                            str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+		                            str += "</c:if>";
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -586,10 +586,10 @@
 		    	              error : function(data){
 		    	            	 alert('error');
 		    	               
-		    	              }//error
-		    			})//ajax
-		    		});//click
-		    });//ready
+		    	              }
+		    			})
+		    		});
+		    });
 			</script>
 
             <nav id="choise2-nav">
@@ -700,15 +700,19 @@
 			<!-- 프리미엄 profile > mainprofile로 변경 -->
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                <c:forEach var="p" items="${ tourList }">
-                <c:if test="${ p.bus_classify eq 'P' && p.file_lv eq '0' }">
+                <c:forEach var="t" items="${ tourList }">
+                <c:if test="${ t.bus_classify eq 'P' && t.file_lv eq '0' }">
                     <div class='mainProfile'>
+                    <input type="hidden" id="bus_code" name="bus_code" value="${ t.bus_code }">
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/busUploadFiles/${ p.file_rename }" onclick="selectRes(${p.bus_code})">
+                        <img class="image" src="../resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                         <b>★4.90(후기 99+개)</b>
-                        <b>${ p.bus_name }</b>
-                        <b>${ p.pro_adult }</b>
-                        <p><img src="../resources/images/image_listpage/heart.png"></p>
+                        <b>${ t.tour_tema } / ${ t.tour_category }</b>
+                        <b>${ t.bus_name }</b>
+                        <b>${ t.pro_adult }원</b>
+                        <c:if test="${ loginUser.usno != null }">
+	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+	                    	</c:if>
                     </div>
                 </c:if>    
                 </c:forEach>
@@ -723,9 +727,12 @@
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                     	</c:if>
                         <b>★4.90(후기 99+개)</b>
+                        <b>${ t.tour_tema } / ${ t.tour_category }</b>
                         <b>${ t.bus_name }</b>
-                        <b>입장료 : 입장료 없음</b>
-                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+                        <b>${ t.pro_adult }원</b>
+                        <c:if test="${ loginUser.usno != null }">
+	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+	                    	</c:if>
                     </div>
                 </c:if>
                 </c:forEach>

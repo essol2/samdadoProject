@@ -521,6 +521,7 @@
             </div>
 
             <div id="ho_info">
+            <c:if test="${ loginUser.usno != null }">
                 <label id="jjim_btn">
 			        <c:choose>
 					    <c:when test="${jjimcheck eq '0' or empty jjimcheck}"> <!-- jjimcheck가 0이면 빈하트-->
@@ -532,6 +533,7 @@
 					              id="btn_like">
 					    </c:otherwise>
 					</c:choose>찜하기</label>
+					</c:if>
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="report_btn"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">${ car.bus_phone }</label>
@@ -689,7 +691,7 @@
             </div>
 
             <hr class="boundary">
-
+			<!-- 
             <div class="choise">
                 <input type="checkbox" name="small" id="small"><label for="small">소형</label>
                 <input type="checkbox" name="midium" id="midium"><label for="midium">중형</label>                
@@ -704,6 +706,7 @@
                 <input type="checkbox" name="diesel" id="diesel"><label for="diesel">디젤</label>
                 <input type="checkbox" name="gasoline" id="gasoline"><label for="gasoline">가솔린</label>
             </div>
+             -->
 			<c:forEach var="c" items="${ cars }">
             <div class="list">
                 <div id="firstlist">
@@ -810,8 +813,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <c:forEach var="c" items="${ cars }">
+        <div class="modal-dialog">        
             <div class="modal-content">
                 <div class="modal-header">
                     <img src="../resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
@@ -831,10 +833,11 @@
                         <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)">
                     </div>                                       
                 </div>
+                <div class="modalcarimage">                    
+                <c:forEach var="c" items="${ cars }">
 				<input type="hidden" id="carNo" name="carNo" value="${ c.car_no }">
 				<input type="hidden" id="carName" name="carName" value="${ c.car_name }">
 				<input type="hidden" id="cAmount" name="cAmount" value="${ c.car_price }">
-                <div class="modalcarimage">                    
                     <h4>${ c.car_name }</h4>
                     <c:forEach var="ca" items="${ carAtt }">
                         <c:if test="${ ca.file_lv eq '0' }">
@@ -871,15 +874,14 @@
                     <b>원</b>
                     
                     <button class="payBtn">결제하기</button>
+               </c:forEach>
                 </div>
-
-               
 
                 <div class="modal-footer">
                     <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
-            </c:forEach>
+            
         </div>
     </div>
     

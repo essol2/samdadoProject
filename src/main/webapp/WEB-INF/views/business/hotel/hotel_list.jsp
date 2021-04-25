@@ -219,10 +219,17 @@
         #filter-img {
             width: 55px;
             height: 55px;
+            margin-left: 3%;
         }
 
         .search-result {
             padding-left: 3%;
+        }
+        
+        .topText{
+        	font-size: 35px;
+		    font-weight: bold;
+		    color: #343a40;
         }
 
         /* 검색필터끝 */
@@ -345,6 +352,20 @@
             box-sizing: border-box;
         }
         
+        .mainProfile {
+
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
         .moreProfile {
 
             display: flex;
@@ -437,6 +458,24 @@
             padding: 10px;
         }
         
+        #searchValue{
+        	width: 300px;
+        }
+        
+        #searchBtn{
+       	    background-color: #467355;
+		    color: white;
+		    border-radius: 10px;
+		    border: none;
+		    height: 35px;
+		    font-weight:bold;
+        }
+        
+        .cover2{
+        	margin-left: 3%;
+        	margin-top: 1%;
+        }
+        
         #jjimOn{
         	display : none;
         	background-color : rgba( 0,0,0,0);
@@ -478,22 +517,58 @@
             </nav>
 
             <nav id="filter-nav">
-                <form id="search_report_form">
-                    <div class="cover2">
-                        <ul id="filter">
-                            <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">							
-                            <li>
-                            	<input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" placeholder="관광지 이름">
-                            </li>
-                            	<button class="btn btn-secondary" id="searchBtn" type="button">검색하기</button>
-                        </ul>
-                    </div>
-                </form>
+                <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">							
                 <div class="search-result">
                     <label class="topText">삼다도와 함께하는</label><br>
-                    <label class="topText">제주도 지역의 관광지</label>
+                    <label class="topText">제주도 지역의 숙박업소</label>
                 </div>
+                <form id="search_business_form">
+                    <div class="cover2">
+                      	<input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" placeholder="숙박업소 이름">
+                       	<button class="btn btn-secondary" id="searchBtn" type="button">검색</button>
+                    </div>
+                </form>
             </nav>
+            
+            <script>	
+		    $(function(){
+		    	 $("#searchBtn").on("click", function() {
+		    		 	var search = {};		         		
+		         		search.searchValue = $("#searchValue").val();
+		         		search.searchKind = 1;
+		    			$.ajax({
+		    				 url : '${contextPath}/business/searchBusinessList', 
+		    	              data : JSON.stringify(search),
+		    	              type : "post",
+		    	              contentType : "application/json; charset=utf-8",
+		    	              dataType : "json",
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";
+		                            str += "<b>38,000원 ~ 40,000원 / 박</b>";
+		                            str += "<b>총액 80,000원</b>";
+		                            str += "<c:if test='${ loginUser.usno != null }'>"
+			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+			                        str += "</c:if>";
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }
+		    			})
+		    		});
+		    });
+			</script>
 
             <nav id="choise2-nav">
                 <ul id="choise2">
@@ -557,33 +632,22 @@
 
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                    <div class='profile'>
+                    <c:forEach var="h" items="${ hotelList }">
+                <c:if test="${ h.bus_classify eq 'P' && h.file_lv eq '0' }">
+                    <div class='mainProfile'>
+                    <input type="hidden" id="bus_code" name="bus_code" value="${ h.bus_code }">
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/hotel1.png">
+                        <img class="image" src="../resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
                         <b>★4.90(후기 99+개)</b>
-                        <b>제주도 좋은 호텔</b>
-                        <b>38,000 ~ 40,000 / 박</b>
-                        <b>총액 80,000</b>
-                        <p><img src="../resources/images/image_listpage/heart.png"></p>
+	                    <b>${ h.bus_name }</b>
+	                    <b>38,000 ~ 40,000 / 박</b>
+	                    <b>총액 80,000</b>
+                        <c:if test="${ loginUser.usno != null }">
+	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+	                    	</c:if>
                     </div>
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/hotel2.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>제주도 좋은 호텔</b>
-                        <b>38,000 ~ 40,000 / 박</b>
-                        <b>총액 80,000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/hotel3.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>제주도 좋은 호텔</b>
-                        <b>38,000 ~ 40,000 / 박</b>
-                        <b>총액 80,000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
+                </c:if>    
+                </c:forEach>
                 </div>
 
                 <div id="secondlist">
@@ -598,7 +662,9 @@
 	                        <b>${ h.bus_name }</b>
 	                        <b>38,000 ~ 40,000 / 박</b>
 	                        <b>총액 80,000</b>
+	                        <c:if test="${ loginUser.usno != null }">
 	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+	                    	</c:if>
 	                    </div>
 	                    </c:if>
                     </c:forEach>
@@ -621,10 +687,10 @@
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 9;
+							x = 6;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+9 <= size_div)? x+9 : size_div;
+								x= (x+6 <= size_div)? x+6 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});
