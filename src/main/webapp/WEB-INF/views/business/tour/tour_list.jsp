@@ -497,6 +497,18 @@
         	margin-left: 3%;
         	margin-top: 1%;
         }
+        
+        #jjimOn{
+        	display : none;
+        	background-color : rgba( 0,0,0,0);
+        }
+        
+        .jjimBtn{
+        	border-style : none;
+        	width : fit-content;
+        	height : fit-content;
+        	backtround-color : rgba( 0,0,0,0);
+        }
 
         /* 사업장종류선택끝 */
     </style>
@@ -707,14 +719,13 @@
                 <c:if test="${t.bus_classify eq 'G' }">
                     <div class='profile'>
                     	<c:if test="${t.file_lv eq '0'}">
+                        <input type="hidden" id="bus_code" name="bus_code" value="${ t.bus_code }">
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                     	</c:if>
                         <b>★4.90(후기 99+개)</b>
                         <b>${ t.bus_name }</b>
                         <b>입장료 : 입장료 없음</b>
-                        <div id="frm_read">                
-                        <a href='javascript: like_func();'><img src="../resources/images/image_listpage/heart.png"></a>
-                        </div>
+                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
                     </div>
                 </c:if>
                 </c:forEach>
@@ -770,6 +781,65 @@
             <hr>
             <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
         </footer>
+        
+        <script>
+	
+	
+	$('.jjimBtn').click(function(){
+		
+		var $this = $(this);
+		var bus_code = $(this).parent().eq(0).children().val();
+		var check=$this.find(">img");
+		
+		console.log($this);
+		console.log(check);
+		
+		var jjimOb = new Object();
+		jjimOb.bus_code = bus_code;
+		jjimOb.us_no = ${loginUser.usno};
+		
+		
+		$this.find(">img").attr("src", function(index, attr){
+			if(attr.match('_on')){
+				
+				$.ajax({
+				url : "${contextPath}/mypage/jjimoff",
+				data : JSON.stringify(jjimOb),
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				success : function(data){
+					
+					//console.log("하트 오프!");
+					
+					
+				}, error:function(e){
+					alert("error code : " + e.status + "\n" + "message : " + e.responseText);
+				}
+			});
+				return attr.replace("_on.png", "_off.png");
+				
+			} else {
+				
+				$.ajax({
+				url : "${contextPath}/mypage/jjimon",
+				data : JSON.stringify(jjimOb),
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				success : function(data){
+					
+					//console.log("하트 온!");
+					
+					
+				}, error:function(e){
+					alert("error code : " + e.status + "\n" + "message : " + e.responseText);
+				}
+			});
+				return attr.replace("_off.png", "_on.png");
+			}
+		});
+	});
+
+</script>
 
 </body>
 

@@ -588,6 +588,7 @@
 
                 <div id="secondlist">
                 	<c:forEach var="h" items="${ hotelList }">
+                	<c:if test="${h.bus_classify eq 'G' }">
 	                    <div class='profile'>
 	                    	<c:if test="${ h.file_lv eq '0' }">
 	                    	<input type="hidden" id="bus_code" name="bus_code" value="${ h.bus_code }">
@@ -599,6 +600,7 @@
 	                        <b>총액 80,000</b>
 	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
 	                    </div>
+	                    </c:if>
                     </c:forEach>
                 </div>
 			</div>
@@ -683,7 +685,7 @@
 					
 					
 				}, error:function(e){
-					alert("error code : " + e.status + "\n" + "message : " + e.responseText);
+					alert("error code : " + e.status + "/n" + "message : " + e.responseText);
 				}
 			});
 				return attr.replace("_on.png", "_off.png");
@@ -701,7 +703,7 @@
 					
 					
 				}, error:function(e){
-					alert("error code : " + e.status + "\n" + "message : " + e.responseText);
+					alert("error code : " + e.status + "/n" + "message : " + e.responseText);
 				}
 			});
 				return attr.replace("_off.png", "_on.png");

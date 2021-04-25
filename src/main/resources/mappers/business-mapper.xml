@@ -662,6 +662,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BUS_ADDRESS
      		 , BUS_INTRO
      		 , BUS_CATEGORY
+     		 , BUS_CLASSIFY
      		 , BUS_PHONE
      		 , BUS_OPENING
      		 , HOTEL_CATEGORY
