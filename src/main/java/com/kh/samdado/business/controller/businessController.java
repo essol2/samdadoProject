@@ -323,11 +323,11 @@ public class businessController {
 							int useridx = Integer.parseInt(loginUser.getUsno());		    
 							idxMap.put("bbsidx", bbsidx);
 							idxMap.put("useridx", useridx);
-							System.out.println("idxMap : " + idxMap);
+							//System.out.println("idxMap : " + idxMap);
 							
 							//jjim 테이블 에서 찜하기유무 확인하기
 							Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
-							System.out.println("jjimcheckMap : " + jjimcheckMap);
+							//System.out.println("jjimcheckMap : " + jjimcheckMap);
 							//찜 누른 기록이 없다면
 							if(jjimcheckMap == null) {
 								model.addAttribute("jjimcheck",0);
@@ -417,11 +417,11 @@ public class businessController {
 			}
 			int result3 = bService.insertIncome1(i);
 		}
-		System.out.println(b);
+		//System.out.println(b);
 		int result = bService.insertBusiness(b, list);
 		int result3 = bService.insertTour(tp);
 		int result4 = bService.insertMain(bat);
-		System.out.println(b);
+		//System.out.println(b);
 		
 		// --- 은솔 : Usno 빼가기
 		String usno = i.getUsno();
@@ -507,11 +507,11 @@ public class businessController {
 				int useridx = Integer.parseInt(loginUser.getUsno());		    
 				idxMap.put("bbsidx", bbsidx);
 				idxMap.put("useridx", useridx);
-				System.out.println("idxMap : " + idxMap);
+				//System.out.println("idxMap : " + idxMap);
 				
 				//jjim 테이블 에서 찜하기유무 확인하기
 				Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
-				System.out.println("jjimcheckMap : " + jjimcheckMap);
+				//System.out.println("jjimcheckMap : " + jjimcheckMap);
 				//찜 누른 기록이 없다면
 				if(jjimcheckMap == null) {
 					model.addAttribute("jjimcheck",0);
@@ -629,9 +629,11 @@ public class businessController {
 			int result3 = bService.insertIncome1(i);
 		}
 		
+		//System.out.println("bat : " + bat);
+		//System.out.println("menus : " + menus);
 		int result = bService.insertBusiness(b, list);
 		int result2 = bService.insertMain(bat);
-		int result3 = bService.insertMenu(menus);
+		int result4 = bService.insertMenu(menus);
 		
 		//  ---  은솔 : usno 빼갈게여
 		String usno = i.getUsno();
@@ -690,7 +692,7 @@ public class businessController {
 		}
 		
 		List<Business> resList = bService.selectResList();
-		System.out.println(resList);
+		//System.out.println(resList);
 		if(resList != null) {
 			mv.addObject("resList", resList);
 			mv.setViewName("business/restaurant/restaurant_list");
@@ -724,11 +726,11 @@ public class businessController {
 							int useridx = Integer.parseInt(loginUser.getUsno());		    
 							idxMap.put("bbsidx", bbsidx);
 							idxMap.put("useridx", useridx);
-							System.out.println("idxMap : " + idxMap);
+							//System.out.println("idxMap : " + idxMap);
 							
 							//jjim 테이블 에서 찜하기유무 확인하기
 							Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
-							System.out.println("jjimcheckMap : " + jjimcheckMap);
+							//System.out.println("jjimcheckMap : " + jjimcheckMap);
 							//찜 누른 기록이 없다면
 							if(jjimcheckMap == null) {
 								model.addAttribute("jjimcheck",0);
@@ -923,7 +925,7 @@ public class businessController {
 	
 	@GetMapping("/pay")
 	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code) {
-		System.out.println("i : " + i);		
+		//System.out.println("i : " + i);		
 		// 포인트에 amount 넣어주기
 		p.setPamount(i.getAmount());
 		// income에  들어갈 원가 10퍼센트 셋팅
@@ -934,9 +936,9 @@ public class businessController {
 		// p에 예약받는 사업장주인 usno 넣기		 
 		Business selectUser = bService.selectBusCodeUser(bus_code);
 		p.setUsno(selectUser.getUs_no());
-		System.out.println("p : " + p);
+		//System.out.println("p : " + p);
 		Point findPoint = bService.findPoint(p);
-		System.out.println(findPoint);
+		//System.out.println(findPoint);
 		 if(findPoint != null) {
 			 // 이미 포인트가 있으면 기존 포인트 + 결제금액의 90% 적립
 			 p.setPbalance(findPoint.getPbalance()+i.getAmount() * 9);
@@ -946,7 +948,7 @@ public class businessController {
 		 }
 		 // 포인트 넣기
 		int point = bService.insertPoint(p);		
-		System.out.println(b);
+		//System.out.println(b);
 		// 예약정보 insert	
 		if(b.getBookingLv() == 1) {
 			b.setR_bus_name(selectUser.getBus_name());
@@ -955,7 +957,7 @@ public class businessController {
 			int bookingHotel = bService.insertBookingHotel(b);
 		} else if(b.getBookingLv() == 2) {
 			TourProduct selectTourProduct = bService.selectTourProduct(bus_code);
-			System.out.println(selectTourProduct);
+			//System.out.println(selectTourProduct);
 			b.setPro_no(selectTourProduct.getPro_no());
 			b.setT_bus_name(selectUser.getBus_name());
 			b.setT_booking_address(selectUser.getBus_address());
@@ -1037,7 +1039,7 @@ public class businessController {
                 commandMap.put("jjimcheck", jjimcheck);
                 int result = bService.updateJjim(commandMap);                
                 if(result > 0) {
-                	System.out.println("여기까지");
+                	//System.out.println("여기까지");
                 	resultCode = 0;                	
                 }
             }            
@@ -1087,7 +1089,7 @@ public class businessController {
 							  HttpServletRequest request,
 							  Alert al) {
 		
-		 System.out.println("a : " + a);
+		// System.out.println("a : " + a);
 		// System.out.println("file : " + file);
 		
 		// 업로드 파일 서버에 저장

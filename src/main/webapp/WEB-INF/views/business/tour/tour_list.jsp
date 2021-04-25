@@ -221,6 +221,7 @@
         #filter-img {
             width: 55px;
             height: 55px;
+            margin-left: 3%;
         }
 
         .search-result {
@@ -467,17 +468,20 @@
         
         #searchValue{
         	width: 300px;
-			margin-left: 1%;
-			margin-right: 1%;
         }
         
         #searchBtn{
-        	background-color: #467355;
+       	    background-color: #467355;
 		    color: white;
 		    border-radius: 10px;
 		    border: none;
-		    height: 45px;
-		    margin-top : 5px;
+		    height: 35px;
+		    font-weight:bold;
+        }
+        
+        .cover2{
+        	margin-left: 3%;
+        	margin-top: 1%;
         }
 
         /* 사업장종류선택끝 */
@@ -509,21 +513,17 @@
             </nav>
 
             <nav id="filter-nav">
-                <form id="search_report_form">
-                    <div class="cover2">
-                        <ul id="filter">
-                            <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">							
-                            <li>
-                            	<input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" placeholder="관광지 이름">
-                            </li>
-                            	<button class="btn btn-secondary" id="searchBtn" type="button">검색하기</button>
-                        </ul>
-                    </div>
-                </form>
+                <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">							
                 <div class="search-result">
                     <label class="topText">삼다도와 함께하는</label><br>
                     <label class="topText">제주도 지역의 관광지</label>
                 </div>
+                <form id="search_report_form">
+                    <div class="cover2">
+                      	<input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" placeholder="관광지 이름">
+                       	<button class="btn btn-secondary" id="searchBtn" type="button">검색</button>
+                    </div>
+                </form>
 
             </nav>
             
