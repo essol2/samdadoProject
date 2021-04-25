@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +10,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage_route</title>
+    <!-- 지도 -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
+ <!--jQuery-->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 </head>
 <style>
 
@@ -16,7 +24,7 @@
     }
 
 	/* 마이페이지 css */
-    #back {
+     #back {
         width: 1440px;
         height: 100%;
         /* margin: auto; */
@@ -25,7 +33,6 @@
     
     body{
         background-image: url('${contextPath}/resources/images/image_mp/backgroundImg.png');
-        /* background-repeat: no-repeat; */
         background-size: 100%;
     }
     #topMenu{
@@ -45,33 +52,33 @@
         color : white;
         text-align : center;
         font-size: 30px;
-        margin-left : 3%;
+        margin-left : 4%;
+        margin-top : 5%;
     }
     .menuBox{
         width : 55%;
         height : 150px;
-        /* border : 1px solid blue; */
+       /*  border : 1px solid blue; */
         display : inline-block;
         position:relative;
         top : -60%;
         left : 3%;
         margin-left : 3%;
+        /* margin-top : 1.5%; */
         align-items: center;
     }
     .menuButton{
-        width : 150px;
-        height : 110px;
+        width : 155px;
+        height : 140px;
         border : 1px solid white;
         background-color: white;
         color : #bfbfbf;
         text-align : center;
         display : inline-block;
         margin-top : 2%;
-        margin-left : 5%;
+        margin-left : 2%;
         border-radius: 2px;
         align-items: center;
-        /* -webkit-transition-duration : 0.4s;
-        transition-duration: 0.4s; */
     }
 
     .menuButton:hover{
@@ -84,28 +91,30 @@
         width : 110px;
         height : 110px;
         text-align: center;
-        margin-left : 6%;
+        margin-left : 11%;
+        padding : 0;
     }
 
     .btnImg{
         width: 60px;
         height : 60px;
-        /* border : 1px solid yellow; */
+      /*  border : 1px solid yellow; */
     }
 
     .clickedBtn{
         box-shadow: 3px 3px gray;
-        width : 150px;
-        height : 110px;
+        width : 155px;
+        height : 140px;
         border : 1px solid #467355;
         background-color:#467355;
         color : white;
         text-align : center;
         display : inline-block;
         margin-top : 2%;
-        margin-left : 1%;
+        margin-left : 2%;
         border-radius: 2px;
         align-items: center;
+       	
     }
 
     .clickedBtn:hover{
@@ -115,38 +124,29 @@
     /* mainBox */
     #mainBox{
         position : absolute;
-        top : 25%;
+        top : 30%;
         left : 3%;
         background-color:rgba( 255, 255, 255, 0.8 );
         border : 5px solid white;
         width : 77%;
-        height : fit-content;
-        position : absolute;
-    }
+        height : 600px;
+    }s
 
     #tripTopBox{
         display: flex;
     }
 
-    #mapArea{
+   /*  #mapArea{
         order : 1;
-        width : 75%;
-        /* border : 1px solid red; */
-        margin : 1%;
-    }
-    #jejuMapImg{
-        width:100%;
-        height : auto;
-    }
-
-    #reserveInfoArea{
-        order : 2;
-        width : 20%;
-        border : 2px solid #467355;
-        background-color: white;
-        font-size: small;
-        padding : 1%;
-        margin : 1%;
+        width : 70%;
+        /* border : 1px solid red; 
+        margin-right : 0px;
+        display : inline-block;
+    } */
+    
+    #map{
+    	order : 1;
+    	margin : 0px;
     }
 
     .dotImg{
@@ -166,9 +166,10 @@
     .tripReservInfoBox{
         background-color: white;
         border : 2px solid #467355;
-        width : 98%;
+        width : 101%;
         height: fit-content;
-        margin-left : 1%;
+        margin-left : -0.5%;
+        margin-top : 1%;
         margin-right : 1%;
         margin-bottom: 1%;
     }
@@ -180,11 +181,11 @@
     }
 
     .routesBox{
-        display : flex;
+        display : inline-block;
         /* border : 1px solid blueviolet; */
-        width : 94%;
-        margin-left : 3%;
-        margin-right : 3%;
+        width : fit-content;
+       /*  margin-left : 3%;
+        margin-right : 3%; */
         padding-bottom : 3%;
         align-items: center;
     }
@@ -225,6 +226,15 @@
 	    width : 20px;
 	    height : 20px;
 	}
+	
+	.rInfoImgArea{
+		width : 100%;
+		height : 90%;
+	}
+	
+	.routeInfoBox{
+		width : 200px;
+	}
 
   
 </style>
@@ -242,9 +252,9 @@
                     <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
                     <button class="menuButton" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록</div></button>
-                    <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingW.png" class="btnImg"> <br> 내 예약</div></button>
-                    <button class="clickedBtn" id="myInfo" onclick="goToRoute();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행</div></button>
-                    <button class="menuButton" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/walletB.png" class="btnImg"> <br> 내 지갑</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약</div></button>
+                    <button class="clickedBtn" id="myInfo" onclick="goToRoute();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripW.png" class="btnImg"> <br> 나만의 여행</div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑</div></button>
 
                 </div>
             </div>
@@ -252,206 +262,75 @@
             <div id="mainBox">
                 <div id="tripContainer">
                     <div id="tripTopBox">
-                        <div id="mapArea">
-
-                            <img src="image_mp/jejuMap.png" alt="" id="jejuMapImg">
-
-                        </div>
-                        <div id="reserveInfoArea">
-                            <h3 style="color:#467355;"> 여행정보</h3>
-                            <br>
-
-                            <img src="${contextPath}/resources/images/image_mp/dot.png" class="dotImg"> <div class="forLineMath">동행자</div>
-                            <p>3명</p>
-                            <br>
-                            <img src="${contextPath}/resources/images/image_mp/dot.png" class="dotImg"> <div class="forLineMath">여행일자</div>
-                            <p>21.05.04 화 - 21.05.06 목 (2박 3일)</p>
-                            <br>
-                            <img src="${contextPath}/resources/images/image_mp/dot.png" class="dotImg"> <div class="forLineMath">비행기</div>
-                            <p>김포-제주 13:02 제주항공</p>
-                            <p>제주-김포 18:30 대한항공</p>
-                            <br>
-                            <img src="${contextPath}/resources/images/image_mp/dot.png" class="dotImg"> <div class="forLineMath">예상경비</div>
-
-                            <p>총 318,000원</p>
-                            <p style="color: red;">(길에 포함된 호텔, 교통, 입장권, 체험권의 합계 입니다.)</p>
-                        </div>
-
+                             <div id="map" style="width: 100%; height:590px; disply:inline-block; margin:0px;"></div>
+                             <script>
+								var container = document.getElementById('map');
+								var options = {
+									center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
+									level: 9
+								};
+						
+								var map = new kakao.maps.Map(container, options);
+							</script>
                     </div>
+                    <c:choose>
+                    <c:when test="${!empty myRoute }">
+					<c:forEach items="${ routeTest }" var="rt" varStatus="rtNum">
                     <div class="tripReservInfoBox">
                         <div id="rinfoText"><h3 style="font-size: medium;">1일차. (소요시간 : 10시간)</h3></div>
-                        <div class="routesBox">
-                            <div class="routeInfoBox">
-                                <div class="rInfoImgArea">
-                                    <img src="${contextPath}/resources/images/image_mp/kimpoAirport.png" alt="">
-                                </div>
-                                <div class="rNameArea">
-                                    <p>제주공항</p>
-                                </div>
-                            </div>
-
-                            <div class="rArrowArea">
-
-                                <img src="${contextPath}/resources/images/image_mp/arrow.png">
-
-                            </div>
-
-                            <div class="routeInfoBox">
-                                <div class="rInfoImgArea">
-
-                                    <img src="${contextPath}/resources/images/image_mp/hostel.png" alt="">
-                  </div>
-                                <div class="rNameArea">
-                                    <p>삼삼 게스트 하우스</p>
-                                </div>
-                            </div>
-
-                            <div class="rArrowArea">
-
-                                <img src="${contextPath}/resources/images/image_mp/arrow.png">
-               </div>
-
-                            <div class="routeInfoBox">
-                                <div class="rInfoImgArea">
-
-                                    <img src="${contextPath}/resources/images/image_mp/kimpoAirport.png" alt="">
-                  </div>
-                                <div class="rNameArea">
-                                    <p>제주공항</p>
-                                </div>
-                            </div>
-
-                            <div class="rArrowArea">
-
-                                <img src="${contextPath}/resources/images/image_mp/arrow.png">
-
-                            </div>
-
-                            <div class="routeInfoBox">
-                                <div class="rInfoImgArea">
-
-                                    <img src="${contextPath}/resources/images/image_mp/hostel.png" alt="">
-
-                                </div>
-                                <div class="rNameArea">
-                                    <p>삼삼 게스트 하우스</p>
-                                </div>
-                            </div>
-
-                            <div class="rArrowArea">
-
-                                <img src="${contextPath}/resources/images/image_mp/arrow.png">
-
-                            </div>
-
-                            <div class="routeInfoBox">
-                                <div class="rInfoImgArea">
-
-                                    <img src="${contextPath}/resources/images/image_mp/hostel.png" alt="">
-
-                                </div>
-                                <div class="rNameArea">
-                                    <p>삼삼 게스트 하우스</p>
-                                </div>
-                            </div>
-                        </div>
+                        
+                       		<c:forEach var='i' begin='1' end="${standardList[0]}">
+		                        <div class="routesBox">
+		                            
+		                            <c:if test="${ mr.spot_no ne 0}">
+		                            <div class="routeInfoBox">
+		                                <div class="rInfoImgArea">
+		                                    <%-- <img src="${contextPath}/resources/images/image_route/${inRt(inRtNum.index).spot_oname}" alt="" style="width:100%; height:100%;"> --%>
+		                                </div>
+		                                <div class="rNameArea">
+		                                    <p>${mr.spot_title}</p>
+		                                </div>
+		                            </div>
+		                            </c:if>
+		                            <c:if test="${ mr.bus_code ne 0}">
+		                            <div class="routeInfoBox">
+		                                <div class="rInfoImgArea">
+		                                    <img src="${contextPath}/resources/images/image_route/${mr.file_rename}" alt="" style="width:100%; height:100%;">
+		                                </div>
+		                                <div class="rNameArea">
+		                                    <p>${mr.bus_name}</p>
+		                            </div>
+		                            </div>
+		                            </c:if>
+		                            
+		                            <c:if test="${mrNum.last eq false }">
+		                            <div class="rArrowArea">
+		
+		                                <img src="${contextPath}/resources/images/image_mp/arrow.png">
+		
+		                            </div>
+		                            </c:if>
+		                        </div>
+                       		</c:forEach>
                     </div>
+						</c:forEach>
+							</c:when>
+							<c:otherwise>
+								 <div class="tripReservInfoBox">
+			                        <div id="rinfoText"><h3 style="font-size: medium;">2일차.</h3></div>
+			                        <div class="routesBox">
+			                            <div class="noRouteBox">
+			
+			                                <img src="${contextPath}/resources/images/image_mp/noRoute.png" alt=""><br>
+			
+			                                <p>아직 저장된 길이 없습니다.</p>
+			                            </div>
+			                        </div>
+			                    </div>
+							</c:otherwise>
+							</c:choose>
 
-                    <div class="tripReservInfoBox">
-                        <div id="rinfoText"><h3 style="font-size: medium;">1일차. (소요시간 : 10시간)</h3></div>
-                        <div class="routesBox">
-                            <div class="routeInfoBox">
-                                <div class="rInfoImgArea">
-
-                                    <img src="${contextPath}/resources/images/image_mp/kimpoAirport.png" alt="">
-
-                                </div>
-                                <div class="rNameArea">
-                                    <p>제주공항</p>
-                                </div>
-                            </div>
-
-                            <div class="rArrowArea">
-
-                                <img src="${contextPath}/resources/images/image_mp/arrow.png">
-
-                            </div>
-
-                            <div class="routeInfoBox">
-                                <div class="rInfoImgArea">
-
-                                    <img src="${contextPath}/resources/images/image_mp/hostel.png" alt="">
-
-                                </div>
-                                <div class="rNameArea">
-                                    <p>삼삼 게스트 하우스</p>
-                                </div>
-                            </div>
-
-                            <div class="rArrowArea">
-
-                                <img src="${contextPath}/resources/images/image_mp/arrow.png">
-
-                            </div>
-
-                            <div class="routeInfoBox">
-                                <div class="rInfoImgArea">
-
-                                    <img src="${contextPath}/resources/images/image_mp/kimpoAirport.png" alt="">
-
-                                </div>
-                                <div class="rNameArea">
-                                    <p>제주공항</p>
-                                </div>
-                            </div>
-
-                            <div class="rArrowArea">
-
-                                <img src="${contextPath}/resources/images/image_mp/arrow.png">
-
-                            </div>
-
-                            <div class="routeInfoBox">
-                                <div class="rInfoImgArea">
-
-                                    <img src="${contextPath}/resources/images/image_mp/hostel.png" alt="">
-
-                                </div>
-                                <div class="rNameArea">
-                                    <p>삼삼 게스트 하우스</p>
-                                </div>
-                            </div>
-
-                            <div class="rArrowArea">
-
-                                <img src="${contextPath}/resources/images/image_mp/arrow.png">
-
-                            </div>
-
-                            <div class="routeInfoBox">
-                                <div class="rInfoImgArea">
-
-                                    <img src="${contextPath}/resources/images/image_mp/hostel.png" alt="">
-
-                                </div>
-                                <div class="rNameArea">
-                                    <p>삼삼 게스트 하우스</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tripReservInfoBox">
-                        <div id="rinfoText"><h3 style="font-size: medium;">2일차.</h3></div>
-                        <div class="routesBox">
-                            <div class="noRouteBox">
-
-                                <img src="${contextPath}/resources/images/image_mp/noRoute.png" alt=""><br>
-
-                                <p>아직 저장된 길이 없습니다.</p>
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
         </section>
@@ -477,6 +356,26 @@
 		location.href='${contextPath}/mypage/myroute?usno='+${loginUser.usno};	
 	}
 	</script>
+	
+<!-- 	 <script>
+    	document.getElementById('routeDate').valueAsDate = new Date();
+    	
+    	var today = new Date();
+    	var dd = today.getDate();
+    	var mm = today.getMonth() + 1;
+    	var yyyy = today.getFullYear();
+    	
+    	 if(dd < 10){
+    	        dd = '0' + dd;
+    	    } 
+    	    if(mm < 10){
+    	        mm = '0' + mm;
+    	    } 
+    	
+    	today = yyyy + '-' + mm + '-' + dd;
+    	document.getElementById("routeDate").setAttribute("min", today);
+    </script> -->
+   
     
     <script>
 	 	$(document).ready(function(){
@@ -515,6 +414,128 @@
 	 		
 	 	});
 	 </script>
+	  <script language=JavaScript>
+    	var arr = new Array();
+    	<c:forEach items="${list}" var="list">
+    		arr.push({
+    			title: "${list.spot_title}",
+    			address: "${list.spot_address}",
+    			content: "${list.spot_content}",
+    			path1: "${list.spot_path}",
+    			path2: "${list.spot_oname}"
+    			});
+    	</c:forEach>
+    	
+    	var positions = arr;
+    	
+    	//console.log(positions);
+    	
+    	var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(33.376073744219326, 126.54506534832129),
+			level: 8
+		};
+
+		var map = new kakao.maps.Map(container, options);
+		
+		var geocoder = new kakao.maps.services.Geocoder();
+		var imageSrc = "${ contextPath }/resources/images/image_route/marker.png";
+		var imageSize = new kakao.maps.Size(33, 54);
+		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		var bounds = new kakao.maps.LatLngBounds();
+		
+		var linePath = [];
+		
+		var distanceOverlay;
+		
+		var polyline = new kakao.maps.Polyline({
+		    path: linePath,
+		    strokeWeight: 3,
+		    strokeOpacity: 1,
+		    strokeColor: 'red',
+		    strokeStyle: 'solid'
+		});
+		
+		
+		const addressSearch = address => {
+		    return new Promise((resolve, reject) => {
+		        geocoder.addressSearch(address.address, function(result, status) {
+		            if (status === kakao.maps.services.Status.OK) {
+		            	
+		            	  var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						       
+						       // 결과값으로 받은 위치를 마커로 표시합니다
+						        var marker = new kakao.maps.Marker({
+						            map: map,
+						            position: coords,
+						            image: markerImage
+						        });
+						       
+						       marker.setMap(map);
+							
+
+					        // 인포윈도우로 장소에 대한 설명을 표시합니다
+					        var infowindow = new kakao.maps.InfoWindow({
+					            content: '<div style="width:150px;text-align:center;padding:6px 0;">' + address.title + '</div>'
+					        });
+					        
+					        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+						    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+						    
+						    kakao.maps.event.addListener(marker, 'click', function() {
+						        document.getElementById("detail_modal").click();
+						        document.getElementById("detail_title").innerHTML = address.title;
+						        document.getElementById("detail_address").innerHTML = address.address;
+						        document.getElementById("detail_content").innerHTML = address.content;
+						        
+						  	});
+					    	
+					    	bounds.extend(new kakao.maps.LatLng(coords.Ma, coords.La));
+					    	map.setBounds(bounds);
+		                
+		                resolve(result);
+		            } else {
+		                reject(status);
+		            }
+		        });
+		    });
+		};
+
+		(async () => {
+		    try {
+		        for(let address of positions) {
+		            const result = await addressSearch(address);
+		            setPolyLine(result);
+		            console.log("길이: " + polyline.getLength());
+		        }
+		    } catch (e) {
+		        console.log(e);
+		    }
+		})();
+
+		function setPolyLine(result) {
+		    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		    linePath.push(coords);
+		    polyline.setPath(linePath);
+		    
+		    if(!polyline.getMap()) {
+		        polyline.setMap(map);
+		    }
+		}
+		
+		function makeOverListener(map, marker, infowindow) {
+			return function() {
+				infowindow.open(map, marker);
+				};
+			}
+
+			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			function makeOutListener(infowindow) {
+				return function() {
+					infowindow.close();
+				};
+			}
+    </script>
  
 </body>
 </html>

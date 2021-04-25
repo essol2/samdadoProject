@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,6 +42,7 @@ import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 
@@ -116,7 +119,7 @@ public class MypageController {
 	}
 		 
 	// 제휴회원 - 이메일, 전화번호 수정 메소드
-	@PostMapping("/updatebuInfo")
+	@GetMapping("/updatebuInfo")
 	public String updateBuInfo(@ModelAttribute("loginUser") User u,
 					           Model model,
 					           HttpSession session,
@@ -127,19 +130,7 @@ public class MypageController {
 			 
 			 
 		User loginUser = uService.loginUser(u);
-			 
-			 
-		if(email==null) {
-			u.setUsemail(loginUser.getUsemail());
-		} else {
-			u.setUsemail(email);
-		}
-			 
-		if(phone==null) {
-			u.setUsphone(loginUser.getUsphone());
-		} else {
-			u.setUsphone(phone);
-		}
+
 			 
 		// DB에 UPDATE_이메일, 전화번호 변경 메소드
 		int result = mService.updateUserInfo(u);	// 암호화 한 비번 db에 update
@@ -955,9 +946,95 @@ public class MypageController {
 	 
 	// 일반회원 - 내 루트
 		 @GetMapping("/myroute")
-		 public ModelAndView goToMyroute(@ModelAttribute User u, ModelAndView mv) {
+		 public ModelAndView goToMyroute(@ModelAttribute User u, ModelAndView mv, Map map) {
 			 
+			 List<RouteFinal> myRouteList = mService.selectMyRoute(u);
+			 System.out.println("myRoute확인 : " + myRouteList);
 			 
+			 List<RouteFinal> routeNumber = mService.selectRouteNum(u);
+			 
+			 // route_no별로 담을 Map 객체 선언
+			 HashMap<Integer, List<RouteFinal>> routeTest = new HashMap<>(); 
+			 
+			 int routeNum = 0;
+			 int[] standardList = new int[routeNumber.size()];
+//			 int[] standardList2 = new int[routeNumber.size()];
+			 int mapKey = 1;
+			 int forIndex = 0;
+			 
+			 // 리스트 자르기 위한 기준 찾기
+			 for(int a = 0; a < routeNumber.size(); a++) {
+				 routeNum = myRouteList.get(a).getRoute_no();
+				 int standard = mService.selectStandard(routeNum);
+				 standardList[a] = standard;
+			 }
+			 for(int e = 0; e < routeNumber.size(); e++) {
+				 System.out.println("standardList1["+e+"] : " + standardList[e]);
+			 }
+			 
+//			 standardList2[2] = standardList[2]-1;
+//			 System.out.println(standardList2[1]);
+			 
+//			 for(int d=0; d>routeNumber.size(); d++) {
+//				 standardList2[d] = standardList[d]-1;
+//			 }
+//			 
+//			 for(int f = 0;f < routeNumber.size(); f++) {
+//				 System.out.println("standardList2["+f+"] : " + standardList2[f]);
+//			 }
+			 
+			 for(int b = 0; b < routeNumber.size(); b++) {
+				 List<RouteFinal> insertThis = myRouteList.subList(forIndex,forIndex+standardList[b]-1);
+				 routeTest.put(mapKey, insertThis);
+				 forIndex = forIndex + standardList[b];
+				 mapKey ++;
+				 System.out.println("routeTest["+b+"] : " + routeTest.get(b));
+			 }
+			 
+			 mv.addObject("routeList", routeTest);
+			 
+//			 // 1. route_no만 담고있는 list 만들고 담기
+//			 int[] routeNos = new int[myRouteList.size()];
+//			 
+//			 int resultCompare = 0;
+//			 int newRouteNo = 0;
+////			 int resultno = myRouteList.get(0).getRoute_no();
+////			 System.out.println(resultno);
+//			 
+//			 for(int i=0; i < myRouteList.size(); i++) {
+//				 routeNos[i] = myRouteList.get(i).getRoute_no();
+//				 System.out.println("routeNos["+i+"] : " + routeNos[i]);
+//			 }
+//			 
+//			 System.out.println("객체로 빼올 수 있는지 확인 : " + myRouteList.get(1));
+//			 int lastIndex = myRouteList.size()-1;
+//			 routeTest.put(newRouteNo, myRouteList.get(0));
+//			 newRouteNo += 1;
+//			 routeTest.put(newRouteNo, myRouteList.get(3));
+//			 System.out.println("put test : " + routeTest.get(0));
+//			 System.out.println("put test : " + routeTest.get(1));
+//			 
+////			 for(int j=0; j < lastIndex; j++) {
+////				if(routeNos[j] == routeNos[j+1]) {
+////					resultCompare = 1;
+////					
+////					System.out.println("if : " + j+"번째, resultCompare : " + resultCompare + ", newRouteNo : " + newRouteNo);
+////				} else {
+////					resultCompare = 0;
+////					routeTest.put(newRouteNo, myRouteList.get(j));
+////					newRouteNo += 1;
+////					System.out.println("else : " + j+"번째, resultCompare : " + resultCompare + ", newRouteNo : " + newRouteNo);
+////				}
+////				
+////				
+////				System.out.println("routeTest["+j+"] : " + routeTest.get(j));
+////			 }
+//			 routeTest.put(newRouteNo, myRouteList.get(lastIndex));
+//			 System.out.println("routeTest[11] : " + routeTest.get(11));
+			 
+			 mv.addObject("routeNum", routeNumber);
+			 mv.addObject("standardList", standardList);
+			 mv.setViewName("mypage/mp_MyRoutes");
 			 
 			 return mv;
 		 }
@@ -993,10 +1070,8 @@ public class MypageController {
 					model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
 					return "/mypage/mp_UserInfo";
 				} else {
-					model.addAttribute("alertNList", alertNList);
-					 model.addAttribute("alertYList", alertYList);
 					model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
-					return "/mypage/mp_UserInfo";
+					return "/mypage/mp_bUserInfo";
 				}
 				
 			}
@@ -1007,10 +1082,8 @@ public class MypageController {
 				model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
 				return "/mypage/mp_UserInfo";
 			} else {
-				model.addAttribute("alertNList", alertNList);
-				 model.addAttribute("alertYList", alertYList);
 				model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
-				return "/mypage/mp_UserInfo";
+				return "/mypage/mp_bUserInfo";
 			}
 		 }
 
