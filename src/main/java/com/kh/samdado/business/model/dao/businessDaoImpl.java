@@ -358,6 +358,18 @@ public class businessDaoImpl implements businessDao {
 	public int insertMenu(List<BusinessAtt> menus) {
 		return sqlSession.insert("businessMapper.insertMenu", menus);
 	}
+
+	@Override
+	public List<Business> calList(String kind) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.calList", kind);
+	}
+
+	@Override
+	public List<Business> priceList(Business kinds) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.calList");
+	}
   
  
 

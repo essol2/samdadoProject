@@ -772,8 +772,10 @@
 		<c:forEach var="r" items="${ room }">
         <div class="detail">
             <div class="imgArea">
-            	<c:forEach var="ra" items="${ roomAtt }">
-                <img src="${ contextPath }/resources/busUploadFiles/" ${ ra.file_rename } class="detailImg">
+            	<c:forEach var="ra" items="${ roomAtt }" varStatus="i">
+            	<c:if test="${ i.first }">
+                <img src="${ contextPath }/resources/busUploadFiles/${ ra.file_rename }" class="detailImg">
+                </c:if>
                 </c:forEach>
             </div>
 

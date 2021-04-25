@@ -154,6 +154,10 @@ public interface businessDao {
 
 	int insertMenu(List<BusinessAtt> menus);
 
+	List<Business> calList(String kind);
+
+	List<Business> priceList(Business kinds);
+
 	
 
 	

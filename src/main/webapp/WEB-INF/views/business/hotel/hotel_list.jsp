@@ -522,7 +522,7 @@
             <nav id="choise2-nav">
                 <ul id="choise2">
                     <li>
-                        <div class="cover"><label>요금</label></div>
+                        <div class="cover" id="priceList"><label>요금</label></div>
                     </li>
                     <li>
                         <div class="cover"><label>시설</label></div>
@@ -536,6 +536,46 @@
                 </ul>
 
             </nav>
+            
+            <script>
+            $(function(){
+		    	$("#priceList").change(function(){
+		    			var kinds = {}; 
+						
+		    			$.ajax({
+		    				 url : '${contextPath}/business/priceList', 
+		    	              type : "post", 
+		    	              data : JSON.stringify(kinds),
+							  type : "post", 
+							  contentType : "application/json; charset=utf-8",
+							  dataType : "json",
+		    	              success : function(data){
+		    	            	  console.log(data);
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";
+		                            str += "<b>입장료 : 입장료 없음</b>";
+		                            str += "<div id='frm_read'>"
+		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+		                            str += "</div>";               
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+            </script>
 
             <!-- 관광지목록 div -->
 

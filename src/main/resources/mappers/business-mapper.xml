@@ -658,6 +658,32 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
        	   AND BT.FILE_LV = '0'
 	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
+	
+	<!-- 호텔리스트 -->
+	<select id="priceList" resultMap="BusinessResultSet">
+		SELECT 
+       		   B.BUS_CODE
+       		 , US_NO
+             , BUS_NAME
+     		 , BUS_ADDRESS
+     		 , BUS_INTRO
+     		 , BUS_CATEGORY
+     		 , BUS_PHONE
+     		 , BUS_OPENING
+     		 , HOTEL_CATEGORY
+     		 , BT.FILE_RENAME
+     		 , BT.FILE_LV
+  		  FROM 
+  		       BUSINESS B
+  		  JOIN 
+  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE
+  		       
+ 		 WHERE   
+       		   BUS_STATUS = 'Y'
+       	   AND BUS_CATEGORY = 'H'
+       	   AND BT.FILE_LV = '0'
+	  ORDER BY DBMS_RANDOM.RANDOM
+	</select>
 	<!-- 음식점리스트 -->
 	<select id="selectResList" resultMap="BusinessResultSet">
 		SELECT 
@@ -1274,6 +1300,42 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
            AND BT.FILE_LV = '0'
 	  ORDER BY DBMS_RANDOM.RANDOM
 	</select>
+	
+	<!-- 유형별 리스트 -->
+	<select id="calList" resultMap="BusinessResultSet">
+		SELECT 
+		       B.BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+		     , PRO_ADULT
+		     , PRO_YOUTH
+		     , PRO_CHILD
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
+		   AND BUS_CATEGORY = 'T'
+		   AND BUS_CLASSIFY = 'G'
+		   AND BUS_STATUS = 'Y'
+           AND B.TOUR_CATEGORY = #{kind}
+           AND BT.FILE_LV = '0'
+	  ORDER BY DBMS_RANDOM.RANDOM
+	</select>
+	
+	
 	
 	<select id="selectReview" resultMap="ReviewResultSet">
 		SELECT
