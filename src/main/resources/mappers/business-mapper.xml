@@ -636,6 +636,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_OPENING
 		     , BT.FILE_RENAME
 		     , BT.FILE_LV
+		     , TOUR_TEMA
+		     , TOUR_CATEGORY
 		     , PRO_ADULT
 		     , PRO_YOUTH
 		     , PRO_CHILD
@@ -693,9 +695,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BUS_ADDRESS
      		 , BUS_INTRO
      		 , BUS_CATEGORY
+     		 , BUS_CLASSIFY
      		 , BUS_PHONE
-     		 , BUS_OPENING
-     		 , RES_CATEGORY
+     		 , BUS_OPENING     		 
      		 , BT.FILE_RENAME
      		 , BT.FILE_LV
   		  FROM 
