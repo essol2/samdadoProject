@@ -112,6 +112,13 @@ public interface businessDao {
 	List<Report> findReportRexdate();
 	
 	int updateRexdate(Report r);
+	
+	// Income의 exdate 확인 메소드
+	List<Income> findIncomeExdate();
+	
+	int updateExdate(Income i);
+	
+	int updateBusClassify(int bus_code);
 
 	// 일반결제 메소드
 	int insertIncome(Income i);
@@ -171,6 +178,12 @@ public interface businessDao {
 	List<Business> calList(String kind);
 
 	List<Business> priceList(Business kinds);
+
+	
+
+	
+
+	
 
 	
 

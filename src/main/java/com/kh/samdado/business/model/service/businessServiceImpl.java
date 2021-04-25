@@ -284,6 +284,21 @@ public class businessServiceImpl implements businessService {
 	public int updateRexdate(Report r) {
 	  	return bDao.updateRexdate(r);
 	}
+  
+  @Override
+	public List<Income> findIncomeExdate() {		
+	  return bDao.findIncomeExdate();
+	}
+  
+  @Override
+	public int updateExdate(Income i) {
+	  return bDao.updateExdate(i);
+	}
+  
+  @Override
+	public int updateBusClassify(int bus_code) {
+	  return bDao.updateBusClassify(bus_code);
+	}
 
   	// 프리미엄 등록 시 만료일
 	@Override
@@ -377,6 +392,12 @@ public class businessServiceImpl implements businessService {
 		// TODO Auto-generated method stub
 		return bDao.priceList(kinds);
 	}
+
+	
+
+	
+
+	
 
 	
 
