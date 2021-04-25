@@ -18,6 +18,7 @@ import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.RouteMP;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
 import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.user.model.vo.User;
@@ -355,7 +356,7 @@ public class MypageServiceImpl implements MypageService{
 
 	// 사용자 별로 가지고 있는 루트 갯수
 	@Override
-	public List<RouteFinal> selectRouteNum(User u) {
+	public List<RouteMP> selectRouteNum(User u) {
 		return mDao.selectRouteNum(u);
 	}
 

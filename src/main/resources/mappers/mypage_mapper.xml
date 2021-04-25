@@ -371,6 +371,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		
 	</resultMap>
 	
+	<resultMap type="RouteMP" id="RouteMPResultSet">
+		<id property="route_no" column="ROUTE_NO"/>
+	</resultMap>
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
 	<!-- 1. 이메일, 전화번호 변경 메소드 -->
 	<update id="updateUserInfo" parameterType="User">
@@ -1158,15 +1161,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		ORDER BY RD.ROUTE_NO DESC, RD.DETAIL_NO
   </select>
   
-  <select id="selectRouteNum" resultMap="RouteFinalResultSet">
-		SELECT count(*) AS "rowNum"
+  <!-- <select id="selectRouteNum" resultType="_int">
+		SELECT COUNT(*) AS "rowNum"
+		FROM(
+		SELECT COUNT(*)
 		FROM ROUTE_DETAIL RD, TOUR_SPOT TS, BBA, ROUTE_FINAL RF
 		WHERE RD.SPOT_NO = TS.SPOT_NO(+)
 		AND RD.BUS_CODE = BBA.BUS_CODE(+)
 		AND RD.ROUTE_NO = RF.ROUTE_NO
 		AND RF.US_NO = #{usno}
-		GROUP BY RD.ROUTE_NO
-  </select>
+		GROUP BY RD.ROUTE_NO)
+  </select> -->
   
   <select id="selectStandard" resultType="_int">
   		SELECT COUNT(*) AS "standardNum"
@@ -1175,4 +1180,11 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		AND RF.ROUTE_NO = #{routeNum}
 		GROUP BY RF.ROUTE_NO
   </select>
+  
+  <select id="selectRouteNum" resultMap="RouteMPResultSet">
+		SELECT ROUTE_NO
+		FROM ROUTE_FINAL
+		WHERE US_NO = #{usno}
+		ORDER BY ROUTE_NO DESC
+   </select>
 </mapper>

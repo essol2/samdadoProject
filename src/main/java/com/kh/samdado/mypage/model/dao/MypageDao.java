@@ -14,6 +14,7 @@ import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.RouteMP;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
 import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.user.model.vo.User;
@@ -183,7 +184,7 @@ public interface MypageDao {
 	public List<RouteFinal> selectMyRoute(User u);
 
 	// 사용자 별로 가지고 있는 루트 갯수
-	public List<RouteFinal> selectRouteNum(User u);
+	public List<RouteMP> selectRouteNum(User u);
 
 	// 루트 별로 가지고 있는 관광지 개수
 	public int selectStandard(int routeNum);
