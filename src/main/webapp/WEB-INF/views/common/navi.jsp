@@ -469,7 +469,7 @@
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
                 <!-- <h5 class="helloName"> 혼저옵서예.</h5> -->
  					<p class="right" id="navi-menu" onclick="goToInfo();">
-				    <img src="${contextPath}/resources/images/image_mp/new_b.png" class="newAlert">내 정보</p>
+				    <img src="${contextPath}/resources/images/image_mp/new_b.png" class="newAlert" onclick="goToInfo(${loginUser.uspart});">내 정보</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
 				</div>				    
                 </c:if>
@@ -498,7 +498,7 @@
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
 					 <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">
-		                <img src="${contextPath}/resources/images/image_mp/new_b.png" class="newAlert">내 정보</p>
+		                <img src="${contextPath}/resources/images/image_mp/new_b.png" class="newAlert" onclick="location.href='${contextPath}/mypage/buserinfo'">내 정보</p>
 					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>		
                 </div>
                 </c:if>
@@ -958,7 +958,13 @@
 	 		
 	 	});
 	 </script>
-	    
+	 
+	 <script>
+	 	function goToInfo(uspart){
+	 		var uspart = "일반";
+	 		location.href="${contextPath}/mypage/userinfo?usno="+${loginUser.usno} + "&uspart=" + uspart;
+	 	}
+	 </script>
 
 
     <!-- Optional JavaScript; choose one of the two! -->

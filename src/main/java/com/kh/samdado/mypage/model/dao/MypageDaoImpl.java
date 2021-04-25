@@ -20,6 +20,7 @@ import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.user.model.vo.User;
 
 @Repository
@@ -348,6 +349,24 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public int updateUserStatus(User u) {
 		return sqlSession.update("mypageMapper.updateUserStatus", u);
+	}
+
+	// 내 루트 찾기
+	@Override
+	public List<RouteFinal> selectMyRoute(User u) {
+		return sqlSession.selectList("mypageMapper.selectMyRoute", u);
+	}
+
+	// 사용자 별로 가지고 있는 루트 갯수
+	@Override
+	public List<RouteFinal> selectRouteNum(User u) {
+		return sqlSession.selectList("mypageMapper.selectRouteNum", u);
+	}
+
+	// 루트 별로 가지고 있는 관광지 개수
+	@Override
+	public int selectStandard(int routeNum) {
+		return sqlSession.selectOne("mypageMapper.selectStandard", routeNum);
 	}
 
 }

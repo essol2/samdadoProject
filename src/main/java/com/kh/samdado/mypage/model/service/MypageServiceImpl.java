@@ -1,13 +1,11 @@
 package com.kh.samdado.mypage.model.service;
 
-import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.samdado.admin.model.vo.A_board;
-import com.kh.samdado.admin.model.vo.PageInfo;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -21,6 +19,7 @@ import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.user.model.vo.User;
 
 @Service
@@ -346,6 +345,24 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int updateUserStatus(User u) {
 		return mDao.updateUserStatus(u);
+	}
+
+	// 내 루트 찾기
+	@Override
+	public List<RouteFinal> selectMyRoute(User u) {
+		return mDao.selectMyRoute(u);
+	}
+
+	// 사용자 별로 가지고 있는 루트 갯수
+	@Override
+	public List<RouteFinal> selectRouteNum(User u) {
+		return mDao.selectRouteNum(u);
+	}
+
+	// 루트 별로 가지고 있는 관광지 개수
+	@Override
+	public int selectStandard(int routeNum) {
+		return mDao.selectStandard(routeNum);
 	}
 
 	

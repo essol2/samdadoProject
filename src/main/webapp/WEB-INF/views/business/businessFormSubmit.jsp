@@ -77,7 +77,7 @@
                              </h6>             
                         <br><br>
                         <div class="goToPayBtn_div">
-                            <a href="${ contextPath }/mypage/userinfo" id="goMyPageBtn" class="btn btn-secondary" style="color: white; text-decoration: none;">동의 후 포인트 충전하러 가기</a> 
+                            <p id="goMyPageBtn" onclick="goToPoint();" class="btn btn-secondary" style="color: white; text-decoration: none;">동의 후 포인트 충전하러 가기</p> 
                         </div>    
                         </div>
                         <div class="modal-footer">
@@ -183,6 +183,10 @@
 			
 			return true;
 		}
+		
+		function goToPoint(){
+			location.href='${contextPath}/mypage/point?usno='+${loginUser.usno};
+		};
 	
 	</script>
 

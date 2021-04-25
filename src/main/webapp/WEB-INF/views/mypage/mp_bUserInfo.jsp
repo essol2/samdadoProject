@@ -249,7 +249,6 @@
 
             <div id="mainBox">
                 <div id="leftBox">
-                <form action="${ contextPath }/mypage/updatebuInfo" method="POST" onsubmit="return submitValidate();">
                     <table id="memInfoTable">
                         <tr>
                             <th>이름, 아이디</th>
@@ -259,25 +258,29 @@
                             <th>비밀번호 수정</th>
                             <td colspan="3" > <button type="button" id="changePwdBtn" onclick="">비밀번호 수정하기</button></td>
                         </tr>
-                       <tr>
-							
-	                            <th>이메일, 전화번호 수정</th>
-	                            <td style="width : 10%;">이메일 <input type="text" class="chInfoTag" id="email" name="email" value="${ loginUser.usemail }">
-	                                </td>
-	                            <td style="width : 10%;">전화번호 <input type="text" class="chInfoTag" id="phone" name="phone" value="${ loginUser.usphone }">
-	                                <input type="hidden" name="usid" id="usid" value="${ loginUser.usid }"></td>
-	                            <td><button id="changeInfo" type="submit">수정하기</button></td>
-                        	
-                        </tr>
                         <tr>
+	                            <th>이메일, 전화번호 수정</th>
+	                            <td>이메일 <input type="text" class="chInfoTag" id="newEmail" name="email" value="${ loginUser.usemail }">
+	                                </td>
+	                            <td>전화번호 <input type="text" class="chInfoTag" id="newPhone" name="phone" value="${ loginUser.usphone }">
+	                                <input type="hidden" name="usid" id="usid" value="${ loginUser.usid }"></td>
+	                            <td><button id="changeInfo" onclick="goToChange();">수정하기</button></td>
+                        </tr>
+                         <tr>
                             <th >회원 탈퇴</th>
-                            <td colspan="3"><p id="specificCon">회원 탈퇴 시 저장되어 있는 회원 정보는 3개월간 보관 후 영구적으로 삭제됩니다. 3개월 이내에는 복구가 가능하며 관리자에게 문의주세요.
-                                <br>삭제 후 복구 시, 사업장 정보와 충전해 놨던 포인트는 남아있지만 배너 및 프리미엄 광고 내역을 사라집니다. 주의 바랍니다.
-                                <br>탈퇴를 원하시면 아래 동의 후 비밀번호 확인을 통해 탈퇴하실 수 있습니다.<br></p>
-                                <input type="checkbox" name="check" value="위의 안내사항에 대해 동의합니다.">위의 안내사항에 대해 동의합니다.<br><br>
+                            <td colspan="3">
+                            <form action="${contextPath}/mypage/userout" method="post">
+                            <p id="specificCon">회원 탈퇴 시 저장되어 있는 회원 정보는 3개월간 보관 후 영구적으로 삭제됩니다. <br>
+                                3개월 이내에는 복구가 가능하며 관리자에게 문의주세요.<br>
+                                삭제시 모든 예약 정보, 길 정보를 찾을 수 없습니다.<br>
+                                탈퇴를 원하시면 아래 동의 후 비밀번호 확인을 통해 탈퇴하실 수 있습니다.<br></p>
+                                <input type="checkbox" name="check" value="위의 안내사항에 대해 동의합니다.">위의 안내사항에 대해 동의합니다.<br>
                                 <label style="font-size: small;">비밀번호 확인 :</label>
-                                <input type="password" id="memoutPwd" name="memoutPwd">
-                                <button id="memOut" onclick="goToMemout();">탈퇴</button></td>
+                                <input type="password" id="uspwd" name="uspwd">
+                                <input type="hidden" id="usno" name="usno" value="${loginUser.usno }">
+                                <input type="hidden" id="uspart" name="uspart" value="${loginUser.uspart}">
+                                <input type="hidden" id="usid" name="usid" value="${loginUser.usid}">
+                                <button id="memOut" type="submit">탈퇴</button></form></td>
                         </tr>
                     </table>
                     </form>
@@ -294,7 +297,7 @@
 
                     <form action="${ contextPath }/mypage/updateBupwd" method="POST" onsubmit="return submitValidate();">
                       <div class="row g-3">
-
+						<input type="hidden" name="uspart" id="uspart" value="${loginUser.uspart }">
                         <div class="col-12">
                             <label for="_id" class="form-label">현재 비밀변호 </label>
                             <input type="password" class="form-control" id="checkPwd" name="currentPwd" required>                           
@@ -340,7 +343,7 @@
     
     <!-- 비밀번호 유효성검사 -->
     <script>
-    function joinValidate(){
+ 	function joinValidate(){
     	
 	 	// 비밀번호 유효성검사
 		if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#uspwd").val()))){
@@ -353,10 +356,8 @@
 		if($("#uspwd2").val() != $("#uspwd").val()){
 			alert('비밀번호가 일치하지 않습니다.');
 			$("#uspwd2").select();
-			return false;
 		}
-	    }
-		
+    }
     </script>
     <script>
 	    $("#uspwd").keyup(function () { 
@@ -399,14 +400,22 @@
 		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno} +"&uspart=" + uspart;
 	}
 	
-	function goToMemout(){
-		var memoutPwd = $('#memoutPwd').val();
-		var uspart = "일반";
-		location.href="${contextPath}/mypage/userout?usno="+${loginUser.usno}+"&memoutPwd="+memoutPwd+"&uspart="+uspart;
+	function goToChange(){
+		var uspart = "제휴";
+		var usid=$('#usid').val();
+		var usemail = document.getElementById('newEmail').value;
+		/* var usemail=$('#email').val(); */
+		var usphone=$('#newPhone').val();
+		
+		console.log(uspart);
+		console.log(usid);
+		console.log(usemail);
+		console.log(usphone); 
+		
+		location.href="${contextPath}/mypage/updatebuInfo?usno=" + ${loginUser.usno} + "&uspart" + uspart + "&usid=" + usid + "&usemail=" + usemail + "&usphone=" + usphone;
 	}
-	</script>
-	
-	<script>
+
+
 	 	$(document).ready(function(){
 	 		
 	 		if(${not empty sessionScope.loginUser}){
