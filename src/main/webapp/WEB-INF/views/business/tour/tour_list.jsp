@@ -464,6 +464,21 @@
             font-size: 20px;
             padding: 10px;
         }
+        
+        #searchValue{
+        	width: 300px;
+			margin-left: 1%;
+			margin-right: 1%;
+        }
+        
+        #searchBtn{
+        	background-color: #467355;
+		    color: white;
+		    border-radius: 10px;
+		    border: none;
+		    height: 45px;
+		    margin-top : 5px;
+        }
 
         /* 사업장종류선택끝 */
     </style>
@@ -494,38 +509,14 @@
             </nav>
 
             <nav id="filter-nav">
-                <form method="POST">
+                <form id="search_report_form">
                     <div class="cover2">
                         <ul id="filter">
-                            <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">
-
-                            <li><label>지역</label>
-                                <select>
-                                    <option value="location">무관</option>
-                                    <option value="location">서귀포</option>
-                                    <option value="location">용인</option>
-                                    <option value="location">한라산</option>
-                                </select>
-
-                            </li>
-                            <li><label>날짜</label>
-                                <input type="date">
-
-                            </li>
+                            <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">							
                             <li>
-                                <label>인원수</label>
-                                <div>
-                                    <select>
-                                        <option value="location">1명</option>
-                                        <option value="location">2명</option>
-                                        <option value="location">3명</option>
-                                        <option value="location">4명</option>
-                                        <option value="location">5명</option>
-                                        <option value="location">6명이상</option>
-                                    </select>
-                                    <img src="../resources/images/image_listpage/search.png">
-                                </div>
+                            	<input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" placeholder="관광지 이름">
                             </li>
+                            	<button class="btn btn-secondary" id="searchBtn" type="button">검색하기</button>
                         </ul>
                     </div>
                 </form>
@@ -533,7 +524,47 @@
                     <label class="topText">삼다도와 함께하는</label><br>
                     <label class="topText">제주도 지역의 관광지</label>
                 </div>
+
             </nav>
+            
+            <script>	
+		    $(function(){
+		    	 $("#searchBtn").on("click", function() {
+		    		 	var search = {};		         		
+		         		search.searchValue = $("#searchValue").val();
+		         		search.searchKind = 2;
+		    			$.ajax({
+		    				 url : '${contextPath}/business/searchBusinessList', 
+		    	              data : JSON.stringify(search),
+		    	              type : "post",
+		    	              contentType : "application/json; charset=utf-8",
+		    	              dataType : "json",
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";
+		                            str += "<b>입장료 : 입장료 없음</b>";
+		                            str += "<div id='frm_read'>"
+		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+		                            str += "</div>";               
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+			</script>
 
             <nav id="choise2-nav">
                 <ul id="choise2">

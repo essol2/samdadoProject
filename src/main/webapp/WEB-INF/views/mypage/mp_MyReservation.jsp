@@ -313,6 +313,14 @@ body {
   	flex-direction: column;
   }
   
+  #reddot{
+		position: absolute;
+	    top: 8%;
+	    left: 18%;
+	    width : 20px;
+	    height : 20px;
+	}
+
 </style>
 <body>
 	<!-- navi.jsp include -->
@@ -330,9 +338,10 @@ body {
 		<div class="menuBox" id="menuBox">
 
                     <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
+                    <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
                     <button class="menuButton" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록<br><br> </div></button>
                     <button class="clickedBtn" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle" onclick="location.href='${contextPath}/mypage/booking'"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingW.png" class="btnImg"> <br> 내 예약<br> <br></div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행<br> <br></div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToRoute();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행<br> <br></div></button>
                     <button class="menuButton" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑<br><br></div></button>
         </div>
 	</div>
@@ -653,7 +662,8 @@ body {
 
 	<script>
 	function goToInfo(){
-		location.href='${contextPath}/mypage/userinfo?usno=' + ${loginUser.usno};
+		var uspart = "일반";
+		location.href='${contextPath}/mypage/userinfo?usno='+${loginUser.usno} + '&uspart='+uspart;
 	}
  	function goToBooking(){
 		location.href='${contextPath}/mypage/booking?usno='+${loginUser.usno};
@@ -670,6 +680,10 @@ body {
 	
 	function goToDetail(bus_code){
 		location.href='${contextPath}/business/detail?bus_code='+bus_code;
+	}
+	
+	function goToRoute(){
+		location.href="${contextPath}/mypage/myroute?usno="+${loginUser.usno};
 	}
 	
 	function goToCancel(bookingLv, category, bus_name){
@@ -905,6 +919,43 @@ body {
 		});
 	});
 	</script>
+	<script>
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty sessionScope.loginUser}){
+	 			if(${loginUser.uspart eq "일반"}){
+	 				var uspart = "일반";
+	 			} else if(${loginUser.uspart eq "제휴"}){
+	 				var uspart = "제휴";
+	 			} else {
+	 				var uspart = " ";
+	 			}
+	 			
+	 			var searchU = new Object();
+				searchU.usno = ${loginUser.usno};
+				searchU.uspart = uspart;
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
 
 </body>
 </html>

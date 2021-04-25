@@ -217,7 +217,13 @@
 		margin-bottom : 0;
 	}
 	
-   
+	#reddot{
+		position: absolute;
+	    top: 13%;
+	    left: 27%;
+	    width : 30px;
+	    height : 30px;
+	}
 </style>
 </head>
 <body>
@@ -232,6 +238,7 @@
 
                     <button class="clickedBtn" id="myInfo" onclick="location.href='${ contextPath }/mypage/buserinfo'"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/mp_userW.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToAlert();"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
+                    <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
                     <button class="menuButton" id="myInfo" onclick="goToBuss();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToAdvert();"> <div class="menuBoxEle" onclick="goToAdvert();"><br><img src="../resources/images/image_mp/adverB.png" class="btnImg"> <br> 광고관리</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToPoint();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 포인트</div></button>
@@ -269,8 +276,8 @@
                                 <br>탈퇴를 원하시면 아래 동의 후 비밀번호 확인을 통해 탈퇴하실 수 있습니다.<br></p>
                                 <input type="checkbox" name="check" value="위의 안내사항에 대해 동의합니다.">위의 안내사항에 대해 동의합니다.<br><br>
                                 <label style="font-size: small;">비밀번호 확인 :</label>
-                                <input type="password" id="checkPwd" name="checkPwd">
-                                <button id="memOut">탈퇴</button></td>
+                                <input type="password" id="memoutPwd" name="memoutPwd">
+                                <button id="memOut" onclick="goToMemout();">탈퇴</button></td>
                         </tr>
                     </table>
                     </form>
@@ -333,6 +340,8 @@
     
     <!-- 비밀번호 유효성검사 -->
     <script>
+    function joinValidate(){
+    	
 	 	// 비밀번호 유효성검사
 		if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#uspwd").val()))){
 			alert('영어대소문자/숫자/특수문자를 포함한 8~16자리 입력');
@@ -346,6 +355,7 @@
 			$("#uspwd2").select();
 			return false;
 		}
+	    }
 		
     </script>
     <script>
@@ -385,9 +395,54 @@
 	}
 	
 	function goToAlert(){
-		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno};
+		var uspart = "제휴";
+		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno} +"&uspart=" + uspart;
+	}
+	
+	function goToMemout(){
+		var memoutPwd = $('#memoutPwd').val();
+		var uspart = "일반";
+		location.href="${contextPath}/mypage/userout?usno="+${loginUser.usno}+"&memoutPwd="+memoutPwd+"&uspart="+uspart;
 	}
 	</script>
+	
+	<script>
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty sessionScope.loginUser}){
+	 			if(${loginUser.uspart eq "일반"}){
+	 				var uspart = "일반";
+	 			} else if(${loginUser.uspart eq "제휴"}){
+	 				var uspart = "제휴";
+	 			} else {
+	 				var uspart = " ";
+	 			}
+	 			
+	 			var searchU = new Object();
+				searchU.usno = ${loginUser.usno};
+				searchU.uspart = uspart;
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
  <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>

@@ -401,9 +401,15 @@
 	#navi-menu, #navi-title, p:hover, #navi-menu{
 		cursor: pointer;
 	}
-	
-	
-	
+	.newAlert{
+ 	 width : 28px;
+ 	height  : 28px; 
+ 	display : none;
+ 	/* display : inline-block; */
+ 	margin-right : 8px;
+ 	float : inherit;
+ 	/* float : right; */
+ }
 </style>
 </head>
 <body>
@@ -462,8 +468,8 @@
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
                 <!-- <h5 class="helloName"> 혼저옵서예.</h5> -->
- 
-				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/userinfo'">내 정보</p>
+ 					<p class="right" id="navi-menu" onclick="goToInfo();">
+				    <img src="${contextPath}/resources/images/image_mp/new_b.png" class="newAlert">내 정보</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
 				</div>				    
                 </c:if>
@@ -491,10 +497,9 @@
                 
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
-
-	                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">내 정보</p>
-				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			    
-
+					 <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">
+		                <img src="${contextPath}/resources/images/image_mp/new_b.png" class="newAlert">내 정보</p>
+					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>		
                 </div>
                 </c:if>
                
@@ -915,6 +920,45 @@
         });
 	
     </script>
+    
+     <script>
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty sessionScope.loginUser}){
+	 			if(${loginUser.uspart eq "일반"}){
+	 				var uspart = "일반";
+	 			} else if(${loginUser.uspart eq "제휴"}){
+	 				var uspart = "제휴";
+	 			} else {
+	 				var uspart = " ";
+	 			}
+	 			
+	 			var searchU = new Object();
+				searchU.usno = ${loginUser.usno};
+				searchU.uspart = uspart;
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
+	    
 
 
     <!-- Optional JavaScript; choose one of the two! -->

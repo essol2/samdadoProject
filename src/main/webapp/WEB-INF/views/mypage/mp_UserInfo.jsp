@@ -343,6 +343,14 @@
    	padding-left : 2%;
    	padding-right : 2%;
    }
+   
+   #reddot{
+		position: absolute;
+	    top: 8%;
+	    left: 18%;
+	    width : 20px;
+	    height : 20px;
+	}
 	
    /*  @media (max-width:1440px){
          /* 마이페이지 css 
@@ -448,9 +456,10 @@
                 <div class="menuBox" id="menuBox">
 
                     <button class="clickedBtn" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userW.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
+                    <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
                     <button class="menuButton" id="myInfo" onclick="goToJjim();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_jjimB.png" class="btnImg"> <br> 찜목록<br><br> </div></button>
                     <button class="menuButton" id="myInfo" onclick="goToBooking();"> <div class="menuBoxEle" onclick="location.href='${contextPath}/mypage/booking'"><br><img src="${contextPath}/resources/images/image_mp/mp_bookingB.png" class="btnImg"> <br> 내 예약<br> <br></div></button>
-                    <button class="menuButton" id="myInfo"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행<br> <br></div></button>
+                    <button class="menuButton" id="myInfo" onclick="goToRoute();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_tripB.png" class="btnImg"> <br> 나만의 여행<br> <br></div></button>
                     <button class="menuButton" id="myInfo" onclick="goToWallet();"> <div class="menuBoxEle"><br><img src="${contextPath}/resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 지갑<br><br></div></button>
 
                 </div>
@@ -458,7 +467,8 @@
 
             <div id="mainBox">
                 <div id="leftBox">
-                <form action="${ contextPath }/mypage/updateInfo" method="POST" onsubmit="return submitValidate();">
+                
+                    <input type="hidden" name="uspart" id="uspart" value="${loginUser.uspart }">
                     <table id="memInfoTable">
                         <tr>
                             <th>이름, 아이디</th>
@@ -468,39 +478,48 @@
                             <th>비밀번호 수정</th>
                             <td colspan="3" > <button type="button" id="changePwdBtn" onclick="">비밀번호 수정하기</button></td>
                         </tr>
-                        
+                       
 						<tr>
-							
 	                            <th>이메일, 전화번호 수정</th>
-	                            <td>이메일 <input type="text" class="chInfoTag" id="email" name="email" value="${ loginUser.usemail }">
+	                            <td>이메일 <input type="text" class="chInfoTag" id="newEmail" name="email" value="${ loginUser.usemail }">
 	                                </td>
-	                            <td>전화번호 <input type="text" class="chInfoTag" id="phone" name="phone" value="${ loginUser.usphone }">
+	                            <td>전화번호 <input type="text" class="chInfoTag" id="newPhone" name="phone" value="${ loginUser.usphone }">
 	                                <input type="hidden" name="usid" id="usid" value="${ loginUser.usid }"></td>
-	                            <td><button id="changeInfo" type="submit">수정하기</button></td>
-                        	
+	                            <td><button id="changeInfo" onclick="goToChange();">수정하기</button></td>
                         </tr>
-                      
+                     
                         <tr>
                             <th >회원 탈퇴</th>
-                            <td colspan="3"><p id="specificCon">회원 탈퇴 시 저장되어 있는 회원 정보는 3개월간 보관 후 영구적으로 삭제됩니다. <br>
+                            <td colspan="3">
+                            <form action="${contextPath}/mypage/userout" method="post">
+                            <p id="specificCon">회원 탈퇴 시 저장되어 있는 회원 정보는 3개월간 보관 후 영구적으로 삭제됩니다. <br>
                                 3개월 이내에는 복구가 가능하며 관리자에게 문의주세요.<br>
                                 삭제시 모든 예약 정보, 길 정보를 찾을 수 없습니다.<br>
                                 탈퇴를 원하시면 아래 동의 후 비밀번호 확인을 통해 탈퇴하실 수 있습니다.<br></p>
                                 <input type="checkbox" name="check" value="위의 안내사항에 대해 동의합니다.">위의 안내사항에 대해 동의합니다.<br>
                                 <label style="font-size: small;">비밀번호 확인 :</label>
-                                <input type="password" id="checkPwd" name="checkPwd">
-                                <button id="memOut">탈퇴</button></td>
+                                <input type="password" id="uspwd" name="uspwd">
+                                <input type="hidden" id="usno" name="usno" value="${loginUser.usno }">
+                                <input type="hidden" id="uspart" name="uspart" value="${loginUser.uspart}">
+                                <input type="hidden" id="usid" name="usid" value="${loginUser.usid}">
+                                <button id="memOut" type="submit">탈퇴</button></form></td>
                         </tr>
                     </table>
-                    </form>
+                    
                 </div>
                 <div id="rightBox">
                     <div id="alertBox">
                         
                         <div id="tableBox" style="overflow:auto;">
                         <c:choose>
-	                    <c:when test="${ !empty alertNList &&  !empty alertYList}">
-	                    <h2>&nbsp알림</h2>
+                        <c:when test="${ empty alertNList && empty alertYList }">
+                        	<div colspan="4" style="color : #467355; font-size : 30px; text-align : center; "> 
+			             		<p style="padding-top : 20%;">새로운 소식이 없습니다!</p>
+			             	</div>
+                        </c:when>
+			            
+			             <c:otherwise>
+			             	 <h2>&nbsp알림</h2>
 	                    <table>
 	                        <c:forEach var="ab" items="${ alertNList }" varStatus="abStatus">
 			                <tr style="cursor : pointer;" onclick="detailNAlert(${ab.nno})" class="newList">
@@ -544,12 +563,6 @@
 			                </tr>
 			             </c:forEach> 
 			             </table>
-			             </c:when>
-			            
-			             <c:otherwise>
-			             	<div colspan="4" style="color : #467355; font-size : 30px; text-align : center; "> 
-			             		<p style="padding-top : 20%;">새로운 소식이 없습니다!</p>
-			             	</div>
 			             </c:otherwise>
 			             </c:choose>
                         </div>
@@ -565,7 +578,7 @@
 
                     <form action="${ contextPath }/mypage/updatepwd" method="POST" onsubmit="return submitValidate();">
                       <div class="row g-3">
-
+						<input type="hidden" name="uspart" id="uspart" value="${loginUser.uspart }">
                         <div class="col-12">
                             <label for="_id" class="form-label">현재 비밀변호 </label>
                             <input type="password" class="form-control" id="checkPwd" name="currentPwd" required>                           
@@ -647,6 +660,8 @@
     
     <!-- 비밀번호 유효성검사 -->
     <script>
+    function joinValidate(){
+    	
 	 	// 비밀번호 유효성검사
 		if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#uspwd").val()))){
 			alert('영어대소문자/숫자/특수문자를 포함한 8~16자리 입력');
@@ -658,8 +673,8 @@
 		if($("#uspwd2").val() != $("#uspwd").val()){
 			alert('비밀번호가 일치하지 않습니다.');
 			$("#uspwd2").select();
-			return false;
 		}
+    }
 		
     </script>
     <script>
@@ -699,6 +714,24 @@
 	
 	function goToInfo(){
 		location.href='${ contextPath }/mypage/userinfo?usno='+${loginUser.usno};
+	}
+	
+	function goToRoute(){
+		location.href="${contextPath}/mypage/myroute?usno=" + ${loginUser.usno};
+	}
+	function goToChange(){
+		var uspart = "일반";
+		var usid=$('#usid').val();
+		var usemail = document.getElementById('newEmail').value;
+		/* var usemail=$('#email').val(); */
+		var usphone=$('#newPhone').val();
+	/* 	
+		console.log(uspart);
+		console.log(usid);
+		console.log(usemail);
+		console.log(usphone); */
+		
+		location.href="${contextPath}/mypage/updateInfo?usno=" + ${loginUser.usno} + "&uspart" + uspart + "&usid=" + usid + "&usemail=" + usemail + "&usphone=" + usphone;
 	}
 	
 	function detailNAlert(nno){
@@ -1043,6 +1076,43 @@
 		});
 	} 
     </script>
+    <script>
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty sessionScope.loginUser}){
+	 			if(${loginUser.uspart eq "일반"}){
+	 				var uspart = "일반";
+	 			} else if(${loginUser.uspart eq "제휴"}){
+	 				var uspart = "제휴";
+	 			} else {
+	 				var uspart = " ";
+	 			}
+	 			
+	 			var searchU = new Object();
+				searchU.usno = ${loginUser.usno};
+				searchU.uspart = uspart;
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
     
      <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

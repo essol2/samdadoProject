@@ -9,6 +9,7 @@ import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.vo.User;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
+import com.kh.samdado.business.model.vo.BusinessSearch;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -92,6 +93,15 @@ public interface businessService {
 	Object insertJjim(Map<String, Object> commandMap);	
 	
 	public int updateJjim(Map<String, Object> commandMap);
+	
+	// 리스트에서 사업장검색
+	List<Business> searchTourList(BusinessSearch search);
+	
+	List<Business> searchHotelList(BusinessSearch search);
+
+	List<Business> searchResList(BusinessSearch search);
+
+	List<Business> searchCarList(BusinessSearch search);
 
 	// 신고 카운트
 	int countReport();  
@@ -150,6 +160,8 @@ public interface businessService {
 	List<Business> calList(String kind);
 
 	List<Business> priceList(Business kinds);
+
+	
 
 	
 
