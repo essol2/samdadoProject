@@ -208,9 +208,9 @@
                     <span  class="box">
                         <select class="content" id="payCategory" name="primonth">
 	                    <option value="0" selected>선택</option>
-	                    <option value="30">1개월 : 10억</option>
-	                    <option value="90">3개월 : 27억</option>
-	                    <option value="180">6개월 : 58억</option>
+	                    <option value="30">1개월 : 1천만원</option>
+	                    <option value="90">3개월 : 2천만원</option>
+	                    <option value="180">6개월 : 5천만원</option>
 	                </select>
                     </span>
                 </div>
@@ -370,50 +370,28 @@
 				<!-- 차종 -->
 		        <div class="join-wrap" >
 		            <h3><label>차종</label></h3>           
-	                <input multiple="multiple" type="checkbox" class="carType" name="carList[0].car_type" value="소형" onclick="checkOne(this)">
+	                <input multiple="multiple" type="checkbox" class="carType" name="carList[0].car_type" value="소형">
 	                <label for = "소형">소형</label>&nbsp;
-	                <input type="checkbox" class="carType" name="carList[0].car_type" value="중형" onclick="checkOne(this)">
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="중형">
 	                <label for = "중형">중형</label>&nbsp;
-	                <input type="checkbox" class="carType" name="carList[0].car_type" value="대형" onclick="checkOne(this)">
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="대형">
 	                <label for = "대형">대형</label>&nbsp;
-	                <input type="checkbox" class="carType" name="carList[0].car_type" value="스포츠" onclick="checkOne(this)">
+	                <input type="checkbox" class="carType" name="carList[0].car_type" value="스포츠">
 	                <label for = "스포츠">스포츠</label>&nbsp;
 		        </div>
 
 		        <!-- 연료 -->
 		        <div class="join-wrap" >
 		            <h3><label>연료</label></h3>           
-	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="디젤" onclick="checkOne2(this)">
+	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="디젤">
 	                <label for = "디젤">디젤</label>&nbsp;
-	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="가솔린" onclick="checkOne2(this)">
+	                <input multiple="multiple" type="checkbox" class="fuel" name="carList[0].car_fuel" value="가솔린">
 	                <label for ="가솔린">가솔린</label>&nbsp;
 		        </div>
 				
 				<!-- 체크박스 선택 하나만 되게함 -->
 				<script>
-				function checkOne(element) {
-					  
-					  const checkboxes 
-					      = document.getElementsByName("carList[0].car_type");
-					  
-					  checkboxes.forEach((cb) => {
-					    cb.checked = false;
-					  })
-					  
-					  element.checked = true;
-					}
 				
-				function checkOne2(element) {
-					  
-					  const checkboxes 
-					      = document.getElementsByName("carList[0].car_fuel");
-					  
-					  checkboxes.forEach((cb) => {
-					    cb.checked = false;
-					  })
-					  
-					  element.checked = true;
-					}
 				</script>
 				
 				<!-- 차량사진 -->

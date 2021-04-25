@@ -510,9 +510,6 @@
             <nav id="choise2-nav">
                 <ul id="choise2">
                     <li>
-                        <div class="cover"><label>요금</label></div>
-                    </li>
-                    <li>
                         <div class="cover"><label>종류</label></div>
                     </li>
                     <li>

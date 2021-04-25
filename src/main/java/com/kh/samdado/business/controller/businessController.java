@@ -256,7 +256,6 @@ public class businessController {
 		List<Business> hotelList = bService.selectHotelList();
 			
 		if(hotelList != null) {
-			// System.out.println("hotelList : " + hotelList);
 			mv.addObject("hotelList", hotelList);
 			mv.setViewName("business/hotel/hotel_list");
 		}
@@ -605,15 +604,12 @@ public class businessController {
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		List<Car> carList = bService.selectCars(bus_code);
 		List<CarAtt> carAtt = bService.selectCarAtt(bus_code);
-		// List<Car> CarList = bService.selectCar(bus_code);
-		// List<CarAtt> CarAtt = bService.selectCarAtt(bus_code); 
 		if(b != null) {
 
 			model.addAttribute("car", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("cars", carList);
 			model.addAttribute("carAtt", carAtt);
-			System.out.println(model);
 			
 						// 찜하기			
 						if(session.getAttribute("loginUser") != null) {
@@ -846,11 +842,28 @@ public class businessController {
 		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
 		List<Business> cateList = bService.cateList(kind);
 		
-		System.out.println("cateList : " + cateList.size());
+		//System.out.println("cateList : " + cateList.size());
 		return cateList;
 		
 	}
-
+	
+	@RequestMapping(value="calList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> calList(HttpServletResponse response, @RequestBody String kinds) {
+		
+		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
+		List<Business> calList = bService.calList(kind);
+		
+		return calList;
+		
+	}
+	
+	@RequestMapping("/priceList")
+	@ResponseBody
+	public List<Business> priceList(HttpServletResponse response, @RequestBody Business kinds) {
+		List<Business> priceList = bService.priceList(kinds);
+		return priceList;
+	}
 	//찜하기 ajax받기	
     @RequestMapping("/jjim")
     @ResponseBody

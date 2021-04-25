@@ -87,7 +87,8 @@
         }
 
         #ho_title {
-            font-size: 28px;
+            font-size: 50px;
+    		color: #343a40;
         }
 
         #ho_grade {
@@ -98,6 +99,12 @@
         .title_tag {
             margin-bottom: 1%;
         }
+        
+        .infoLabel{
+       	    font-size: 20px;
+		    font-weight: bold;
+		    color: #495740;
+        }
 
         .jjim_img {
             width: 20px;
@@ -105,8 +112,8 @@
         }
 
         .report_img {
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
         }
 
         /* 메인사진 위 정보div들 끝 */
@@ -233,16 +240,24 @@
             margin-bottom: 2%;
             margin-top: 5%;
             display: flex;
+            border-radius: 3px;
             /* align-items: center; */
             /* justify-content: center; */
         }
 
         .detailView {
             width: 56%;
+            margin:10px;
+        }
+        
+        .detailView b{
+        	font-size:30px;
         }
 
         .detailView label {
             line-height: 50px;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .btnArea {
@@ -293,6 +308,11 @@
         
          #report_btn, #jjim_btn{
         	cursor: pointer;
+        	margin-right: 1%;
+        }
+        
+        #jjim_btn{
+       	    margin-right: 2%;
         }
 
         /* 후기 */
@@ -306,10 +326,15 @@
             margin-right: 1%;
         }
 
-        .reivew {
+        .review {
             border: 1px solid black;
             width: 90%;
             border-radius: 6px;
+            padding: 10px;
+        }
+        
+        .review a{
+        	font-size:17px;
         }
 
         .review_img {
@@ -327,6 +352,7 @@
             float: right;
             margin: 1%;
             margin-bottom: 0;
+            font-weight: bold;
         }
         
         #map {
@@ -510,7 +536,7 @@
         display: flex;
     }
 
-    .reivew-name{
+    .review-name{
         margin-top: 25px;
     }
 
@@ -566,7 +592,12 @@
     }
     
     .facLabel{
-    	margin-right: 15px
+    	margin-right: 15px;
+    	font-size: 18px;
+    }
+    
+    .facLabel img{
+    	margin-right:3px;
     }
     
     .logo-wrap{
@@ -597,6 +628,12 @@
 	    	width:455px;
 	    	height:420px;
     	}
+    	
+    	.reviewTitle{
+    		font-size: 30px;
+    		font-weight:bold;
+    	}
+    	
     
     	
     	
@@ -624,17 +661,17 @@
                     <label id="ho_title" class="title_tag">${ tour.bus_name }</label>
                     <br>
                 </div>
-                <label id="ho_address">
+                <label id="ho_address" class="infoLabel">
                 <c:set var="add" value="${fn:split(tour.bus_address, ',') }"/>
                 <c:forEach var="add" items="${add}" varStatus="a">
                 <c:if test="${a.count == 2}">주소 : ${add}</c:if>
                 </c:forEach>
                 </label><br>
-                <label>영업시간 : 오픈 ${ tour.bus_opening.substring(0, 5) } ~ 마감 ${ tour.bus_opening.substring(6) }</label>&nbsp;
+                <label class="infoLabel">영업시간 : 오픈 ${ tour.bus_opening.substring(0, 5) } ~ 마감 ${ tour.bus_opening.substring(6) }</label>&nbsp;
             </div>
 			
             <div id="ho_info">
-                <label id="jjim_btn">
+                <label id="jjim_btn" class="infoLabel">
 			        <c:choose>
 					    <c:when test="${jjimcheck eq '0' or empty jjimcheck}"> <!-- jjimcheck가 0이면 빈하트-->
 					        <img src="../resources/images/image_listpage/noheart.png" 
@@ -645,8 +682,8 @@
 					              id="btn_like">
 					    </c:otherwise>
 					</c:choose>찜하기</label>
-                <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
-                <label id="report_btn"><img id="report" class="report_img"
+                <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal" class="infoLabel"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
+                <label id="phone_btn" class="infoLabel"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">${ tour.bus_phone }</label>
             </div>
         </div>
@@ -826,7 +863,7 @@
 						
 						            <!-- 리뷰 상단 -->
 						            <div class="review-title">
-						                <div class="reivew-name">
+						                <div class="review-name">
 						                    <h3>제주호텔 ★★★★</h3>
 						                </div>
 						                <div class="review-avg">
@@ -944,7 +981,7 @@
 
         <!-- 후기 -->
         <div id="review_area">
-            <label>후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:yellow;">★</a>(후기 ${ review.size() }개)</label><br>
+            <label class="reviewTitle">후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:#ffd700;">★</a><b></b>(후기 ${ review.size() }개)</label><br>
             <c:if test="${ empty review }">
             <div class="reviewBox">
             <p style="font-size:60px">리뷰가 없습니다!!!</p>
@@ -959,15 +996,16 @@
 					<c:if test="${ r.img_rename2 ne '미입력'  }">
 	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename2 }" class="review_img">
 	                </c:if>
-	                <c:if test="${ r.img_rename3 ne '미입력'  }">
+	                <c:if test="${ r.img_rename3 ne '미입력'  }"> 	
 	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename3 }" class="review_img">
 	                </c:if>
 	            </div>
 	            <div class="review_writer">
-	                <label>${ r.us_name }</label>
-	                <div class="reivew">
+	                <label  class="reviewTitle" style="font-size:15px;">${ r.us_name }</label>
+	                <div class="review">
 	                    <a>${ r.rev_comment }</a>
 	                    <label class="review_date_label">${ r.rev_date }</label>
+	                    <label class="review_date_label"><a style="color:#ffd700;">★</a> ${r.re_star }</label>
 	                </div>
 	            </div>
             </div>
@@ -976,9 +1014,28 @@
     </section>
     
     <script>
-    	function(){
-    		
-    	}
+    
+    
+    var sum = 0;
+    var cnt = 0;
+    	$(function(){
+			 <c:forEach items="${review}" var="r">
+				 var star = '<c:out value="${r.re_star}"/>'
+				  
+				 sum += Number(star); 
+				 cnt++;
+			 </c:forEach>
+			 
+			 var avg = sum / cnt;
+			 
+			 var stars = $('#starLabel').find('b').text(avg.toFixed(1));
+			 
+			 var review = '<c:out value="${review.size()}"/>'
+		        	
+		        	if(review == '0'){
+		        		$('#starLabel').find('b').text(review);
+		        	}
+    	});
     
     	$j1124.datepicker.setDefaults({
 	        dateFormat: 'yy-mm-dd',

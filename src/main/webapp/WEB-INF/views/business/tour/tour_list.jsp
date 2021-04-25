@@ -228,6 +228,13 @@
         }
 
         /* 검색필터끝 */
+        
+        .topText{
+        	font-size: 35px;
+		    font-weight: bold;
+		    color: #343a40;
+        }
+        
 
         /* 정렬필터 */
 
@@ -403,13 +410,14 @@
         }
         
         .cateSelect {
-       	    width: 70px;
-		    height: 33px;
-		    border: 1px solid black;
+    	    /* width: 70px; */
+		    /* height: 33px; */
+		    /* border: 1px solid black; */
 		    border-radius: 20%;
 		    /* -webkit-appearance: none; */
 		    appearance: none;
 		    padding-left: 5px;
+		    font-weight: bold;
 		    
         }
         
@@ -511,7 +519,12 @@
                             	<button class="btn btn-secondary" id="searchBtn" type="button">검색하기</button>
                         </ul>
                     </div>
-                 </form>               
+                </form>
+                <div class="search-result">
+                    <label class="topText">삼다도와 함께하는</label><br>
+                    <label class="topText">제주도 지역의 관광지</label>
+                </div>
+
             </nav>
             
             <script>	
@@ -557,7 +570,7 @@
                 <ul id="choise2">
                     <li>
                         <div class="cover">
-							<select id="cateSelect"class="cateSelect">
+							<select id="cateSelect" class="cateSelect">
                                 <option value="tema">테마별</option>
                                 <option value="wedding">신혼</option>
                                 <option value="gradu">졸업</option>
@@ -566,7 +579,14 @@
 						</div>
                     </li>
                     <li>
-                        <div class="cover"><label>유형별</label></div>
+                        <div class="cover">
+							<select id="calSelect" class="cateSelect">
+                                <option value="tema">유형별</option>
+                                <option value="act">체험</option>
+                                <option value="mus">전시회</option>
+                                <option value="etc">기타</option>
+                            </select>
+						</div>
                     </li>
                     <li>
                         <div class="cover"><label>별점순</label></div>
@@ -588,6 +608,41 @@
 		    	              type : "post", 
 		    	              data : {"kinds" : kinds},
 		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";
+		                            str += "<b>입장료 : 입장료 없음</b>";
+		                            str += "<div id='frm_read'>"
+		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+		                            str += "</div>";               
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+		    
+		    $(function(){
+		    	$("#calSelect").change(function(){
+		    			var kinds = $(this).val(); 
+
+		    			$.ajax({
+		    				 url : '${contextPath}/business/calList', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  console.log(data);
 		    	            	  var cate = document.getElementById("secondlist");
 		    	            	  var list = "";
 		    	            	  for(var i in data){
