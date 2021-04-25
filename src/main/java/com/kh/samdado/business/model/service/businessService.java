@@ -114,6 +114,13 @@ public interface businessService {
 	
 	int updateRexdate(Report r);
 	
+	// Income의 exdate 확인 메소드 (selectList)
+	List<Income> findIncomeExdate();
+	
+	int updateExdate(Income i);
+	
+	int updateBusClassify(int bus_code);
+	
 	// 일반결제 메소드
 	public int insertIncome(Income i);
 
@@ -165,6 +172,12 @@ public interface businessService {
 	List<Business> calList(String kind);
 
 	List<Business> priceList(Business kinds);
+
+	
+
+	
+
+	
 
 	
 
