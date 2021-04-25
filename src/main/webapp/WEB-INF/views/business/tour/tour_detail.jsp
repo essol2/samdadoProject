@@ -22,7 +22,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -204,17 +204,18 @@
         }
 
         #mapBtn {
-            position: absolute;
-            background-color: white;
-            border-radius: 6px;
-            border: 1px solid rgb(70, 115, 85);
-            cursor: pointer;
-            color: skyblue;
-            font-family: Arial;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 10px 35px;
-            text-decoration: none;
+            position: relative;
+		    background-color: rgb(70, 115, 85);
+		    border-radius: 6px;
+		    border: 1px solid rgb(70, 115, 85);
+		    cursor: pointer;
+		    color: #ffffff;
+		    /* font-family: Arial; */
+		    font-size: 15px;
+		    font-weight: bold;
+		    padding: 5px 20px;
+		    text-decoration: none;
+		    z-index: 2;
         }
 
         /* 편의시설 체크div 및 소개 div */
@@ -763,7 +764,7 @@
                 <div class="col2">
                     <div id="map" style="width: 555px; height:330px;">
                     <button type="button" id="mapBtn" 
-                    onclick="window.open('https://map.kakao.com/link/search/${tour.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">길찾기</button>
+                    onclick="window.open('https://map.kakao.com/link/to/${tour.bus_address.substring(6)}','window_name','width=1200,height=800,location=no,status=no,scrollbars=yes');">길찾기</button>
                     </div>
                 </div>
                 
@@ -788,10 +789,12 @@
 	            
 	            // 주소로 좌표를 검색합니다
 	            geocoder.addressSearch(splitadd[1], function(result, status) {
-	
+	            	
+						console.log(add);
+						console.log(splitadd[1]);
 	                // 정상적으로 검색이 완료됐으면 
 	                 if (status === kakao.maps.services.Status.OK) {
-	
+			
 	                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 	
 	                    // 결과값으로 받은 위치를 마커로 표시합니다

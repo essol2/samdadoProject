@@ -355,6 +355,20 @@
             box-sizing: border-box;
         }
         
+        .mainProfile {
+
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
         .moreProfile {
 
             display: flex;
@@ -676,7 +690,7 @@
                 <div id="firstlist" class="gradient-border">
                 <c:forEach var="p" items="${ tourList }">
                 <c:if test="${ p.bus_classify eq 'P' && p.file_lv eq '0' }">
-                    <div class='profile'>
+                    <div class='mainProfile'>
                         <img class="premium" src="../resources/images/image_listpage/premium.png">
                         <img class="image" src="../resources/busUploadFiles/${ p.file_rename }" onclick="selectRes(${p.bus_code})">
                         <b>★4.90(후기 99+개)</b>
@@ -724,10 +738,10 @@
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 9;
+							x = 6;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+9 <= size_div)? x+9 : size_div;
+								x= (x+6 <= size_div)? x+6 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});
