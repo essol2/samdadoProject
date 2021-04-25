@@ -152,8 +152,6 @@ public interface businessService {
 
 	List<RoomAtt> selectRoomAtt(int bus_code);	
 
-	
-
 	List<Business> cateList(String kind);
 
 	List<Car> selectCars(int bus_code);
@@ -163,6 +161,10 @@ public interface businessService {
 	List<Review> selectReview(int bus_code);
 
 	int insertMenu(List<BusinessAtt> menus);
+
+	List<Business> calList(String kind);
+
+	List<Business> priceList(Business kinds);
 
 	
 

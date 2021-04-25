@@ -680,13 +680,6 @@
                 </div>
             </div>
         </div>
-            <div class="checktable">
-                <h2>주요 편의 시설</h2><br>                
-                <label><img src="../resources/images/image_listpage/check.png">테라스</label>
-                <label><img src="../resources/images/image_listpage/check.png">편의점</label>
-                <label><img src="../resources/images/image_listpage/check.png">주차</label><br>
-                
-            </div>
 
             <hr class="boundary">
 
@@ -715,9 +708,9 @@
             <div class="list">
                 <div id="firstlist">
                     <div class='profile'>
-                        <c:forEach var="ca" items="${ carAtt }">
-                        <c:if test="${ ca.file_lv eq '0' }">
-                        <img class="image" src="${ contextPath }/resources/busUploadFiles/" ${ ca.file_rename }>
+                        <c:forEach var="ca" items="${ carAtt }" varStatus="i">
+                        <c:if test="${ i.first }">
+                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ ca.file_rename }">
                         </c:if>
                         </c:forEach>
                         <b>${ c.car_name }</b><br>

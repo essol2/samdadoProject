@@ -366,6 +366,18 @@ public class businessServiceImpl implements businessService {
 		return bDao.insertMenu(menus);
 	}
 
+	@Override
+	public List<Business> calList(String kind) {
+		// TODO Auto-generated method stub
+		return bDao.calList(kind);
+	}
+
+	@Override
+	public List<Business> priceList(Business kinds) {
+		// TODO Auto-generated method stub
+		return bDao.priceList(kinds);
+	}
+
 	
 
 	
