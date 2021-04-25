@@ -41,6 +41,7 @@ import com.kh.samdado.mypage.model.vo.ApplyPagination;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.RouteMP;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
 import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.user.model.service.UserService;
@@ -948,90 +949,47 @@ public class MypageController {
 		 @GetMapping("/myroute")
 		 public ModelAndView goToMyroute(@ModelAttribute User u, ModelAndView mv, Map map) {
 			 
+			 // 이 회원이 가지고 있는 모든 경로의 모든 관광지 리스트
 			 List<RouteFinal> myRouteList = mService.selectMyRoute(u);
 			 System.out.println("myRoute확인 : " + myRouteList);
 			 
-			 List<RouteFinal> routeNumber = mService.selectRouteNum(u);
+			 // 이 회원이 가지고 있는 경로 수
+			 List<RouteMP> routeNumber = mService.selectRouteNum(u);
+			 System.out.println("routeNumber : " + routeNumber);
 			 
 			 // route_no별로 담을 Map 객체 선언
 			 HashMap<Integer, List<RouteFinal>> routeTest = new HashMap<>(); 
 			 
+			 // 경로 별로 가지고 있는 관광지 수
 			 int routeNum = 0;
-			 int[] standardList = new int[routeNumber.size()];
-//			 int[] standardList2 = new int[routeNumber.size()];
-			 int mapKey = 1;
+			 // 관광지 수를 담을 리스트 선언
+			 int[] standardList = new int[100];
+			 // hashMap의 key값이 되어줄 아이(index)
+			 int mapKey = 0;
+			 // 배열 slice의 연산을 위해 호출
 			 int forIndex = 0;
-			 
-			 // 리스트 자르기 위한 기준 찾기
+
+			 // 리스트 자르기 위한 기준 찾기 -> 관광지 갯수 별로 자르기.
 			 for(int a = 0; a < routeNumber.size(); a++) {
-				 routeNum = myRouteList.get(a).getRoute_no();
+				 // 모든 경로의 모든 관광지 리스트 중에서 index=0의 route_no spotNum에 넣기
+				 routeNum = routeNumber.get(a).getRoute_no();
+				 // 해당 index의 경로의 관광지 갯수 찾아서 standard에 넣기 (ex. index=0의 경로에는 standard만큼의 관광지가 들어잇음)
 				 int standard = mService.selectStandard(routeNum);
+				 // 이 관광지 개수를 standardList[0]에 넣기
 				 standardList[a] = standard;
+				 System.out.println("standardList1["+a+"] : " + standardList[a] + ", standard : " + standard);
 			 }
-			 for(int e = 0; e < routeNumber.size(); e++) {
-				 System.out.println("standardList1["+e+"] : " + standardList[e]);
-			 }
-			 
-//			 standardList2[2] = standardList[2]-1;
-//			 System.out.println(standardList2[1]);
-			 
-//			 for(int d=0; d>routeNumber.size(); d++) {
-//				 standardList2[d] = standardList[d]-1;
-//			 }
-//			 
-//			 for(int f = 0;f < routeNumber.size(); f++) {
-//				 System.out.println("standardList2["+f+"] : " + standardList2[f]);
-//			 }
+
 			 
 			 for(int b = 0; b < routeNumber.size(); b++) {
-				 List<RouteFinal> insertThis = myRouteList.subList(forIndex,forIndex+standardList[b]-1);
+				 List<RouteFinal> insertThis = myRouteList.subList(forIndex,forIndex+standardList[b]);
 				 routeTest.put(mapKey, insertThis);
 				 forIndex = forIndex + standardList[b];
 				 mapKey ++;
 				 System.out.println("routeTest["+b+"] : " + routeTest.get(b));
 			 }
 			 
-			 mv.addObject("routeList", routeTest);
-			 
-//			 // 1. route_no만 담고있는 list 만들고 담기
-//			 int[] routeNos = new int[myRouteList.size()];
-//			 
-//			 int resultCompare = 0;
-//			 int newRouteNo = 0;
-////			 int resultno = myRouteList.get(0).getRoute_no();
-////			 System.out.println(resultno);
-//			 
-//			 for(int i=0; i < myRouteList.size(); i++) {
-//				 routeNos[i] = myRouteList.get(i).getRoute_no();
-//				 System.out.println("routeNos["+i+"] : " + routeNos[i]);
-//			 }
-//			 
-//			 System.out.println("객체로 빼올 수 있는지 확인 : " + myRouteList.get(1));
-//			 int lastIndex = myRouteList.size()-1;
-//			 routeTest.put(newRouteNo, myRouteList.get(0));
-//			 newRouteNo += 1;
-//			 routeTest.put(newRouteNo, myRouteList.get(3));
-//			 System.out.println("put test : " + routeTest.get(0));
-//			 System.out.println("put test : " + routeTest.get(1));
-//			 
-////			 for(int j=0; j < lastIndex; j++) {
-////				if(routeNos[j] == routeNos[j+1]) {
-////					resultCompare = 1;
-////					
-////					System.out.println("if : " + j+"번째, resultCompare : " + resultCompare + ", newRouteNo : " + newRouteNo);
-////				} else {
-////					resultCompare = 0;
-////					routeTest.put(newRouteNo, myRouteList.get(j));
-////					newRouteNo += 1;
-////					System.out.println("else : " + j+"번째, resultCompare : " + resultCompare + ", newRouteNo : " + newRouteNo);
-////				}
-////				
-////				
-////				System.out.println("routeTest["+j+"] : " + routeTest.get(j));
-////			 }
-//			 routeTest.put(newRouteNo, myRouteList.get(lastIndex));
-//			 System.out.println("routeTest[11] : " + routeTest.get(11));
-			 
+			 mv.addObject("routeTest", routeTest);
 			 mv.addObject("routeNum", routeNumber);
 			 mv.addObject("standardList", standardList);
 			 mv.setViewName("mypage/mp_MyRoutes");
@@ -1045,10 +1003,10 @@ public class MypageController {
 	@PostMapping("/userout")
 	public String memberOut(@ModelAttribute User u, Model model) {
 		
-		System.out.println("out u : " + u);
+		//System.out.println("out u : " + u);
 		//System.out.println(memoutPwd);
 		User loginUser = uService.loginUser(u);
-		System.out.println("out loginUser" + loginUser);
+		//System.out.println("out loginUser" + loginUser);
 		
 		List<Alert> alertNList = mService.selectAlertList(u);
 		 // 읽은 리스트

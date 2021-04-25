@@ -172,6 +172,7 @@
         margin-top : 1%;
         margin-right : 1%;
         margin-bottom: 1%;
+        align-items : center;
     }
 
     #rinfoText{
@@ -236,7 +237,14 @@
 		width : 200px;
 	}
 
-  
+  #motherDiv{
+  	flex-wrap : wrap;
+  	display: flex;
+  	width : 100%;
+  	height : fit-content;
+  	justify-content : center;
+  	margin-left : 2%;
+  }
 </style>
 <body>
 
@@ -274,36 +282,39 @@
 							</script>
                     </div>
                     <c:choose>
-                    <c:when test="${!empty myRoute }">
+                    <c:when test="${!empty routeTest }">
 					<c:forEach items="${ routeTest }" var="rt" varStatus="rtNum">
                     <div class="tripReservInfoBox">
-                        <div id="rinfoText"><h3 style="font-size: medium;">1일차. (소요시간 : 10시간)</h3></div>
-                        
-                       		<c:forEach var='i' begin='1' end="${standardList[0]}">
+                        <div id="rinfoText"><h3 style="font-size: medium;">${ rtNum.count }일차.</h3></div>
+                        <div id="motherDiv">
+                        	
+                       		<c:forEach var='rrt' items="${rt.value}" varStatus="rrtNum"> 
+                       		<%-- <c:forEach var="i" begin="0" end="${fn:length(rt.key)}"> --%>
 		                        <div class="routesBox">
-		                            
-		                            <c:if test="${ mr.spot_no ne 0}">
+		                           
+		                            <c:if test="${ rrt.spot_no ne 0}">
 		                            <div class="routeInfoBox">
 		                                <div class="rInfoImgArea">
-		                                    <%-- <img src="${contextPath}/resources/images/image_route/${inRt(inRtNum.index).spot_oname}" alt="" style="width:100%; height:100%;"> --%>
+		                                
+		                                    <img src="${contextPath}/resources/images/image_route/${rrt.spot_oname}" alt="" style="width:100%; height:100%;"> 
 		                                </div>
 		                                <div class="rNameArea">
-		                                    <p>${mr.spot_title}</p>
+		                                    <p>${rrt.spot_title}</p>
 		                                </div>
 		                            </div>
 		                            </c:if>
-		                            <c:if test="${ mr.bus_code ne 0}">
+		                            <c:if test="${rrt.bus_code ne 0}">
 		                            <div class="routeInfoBox">
 		                                <div class="rInfoImgArea">
-		                                    <img src="${contextPath}/resources/images/image_route/${mr.file_rename}" alt="" style="width:100%; height:100%;">
+		                                    <img src="${contextPath}/resources/images/image_route/${rrt.file_rename}" alt="" style="width:100%; height:100%;">
 		                                </div>
 		                                <div class="rNameArea">
-		                                    <p>${mr.bus_name}</p>
+		                                    <p>${routeTest[rrt].bus_name}</p>
 		                            </div>
 		                            </div>
 		                            </c:if>
 		                            
-		                            <c:if test="${mrNum.last eq false }">
+		                            <c:if test="${ rrtNum.last eq false }">
 		                            <div class="rArrowArea">
 		
 		                                <img src="${contextPath}/resources/images/image_mp/arrow.png">
@@ -312,17 +323,17 @@
 		                            </c:if>
 		                        </div>
                        		</c:forEach>
-                    </div>
+                       		</div>
+                    	</div>
 						</c:forEach>
 							</c:when>
 							<c:otherwise>
 								 <div class="tripReservInfoBox">
-			                        <div id="rinfoText"><h3 style="font-size: medium;">2일차.</h3></div>
 			                        <div class="routesBox">
 			                            <div class="noRouteBox">
 			
 			                                <img src="${contextPath}/resources/images/image_mp/noRoute.png" alt=""><br>
-			
+											
 			                                <p>아직 저장된 길이 없습니다.</p>
 			                            </div>
 			                        </div>
