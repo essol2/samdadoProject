@@ -671,31 +671,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                                      AND R.REXDATE IS NOT NULL)
 	</select>
 	
-	<!-- 호텔리스트 -->
-	<select id="priceList" resultMap="BusinessResultSet">
-		SELECT 
-       		   B.BUS_CODE
-       		 , US_NO
-             , BUS_NAME
-     		 , BUS_ADDRESS
-     		 , BUS_INTRO
-     		 , BUS_CATEGORY
-     		 , BUS_PHONE
-     		 , BUS_OPENING
-     		 , HOTEL_CATEGORY
-     		 , BT.FILE_RENAME
-     		 , BT.FILE_LV
-  		  FROM 
-  		       BUSINESS B
-  		  JOIN 
-  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE
-  		       
- 		 WHERE   
-       		   BUS_STATUS = 'Y'
-       	   AND BUS_CATEGORY = 'H'
-       	   AND BT.FILE_LV = '0'
-	  ORDER BY DBMS_RANDOM.RANDOM
-	</select>
 	<!-- 음식점리스트 -->
 	<select id="selectResList" resultMap="BusinessResultSet">
 		SELECT 

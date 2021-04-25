@@ -336,7 +336,7 @@
 			
 		<!-- 차량추가 버튼 -->
         <div class="addBtn-area">
-            <button type="button" class="addBtn" id="removeBtn" onclick="removeCar()">차량삭제</button>
+            <button type="button" class="addBtn" id="removeBtn" onclick="removeCar()" style="display:none;">차량삭제</button>
             <button type="button" class="addBtn" id="addBtn" onclick="addCar()">차량추가</button>
         </div>
 		
@@ -389,10 +389,6 @@
 	                <label for ="가솔린">가솔린</label>&nbsp;
 		        </div>
 				
-				<!-- 체크박스 선택 하나만 되게함 -->
-				<script>
-				
-				</script>
 				
 				<!-- 차량사진 -->
 				<div class="join-wrap">
@@ -444,6 +440,7 @@
 	
 <script>
 	var _cnt = 1;
+	var num = 0;
        function addCar(){
            var div = document.createElement('div');
 
@@ -458,15 +455,24 @@
            $("#carInfoDiv-"+_cnt).children().find('#carName').attr('name', 'carList[' + _cnt + '].car_name');
            $("#carInfoDiv-"+_cnt).children().find('#carPrice').attr('name', 'carList[' + _cnt + '].car_price');
            
+           num = _cnt;
            _cnt++;
-           
-           var addCnt = $("#addBtn").text('차량추가(' + _cnt + ')');
+           $("#addBtn").text('차량추가(' + _cnt + ')');
+           $("#removeBtn").show();
        }
        
        function removeCar(){
-
+    	   $("#carInfoDiv-"+num).remove();
+    	   num--;
+    	   _cnt--;
+    	   if(num == 0){
+    	   $("#removeBtn").hide();
+    	   $("#addBtn").text('차량추가');
+    	   } else{
+    	   $("#addBtn").text('차량추가(' + _cnt + ')');
+      	
     	   }
-       
+       }   
        $("#gen").change(function() {
     	    $("#hidenDiv").hide();
     	});
