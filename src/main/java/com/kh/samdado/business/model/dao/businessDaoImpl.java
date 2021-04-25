@@ -286,6 +286,16 @@ public class businessDaoImpl implements businessDao {
 	public Report findReportStatus(Report r) {		
 		return sqlSession.selectOne("businessMapper.findReportStatus", r);
 	}
+  
+  @Override
+	public List<Report> findReportRexdate() {
+	  return sqlSession.selectList("businessMapper.findReportRexdate");
+	}
+  
+  @Override
+	public int updateRexdate(Report r) {
+	  return sqlSession.update("businessMapper.updateRexdate", r);
+	}
   	
   	// 프리미엄 등록 시 만료일
 	@Override
@@ -383,6 +393,10 @@ public class businessDaoImpl implements businessDao {
 	public int insertMenu(List<BusinessAtt> menus) {
 		return sqlSession.insert("businessMapper.insertMenu", menus);
 	}
+
+	
+
+	
 
   
  

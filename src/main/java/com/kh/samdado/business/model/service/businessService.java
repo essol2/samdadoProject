@@ -109,6 +109,11 @@ public interface businessService {
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
 	
+	// Report의 rexdate 확인 메소드 (selectList)
+	List<Report> findReportRexdate();
+	
+	int updateRexdate(Report r);
+	
 	// 일반결제 메소드
 	public int insertIncome(Income i);
 
@@ -158,6 +163,10 @@ public interface businessService {
 	List<Review> selectReview(int bus_code);
 
 	int insertMenu(List<BusinessAtt> menus);
+
+	
+
+	
 
 	
 

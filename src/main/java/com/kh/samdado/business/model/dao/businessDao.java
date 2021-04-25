@@ -108,6 +108,10 @@ public interface businessDao {
 	
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
+	
+	List<Report> findReportRexdate();
+	
+	int updateRexdate(Report r);
 
 	// 일반결제 메소드
 	int insertIncome(Income i);
@@ -163,6 +167,10 @@ public interface businessDao {
 	List<Review> selectReview(int bus_code);
 
 	int insertMenu(List<BusinessAtt> menus);
+
+	
+
+	
 
 	
 

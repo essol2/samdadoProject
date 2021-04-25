@@ -253,6 +253,41 @@ public class businessController {
 	@GetMapping("/hotel_list")
 	public ModelAndView hotelList(ModelAndView mv) {
 		
+		List<Report> findReportRexdate = bService.findReportRexdate();
+		//System.out.println(findReportRexdate);
+		
+		Date today = new Date(); // 오늘날짜
+		Date rexdate = null; // 비교날짜 변수선언
+		String day1 = null; // 오늘날짜 스트링타입
+		String day2 = null; // 비교날짜 스트링타입
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (Report r : findReportRexdate) {
+			rexdate = r.getRexdate();			
+			//System.out.println("r : " + r);
+		
+				try {
+					day1 = sdf.format(today); // 오늘
+					day2 = sdf.format(rexdate); // 만기	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			
+				//System.out.println("day1 : " + day1);
+				//System.out.println("day2 : " + day2);
+				
+			int compare = day1.compareTo(day2);			
+			//System.out.println("compare : " + compare);
+			
+			if (compare >= 0) { // 제재기간 넘음 
+				bService.updateRexdate(r); // rexdate를 null로 update
+				
+			} else if (compare < 0) { // 제재 남음
+				// 제재기간이 안지났으므로 아무행위X
+			}
+		}
+		
 		List<Business> hotelList = bService.selectHotelList();
 			
 		if(hotelList != null) {
@@ -403,6 +438,41 @@ public class businessController {
 	// 관광지 리스트
 	@GetMapping("/tour_list")
 	public ModelAndView tourList(ModelAndView mv) {
+		
+		List<Report> findReportRexdate = bService.findReportRexdate();
+		//System.out.println(findReportRexdate);
+		
+		Date today = new Date(); // 오늘날짜
+		Date rexdate = null; // 비교날짜 변수선언
+		String day1 = null; // 오늘날짜 스트링타입
+		String day2 = null; // 비교날짜 스트링타입
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (Report r : findReportRexdate) {
+			rexdate = r.getRexdate();			
+			//System.out.println("r : " + r);
+		
+				try {
+					day1 = sdf.format(today); // 오늘
+					day2 = sdf.format(rexdate); // 만기	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			
+				//System.out.println("day1 : " + day1);
+				//System.out.println("day2 : " + day2);
+				
+			int compare = day1.compareTo(day2);			
+			//System.out.println("compare : " + compare);
+			
+			if (compare >= 0) { // 제재기간 넘음 
+				bService.updateRexdate(r); // rexdate를 null로 update
+				
+			} else if (compare < 0) { // 제재 남음
+				// 제재기간이 안지났으므로 아무행위X
+			}
+		}
 		
 		List<Business> tourList = bService.selectTourList();
 		
@@ -584,6 +654,41 @@ public class businessController {
 	// 음식점 리스트
 	@GetMapping("/restaurant_list")
 	public ModelAndView resList(ModelAndView mv) {
+		
+		List<Report> findReportRexdate = bService.findReportRexdate();
+		//System.out.println(findReportRexdate);
+		
+		Date today = new Date(); // 오늘날짜
+		Date rexdate = null; // 비교날짜 변수선언
+		String day1 = null; // 오늘날짜 스트링타입
+		String day2 = null; // 비교날짜 스트링타입
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (Report r : findReportRexdate) {
+			rexdate = r.getRexdate();			
+			//System.out.println("r : " + r);
+		
+				try {
+					day1 = sdf.format(today); // 오늘
+					day2 = sdf.format(rexdate); // 만기	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			
+				//System.out.println("day1 : " + day1);
+				//System.out.println("day2 : " + day2);
+				
+			int compare = day1.compareTo(day2);			
+			//System.out.println("compare : " + compare);
+			
+			if (compare >= 0) { // 제재기간 넘음 
+				bService.updateRexdate(r); // rexdate를 null로 update
+				
+			} else if (compare < 0) { // 제재 남음
+				// 제재기간이 안지났으므로 아무행위X
+			}
+		}
 		
 		List<Business> resList = bService.selectResList();
 		System.out.println(resList);
@@ -773,6 +878,41 @@ public class businessController {
 	// 렌트카 리스트
 	@GetMapping("/rentcar_list")
 	public ModelAndView carList(ModelAndView mv) {
+		
+		List<Report> findReportRexdate = bService.findReportRexdate();
+		//System.out.println(findReportRexdate);
+		
+		Date today = new Date(); // 오늘날짜
+		Date rexdate = null; // 비교날짜 변수선언
+		String day1 = null; // 오늘날짜 스트링타입
+		String day2 = null; // 비교날짜 스트링타입
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (Report r : findReportRexdate) {
+			rexdate = r.getRexdate();			
+			//System.out.println("r : " + r);
+		
+				try {
+					day1 = sdf.format(today); // 오늘
+					day2 = sdf.format(rexdate); // 만기	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			
+				//System.out.println("day1 : " + day1);
+				//System.out.println("day2 : " + day2);
+				
+			int compare = day1.compareTo(day2);			
+			//System.out.println("compare : " + compare);
+			
+			if (compare >= 0) { // 제재기간 넘음 
+				bService.updateRexdate(r); // rexdate를 null로 update
+				
+			} else if (compare < 0) { // 제재 남음
+				// 제재기간이 안지났으므로 아무행위X
+			}
+		}
 		
 		List<Business> carList = bService.selectCarList();
 		
