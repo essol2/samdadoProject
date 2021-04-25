@@ -1034,6 +1034,28 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     WHERE
 		     	   BUS_CODE = #{bus_code}
 	</select>
+	
+	<select id="findReportRexdate" parameterType="Report" resultMap="ReportResultSet">
+      SELECT 
+              REPORT_NO	       
+	        , REXDATE	        
+	        , US_NO
+	        , R_COUNT
+	        , REF_BUS_CODE
+        FROM 
+              REPORT
+       WHERE
+       		  REXDATE IS NOT NULL
+   </select>
+   
+   <update id="updateRexdate" parameterType="Report">
+		UPDATE
+				REPORT
+			SET
+				REXDATE = NULL
+		  WHERE
+	     	    REF_BUS_CODE = #{ bus_code }
+	</update>
   
    <select id="findReportStatus" parameterType="Report" resultMap="ReportResultSet">
       SELECT 
@@ -1456,6 +1478,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
        	   AND BT.FILE_LV = '0'
        	   AND BUS_CLASSIFY = 'G'
 	  	   AND B.BUS_NAME like #{bus_name}
+	  	   AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
 	</select>
 	
 	<select id="searchTourList" resultMap="BusinessResultSet">
@@ -1489,6 +1517,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		   AND BUS_STATUS = 'Y'
            AND BT.FILE_LV = '0'
            AND BUS_NAME like #{bus_name}
+           AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
 	</select>
 	
 	<select id="searchResList" resultMap="BusinessResultSet">
@@ -1515,6 +1549,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
        	   AND BT.FILE_LV = '0'
        	   AND BUS_CLASSIFY = 'G'
 	  	   AND BUS_NAME like #{bus_name}
+	  	   AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
 	</select>
 	
 	<select id="searchCarList" resultMap="BusinessResultSet">
@@ -1545,6 +1585,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
        	   AND BT.FILE_LV = '0'
 	  	   AND BUS_CLASSIFY = 'G'
 	  	   AND BUS_NAME like #{bus_name}
+	  	   AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
 	</select>
 
    <!-- 지혜 -->
