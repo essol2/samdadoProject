@@ -194,7 +194,7 @@
 												<div class="parent">
 													<div class="spot_border">
 														<p class="spot_title" id="spotTitle">${ r.spot_title }</p>
-														<button class="spot_btn"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
+														<button class="spot_btn" id="deleteSpot" onclick="deleteSpot(this)"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
 													</div>
 													<div class="spot_chnge">
 	                                                	<button class="up_down" id="tableUp" onclick="moveUp(this)" ><img src="../resources/images/image_route/btn_up.png"></button>
@@ -216,11 +216,10 @@
 	                                    </c:if>
                                </c:forEach>
                                  
-                                   <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: 10%; font-size: 16px;">총 이동 거리 40.1km </p></td></tr>
-                                   <tr><td colspan="2"><p id="navi-content" style="text-align: center; margin-top: -5%; font-size: 16px; margin-bottom: 10%;">예상 이동 시간 83분</p></td></tr>
-                                   
                                    <tr>
+                                   
                                         <td colspan="2"> 
+                                        <p style="margin-top: 15%;"></p>
                                             <button class="_btn" id="ch_btn">변경 완료</button>
                                             <button class="_btn" id="add_btn">추가하기</button>
                                         </td>
@@ -446,6 +445,26 @@
 		});
 		
 	</script>
+	
+	<!-- 여행지 삭제 -->
+	<script>
+		function deleteSpot(el) {
+			var $tr1 = $(el).closest('tr');
+			var $tr2 = $tr1.prev();
+			var $tr3 = $tr1.next();
+			
+			if($tr1.prev().html() != null) {
+				$tr1.remove();
+				$tr2.remove();
+			} else if($tr1.next().next().html != null) { 
+				$tr1.remove();
+				$tr3.remove();
+			} else {
+				$tr1.remove();
+				$tr3.remove();
+			}
+		}
+	</script>
 	    
 	<!-- 순서 변경 -->
 	<script>
@@ -604,6 +623,7 @@
 		            const result = await addressSearch(address);
 		            setPolyLine(result);
 		            console.log("길이: " + polyline.getLength());
+		            
 		        }
 		    } catch (e) {
 		        console.log(e);
