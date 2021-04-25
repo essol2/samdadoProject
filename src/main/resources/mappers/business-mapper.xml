@@ -48,7 +48,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="room_people" column="ROOM_PEOPLE" />
 		<result property="room_amenity" column="ROOM_AMENITY" />
 		<result property="room_no" column="ROOM_NO" />
+		<!-- 신고기록 조인 -->
 		<result property="rexdate" column="REXDATE" />
+		<result property="ref_bus_code" column="REF_BUS_CODE" />
 	</resultMap>
 	
 	<resultMap type="BusinessAtt" id="BusinessAttResultSet">
@@ -607,7 +609,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<select id="selectTourList" resultMap="BusinessResultSet">
 		SELECT 
 		       B.BUS_CODE
-		     , US_NO
+		     , B.US_NO
 		     , BUS_NAME
 		     , BUS_ADDRESS
 		     , BUS_INTRO
@@ -628,16 +630,22 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
 		 WHERE
-		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE   	   
+		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE
 		   AND BUS_CATEGORY = 'T'
 		   AND BUS_STATUS = 'Y'
 		   AND BT.FILE_LV = '0'
+           AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
 	</select>
 	<!-- 호텔리스트 -->
 	<select id="selectHotelList" resultMap="BusinessResultSet">
 		SELECT 
        		   B.BUS_CODE
-       		 , US_NO
+       		 , B.US_NO
              , BUS_NAME
      		 , BUS_ADDRESS
      		 , BUS_INTRO
@@ -654,13 +662,19 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
  		 WHERE   
        		   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'H'
-       	   AND BT.FILE_LV = '0'	  
+       	   AND BT.FILE_LV = '0'
+       	   AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
 	</select>
 	<!-- 음식점리스트 -->
 	<select id="selectResList" resultMap="BusinessResultSet">
 		SELECT 
        		   B.BUS_CODE
-       		 , US_NO
+       		 , B.US_NO
              , BUS_NAME
      		 , BUS_ADDRESS
      		 , BUS_INTRO
@@ -677,14 +691,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
  		 WHERE   
        		   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'R'
-       	   AND BT.FILE_LV = '0'	  
+       	   AND BT.FILE_LV = '0'
+       	   AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
 	</select>
 	
 	<!-- 렌트카리스트 -->
 	<select id="selectCarList" resultMap="BusinessResultSet">
 		SELECT
 			   B.BUS_CODE
-			 , US_NO
+			 , B.US_NO
 			 , BUS_NAME
 			 , BUS_ADDRESS
 			 , BUS_INTRO
@@ -705,7 +725,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE 
 		 	   BUS_STATUS = 'Y'
        	   AND BUS_CATEGORY = 'C'
-       	   AND BT.FILE_LV = '0'	  
+       	   AND BT.FILE_LV = '0'
+       	   AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
 	</select>
 	<!--지혜 -->
 
