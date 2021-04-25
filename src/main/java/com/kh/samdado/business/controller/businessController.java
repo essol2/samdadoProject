@@ -970,7 +970,7 @@ public class businessController {
 			int bookingCar = bService.insertBookingCar(b);
 		}
 		
-		return "redirect:/mypage/booking";
+		return "redirect:/mypage/booking?usno=" + i.getUsno();
 		
 	}
 	
