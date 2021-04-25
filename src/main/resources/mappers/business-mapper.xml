@@ -1065,7 +1065,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  	PAY_NO
 		  , ITEM
 		  , AMOUNT
-	    , PDATE
+	      , PDATE
 		  , EXDATE
 		  , US_NO
 		  )
