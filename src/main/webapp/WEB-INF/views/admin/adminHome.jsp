@@ -47,7 +47,7 @@
                  		   <br><br>
                            <div class="row" style="padding-top: 4%;">
                            <h1>광고별 매출</h1>
-                	       <h6>데일리 배너광고 | 프리미엄 광고 | 커미션 매출 내역이 보여집니다.</h6>
+                	       <h6>배너광고 | 프리미엄 광고 | 커미션 매출 내역이 보여집니다.</h6>
                 	       <br><br>
                             <div>
                                 <canvas id="myAllChart"></canvas>

@@ -130,7 +130,7 @@
 					
 					for (var i in data) {
 						
-						var div = $("<div class='col-sm-6 col-md-4' onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
+						var div = $("<div class='col-sm-6 col-md-4' style='position: absolute;' onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
 						var card = $("<div class='card'>");
 						var cardBody = $("<div class='card-body'>");
 						var img = $("<img class='card-img-top' src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "'>");
@@ -144,12 +144,9 @@
 						card.append(img);
 						card.append(cardBody);
 						div.append(card);
-						//badiv.append(div);
+						badiv.append(div);
 						
-						$('#bannerAdImglistDiv').masonry({
-							itemSelector: 'col-sm-6',
-							percentPosition: true
-						}).append(card).masonry('appended', card).masonry();
+						
 					}
 					
 					
