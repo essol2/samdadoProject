@@ -691,25 +691,10 @@
             </div>
 
             <hr class="boundary">
-			<!-- 
-            <div class="choise">
-                <input type="checkbox" name="small" id="small"><label for="small">소형</label>
-                <input type="checkbox" name="midium" id="midium"><label for="midium">중형</label>                
-                <input type="checkbox" name="big" id="big"><label for="big">대형</label>
-                <input type="checkbox" name="suv" id="suv"><label for="suv">SUV</label>
-                <input type="checkbox" name="foreign" id="foreign"><label for="foreign">수입</label><br>
-                <input type="checkbox" name="kia" id="kia"><label for="kia">기아</label>
-                <input type="checkbox" name="hyundae" id="hyundae"><label for="hyundae">현대</label>
-                <input type="checkbox" name="bmw" id="bmw"><label for="bmw">BMW</label>
-                <input type="checkbox" name="benz" id="benz"><label for="benz">BENZ</label>
-                <input type="checkbox" name="rno" id="rno"><label for="rno">르노</label><br>
-                <input type="checkbox" name="diesel" id="diesel"><label for="diesel">디젤</label>
-                <input type="checkbox" name="gasoline" id="gasoline"><label for="gasoline">가솔린</label>
-            </div>
-             -->
-			<c:forEach var="c" items="${ cars }">
+			
             <div class="list">
                 <div id="firstlist">
+			<c:forEach var="c" items="${ cars }">
                     <div class='profile'>
                         <c:forEach var="ca" items="${ carAtt }" varStatus="i">
                         <c:if test="${ i.first }">
@@ -720,14 +705,11 @@
                         <b>${ c.car_fuel }</b><br>
                         <b>${ c.car_price }원</b><br>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            예약하기
-                        </button>
-                        
+ 예약하기</button>
                     </div>                    
-                    
+            </c:forEach>
                 </div>                               
             </div>
-            </c:forEach>
             <div class="btnArea">
                 <button class="moreBtn">더보기</button>
             </div>

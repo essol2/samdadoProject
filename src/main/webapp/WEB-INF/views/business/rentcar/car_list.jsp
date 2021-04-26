@@ -486,6 +486,13 @@
         	height : fit-content;
         	backtround-color : rgba( 0,0,0,0);
         }
+        
+        .btn.btn-sea{-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+		a{text-decoration:none;}        
+        .btn.btn-sea {font-size: 18px; white-space:nowrap; width:150px; padding:.8em 1.5em; font-family: GmarketSansBold; line-height:18px; display: inline-block;zoom: 1; color: #fff; text-align: center; position:relative; -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear; transition: border .25s linear, color .25s linear, background-color .25s linear;}      
+        .btn.btn-sea{background-color: #467355; border-color: #467355; -webkit-box-shadow: 0 3px 0 #088d74; box-shadow: 0 3px 0 #088d74;}
+		.btn.btn-sea:hover{background-color:white; color:#467355;}
+		.btn.btn-sea:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
 
         /* 사업장종류선택끝 */
     </style>
@@ -501,16 +508,16 @@
             <nav id="choise-nav">
             	<ul id="choise">
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/hotel_list'>숙박</a></div>
+                        <a href='${ contextPath }/business/hotel_list' class="btn btn-sea">숙박</a>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/tour_list'>관광지</a></div>
+                        <a href='${ contextPath }/business/tour_list' class="btn btn-sea">관광지</a>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/restaurant_list'>음식점</a></div>
+                        <a href='${ contextPath }/business/restaurant_list' class="btn btn-sea">음식점</a>
                     </li>
                     <li>
-                        <div class="cover" style="background-color: rgb(70, 115, 85);"><label  style="color: white;">렌트카</label></div>
+                        <a href='${ contextPath }/business/rentcar_list' class="btn btn-sea">렌트카</a>
                     </li>
                 </ul>
             </nav>
@@ -587,7 +594,7 @@
                 <c:if test="${ c.bus_classify eq 'P' && c.file_lv eq '0' }">
                     <div class='mainProfile'>
                     <input type="hidden" id="bus_code" name="bus_code" value="${ c.bus_code }">
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
+                        <img class="premium" src="../resources/images/image_listpage/premiumicon.PNG">
                         <img class="image" src="../resources/busUploadFiles/${ c.file_rename }" onclick="selectRes(${c.bus_code})">
                         <b>${ c.bus_name }</b>	                        
 	                        <c:if test="${ loginUser.usno != null }">
