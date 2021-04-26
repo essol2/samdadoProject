@@ -274,8 +274,8 @@
         }
 
         .premium {
-            width: 75px;
-            height: 21px;
+            width: 60px;
+            height: 60px;
         }
 
         /* 프리미엄테두리 반짝이효과 */
@@ -347,7 +347,7 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -357,13 +357,18 @@
             display: flex;
             flex-direction: column;
             /* align-items: center; */
-            justify-content: center;
+            /* justify-content: center; */
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
+        }
+        
+        .premium_div{
+        	position:absolute;
+        	margin-bottom:368px;
         }
         
         .moreProfile {
@@ -375,7 +380,7 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -643,7 +648,9 @@
                 <c:if test="${ h.bus_classify eq 'P' && h.file_lv eq '0' }">
                     <div class='mainProfile'>
                     <input type="hidden" id="bus_code" name="bus_code" value="${ h.bus_code }">
-                        <img class="premium" src="../resources/images/image_listpage/premiumicon.PNG">
+                        <div class="premium_div">                    	
+                        <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
+                    	</div>
                         <img class="image" src="../resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
                         <b>★4.90(후기 99+개)</b>
 	                    <b>${ h.bus_name }</b>

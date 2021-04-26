@@ -989,7 +989,7 @@
                     <!-- 예약날짜-->
                     <div class="start-div">
                         <label for="startDate">예약날짜</label>
-                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)" required>
                     </div>
                 </div>
                 <div class="modal-body2">
