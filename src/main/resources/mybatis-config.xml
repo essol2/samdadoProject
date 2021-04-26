@@ -19,6 +19,7 @@
 		<typeAlias type="com.kh.samdado.mypage.model.vo.AccountBook" alias="AccountBook"/>
 		<typeAlias type="com.kh.samdado.mypage.model.vo.Alert" alias="Alert"/>
 		<typeAlias type="com.kh.samdado.mypage.model.vo.Booking" alias="Booking"/>
+		<typeAlias type="com.kh.samdado.mypage.model.vo.RouteMP" alias="RouteMP"/>
 		<typeAlias type="com.kh.samdado.common.model.vo.Income" alias="Income"/>
 		<typeAlias type="com.kh.samdado.admin.model.vo.aSearch" alias="aSearch"/>
 	    <typeAlias type="com.kh.samdado.admin.model.vo.A_board" alias="A_board"/>

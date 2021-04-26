@@ -217,7 +217,13 @@
 		margin-bottom : 0;
 	}
 	
-   
+	#reddot{
+		position: absolute;
+	    top: 13%;
+	    left: 27%;
+	    width : 30px;
+	    height : 30px;
+	}
 </style>
 </head>
 <body>
@@ -232,6 +238,7 @@
 
                     <button class="clickedBtn" id="myInfo" onclick="location.href='${ contextPath }/mypage/buserinfo'"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/mp_userW.png" class="btnImg"> <br> 내 정보</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToAlert();"> <div class="menuBoxEle" ><br><img src="../resources/images/image_mp/bellB.png" class="btnImg"> <br> 내 소식</div></button>
+                    <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
                     <button class="menuButton" id="myInfo" onclick="goToBuss();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/storeB.png" class="btnImg"> <br> 내 사업장</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToAdvert();"> <div class="menuBoxEle" onclick="goToAdvert();"><br><img src="../resources/images/image_mp/adverB.png" class="btnImg"> <br> 광고관리</div></button>
                     <button class="menuButton" id="myInfo" onclick="goToPoint();"> <div class="menuBoxEle"><br><img src="../resources/images/image_mp/mp_walletB.png" class="btnImg"> <br> 내 포인트</div></button>
@@ -242,7 +249,6 @@
 
             <div id="mainBox">
                 <div id="leftBox">
-                <form action="${ contextPath }/mypage/updatebuInfo" method="POST" onsubmit="return submitValidate();">
                     <table id="memInfoTable">
                         <tr>
                             <th>이름, 아이디</th>
@@ -252,25 +258,29 @@
                             <th>비밀번호 수정</th>
                             <td colspan="3" > <button type="button" id="changePwdBtn" onclick="">비밀번호 수정하기</button></td>
                         </tr>
-                       <tr>
-							
-	                            <th>이메일, 전화번호 수정</th>
-	                            <td style="width : 10%;">이메일 <input type="text" class="chInfoTag" id="email" name="email" value="${ loginUser.usemail }">
-	                                </td>
-	                            <td style="width : 10%;">전화번호 <input type="text" class="chInfoTag" id="phone" name="phone" value="${ loginUser.usphone }">
-	                                <input type="hidden" name="usid" id="usid" value="${ loginUser.usid }"></td>
-	                            <td><button id="changeInfo" type="submit">수정하기</button></td>
-                        	
-                        </tr>
                         <tr>
+	                            <th>이메일, 전화번호 수정</th>
+	                            <td>이메일 <input type="text" class="chInfoTag" id="newEmail" name="email" value="${ loginUser.usemail }">
+	                                </td>
+	                            <td>전화번호 <input type="text" class="chInfoTag" id="newPhone" name="phone" value="${ loginUser.usphone }">
+	                                <input type="hidden" name="usid" id="usid" value="${ loginUser.usid }"></td>
+	                            <td><button id="changeInfo" onclick="goToChange();">수정하기</button></td>
+                        </tr>
+                         <tr>
                             <th >회원 탈퇴</th>
-                            <td colspan="3"><p id="specificCon">회원 탈퇴 시 저장되어 있는 회원 정보는 3개월간 보관 후 영구적으로 삭제됩니다. 3개월 이내에는 복구가 가능하며 관리자에게 문의주세요.
-                                <br>삭제 후 복구 시, 사업장 정보와 충전해 놨던 포인트는 남아있지만 배너 및 프리미엄 광고 내역을 사라집니다. 주의 바랍니다.
-                                <br>탈퇴를 원하시면 아래 동의 후 비밀번호 확인을 통해 탈퇴하실 수 있습니다.<br></p>
-                                <input type="checkbox" name="check" value="위의 안내사항에 대해 동의합니다.">위의 안내사항에 대해 동의합니다.<br><br>
+                            <td colspan="3">
+                            <form action="${contextPath}/mypage/userout" method="post">
+                            <p id="specificCon">회원 탈퇴 시 저장되어 있는 회원 정보는 3개월간 보관 후 영구적으로 삭제됩니다. <br>
+                                3개월 이내에는 복구가 가능하며 관리자에게 문의주세요.<br>
+                                삭제시 모든 예약 정보, 길 정보를 찾을 수 없습니다.<br>
+                                탈퇴를 원하시면 아래 동의 후 비밀번호 확인을 통해 탈퇴하실 수 있습니다.<br></p>
+                                <input type="checkbox" name="check" value="위의 안내사항에 대해 동의합니다.">위의 안내사항에 대해 동의합니다.<br>
                                 <label style="font-size: small;">비밀번호 확인 :</label>
-                                <input type="password" id="checkPwd" name="checkPwd">
-                                <button id="memOut">탈퇴</button></td>
+                                <input type="password" id="uspwd" name="uspwd">
+                                <input type="hidden" id="usno" name="usno" value="${loginUser.usno }">
+                                <input type="hidden" id="uspart" name="uspart" value="${loginUser.uspart}">
+                                <input type="hidden" id="usid" name="usid" value="${loginUser.usid}">
+                                <button id="memOut" type="submit">탈퇴</button></form></td>
                         </tr>
                     </table>
                     </form>
@@ -287,7 +297,7 @@
 
                     <form action="${ contextPath }/mypage/updateBupwd" method="POST" onsubmit="return submitValidate();">
                       <div class="row g-3">
-
+						<input type="hidden" name="uspart" id="uspart" value="${loginUser.uspart }">
                         <div class="col-12">
                             <label for="_id" class="form-label">현재 비밀변호 </label>
                             <input type="password" class="form-control" id="checkPwd" name="currentPwd" required>                           
@@ -333,6 +343,8 @@
     
     <!-- 비밀번호 유효성검사 -->
     <script>
+ 	function joinValidate(){
+    	
 	 	// 비밀번호 유효성검사
 		if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#uspwd").val()))){
 			alert('영어대소문자/숫자/특수문자를 포함한 8~16자리 입력');
@@ -344,9 +356,8 @@
 		if($("#uspwd2").val() != $("#uspwd").val()){
 			alert('비밀번호가 일치하지 않습니다.');
 			$("#uspwd2").select();
-			return false;
 		}
-		
+    }
     </script>
     <script>
 	    $("#uspwd").keyup(function () { 
@@ -385,9 +396,62 @@
 	}
 	
 	function goToAlert(){
-		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno};
+		var uspart = "제휴";
+		location.href="${contextPath}/mypage/alert?usno="+${loginUser.usno} +"&uspart=" + uspart;
 	}
-	</script>
+	
+	function goToChange(){
+		var uspart = "제휴";
+		var usid=$('#usid').val();
+		var usemail = document.getElementById('newEmail').value;
+		/* var usemail=$('#email').val(); */
+		var usphone=$('#newPhone').val();
+		
+		console.log(uspart);
+		console.log(usid);
+		console.log(usemail);
+		console.log(usphone); 
+		
+		location.href="${contextPath}/mypage/updatebuInfo?usno=" + ${loginUser.usno} + "&uspart" + uspart + "&usid=" + usid + "&usemail=" + usemail + "&usphone=" + usphone;
+	}
+
+
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty sessionScope.loginUser}){
+	 			if(${loginUser.uspart eq "일반"}){
+	 				var uspart = "일반";
+	 			} else if(${loginUser.uspart eq "제휴"}){
+	 				var uspart = "제휴";
+	 			} else {
+	 				var uspart = " ";
+	 			}
+	 			
+	 			var searchU = new Object();
+				searchU.usno = ${loginUser.usno};
+				searchU.uspart = uspart;
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
  <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 </body>

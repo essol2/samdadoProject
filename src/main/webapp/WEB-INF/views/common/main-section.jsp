@@ -10,6 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 	
@@ -85,13 +86,14 @@
                 <!-- 은솔 : 배너광고 구간 -->
                 <h3 style="margin-left : 3%;"> 이제, 여행은 가까운 곳에서.</h3>
                 <br>
-                            
+                <!--  data-masonry='{"percentPosition": true }' -->
                 <div style="margin-left : 3%;">
-				  <div class="row" id="bannerAdImglistDiv" style='height: fill;'>
-				    
+				  <div class="row" id="bannerAdImglistDiv" style="position: relative;" data-masonry='{"percentPosition": true }'>
+					  
+						
 				  </div>
 				</div>
-               
+              
                <!--  
      			<div class="tableArea" style="margin-left : 3%; width: 1920px;">
 					<table id="bannerAdImglistTable">
@@ -128,17 +130,29 @@
 					
 					for (var i in data) {
 						
-						var div = $("<div class='col-5' style='min-content;' onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
-						
+						var div = $("<div class='col-sm-6 col-md-4' onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
+						var card = $("<div class='card'>");
+						var cardBody = $("<div class='card-body'>");
+						var img = $("<img class='card-img-top' src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "'>");
 						//var alno = $("<td>").text(data[i].alno); 
 						//var bus_code = $("<td>").text(data[i].bus_code); 
 						//var aimgcname = $("<td>");
 						
-						div.html("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 660px;'>");
+						//div.html("<img class='card-img-top' src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "'>");
 
 						//tr.append(aimgcname);
-						badiv.append(div);
+						card.append(img);
+						card.append(cardBody);
+						div.append(card);
+						//badiv.append(div);
+						
+						$('#bannerAdImglistDiv').masonry({
+							itemSelector: 'col-sm-6',
+							percentPosition: true
+						}).append(card).masonry('appended', card).masonry();
 					}
+					
+					
 				},
 				error : function(e) {
 					alert("code : " + e.status + "\n"

@@ -91,5 +91,6 @@ public class Business {
 	
 	// 신고기록 조인
 	private Date rexdate;
+	private int ref_bus_code;
 
 }

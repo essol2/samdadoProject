@@ -3,6 +3,7 @@ package com.kh.samdado.business.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.samdado.business.model.vo.BusinessSearch;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -91,6 +92,15 @@ public interface businessDao {
 	Object insertJjim(Map<String, Object> commandMap);
 
 	public int updateJjim(Map<String, Object> commandMap);
+	
+	// 리스트에서 사업장 검색
+	List<Business> searchTourList(BusinessSearch search);
+	
+	List<Business> searchHotelList(BusinessSearch search);
+
+	List<Business> searchResList(BusinessSearch search);
+
+	List<Business> searchCarList(BusinessSearch search);
 
 	// ************************** 지혜
 	// 신고 카운트
@@ -98,6 +108,17 @@ public interface businessDao {
 	
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
+	
+	List<Report> findReportRexdate();
+	
+	int updateRexdate(Report r);
+	
+	// Income의 exdate 확인 메소드
+	List<Income> findIncomeExdate();
+	
+	int updateExdate(Income i);
+	
+	int updateBusClassify(int bus_code);
 
 	// 일반결제 메소드
 	int insertIncome(Income i);
@@ -153,6 +174,24 @@ public interface businessDao {
 	List<Review> selectReview(int bus_code);
 
 	int insertMenu(List<BusinessAtt> menus);
+
+	List<Business> calList(String kind);
+
+	List<Business> priceList(Business kinds);
+
+	List<Alliance> selectAlli();
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
 
 	
 

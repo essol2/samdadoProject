@@ -34,8 +34,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kh.samdado.admin.model.vo.aSearch;
 import com.kh.samdado.business.model.exception.businessException;
 import com.kh.samdado.business.model.service.businessService;
+import com.kh.samdado.business.model.vo.BusinessSearch;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.business.model.vo.business.BusinessAtt;
@@ -81,6 +83,8 @@ public class businessController {
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		List<Room> roomList = bService.selectRoom(bus_code);
 		List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
+		List<Review> reviewList = bService.selectReview(bus_code);
+		List<Alliance> alliance = bService.selectAlli();
 		
 		if(b != null && roomList != null) {
 			//System.out.println("호텔사진  : " + attList);
@@ -88,6 +92,8 @@ public class businessController {
 			model.addAttribute("att", attList);
 			model.addAttribute("room", roomList);
 			model.addAttribute("roomAtt", roomAtt);
+			model.addAttribute("review", reviewList);
+			model.addAttribute("all", alliance);
 			
 			// 찜하기			
 			if(session.getAttribute("loginUser") != null) {
@@ -232,6 +238,7 @@ public class businessController {
 			int result3 = bService.insertIncome1(i);
 		}
 		
+		
 		int result = bService.insertBusiness(b, list);
 		int result3 = bService.insertRoom(rooms);
 		int result4 = bService.insertMain(bat);
@@ -251,10 +258,72 @@ public class businessController {
 	@GetMapping("/hotel_list")
 	public ModelAndView hotelList(ModelAndView mv) {
 		
+		List<Report> findReportRexdate = bService.findReportRexdate();
+		List<Income> findIncomeExdate = bService.findIncomeExdate();		
+		
+		// 신고 제재기간 만료 확인
+		Date todayR = new Date();
+		Date rexdate = null; 
+		String dayR1 = null; 
+		String dayR2 = null; 
+		
+		SimpleDateFormat sdfR = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (Report r : findReportRexdate) {
+			rexdate = r.getRexdate();
+		
+				try {
+					// 오늘 날짜와 제재만료 날짜 담기
+					dayR1 = sdfR.format(todayR); 
+					dayR2 = sdfR.format(rexdate); 
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				
+			// 두 날짜 비교	
+			int compareR = dayR1.compareTo(dayR2);			
+			
+			// 제재 기간이 끝났다면 rexdate를 null로 update
+			if (compareR >= 0) {
+				bService.updateRexdate(r);
+			// 제재 기간이 남았다면 아무 행위 X				
+			} else if (compareR < 0) {
+				
+			}
+		}
+		
+		// 프리미엄 만료 확인
+				Date todayI = new Date();
+				Date exdate = null;
+				String dayI1 = null;
+				String dayI2 = null;
+				
+				SimpleDateFormat sdfI = new SimpleDateFormat("yyyy-MM-dd");
+				
+				for (Income i : findIncomeExdate) {
+					exdate = i.getExdate();
+				
+						try {
+							dayI1 = sdfI.format(todayI);
+							dayI2 = sdfI.format(exdate);	
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						
+					int compareI = dayI1.compareTo(dayI2);
+					
+					// 프리미엄기간이 끝났다면 income의 exdate를 null로, business의 classify를 G로 update
+					if (compareI >= 0) {						
+						bService.updateExdate(i);
+						bService.updateBusClassify(i.getBus_code());
+					} else if (compareI < 0) {
+						
+					}
+				}
+		
 		List<Business> hotelList = bService.selectHotelList();
 			
 		if(hotelList != null) {
-			// System.out.println("hotelList : " + hotelList);
 			mv.addObject("hotelList", hotelList);
 			mv.setViewName("business/hotel/hotel_list");
 		}
@@ -265,20 +334,17 @@ public class businessController {
 	@GetMapping("/tour_detail")
 	public String tourDetail(@RequestParam int bus_code,
 			   				Model model, HttpSession session) {
-
-		//System.out.println("나와라 : " + bus_code);
 	
 		Business b = bService.selectTour(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		List<Review> reviewList = bService.selectReview(bus_code);
-		
+		List<Alliance> alliance = bService.selectAlli();
 		
 		if(b != null) {
 			model.addAttribute("tour", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("review", reviewList);
-			//System.out.println("review : " + reviewList);
-
+			model.addAttribute("all", alliance);
 						// 찜하기			
 						if(session.getAttribute("loginUser") != null) {
 							User loginUser = (User)session.getAttribute("loginUser");
@@ -287,11 +353,11 @@ public class businessController {
 							int useridx = Integer.parseInt(loginUser.getUsno());		    
 							idxMap.put("bbsidx", bbsidx);
 							idxMap.put("useridx", useridx);
-							System.out.println("idxMap : " + idxMap);
+							//System.out.println("idxMap : " + idxMap);
 							
 							//jjim 테이블 에서 찜하기유무 확인하기
 							Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
-							System.out.println("jjimcheckMap : " + jjimcheckMap);
+							//System.out.println("jjimcheckMap : " + jjimcheckMap);
 							//찜 누른 기록이 없다면
 							if(jjimcheckMap == null) {
 								model.addAttribute("jjimcheck",0);
@@ -381,11 +447,11 @@ public class businessController {
 			}
 			int result3 = bService.insertIncome1(i);
 		}
-		System.out.println(b);
+		//System.out.println(b);
 		int result = bService.insertBusiness(b, list);
 		int result3 = bService.insertTour(tp);
 		int result4 = bService.insertMain(bat);
-		System.out.println(b);
+		//System.out.println(b);
 		
 		// --- 은솔 : Usno 빼가기
 		String usno = i.getUsno();
@@ -401,6 +467,69 @@ public class businessController {
 	// 관광지 리스트
 	@GetMapping("/tour_list")
 	public ModelAndView tourList(ModelAndView mv) {
+		
+		List<Report> findReportRexdate = bService.findReportRexdate();
+		List<Income> findIncomeExdate = bService.findIncomeExdate();		
+		
+		// 신고 제재기간 만료 확인
+		Date todayR = new Date();
+		Date rexdate = null; 
+		String dayR1 = null; 
+		String dayR2 = null; 
+		
+		SimpleDateFormat sdfR = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (Report r : findReportRexdate) {
+			rexdate = r.getRexdate();
+		
+				try {
+					// 오늘 날짜와 제재만료 날짜 담기
+					dayR1 = sdfR.format(todayR); 
+					dayR2 = sdfR.format(rexdate); 
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				
+			// 두 날짜 비교	
+			int compareR = dayR1.compareTo(dayR2);			
+			
+			// 제재 기간이 끝났다면 rexdate를 null로 update
+			if (compareR >= 0) {
+				bService.updateRexdate(r);
+			// 제재 기간이 남았다면 아무 행위 X				
+			} else if (compareR < 0) {
+				
+			}
+		}
+		
+		// 프리미엄 만료 확인
+				Date todayI = new Date();
+				Date exdate = null;
+				String dayI1 = null;
+				String dayI2 = null;
+				
+				SimpleDateFormat sdfI = new SimpleDateFormat("yyyy-MM-dd");
+				
+				for (Income i : findIncomeExdate) {
+					exdate = i.getExdate();
+				
+						try {
+							dayI1 = sdfI.format(todayI);
+							dayI2 = sdfI.format(exdate);	
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						
+					int compareI = dayI1.compareTo(dayI2);
+					
+					// 프리미엄기간이 끝났다면 income의 exdate를 null로, business의 classify를 G로 update
+					if (compareI >= 0) {						
+						bService.updateExdate(i);
+						bService.updateBusClassify(i.getBus_code());
+					} else if (compareI < 0) {
+						
+					}
+				}
 		
 		List<Business> tourList = bService.selectTourList();
 		
@@ -420,13 +549,15 @@ public class businessController {
 		
 		Business b = bService.selectRestaurant(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
+		List<Review> reviewList = bService.selectReview(bus_code);
+		List<Alliance> alliance = bService.selectAlli();
 		
 		if(b != null) {
-			// System.out.println("디테일 : " + b);
-			// System.out.println("사진들 : " + attList);
 			
 			model.addAttribute("res", b);
 			model.addAttribute("att", attList);
+			model.addAttribute("review", reviewList);
+			model.addAttribute("all", alliance);
 			
 			// 찜하기			
 			if(session.getAttribute("loginUser") != null) {
@@ -436,11 +567,11 @@ public class businessController {
 				int useridx = Integer.parseInt(loginUser.getUsno());		    
 				idxMap.put("bbsidx", bbsidx);
 				idxMap.put("useridx", useridx);
-				System.out.println("idxMap : " + idxMap);
+				//System.out.println("idxMap : " + idxMap);
 				
 				//jjim 테이블 에서 찜하기유무 확인하기
 				Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
-				System.out.println("jjimcheckMap : " + jjimcheckMap);
+				//System.out.println("jjimcheckMap : " + jjimcheckMap);
 				//찜 누른 기록이 없다면
 				if(jjimcheckMap == null) {
 					model.addAttribute("jjimcheck",0);
@@ -558,9 +689,11 @@ public class businessController {
 			int result3 = bService.insertIncome1(i);
 		}
 		
+		//System.out.println("bat : " + bat);
+		//System.out.println("menus : " + menus);
 		int result = bService.insertBusiness(b, list);
 		int result2 = bService.insertMain(bat);
-		int result3 = bService.insertMenu(menus);
+		int result4 = bService.insertMenu(menus);
 		
 		//  ---  은솔 : usno 빼갈게여
 		String usno = i.getUsno();
@@ -583,8 +716,71 @@ public class businessController {
 	@GetMapping("/restaurant_list")
 	public ModelAndView resList(ModelAndView mv) {
 		
+		List<Report> findReportRexdate = bService.findReportRexdate();
+		List<Income> findIncomeExdate = bService.findIncomeExdate();		
+		
+		// 신고 제재기간 만료 확인
+		Date todayR = new Date();
+		Date rexdate = null; 
+		String dayR1 = null; 
+		String dayR2 = null; 
+		
+		SimpleDateFormat sdfR = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (Report r : findReportRexdate) {
+			rexdate = r.getRexdate();
+		
+				try {
+					// 오늘 날짜와 제재만료 날짜 담기
+					dayR1 = sdfR.format(todayR); 
+					dayR2 = sdfR.format(rexdate); 
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				
+			// 두 날짜 비교	
+			int compareR = dayR1.compareTo(dayR2);			
+			
+			// 제재 기간이 끝났다면 rexdate를 null로 update
+			if (compareR >= 0) {
+				bService.updateRexdate(r);
+			// 제재 기간이 남았다면 아무 행위 X				
+			} else if (compareR < 0) {
+				
+			}
+		}
+		
+		// 프리미엄 만료 확인
+				Date todayI = new Date();
+				Date exdate = null;
+				String dayI1 = null;
+				String dayI2 = null;
+				
+				SimpleDateFormat sdfI = new SimpleDateFormat("yyyy-MM-dd");
+				
+				for (Income i : findIncomeExdate) {
+					exdate = i.getExdate();
+				
+						try {
+							dayI1 = sdfI.format(todayI);
+							dayI2 = sdfI.format(exdate);	
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						
+					int compareI = dayI1.compareTo(dayI2);
+					
+					// 프리미엄기간이 끝났다면 income의 exdate를 null로, business의 classify를 G로 update
+					if (compareI >= 0) {						
+						bService.updateExdate(i);
+						bService.updateBusClassify(i.getBus_code());
+					} else if (compareI < 0) {
+						
+					}
+				}
+		
 		List<Business> resList = bService.selectResList();
-		System.out.println(resList);
+		//System.out.println(resList);
 		if(resList != null) {
 			mv.addObject("resList", resList);
 			mv.setViewName("business/restaurant/restaurant_list");
@@ -603,15 +799,16 @@ public class businessController {
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		List<Car> carList = bService.selectCars(bus_code);
 		List<CarAtt> carAtt = bService.selectCarAtt(bus_code);
-		// List<Car> CarList = bService.selectCar(bus_code);
-		// List<CarAtt> CarAtt = bService.selectCarAtt(bus_code); 
+		List<Review> reviewList = bService.selectReview(bus_code);
+		List<Alliance> alliance = bService.selectAlli();
 		if(b != null) {
 
 			model.addAttribute("car", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("cars", carList);
 			model.addAttribute("carAtt", carAtt);
-			System.out.println(model);
+			model.addAttribute("review", reviewList);
+			model.addAttribute("all", alliance);
 			
 						// 찜하기			
 						if(session.getAttribute("loginUser") != null) {
@@ -621,11 +818,11 @@ public class businessController {
 							int useridx = Integer.parseInt(loginUser.getUsno());		    
 							idxMap.put("bbsidx", bbsidx);
 							idxMap.put("useridx", useridx);
-							System.out.println("idxMap : " + idxMap);
+							//System.out.println("idxMap : " + idxMap);
 							
 							//jjim 테이블 에서 찜하기유무 확인하기
 							Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
-							System.out.println("jjimcheckMap : " + jjimcheckMap);
+							//System.out.println("jjimcheckMap : " + jjimcheckMap);
 							//찜 누른 기록이 없다면
 							if(jjimcheckMap == null) {
 								model.addAttribute("jjimcheck",0);
@@ -772,6 +969,69 @@ public class businessController {
 	@GetMapping("/rentcar_list")
 	public ModelAndView carList(ModelAndView mv) {
 		
+		List<Report> findReportRexdate = bService.findReportRexdate();
+		List<Income> findIncomeExdate = bService.findIncomeExdate();		
+		
+		// 신고 제재기간 만료 확인
+		Date todayR = new Date();
+		Date rexdate = null; 
+		String dayR1 = null; 
+		String dayR2 = null; 
+		
+		SimpleDateFormat sdfR = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (Report r : findReportRexdate) {
+			rexdate = r.getRexdate();
+		
+				try {
+					// 오늘 날짜와 제재만료 날짜 담기
+					dayR1 = sdfR.format(todayR); 
+					dayR2 = sdfR.format(rexdate); 
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				
+			// 두 날짜 비교	
+			int compareR = dayR1.compareTo(dayR2);			
+			
+			// 제재 기간이 끝났다면 rexdate를 null로 update
+			if (compareR >= 0) {
+				bService.updateRexdate(r);
+			// 제재 기간이 남았다면 아무 행위 X				
+			} else if (compareR < 0) {
+				
+			}
+		}
+		
+		// 프리미엄 만료 확인
+				Date todayI = new Date();
+				Date exdate = null;
+				String dayI1 = null;
+				String dayI2 = null;
+				
+				SimpleDateFormat sdfI = new SimpleDateFormat("yyyy-MM-dd");
+				
+				for (Income i : findIncomeExdate) {
+					exdate = i.getExdate();
+				
+						try {
+							dayI1 = sdfI.format(todayI);
+							dayI2 = sdfI.format(exdate);	
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						
+					int compareI = dayI1.compareTo(dayI2);
+					
+					// 프리미엄기간이 끝났다면 income의 exdate를 null로, business의 classify를 G로 update
+					if (compareI >= 0) {						
+						bService.updateExdate(i);
+						bService.updateBusClassify(i.getBus_code());
+					} else if (compareI < 0) {
+						
+					}
+				}
+		
 		List<Business> carList = bService.selectCarList();
 		
 		if(carList != null) {
@@ -785,9 +1045,10 @@ public class businessController {
 	
 	@GetMapping("/pay")
 	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code) {
-		System.out.println("i : " + i);		
+		
 		// 포인트에 amount 넣어주기
 		p.setPamount(i.getAmount());
+		
 		// income에  들어갈 원가 10퍼센트 셋팅
 		i.setAmount(i.getAmount() * 1/10);
 		
@@ -796,9 +1057,9 @@ public class businessController {
 		// p에 예약받는 사업장주인 usno 넣기		 
 		Business selectUser = bService.selectBusCodeUser(bus_code);
 		p.setUsno(selectUser.getUs_no());
-		System.out.println("p : " + p);
+		
 		Point findPoint = bService.findPoint(p);
-		System.out.println(findPoint);
+		
 		 if(findPoint != null) {
 			 // 이미 포인트가 있으면 기존 포인트 + 결제금액의 90% 적립
 			 p.setPbalance(findPoint.getPbalance()+i.getAmount() * 9);
@@ -808,7 +1069,7 @@ public class businessController {
 		 }
 		 // 포인트 넣기
 		int point = bService.insertPoint(p);		
-		System.out.println(b);
+		
 		// 예약정보 insert	
 		if(b.getBookingLv() == 1) {
 			b.setR_bus_name(selectUser.getBus_name());
@@ -816,23 +1077,20 @@ public class businessController {
 			b.setR_booking_phone(selectUser.getBus_phone());
 			int bookingHotel = bService.insertBookingHotel(b);
 		} else if(b.getBookingLv() == 2) {
-			TourProduct selectTourProduct = bService.selectTourProduct(bus_code);
-			System.out.println(selectTourProduct);
+			TourProduct selectTourProduct = bService.selectTourProduct(bus_code);			
 			b.setPro_no(selectTourProduct.getPro_no());
 			b.setT_bus_name(selectUser.getBus_name());
 			b.setT_booking_address(selectUser.getBus_address());
 			b.setT_booking_phone(selectUser.getBus_phone());
-			int bookingTour = bService.insertBookingTour(b);
-			
+			int bookingTour = bService.insertBookingTour(b);			
 		} else if(b.getBookingLv() == 3) {			
 			b.setC_bus_name(selectUser.getBus_name());
 			b.setC_booking_address(selectUser.getBus_address());
-			b.setC_booking_phone(selectUser.getBus_phone());
-			
+			b.setC_booking_phone(selectUser.getBus_phone());			
 			int bookingCar = bService.insertBookingCar(b);
 		}
 		
-		return "redirect:/mypage/booking";
+		return "redirect:/mypage/booking?usno=" + i.getUsno();
 		
 	}
 	
@@ -844,11 +1102,28 @@ public class businessController {
 		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
 		List<Business> cateList = bService.cateList(kind);
 		
-		System.out.println("cateList : " + cateList.size());
+		//System.out.println("cateList : " + cateList.size());
 		return cateList;
 		
 	}
-
+	
+	@RequestMapping(value="calList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> calList(HttpServletResponse response, @RequestBody String kinds) {
+		
+		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
+		List<Business> calList = bService.calList(kind);
+		
+		return calList;
+		
+	}
+	
+	@RequestMapping("/priceList")
+	@ResponseBody
+	public List<Business> priceList(HttpServletResponse response, @RequestBody Business kinds) {
+		List<Business> priceList = bService.priceList(kinds);
+		return priceList;
+	}
 	//찜하기 ajax받기	
     @RequestMapping("/jjim")
     @ResponseBody
@@ -882,7 +1157,7 @@ public class businessController {
                 commandMap.put("jjimcheck", jjimcheck);
                 int result = bService.updateJjim(commandMap);                
                 if(result > 0) {
-                	System.out.println("여기까지");
+                	//System.out.println("여기까지");
                 	resultCode = 0;                	
                 }
             }            
@@ -897,7 +1172,32 @@ public class businessController {
         //System.out.println("resultMap : " + resultMap);
         return resultMap;
     }
-	
+    
+    // 리스트에서 사업장이름검색
+    @RequestMapping(value="searchBusinessList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> searchBusinessList(HttpServletResponse response, @RequestBody BusinessSearch search) {
+		
+    	if(search.getSearchKind() == 1) {
+    		List<Business> searchHotelList = bService.searchHotelList(search);
+    		
+    		return searchHotelList;
+    	} else if(search.getSearchKind() == 2) {
+    		List<Business> searchTourList = bService.searchTourList(search);
+    		
+    		return searchTourList;
+    	} else if(search.getSearchKind() == 3) {
+    		List<Business> searchResList = bService.searchResList(search);
+    		
+    		return searchResList;
+    	} else if(search.getSearchKind() == 4) {
+    		List<Business> searchCarList = bService.searchCarList(search);
+    		
+    		return searchCarList;
+    	}
+		return null;
+    	
+	}
 	
 	// ************* 지혜 *************
 
@@ -907,7 +1207,7 @@ public class businessController {
 							  HttpServletRequest request,
 							  Alert al) {
 		
-		 System.out.println("a : " + a);
+		// System.out.println("a : " + a);
 		// System.out.println("file : " + file);
 		
 		// 업로드 파일 서버에 저장

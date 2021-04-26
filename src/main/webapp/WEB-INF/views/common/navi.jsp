@@ -401,12 +401,20 @@
 	#navi-menu, #navi-title, p:hover, #navi-menu{
 		cursor: pointer;
 	}
-	
-	
-	
+	.newAlert{
+ 	 width : 28px;
+ 	height  : 28px; 
+ 	display : none;
+ 	/* display : inline-block; */
+ 	margin-right : 8px;
+ 	float : inherit;
+ 	/* float : right; */
+ }
 </style>
 </head>
 <body>
+
+  
    <!-- 메세지가 있다면 출력하고 지우기 -->
    <c:if test="${ !empty msg }">
    		<script>alert('${ msg }')</script>
@@ -431,7 +439,7 @@
                 <!-- 1. 로그인 유저가 없을 때 -->
                 <c:if test="${ empty sessionScope.loginUser }">
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 
@@ -451,7 +459,7 @@
                 <!-- 2. 로그인 유저가 있을 때(일반회원)-->
                 <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '일반' }">
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
@@ -462,8 +470,8 @@
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
                 <!-- <h5 class="helloName"> 혼저옵서예.</h5> -->
- 
-				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/userinfo'">내 정보</p>
+ 					<p class="right" id="navi-menu" onclick="goToInfo();">
+				    <img src="${contextPath}/resources/images/image_mp/new_b.png" class="newAlert" onclick="goToInfo(${loginUser.uspart});">내 정보</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
 				</div>				    
                 </c:if>
@@ -471,7 +479,7 @@
                 <!-- 3. 로그인 유저가 있을 때(제휴회원) 및 로그인 유저가 관리자가 아닐 때 -->
                 <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '제휴' && loginUser.usid ne 'samdado' }">
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
@@ -491,17 +499,16 @@
                 
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
-
-	                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">내 정보</p>
-				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			    
-
+					 <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">
+		                <img src="${contextPath}/resources/images/image_mp/new_b.png" class="newAlert" onclick="location.href='${contextPath}/mypage/buserinfo'">내 정보</p>
+					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>		
                 </div>
                 </c:if>
                
                 <!-- 4. 로그인 유저가 관리자 일때 -->
                 <c:if test="${!empty sessionScope.loginUser && loginUser.uspart eq '관리자'}">    
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
@@ -915,6 +922,50 @@
         });
 	
     </script>
+    
+     <script>
+	 	$(document).ready(function(){
+
+	 		if(${not empty loginUser}){
+	 			var searchU = new Object();
+					searchU.usno = "${loginUser.usno}";
+					searchU.uspart = "${loginUser.uspart}";
+					
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					} else{
+	 						alert("관리자님! 오늘도 열일하세요!");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		}
+	 		
+	 	});
+	 </script>
+	 
+	 <script>
+	 	function goToInfo(uspart){
+	 		var uspart = "일반";
+	 		location.href="${contextPath}/mypage/userinfo?usno="+${loginUser.usno} + "&uspart=" + uspart;
+	 	}
+	 	
+	 	function aboutUs(){
+			location.href='${contextPath}/user/aboutus';
+
+	 	}
+	 </script>
 
 
     <!-- Optional JavaScript; choose one of the two! -->
@@ -922,7 +973,7 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>

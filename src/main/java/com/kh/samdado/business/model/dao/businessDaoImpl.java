@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.samdado.business.model.vo.BusinessSearch;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -197,6 +198,27 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.update("businessMapper.udpateJjim", commandMap);
 	}
 	
+	// 리스트에서 사업장검색
+	@Override
+	public List<Business> searchTourList(BusinessSearch search) {
+		return sqlSession.selectList("businessMapper.searchTourList", search);
+	}
+	
+	@Override
+	public List<Business> searchHotelList(BusinessSearch search) {
+		return sqlSession.selectList("businessMapper.searchHotelList", search);
+	}
+
+	@Override
+	public List<Business> searchResList(BusinessSearch search) {
+		return sqlSession.selectList("businessMapper.searchResList", search);
+	}
+
+	@Override
+	public List<Business> searchCarList(BusinessSearch search) {
+		return sqlSession.selectList("businessMapper.searchCarList", search);
+	}
+	
 	// 일반결제 메소드
 	  @Override
 		public int insertIncome(Income i) {
@@ -263,6 +285,31 @@ public class businessDaoImpl implements businessDao {
   @Override
 	public Report findReportStatus(Report r) {		
 		return sqlSession.selectOne("businessMapper.findReportStatus", r);
+	}
+  
+  @Override
+	public List<Report> findReportRexdate() {
+	  return sqlSession.selectList("businessMapper.findReportRexdate");
+	}
+  
+  @Override
+	public int updateRexdate(Report r) {
+	  return sqlSession.update("businessMapper.updateRexdate", r);
+	}
+  
+  @Override
+	public List<Income> findIncomeExdate() {
+	  return sqlSession.selectList("businessMapper.findIncomeExdate");
+	}
+  
+  @Override
+	public int updateExdate(Income i) {
+	  return sqlSession.update("businessMapper.updateExdate", i);
+	}
+  
+  @Override
+	public int updateBusClassify(int bus_code) {
+	  return sqlSession.update("businessMapper.updateBusClassify", bus_code);
 	}
   	
   	// 프리미엄 등록 시 만료일
@@ -359,7 +406,28 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.insert("businessMapper.insertMenu", menus);
 	}
   
- 
+	@Override
+	public List<Business> calList(String kind) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.calList", kind);
+	}
 
+	@Override
+	public List<Business> priceList(Business kinds) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.calList");
+	}
+
+	@Override
+	public List<Alliance> selectAlli() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectAlli");
+	}
+
+	
+
+	
+
+	
 	
 }

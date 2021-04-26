@@ -77,7 +77,7 @@
                              </h6>             
                         <br><br>
                         <div class="goToPayBtn_div">
-                            <a href="${ contextPath }/mypage/userinfo" id="goMyPageBtn" class="btn btn-secondary" style="color: white; text-decoration: none;">동의 후 포인트 충전하러 가기</a> 
+                            <p id="goMyPageBtn" onclick="goToPoint();" class="btn btn-secondary" style="color: white; text-decoration: none;">동의 후 포인트 충전하러 가기</p> 
                         </div>    
                         </div>
                         <div class="modal-footer">
@@ -91,9 +91,16 @@
 			<c:choose>
 				<c:when test="${ !empty selectMyBusinessCategory }">
 	                <div class="inner_content">
-	                    <h4>1. 신청하실 사업장을 선택하세요.</h4> <br>
+	                    <h4>1. 신청하실 사업장을 선택하세요.</h4>
+	                    <br>
+	                   <div class="card text-dark bg-light mb-3" style="max-width: 100rem;">
+								  <div class="card-header">사업장 신청 주의사항</div>
+								  <div class="card-body">
+								    <p class="card-text">* <b>신청 대기중</b> 또는 현재 <b>배너 광고가 진행중인 사업장</b>은 목록에 리스트되지 않습니다.</p>
+								  </div>
+								</div>
 	                    <select class="form-select" aria-label="Default select example" name="bus_code">
-	                        <option>--- 선택 ---</option>
+	                        <option>선택</option>
 	                        <c:forEach var="smbc" items="${ selectMyBusinessCategory }">
 								<option value="${ smbc.bus_code }">No : ${ smbc.bus_code } | 사업장명 : ${ smbc.bus_name } | 주소 : ${ smbc.bus_address }</option>
 							</c:forEach>
@@ -106,7 +113,7 @@
 					  <div class="card-header bg-transparent border-success">삼다도에서 알려드립니다.</div>
 					  <div class="card-body text-success">
 					    <h5 class="card-title">${ loginUser.usname }님께서 배너 광고로 등록할 수 있는 사업장이 없습니다.</h5>
-					    <p class="card-text"><b style="color: red;">관리자 승인 대기중인 사업장 또는 현재 배너 광고 중인 사업장은 목록에서 불러올 수 없습니다.</b></p>
+					    <p class="card-text"><b style="color: red;">관리자 승인 대기중인 사업장 또는 현재 배너 광고 중인 사업장은 목록에 리스트되지 않습니다.</b></p>
 					  </div>
 					  <div class="card-footer bg-transparent border-success"><a href="${ contextPath }/mypage/buss">마이페이지 가기</a></div>
 					</div>
@@ -118,33 +125,40 @@
                     <h4>2. 배너 이미지를 등록해주세요.</h4> 
 					 <br>
                     <div class="mb-3">
-                        <input class="form-control" type="file" id="formFile" name="uploadFile" required>
-                        <br>
-                        <!-- 업로드한 이미지가 노출되는 부분 -->
-                		<div style="display: flex;">
-						    <div class="img_div_part">
-								<img id="exp_img_part">
-						    </div>
-						    &nbsp;
-						      <div class="img_div_part">
-			  					<div class="card text-dark bg-light mb-3" style="max-width: 30rem;" id="imgCautionText">
-								  <div class="card-header">이미지 업로드 규격</div>
+                    	
+                    	<div class="img_div_part">
+			  					<div class="card text-dark bg-light mb-3" style="max-width: 100rem;" id="imgCautionText">
+								  <div class="card-header">이미지 업로드 주의사항</div>
 								  <div class="card-body">
-								    <p class="card-text">* 정해진 픽셀은 없으나, 노출시 가로 규격은 일정한 사이즈 &nbsp;(700px)를 기준으로 노출되므로 제출시 <b>최대한 가로 사이즈 &nbsp;가 넓은 이미지</b>로 업로드 하시는 것을 권유 드립니다.
+								    <p class="card-text">* 정해진 픽셀은 없으나, 노출시 가로 규격은 일정한 사이즈 (700px)를 기준으로 노출되므로 제출시 <b>최대한 가로 사이즈가 넓은 이미지</b>로 업로드 하시는 것을 권유 드립니다.
 									                            <br>&nbsp;<font style="color: red;">(지나치게 사이즈가 작은 이미지나 큰 사진은 반려될 수 있음)</font></p>
-									<p class="card-text">* 등록하시는 사업장 카테고리 및 배너 이벤트 내용과 <b><br>&nbsp;이미지가 일치하지 않으면 반려처리</b> 될 수 있으니 이 점 <br>&nbsp;유의 바랍니다.
+									<p class="card-text">* 등록하시는 사업장 카테고리 및 배너 이벤트 내용과 <b>이미지가 일치하지 않으면 반려처리</b> 될 수 있으니 이 점 유의 바랍니다.
 									    					    <br>&nbsp;<font style="color: red;">(허위광고 및 욕설/음란 이미지는 반려됨)</font></p>
 								  </div>
 								</div>
-		  					</div>
-						</div>
+		  				</div>
+                    	
+                        <input class="form-control" type="file" id="formFile" name="uploadFile" required>
+                        <br>
+                        <!-- 업로드한 이미지가 노출되는 부분 -->   	
+					    <div class="img_div_part">
+							<img id="exp_img_part">
+					    </div>
+						    
                     </div>
                 </div>
                 </c:if>
                 
                 <c:if test="${ !empty selectMyBusinessCategory }">
                 <div class="inner_content">
-                    <h4>3. 해당 사업장에 대한 간단한 소개를 해주세요.</h4> <br>
+                    <h4>3. 배너 신청 이유를 기재해주세요.</h4> <br>
+                    <div class="card text-dark bg-light mb-3" style="max-width: 100rem;">
+					  <div class="card-header">신청 이유 기재시 주의사항</div>
+					  <div class="card-body">
+					    <p class="card-text">* 고객에게 노출되는 문구가 아닌, <b>관리자가 해당 광고에 대한 심사를 진행할 때 고려</b>하는 사항입니다.</p>
+					    <p class="card-text">* 이벤트를 진행 예정이라면 어떤 이벤트인지 기재 <b>(ex.삼다도에서 예약한 회원에게 3000쿠폰 지급 등)</b></p>
+					  </div>
+					</div>
                     <div class="form-floating">
                         <textarea class="form-control" name="alintro" placeholder="해당 사업장에 대한 간단한 소개를 해주세요." id="floatingTextarea" required></textarea>
                     </div>  
@@ -183,6 +197,10 @@
 			
 			return true;
 		}
+		
+		function goToPoint(){
+			location.href='${contextPath}/mypage/point?usno='+${loginUser.usno};
+		};
 	
 	</script>
 
@@ -218,7 +236,7 @@
 				switch(element.name) {
 				case "uploadFile" :
 					selector = "#exp_img_part";
-					//size = {width:"800px", height:"1000px"};
+					size = {width:"700px"};
 					break;
 				}
 				

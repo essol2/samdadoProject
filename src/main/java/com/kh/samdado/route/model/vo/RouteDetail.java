@@ -20,4 +20,6 @@ public class RouteDetail {
 	private int route_no;	// 루트 번호
 	private int spot_no;	// 여행지 번호
 	private int bus_code;	// 사업장 고유 번호
+	
+	
 }

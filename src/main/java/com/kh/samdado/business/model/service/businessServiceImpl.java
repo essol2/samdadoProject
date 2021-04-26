@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.samdado.business.model.dao.businessDao;
+import com.kh.samdado.business.model.vo.BusinessSearch;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -191,6 +192,27 @@ public class businessServiceImpl implements businessService {
 		
 	}
 	
+	// 리스트에서 사업장검색
+	@Override
+	public List<Business> searchTourList(BusinessSearch search) {		
+		return bDao.searchTourList(search);
+	}
+	
+	@Override
+	public List<Business> searchHotelList(BusinessSearch search) {		
+		return bDao.searchHotelList(search);
+	}
+
+	@Override
+	public List<Business> searchResList(BusinessSearch search) {
+		return bDao.searchResList(search);
+	}
+
+	@Override
+	public List<Business> searchCarList(BusinessSearch search) {
+		return bDao.searchCarList(search);
+	}
+	
 	// 일반결제 메소드
 	@Override
 	public int insertIncome(Income i) {		
@@ -251,6 +273,31 @@ public class businessServiceImpl implements businessService {
   @Override
 	public Report findReportStatus(Report r) {		
 		return bDao.findReportStatus(r);
+	}
+  
+  @Override
+	public List<Report> findReportRexdate() {
+	  	return bDao.findReportRexdate();
+	}
+  
+  @Override
+	public int updateRexdate(Report r) {
+	  	return bDao.updateRexdate(r);
+	}
+  
+  @Override
+	public List<Income> findIncomeExdate() {		
+	  return bDao.findIncomeExdate();
+	}
+  
+  @Override
+	public int updateExdate(Income i) {
+	  return bDao.updateExdate(i);
+	}
+  
+  @Override
+	public int updateBusClassify(int bus_code) {
+	  return bDao.updateBusClassify(bus_code);
 	}
 
   	// 프리미엄 등록 시 만료일
@@ -333,6 +380,36 @@ public class businessServiceImpl implements businessService {
 		// TODO Auto-generated method stub
 		return bDao.insertMenu(menus);
 	}
+
+	@Override
+	public List<Business> calList(String kind) {
+		// TODO Auto-generated method stub
+		return bDao.calList(kind);
+	}
+
+	@Override
+	public List<Business> priceList(Business kinds) {
+		// TODO Auto-generated method stub
+		return bDao.priceList(kinds);
+	}
+
+	@Override
+	public List<Alliance> selectAlli() {
+		// TODO Auto-generated method stub
+		return bDao.selectAlli();
+	}
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
 
 	
 

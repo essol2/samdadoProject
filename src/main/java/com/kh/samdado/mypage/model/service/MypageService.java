@@ -2,7 +2,7 @@ package com.kh.samdado.mypage.model.service;
 
 import java.util.List;
 
-import com.kh.samdado.admin.model.vo.PageInfo;
+import com.kh.samdado.admin.model.vo.A_board;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -14,7 +14,9 @@ import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.RouteMP;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.user.model.vo.User;
 
 public interface MypageService {
@@ -23,10 +25,10 @@ public interface MypageService {
 	public int updateUserInfo(User u);
 	
 	// 안읽은 알림 select 메소드	
-	public List<Alert> selectAlertList(String usno);
+	public List<Alert> selectAlertList(User u);
 	
 	// 읽은 알림 select 메소드	
-	public List<Alert> selectYAlertList(String usno);
+	public List<Alert> selectYAlertList(User u);
 	
 	// 알림 상세보기 객체 찾아오는 메소드
 	public Alert selectDetailAlert(Alert al);
@@ -168,6 +170,24 @@ public interface MypageService {
 
 	// 제휴회원 - 로그인시 내소식 확인하기
 	public int findNewNews(User u);
+
+	// 관리자 공지사항 news에 insert
+	public int insertNewBoard(A_board aboard);
+
+	// 관리자 공지사항 bno 찾아오기
+	public int findNewBno(A_board aboard);
+
+	// 회원 탈퇴
+	public int updateUserStatus(User u);
+
+	// 내 루트 찾기
+	public List<RouteFinal> selectMyRoute(User u);
+
+	// 사용자 별로 가지고 있는 루트 개수
+	public List<RouteMP> selectRouteNum(User u);
+
+	// 루트 별로 가지고 있는 관광지 개수
+	public int selectStandard(int routeNum);
 
 
 }

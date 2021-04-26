@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,7 +41,9 @@ import com.kh.samdado.mypage.model.vo.ApplyPagination;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.RouteMP;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 
@@ -56,6 +60,19 @@ public class MypageController {
 	   
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	// 로그인 후 페이지 이동 때 마다 새로운 알람 확인하고 띄우기
+	@RequestMapping("/new")
+	@ResponseBody
+	public int findNew(@RequestBody User u){
+		
+		//System.out.println("User확인 : " + u);
+		// --은솔 : 새로운 알림 있는지 확인하기
+		  int newNews = mService.findNewNews(u);
+		  //System.out.println("mpcontroller newNews : " + newNews);
+		
+		return newNews;
+	}
 	 
 	// 제휴회원 마이페이지로 이동
 	 @GetMapping("/buserinfo")
@@ -103,7 +120,7 @@ public class MypageController {
 	}
 		 
 	// 제휴회원 - 이메일, 전화번호 수정 메소드
-	@PostMapping("/updatebuInfo")
+	@GetMapping("/updatebuInfo")
 	public String updateBuInfo(@ModelAttribute("loginUser") User u,
 					           Model model,
 					           HttpSession session,
@@ -114,19 +131,7 @@ public class MypageController {
 			 
 			 
 		User loginUser = uService.loginUser(u);
-			 
-			 
-		if(email==null) {
-			u.setUsemail(loginUser.getUsemail());
-		} else {
-			u.setUsemail(email);
-		}
-			 
-		if(phone==null) {
-			u.setUsphone(loginUser.getUsphone());
-		} else {
-			u.setUsphone(phone);
-		}
+
 			 
 		// DB에 UPDATE_이메일, 전화번호 변경 메소드
 		int result = mService.updateUserInfo(u);	// 암호화 한 비번 db에 update
@@ -247,7 +252,7 @@ public class MypageController {
 		 if(searchPPList != null) {
 			 return searchPPList;
 		 }else {
-			 System.out.println("List 못가져옴");
+			 //System.out.println("List 못가져옴");
 			 return null;
 		 }
 		  
@@ -340,14 +345,14 @@ public class MypageController {
 	 // 제휴회원 내소식 - 첫 로딩
 	 @GetMapping("/alert")
 	 public ModelAndView selectAlertList(ModelAndView mv,
-			 							  @RequestParam(name="usno") String usno,
+			 							  @ModelAttribute User u,
 			 							  @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
 		 
 		 // DB에서 가져와야 할 알림 내역들 : 문의하기, 신고 받은 내역, 포인트 충전 알림, 배너광고 신청, 승인, 반려(사유), 포인트 얼마 안남음
 		 // 안읽은 리스트
-		 List<Alert> alertNList = mService.selectAlertList(usno);
+		 List<Alert> alertNList = mService.selectAlertList(u);
 		 // 읽은 리스트
-		 List<Alert> alertYList = mService.selectYAlertList(usno);
+		 List<Alert> alertYList = mService.selectYAlertList(u);
 		 
 		 mv.addObject("alertNList", alertNList);
 		 mv.addObject("alertYList", alertYList);
@@ -358,13 +363,13 @@ public class MypageController {
 	 // 제휴회원 내소식 - ajax
 	 @RequestMapping("/alertajax")
 	 @ResponseBody
-	 public List<Alert> selectNewAlertList(@RequestBody Alert al,
+	 public List<Alert> selectNewAlertList(@RequestBody User u,
 			 							   Model model){
 		 
 		// 안읽은 리스트
-		List<Alert> alertNList = mService.selectAlertList(al.getUsno());
+		List<Alert> alertNList = mService.selectAlertList(u);
 		// 읽은 리스트
-		List<Alert> alertYList = mService.selectYAlertList(al.getUsno());
+		List<Alert> alertYList = mService.selectYAlertList(u);
 		
 		// 두개의 리스트 합치기
 		List<Alert> newDataList = new ArrayList<>();
@@ -406,17 +411,23 @@ public class MypageController {
 	 
 	// 일반회원 마이페이지로 이동
 	 @GetMapping("/userinfo")
-	 public String mypageUserFirstView(ModelAndView mv, 
-			 							@ModelAttribute User u) { 
+	 public ModelAndView mypageUserFirstView(ModelAndView mv, 
+			 								 @ModelAttribute User user) { 
+		 //System.out.println(user);
 		 
-		 List<Alert> alertNList = mService.selectAlertList(u.getUsno());
+		 List<Alert> alertNList = mService.selectAlertList(user);
 		 // 읽은 리스트
-		 List<Alert> alertYList = mService.selectYAlertList(u.getUsno());
+		 List<Alert> alertYList = mService.selectYAlertList(user);
+		 
+		 //System.out.println(alertNList);
+		 //System.out.println(alertYList);
 		 
 		 mv.addObject("alertNList", alertNList);
 		 mv.addObject("alertYList", alertYList);
-		 
-			return "mypage/mp_UserInfo";
+		 //mv.addObject("usno", user.getUsno());
+		 //mv.addObject("uspart",user.getUspart());
+		 mv.setViewName("mypage/mp_UserInfo");
+		return mv;
 	}
 	 
 	 // 일반회원 -  비밀번호 수정 메소드
@@ -430,7 +441,7 @@ public class MypageController {
 		 
 		 
 		 
-		// System.out.println(u);
+		//System.out.println("change안에서 u : " + u);
 		 
 		 User loginUser = uService.loginUser(u);
 		 
@@ -442,17 +453,27 @@ public class MypageController {
 				   
 		    // 5) db에 update 후
 			int result = uService.updatePwdUser(u);	// 암호화 한 비번 db에 update
-				   
+			u.setUspart("일반");
+			 List<Alert> alertNList = mService.selectAlertList(u);
+			 // 읽은 리스트
+			 List<Alert> alertYList = mService.selectYAlertList(u);
+			
 		    // 6) 마이페이지로 돌아가기
 			if (result > 0) {
+				 model.addAttribute("alertNList", alertNList);
+				 model.addAttribute("alertYList", alertYList);
 				model.addAttribute("msg", "비밀번호가 수정되었습니다.");
 				return "/mypage/mp_UserInfo";
 			} else {
+				 model.addAttribute("alertNList", alertNList);
+				 model.addAttribute("alertYList", alertYList);
 			    model.addAttribute("msg", "비밀번호 변경에 실패하였습니다. 다시 시도해주세요.");
-				return "/mypage/mp_UserInfo";
+			    return "/mypage/mp_UserInfo";
 			}
 			 
 		 } else {
+			 model.addAttribute("usno", u.getUsno());
+			 model.addAttribute("uspart", u.getUspart());
 			 model.addAttribute("msg", "현재 비밀번호가 틀립니다.");
 			 return "/mypage/mp_UserInfo";
 		 }
@@ -460,43 +481,51 @@ public class MypageController {
 	 }	 
 	 
 	 // 일반회원 - 이메일, 전화번호 수정 메소드
-	 @PostMapping("/updateInfo")
+	 @GetMapping("/updateInfo")
 	 public String updateInfo(@ModelAttribute("loginUser") User u,
 				              Model model,
 				              HttpSession session,
 				              RedirectAttributes rd,
-				              @RequestParam(name="email", defaultValue="null") String email,
-				              @RequestParam(name="phone", defaultValue="null") String phone,
+				              @RequestParam(name="usemail", defaultValue="null") String email,
+				              @RequestParam(name="usphone", defaultValue="null") String phone,
 				              @RequestParam(name="usid") String usid) {
+//		 System.out.println(u);
+		 
+//		 User loginUser = uService.loginUser(u);
 		 
 		 
-		 User loginUser = uService.loginUser(u);
-		 
-		 
-		 if(email==null) {
-			 u.setUsemail(loginUser.getUsemail());
-		 } else {
-			 u.setUsemail(email);
-		 }
-		 
-		 if(phone==null) {
-			 u.setUsphone(loginUser.getUsphone());
-		 } else {
-			 u.setUsphone(phone);
-		 }
-		 
+//		 if(email==null) {
+//			 u.setUsemail(loginUser.getUsemail());
+//		 } else {
+//			 u.setUsemail(email);
+//		 }
+//		 
+//		 if(phone==null) {
+//			 u.setUsphone(loginUser.getUsphone());
+//		 } else {
+//			 u.setUsphone(phone);
+//		 }
+		 System.out.println("changeEP안에서 u : " + u);
 		// DB에 UPDATE_이메일, 전화번호 변경 메소드
 		int result = mService.updateUserInfo(u);	// 암호화 한 비번 db에 update
 		
 		//변경 값 다시 loginUser에 넣어주기
-		loginUser = uService.loginUser(u);
+		User loginUser = uService.loginUser(u);
+		
+		//System.out.println("loginUser가 변경 되었는지 확인해보쟈 : " + loginUser);
+		 u.setUspart("일반");
+		 List<Alert> alertNList = mService.selectAlertList(u);
+		 // 읽은 리스트
+		 List<Alert> alertYList = mService.selectYAlertList(u);
 		 
 		if (result > 0) {
-			//System.out.println("loginUser가 변경 되었는지 확인해보쟈 : " + loginUser);
-			
+			model.addAttribute("alertNList", alertNList);
+			model.addAttribute("alertYList", alertYList);
 			model.addAttribute("msg", "수정이 완료되었습니다!");
-			return "redirect:/mypage/userinfo";
+			return "/mypage/mp_UserInfo";
 		} else {
+			model.addAttribute("alertNList", alertNList);
+			model.addAttribute("alertYList", alertYList);
 		    model.addAttribute("msg", "수정에 실패했습니다. 다시 시도해주세요.");
 			return "/mypage/mp_UserInfo";
 		}
@@ -719,10 +748,10 @@ public class MypageController {
 	 public String cancelBooking(@ModelAttribute() Booking b,
 			 					 Model model){
 	 
-		 System.out.println("canbook에 잘 들어옴! : " +b);
+		 //System.out.println("canbook에 잘 들어옴! : " +b);
 		 // DB에서 예약 내역 삭제하기
 		 int result = mService.deleteBooking(b);
-		 System.out.println("딜리트 결과 result! : " + result);
+		 //System.out.println("딜리트 결과 result! : " + result);
 		
 		 if(result > 0) {
 			 model.addAttribute("usno", b.getUsno());
@@ -805,7 +834,7 @@ public class MypageController {
 				//System.out.println("r.getRev_no() : " + r.getRev_no());
 				
 				result2 = mService.updateCheck(r);
-				System.out.println("insert result2 확인 : " + result2);
+				//System.out.println("insert result2 확인 : " + result2);
 		 	} else if(inup.equals("U")) {
 		 		//System.out.println("update result 확인 : " + result2);
 		 		result = mService.updateReview(r);
@@ -837,32 +866,6 @@ public class MypageController {
 		 
 	 }
 	 
-	 
-	 public String saveFile(MultipartFile file, HttpServletRequest request) {
-		 
-			String root = request.getSession().getServletContext().getRealPath("resources");
-			String savePath = root + "/muploadFiles";
-			File folder = new File(savePath);
-			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
-			
-			// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			String originalFileName = file.getOriginalFilename();
-			String renameFileName = sdf.format(new Date()) + "_"
-								+ (int)(Math.random() * 100000) 
-								+ originalFileName.substring(originalFileName.lastIndexOf("."));
-			
-			String renamePath = folder + "/" + renameFileName; // 저장하고자하는 경로 + 파일명
-			
-			try {
-				file.transferTo(new File(renamePath));
-				// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
-			} catch (IllegalStateException | IOException e) {
-				System.out.println("파일 업로드 에러 : " + e.getMessage());
-			} 
-			
-			return renameFileName;
-		}
 	 
 	 // 일반회원 - 찜하기 On
 	 @RequestMapping("/jjimon")
@@ -916,4 +919,132 @@ public class MypageController {
 			 return mv;
 		 }
 	 
+	// 일반회원 - 내 루트
+		 @GetMapping("/myroute")
+		 public ModelAndView goToMyroute(@ModelAttribute User u, ModelAndView mv, Map map) {
+			 
+			 // 이 회원이 가지고 있는 모든 경로의 모든 관광지 리스트
+			 List<RouteFinal> myRouteList = mService.selectMyRoute(u);
+			 System.out.println("myRoute확인 : " + myRouteList);
+			 
+			 // 이 회원이 가지고 있는 경로 수
+			 List<RouteMP> routeNumber = mService.selectRouteNum(u);
+			 System.out.println("routeNumber : " + routeNumber);
+			 
+			 // route_no별로 담을 Map 객체 선언
+			 HashMap<Integer, List<RouteFinal>> routeTest = new HashMap<>(); 
+			 
+			 // 경로 별로 가지고 있는 관광지 수
+			 int routeNum = 0;
+			 // 관광지 수를 담을 리스트 선언
+			 int[] standardList = new int[100];
+			 // hashMap의 key값이 되어줄 아이(index)
+			 int mapKey = 0;
+			 // 배열 slice의 연산을 위해 호출
+			 int forIndex = 0;
+
+			 // 리스트 자르기 위한 기준 찾기 -> 관광지 갯수 별로 자르기.
+			 for(int a = 0; a < routeNumber.size(); a++) {
+				 // 모든 경로의 모든 관광지 리스트 중에서 index=0의 route_no spotNum에 넣기
+				 routeNum = routeNumber.get(a).getRoute_no();
+				 // 해당 index의 경로의 관광지 갯수 찾아서 standard에 넣기 (ex. index=0의 경로에는 standard만큼의 관광지가 들어잇음)
+				 int standard = mService.selectStandard(routeNum);
+				 // 이 관광지 개수를 standardList[0]에 넣기
+				 standardList[a] = standard;
+				 System.out.println("standardList1["+a+"] : " + standardList[a] + ", standard : " + standard);
+			 }
+
+			 
+			 for(int b = 0; b < routeNumber.size(); b++) {
+				 List<RouteFinal> insertThis = myRouteList.subList(forIndex,forIndex+standardList[b]);
+				 routeTest.put(mapKey, insertThis);
+				 forIndex = forIndex + standardList[b];
+				 mapKey ++;
+				 System.out.println("routeTest["+b+"] : " + routeTest.get(b));
+			 }
+			 
+			 mv.addObject("routeTest", routeTest);
+			 mv.addObject("routeNum", routeNumber);
+			 mv.addObject("standardList", standardList);
+			 mv.setViewName("mypage/mp_MyRoutes");
+			 
+			 return mv;
+		 }
+		 
+	
+		 
+	// 회원 탈퇴
+	@PostMapping("/userout")
+	public String memberOut(@ModelAttribute User u, Model model) {
+		
+		//System.out.println("out u : " + u);
+		//System.out.println(memoutPwd);
+		User loginUser = uService.loginUser(u);
+		//System.out.println("out loginUser" + loginUser);
+		
+		List<Alert> alertNList = mService.selectAlertList(u);
+		 // 읽은 리스트
+		 List<Alert> alertYList = mService.selectYAlertList(u);
+		
+		
+		if(bcryptPasswordEncoder.matches(u.getUspwd(), loginUser.getUspwd())) {
+
+			int result = mService.updateUserStatus(u);
+			
+			
+			if(result>0) {
+				model.addAttribute("msg", "상다도에서 다시 만나는 그 날을 기다릴게요..ㅠㅠ!");
+				return "redirect:/main";
+			} else {
+				if(u.getUspart() == "일반") {
+					model.addAttribute("alertNList", alertNList);
+					 model.addAttribute("alertYList", alertYList);
+					model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
+					return "/mypage/mp_UserInfo";
+				} else {
+					model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
+					return "/mypage/mp_bUserInfo";
+				}
+				
+			}
+		} else {
+			if(u.getUspart() == "일반") {
+				model.addAttribute("alertNList", alertNList);
+				 model.addAttribute("alertYList", alertYList);
+				model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
+				return "/mypage/mp_UserInfo";
+			} else {
+				model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
+				return "/mypage/mp_bUserInfo";
+			}
+		 }
+
+	 }	
+	
+	 public String saveFile(MultipartFile file, HttpServletRequest request) {
+		 
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "/muploadFiles";
+			File folder = new File(savePath);
+			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
+			
+			// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String originalFileName = file.getOriginalFilename();
+			String renameFileName = sdf.format(new Date()) + "_"
+								+ (int)(Math.random() * 100000) 
+								+ originalFileName.substring(originalFileName.lastIndexOf("."));
+			
+			String renamePath = folder + "/" + renameFileName; // 저장하고자하는 경로 + 파일명
+			
+			try {
+				file.transferTo(new File(renamePath));
+				// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
+			} catch (IllegalStateException | IOException e) {
+				//System.out.println("파일 업로드 에러 : " + e.getMessage());
+			} 
+			
+			return renameFileName;
+		}
+
 }

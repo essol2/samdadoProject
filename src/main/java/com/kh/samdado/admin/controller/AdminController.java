@@ -490,13 +490,23 @@ public class AdminController {
 	public String sendSMS() {
 		return "admin/sendSMSForm";
 	}
-	
+
 	@GetMapping("/selectGetProfit")
 	public @ResponseBody String selectGetProfit() {
-		
+	
 		List<Integer> profits = aService.selectGetProfit();
 	
 		return new Gson().toJson(profits);
+	}
+	
+	@PostMapping("/selectGetAllProfit")
+	public @ResponseBody List<Income> selectGetAllProfit(@RequestBody Income profitType) {
+		
+		List<Income> profitRequestResult = aService.selectGetAllProfit(profitType); 
+
+		System.out.println("profitRequestResult : " + profitRequestResult);
+
+		return profitRequestResult;
 	}
 	
 	@PostMapping("/sendAboard")
@@ -506,7 +516,14 @@ public class AdminController {
 		
 		int insertAboard = aService.insertAboard(aboard);
 		
-		if (insertAboard > 0) {
+		// -- 은솔 : news에 새로운 공지사항 넣기
+		// 1. bno 찾아오기
+		int findBno = mService.findNewBno(aboard);
+		
+		aboard.setBno(findBno);
+		int insertNews = mService.insertNewBoard(aboard);
+		
+		if (insertAboard > 0 && insertNews > 0) {
 			//System.out.println("insertAboard 결과 : " + insertAboard);
 			model.addAttribute("msg", "공지글 등록에 성공하였습니다.");
 			return "redirect:/admin/home";

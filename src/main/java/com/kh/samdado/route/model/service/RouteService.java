@@ -25,6 +25,8 @@ public interface RouteService {
 
 	int finalRoute(RouteFinal rf);
 
+	List<Route> changeRoute(String[] rrlist);
+
 
 
 	

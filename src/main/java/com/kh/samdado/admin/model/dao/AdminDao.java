@@ -72,6 +72,10 @@ public interface AdminDao {
 
 	int updateRstatusToEnd(Income adminPremiumAd);
 
+	List<Income> selectGetAllProfit(Income profitRequestDto);
+
+
+
 
 
 

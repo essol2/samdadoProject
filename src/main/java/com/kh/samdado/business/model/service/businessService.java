@@ -9,6 +9,7 @@ import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.vo.User;
 import com.kh.samdado.common.model.vo.Alliance;
 import com.kh.samdado.common.model.vo.Income;
+import com.kh.samdado.business.model.vo.BusinessSearch;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -92,12 +93,33 @@ public interface businessService {
 	Object insertJjim(Map<String, Object> commandMap);	
 	
 	public int updateJjim(Map<String, Object> commandMap);
+	
+	// 리스트에서 사업장검색
+	List<Business> searchTourList(BusinessSearch search);
+	
+	List<Business> searchHotelList(BusinessSearch search);
+
+	List<Business> searchResList(BusinessSearch search);
+
+	List<Business> searchCarList(BusinessSearch search);
 
 	// 신고 카운트
 	int countReport();  
 
 	// Report의 rstatus 확인 메소드
 	public Report findReportStatus(Report r);
+	
+	// Report의 rexdate 확인 메소드 (selectList)
+	List<Report> findReportRexdate();
+	
+	int updateRexdate(Report r);
+	
+	// Income의 exdate 확인 메소드 (selectList)
+	List<Income> findIncomeExdate();
+	
+	int updateExdate(Income i);
+	
+	int updateBusClassify(int bus_code);
 	
 	// 일반결제 메소드
 	public int insertIncome(Income i);
@@ -137,8 +159,6 @@ public interface businessService {
 
 	List<RoomAtt> selectRoomAtt(int bus_code);	
 
-	
-
 	List<Business> cateList(String kind);
 
 	List<Car> selectCars(int bus_code);
@@ -148,6 +168,24 @@ public interface businessService {
 	List<Review> selectReview(int bus_code);
 
 	int insertMenu(List<BusinessAtt> menus);
+
+	List<Business> calList(String kind);
+
+	List<Business> priceList(Business kinds);
+
+	List<Alliance> selectAlli();
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
 
 	
 

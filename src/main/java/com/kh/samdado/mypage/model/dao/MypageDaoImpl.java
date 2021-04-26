@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.samdado.admin.model.vo.A_board;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -18,7 +19,9 @@ import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.RouteMP;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.user.model.vo.User;
 
 @Repository
@@ -34,14 +37,14 @@ public class MypageDaoImpl implements MypageDao{
 	
 	// 안읽은 알림 select 메소드
 	@Override
-	public List<Alert> selectAlertList(String usno) {
-		return sqlSession.selectList("mypageMapper.selectAlertList", usno);
+	public List<Alert> selectAlertList(User u) {
+		return sqlSession.selectList("mypageMapper.selectAlertList", u);
 	}
 	
 	// 읽은 알림 select 메소드
 	@Override
-	public List<Alert> selectYAlertList(String usno) {
-		return sqlSession.selectList("mypageMapper.selectYAlertList", usno);
+	public List<Alert> selectYAlertList(User u) {
+		return sqlSession.selectList("mypageMapper.selectYAlertList", u);
 	}
 
 	// 알림 상세보기 객체 찾아오는 메소드
@@ -310,7 +313,7 @@ public class MypageDaoImpl implements MypageDao{
 	//일반회원 - 다시 찜하기
 	@Override
 	public int updateJjim(String jjim_no) {
-		return sqlSession.insert("mypageMapper.updateJjim", jjim_no);
+		return sqlSession.update("mypageMapper.updateJjim", jjim_no);
 	}
 
 	// 일반회원 - 찜목록 삭제
@@ -329,6 +332,42 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public int findNewNews(User u) {
 		return sqlSession.selectOne("mypageMapper.findNewNews", u);
+	}
+
+	// 관리자 공지사항 news에 insert
+	@Override
+	public int insertNewBoard(A_board aboard) {
+		return sqlSession.insert("mypageMapper.insertNewBoard", aboard);
+	}
+
+	// 관리자 공지사항 bno 찾아오기
+	@Override
+	public int findNewBno(A_board aboard) {
+		return sqlSession.selectOne("mypageMapper.findNewBno", aboard);
+	}
+
+	// 회원 탈퇴
+	@Override
+	public int updateUserStatus(User u) {
+		return sqlSession.update("mypageMapper.updateUserStatus", u);
+	}
+
+	// 내 루트 찾기
+	@Override
+	public List<RouteFinal> selectMyRoute(User u) {
+		return sqlSession.selectList("mypageMapper.selectMyRoute", u);
+	}
+
+	// 사용자 별로 가지고 있는 루트 갯수
+	@Override
+	public List<RouteMP> selectRouteNum(User u) {
+		return sqlSession.selectList("mypageMapper.selectRouteNum", u);
+	}
+
+	// 루트 별로 가지고 있는 관광지 개수
+	@Override
+	public int selectStandard(int routeNum) {
+		return sqlSession.selectOne("mypageMapper.selectStandard", routeNum);
 	}
 
 }

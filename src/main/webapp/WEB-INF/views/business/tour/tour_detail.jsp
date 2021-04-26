@@ -22,7 +22,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -87,7 +87,8 @@
         }
 
         #ho_title {
-            font-size: 28px;
+            font-size: 50px;
+    		color: #343a40;
         }
 
         #ho_grade {
@@ -98,6 +99,12 @@
         .title_tag {
             margin-bottom: 1%;
         }
+        
+        .infoLabel{
+       	    font-size: 20px;
+		    /* font-weight: bold; */
+		    color: #495740;
+        }
 
         .jjim_img {
             width: 20px;
@@ -105,8 +112,8 @@
         }
 
         .report_img {
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
         }
 
         /* 메인사진 위 정보div들 끝 */
@@ -127,8 +134,8 @@
         }
 
         #small_view_area {
-            border: 1px solid black;
-            border-radius: 13px;
+            /* border: 1px solid black; */
+    		/* border-radius: 13px; */
         }
 
         .small_view {
@@ -197,17 +204,18 @@
         }
 
         #mapBtn {
-            position: absolute;
-            background-color: white;
-            border-radius: 6px;
-            border: 1px solid rgb(70, 115, 85);
-            cursor: pointer;
-            color: skyblue;
-            font-family: Arial;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 10px 35px;
-            text-decoration: none;
+             position: relative;
+		    background-color: #ffffff;
+		    border-radius: 6px;
+		    border: 1px solid rgb(70, 115, 85);
+		    cursor: pointer;
+		    color: skyblue;
+		    /* font-family: Arial; */
+		    font-size: 15px;
+		    font-weight: bold;
+		    padding: 5px 20px;
+		    text-decoration: none;
+		    z-index: 2;	
         }
 
         /* 편의시설 체크div 및 소개 div */
@@ -233,16 +241,24 @@
             margin-bottom: 2%;
             margin-top: 5%;
             display: flex;
+            border-radius: 3px;
             /* align-items: center; */
             /* justify-content: center; */
         }
 
         .detailView {
             width: 56%;
+            margin:10px;
+        }
+        
+        .detailView b{
+        	font-size:30px;
         }
 
         .detailView label {
             line-height: 50px;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .btnArea {
@@ -293,6 +309,11 @@
         
          #report_btn, #jjim_btn{
         	cursor: pointer;
+        	margin-right: 1%;
+        }
+        
+        #jjim_btn{
+       	    margin-right: 2%;
         }
 
         /* 후기 */
@@ -306,10 +327,15 @@
             margin-right: 1%;
         }
 
-        .reivew {
+        .review {
             border: 1px solid black;
             width: 90%;
             border-radius: 6px;
+            padding: 10px;
+        }
+        
+        .review a{
+        	font-size:17px;
         }
 
         .review_img {
@@ -327,6 +353,7 @@
             float: right;
             margin: 1%;
             margin-bottom: 0;
+            font-weight: bold;
         }
         
         #map {
@@ -510,7 +537,7 @@
         display: flex;
     }
 
-    .reivew-name{
+    .review-name{
         margin-top: 25px;
     }
 
@@ -566,7 +593,12 @@
     }
     
     .facLabel{
-    	margin-right: 15px
+    	margin-right: 15px;
+    	font-size: 18px;
+    }
+    
+    .facLabel img{
+    	margin-right:3px;
     }
     
     .logo-wrap{
@@ -597,7 +629,23 @@
 	    	width:455px;
 	    	height:420px;
     	}
-    
+    	
+    	.reviewTitle{
+    		font-size: 30px;
+    		font-weight:bold;
+    	}
+    	
+    	.beneImgs{
+    		width: 100%;
+		    height: 325px;
+		    border-radius: 8px;
+    	}
+    	
+    	.premium {
+            width: 60px;
+            height: 60px;
+            margin-bottom:30px;
+        }
     	
     	
     </style>
@@ -619,22 +667,22 @@
             <div class="title_area">
                 <div class="title_area">
                 	<c:if test="${ tour.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premium.png"><br>
+                    <img class="premium" src="../resources/images/image_listpage/premiumicon.PNG">
                     </c:if>
                     <label id="ho_title" class="title_tag">${ tour.bus_name }</label>
                     <br>
                 </div>
-                <label id="ho_address">
+                <label id="ho_address" class="infoLabel">
                 <c:set var="add" value="${fn:split(tour.bus_address, ',') }"/>
                 <c:forEach var="add" items="${add}" varStatus="a">
                 <c:if test="${a.count == 2}">주소 : ${add}</c:if>
                 </c:forEach>
                 </label><br>
-                <label>영업시간 : 오픈 ${ tour.bus_opening.substring(0, 5) } ~ 마감 ${ tour.bus_opening.substring(6) }</label>&nbsp;
+                <label class="infoLabel">영업시간 : 오픈 ${ tour.bus_opening.substring(0, 5) } ~ 마감 ${ tour.bus_opening.substring(6) }</label>&nbsp;
             </div>
 			
             <div id="ho_info">
-                <label id="jjim_btn">
+                <label id="jjim_btn" class="infoLabel">
 			        <c:choose>
 					    <c:when test="${jjimcheck eq '0' or empty jjimcheck}"> <!-- jjimcheck가 0이면 빈하트-->
 					        <img src="../resources/images/image_listpage/noheart.png" 
@@ -645,8 +693,8 @@
 					              id="btn_like">
 					    </c:otherwise>
 					</c:choose>찜하기</label>
-                <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
-                <label id="report_btn"><img id="report" class="report_img"
+                <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal" class="infoLabel"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
+                <label id="phone_btn" class="infoLabel"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">${ tour.bus_phone }</label>
             </div>
         </div>
@@ -726,7 +774,7 @@
                 <div class="col2">
                     <div id="map" style="width: 555px; height:330px;">
                     <button type="button" id="mapBtn" 
-                    onclick="window.open('https://map.kakao.com/link/search/${tour.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">길찾기</button>
+                    onclick="window.open('https://map.kakao.com/link/to/${tour.bus_address.substring(6)}','window_name','width=1200,height=800,location=no,status=no,scrollbars=yes');">길찾기</button>
                     </div>
                 </div>
                 
@@ -751,10 +799,12 @@
 	            
 	            // 주소로 좌표를 검색합니다
 	            geocoder.addressSearch(splitadd[1], function(result, status) {
-	
+	            	
+						console.log(add);
+						console.log(splitadd[1]);
 	                // 정상적으로 검색이 완료됐으면 
 	                 if (status === kakao.maps.services.Status.OK) {
-	
+			
 	                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 	
 	                    // 결과값으로 받은 위치를 마커로 표시합니다
@@ -777,115 +827,22 @@
 				
                 <!-- 작은 리뷰 -->
                 <div class="col2" id="small_view_area">
-                    <button type="button" class="small_view_btn">후기</button><br>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label>
-                        <p class="small_view_con">
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        </p>
-                    </div>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label><br>
-                        <p class="small_view_con">최고의 숙소 상태와 너무너무 친절하신 호스트분까지..</p>
-                    </div>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label>
-                        <p class="small_view_con">
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-
-                         </p>
-                		<button type="button" id="small_view_morebtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">more...</button>
-                    </div>
-                    <!-- Modal -->
-				    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-					    <div class="modal-dialog modal-dialog-centered" style="max-width:60%;">
-					        <div class="modal-content" style="width:100%;">
-						        <div class="modal-header">
-						            <h5 class="modal-title" id="staticBackdropLabel">다녀온 고객 후기</h5>
-						            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						        </div>
-						        <div class="modal-body">
-						            <div class="review-main">
-						
-						            <!-- 리뷰 상단 -->
-						            <div class="review-title">
-						                <div class="reivew-name">
-						                    <h3>제주호텔 ★★★★</h3>
-						                </div>
-						                <div class="review-avg">
-						                    <div class="avg-con">
-						                        <div class="avg-img"></div>
-						                        <img src="">
-						                        <div class="avg-text">
-						                            <p style="font-size: 25px; color: blue;">최고</p>
-						                            <p>n개의 후기</p>
-						                        </div>
-						                    </div>
-						                </div>
-						            </div>
-						
-						            <!-- 리뷰 바디 -->
-						            <div class="review-body">
-						                <div class="review-box">
-						                    <div class="review-user"> 
-						                        <p>은솔이</p>
-						                        <p>2020년 2월</p>
-						                    </div>
-						                    <div class="review-con">
-						                        <img src="" style="width: 300px; height: 300px;">
-						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
-						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
-						                    </div>
-						                </div>
-						                <div class="review-box">
-						                    <div class="review-user">
-						                        <p>은솔이</p>
-						                        <p>2020년 2월</p>
-						                    </div>
-						                    <div class="review-con">
-						                        <img src="" style="width: 300px; height: 300px;">
-						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
-						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
-						                    </div>
-						                </div>
-						                <div class="review-box">
-						                    <div class="review-user">
-						                        <p>은솔이</p>
-						                        <p>2020년 2월</p>
-						                    </div>
-						                    <div class="review-con">
-						                        <img src="" style="width: 300px; height: 300px;">
-						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
-						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
-						                    </div>
-						                </div>
-						            </div>
-						            </div>
-						        </div>
-						        <div class="modal-footer">
-						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-						            <button type="button" class="btn btn-primary">전체리뷰보기</button>
-						        </div>
-					        </div>
-					    </div>
-				    </div>
+	                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+	                  <div class="carousel-inner">
+	                  	<div class="carousel-item active">
+	                  	<c:forEach var="a" items="${ all }" varStatus="i">
+	                  		<c:if test="${ i.first }">
+								<img class="beneImgs"src="${ contextPath }/resources/busUploadFiles/alliance/${ a.aimgcname }" class="d-block w-100" alt="...">
+							</c:if>
+						</c:forEach>
+	                    </div>
+						<c:forEach var="a" items="${ all }">
+							<div class="carousel-item">
+								<img class="beneImgs"src="${ contextPath }/resources/busUploadFiles/alliance/${ a.aimgcname }" class="d-block w-100" alt="...">
+	                    	</div>
+						</c:forEach>
+	                  </div>
+	                </div>
                 </div>
             </div>
         </div>
@@ -928,7 +885,7 @@
           		</c:forEach>
             </div>
             <div class="detailView" id="detailView">
-                <b>상품명 : ${ tour.pro_name }</b><br><br>
+                <b>${ tour.pro_name }</b><br><br>
                 <label id="adult">어른 : ${ tour.pro_adult }원</label><br>
                 <label id="youth">청소년 : ${ tour.pro_youth }원</label><br>
                 <label id="child">어린이 : ${ tour.pro_child }원</label>
@@ -944,7 +901,7 @@
 
         <!-- 후기 -->
         <div id="review_area">
-            <label>후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:yellow;">★</a>(후기 ${ review.size() }개)</label><br>
+            <label class="reviewTitle">후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:#ffd700;">★</a><b></b>(후기 ${ review.size() }개)</label><br>
             <c:if test="${ empty review }">
             <div class="reviewBox">
             <p style="font-size:60px">리뷰가 없습니다!!!</p>
@@ -959,15 +916,16 @@
 					<c:if test="${ r.img_rename2 ne '미입력'  }">
 	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename2 }" class="review_img">
 	                </c:if>
-	                <c:if test="${ r.img_rename3 ne '미입력'  }">
+	                <c:if test="${ r.img_rename3 ne '미입력'  }"> 	
 	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename3 }" class="review_img">
 	                </c:if>
 	            </div>
 	            <div class="review_writer">
-	                <label>${ r.us_name }</label>
-	                <div class="reivew">
+	                <label  class="reviewTitle" style="font-size:15px;">${ r.us_name }</label>
+	                <div class="review">
 	                    <a>${ r.rev_comment }</a>
 	                    <label class="review_date_label">${ r.rev_date }</label>
+	                    <label class="review_date_label"><a style="color:#ffd700;">★</a> ${r.re_star }</label>
 	                </div>
 	            </div>
             </div>
@@ -976,9 +934,28 @@
     </section>
     
     <script>
-    	function(){
-    		
-    	}
+    
+    
+    var sum = 0;
+    var cnt = 0;
+    	$(function(){
+			 <c:forEach items="${review}" var="r">
+				 var star = '<c:out value="${r.re_star}"/>'
+				  
+				 sum += Number(star); 
+				 cnt++;
+			 </c:forEach>
+			 
+			 var avg = sum / cnt;
+			 
+			 var stars = $('#starLabel').find('b').text(avg.toFixed(1));
+			 
+			 var review = '<c:out value="${review.size()}"/>'
+		        	
+		        	if(review == '0'){
+		        		$('#starLabel').find('b').text(review);
+		        	}
+    	});
     
     	$j1124.datepicker.setDefaults({
 	        dateFormat: 'yy-mm-dd',

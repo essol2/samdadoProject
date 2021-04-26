@@ -220,10 +220,17 @@
         #filter-img {
             width: 55px;
             height: 55px;
+            margin-left: 3%;
         }
 
         .search-result {
             padding-left: 3%;
+        }
+        
+        .topText{
+        	font-size: 35px;
+		    font-weight: bold;
+		    color: #343a40;
         }
 
         /* 검색필터끝 */
@@ -346,6 +353,20 @@
             box-sizing: border-box;
         }
         
+        .mainProfile {
+
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
         .moreProfile {
 
             display: flex;
@@ -437,6 +458,43 @@
             font-size: 20px;
             padding: 10px;
         }
+        
+        #searchValue{
+        	width: 300px;
+        }
+        
+        #searchBtn{
+       	    background-color: #467355;
+		    color: white;
+		    border-radius: 10px;
+		    border: none;
+		    height: 35px;
+		    font-weight:bold;
+        }
+        
+        .cover2{
+        	margin-left: 3%;
+        	margin-top: 1%;
+        }
+        
+        #jjimOn{
+        	display : none;
+        	background-color : rgba( 0,0,0,0);
+        }
+        
+        .jjimBtn{
+        	border-style : none;
+        	width : fit-content;
+        	height : fit-content;
+        	backtround-color : rgba( 0,0,0,0);
+        }
+        
+        .btn.btn-sea{-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+		a{text-decoration:none;}        
+        .btn.btn-sea {font-size: 18px; white-space:nowrap; width:150px; padding:.8em 1.5em; font-family: GmarketSansBold; line-height:18px; display: inline-block;zoom: 1; color: #fff; text-align: center; position:relative; -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear; transition: border .25s linear, color .25s linear, background-color .25s linear;}      
+        .btn.btn-sea{background-color: #467355; border-color: #467355; -webkit-box-shadow: 0 3px 0 #088d74; box-shadow: 0 3px 0 #088d74;}
+		.btn.btn-sea:hover{background-color:white; color:#467355;}
+		.btn.btn-sea:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
 
         /* 사업장종류선택끝 */
     </style>
@@ -451,67 +509,75 @@
             <nav id="choise-nav">
                <ul id="choise">
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/hotel_list'>숙박</a></div>
+                        <a href='${ contextPath }/business/hotel_list' class="btn btn-sea">숙박</a>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/tour_list'>관광지</a></div>
+                        <a href='${ contextPath }/business/tour_list' class="btn btn-sea">관광지</a>
                     </li>
                     <li>
-                        <div class="cover" style="background-color: rgb(70, 115, 85);"><label style="color: white;">음식점</label></div>
+                        <a href='${ contextPath }/business/restaurant_list' class="btn btn-sea">음식점</a>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/rentcar_list'>렌트카</a></div>
+                        <a href='${ contextPath }/business/rentcar_list' class="btn btn-sea">렌트카</a>
                     </li>
                 </ul>
             </nav>
 
             <nav id="filter-nav">
-                <form method="POST">
+                <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">							
+                <div class="search-result">
+                    <label class="topText">삼다도와 함께하는</label><br>
+                    <label class="topText">제주도 지역의 음식점</label>
+                </div>
+                <form id="search_business_form">
                     <div class="cover2">
-                        <ul id="filter">
-                            <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">
-
-                            <li><label>지역</label>
-                                <select>
-                                    <option value="location">무관</option>
-                                    <option value="location">서귀포</option>
-                                    <option value="location">용인</option>
-                                    <option value="location">한라산</option>
-                                </select>
-
-                            </li>
-                            <li><label>날짜</label>
-                                <input type="date">
-
-                            </li>
-                            <li>
-                                <label>인원수</label>
-                                <div>
-                                    <select>
-                                        <option value="location">1명</option>
-                                        <option value="location">2명</option>
-                                        <option value="location">3명</option>
-                                        <option value="location">4명</option>
-                                        <option value="location">5명</option>
-                                        <option value="location">6명이상</option>
-                                    </select>
-                                    <img src="../resources/images/image_listpage/search.png">
-                                </div>
-                            </li>
-                        </ul>
+                      	<input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" placeholder="음식점 이름">
+                       	<button class="btn btn-secondary" id="searchBtn" type="button">검색</button>
                     </div>
                 </form>
-                <div class="search-result">
-                    <label style="font-size: 18px;">3월 16일 ~ 20일. 2명 게스트</label><br>
-                    <label style="font-size: 23px;" >제주도 지역의 음식점</label>
-                </div>
             </nav>
+            
+            <script>	
+		    $(function(){
+		    	 $("#searchBtn").on("click", function() {
+		    		 	var search = {};		         		
+		         		search.searchValue = $("#searchValue").val();
+		         		search.searchKind = 3;
+		    			$.ajax({
+		    				 url : '${contextPath}/business/searchBusinessList', 
+		    	              data : JSON.stringify(search),
+		    	              type : "post",
+		    	              contentType : "application/json; charset=utf-8",
+		    	              dataType : "json",
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";
+		                            str += "<b>"+ data[i].res_category +"</b>";		                            
+		                            str += "<c:if test='${ loginUser.usno != null }'>"
+			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+			                        str += "</c:if>";
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }
+		    			})
+		    		});
+		    });
+			</script>
 
             <nav id="choise2-nav">
                 <ul id="choise2">
-                    <li>
-                        <div class="cover"><label>요금</label></div>
-                    </li>
                     <li>
                         <div class="cover"><label>종류</label></div>
                     </li>
@@ -529,45 +595,37 @@
 
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                	<div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/restaurant2.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>JEJU오성</b>
-                        <b>한식</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
+                	<c:forEach var="r" items="${ resList }">
+                <c:if test="${ r.bus_classify eq 'P' && r.file_lv eq '0' }">
+                    <div class='mainProfile'>
+                    <input type="hidden" id="bus_code" name="bus_code" value="${ r.bus_code }">
+                        <img class="premium" src="../resources/images/image_listpage/premiumicon.PNG">
+                        <img class="image" src="../resources/busUploadFiles/${ r.file_rename }" onclick="selectRes(${r.bus_code})">
+                        <b>${ r.bus_name }</b>
+	                        <b>${ r.res_category }</b>
+	                        <c:if test="${ loginUser.usno != null }">
+	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+	                        </c:if>
                     </div>
-                    <div class='profile'>
-                        <img class="premium" src="../../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/restaurant2.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>JEJU오성</b>
-                        <b>한식</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/restaurant3.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>충민정</b>
-                        <b>한식</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
+                </c:if>    
+                </c:forEach>
                 </div>
 
                 <div id="secondlist">
 	                <c:forEach var="r" items="${ resList }">
+	                <c:if test="${r.bus_classify eq 'G' }">
 	                    <div class='profile'>
 	                        <c:if test="${ r.file_lv eq '0' }">
+	                        <input type="hidden" id="bus_code" name="bus_code" value="${ r.bus_code }">
 	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${r.file_rename}" onclick="selectRes(${r.bus_code})">
-	                        </c:if>
-	                        <b>★4.90(후기 99+개)</b>
+	                        </c:if>	                        
 	                        <b>${ r.bus_name }</b>
 	                        <b>${ r.res_category }</b>
-	                        <c:if test="${ loginUser.usno != null }">                    
-	                        <p><img src="../resources/images/image_listpage/heart.png"></p>
+	                        <c:if test="${ loginUser.usno != null }">
+	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
 	                        </c:if>
 	                    </div>
+	                    </c:if>
 	                </c:forEach>
                 </div>        
 			</div>
@@ -589,10 +647,10 @@
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 9;
+							x = 6;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+9 <= size_div)? x+9 : size_div;
+								x= (x+6 <= size_div)? x+6 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});
@@ -601,6 +659,65 @@
         <footer>
            <jsp:include page="../../common/footer.jsp"/>
         </footer>
+        
+        <script>
+	
+	
+	$('.jjimBtn').click(function(){
+		
+		var $this = $(this);
+		var bus_code = $(this).parent().eq(0).children().val();
+		var check=$this.find(">img");
+		
+		console.log($this);
+		console.log(check);
+		
+		var jjimOb = new Object();
+		jjimOb.bus_code = bus_code;
+		jjimOb.us_no = ${loginUser.usno};
+		
+		
+		$this.find(">img").attr("src", function(index, attr){
+			if(attr.match('_on')){
+				
+				$.ajax({
+				url : "${contextPath}/mypage/jjimoff",
+				data : JSON.stringify(jjimOb),
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				success : function(data){
+					
+					//console.log("하트 오프!");
+					
+					
+				}, error:function(e){
+					alert("error code : " + e.status + "/n" + "message : " + e.responseText);
+				}
+			});
+				return attr.replace("_on.png", "_off.png");
+				
+			} else {
+				
+				$.ajax({
+				url : "${contextPath}/mypage/jjimon",
+				data : JSON.stringify(jjimOb),
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				success : function(data){
+					
+					//console.log("하트 온!");
+					
+					
+				}, error:function(e){
+					alert("error code : " + e.status + "/n" + "message : " + e.responseText);
+				}
+			});
+				return attr.replace("_off.png", "_on.png");
+			}
+		});
+	});
+
+</script>
 
 
 </body>

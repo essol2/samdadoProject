@@ -15,7 +15,7 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    
+
     <!-- naver 간편로그인 -->
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     
@@ -569,6 +569,15 @@
 		cursor: pointer;
 	}
  
+ .newAlert{
+ 	 width : 28px;
+ 	height  : 28px; 
+ 	display : none;
+ 	/* display : inline-block; */
+ 	margin-right : 8px;
+ 	float : inherit;
+ 	/* float : right; */
+ }
     </style>
 </head>
 <body>
@@ -601,7 +610,7 @@
                 <!-- 1. 로그인 유저가 없을 때 -->
                 <c:if test="${ empty sessionScope.loginUser }">
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 
@@ -621,7 +630,7 @@
                 <!-- 2. 로그인 유저가 있을 때(일반회원)-->
                 <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '일반' }">
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img>
+                <img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png" onclick="aboutUs();"></img>
 	                <br><br>
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
@@ -632,8 +641,8 @@
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
                 <!-- <h5 class="helloName"> 혼저옵서예.</h5> -->
- 
-				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/userinfo'">내 정보</p>
+				    <p class="right" id="navi-menu" onclick="goToInfo();">
+				    <img src="${contextPath}/resources/images/image_mp/new_w.png" class="newAlert">내 정보</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
 				</div>				    
                 </c:if>
@@ -641,7 +650,7 @@
                 <!-- 3. 로그인 유저가 있을 때(제휴회원) 및 로그인 유저가 관리자가 아닐 때 -->
                 <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '제휴' && loginUser.usid ne 'samdado' }">
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
@@ -664,26 +673,16 @@
                 
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
-                <fmt:formatNumber value="${newNews}" type="number" var="numberType" />
- 					<c:choose>
-	                <c:when test=" ${newNews > 0}">
-	                	<img src="${contextPath}/resources/image_mp/dot.png">
-		                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">내 정보</p>
-					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			    
-					</c:when>
-					<c:otherwise>
-            			<p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">내 정보</p>
-					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>	
-            		</c:otherwise>
-            		</c:choose>
+		                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">
+		                <img src="${contextPath}/resources/images/image_mp/new_w.png" class="newAlert">내 정보</p>
+					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			
                 </div>
                 </c:if>
                
                 <!-- 4. 로그인 유저가 관리자 일때 -->
                 <c:if test="${!empty sessionScope.loginUser && loginUser.uspart eq '관리자'}">    
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img>
-	                <br><br>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>                <br><br>
 	                <p class="center" id="navi-title">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
@@ -893,9 +892,11 @@
             var scrolled = $window.scrollTop() >= pageOffsetTop; //스크롤된 상태; true or false
             $header.toggleClass('down', scrolled); //클래스 토글
             if($window.scrollTop() >= pageOffsetTop) {
-                $(".navi_logoimg").attr("src", $("img").attr("src").replace("_w","_g"));
+                $(".navi_logoimg").attr("src", $(".navi_logoimg").attr("src").replace("_w","_g"));
+                $(".newAlert").attr("src", $(".newAlert").attr("src").replace("_w","_b"));
             } else if($window.scrollTop() < pageOffsetTop) {
-                $(".navi_logoimg").attr("src", $("img").attr("src").replace("_g","_w"));
+                $(".navi_logoimg").attr("src", $(".navi_logoimg").attr("src").replace("_g","_w"));
+                $(".newAlert").attr("src", $(".newAlert").attr("src").replace("_b","_w"));
             }
             });
         });
@@ -1167,8 +1168,48 @@
 			return true;
 		}
 	
+		function goToInfo(){
+			var uspart = "일반";
+			location.href='${contextPath}/mypage/userinfo?usno='+${loginUser.usno}+'&uspart='+uspart;
+		}
+		
+		function aboutUst(){
+			location.href='${contextPath}/user/aboutUs';
+
+		}
 	</script>
-    
+
+	 <script>
+	 	$(document).ready(function(){
+	 		
+	 		if(${not empty loginUser}){
+	 		
+	 		var searchU = new Object();
+			searchU.usno = "${loginUser.usno}";
+			searchU.uspart = "${loginUser.uspart}";
+	 			
+	 			$.ajax({
+	 				url : "${contextPath}/mypage/new",
+	 				data : JSON.stringify(searchU),
+	 				type : "post",
+	 				contentType : "application/json; charset=utf-8",
+	 				success : function(data){
+	 					if(data > 0){
+	 						$('.newAlert').css("display","block");
+	 						$('.newAlert').css("display","inline-block");
+	 						$('.newAlert').css("margin-bottom","5px;");
+	 					}
+	 				},
+	 				error : function(e){
+	 					alert("error code : " + e.status + "\n"
+									+ "message : " + e.responseText);
+	 				}
+	 			});
+	 		
+	 		}
+	 	});
+	 </script>
+	    
     
     <!-- 네이버아디디로로그인 초기화 Script -->
 	<script type="text/javascript">
@@ -1203,6 +1244,9 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
+	<!-- 갤러리 이미지 탬플릿 사용을 위한 js cdn -->
+	<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+	
     
 </body>
 </html>
