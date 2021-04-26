@@ -275,8 +275,8 @@
         }
 
         .premium {
-            width: 75px;
-            height: 21px;
+            width: 60px;
+            height: 60px;
         }
 
         /* 프리미엄테두리 반짝이효과 */
@@ -348,7 +348,7 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -362,9 +362,14 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
+        }
+        
+        .premium_div{
+        	position:absolute;
+        	margin-bottom:368px;
         }
         
         .moreProfile {
@@ -376,7 +381,7 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -599,7 +604,9 @@
                 <c:if test="${ r.bus_classify eq 'P' && r.file_lv eq '0' }">
                     <div class='mainProfile'>
                     <input type="hidden" id="bus_code" name="bus_code" value="${ r.bus_code }">
-                        <img class="premium" src="../resources/images/image_listpage/premiumicon.PNG">
+                        <div class="premium_div">                    	
+                        <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
+                    	</div>
                         <img class="image" src="../resources/busUploadFiles/${ r.file_rename }" onclick="selectRes(${r.bus_code})">
                         <b>${ r.bus_name }</b>
 	                        <b>${ r.res_category }</b>

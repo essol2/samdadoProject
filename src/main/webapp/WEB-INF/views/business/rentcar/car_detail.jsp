@@ -275,6 +275,19 @@
 
         .profile {
 
+            display: none;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
+        .moreProfile {
+
             display: flex;
             flex-direction: column;
             /* align-items: center; */
@@ -744,6 +757,20 @@
             <div class="btnArea">
                 <button class="moreBtn">더보기</button>
             </div>
+            
+            <!-- 더보기 -->
+			<script>				
+						$(document).ready(function(){
+							size_div = $('.profile').length;
+							
+							x = 6;
+							$('.profile:lt('+x+')').addClass('moreProfile');
+							$('.moreBtn').click(function(){
+								x= (x+6 <= size_div)? x+6 : size_div;
+								$('.profile:lt('+x+')').addClass('moreProfile');	
+							});
+						});
+			</script>
         
         <!-- 후기 -->
         <div id="review_area">
@@ -824,6 +851,7 @@
     </script>
 
     <!-- Modal -->
+    <c:forEach var="c" items="${ cars }">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">        
             <div class="modal-content">
@@ -836,17 +864,17 @@
                     <!--렌트대여날짜-->
                     <div class="start-div">
                         <label for="startDate">예약일</label>
-                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)" required>
                     </div>
                     <!--렌트반납날짜-->
                     <div class="end-div">
                         <label for="endDate">반납일</label>
                         <label id="error" class="error">반납날짜는 예약날짜 이전 일 수 없습니다.</label>
-                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)">
+                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)" required>
                     </div>                                       
                 </div>
                 <div class="modalcarimage">                    
-                <c:forEach var="c" items="${ cars }">
+                
 				<input type="hidden" id="carNo" name="carNo" value="${ c.car_no }">
 				<input type="hidden" id="carName" name="carName" value="${ c.car_name }">
 				<input type="hidden" id="cAmount" name="cAmount" value="${ c.car_price }">
@@ -886,7 +914,7 @@
                     <b>원</b>
                     
                     <button class="payBtn">결제하기</button>
-               </c:forEach>
+               
                 </div>
 
                 <div class="modal-footer">
@@ -896,6 +924,7 @@
             
         </div>
     </div>
+    </c:forEach>
     
    	<script>
 	    function startDate(e) {	  	  

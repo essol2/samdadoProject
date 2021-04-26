@@ -350,7 +350,7 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -364,9 +364,15 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
+            position:relative;
+        }
+        
+        .premium_div{
+        	position:absolute;
+        	margin-bottom:368px;
         }
         
         .moreProfile {
@@ -378,7 +384,7 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -517,6 +523,9 @@
 		.btn.btn-sea:hover{background-color:white; color:#467355;}
 		.btn.btn-sea:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
         
+        .premium_div{
+        	position:absolute;
+        }
 
         /* 사업장종류선택끝 */
     </style>
@@ -712,7 +721,9 @@
                 <c:if test="${ t.bus_classify eq 'P' && t.file_lv eq '0' }">
                     <div class='mainProfile'>
                     <input type="hidden" id="bus_code" name="bus_code" value="${ t.bus_code }">
-                        <img class="premium" src="../resources/images/image_listpage/premiumicon.PNG">
+                    	<div class="premium_div">                    	
+                        <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
+                    	</div>
                         <img class="image" src="../resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                         <b>★4.90(후기 99+개)</b>
                         <b>${ t.tour_tema } / ${ t.tour_category }</b>

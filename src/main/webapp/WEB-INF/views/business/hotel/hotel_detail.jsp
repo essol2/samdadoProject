@@ -243,6 +243,16 @@
             height: 300px;
             margin-bottom: 2%;
             margin-top: 5%;
+            display: none;
+            /* align-items: center; */
+            /* justify-content: center; */
+        }
+        
+        .moreDetail {
+            border: 1px solid black;
+            height: 300px;
+            margin-bottom: 2%;
+            margin-top: 5%;
             display: flex;
             /* align-items: center; */
             /* justify-content: center; */
@@ -798,6 +808,20 @@
         <div class="btnArea">
             <button class="moreBtn">더보기</button>
         </div>
+        
+        <!-- 더보기 -->
+			<script>				
+						$(document).ready(function(){
+							size_div = $('.detail').length;
+							
+							x = 3;
+							$('.detail:lt('+x+')').addClass('moreDetail');
+							$('.moreBtn').click(function(){
+								x= (x+3 <= size_div)? x+3 : size_div;
+								$('.detail:lt('+x+')').addClass('moreDetail');	
+							});
+						});
+			</script>
 
         <!-- 후기 -->
         <div id="review_area">
@@ -887,14 +911,14 @@
                     <!--체크인날짜-->
                     <div class="start-div">
                         <label for="startDate">체크인</label>
-                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)" required>
                     </div>
 
                     <!--체크아웃날짜-->
                     <div class="end-div">
                         <label for="endDate">체크아웃</label>
                         <label id="error" class="error">체크아웃날짜는 체크인날짜 이전 일 수 없습니다.</label>
-                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)">
+                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)" required>
                     </div>
                 </div>
 
