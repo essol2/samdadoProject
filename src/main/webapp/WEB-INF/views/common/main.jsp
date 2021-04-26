@@ -978,21 +978,6 @@
             }
   
         });
-    	
-    	
-    	<%--
-    	$("#phone").change(function() {
-           var phoneVal = $("#phone").val();
-           var regphone = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})?[0-9]{3,4}?[0-9]{4}$/;
-
-
-           if (regphone.test(phoneVal)){
-               $("#test_phone_label").html("올바른 입력입니다.").css("color","green");
-           } else {
-               $("#test_phone_label").html("올바른 형식이 아닙니다.").css("color","red");
-           }
-       });
-       --%>
        
        $("#email").change(function () {
     	   var emailVal = $("#email").val();
@@ -1035,18 +1020,6 @@
                 $("#test_birth_label").html("올바른 형식이 아닙니다.").css("color", "red");
             }
         });
-    	
-    	<%--
-    	$("#email").change(function () {
-            var emailVal = $("#email").val();
-            var regemail = /^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-            if (emailVal.match(regemail) != null) {
-                $("#test_email_label").html("올바른 입력입니다.").css("color", "green");
-            } else {
-                $("#test_email_label").html("올바른 형식이 아닙니다.").css("color", "red");
-            }
-        });
-    	--%>
     	
     	$("#pwd").change(function () { 
             var regpwd = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/;

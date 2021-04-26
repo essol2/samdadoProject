@@ -374,7 +374,9 @@
 		                   <option value="bus_category" <c:if test="${ param.searchCondition == 'bus_category' }">selected</c:if>>카테고리</option> 
 		                   <option value="bus_code" <c:if test="${ param.searchCondition == 'bus_code' }">selected</c:if>>사업장 코드</option> 
 		                   <option value="pbalance" <c:if test="${ param.searchCondition == 'pbalance' }">selected</c:if>>포인트</option>
+		                    <!-- 
 		                   <option value="alsubdate" <c:if test="${ param.searchCondition == 'alsubdate' }">selected</c:if>>신청날짜</option>
+		                   -->
 		                   <option value="alstatus" <c:if test="${ param.searchCondition == 'alstatus' }">selected</c:if>>처리 상태</option>
 		                   
 		               </select>
