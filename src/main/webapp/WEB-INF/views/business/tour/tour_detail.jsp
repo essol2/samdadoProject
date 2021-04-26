@@ -204,7 +204,7 @@
         }
 
         #mapBtn {
-            position: relative;
+             position: relative;
 		    background-color: #ffffff;
 		    border-radius: 6px;
 		    border: 1px solid rgb(70, 115, 85);
@@ -676,7 +676,6 @@
             </div>
 			
             <div id="ho_info">
-            <c:if test="${ loginUser.usno != null }">
                 <label id="jjim_btn" class="infoLabel">
 			        <c:choose>
 					    <c:when test="${jjimcheck eq '0' or empty jjimcheck}"> <!-- jjimcheck가 0이면 빈하트-->
@@ -688,7 +687,6 @@
 					              id="btn_like">
 					    </c:otherwise>
 					</c:choose>찜하기</label>
-					</c:if>
                 <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal" class="infoLabel"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
                 <label id="phone_btn" class="infoLabel"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">${ tour.bus_phone }</label>

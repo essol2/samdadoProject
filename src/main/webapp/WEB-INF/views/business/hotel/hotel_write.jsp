@@ -267,7 +267,7 @@
 				<div class="join-wrap">
 				    <h3><label>전화번호</label></h3>
 				    <span class="box">
-				        <input type="text" id="address" class="content" name="bus_phone" required>
+				        <input type="text" id="address" class="content" name="bus_phone" required placeholder="062-0000-000으로 표기">
 				    </span>
 				</div>
 		        
@@ -460,7 +460,8 @@
 		            <span class="box int_mobile">
 		                <input type="file"  name="room" id="mobile" class="content">
 		            </span>
-		        </div> 
+		        </div>
+		        <hr style="color:black;"> 
 			</div>
 		</div>
 		
