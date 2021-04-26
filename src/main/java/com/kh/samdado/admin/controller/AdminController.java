@@ -504,7 +504,7 @@ public class AdminController {
 		
 		List<Income> profitRequestResult = aService.selectGetAllProfit(profitType); 
 
-		System.out.println("profitRequestResult : " + profitRequestResult);
+		//System.out.println("profitRequestResult : " + profitRequestResult);
 
 		return profitRequestResult;
 	}

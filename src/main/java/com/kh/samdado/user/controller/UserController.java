@@ -98,7 +98,7 @@ public class UserController {
 	   
 	   // 회원 가입 후 바로 로그인이니까 암호화 필요x
 	   if (joinedUser.getUsid() != null) { // 널이 아니면
-		  
+		   model.addAttribute("loginUser", joinedUser); 
 		   // attribute로 묶어서 (loginUser 키값이 위에 선언한 @SessionAttributes({"loginUser", "msg"}) 키 값과 동일하기 때문에 세션에 있는 loginUser 키값 사용 가능)
 		   // 실제로 rd로 묶어준 값은 휘발성이기 때문에 여기서 joinedUser 값이 휘발되어 날라가고, loginUser는 세션에 값이 저장되기 때문에 다른 페이지에서도 사용 가능
 		   
@@ -119,7 +119,7 @@ public class UserController {
 	   User loginUser = uService.loginUser(u);   
 	   
 	   // 일반 로그인이까 암호화 필요 o
-	   if (loginUser != null && bcryptPasswordEncoder.matches(u.getUspwd(), loginUser.getUspwd())) {	   
+	   if (loginUser != null && bcryptPasswordEncoder.matches(u.getUspwd(), loginUser.getUspwd()) && u.getUsstop() != null) {	   
 
 		   model.addAttribute("loginUser", loginUser);
 		   return "redirect:/main";
