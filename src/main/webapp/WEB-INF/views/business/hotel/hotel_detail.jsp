@@ -22,7 +22,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -88,9 +88,16 @@
             margin-bottom: 1%;
         }
 
-        #ho_title {
-            font-size: 28px;
-        }
+
+            #ho_title {
+		    font-size: 50px;
+		    color: #343a40;
+		}
+		
+        .reviewTitle {
+		    font-size: 30px;
+		    font-weight: bold;
+		}
 
         #ho_grade {
             font-size: 19px;
@@ -200,17 +207,18 @@
         }
 
         #mapBtn {
-            position: absolute;
-            background-color: white;
-            border-radius: 6px;
-            border: 1px solid rgb(70, 115, 85);
-            cursor: pointer;
-            color: skyblue;
-            font-family: Arial;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 6px 25px;
-            text-decoration: none;
+            position: relative;
+		    background-color: #ffffff;
+		    border-radius: 6px;
+		    border: 1px solid rgb(70, 115, 85);
+		    cursor: pointer;
+		    color: skyblue;
+		    /* font-family: Arial; */
+		    font-size: 15px;
+		    font-weight: bold;
+		    padding: 5px 20px;
+		    text-decoration: none;
+		    z-index: 2;	
         }
 
         /* 편의시설 체크div 및 소개 div */
@@ -241,8 +249,22 @@
         }
 
         .detailView {
+        	padding:20px;
             width: 56%;
         }
+        
+        .detailView > b{
+        	font-size:30px;
+        }
+        
+        .detailView label img {
+		    margin: 0px 10px;
+		}
+		
+		.facLabel {
+		    margin-right: 15px;
+		    font-size: 18px;
+		}
 
         .btnArea {
             text-align: center;
@@ -253,6 +275,12 @@
         .imgArea {
             width: 44%;
         }
+        
+        .beneImgs {
+		    width: 100%;
+		    height: 325px;
+		    border-radius: 8px;
+		}
 
         .imgArea img {
             width: 100%;
@@ -475,7 +503,12 @@
 	    	width:455px;
 	    	height:420px;
     	}
-    
+    	
+    	.infoLabel{
+       	    font-size: 20px;
+		    /* font-weight: bold; */
+		    color: #495740;
+        }
     </style>
 
 </head>
@@ -495,14 +528,13 @@
                     <img src="../resources/images/image_listpage/premium.png"><br>
                     </c:if>
                     <label id="ho_title" class="title_tag">${ hotel.bus_name }</label>
-                    <label id="ho_grade" class="title_tag">4성급</label><br>
                 </div>
-                <label id="ho_address">${ hotel.bus_address.substring(6) }</label>
+                <label id="ho_address" class="infoLabel">${ hotel.bus_address.substring(6) }</label>
             </div>
 
             <div id="ho_info">
             <c:if test="${ loginUser.usno != null }">
-                <label id="jjim_btn">
+                <label id="jjim_btn" class="infoLabel">
 			        <c:choose>
 					    <c:when test="${jjimcheck eq '0' or empty jjimcheck}"> <!-- jjimcheck가 0이면 빈하트-->
 					        <img src="../resources/images/image_listpage/noheart.png" 
@@ -514,8 +546,8 @@
 					    </c:otherwise>
 					</c:choose>찜하기</label>
 					</c:if>
-                <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
-                <label id="report_btn"><img id="report" class="report_img"
+                <label id="report_btn" class="infoLabel" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
+                <label id="report_btn" class="infoLabel"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">${ hotel.bus_phone }</label>
             </div>
         </div>
@@ -592,151 +624,83 @@
             </script>
 
             <div class="col3">
-                <!-- 구글지도 -->
+	            <!-- 구글지도 -->
                 <div class="col2">
                     <div id="map" style="width: 555px; height:330px;">
                     <button type="button" id="mapBtn" 
-                    onclick="window.open('https://map.kakao.com/link/search/호텔','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">길찾기</button>
+                    onclick="window.open('https://map.kakao.com/link/to/${tour.bus_address.substring(6)}','window_name','width=1200,height=800,location=no,status=no,scrollbars=yes');">길찾기</button>
                     </div>
-                    
-                    <!-- 구글지도 api -->
-	                <script>
-		             // 이미지 지도에 표시할 마커입니다
-		             // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
-		             var markers = [
-		                 {
-		                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
-		                     text: '${hotel.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
-		                 }
-		             ];
-		
-		             var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div  
-		                 staticMapOption = { 
-		                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
-		                     level: 3, // 이미지 지도의 확대 레벨
-		                     marker: markers // 이미지 지도에 표시할 마커 
-		                 };    
-		
-		             // 이미지 지도를 생성합니다
-		             var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
-					</script>
-                    
                 </div>
+                
+                <!-- 구글지도 api -->
+                <script>
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };  
+
+	            // 지도를 생성합니다    
+	            var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	            // 주소-좌표 변환 객체를 생성합니다
+	            var geocoder = new kakao.maps.services.Geocoder();
+	            
+	            var add = "<c:out value='${ hotel.bus_address}'/>";
+	            var splitadd = add.split(',');
+	            
+
+	            
+	            // 주소로 좌표를 검색합니다
+	            geocoder.addressSearch(splitadd[1], function(result, status) {
+	            	
+						console.log(add);
+						console.log(splitadd[1]);
+	                // 정상적으로 검색이 완료됐으면 
+	                 if (status === kakao.maps.services.Status.OK) {
+			
+	                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+	                    // 결과값으로 받은 위치를 마커로 표시합니다
+	                    var marker = new kakao.maps.Marker({
+	                        map: map,
+	                        position: coords
+	                    });
+	
+	                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+	                    var infowindow = new kakao.maps.InfoWindow({
+	                        content: '<div style="width:150px;text-align:center;padding:6px 0;">${ hotel.bus_name }</div>'
+	                    });
+	                    infowindow.open(map, marker);
+	
+	                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	                    map.setCenter(coords);
+	                } 
+	            });    
+				</script>
+				
                 <!-- 작은 리뷰 -->
                 <div class="col2" id="small_view_area">
-                    <button type="button" class="small_view_btn">후기</button><br>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label>
-                        <p class="small_view_con">
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        </p>
-                    </div>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label><br>
-                        <p class="small_view_con">최고의 숙소 상태와 너무너무 친절하신 호스트분까지..</p>
-                    </div>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label>
-                        <p class="small_view_con">
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-
-                        </p>
-                        <button type="button" id="small_view_morebtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">more...</button>
-                    </div>
-                    <!-- Modal -->
-				    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-					    <div class="modal-dialog modal-dialog-centered" style="max-width:60%;">
-					        <div class="modal-content" style="width:100%;">
-						        <div class="modal-header">
-						            <h5 class="modal-title" id="staticBackdropLabel">다녀온 고객 후기</h5>
-						            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						        </div>
-						        <div class="modal-body">
-						            <div class="review-main">
-						
-						            <!-- 리뷰 상단 -->
-						            <div class="review-title">
-						                <div class="reivew-name">
-						                    <h3>제주호텔 ★★★★</h3>
-						                </div>
-						                <div class="review-avg">
-						                    <div class="avg-con">
-						                        <div class="avg-img"></div>
-						                        <img src="image/평점.png">
-						                        <div class="avg-text">
-						                            <p style="font-size: 25px; color: blue;">최고</p>
-						                            <p>n개의 후기</p>
-						                        </div>
-						                    </div>
-						                </div>
-						            </div>
-						
-						            <!-- 리뷰 바디 -->
-						            <div class="review-body">
-						                <div class="review-box">
-						                    <div class="review-user"> 
-						                        <p>은솔이</p>
-						                        <p>2020년 2월</p>
-						                    </div>
-						                    <div class="review-con">
-						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
-						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
-						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
-						                    </div>
-						                </div>
-						                <div class="review-box">
-						                    <div class="review-user">
-						                        <p>은솔이</p>
-						                        <p>2020년 2월</p>
-						                    </div>
-						                    <div class="review-con">
-						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
-						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
-						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
-						                    </div>
-						                </div>
-						                <div class="review-box">
-						                    <div class="review-user">
-						                        <p>은솔이</p>
-						                        <p>2020년 2월</p>
-						                    </div>
-						                    <div class="review-con">
-						                        <img src="image_listpage/room2.png" style="width: 300px; height: 300px;">
-						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
-						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
-						                    </div>
-						                </div>
-						            </div>
-						            </div>
-						        </div>
-						        <div class="modal-footer">
-						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						            <button type="button" class="btn btn-primary">Understood</button>
-						        </div>
-					        </div>
-					    </div>
-				    </div>
+	                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+	                  <div class="carousel-inner">
+	                  	<div class="carousel-item active">
+	                  	<c:forEach var="a" items="${ all }" varStatus="i">
+	                  		<c:if test="${ i.first }">
+								<img class="beneImgs"src="${ contextPath }/resources/busUploadFiles/alliance/${ a.aimgcname }" class="d-block w-100" alt="...">
+							</c:if>
+						</c:forEach>
+	                    </div>
+						<c:forEach var="a" items="${ all }">
+							<div class="carousel-item">
+								<img class="beneImgs"src="${ contextPath }/resources/busUploadFiles/alliance/${ a.aimgcname }" class="d-block w-100" alt="...">
+	                    	</div>
+						</c:forEach>
+	                  </div>
+	                </div>
                 </div>
             </div>
         </div>
-        <!-- 편의시설 -->
+        <%-- <!-- 편의시설 -->
         <div class="checktable">
             <h2>주요 편의 시설</h2><br>
             <c:forTokens var="w" items="${ hotel.hotel_facility }" delims=",">
@@ -760,7 +724,7 @@
             <label><img src="../resources/images/image_listpage/check.png">주차</label><br>
             <label><img src="../resources/images/image_listpage/check.png">컴퓨터</label>
             <label><img src="../resources/images/image_listpage/check.png">조식</label> -->
-        </div>
+        </div> --%>
 
         <hr class="boundary">
 
@@ -837,65 +801,60 @@
 
         <!-- 후기 -->
         <div id="review_area">
-            <label>후기</label>&nbsp;&nbsp;<label>★ 4.5(후기 99개)</label><br>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
+            <label class="reviewTitle">후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:#ffd700;">★</a><b></b>(후기 ${ review.size() }개)</label><br>
+            <c:if test="${ empty review }">
+            <div class="reviewBox">
+            <p style="font-size:60px">리뷰가 없습니다!!!</p>
             </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
+            </c:if>
+            <c:forEach var="r" items="${ review }">
+            <div class="reviewBox">
+	            <div class="review_img_area">
+	            	<c:if test="${ r.img_rename1 ne '미입력'  }">
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename1 }" class="review_img">
+	                </c:if>
+					<c:if test="${ r.img_rename2 ne '미입력'  }">
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename2 }" class="review_img">
+	                </c:if>
+	                <c:if test="${ r.img_rename3 ne '미입력'  }"> 	
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename3 }" class="review_img">
+	                </c:if>
+	            </div>
+	            <div class="review_writer">
+	                <label  class="reviewTitle" style="font-size:15px;">${ r.us_name }</label>
+	                <div class="review">
+	                    <a>${ r.rev_comment }</a>
+	                    <label class="review_date_label">${ r.rev_date }</label>
+	                    <label class="review_date_label"><a style="color:#ffd700;">★</a> ${r.re_star }</label>
+	                </div>
+	            </div>
             </div>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-            </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
-            </div>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-            </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                        최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서
-                        매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
-            </div>
+            </c:forEach>
         </div>
         
     </section>
     <script>
+    var sum = 0;
+    var cnt = 0;
+    	$(function(){
+			 <c:forEach items="${review}" var="r">
+				 var star = '<c:out value="${r.re_star}"/>'
+				  
+				 sum += Number(star); 
+				 cnt++;
+			 </c:forEach>
+			 
+			 var avg = sum / cnt;
+			 
+			 var stars = $('#starLabel').find('b').text(avg.toFixed(1));
+			 
+			 var review = '<c:out value="${review.size()}"/>'
+		        	
+		        	if(review == '0'){
+		        		$('#starLabel').find('b').text(review);
+		        	}
+    	});
+    
 	    $j1124.datepicker.setDefaults({
 	        dateFormat: 'yy-mm-dd',
 	        prevText: '이전 달',
@@ -988,6 +947,8 @@
     </div>
     </c:forEach>
       <script>
+      
+      
 
   	$(".payBtn").click(function() {
   		
@@ -1144,26 +1105,8 @@
     </script>
         
     <footer>
-            <div id="footer_left">
-                <img src="../resources/images/image_footer/footerlogo.png" class="leftImg">
-            </div>
-            <div id="footer_center">
-                <img src="../resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
-                <img src="../resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
-                <img src="../resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
-            </div>
-            <div id="footer_right">
-                <p id="samdado_news">삼다도 소식</p>
-                <img src="../resources/images/image_footer/facebook.png" class="rightImg">
-                <img src="../resources/images/image_footer/twitter.png" class="rightImg">
-                <img src="../resources/images/image_footer/LinkedIn.png" class="rightImg">
-                <img src="../resources/images/image_footer/pininterest.png" class="rightImg">
-            </div>
-            <br>
-            <br>
-            <hr>
-            <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
-        </footer>
+          <jsp:include page="../../common/footer.jsp"/>
+    </footer>
         
     <!-- Optional JavaScript; choose one of the two! -->
 

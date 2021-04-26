@@ -83,6 +83,8 @@ public class businessController {
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		List<Room> roomList = bService.selectRoom(bus_code);
 		List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
+		List<Review> reviewList = bService.selectReview(bus_code);
+		List<Alliance> alliance = bService.selectAlli();
 		
 		if(b != null && roomList != null) {
 			//System.out.println("호텔사진  : " + attList);
@@ -90,6 +92,8 @@ public class businessController {
 			model.addAttribute("att", attList);
 			model.addAttribute("room", roomList);
 			model.addAttribute("roomAtt", roomAtt);
+			model.addAttribute("review", reviewList);
+			model.addAttribute("all", alliance);
 			
 			// 찜하기			
 			if(session.getAttribute("loginUser") != null) {
@@ -545,13 +549,15 @@ public class businessController {
 		
 		Business b = bService.selectRestaurant(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
+		List<Review> reviewList = bService.selectReview(bus_code);
+		List<Alliance> alliance = bService.selectAlli();
 		
 		if(b != null) {
-			// System.out.println("디테일 : " + b);
-			// System.out.println("사진들 : " + attList);
 			
 			model.addAttribute("res", b);
 			model.addAttribute("att", attList);
+			model.addAttribute("review", reviewList);
+			model.addAttribute("all", alliance);
 			
 			// 찜하기			
 			if(session.getAttribute("loginUser") != null) {
@@ -793,12 +799,16 @@ public class businessController {
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		List<Car> carList = bService.selectCars(bus_code);
 		List<CarAtt> carAtt = bService.selectCarAtt(bus_code);
+		List<Review> reviewList = bService.selectReview(bus_code);
+		List<Alliance> alliance = bService.selectAlli();
 		if(b != null) {
 
 			model.addAttribute("car", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("cars", carList);
 			model.addAttribute("carAtt", carAtt);
+			model.addAttribute("review", reviewList);
+			model.addAttribute("all", alliance);
 			
 						// 찜하기			
 						if(session.getAttribute("loginUser") != null) {
