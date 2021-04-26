@@ -234,6 +234,7 @@ public class businessController {
 			int result3 = bService.insertIncome1(i);
 		}
 		
+		
 		int result = bService.insertBusiness(b, list);
 		int result3 = bService.insertRoom(rooms);
 		int result4 = bService.insertMain(bat);
@@ -329,20 +330,17 @@ public class businessController {
 	@GetMapping("/tour_detail")
 	public String tourDetail(@RequestParam int bus_code,
 			   				Model model, HttpSession session) {
-
-		//System.out.println("나와라 : " + bus_code);
 	
 		Business b = bService.selectTour(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		List<Review> reviewList = bService.selectReview(bus_code);
-		
+		List<Alliance> alliance = bService.selectAlli();
 		
 		if(b != null) {
 			model.addAttribute("tour", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("review", reviewList);
-			//System.out.println("review : " + reviewList);
-
+			model.addAttribute("all", alliance);
 						// 찜하기			
 						if(session.getAttribute("loginUser") != null) {
 							User loginUser = (User)session.getAttribute("loginUser");
