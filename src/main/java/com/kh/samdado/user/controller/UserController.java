@@ -119,7 +119,7 @@ public class UserController {
 	   User loginUser = uService.loginUser(u);   
 	   
 	   // 일반 로그인이까 암호화 필요 o
-	   if (loginUser != null && bcryptPasswordEncoder.matches(u.getUspwd(), loginUser.getUspwd()) && u.getUsstop() != null) {	   
+	   if (loginUser != null && bcryptPasswordEncoder.matches(u.getUspwd(), loginUser.getUspwd()) && loginUser.getUsstop() == null) {	   
 
 		   model.addAttribute("loginUser", loginUser);
 		   return "redirect:/main";
