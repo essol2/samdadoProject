@@ -173,6 +173,8 @@ public interface businessService {
 
 	List<Business> priceList(Business kinds);
 
+	List<Alliance> selectAlli();
+
 	
 
 	

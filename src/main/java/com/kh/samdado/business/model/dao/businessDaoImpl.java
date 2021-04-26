@@ -418,6 +418,12 @@ public class businessDaoImpl implements businessDao {
 		return sqlSession.selectList("businessMapper.calList");
 	}
 
+	@Override
+	public List<Alliance> selectAlli() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectAlli");
+	}
+
 	
 
 	

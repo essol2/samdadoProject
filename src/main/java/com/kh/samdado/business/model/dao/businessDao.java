@@ -179,6 +179,8 @@ public interface businessDao {
 
 	List<Business> priceList(Business kinds);
 
+	List<Alliance> selectAlli();
+
 	
 
 	

@@ -393,6 +393,12 @@ public class businessServiceImpl implements businessService {
 		return bDao.priceList(kinds);
 	}
 
+	@Override
+	public List<Alliance> selectAlli() {
+		// TODO Auto-generated method stub
+		return bDao.selectAlli();
+	}
+
 	
 
 	
