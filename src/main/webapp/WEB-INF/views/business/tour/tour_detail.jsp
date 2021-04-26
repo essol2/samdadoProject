@@ -641,6 +641,12 @@
 		    border-radius: 8px;
     	}
     	
+    	.premium {
+            width: 60px;
+            height: 60px;
+            margin-bottom:30px;
+        }
+    	
     	
     </style>
 
@@ -661,7 +667,7 @@
             <div class="title_area">
                 <div class="title_area">
                 	<c:if test="${ tour.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premium.png"><br>
+                    <img class="premium" src="../resources/images/image_listpage/premiumicon.PNG">
                     </c:if>
                     <label id="ho_title" class="title_tag">${ tour.bus_name }</label>
                     <br>
@@ -879,7 +885,7 @@
           		</c:forEach>
             </div>
             <div class="detailView" id="detailView">
-                <b>상품명 : ${ tour.pro_name }</b><br><br>
+                <b>${ tour.pro_name }</b><br><br>
                 <label id="adult">어른 : ${ tour.pro_adult }원</label><br>
                 <label id="youth">청소년 : ${ tour.pro_youth }원</label><br>
                 <label id="child">어린이 : ${ tour.pro_child }원</label>
