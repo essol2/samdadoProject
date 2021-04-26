@@ -50,29 +50,99 @@
                 	       <h6>데일리 배너광고 | 프리미엄 광고 | 커미션 매출 내역이 보여집니다.</h6>
                 	       <br><br>
                             <div>
-                                <canvas id="myLineChart"></canvas>
+                                <canvas id="myAllChart"></canvas>
                             </div>
+                            
+                            <script>
+	                            function getAllProfit(profitType) {
+	                            	
+	                            	var allprofits = [];
+	                            	obj = { item: profitType }; // 키값 vo 필드명이랑 일치
+	                            	
+	                            	$.ajax({
+	                    				url : "${ contextPath }/admin/selectGetAllProfit",
+	                    				dataType : "json",
+	                    				data: JSON.stringify(obj),
+	                    				contentType: "application/json",
+	                    				method: "post", 
+	                    				async: false, // 비동기가 아니도록 처리
+	                    				success : function(data) {
+	                    					console.log("AJAX SUCCESS!");
+                    			            //console.log(data);
+                    			            
+                    			            for (var i in data) {
+                    			            	
+                    			            	//var pamount = $(data[i].pamount);
+                    			            	
+                    			            	//console.log(pamount);
+                    			            	
+                    			            	allprofits.push(data[i].pamount);
+                    			            	
+                    			            	
+                    			            }
+
+	                    				},
+	                    				error : function(e) {
+	                    					 console.log("AJAX FAILED..");
+
+	                    				}
+	                    			});
+	                            	
+	                            	console.log(allprofits);
+	                            	return allprofits;
+	                            }
+                            </script>
                                     	
 		                  	<script>
-		                  	      var ctx = document.getElementById('myLineChart').getContext('2d');
-			                  	  var chart = new Chart(ctx, {
-			                  	    // The type of chart we want to create
-			                  	    type: 'line',
-	
-			                  	    // The data for our dataset
-			                  	    data: {
-			                  	        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-			                  	        datasets: [{
-			                  	            label: '매출',
-			                  	            backgroundColor: 'rgb(255, 99, 132)',
-			                  	            borderColor: 'rgb(255, 99, 132)',
-			                  	            data: [0, 10, 5, 2, 20, 30, 45]
-			                  	        }]
-			                  	    },
-	
-			                  	    // Configuration options go here
-			                  	    options: {}
-			                  	});
+				                  	const DATA_COUNT = 6;
+				                  	const NUMBER_CFG = {count: DATA_COUNT, min: 0};
+		
+				                  	const labels = ["11월", "12월", "1월", "2월", "3월", "4월"];
+				                  	
+				                  	const data = {
+				                  	  labels: labels,
+				                  	  datasets: [
+				                  	    {
+				                  	      label: '커미션',
+				                  	      data: getAllProfit("수수료"),
+				                  	      backgroundColor: "rgb(54, 162, 235)",
+				                  	    },
+				                  	    {
+				                  	      label: '프리미엄',
+				                  	      data: getAllProfit("프리미엄"),
+				                  	      backgroundColor: "rgb(75, 192, 192)",
+				                  	    },
+				                  	    {
+				                  	      label: '배너',
+				                  	      data: getAllProfit("충전"),
+				                  	      backgroundColor: "rgb(255, 99, 132)",
+				                  	    },
+				                  	  ]
+				                  	};
+				                   
+		                  	       const config = {
+		                  	    	  type: 'bar',
+		                  	    	  data,
+		                  	    	  options: {
+		                  	    	    plugins: {
+		                  	    	      title: {
+		                  	    	        display: true,
+		                  	    	        text: 'Chart.js Bar Chart - Stacked'
+		                  	    	      },
+		                  	    	    },
+		                  	    	    responsive: true,
+		                  	    	    scales: {
+		                  	    	      x: {
+		                  	    	        stacked: true,
+		                  	    	      },
+		                  	    	      y: {
+		                  	    	        stacked: true
+		                  	    	      }
+		                  	    	    }
+		                  	    	  }
+		                  	    	};
+		                  	       
+				                   var myAllChart = new Chart(document.getElementById('myAllChart'), config);
 		                  	</script>
                   	
                         </div>
