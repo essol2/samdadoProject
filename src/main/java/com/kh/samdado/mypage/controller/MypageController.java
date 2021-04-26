@@ -867,32 +867,6 @@ public class MypageController {
 	 }
 	 
 	 
-	 public String saveFile(MultipartFile file, HttpServletRequest request) {
-		 
-			String root = request.getSession().getServletContext().getRealPath("resources");
-			String savePath = root + "/muploadFiles";
-			File folder = new File(savePath);
-			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
-			
-			// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			String originalFileName = file.getOriginalFilename();
-			String renameFileName = sdf.format(new Date()) + "_"
-								+ (int)(Math.random() * 100000) 
-								+ originalFileName.substring(originalFileName.lastIndexOf("."));
-			
-			String renamePath = folder + "/" + renameFileName; // 저장하고자하는 경로 + 파일명
-			
-			try {
-				file.transferTo(new File(renamePath));
-				// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
-			} catch (IllegalStateException | IOException e) {
-				//System.out.println("파일 업로드 에러 : " + e.getMessage());
-			} 
-			
-			return renameFileName;
-		}
-	 
 	 // 일반회원 - 찜하기 On
 	 @RequestMapping("/jjimon")
 	 @ResponseBody
@@ -1045,6 +1019,32 @@ public class MypageController {
 			}
 		 }
 
-	 }	 
-		
+	 }	
+	
+	 public String saveFile(MultipartFile file, HttpServletRequest request) {
+		 
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "/muploadFiles";
+			File folder = new File(savePath);
+			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
+			
+			// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String originalFileName = file.getOriginalFilename();
+			String renameFileName = sdf.format(new Date()) + "_"
+								+ (int)(Math.random() * 100000) 
+								+ originalFileName.substring(originalFileName.lastIndexOf("."));
+			
+			String renamePath = folder + "/" + renameFileName; // 저장하고자하는 경로 + 파일명
+			
+			try {
+				file.transferTo(new File(renamePath));
+				// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
+			} catch (IllegalStateException | IOException e) {
+				//System.out.println("파일 업로드 에러 : " + e.getMessage());
+			} 
+			
+			return renameFileName;
+		}
+
 }

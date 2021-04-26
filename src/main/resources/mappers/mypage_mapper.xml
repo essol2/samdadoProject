@@ -840,11 +840,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="selectYAlertList" resultMap="AlertResultSet">
-		SELECT *
-		FROM NEWS
-		WHERE US_NO = #{usno}
-		AND NSTATUS = 'Y'
-		ORDER BY NNO DESC
+		<if test="uspart eq '제휴'.toString()">
+			SELECT *
+			FROM NEWS
+			WHERE (US_NO = #{usno} OR US_NO = 'b' OR US_NO = 'all')
+			AND NSTATUS = 'Y'
+			ORDER BY NNO DESC
+		</if>
+		<if test="uspart eq '일반'.toString()">
+			SELECT *
+			FROM NEWS
+			WHERE (US_NO = #{usno} OR US_NO = 'u' OR US_NO = 'all')
+			AND NSTATUS = 'Y'
+			ORDER BY NNO DESC
+		</if>
 	</select>
 	
 	<select id="selectDetailAlert" resultMap="AlertResultSet">
@@ -1118,6 +1127,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			WHERE (US_NO = #{usno} OR US_NO = 'u' OR US_NO = 'all')
 			AND NSTATUS = 'N'
 		</if>
+		<if test="uspart eq '관리자'.toString()">
+			SELECT COUNT(*)
+			FROM NEWS
+			WHERE US_NO = #{usno}
+			AND NSTATUS = 'N'
+		</if>
   </select>
   
   <insert id="insertNewBoard" parameterType="A_board">
@@ -1135,7 +1150,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</if>
   </insert>
   
-  <select id="findNewBno" resultMap="ABoardResultSet">
+  <select id="findNewBno" resultType="_int">
   		SELECT BNO
   		FROM (
   			SELECT BNO

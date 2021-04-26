@@ -1178,20 +1178,11 @@
 	 <script>
 	 	$(document).ready(function(){
 	 		
+	 		if(${not empty loginUser}){
 	 		
-	 		
-	 		if(${not empty sessionScope.loginUser}){
-	 			if(${loginUser.uspart eq "일반"}){
-	 				var uspart = "일반";
-	 			} else if(${loginUser.uspart eq "제휴"}){
-	 				var uspart = "제휴";
-	 			} else {
-	 				var uspart = " ";
-	 			}
-	 			
-	 			var searchU = new Object();
-				searchU.usno = ${loginUser.usno};
-				searchU.uspart = uspart;
+	 		var searchU = new Object();
+			searchU.usno = "${loginUser.usno}";
+			searchU.uspart = "${loginUser.uspart}";
 	 			
 	 			$.ajax({
 	 				url : "${contextPath}/mypage/new",
@@ -1210,8 +1201,8 @@
 									+ "message : " + e.responseText);
 	 				}
 	 			});
-	 		}
 	 		
+	 		}
 	 	});
 	 </script>
 	    
