@@ -1103,7 +1103,7 @@
                 
             </div>
             <div class="modal-footer">                
-                <button type="submit" id="reportBtn">신고하기</button>
+                <button type="submit" id="reportBtn" onclick="reportAlert()">신고하기</button>
                 <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
             </div>
             </form>
