@@ -180,6 +180,10 @@
     #specificCon{
         font-size: x-small;
     }
+    
+    #alertTable{
+    	width : 100%;
+    }
 
     #alertTable td{
         border-top : 1px solid lightgray;
@@ -519,8 +523,8 @@
                         </c:when>
 			            
 			             <c:otherwise>
-			             	 <h2>&nbsp알림</h2>
-	                    <table>
+			             	 <h2>&nbsp 공지사항</h2>
+	                    <table id="alertTable">
 	                        <c:forEach var="ab" items="${ alertNList }" varStatus="abStatus">
 			                <tr style="cursor : pointer;" onclick="detailNAlert(${ab.nno})" class="newList">
 			                    <th class="nno" style="color : #467355;">new</th>

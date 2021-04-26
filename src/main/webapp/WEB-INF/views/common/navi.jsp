@@ -923,20 +923,12 @@
     
      <script>
 	 	$(document).ready(function(){
-	 		
-	 		if(${not empty sessionScope.loginUser}){
-	 			if(${loginUser.uspart eq "일반"}){
-	 				var uspart = "일반";
-	 			} else if(${loginUser.uspart eq "제휴"}){
-	 				var uspart = "제휴";
-	 			} else {
-	 				var uspart = " ";
-	 			}
-	 			
+
+	 		if(${not empty loginUser}){
 	 			var searchU = new Object();
-				searchU.usno = ${loginUser.usno};
-				searchU.uspart = uspart;
-	 			
+					searchU.usno = "${loginUser.usno}";
+					searchU.uspart = "${loginUser.uspart}";
+					
 	 			$.ajax({
 	 				url : "${contextPath}/mypage/new",
 	 				data : JSON.stringify(searchU),
@@ -947,6 +939,8 @@
 	 						$('.newAlert').css("display","block");
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
+	 					} else{
+	 						alert("관리자님! 오늘도 열일하세요!");
 	 					}
 	 				},
 	 				error : function(e){
@@ -972,7 +966,7 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
