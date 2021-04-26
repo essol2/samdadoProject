@@ -361,8 +361,11 @@ public class UserController {
    }
    
    
-  
-   
+  @GetMapping("/aboutus")
+   private String goToAboutUs() {
+	   
+	   return "/common/aboutUs";
+   }
    
   
    

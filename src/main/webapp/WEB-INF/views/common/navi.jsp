@@ -413,6 +413,8 @@
 </style>
 </head>
 <body>
+
+  
    <!-- 메세지가 있다면 출력하고 지우기 -->
    <c:if test="${ !empty msg }">
    		<script>alert('${ msg }')</script>
@@ -437,7 +439,7 @@
                 <!-- 1. 로그인 유저가 없을 때 -->
                 <c:if test="${ empty sessionScope.loginUser }">
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 
@@ -457,7 +459,7 @@
                 <!-- 2. 로그인 유저가 있을 때(일반회원)-->
                 <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '일반' }">
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
@@ -477,7 +479,7 @@
                 <!-- 3. 로그인 유저가 있을 때(제휴회원) 및 로그인 유저가 관리자가 아닐 때 -->
                 <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '제휴' && loginUser.usid ne 'samdado' }">
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
@@ -506,7 +508,7 @@
                 <!-- 4. 로그인 유저가 관리자 일때 -->
                 <c:if test="${!empty sessionScope.loginUser && loginUser.uspart eq '관리자'}">    
                 <div class="navi">
-                <img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
@@ -957,6 +959,11 @@
 	 	function goToInfo(uspart){
 	 		var uspart = "일반";
 	 		location.href="${contextPath}/mypage/userinfo?usno="+${loginUser.usno} + "&uspart=" + uspart;
+	 	}
+	 	
+	 	function aboutUs(){
+			location.href='${contextPath}/user/aboutus';
+
 	 	}
 	 </script>
 
