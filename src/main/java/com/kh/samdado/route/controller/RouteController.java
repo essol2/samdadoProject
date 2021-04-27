@@ -166,8 +166,8 @@ public class RouteController {
 		
 		if(result > 0) {
 			model.addAttribute("msg", "저장되었습니다. 내 정보에서 확인하세요!");
-			session.setAttribute("usno", rf.getUs_no());
-			
+			//session.setAttribute("usno", rf.getUs_no());
+			//return null;
 			return "redirect:/mypage/myroute";
 		} else {
 			throw new RouteException("저장에 실패하였습니다.");
