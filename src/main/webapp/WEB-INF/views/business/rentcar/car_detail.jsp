@@ -250,7 +250,6 @@
             margin-left: 1%;
             /* flex: 5; */
             display: flex;
-            justify-content: center;
             align-items: center;
 
         }
@@ -281,7 +280,7 @@
             justify-content: center;
             /* flex: 1; */
             
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -294,7 +293,7 @@
             justify-content: center;
             /* flex: 1; */
             
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -758,6 +757,16 @@
                 <button class="moreBtn">더보기</button>
             </div>
             
+            <script>
+            $(".btn-primary").click(function () {
+            	if("${ loginUser.uspart }" === "제휴" || "${ loginUser.uspart }" === "관리자"){
+            		alert("일반회원으로 이용해주세요.");
+            		return;
+            	}
+            
+            });
+            </script>
+            
             <!-- 더보기 -->
 			<script>				
 						$(document).ready(function(){
@@ -851,7 +860,8 @@
     </script>
 
     <!-- Modal -->
-    <c:forEach var="c" items="${ cars }">
+    
+    
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">        
             <div class="modal-content">
@@ -863,38 +873,40 @@
                 <div class="modal-body">
                     <!--렌트대여날짜-->
                     <div class="start-div">
-                        <label for="startDate">예약일</label>
+                        <label for="startDate">대여일</label>
                         <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)" required>
                     </div>
                     <!--렌트반납날짜-->
                     <div class="end-div">
                         <label for="endDate">반납일</label>
-                        <label id="error" class="error">반납날짜는 예약날짜 이전 일 수 없습니다.</label>
+                        <label id="error" class="error">반납일은 대여일 이전 일 수 없습니다.</label>
                         <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)" required>
                     </div>                                       
                 </div>
                 <div class="modalcarimage">                    
-                
+                <c:forEach var="c" items="${ cars }" varStatus="status" end="0">
 				<input type="hidden" id="carNo" name="carNo" value="${ c.car_no }">
 				<input type="hidden" id="carName" name="carName" value="${ c.car_name }">
 				<input type="hidden" id="cAmount" name="cAmount" value="${ c.car_price }">
+                    					
                     <h4>${ c.car_name }</h4>
+						<!-- 
                     <c:forEach var="ca" items="${ carAtt }">
                         <c:if test="${ ca.file_lv eq '0' }">
                         <img class="mordalmainimage" src="${ contextPath }/resources/busUploadFiles/" ${ ca.file_rename }>
                         </c:if>
                         </c:forEach>
+                         -->
+                    </c:forEach>
+                    <!-- 
                     <div class="other">
-                    
-                    
                         <img class="otherimage" src="../resources/images/image_listpage/car1.png">
                         <img class="otherimage" src="../resources/images/image_listpage/car2.png">
                         <img class="otherimage" src="../resources/images/image_listpage/car3.png">
                         <img class="otherimage" src="../resources/images/image_listpage/car2.png">
                         <img class="otherimage" src="../resources/images/image_listpage/car3.png">
-                             
-    				
-                    </div>
+         			</div>
+                     -->
                 <div class="modal-book">
                         <div class="checkin">
                             <label>대여일</label><br>
@@ -924,7 +936,8 @@
             
         </div>
     </div>
-    </c:forEach>
+    
+    
     
    	<script>
 	    function startDate(e) {	  	  
@@ -966,8 +979,12 @@
 			        var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
 			        document.getElementById('payResult').value = amount * days
 			     }
-			    if(sdd >= edd){
-			    	alert('체크아웃날짜를 다시 체크해주세요.');
+			    if(sdd > edd){
+			    	alert('반납일을 다시 선택해주세요.');
+			    	document.getElementById("endDate").value="";
+			    	document.getElementById('endDateResult').innerText = document.getElementById("endDate").value;
+			    	document.getElementById('payResult').value="";
+			    	document.getElementById('days').value="";
 			    }
 		  	}
 
@@ -980,45 +997,55 @@
     
     <script>
 
-  	$(".payBtn").click(function() {
-  		
-  		var name = document.getElementById('carName').value;
-  		var carNo = document.getElementById('carNo').value;
-  		var payResult = document.getElementById('payResult').value;
-  		var startDate = document.getElementById("startDate").value;  		
-  		var endDate = document.getElementById("endDate").value;
-  	    var bookingLv = 3;
-  		// var amount = payResult;
-  		var amount = 100;
-	    var IMP = window.IMP;
-	    IMP.init('imp34313892');
-	    IMP.request_pay({
-	        pg : 'html5_inicis',
-	        pay_method : 'card',
-	        merchant_uid : 'merchant_' + new Date().getTime(),
-	        name : name,
-	        amount : amount,
-	        buyer_email : "${loginUser.usemail}",
-	        buyer_name : "${loginUser.usname}",
-	        buyer_tel : "${loginUser.usphone}",
-	        buyer_addr : '',
-	        buyer_postcode : ''
-	    }, function(rsp) {console.log(rsp);
-	        if ( rsp.success ) {
-	            var msg = '결제가 완료되었습니다!';
-	            msg += '결제 금액 : ' + rsp.paid_amount;
-	            location.href = '${contextPath}/business/pay?usno='+${loginUser.usno}+'&c_booking_trvEnd='+endDate
-					            +'&bus_code='+${ car.bus_code }+'&c_booking_trv='+startDate+'&bookingLv='+bookingLv
-					            +'&c_booking_pay='+payResult+'&rent_no='+carNo+'&c_booking_product='+name+'&amount='+amount
-					            ;
-	            				
-	        } else {
-	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
-	        }
-	    
-	        alert(msg);
-	    });
-  	});
+    $(".payBtn").click(function () {
+
+        var name = document.getElementById('carName').value;
+        var carNo = document.getElementById('carNo').value;
+        var payResult = document.getElementById('payResult').value;
+        var startDate = document.getElementById("startDate").value;
+        var endDate = document.getElementById("endDate").value;
+        var bookingLv = 3;
+        // var amount = payResult;
+        var amount = 100;
+        var IMP = window.IMP;
+        
+        	
+        if (startDate === "") {
+            alert("대여일을 선택해주세요.");
+        } else if(endDate === ""){
+        	alert("반납일을 선택해주세요.");
+        } else {
+            IMP.init('imp34313892');
+            IMP.request_pay({
+                pg: 'html5_inicis',
+                pay_method: 'card',
+                merchant_uid: 'merchant_' + new Date().getTime(),
+                name: name,
+                amount: amount,
+                buyer_email: "${loginUser.usemail}",
+                buyer_name: "${loginUser.usname}",
+                buyer_tel: "${loginUser.usphone}",
+                buyer_addr: '',
+                buyer_postcode: ''
+            }, function (rsp) {
+                    if (rsp.success) {
+                        console.log(startDate);
+                        var msg = '결제가 완료되었습니다!';
+                        msg += '결제 금액 : ' + rsp.paid_amount;
+                        location.href = '${contextPath}/business/pay?usno=' + ${ loginUser.usno } +'&c_booking_trvEnd=' + endDate
+                            + '&bus_code=' + ${ car.bus_code } +'&c_booking_trv=' + startDate + '&bookingLv=' + bookingLv
+                                + '&c_booking_pay=' + payResult + '&rent_no=' + carNo + '&c_booking_product=' + name + '&amount=' + amount
+                            ;
+
+                    } else {
+                        var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
+                    }
+
+                    alert(msg);
+                });
+        };
+        
+    });
     </script>
     
     <!-- 신고Modal -->
