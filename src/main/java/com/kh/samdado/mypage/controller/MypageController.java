@@ -329,7 +329,7 @@ public class MypageController {
 		 
 		// 차트에 넣을 데이터 메소드
 		List<Business> chartDataList = mService.selectAlliChartList(usno);
-		System.out.println(chartDataList);
+		//System.out.println(chartDataList);
 		
 		 mv.addObject("api", api);
 		 mv.addObject("allList", allList);
@@ -366,6 +366,7 @@ public class MypageController {
 	 public List<Alert> selectNewAlertList(@RequestBody User u,
 			 							   Model model){
 		 
+		
 		// 안읽은 리스트
 		List<Alert> alertNList = mService.selectAlertList(u);
 		// 읽은 리스트
@@ -379,7 +380,7 @@ public class MypageController {
 		newDataList.addAll(alertNList);
 		newDataList.addAll(alertYList);
 		
-		System.out.println(newDataList);
+		//System.out.println(newDataList);
 		
 		return newDataList;
 
@@ -394,7 +395,7 @@ public class MypageController {
 		 
 		 // 1. 해당 nno에 대한 detail 찾아오기
 		 Alert deAlert = mService.selectDetailAlert(al);
-		 System.out.println("컨트롤러에서 deAlert 확인 : " + deAlert);
+		 //System.out.println("컨트롤러에서 deAlert 확인 : " + deAlert);
 		 
 		 //  2. 읽음으로 처리해주기
 		 int result =  mService.updateNstatus(al);
@@ -505,7 +506,7 @@ public class MypageController {
 //		 } else {
 //			 u.setUsphone(phone);
 //		 }
-		 System.out.println("changeEP안에서 u : " + u);
+		 //System.out.println("changeEP안에서 u : " + u);
 		// DB에 UPDATE_이메일, 전화번호 변경 메소드
 		int result = mService.updateUserInfo(u);	// 암호화 한 비번 db에 update
 		
@@ -776,7 +777,7 @@ public class MypageController {
 							   HttpServletRequest request, Model model ) {
 //		 System.out.println(file1);
 //		 System.out.println(file2);
-//		 System.out.println(file3);
+//		 //System.out.println(file3);
 		 r.setRe_star(re_star);
 		 
 		//System.out.println("r 확인 1 : " + r);
@@ -929,7 +930,7 @@ public class MypageController {
 			 
 			 // 이 회원이 가지고 있는 경로 수
 			 List<RouteMP> routeNumber = mService.selectRouteNum(u);
-			 System.out.println("routeNumber : " + routeNumber);
+			 //System.out.println("routeNumber : " + routeNumber);
 			 
 			 // route_no별로 담을 Map 객체 선언
 			 HashMap<Integer, List<RouteFinal>> routeTest = new HashMap<>(); 
@@ -951,7 +952,7 @@ public class MypageController {
 				 int standard = mService.selectStandard(routeNum);
 				 // 이 관광지 개수를 standardList[0]에 넣기
 				 standardList[a] = standard;
-				 System.out.println("standardList1["+a+"] : " + standardList[a] + ", standard : " + standard);
+				 //System.out.println("standardList1["+a+"] : " + standardList[a] + ", standard : " + standard);
 			 }
 
 			 
@@ -960,7 +961,7 @@ public class MypageController {
 				 routeTest.put(mapKey, insertThis);
 				 forIndex = forIndex + standardList[b];
 				 mapKey ++;
-				 System.out.println("routeTest["+b+"] : " + routeTest.get(b));
+				 //System.out.println("routeTest["+b+"] : " + routeTest.get(b));
 			 }
 			 
 			 mv.addObject("routeTest", routeTest);
@@ -977,7 +978,7 @@ public class MypageController {
 	@PostMapping("/userout")
 	public String memberOut(@ModelAttribute User u, Model model) {
 		
-		//System.out.println("out u : " + u);
+		////System.out.println("out u : " + u);
 		//System.out.println(memoutPwd);
 		User loginUser = uService.loginUser(u);
 		//System.out.println("out loginUser" + loginUser);

@@ -131,20 +131,24 @@
         border : 5px solid white;
         width : 77%;
         height : 500px;
+        display : flex;
     }
 
     #leftBox{
         width: 60%;
         border-right : thick double white;
         display : inline-block;
+        order : 1;
     }
 
     #rightBox{
         width : 38.5%;
         /* border : 1px solid red; */
         display : inline-block;
-        position : relative;
-        top : -380px;
+        order : 2;
+        height : 450px;
+        margin : 20px;
+        overflow : auto;
     }
 
     #memInfoTable{
@@ -514,7 +518,7 @@
                 <div id="rightBox">
                     <div id="alertBox">
                         
-                        <div id="tableBox"> <!-- style="overflow:auto;" -->
+                        <div id="tableBox" style="overflow:scroll; ">
                         <c:choose>
                         <c:when test="${ empty alertNList && empty alertYList }">
                         	<div colspan="4" style="color : #467355; font-size : 30px; text-align : center; "> 
@@ -591,13 +595,13 @@
                         <div class="col-12">
                             <label for="_pwd" class="form-label" id="forMargin">수정할 비밀번호</label>
                             <label id="test_uspwd_label" class="test_div"></label>
-                            <input type="password" class="form-control" name="newPwd" id="uspwd" placeholder="영어대소문자/숫자/특수문자를 포함한 8~16자" required>                           
+                            <input type="password" class="form-control" name="newPwd" id="uspwdnew" placeholder="영어대소문자/숫자/특수문자를 포함한 8~16자" required>                           
                         </div>
                         
                         <div class="col-12">
                             <label for="_pwd" class="form-label">비밀번호 확인</label>
                             <label id="test_uspwd2_label" class="test_div"></label>
-                            <input type="password" class="form-control" name="newPwd2" id="uspwd2" placeholder="비밀번호 확인" required>                           
+                            <input type="password" class="form-control" name="newPwd2" id="uspwdnew2" placeholder="비밀번호 확인" required>                           
                         </div>
                                     
                       </div>
@@ -661,28 +665,9 @@
 		   $("#modal").fadeOut();
 		});      
 	</script>     
-    
-    <!-- 비밀번호 유효성검사 -->
+
     <script>
-    function joinValidate(){
-    	
-	 	// 비밀번호 유효성검사
-		if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#uspwd").val()))){
-			alert('영어대소문자/숫자/특수문자를 포함한 8~16자리 입력');
-			$("#uspwd").select();
-			return false;
-		}
-		
-	    // 비밀번호일치 검사
-		if($("#uspwd2").val() != $("#uspwd").val()){
-			alert('비밀번호가 일치하지 않습니다.');
-			$("#uspwd2").select();
-		}
-    }
-		
-    </script>
-    <script>
-	    $("#uspwd").keyup(function () { 
+	    $("#uspwdnew").keyup(function () { 
 	    	/* console.log("이거 맞나염?"); */
 	        var regpwd = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/;
 	        if (!regpwd.test($(this).val())) {
@@ -693,9 +678,9 @@
 	        
 	    });
 	
-	    $("#uspwd2").keyup(function () {
+	    $("#uspwdnew2").keyup(function () {
 	    	/* console.log("이벤트 확인 돼랏!"); */
-	        if ($("#uspwd2").val() != $("#uspwd").val()) {
+	        if ($("#uspwdnew2").val() != $("#uspwdnew").val()) {
 	            $("#test_uspwd2_label").html("비밀번호가 일치하지 않습니다.").css("color", "red");
 	        } else {
 	            $("#test_uspwd2_label").html("비밀번호가 일치합니다.").css("color", "green");
@@ -1102,10 +1087,10 @@
 		});
 	} 
     </script>
-    <script>
+     <script>
 	 	$(document).ready(function(){
 
-	 		if(${!empty loginUser.usid}){
+	 		if('${loginUser.usid}' != ''){
 	 			var searchU = new Object();
 					searchU.usno = "${loginUser.usno}";
 					searchU.uspart = "${loginUser.uspart}";
@@ -1121,10 +1106,11 @@
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
 	 					} else{
+	 						alert("세션확인 오류!");
 	 					}
 	 				},
 	 				error : function(e){
-	 					alert("error code : " + e.status + "\n"
+	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
 									+ "message : " + e.responseText);
 	 				}
 	 			});
