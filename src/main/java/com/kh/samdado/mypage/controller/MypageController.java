@@ -394,7 +394,7 @@ public class MypageController {
 		 
 		 // 1. 해당 nno에 대한 detail 찾아오기
 		 Alert deAlert = mService.selectDetailAlert(al);
-		 //System.out.println("컨트롤러에서 deAlert 확인 : " + deAlert);
+		 System.out.println("컨트롤러에서 deAlert 확인 : " + deAlert);
 		 
 		 //  2. 읽음으로 처리해주기
 		 int result =  mService.updateNstatus(al);

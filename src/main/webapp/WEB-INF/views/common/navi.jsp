@@ -403,6 +403,14 @@
  	margin-right : 8px;
  	float : inherit;
  	/* float : right; */
+ 	
+ }
+ 
+ #naviNew{
+ 
+	border : 1px solid black;
+ 	padding : 2px; 
+ 	border-radius : 3px;
  }
 </style>
 </head>
@@ -463,7 +471,7 @@
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
                 <!-- <h5 class="helloName"> 혼저옵서예.</h5> -->
  					<p class="right" id="navi-menu" onclick="goToInfo();">
-				    <img src="${contextPath}/resources/images/image_mp/new_b.png" class="newAlert" onclick="goToInfo(${loginUser.uspart});">내 정보</p>
+				    <img src="${contextPath}/resources/images/image_main/newGif.gif" class="newAlert" id="naviNew" onclick="goToInfo(${loginUser.uspart});">내 정보</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
 				</div>				    
                 </c:if>
@@ -492,7 +500,7 @@
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
 					 <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">
-		                <img src="${contextPath}/resources/images/image_mp/new_b.png" class="newAlert" onclick="location.href='${contextPath}/mypage/buserinfo'">내 정보</p>
+		                <img src="${contextPath}/resources/images/image_main/newGif.gif" class="newAlert" id="naviNew" onclick="location.href='${contextPath}/mypage/buserinfo'">내 정보</p>
 					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>		
                 </div>
                 </c:if>
@@ -898,7 +906,7 @@
      <script>
 	 	$(document).ready(function(){
 
-	 		if(${not empty loginUser}){
+	 		if(${loginUser.usid} != null){
 	 			var searchU = new Object();
 					searchU.usno = "${loginUser.usno}";
 					searchU.uspart = "${loginUser.uspart}";
@@ -914,7 +922,6 @@
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
 	 					} else{
-	 						alert("관리자님! 오늘도 열일하세요!");
 	 					}
 	 				},
 	 				error : function(e){

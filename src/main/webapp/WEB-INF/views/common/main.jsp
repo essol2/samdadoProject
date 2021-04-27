@@ -577,11 +577,14 @@
  
  .newAlert{
  	 width : 28px;
- 	height  : 28px; 
+ 	height  : 20px; 
  	display : none;
  	/* display : inline-block; */
  	margin-right : 8px;
  	float : inherit;
+ 	border : 1px solid white;
+ 	padding : 2px; 
+ 	border-radius : 3px;
  	/* float : right; */
  }
     </style>
@@ -648,7 +651,7 @@
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
                 <!-- <h5 class="helloName"> 혼저옵서예.</h5> -->
 				    <p class="right" id="navi-menu" onclick="goToInfo();">
-				    <img src="${contextPath}/resources/images/image_mp/new_w.png" class="newAlert">내 정보</p>
+				    <img src="${contextPath}/resources/images/image_main/newGif.gif" class="newAlert">내 정보</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
 				</div>				    
                 </c:if>
@@ -680,7 +683,7 @@
                 <div>
                         <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
 		                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">
-		                <img src="${contextPath}/resources/images/image_mp/new_w.png" class="newAlert">내 정보</p>
+		                <img src="${contextPath}/resources/images/image_main/newGif.gif" class="newAlert">내 정보</p>
 					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			
                 </div>
                 </c:if>
@@ -900,10 +903,12 @@
             $header.toggleClass('down', scrolled); //클래스 토글
             if($window.scrollTop() >= pageOffsetTop) {
                 $(".navi_logoimg").attr("src", $(".navi_logoimg").attr("src").replace("_w","_g"));
-                $(".newAlert").attr("src", $(".newAlert").attr("src").replace("_w","_b"));
+                //$(".newAlert").attr("src", $(".newAlert").attr("src").replace("_w","_b"));
+                $(".newAlert").css("border", "1px solid black");
             } else if($window.scrollTop() < pageOffsetTop) {
                 $(".navi_logoimg").attr("src", $(".navi_logoimg").attr("src").replace("_g","_w"));
-                $(".newAlert").attr("src", $(".newAlert").attr("src").replace("_b","_w"));
+                //$(".newAlert").attr("src", $(".newAlert").attr("src").replace("_b","_w"));
+                $(".newAlert").css("border", "1px solid white");
             }
             });
         });
@@ -1157,7 +1162,7 @@
 	 <script>
 	 	$(document).ready(function(){
 	 		
-	 		if(${not empty loginUser}){
+	 		if(${loginUser.usid} != null){
 	 		
 	 		var searchU = new Object();
 			searchU.usno = "${loginUser.usno}";
@@ -1173,6 +1178,8 @@
 	 						$('.newAlert').css("display","block");
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
+	 					} else {
+	 						
 	 					}
 	 				},
 	 				error : function(e){
