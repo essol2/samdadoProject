@@ -514,7 +514,7 @@
                 <div id="rightBox">
                     <div id="alertBox">
                         
-                        <div id="tableBox" style="overflow:auto;">
+                        <div id="tableBox"> <!-- style="overflow:auto;" -->
                         <c:choose>
                         <c:when test="${ empty alertNList && empty alertYList }">
                         	<div colspan="4" style="color : #467355; font-size : 30px; text-align : center; "> 
@@ -993,6 +993,24 @@
 					tr4.append(tqreply);
 					blankTr2.append(blankTd2);
 					table.append(tr1, blankTr2, tr3, tr4);
+				} else if(deAlert.ncate == 'B'){ // 공지사항 상세보기
+					var tncate = $("<th style='width : 10%; text-align : right;'>").text("유형 : ");
+					var tncateData = $("<td style='width : 60%; text-align : left;'>").text("공지사항");
+
+					var blankTr2 = $("<tr>");
+					var blankTd2 = $("<td colspan='4' style='height : 30px;'>").text(" ");
+					
+					var tr3 = $("<tr>");
+					var tqcont = $("<th colspan='4'>").text("제목 : " + daAlert.btitle);
+					
+					var tr4 = $("<tr>");
+					var tqreply = $("<th colspan='4'>").text(daAlert.bcontent);
+					
+					tr1.append(tnno, tnnoData, tncate, tncateData);
+					tr3.append(tqcont);
+					tr4.append(tqreply);
+					blankTr2.append(blankTd2);
+					table.append(tr1, blankTr2, tr3, tr4);
 				}
 			
 				
@@ -1042,6 +1060,8 @@
 							var ajncate = $("<td>").text("신고접수");
 						} else if(data[i].ncate == 'P'){
 							var ajncate = $("<td>").text("포인트");
+						} else if(data[i] = 'B'){
+							var ajncate = $("<td>").text("공지사항");
 						} else{
 							var ajncate = $("<td>").text("배너광고");
 						}
@@ -1061,6 +1081,8 @@
 							var ajncate = $("<td>").text("신고접수");
 						} else if(data[i].ncate == 'P'){
 							var ajncate = $("<td>").text("포인트");
+						} else if(data[i] = 'B'){
+							var ajncate = $("<td>").text("공지사항");
 						} else{
 							var ajncate = $("<td>").text("배너광고");
 						}
@@ -1082,20 +1104,12 @@
     </script>
     <script>
 	 	$(document).ready(function(){
-	 		
-	 		if(${not empty sessionScope.loginUser}){
-	 			if(${loginUser.uspart eq "일반"}){
-	 				var uspart = "일반";
-	 			} else if(${loginUser.uspart eq "제휴"}){
-	 				var uspart = "제휴";
-	 			} else {
-	 				var uspart = " ";
-	 			}
-	 			
+
+	 		if(${!empty loginUser.usid}){
 	 			var searchU = new Object();
-				searchU.usno = ${loginUser.usno};
-				searchU.uspart = uspart;
-	 			
+					searchU.usno = "${loginUser.usno}";
+					searchU.uspart = "${loginUser.uspart}";
+					
 	 			$.ajax({
 	 				url : "${contextPath}/mypage/new",
 	 				data : JSON.stringify(searchU),
@@ -1106,6 +1120,7 @@
 	 						$('.newAlert').css("display","block");
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
+	 					} else{
 	 					}
 	 				},
 	 				error : function(e){
