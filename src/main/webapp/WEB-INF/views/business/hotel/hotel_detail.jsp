@@ -903,7 +903,7 @@
     </script>
 
     <!-- Modal -->
-    <c:forEach var="r" items="${ room }">
+    
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -928,10 +928,16 @@
                 </div>
 
                 <div class="modal-body2">
-                	<label><input type="text" id="roomName" style="border:none;width:200px;" readonly value="${ r.room_name }"></label><br>
+                	<c:forEach var="r" items="${ room }" varStatus="status" end="0">
+                	<h4>${ r.room_name }</h4>
                     <label>${ r.room_price }원 / 박</label><br>
+                    <input type="hidden" id="roomName" value="${ r.room_name }">
                     <input type="hidden" id="cAmount" name="cAmount" value="${ r.room_price }">                    
                     <input type="hidden" id="roomNo" name="roomNo" value="${ r.room_no }">
+                    <input type="hidden" id="personNumber">
+                    <input type="hidden" id="days">
+                    <input type="hidden" id="payResult">
+                    </c:forEach>
                     <div class="modal-book">
                         <div class="checkin">
                             <label>체크인</label><br>
@@ -945,7 +951,7 @@
                     <div class="modal-book2">
                         <div class="people">
                             <label>인원 : </label>
-                            <label><input type="text" id="personNumber" style="border:none;width:20px;" readonly>명</label>                            
+                            <label id="personNumberL"></label>                            
                         </div>
                         <div class="people2">
                             <select id="selectBox" onchange="handleOnChange(this)">
@@ -959,13 +965,14 @@
                             </select>
                         </div>
                     </div>
+                    <c:forEach var="r" items="${ room }" varStatus="status" end="0">
                     <label>${ r.room_price }원 * </label>
-                    <label><input type="text" id="days" style="border:none;width:20px;" readonly></label>
+                    </c:forEach>
+                    <label id="daysL"></label>
                     <label>박</label>
                     <br>
                     <b>총 합계 : </b>
-                    <b><input type="text" id="payResult" style="border:none;width:70px" readonly></b>
-                    <b>원</b>
+                    <b id="payResultB"></b>
                     <button class="payBtn">결제하기</button>
                 </div>
                 <div class="modal-footer">
@@ -974,7 +981,7 @@
             </div>
         </div>
     </div>
-    </c:forEach>
+    
       <script>
       
       
@@ -1045,8 +1052,10 @@
 		    var dif = da2 - da1;
 		    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 		    if(sdd && edd){		        
-		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
-		        document.getElementById('payResult').value = amount * days
+		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
+		    	document.getElementById('daysL').innerText = days
+		        var payResult = document.getElementById('payResult').value = amount * days
+		        document.getElementById('payResultB').innerText = payResult+"원"
 		     }
 	  	}
 	    
@@ -1066,11 +1075,19 @@
 			    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 			    
 			    if(sdd && edd){		        
-			        var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
-			        document.getElementById('payResult').value = amount * days
+			    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
+			    	document.getElementById('daysL').innerText = days
+			        var payResult = document.getElementById('payResult').value = amount * days
+			        document.getElementById('payResultB').innerText = payResult+"원"
 			     }
 			    if(sdd >= edd){
 			    	alert('체크아웃날짜를 다시 체크해주세요.');
+			    	document.getElementById("endDate").value="";
+			    	document.getElementById('endDateResult').innerText = document.getElementById("endDate").value;
+			    	document.getElementById('payResult').value="";
+			    	document.getElementById('payResultB').innerText = "";
+			    	document.getElementById('days').value="";
+			    	document.getElementById('daysL').innerText ="";
 			    }
 		  	}
 
@@ -1078,6 +1095,8 @@
 	    	  const value = e.value;	    	  
 	    	  document.getElementById('personNumber').value
 	    	    = value;
+	    	  
+	    	  document.getElementById('personNumberL').innerText = value;
 	    	}
     </script>
     
