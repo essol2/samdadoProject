@@ -1,6 +1,7 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
@@ -798,9 +799,11 @@
                 <br>
                 <b>${ r.room_price }원</b><br>
                 <b>1박당 객실 요금</b><br><br>
+                <c:if test="${ loginUser.uspart == '일반'}">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     예약하기
                 </button>
+                </c:if>
             </div>
         </div>
 		</c:forEach>
@@ -989,6 +992,12 @@
   		var amount = 100;
 	    var IMP = window.IMP;
 	    IMP.init('imp34313892');
+	    
+	    if (startDate === "") {
+            alert("체크인날짜를 선택해주세요.");
+        } else if(endDate === ""){
+        	alert("체크아웃날짜를 선택해주세요.");
+        } else {
 	    IMP.request_pay({
 	        pg : 'html5_inicis',
 	        pay_method : 'card',
@@ -1015,6 +1024,8 @@
 	    
 	        alert(msg);
 	    });
+        	
+        };
   	});
     </script>
     
