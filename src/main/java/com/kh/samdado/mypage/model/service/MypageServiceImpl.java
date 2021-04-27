@@ -366,5 +366,11 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.selectStandard(routeNum);
 	}
 
+	// 길찾기 내 찜하기 
+	@Override
+	public List<Business> findHotelJjimList(User u) {
+		return mDao.findHotelJjimList(u);
+	}
+
 	
 }

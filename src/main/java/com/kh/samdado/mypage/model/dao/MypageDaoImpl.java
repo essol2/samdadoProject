@@ -370,4 +370,10 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.selectOne("mypageMapper.selectStandard", routeNum);
 	}
 
+	// 길찾기 내 찜하기 
+	@Override
+	public List<Business> findHotelJjimList(User u) {
+		return sqlSession.selectList("mypageMapper.findHotelJjimList", u);
+	}
+
 }
