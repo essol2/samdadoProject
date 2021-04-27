@@ -514,7 +514,7 @@
             <div class="title_area">
                 <div class="title_area">
                     <c:if test="${ res.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premium.png"><br>
+                    <img src="../resources/images/image_listpage/premiumicon.png"><br>
                     </c:if>
                     <label id="ho_title" class="title_tag">${ res.bus_name }</label>
                     <br>

@@ -550,7 +550,7 @@
             <div class="title_area">
                 <div class="title_area">
                     <c:if test="${ car.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premium.png"><br>
+                    <img src="../resources/images/image_listpage/premiumicon.png"><br>
                     </c:if>
                     <label id="ho_title" class="title_tag">${car.bus_name }</label>
                     <br>
@@ -829,7 +829,7 @@
 		        		$('#starLabel').find('b').text(review);
 		        	}
     	});        
-    </section>
+    </script>
     
     <script>
 	    $j1124.datepicker.setDefaults({

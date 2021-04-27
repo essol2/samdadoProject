@@ -535,7 +535,7 @@
             <div class="title_area">
                 <div class="title_area">
                     <c:if test="${ hotel.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premium.png"><br>
+                    <img src="../resources/images/image_listpage/premiumicon.png"><br>
                     </c:if>
                     <label id="ho_title" class="title_tag">${ hotel.bus_name }</label>
                 </div>
@@ -878,7 +878,9 @@
 		        		$('#starLabel').find('b').text(review);
 		        	}
     	});
-    
+    	</script>
+    	
+    	<script>
 	    $j1124.datepicker.setDefaults({
 	        dateFormat: 'yy-mm-dd',
 	        prevText: '이전 달',
