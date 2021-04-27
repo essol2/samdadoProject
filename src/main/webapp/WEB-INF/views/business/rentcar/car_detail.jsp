@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <html lang="en">
@@ -747,8 +748,10 @@
                         <b>${ c.car_name }</b><br>
                         <b>${ c.car_fuel }</b><br>
                         <b>${ c.car_price }원</b><br>
+                        <c:if test="${ loginUser.uspart == '일반'}">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
- 예약하기</button>
+						 예약하기</button>
+						 </c:if>
                     </div>                    
             </c:forEach>
                 </div>                               
@@ -756,16 +759,6 @@
             <div class="btnArea">
                 <button class="moreBtn">더보기</button>
             </div>
-            
-            <script>
-            $(".btn-primary").click(function () {
-            	if("${ loginUser.uspart }" === "제휴" || "${ loginUser.uspart }" === "관리자"){
-            		alert("일반회원으로 이용해주세요.");
-            		return;
-            	}
-            
-            });
-            </script>
             
             <!-- 더보기 -->
 			<script>				
@@ -888,6 +881,8 @@
 				<input type="hidden" id="carNo" name="carNo" value="${ c.car_no }">
 				<input type="hidden" id="carName" name="carName" value="${ c.car_name }">
 				<input type="hidden" id="cAmount" name="cAmount" value="${ c.car_price }">
+				<input type="hidden" id="days">
+				<input type="hidden" id="payResult">
                     					
                     <h4>${ c.car_name }</h4>
 						<!-- 
@@ -917,14 +912,13 @@
                             <b id="endDateResult"></b>
                         </div>
                 </div>
+                <c:forEach var="c" items="${ cars }" varStatus="status" end="0">
                 	<label>${ c.car_price }원 * </label>
-                    <label><input type="text" id="days" style="border:none;width:20px;" readonly></label>
-                    <label>일</label>
+                	</c:forEach>
+                    <label id="daysResult"></label><label>일</label>
                     <br>
                     <b>총 합계 : </b>
-                    <b><input type="text" id="payResult" style="border:none;width:70px" readonly></b>
-                    <b>원</b>
-                    
+                    <b id="payResultB"></b><b>원</b>
                     <button class="payBtn">결제하기</button>
                
                 </div>
@@ -955,8 +949,10 @@
 		    var dif = da2 - da1;
 		    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 		    if(sdd && edd){		        
-		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
-		        document.getElementById('payResult').value = amount * days
+		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
+		    	document.getElementById('daysResult').innerText = days
+		        var payResult = document.getElementById('payResult').value = amount * days
+		        document.getElementById('payResultB').innerText = payResult
 		     }
 	  	}
 	    
@@ -976,15 +972,19 @@
 			    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 			    
 			    if(sdd && edd){		        
-			        var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
-			        document.getElementById('payResult').value = amount * days
+			        var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
+			        document.getElementById('daysResult').innerText = days
+			        var payResult = document.getElementById('payResult').value = amount * days
+			        document.getElementById('payResultB').innerText = payResult
 			     }
 			    if(sdd > edd){
 			    	alert('반납일을 다시 선택해주세요.');
 			    	document.getElementById("endDate").value="";
 			    	document.getElementById('endDateResult').innerText = document.getElementById("endDate").value;
 			    	document.getElementById('payResult').value="";
+			    	document.getElementById('payResultB').innerText = "";
 			    	document.getElementById('days').value="";
+			    	document.getElementById('daysResult').innerText ="";
 			    }
 		  	}
 
@@ -1007,8 +1007,7 @@
         var bookingLv = 3;
         // var amount = payResult;
         var amount = 100;
-        var IMP = window.IMP;
-        
+        var IMP = window.IMP;        
         	
         if (startDate === "") {
             alert("대여일을 선택해주세요.");
