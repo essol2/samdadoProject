@@ -17,6 +17,55 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="spot_rename" column="SPOT_RENAME" />
 		<result property="spot_content" column="SPOT_CONTENT" />
 	</resultMap>
+	<resultMap type="business" id="BusinessResultSet">
+		<id property="bus_code" column="BUS_CODE" />
+		<result property="us_no" column="US_NO" />
+		<result property="bus_name" column="BUS_NAME" />
+		<result property="bus_address" column="BUS_ADDRESS" />
+		<result property="bus_intro" column="BUS_INTRO" />
+		<result property="bus_date" column="BUS_DATE" />
+		<result property="bus_modify" column="BUS_MODIFY" />
+		<result property="ad_count" column="AD_COUNT" />
+		<result property="bus_classify" column="BUS_CLASSIFY" />
+		<result property="bus_category" column="BUS_CATEGORY" />
+		<result property="bus_status" column="BUS_STATUS" />
+		<result property="bus_phone" column="BUS_PHONE" />
+		<result property="res_category" column="RES_CATEGORY"/>
+		<result property="hotel_category" column="HOTEL_CATEGORY" />
+		<result property="tour_category" column="TOUR_CATEGORY" />
+		<result property="tour_tema" column="TOUR_TEMA" />
+		<result property="al_no" column="AL_NO" />
+		<result property="bus_opening" column="BUS_OPENING" />
+		<result property="hotel_facility" column="HOTEL_FACILITY" />
+		<result property="file_rename" column="FILE_RENAME" />	<!-- 비즈니스ATT 대한 JOIN -->
+		<result property="file_lv" column="FILE_LV" />
+		<!-- USER 테이블 조인을 위한 필드 -->
+		<result property="usname" column="US_NAME" />
+		<!-- 관광지프로덕트 조인 -->	
+		<result property="pro_name" column="PRO_NAME" />
+		<result property="pro_price" column="PRO_PRICE" />
+		<result property="pro_adult" column="PRO_ADULT" />
+		<result property="pro_youth" column="PRO_YOUTH" />
+		<result property="pro_child" column="PRO_CHILD" />
+		<result property="pro_fac" column="PRO_FAC" />
+		<result property="pro_no" column="PRO_NO" />
+		<!-- 차조인 -->
+		<result property="car_name" column="CAR_NAME" />
+		<result property="car_type" column="CAR_TYPE" />
+		<result property="car_producer" column="CAR_PRODUCER" />
+		<result property="car_fuel" column="CAR_FUEL" />
+		<result property="car_price" column="CAR_PRICE" />
+		<result property="rent_no" column="CAR_NO" />
+		<!-- 방 조인 -->
+		<result property="room_name" column="ROOM_NAME" />
+		<result property="room_price" column="ROOM_PRICE" />
+		<result property="room_people" column="ROOM_PEOPLE" />
+		<result property="room_amenity" column="ROOM_AMENITY" />
+		<result property="room_no" column="ROOM_NO" />
+		<!-- 신고기록 조인 -->
+		<result property="rexdate" column="REXDATE" />
+		<result property="ref_bus_code" column="REF_BUS_CODE" />
+	</resultMap>
 
 	<select id="routeSearch" parameterType="rSearch" resultMap="TourSpotResultSet">
 		SELECT 
@@ -97,40 +146,59 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			SPOT_ADDRESS,
 			SPOT_PATH,
 			SPOT_ONAME
-			
 		FROM
 			TOUR_SPOT
 		WHERE
 			SPOT_TITLE LIKE #{st}
 	</select>
 	
+	<select id="spotSearch1" parameterType="String" resultMap="BusinessResultSet">
+	<bind name="st" value="'%' + _parameter + '%'"/>
+		SELECT 
+             B.BUS_CODE
+           , BUS_NAME
+           , BUS_ADDRESS
+           , BT.FILE_RENAME
+        FROM
+             BUSINESS B, BUSINESS_ATT BT
+       	WHERE
+			BUS_NAME LIKE #{st}
+         	AND B.BUS_CODE = BT.BUS_CODE 
+         	AND BUS_STATUS = 'Y'
+         	AND BT.FILE_LV = '0'
+           	AND B.BUS_CODE NOT IN (SELECT 
+                                   		R.REF_BUS_CODE
+                                   FROM
+                                       BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     	AND R.REXDATE IS NOT NULL)
+	</select>
+	
 	<select id="changeRoute" parameterType="String" resultMap="TourSpotResultSet">
 	<bind name="st" value="'%' + _parameter + '%'" />
-		<!-- <foreach collection="array" item="st">
 		SELECT
-			SPOT_TITLE,
-			SPOT_PATH,
-			SPOT_ONAME
-		FROM
-			TOUR_SPOT
-		WHERE 
-			SPOT_TITLE LIKE
-			
-				 #{st}
-			</foreach> -->
-			SELECT
-	    		SPOT_TITLE,
+	    	SPOT_TITLE,
 			SPOT_ADDRESS,
 			SPOT_PATH,
 			SPOT_ONAME
+			<!-- BUS_NAME,
+			BUS_ADDRESS,
+			FILE_RENAME -->
 		FROM
-	    	TOUR_SPOT
+	    	TOUR_SPOT<!-- , BUSINESS, BUSINESS_ATT -->
 		WHERE
 			SPOT_TITLE IN (
-			<foreach collection="array" item="st" separator=",">
-				#{st}
-			</foreach>
+				<foreach collection="array" item="st" separator=",">
+					#{st}
+				</foreach>
 	    	)
+	    	<!--  OR
+	    	BUS_NAME IN (
+	    		<foreach collection="array" item="st" separator=",">
+					#{st}
+				</foreach>
+	    	)
+	    -->
 	    	ORDER BY (
 	    		CASE SPOT_TITLE
 		    	<foreach collection="array" item="st" index="idx">
@@ -169,6 +237,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
         		ROUTE_NO
         		, DETAIL_NO
         		, SPOT_NO
+        		, BUS_CODE
 		    )
 		    VALUES
 		    (
@@ -183,7 +252,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	                	SPOT_TITLE IN (
 	                		#{st}
 	                	)
-        			) 
+        			)
+        		, (
+        			SELECT
+        				BUS_CODE
+        			FROM
+        				BUSINESS
+        			WHERE
+        				BUS_NAME IN (
+        					#{st}
+        				)
+        		
+        			)
     			)
     		</foreach>
 	</insert>
