@@ -145,7 +145,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			SPOT_TITLE,
 			SPOT_ADDRESS,
 			SPOT_PATH,
-			SPOT_ONAME
+			SPOT_ONAME,
+			SPOT_PRICE
 		FROM
 			TOUR_SPOT
 		WHERE
@@ -180,7 +181,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	    	SPOT_TITLE,
 			SPOT_ADDRESS,
 			SPOT_PATH,
-			SPOT_ONAME
+			SPOT_ONAME,
+			SPOT_PRICE
 			<!-- BUS_NAME,
 			BUS_ADDRESS,
 			FILE_RENAME -->

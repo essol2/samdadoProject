@@ -236,13 +236,13 @@
                                         <c:set var="totalPrice" value="0"/>
                                 		<c:forEach var="r" items="${ list }">
 											<tr>
-		                                    	<td id="cost-content">&nbsp;${ r.spot_title } <fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+		                                    	<td id="cost-content">&nbsp;${ r.spot_title }<fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
 		                                        <c:set var="totalPrice" value="${ totalPrice + r.spot_price }"/>
 		                                    </tr>
                                       	</c:forEach>
                                     	
                                         <tr> 
-                                            <td id="cost-content" style="text-align: right;" >총 <fmt:formatNumber value="${ totalPrice }" pattern="#,###"/>원&nbsp;</td>
+                                            <td id="tcost-content" style="text-align: right;" >총 <span id="totalPrice"><fmt:formatNumber value="${ totalPrice }" pattern="#,###"/></span>원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>
