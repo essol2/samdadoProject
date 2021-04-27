@@ -105,22 +105,7 @@
 				  <div class="grid-item">...</div>
 				</div>
                 
-                 <!-- 
-                <div style="margin-left : 3%;">
-				  <div class="row" id="bannerAdImglistDiv" style="position: relative;" data-masonry='{"percentPosition": true }'>
-					  
-						
-				  </div>
-				</div>
-              
-               
-     			<div class="tableArea" style="margin-left : 3%; width: 1920px;">
-					<table id="bannerAdImglistTable">
-						<tbody></tbody>
-					</table>
-				</div>
-                -->
-               
+         
             </div>
         </div>
         </section>

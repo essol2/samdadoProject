@@ -1,6 +1,9 @@
 package com.kh.samdado.user.controller;
 
+import java.io.IOException;
 import java.util.Random;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -344,9 +347,7 @@ public class UserController {
        return buffer.toString(); // 리턴타입 스트링
    }
    
-   
-  
-   
+
    
   
    

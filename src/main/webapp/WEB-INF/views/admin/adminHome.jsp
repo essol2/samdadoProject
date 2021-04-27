@@ -116,31 +116,26 @@
 				                  	      label: '배너',
 				                  	      data: getAllProfit("충전"),
 				                  	      backgroundColor: "rgb(255, 99, 132)",
-				                  	    },
+				                  	    }
 				                  	  ]
 				                  	};
 				                   
-		                  	       const config = {
-		                  	    	  type: 'bar',
-		                  	    	  data,
-		                  	    	  options: {
-		                  	    	    plugins: {
-		                  	    	      title: {
-		                  	    	        display: true,
-		                  	    	        text: 'Chart.js Bar Chart - Stacked'
-		                  	    	      },
-		                  	    	    },
-		                  	    	    responsive: true,
-		                  	    	    scales: {
-		                  	    	      x: {
-		                  	    	        stacked: true,
-		                  	    	      },
-		                  	    	      y: {
-		                  	    	        stacked: true
-		                  	    	      }
-		                  	    	    }
-		                  	    	  }
-		                  	    	};
+				                  	const config = {
+				                  		  type: 'bar',
+				                  		  data: data,
+				                  		  options: {
+				                  		    responsive: true,
+				                  		    plugins: {
+				                  		      legend: {
+				                  		        position: 'top',
+				                  		      },
+				                  		      title: {
+				                  		        display: true,
+				                  		        text: 'Chart.js Combined Line/Bar Chart'
+				                  		      }
+				                  		    }
+				                  		  },
+				                  		};
 		                  	       
 				                   var myAllChart = new Chart(document.getElementById('myAllChart'), config);
 		                  	</script>

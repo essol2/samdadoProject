@@ -859,7 +859,8 @@
 			                               <a href="${ contextPath }/user/easyLogin/google"><img src="resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
 			                            </div>
 			                              <div class="col-sm">
-			                               <a id="naver_id_login"><img src="resources/images/image_user/naver.png" alt=""> 네이버</a>
+			                              <a href="${naver_url}" id="naver_id_login"><img src="${contextPath}resources/images/image_user/naver.png"/></a>
+			                               <!--  <a id="naver_id_login"><img src="${contextPath}resources/images/image_user/naver.png" alt=""> 네이버</a>-->
 			                              </div>
 			                              <div class="col-sm">
 			                                <a href="${ contextPath }/user/easyLogin/kakao"><img src="resources/images/image_user/kakao.png" alt=""> 카카오</a>
@@ -1190,7 +1191,7 @@
 	<script type="text/javascript">
 		var naver_id_login = new naver_id_login("bwz0ZV165D8RHBEFHdF6", "http://localhost:8896/samdado/main");
 		var state = naver_id_login.getUniqState();
-		//naver_id_login.setButton("white", 2,40);
+		naver_id_login.setButton("white");
 		naver_id_login.setDomain(".service.com");
 		naver_id_login.setState(state);
 		naver_id_login.setPopup();
