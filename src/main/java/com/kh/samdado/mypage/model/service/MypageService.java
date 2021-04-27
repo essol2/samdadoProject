@@ -189,5 +189,8 @@ public interface MypageService {
 	// 루트 별로 가지고 있는 관광지 개수
 	public int selectStandard(int routeNum);
 
+	// 길찾기 내 찜하기 
+	public List<Business> findHotelJjimList(User u);
+
 
 }

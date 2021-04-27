@@ -1,13 +1,10 @@
 package com.kh.samdado.route.controller;
 
 import java.sql.Date;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.kh.samdado.business.model.vo.business.Business;
+import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.route.model.exception.RouteException;
 import com.kh.samdado.route.model.service.RouteService;
 import com.kh.samdado.route.model.vo.Route;
@@ -35,6 +33,9 @@ public class RouteController {
 	@Autowired
 	private RouteService rService;
 	
+	@Autowired
+	private MypageService mService;
+	
 	@GetMapping("/m_route")				// 길 만들기 페이지로 이동
 	public String route() {
 		return "route/route_main";
@@ -43,11 +44,19 @@ public class RouteController {
 	@GetMapping("/search")
 	public String searchRoute(Model model, 
 							HttpSession session,
+							@ModelAttribute User u,
 							@ModelAttribute rSearch search,
 							@RequestParam("area") String area, 
 							@RequestParam("thema") String thema, 
 							@RequestParam("routeDate") Date routeDate ) {		// 루트 검색
-
+		// 사용자별 찜한 숙소리스트 가져오기
+		if(u.getUsno() != null) {
+			List<Business> jjimHotel = mService.findHotelJjimList(u);
+			//System.out.println("jjimHotel 확인 : " + jjimHotel);
+			model.addAttribute("jjimList", jjimHotel);
+		}
+		
+		
 		model.addAttribute("area", area);
 		model.addAttribute("thema", thema);
 		model.addAttribute("routeDate", routeDate);

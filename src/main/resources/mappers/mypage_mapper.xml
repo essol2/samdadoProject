@@ -1210,4 +1210,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE US_NO = #{usno}
 		ORDER BY ROUTE_NO DESC
    </select>
+   
+   <select id="findHotelJjimList" resultMap="JjimResultSet">
+   		SELECT *
+		FROM JJIM J, BUSINESS B, BUSINESS_ATT BA
+		WHERE J.BUS_CODE = B.BUS_CODE
+		AND B.BUS_CODE = BA.BUS_CODE
+		AND B.BUS_CATEGORY = 'H'
+		AND BA.FILE_LV = 0
+		AND J.US_NO = #{usno}
+   </select>
 </mapper>
