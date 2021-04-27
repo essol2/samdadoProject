@@ -83,6 +83,8 @@ public class businessController {
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		List<Room> roomList = bService.selectRoom(bus_code);
 		List<RoomAtt> roomAtt = bService.selectRoomAtt(bus_code);
+		List<Review> reviewList = bService.selectReview(bus_code);
+		List<Alliance> alliance = bService.selectAlli();
 		
 		if(b != null && roomList != null) {
 			//System.out.println("호텔사진  : " + attList);
@@ -90,6 +92,8 @@ public class businessController {
 			model.addAttribute("att", attList);
 			model.addAttribute("room", roomList);
 			model.addAttribute("roomAtt", roomAtt);
+			model.addAttribute("review", reviewList);
+			model.addAttribute("all", alliance);
 			
 			// 찜하기			
 			if(session.getAttribute("loginUser") != null) {
@@ -234,6 +238,7 @@ public class businessController {
 			int result3 = bService.insertIncome1(i);
 		}
 		
+		
 		int result = bService.insertBusiness(b, list);
 		int result3 = bService.insertRoom(rooms);
 		int result4 = bService.insertMain(bat);
@@ -254,39 +259,67 @@ public class businessController {
 	public ModelAndView hotelList(ModelAndView mv) {
 		
 		List<Report> findReportRexdate = bService.findReportRexdate();
-		//System.out.println(findReportRexdate);
+		List<Income> findIncomeExdate = bService.findIncomeExdate();		
 		
-		Date today = new Date(); // 오늘날짜
-		Date rexdate = null; // 비교날짜 변수선언
-		String day1 = null; // 오늘날짜 스트링타입
-		String day2 = null; // 비교날짜 스트링타입
+		// 신고 제재기간 만료 확인
+		Date todayR = new Date();
+		Date rexdate = null; 
+		String dayR1 = null; 
+		String dayR2 = null; 
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdfR = new SimpleDateFormat("yyyy-MM-dd");
 		
 		for (Report r : findReportRexdate) {
-			rexdate = r.getRexdate();			
-			//System.out.println("r : " + r);
+			rexdate = r.getRexdate();
 		
 				try {
-					day1 = sdf.format(today); // 오늘
-					day2 = sdf.format(rexdate); // 만기	
+					// 오늘 날짜와 제재만료 날짜 담기
+					dayR1 = sdfR.format(todayR); 
+					dayR2 = sdfR.format(rexdate); 
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
-			
-				//System.out.println("day1 : " + day1);
-				//System.out.println("day2 : " + day2);
 				
-			int compare = day1.compareTo(day2);			
-			//System.out.println("compare : " + compare);
+			// 두 날짜 비교	
+			int compareR = dayR1.compareTo(dayR2);			
 			
-			if (compare >= 0) { // 제재기간 넘음 
-				bService.updateRexdate(r); // rexdate를 null로 update
+			// 제재 기간이 끝났다면 rexdate를 null로 update
+			if (compareR >= 0) {
+				bService.updateRexdate(r);
+			// 제재 기간이 남았다면 아무 행위 X				
+			} else if (compareR < 0) {
 				
-			} else if (compare < 0) { // 제재 남음
-				// 제재기간이 안지났으므로 아무행위X
 			}
 		}
+		
+		// 프리미엄 만료 확인
+				Date todayI = new Date();
+				Date exdate = null;
+				String dayI1 = null;
+				String dayI2 = null;
+				
+				SimpleDateFormat sdfI = new SimpleDateFormat("yyyy-MM-dd");
+				
+				for (Income i : findIncomeExdate) {
+					exdate = i.getExdate();
+				
+						try {
+							dayI1 = sdfI.format(todayI);
+							dayI2 = sdfI.format(exdate);	
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						
+					int compareI = dayI1.compareTo(dayI2);
+					
+					// 프리미엄기간이 끝났다면 income의 exdate를 null로, business의 classify를 G로 update
+					if (compareI >= 0) {						
+						bService.updateExdate(i);
+						bService.updateBusClassify(i.getBus_code());
+					} else if (compareI < 0) {
+						
+					}
+				}
 		
 		List<Business> hotelList = bService.selectHotelList();
 			
@@ -301,20 +334,17 @@ public class businessController {
 	@GetMapping("/tour_detail")
 	public String tourDetail(@RequestParam int bus_code,
 			   				Model model, HttpSession session) {
-
-		//System.out.println("나와라 : " + bus_code);
 	
 		Business b = bService.selectTour(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		List<Review> reviewList = bService.selectReview(bus_code);
-		
+		List<Alliance> alliance = bService.selectAlli();
 		
 		if(b != null) {
 			model.addAttribute("tour", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("review", reviewList);
-			//System.out.println("review : " + reviewList);
-
+			model.addAttribute("all", alliance);
 						// 찜하기			
 						if(session.getAttribute("loginUser") != null) {
 							User loginUser = (User)session.getAttribute("loginUser");
@@ -439,39 +469,67 @@ public class businessController {
 	public ModelAndView tourList(ModelAndView mv) {
 		
 		List<Report> findReportRexdate = bService.findReportRexdate();
-		//System.out.println(findReportRexdate);
+		List<Income> findIncomeExdate = bService.findIncomeExdate();		
 		
-		Date today = new Date(); // 오늘날짜
-		Date rexdate = null; // 비교날짜 변수선언
-		String day1 = null; // 오늘날짜 스트링타입
-		String day2 = null; // 비교날짜 스트링타입
+		// 신고 제재기간 만료 확인
+		Date todayR = new Date();
+		Date rexdate = null; 
+		String dayR1 = null; 
+		String dayR2 = null; 
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdfR = new SimpleDateFormat("yyyy-MM-dd");
 		
 		for (Report r : findReportRexdate) {
-			rexdate = r.getRexdate();			
-			//System.out.println("r : " + r);
+			rexdate = r.getRexdate();
 		
 				try {
-					day1 = sdf.format(today); // 오늘
-					day2 = sdf.format(rexdate); // 만기	
+					// 오늘 날짜와 제재만료 날짜 담기
+					dayR1 = sdfR.format(todayR); 
+					dayR2 = sdfR.format(rexdate); 
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
-			
-				//System.out.println("day1 : " + day1);
-				//System.out.println("day2 : " + day2);
 				
-			int compare = day1.compareTo(day2);			
-			//System.out.println("compare : " + compare);
+			// 두 날짜 비교	
+			int compareR = dayR1.compareTo(dayR2);			
 			
-			if (compare >= 0) { // 제재기간 넘음 
-				bService.updateRexdate(r); // rexdate를 null로 update
+			// 제재 기간이 끝났다면 rexdate를 null로 update
+			if (compareR >= 0) {
+				bService.updateRexdate(r);
+			// 제재 기간이 남았다면 아무 행위 X				
+			} else if (compareR < 0) {
 				
-			} else if (compare < 0) { // 제재 남음
-				// 제재기간이 안지났으므로 아무행위X
 			}
 		}
+		
+		// 프리미엄 만료 확인
+				Date todayI = new Date();
+				Date exdate = null;
+				String dayI1 = null;
+				String dayI2 = null;
+				
+				SimpleDateFormat sdfI = new SimpleDateFormat("yyyy-MM-dd");
+				
+				for (Income i : findIncomeExdate) {
+					exdate = i.getExdate();
+				
+						try {
+							dayI1 = sdfI.format(todayI);
+							dayI2 = sdfI.format(exdate);	
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						
+					int compareI = dayI1.compareTo(dayI2);
+					
+					// 프리미엄기간이 끝났다면 income의 exdate를 null로, business의 classify를 G로 update
+					if (compareI >= 0) {						
+						bService.updateExdate(i);
+						bService.updateBusClassify(i.getBus_code());
+					} else if (compareI < 0) {
+						
+					}
+				}
 		
 		List<Business> tourList = bService.selectTourList();
 		
@@ -491,13 +549,15 @@ public class businessController {
 		
 		Business b = bService.selectRestaurant(bus_code);
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
+		List<Review> reviewList = bService.selectReview(bus_code);
+		List<Alliance> alliance = bService.selectAlli();
 		
 		if(b != null) {
-			// System.out.println("디테일 : " + b);
-			// System.out.println("사진들 : " + attList);
 			
 			model.addAttribute("res", b);
 			model.addAttribute("att", attList);
+			model.addAttribute("review", reviewList);
+			model.addAttribute("all", alliance);
 			
 			// 찜하기			
 			if(session.getAttribute("loginUser") != null) {
@@ -657,39 +717,67 @@ public class businessController {
 	public ModelAndView resList(ModelAndView mv) {
 		
 		List<Report> findReportRexdate = bService.findReportRexdate();
-		//System.out.println(findReportRexdate);
+		List<Income> findIncomeExdate = bService.findIncomeExdate();		
 		
-		Date today = new Date(); // 오늘날짜
-		Date rexdate = null; // 비교날짜 변수선언
-		String day1 = null; // 오늘날짜 스트링타입
-		String day2 = null; // 비교날짜 스트링타입
+		// 신고 제재기간 만료 확인
+		Date todayR = new Date();
+		Date rexdate = null; 
+		String dayR1 = null; 
+		String dayR2 = null; 
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdfR = new SimpleDateFormat("yyyy-MM-dd");
 		
 		for (Report r : findReportRexdate) {
-			rexdate = r.getRexdate();			
-			//System.out.println("r : " + r);
+			rexdate = r.getRexdate();
 		
 				try {
-					day1 = sdf.format(today); // 오늘
-					day2 = sdf.format(rexdate); // 만기	
+					// 오늘 날짜와 제재만료 날짜 담기
+					dayR1 = sdfR.format(todayR); 
+					dayR2 = sdfR.format(rexdate); 
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
-			
-				//System.out.println("day1 : " + day1);
-				//System.out.println("day2 : " + day2);
 				
-			int compare = day1.compareTo(day2);			
-			//System.out.println("compare : " + compare);
+			// 두 날짜 비교	
+			int compareR = dayR1.compareTo(dayR2);			
 			
-			if (compare >= 0) { // 제재기간 넘음 
-				bService.updateRexdate(r); // rexdate를 null로 update
+			// 제재 기간이 끝났다면 rexdate를 null로 update
+			if (compareR >= 0) {
+				bService.updateRexdate(r);
+			// 제재 기간이 남았다면 아무 행위 X				
+			} else if (compareR < 0) {
 				
-			} else if (compare < 0) { // 제재 남음
-				// 제재기간이 안지났으므로 아무행위X
 			}
 		}
+		
+		// 프리미엄 만료 확인
+				Date todayI = new Date();
+				Date exdate = null;
+				String dayI1 = null;
+				String dayI2 = null;
+				
+				SimpleDateFormat sdfI = new SimpleDateFormat("yyyy-MM-dd");
+				
+				for (Income i : findIncomeExdate) {
+					exdate = i.getExdate();
+				
+						try {
+							dayI1 = sdfI.format(todayI);
+							dayI2 = sdfI.format(exdate);	
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						
+					int compareI = dayI1.compareTo(dayI2);
+					
+					// 프리미엄기간이 끝났다면 income의 exdate를 null로, business의 classify를 G로 update
+					if (compareI >= 0) {						
+						bService.updateExdate(i);
+						bService.updateBusClassify(i.getBus_code());
+					} else if (compareI < 0) {
+						
+					}
+				}
 		
 		List<Business> resList = bService.selectResList();
 		//System.out.println(resList);
@@ -711,12 +799,16 @@ public class businessController {
 		List<BusinessAtt> attList = bService.selectAtt(bus_code);
 		List<Car> carList = bService.selectCars(bus_code);
 		List<CarAtt> carAtt = bService.selectCarAtt(bus_code);
+		List<Review> reviewList = bService.selectReview(bus_code);
+		List<Alliance> alliance = bService.selectAlli();
 		if(b != null) {
 
 			model.addAttribute("car", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("cars", carList);
 			model.addAttribute("carAtt", carAtt);
+			model.addAttribute("review", reviewList);
+			model.addAttribute("all", alliance);
 			
 						// 찜하기			
 						if(session.getAttribute("loginUser") != null) {
@@ -878,39 +970,67 @@ public class businessController {
 	public ModelAndView carList(ModelAndView mv) {
 		
 		List<Report> findReportRexdate = bService.findReportRexdate();
-		//System.out.println(findReportRexdate);
+		List<Income> findIncomeExdate = bService.findIncomeExdate();		
 		
-		Date today = new Date(); // 오늘날짜
-		Date rexdate = null; // 비교날짜 변수선언
-		String day1 = null; // 오늘날짜 스트링타입
-		String day2 = null; // 비교날짜 스트링타입
+		// 신고 제재기간 만료 확인
+		Date todayR = new Date();
+		Date rexdate = null; 
+		String dayR1 = null; 
+		String dayR2 = null; 
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdfR = new SimpleDateFormat("yyyy-MM-dd");
 		
 		for (Report r : findReportRexdate) {
-			rexdate = r.getRexdate();			
-			//System.out.println("r : " + r);
+			rexdate = r.getRexdate();
 		
 				try {
-					day1 = sdf.format(today); // 오늘
-					day2 = sdf.format(rexdate); // 만기	
+					// 오늘 날짜와 제재만료 날짜 담기
+					dayR1 = sdfR.format(todayR); 
+					dayR2 = sdfR.format(rexdate); 
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
-			
-				//System.out.println("day1 : " + day1);
-				//System.out.println("day2 : " + day2);
 				
-			int compare = day1.compareTo(day2);			
-			//System.out.println("compare : " + compare);
+			// 두 날짜 비교	
+			int compareR = dayR1.compareTo(dayR2);			
 			
-			if (compare >= 0) { // 제재기간 넘음 
-				bService.updateRexdate(r); // rexdate를 null로 update
+			// 제재 기간이 끝났다면 rexdate를 null로 update
+			if (compareR >= 0) {
+				bService.updateRexdate(r);
+			// 제재 기간이 남았다면 아무 행위 X				
+			} else if (compareR < 0) {
 				
-			} else if (compare < 0) { // 제재 남음
-				// 제재기간이 안지났으므로 아무행위X
 			}
 		}
+		
+		// 프리미엄 만료 확인
+				Date todayI = new Date();
+				Date exdate = null;
+				String dayI1 = null;
+				String dayI2 = null;
+				
+				SimpleDateFormat sdfI = new SimpleDateFormat("yyyy-MM-dd");
+				
+				for (Income i : findIncomeExdate) {
+					exdate = i.getExdate();
+				
+						try {
+							dayI1 = sdfI.format(todayI);
+							dayI2 = sdfI.format(exdate);	
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						
+					int compareI = dayI1.compareTo(dayI2);
+					
+					// 프리미엄기간이 끝났다면 income의 exdate를 null로, business의 classify를 G로 update
+					if (compareI >= 0) {						
+						bService.updateExdate(i);
+						bService.updateBusClassify(i.getBus_code());
+					} else if (compareI < 0) {
+						
+					}
+				}
 		
 		List<Business> carList = bService.selectCarList();
 		
@@ -925,9 +1045,10 @@ public class businessController {
 	
 	@GetMapping("/pay")
 	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code) {
-		//System.out.println("i : " + i);		
+		
 		// 포인트에 amount 넣어주기
 		p.setPamount(i.getAmount());
+		
 		// income에  들어갈 원가 10퍼센트 셋팅
 		i.setAmount(i.getAmount() * 1/10);
 		
@@ -936,9 +1057,9 @@ public class businessController {
 		// p에 예약받는 사업장주인 usno 넣기		 
 		Business selectUser = bService.selectBusCodeUser(bus_code);
 		p.setUsno(selectUser.getUs_no());
-		//System.out.println("p : " + p);
+		
 		Point findPoint = bService.findPoint(p);
-		//System.out.println(findPoint);
+		
 		 if(findPoint != null) {
 			 // 이미 포인트가 있으면 기존 포인트 + 결제금액의 90% 적립
 			 p.setPbalance(findPoint.getPbalance()+i.getAmount() * 9);
@@ -948,7 +1069,7 @@ public class businessController {
 		 }
 		 // 포인트 넣기
 		int point = bService.insertPoint(p);		
-		//System.out.println(b);
+		
 		// 예약정보 insert	
 		if(b.getBookingLv() == 1) {
 			b.setR_bus_name(selectUser.getBus_name());
@@ -956,19 +1077,16 @@ public class businessController {
 			b.setR_booking_phone(selectUser.getBus_phone());
 			int bookingHotel = bService.insertBookingHotel(b);
 		} else if(b.getBookingLv() == 2) {
-			TourProduct selectTourProduct = bService.selectTourProduct(bus_code);
-			//System.out.println(selectTourProduct);
+			TourProduct selectTourProduct = bService.selectTourProduct(bus_code);			
 			b.setPro_no(selectTourProduct.getPro_no());
 			b.setT_bus_name(selectUser.getBus_name());
 			b.setT_booking_address(selectUser.getBus_address());
 			b.setT_booking_phone(selectUser.getBus_phone());
-			int bookingTour = bService.insertBookingTour(b);
-			
+			int bookingTour = bService.insertBookingTour(b);			
 		} else if(b.getBookingLv() == 3) {			
 			b.setC_bus_name(selectUser.getBus_name());
 			b.setC_booking_address(selectUser.getBus_address());
-			b.setC_booking_phone(selectUser.getBus_phone());
-			
+			b.setC_booking_phone(selectUser.getBus_phone());			
 			int bookingCar = bService.insertBookingCar(b);
 		}
 		

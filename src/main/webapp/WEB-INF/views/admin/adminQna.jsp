@@ -148,8 +148,10 @@
 		                   <option value="qnano" <c:if test="${ param.searchCondition == 'qnano' }">selected</c:if>>Q&A번호</option>
 		                   <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원명</option>
 		                   <option value="usno" <c:if test="${ param.searchCondition == 'usno' }">selected</c:if>>회원 번호</option>
-		                   <option value="qcont" <c:if test="${ param.searchCondition == 'qcont' }">selected</c:if>>문의내용</option> <!-- like 조회 -->
+		                   <option value="qcont" <c:if test="${ param.searchCondition == 'qcont' }">selected</c:if>>문의내용</option> 
+		                   <!-- 
 		                   <option value="qdate" <c:if test="${ param.searchCondition == 'qdoate' }">selected</c:if>>문의날짜</option>
+		                    -->
 		                   <option value="qreply" <c:if test="${ param.searchCondition == 'qreply' }">selected</c:if>>답변내용</option>
 		                   <option value="qstatus" <c:if test="${ param.searchCondition == 'qstatus' }">selected</c:if>>답변 상태(Y/N)</option>
 		               </select>
@@ -204,7 +206,6 @@
 										var usname = $("<td>").text(data[i].usname);
 										var usno = $("<td>").text(data[i].usno);
 										var qcont = $("<td>").text(data[i].qcont);
-										//var qdate = $("<td>").text(data[i].qdate);
 										var qtodate = $("<td>").text(data[i].qtodate);
 										var qreply = $("<td>").text(data[i].qreply);
 										var qstatus = $("<td>").text(data[i].qstatus);

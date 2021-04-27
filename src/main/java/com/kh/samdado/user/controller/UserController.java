@@ -1,35 +1,24 @@
 package com.kh.samdado.user.controller;
 
+import java.io.IOException;
 import java.util.Random;
 
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.google.gson.JsonParser;
 import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.user.model.exception.UserException;
 import com.kh.samdado.user.model.service.UserService;
@@ -41,9 +30,7 @@ import com.kh.samdado.user.model.vo.User;
 @RequestMapping("/user")
 @SessionAttributes({"loginUser", "msg"})
 public class UserController {
-	
-   private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-   
+
    @Autowired
    UserService uService;
    
@@ -98,7 +85,7 @@ public class UserController {
 	   
 	   // 회원 가입 후 바로 로그인이니까 암호화 필요x
 	   if (joinedUser.getUsid() != null) { // 널이 아니면
-		  
+		   model.addAttribute("loginUser", joinedUser); 
 		   // attribute로 묶어서 (loginUser 키값이 위에 선언한 @SessionAttributes({"loginUser", "msg"}) 키 값과 동일하기 때문에 세션에 있는 loginUser 키값 사용 가능)
 		   // 실제로 rd로 묶어준 값은 휘발성이기 때문에 여기서 joinedUser 값이 휘발되어 날라가고, loginUser는 세션에 값이 저장되기 때문에 다른 페이지에서도 사용 가능
 		   
@@ -119,7 +106,7 @@ public class UserController {
 	   User loginUser = uService.loginUser(u);   
 	   
 	   // 일반 로그인이까 암호화 필요 o
-	   if (loginUser != null && bcryptPasswordEncoder.matches(u.getUspwd(), loginUser.getUspwd())) {	   
+	   if (loginUser != null && bcryptPasswordEncoder.matches(u.getUspwd(), loginUser.getUspwd()) && loginUser.getUsstop() == null) {	   
 
 		   model.addAttribute("loginUser", loginUser);
 		   return "redirect:/main";
@@ -360,9 +347,7 @@ public class UserController {
        return buffer.toString(); // 리턴타입 스트링
    }
    
-   
-  
-   
+
    
   
    

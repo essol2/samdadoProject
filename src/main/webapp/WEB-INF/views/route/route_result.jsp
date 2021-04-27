@@ -238,31 +238,23 @@
                                 <button class="_btn" id="morebtn" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 더 보러 가기</button>
                                 
                                 <br><br>
-                                <c:if test="${ !empty loginUser }">
+                                <c:if test="${ !empty loginUser  && !empty jjimList}">
                                 <label class="content-title" id="title4">${ loginUser.usname } 님이 찜하신 숙박</label>
                                 <div class="c1_border" id="right-bottom-border">
-                                    <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
+                      			<c:forEach items="${ jjimList }" var="jl" varStatus="jlNum">
+                                    <table style="margin: auto; margin-top: 10%; margin-bottom: 10%; text-align : center;">
                                         <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
+                                            <td onclick="goToDetail(${jl.bus_code})" ><img src="${contextPath}/resources/busUploadFiles/${jl.file_rename}" style="width : 90%; height : auto;"></td>
+                                        </tr>
+                                         <tr>
+                                            <td id="navi-content" style="font-size : 30px; color : #467355; padding-top:2%;">${jl.bus_name }</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
+                                            <td id="navi-content" style="color:#bfbfbf;">${jl.hotel_facility }</td>
                                         </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔1</td>
-                                        </tr>
+                                       
                                     </table>
-                                    <table style="margin: auto; margin-bottom: 10%;">
-                                        <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔2</td>
-                                        </tr>
-                                    </table>
+                                 </c:forEach>
                                 </div>
                                 </c:if>
                                 <br>
@@ -385,7 +377,12 @@
 			
 			$("#rlist").submit();
 			
-		})
+		});
+		
+		function goToDetail(bus_code){
+			
+			location.href="${contextPath}/business/hotel_detail?bus_code=" + bus_code;
+		}
 	</script> 
 	<!-- 추가하기  -->
 	<script>	

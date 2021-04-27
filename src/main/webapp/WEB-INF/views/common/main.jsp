@@ -15,19 +15,28 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    
+
     <!-- naver 간편로그인 -->
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    
+    <!-- masonry 로딩 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js"></script>
+	
+	<!-- imagesloaded 로딩 (모든 이미지가 로딩된 후 실행되도록 할때 필요) -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.0/imagesloaded.pkgd.min.js"></script>
     <style>
 
         /* 공통 - 폰트 */
         * {
             font-family: 'Jeju Myeongjo', serif;
         }
-
+		body{
+			padding : 0px;
+			margin : 0px;
+		}
         /* 길만들러 가기 영역 */
         /* 왼쪽 텍스트 영역 전체 */
         #left_side_text {
@@ -137,7 +146,7 @@
         #top {
             width: 100%;
             height: auto;
-            background-color: black;
+            margin : 0px;
         }
         #bottom {
             width: 1440px;
@@ -203,7 +212,7 @@
 
         .content{ position:relative; padding-top:56%; width:100%; } 
 
-        #backgroundGif{ position:absolute; top:0; left:0; width:100%; height:100%; }
+        #backgroundGif{ position:absolute; top:0; left:0; width:100%; height:100%; margin:0px;}
 
         /* 푸터 css */
         footer{
@@ -571,11 +580,14 @@
  
  .newAlert{
  	 width : 28px;
- 	height  : 28px; 
+ 	height  : 20px; 
  	display : none;
  	/* display : inline-block; */
  	margin-right : 8px;
  	float : inherit;
+ 	border : 1px solid white;
+ 	padding : 2px; 
+ 	border-radius : 3px;
  	/* float : right; */
  }
     </style>
@@ -642,7 +654,7 @@
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
                 <!-- <h5 class="helloName"> 혼저옵서예.</h5> -->
 				    <p class="right" id="navi-menu" onclick="goToInfo();">
-				    <img src="${contextPath}/resources/images/image_mp/new_w.png" class="newAlert">내 정보</p>
+				    <img src="${contextPath}/resources/images/image_main/newGif.gif" class="newAlert">내 정보</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
 				</div>				    
                 </c:if>
@@ -672,9 +684,9 @@
             	</div>
                 
                 <div>
-                <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
+                        <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
 		                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">
-		                <img src="${contextPath}/resources/images/image_mp/new_w.png" class="newAlert">내 정보</p>
+		                <img src="${contextPath}/resources/images/image_main/newGif.gif" class="newAlert">내 정보</p>
 					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			
                 </div>
                 </c:if>
@@ -853,7 +865,8 @@
 			                               <a href="${ contextPath }/user/easyLogin/google"><img src="resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
 			                            </div>
 			                              <div class="col-sm">
-			                               <a id="naver_id_login"><img src="resources/images/image_user/naver.png" alt=""> 네이버</a>
+			                              <a href="${naver_url}" id="naver_id_login"><img src="${contextPath}resources/images/image_user/naver.png"/></a>
+			                               <!--  <a id="naver_id_login"><img src="${contextPath}resources/images/image_user/naver.png" alt=""> 네이버</a>-->
 			                              </div>
 			                              <div class="col-sm">
 			                                <a href="${ contextPath }/user/easyLogin/kakao"><img src="resources/images/image_user/kakao.png" alt=""> 카카오</a>
@@ -894,10 +907,12 @@
             $header.toggleClass('down', scrolled); //클래스 토글
             if($window.scrollTop() >= pageOffsetTop) {
                 $(".navi_logoimg").attr("src", $(".navi_logoimg").attr("src").replace("_w","_g"));
-                $(".newAlert").attr("src", $(".newAlert").attr("src").replace("_w","_b"));
+                //$(".newAlert").attr("src", $(".newAlert").attr("src").replace("_w","_b"));
+                $(".newAlert").css("border", "1px solid black");
             } else if($window.scrollTop() < pageOffsetTop) {
                 $(".navi_logoimg").attr("src", $(".navi_logoimg").attr("src").replace("_g","_w"));
-                $(".newAlert").attr("src", $(".newAlert").attr("src").replace("_b","_w"));
+                //$(".newAlert").attr("src", $(".newAlert").attr("src").replace("_b","_w"));
+                $(".newAlert").css("border", "1px solid white");
             }
             });
         });
@@ -978,21 +993,6 @@
             }
   
         });
-    	
-    	
-    	<%--
-    	$("#phone").change(function() {
-           var phoneVal = $("#phone").val();
-           var regphone = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})?[0-9]{3,4}?[0-9]{4}$/;
-
-
-           if (regphone.test(phoneVal)){
-               $("#test_phone_label").html("올바른 입력입니다.").css("color","green");
-           } else {
-               $("#test_phone_label").html("올바른 형식이 아닙니다.").css("color","red");
-           }
-       });
-       --%>
        
        $("#email").change(function () {
     	   var emailVal = $("#email").val();
@@ -1035,18 +1035,6 @@
                 $("#test_birth_label").html("올바른 형식이 아닙니다.").css("color", "red");
             }
         });
-    	
-    	<%--
-    	$("#email").change(function () {
-            var emailVal = $("#email").val();
-            var regemail = /^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-            if (emailVal.match(regemail) != null) {
-                $("#test_email_label").html("올바른 입력입니다.").css("color", "green");
-            } else {
-                $("#test_email_label").html("올바른 형식이 아닙니다.").css("color", "red");
-            }
-        });
-    	--%>
     	
     	$("#pwd").change(function () { 
             var regpwd = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/;
@@ -1175,24 +1163,15 @@
 		}
 	</script>
 
-	 <script>
+	 
+     <script>
 	 	$(document).ready(function(){
-	 		
-	 		
-	 		
-	 		if(${not empty sessionScope.loginUser}){
-	 			if(${loginUser.uspart eq "일반"}){
-	 				var uspart = "일반";
-	 			} else if(${loginUser.uspart eq "제휴"}){
-	 				var uspart = "제휴";
-	 			} else {
-	 				var uspart = " ";
-	 			}
-	 			
+
+	 		if('${loginUser.usid}' != ''){
 	 			var searchU = new Object();
-				searchU.usno = ${loginUser.usno};
-				searchU.uspart = uspart;
-	 			
+					searchU.usno = "${loginUser.usno}";
+					searchU.uspart = "${loginUser.uspart}";
+					
 	 			$.ajax({
 	 				url : "${contextPath}/mypage/new",
 	 				data : JSON.stringify(searchU),
@@ -1203,10 +1182,12 @@
 	 						$('.newAlert').css("display","block");
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
+	 					} else{
+	 						alert("세션확인 오류!");
 	 					}
 	 				},
 	 				error : function(e){
-	 					alert("error code : " + e.status + "\n"
+	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
 									+ "message : " + e.responseText);
 	 				}
 	 			});
@@ -1214,13 +1195,12 @@
 	 		
 	 	});
 	 </script>
-	    
     
     <!-- 네이버아디디로로그인 초기화 Script -->
 	<script type="text/javascript">
 		var naver_id_login = new naver_id_login("bwz0ZV165D8RHBEFHdF6", "http://localhost:8896/samdado/main");
 		var state = naver_id_login.getUniqState();
-		//naver_id_login.setButton("white", 2,40);
+		naver_id_login.setButton("white");
 		naver_id_login.setDomain(".service.com");
 		naver_id_login.setState(state);
 		naver_id_login.setPopup();
@@ -1249,6 +1229,9 @@
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
+	<!-- 갤러리 이미지 탬플릿 사용을 위한 js cdn -->
+	<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+	
     
 </body>
 </html>

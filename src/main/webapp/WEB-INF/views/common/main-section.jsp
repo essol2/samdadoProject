@@ -10,6 +10,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- masonry 로딩 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js"></script>
+
+<!-- imagesloaded 로딩 (모든 이미지가 로딩된 후 실행되도록 할때 필요) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.0/imagesloaded.pkgd.min.js"></script>
+
+<style type="text/css">
+
+	.wrap { margin:0 auto; } /* 이미지들을 가운데로 정렬하기 위해 설정 */
+	.wrap img { margin:3px; }
+
+</style>
+
 </head>
 <body>
 	
@@ -85,21 +99,13 @@
                 <!-- 은솔 : 배너광고 구간 -->
                 <h3 style="margin-left : 3%;"> 이제, 여행은 가까운 곳에서.</h3>
                 <br>
-                            
-                <div style="margin-left : 3%;">
-				  <div class="row" id="bannerAdImglistDiv" style='height: fill;'>
-				    
-				  </div>
+                <!--  data-masonry='{"percentPosition": true }' -->
+                
+                <div class="wrap" id="bannerAdImglistDiv" style="margin-left : 3%;">
+				  <div class="grid-item">...</div>
 				</div>
-               
-               <!--  
-     			<div class="tableArea" style="margin-left : 3%; width: 1920px;">
-					<table id="bannerAdImglistTable">
-						<tbody></tbody>
-					</table>
-				</div>
-                -->
-               
+                
+         
             </div>
         </div>
         </section>
@@ -108,9 +114,28 @@
         
      <!-- ajax -->
 	<script>
+		function zeroFill(sVal, nCnt){ // zeroFill(값, 채울갯수)
+			var zero = '';
+			var ret  = sVal.toString();
+			if(nCnt > 100) return sVal; // 100개 이상 채울 수 없음;;
+			for(var i=0 ; i < nCnt-ret.length ; i++){
+				zero += '0';
+			}
+			return zero + ret;
+		}
+	
+	
 		$(function() {
 			selectBannerAdImgList();
-			setInterval(selectBannerAdImgList, 10000);
+			//setInterval(selectBannerAdImgList, 10000);
+			$imgs = $('.wrap');
+			$imgs.imagesLoaded(function(){
+				$imgs.masonry('reload');
+				$imgs.masonry({
+					itemSelector : 'img', // img 태그를 대상으로 masonry 적용
+					fitWidth : true // 내용물을 가운데 정렬하기, CSS margin:0 auto; 설정이 필요함
+				});
+			});
 		});
 		
 		function selectBannerAdImgList() {
@@ -122,23 +147,16 @@
 					
 					badiv = $("#bannerAdImglistDiv");
 					badiv.html("");
-
-					//tableBody = $("#bannerAdImglistTable tbody");
-					//tableBody.html("");
 					
 					for (var i in data) {
 						
-						var div = $("<div class='col-5' style='min-content;' onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
+						//var div = $("<div onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
+						var img = $("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' onclick='selectBannerAdDetail(" + data[i].bus_code + ")' style='width: 700px;'>");
 						
-						//var alno = $("<td>").text(data[i].alno); 
-						//var bus_code = $("<td>").text(data[i].bus_code); 
-						//var aimgcname = $("<td>");
-						
-						div.html("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 660px;'>");
-
-						//tr.append(aimgcname);
-						badiv.append(div);
+						badiv.append(img);
 					}
+					
+					
 				},
 				error : function(e) {
 					alert("code : " + e.status + "\n"
@@ -151,12 +169,20 @@
 		function selectBannerAdDetail(bus_code) {
 			location.href='${ contextPath }/business/detail?bus_code=' + bus_code;
 		}
+		
+		// wrap 클래스안의 모든 이미지가 로딩되면 masonry 적용
+		/* $imgs = $('.wrap').imagesLoaded(function(){
+			$imgs.masonry({
+				itemSelector : 'img', // img 태그를 대상으로 masonry 적용
+				fitWidth : true // 내용물을 가운데 정렬하기, CSS margin:0 auto; 설정이 필요함
+			});
+		}); */
 	</script>
 	
 	
 	<!-- Optional JavaScript; choose one of the two! -->
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-        
+
 </body>
 </html>

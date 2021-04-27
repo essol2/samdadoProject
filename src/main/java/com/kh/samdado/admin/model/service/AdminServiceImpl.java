@@ -196,6 +196,13 @@ public class AdminServiceImpl implements AdminService {
 		return aDao.updateRstatusToEnd(adminPremiumAd);
 	}
 
+	@Override
+	public List<Income> selectGetAllProfit(Income profitRequestDto) {
+		// TODO Auto-generated method stub
+		return aDao.selectGetAllProfit(profitRequestDto);
+	}
+
+
 
 	
 

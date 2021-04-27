@@ -162,8 +162,10 @@
 		                    <option value="usname" <c:if test="${ param.searchCondition == 'usname' }">selected</c:if>>회원명</option> 
 		                    <option value="bus_code" <c:if test="${ param.searchCondition == 'bus_code' }">selected</c:if>>사업장 코드</option> 
 		                    <option value="bus_category" <c:if test="${ param.searchCondition == 'bus_category' }">selected</c:if>>카테고리</option>
+		                    <!-- 
 		                    <option value="pdate" <c:if test="${ param.searchCondition == 'pdate' }">selected</c:if>>신청날짜</option>
 		                    <option value="exdate" <c:if test="${ param.searchCondition == 'exdate' }">selected</c:if>>만기날짜</option>
+		                    -->
 	                    </select>
 	                    <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
 		                <button class="btn btn-secondary" type="button">검색하기</button>

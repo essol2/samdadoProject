@@ -21,7 +21,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -85,7 +85,8 @@
         }
 
         #ho_title {
-            font-size: 28px;
+            font-size: 50px;
+    		color: #343a40;
         }
 
         #ho_grade {
@@ -193,19 +194,26 @@
             width: 100%;
             height: 100%;
         }
+        
+        .infoLabel{
+       	    font-size: 20px;
+		    /* font-weight: bold; */
+		    color: #495740;
+        }
 
         #mapBtn {
-            position: absolute;
-            background-color: white;
-            border-radius: 6px;
-            border: 1px solid rgb(70, 115, 85);
-            cursor: pointer;
-            color: skyblue;
-            font-family: Arial;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 6px 25px;
-            text-decoration: none;
+            position: relative;
+		    background-color: #ffffff;
+		    border-radius: 6px;
+		    border: 1px solid rgb(70, 115, 85);
+		    cursor: pointer;
+		    color: skyblue;
+		    /* font-family: Arial; */
+		    font-size: 15px;
+		    font-weight: bold;
+		    padding: 5px 20px;
+		    text-decoration: none;
+		    z-index: 2;
         }
 
         /* 편의시설 체크div 및 소개 div */
@@ -266,6 +274,19 @@
         }
 
         .profile {
+
+            display: none;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            
+            width: 500px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
+        .moreProfile {
 
             display: flex;
             flex-direction: column;
@@ -359,6 +380,18 @@
             margin: 1%;
             margin-bottom: 0;
         }
+        
+        .reviewTitle{
+    		font-size: 30px;
+    		font-weight:bold;
+    	}
+    	
+    	
+        
+        .reviewTitle{
+    		font-size: 30px;
+    		font-weight:bold;
+    	}
 
         /* 부트스트랩 모달*/
 
@@ -496,6 +529,12 @@
 	    	width:455px;
 	    	height:420px;
    		}
+   		
+   		.beneImgs{
+    		width: 100%;
+		    height: 325px;
+		    border-radius: 8px;
+    	}
 
     </style>
 
@@ -510,17 +549,18 @@
         <div id="ho_header">
             <div class="title_area">
                 <div class="title_area">
-                    <c:if test="${ res.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premium.png"><br>
+                    <c:if test="${ car.bus_classify eq 'P' }">
+                    <img src="../resources/images/image_listpage/premiumicon.png"><br>
                     </c:if>
                     <label id="ho_title" class="title_tag">${car.bus_name }</label>
                     <br>
                 </div>
-                <label id="ho_address">${ car.bus_address.substring(6) }</label><br>
-                <label>영업시간 : ${ car.bus_opening.substring(0, 5) } ~ ${ car.bus_opening.substring(6) }</label>&nbsp;
+                <label id="ho_address" class="infoLabel">${ car.bus_address.substring(6) }</label><br>
+                <label class="infoLabel">영업시간 : ${ car.bus_opening.substring(0, 5) } ~ ${ car.bus_opening.substring(6) }</label>&nbsp;
             </div>
 
             <div id="ho_info">
+            <c:if test="${ loginUser.usno != null }">
                 <label id="jjim_btn">
 			        <c:choose>
 					    <c:when test="${jjimcheck eq '0' or empty jjimcheck}"> <!-- jjimcheck가 0이면 빈하트-->
@@ -532,8 +572,9 @@
 					              id="btn_like">
 					    </c:otherwise>
 					</c:choose>찜하기</label>
-                <label id="report_btn" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
-                <label id="report_btn"><img id="report" class="report_img"
+					</c:if>
+                <label id="report_btn" class="infoLabel" data-bs-toggle="modal" data-bs-target="#reportModal"><img id="report" class="report_img" src="../resources/images/image_listpage/siren.png">신고하기</label>
+                <label id="report_btn" class="infoLabel"><img id="report" class="report_img"
                         src="../resources/images/image_listpage/phone.png">${ car.bus_phone }</label>
             </div>
         </div>
@@ -613,70 +654,75 @@
                 <div class="col2">
                     <div id="map" style="width: 555px; height:330px;">
                     <button type="button" id="mapBtn" 
-                    onclick="window.open('https://map.kakao.com/link/search/${car.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">카카오 지도</button>
+                    onclick="window.open('https://map.kakao.com/link/to/${tour.bus_address.substring(6)}','window_name','width=1200,height=800,location=no,status=no,scrollbars=yes');">길찾기</button>
                     </div>
                 </div>
                 
                 <!-- 구글지도 api -->
                 <script>
-	             // 이미지 지도에 표시할 마커입니다
-	             // 이미지 지도에 표시할 마커를 아래와 같이 배열로 넣어주면 여러개의 마커를 표시할 수 있습니다 
-	             var markers = [
-	                 {
-	                     position: new kakao.maps.LatLng(33.450001, 126.570467), 
-	                     text: '${car.bus_name}' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다     
-	                 }
-	             ];
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };  
+
+	            // 지도를 생성합니다    
+	            var map = new kakao.maps.Map(mapContainer, mapOption); 
 	
-	             var staticMapContainer  = document.getElementById('map'), // 이미지 지도를 표시할 div  
-	                 staticMapOption = { 
-	                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
-	                     level: 3, // 이미지 지도의 확대 레벨
-	                     marker: markers // 이미지 지도에 표시할 마커 
-	                 };    
+	            // 주소-좌표 변환 객체를 생성합니다
+	            var geocoder = new kakao.maps.services.Geocoder();
+	            
+	            var add = "<c:out value='${ car.bus_address}'/>";
+	            var splitadd = add.split(',');
+	            
+
+	            
+	            // 주소로 좌표를 검색합니다
+	            geocoder.addressSearch(splitadd[1], function(result, status) {
+	            	
+						console.log(add);
+						console.log(splitadd[1]);
+	                // 정상적으로 검색이 완료됐으면 
+	                 if (status === kakao.maps.services.Status.OK) {
+			
+	                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 	
-	             // 이미지 지도를 생성합니다
-	             var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+	                    // 결과값으로 받은 위치를 마커로 표시합니다
+	                    var marker = new kakao.maps.Marker({
+	                        map: map,
+	                        position: coords
+	                    });
+	
+	                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+	                    var infowindow = new kakao.maps.InfoWindow({
+	                        content: '<div style="width:150px;text-align:center;padding:6px 0;">${ car.bus_name }</div>'
+	                    });
+	                    infowindow.open(map, marker);
+	
+	                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	                    map.setCenter(coords);
+	                } 
+	            });    
 				</script>
 				
                 <!-- 작은 리뷰 -->
                 <div class="col2" id="small_view_area">
-                    <button type="button" class="small_view_btn">후기</button><br>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label>
-                        <p class="small_view_con">
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        </p>
-                    </div>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label><br>
-                        <p class="small_view_con">최고의 숙소 상태와 너무너무 친절하신 호스트분까지..</p>
-                    </div>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label>
-                        <p class="small_view_con">
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-
-                        </p>
-                        <button class="small_view_morebtn">more...</button>
-                    </div>
+	                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+	                  <div class="carousel-inner">
+	                  	<div class="carousel-item active">
+	                  	<c:forEach var="a" items="${ all }" varStatus="i">
+	                  		<c:if test="${ i.first }">
+								<img class="beneImgs"src="${ contextPath }/resources/busUploadFiles/alliance/${ a.aimgcname }" class="d-block w-100" alt="...">
+							</c:if>
+						</c:forEach>
+	                    </div>
+						<c:forEach var="a" items="${ all }">
+							<div class="carousel-item">
+								<img class="beneImgs"src="${ contextPath }/resources/busUploadFiles/alliance/${ a.aimgcname }" class="d-block w-100" alt="...">
+	                    	</div>
+						</c:forEach>
+	                  </div>
+	                </div>
                 </div>
             </div>
         </div>
@@ -689,24 +735,10 @@
             </div>
 
             <hr class="boundary">
-
-            <div class="choise">
-                <input type="checkbox" name="small" id="small"><label for="small">소형</label>
-                <input type="checkbox" name="midium" id="midium"><label for="midium">중형</label>                
-                <input type="checkbox" name="big" id="big"><label for="big">대형</label>
-                <input type="checkbox" name="suv" id="suv"><label for="suv">SUV</label>
-                <input type="checkbox" name="foreign" id="foreign"><label for="foreign">수입</label><br>
-                <input type="checkbox" name="kia" id="kia"><label for="kia">기아</label>
-                <input type="checkbox" name="hyundae" id="hyundae"><label for="hyundae">현대</label>
-                <input type="checkbox" name="bmw" id="bmw"><label for="bmw">BMW</label>
-                <input type="checkbox" name="benz" id="benz"><label for="benz">BENZ</label>
-                <input type="checkbox" name="rno" id="rno"><label for="rno">르노</label><br>
-                <input type="checkbox" name="diesel" id="diesel"><label for="diesel">디젤</label>
-                <input type="checkbox" name="gasoline" id="gasoline"><label for="gasoline">가솔린</label>
-            </div>
-			<c:forEach var="c" items="${ cars }">
+			
             <div class="list">
                 <div id="firstlist">
+			<c:forEach var="c" items="${ cars }">
                     <div class='profile'>
                         <c:forEach var="ca" items="${ carAtt }" varStatus="i">
                         <c:if test="${ i.first }">
@@ -717,77 +749,87 @@
                         <b>${ c.car_fuel }</b><br>
                         <b>${ c.car_price }원</b><br>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            예약하기
-                        </button>
-                        
+ 예약하기</button>
                     </div>                    
-                    
+            </c:forEach>
                 </div>                               
             </div>
-            </c:forEach>
             <div class="btnArea">
                 <button class="moreBtn">더보기</button>
             </div>
+            
+            <!-- 더보기 -->
+			<script>				
+						$(document).ready(function(){
+							size_div = $('.profile').length;
+							
+							x = 6;
+							$('.profile:lt('+x+')').addClass('moreProfile');
+							$('.moreBtn').click(function(){
+								x= (x+6 <= size_div)? x+6 : size_div;
+								$('.profile:lt('+x+')').addClass('moreProfile');	
+							});
+						});
+			</script>
         
         <!-- 후기 -->
         <div id="review_area">
-            <label>후기</label>&nbsp;&nbsp;<label>★ 4.5(후기 99개)</label><br>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
+            <label class="reviewTitle">후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:#ffd700;">★</a><b></b>(후기 ${ review.size() }개)</label><br>
+            <c:if test="${ empty review }">
+            <div class="reviewBox">
+            <p style="font-size:60px">리뷰가 없습니다!!!</p>
             </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
+            </c:if>
+            <c:forEach var="r" items="${ review }">
+            <div class="reviewBox">
+	            <div class="review_img_area">
+	            	<c:if test="${ r.img_rename1 ne '미입력'  }">
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename1 }" class="review_img">
+	                </c:if>
+					<c:if test="${ r.img_rename2 ne '미입력'  }">
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename2 }" class="review_img">
+	                </c:if>
+	                <c:if test="${ r.img_rename3 ne '미입력'  }"> 	
+	                <img src="${ contextPath }/resources/muploadFiles/${ r.img_rename3 }" class="review_img">
+	                </c:if>
+	            </div>
+	            <div class="review_writer">
+	                <label  class="reviewTitle" style="font-size:15px;">${ r.us_name }</label>
+	                <div class="review">
+	                    <a>${ r.rev_comment }</a>
+	                    <label class="review_date_label">${ r.rev_date }</label>
+	                    <label class="review_date_label"><a style="color:#ffd700;">★</a> ${r.re_star }</label>
+	                </div>
+	            </div>
             </div>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-            </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
-            </div>
-            <div class="review_img_area">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-                <img src="../resources/images/image_listpage/tour3.png" class="review_img">
-            </div>
-            <div class="review_writer">
-                <label>Eunsol</label>
-                <div class="reivew">
-                    <a>최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서 매일 푹 잠잘 수 있었구요,
-                        최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        덕분에 속초 여행 만족도가 10배 상승했습니다!! 침대가
-
-                        푹신하고 방이 조용해서
-                        매일 푹 잠잘 수 있었구요,
-                    </a>
-                    <label class="review_date_label">2020.04.05</label>
-                </div>
-            </div>
-        </div>        
+            </c:forEach>
+        </div>
     </section>
+    
+    <script>
+    
+    
+    var sum = 0;
+    var cnt = 0;
+    	$(function(){
+			 <c:forEach items="${review}" var="r">
+				 var star = '<c:out value="${r.re_star}"/>'
+				  
+				 sum += Number(star); 
+				 cnt++;
+			 </c:forEach>
+			 
+			 var avg = sum / cnt;
+			 
+			 var stars = $('#starLabel').find('b').text(avg.toFixed(1));
+			 
+			 var review = '<c:out value="${review.size()}"/>'
+		        	
+		        	if(review == '0'){
+		        		$('#starLabel').find('b').text(review);
+		        	}
+    	});        
+    </script>
     
     <script>
 	    $j1124.datepicker.setDefaults({
@@ -809,9 +851,9 @@
     </script>
 
     <!-- Modal -->
+    <c:forEach var="c" items="${ cars }">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <c:forEach var="c" items="${ cars }">
+        <div class="modal-dialog">        
             <div class="modal-content">
                 <div class="modal-header">
                     <img src="../resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
@@ -822,19 +864,20 @@
                     <!--렌트대여날짜-->
                     <div class="start-div">
                         <label for="startDate">예약일</label>
-                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)" required>
                     </div>
                     <!--렌트반납날짜-->
                     <div class="end-div">
                         <label for="endDate">반납일</label>
                         <label id="error" class="error">반납날짜는 예약날짜 이전 일 수 없습니다.</label>
-                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)">
+                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)" required>
                     </div>                                       
                 </div>
+                <div class="modalcarimage">                    
+                
 				<input type="hidden" id="carNo" name="carNo" value="${ c.car_no }">
 				<input type="hidden" id="carName" name="carName" value="${ c.car_name }">
 				<input type="hidden" id="cAmount" name="cAmount" value="${ c.car_price }">
-                <div class="modalcarimage">                    
                     <h4>${ c.car_name }</h4>
                     <c:forEach var="ca" items="${ carAtt }">
                         <c:if test="${ ca.file_lv eq '0' }">
@@ -871,17 +914,17 @@
                     <b>원</b>
                     
                     <button class="payBtn">결제하기</button>
-                </div>
-
                
+                </div>
 
                 <div class="modal-footer">
                     <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
-            </c:forEach>
+            
         </div>
     </div>
+    </c:forEach>
     
    	<script>
 	    function startDate(e) {	  	  
@@ -1013,7 +1056,7 @@
                 
             </div>
             <div class="modal-footer">                
-                <button type="submit" id="reportBtn">신고하기</button>
+                <button type="submit" id="reportBtn" onclick="reportAlert()">신고하기</button>
                 <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
             </div>
             </form>

@@ -158,6 +158,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		
 		<!-- BUSINUESS Join -->
 		<result property="bus_name" column="BUS_NAME"/>
+		
+		<!-- A_board join -->
+		<result property="bno" column="BNO"/>
+		<result property="btitle" column="BTITLE"/>
+		<result property="bdate" column="BDATE"/>
+		<result property="bcontent" column="BCONTENT"/>
 	</resultMap>
 	
 	<resultMap type="Booking" id="BookingResultSet">
@@ -326,8 +332,54 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usno" column="US_NO"/>
 		<result property="uspart" column="US_PART"/>
 	</resultMap>
+
+	<resultMap type="RouteFinal" id="RouteFinalResultSet">
+		<id property="route_no" column="ROUTE_NO" />
+		<result property="route_date" column="ROUTE_DATE" />
+		<result property="route_price" column="ROUTE_PRICE" />
+		<result property="us_no" column="US_NO" />
+	<!-- ROUE DETAIL JOIN -->	
+		<result property="detail_no" column="DETAIL_NO" />
+	<!-- TOUR_SPOT JOIN -->
+		<result property="spot_no" column="SPOT_NO" />
+		<result property="spot_lo" column="SPOT_LO" />
+		<result property="spot_them" column="SPOT_THEM" />
+		<result property="spot_title" column="SPOT_TITLE" />
+		<result property="spot_path" column="SPOT_PATH" />
+		<result property="spot_oname" column="SPOT_ONAME" />
+		<result property="spot_content" column="SPOT_CONTENT" />
+		<result property="spot_price" column="SPOT_PRICE" />
+		<result property="spot_address" column="SPOT_ADDRESS" />
+	<!-- BUSINESS JOIN -->
+		<result property="bus_code" column="BUS_CODE" />
+		<result property="bus_name" column="BUS_NAME" />
+		<result property="bus_address" column="BUS_ADDRESS" />
+		<result property="bus_intro" column="BUS_INTRO" />
+		<result property="bus_date" column="BUS_DATE" />
+		<result property="bus_modify" column="BUS_MODIFY" />
+		<result property="ad_count" column="AD_COUNT" />
+		<result property="bus_classify" column="BUS_CLASSIFY" />
+		<result property="bus_category" column="BUS_CATEGORY" />
+		<result property="bus_status" column="BUS_STATUS" />
+		<result property="bus_phone" column="BUS_PHONE" />
+		<result property="res_category" column="RES_CATEGORY"/>
+		<result property="hotel_category" column="HOTEL_CATEGORY" />
+		<result property="tour_category" column="TOUR_CATEGORY" />
+		<result property="tour_tema" column="TOUR_TEMA" />
+		<result property="al_no" column="AL_NO" />
+		<result property="bus_opening" column="BUS_OPENING" />
 		
+		<!-- 비즈니스ATT 대한 JOIN -->
+		<result property="file_rename" column="FILE_RENAME" />
+		<result property="file_lv" column="FILE_LV" />
+		<result property="rowNum" column="rowNum"/>
+		<result property="standardNum" column="standardNum"/>
+		
+	</resultMap>
 	
+	<resultMap type="RouteMP" id="RouteMPResultSet">
+		<id property="route_no" column="ROUTE_NO"/>
+	</resultMap>
 	<!-- 0. 회원 pwd 변경 메소드 : userService로 넘김 -->
 	<!-- 1. 이메일, 전화번호 변경 메소드 -->
 	<update id="updateUserInfo" parameterType="User">
@@ -794,21 +846,31 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	
 	<select id="selectYAlertList" resultMap="AlertResultSet">
-		SELECT *
-		FROM NEWS
-		WHERE US_NO = #{usno}
-		AND NSTATUS = 'Y'
-		ORDER BY NNO DESC
+		<if test="uspart eq '제휴'.toString()">
+			SELECT *
+			FROM NEWS
+			WHERE (US_NO = #{usno} OR US_NO = 'b' OR US_NO = 'all')
+			AND NSTATUS = 'Y'
+			ORDER BY NNO DESC
+		</if>
+		<if test="uspart eq '일반'.toString()">
+			SELECT *
+			FROM NEWS
+			WHERE (US_NO = #{usno} OR US_NO = 'u' OR US_NO = 'all')
+			AND NSTATUS = 'Y'
+			ORDER BY NNO DESC
+		</if>
 	</select>
 	
 	<select id="selectDetailAlert" resultMap="AlertResultSet">
 		SELECT *
-		FROM NEWS N, POINT P, REPORT R, "QnA" Q, ALLIANCE A, BUSINESS B
+		FROM NEWS N, POINT P, REPORT R, "QnA" Q, ALLIANCE A, BUSINESS B, A_BOARD AB
 		WHERE A.BUS_CODE = B.BUS_CODE(+)
 		AND N.NKEYNO = P.PNO(+)
 		AND N.NKEYNO = R.REPORT_NO(+)
 		AND N.NKEYNO = Q.QNA_NO(+)
 		AND N.NKEYNO = A.AL_NO(+)
+		AND N.NKEYNO = AB.BNO(+)
 		AND N.NNO = #{nno}
 	</select>
 	
@@ -1072,6 +1134,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			WHERE (US_NO = #{usno} OR US_NO = 'u' OR US_NO = 'all')
 			AND NSTATUS = 'N'
 		</if>
+		<if test="uspart eq '관리자'.toString()">
+			SELECT COUNT(*)
+			FROM NEWS
+			WHERE US_NO = #{usno}
+			AND NSTATUS = 'N'
+		</if>
   </select>
   
   <insert id="insertNewBoard" parameterType="A_board">
@@ -1089,7 +1157,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</if>
   </insert>
   
-  <select id="findNewBno" resultMap="ABoardResultSet">
+  <select id="findNewBno" resultType="_int">
   		SELECT BNO
   		FROM (
   			SELECT BNO
@@ -1102,6 +1170,54 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
   <update id="updateUserStatus" parameterType="User">
   		UPDATE "USER"
   		SET US_STATUS = 'N'
+  			US_STOP = SYSDATE
   		WHERE US_NO = #{usno}
   </update>
+  
+  <select  id="selectMyRoute" resultMap="RouteFinalResultSet">
+  		SELECT *
+		FROM ROUTE_DETAIL RD, TOUR_SPOT TS, BBA, ROUTE_FINAL RF
+		WHERE RD.SPOT_NO = TS.SPOT_NO(+)
+		AND RD.BUS_CODE = BBA.BUS_CODE(+)
+		AND RD.ROUTE_NO = RF.ROUTE_NO(+)
+		AND RF.US_NO = #{usno}
+		ORDER BY RD.ROUTE_NO DESC, RD.DETAIL_NO
+  </select>
+  
+  <!-- <select id="selectRouteNum" resultType="_int">
+		SELECT COUNT(*) AS "rowNum"
+		FROM(
+		SELECT COUNT(*)
+		FROM ROUTE_DETAIL RD, TOUR_SPOT TS, BBA, ROUTE_FINAL RF
+		WHERE RD.SPOT_NO = TS.SPOT_NO(+)
+		AND RD.BUS_CODE = BBA.BUS_CODE(+)
+		AND RD.ROUTE_NO = RF.ROUTE_NO
+		AND RF.US_NO = #{usno}
+		GROUP BY RD.ROUTE_NO)
+  </select> -->
+  
+  <select id="selectStandard" resultType="_int">
+  		SELECT COUNT(*) AS "standardNum"
+		FROM ROUTE_DETAIL RD, ROUTE_FINAL RF
+		WHERE RD.ROUTE_NO = RF.ROUTE_NO
+		AND RF.ROUTE_NO = #{routeNum}
+		GROUP BY RF.ROUTE_NO
+  </select>
+  
+  <select id="selectRouteNum" resultMap="RouteMPResultSet">
+		SELECT ROUTE_NO
+		FROM ROUTE_FINAL
+		WHERE US_NO = #{usno}
+		ORDER BY ROUTE_NO DESC
+   </select>
+   
+   <select id="findHotelJjimList" resultMap="JjimResultSet">
+   		SELECT *
+		FROM JJIM J, BUSINESS B, BUSINESS_ATT BA
+		WHERE J.BUS_CODE = B.BUS_CODE
+		AND B.BUS_CODE = BA.BUS_CODE
+		AND B.BUS_CATEGORY = 'H'
+		AND BA.FILE_LV = 0
+		AND J.US_NO = #{usno}
+   </select>
 </mapper>

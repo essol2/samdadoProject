@@ -296,6 +296,21 @@ public class businessDaoImpl implements businessDao {
 	public int updateRexdate(Report r) {
 	  return sqlSession.update("businessMapper.updateRexdate", r);
 	}
+  
+  @Override
+	public List<Income> findIncomeExdate() {
+	  return sqlSession.selectList("businessMapper.findIncomeExdate");
+	}
+  
+  @Override
+	public int updateExdate(Income i) {
+	  return sqlSession.update("businessMapper.updateExdate", i);
+	}
+  
+  @Override
+	public int updateBusClassify(int bus_code) {
+	  return sqlSession.update("businessMapper.updateBusClassify", bus_code);
+	}
   	
   	// 프리미엄 등록 시 만료일
 	@Override
@@ -402,5 +417,17 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.calList");
 	}
+
+	@Override
+	public List<Alliance> selectAlli() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectAlli");
+	}
+
+	
+
+	
+
+	
 	
 }

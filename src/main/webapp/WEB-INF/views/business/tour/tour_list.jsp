@@ -277,8 +277,8 @@
         }
 
         .premium {
-            width: 75px;
-            height: 21px;
+            width: 60px;
+            height: 60px;
         }
 
         /* 프리미엄테두리 반짝이효과 */
@@ -350,9 +350,29 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
+        }
+        
+        .mainProfile {
+
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 435px;
+            height: 500px;
+            box-sizing: border-box;
+            position:relative;
+        }
+        
+        .premium_div{
+        	position:absolute;
+        	margin-bottom:368px;
         }
         
         .moreProfile {
@@ -364,7 +384,7 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -483,6 +503,29 @@
         	margin-left: 3%;
         	margin-top: 1%;
         }
+        
+        #jjimOn{
+        	display : none;
+        	background-color : rgba( 0,0,0,0);
+        }
+        
+        .jjimBtn{
+        	border-style : none;
+        	width : fit-content;
+        	height : fit-content;
+        	backtround-color : rgba( 0,0,0,0);
+        }
+        
+        .btn.btn-sea{-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+		a{text-decoration:none;}        
+        .btn.btn-sea {font-size: 18px; white-space:nowrap; width:150px; padding:.8em 1.5em; font-family: GmarketSansBold; line-height:18px; display: inline-block;zoom: 1; color: #fff; text-align: center; position:relative; -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear; transition: border .25s linear, color .25s linear, background-color .25s linear;}      
+        .btn.btn-sea{background-color: #467355; border-color: #467355; -webkit-box-shadow: 0 3px 0 #088d74; box-shadow: 0 3px 0 #088d74;}
+		.btn.btn-sea:hover{background-color:white; color:#467355;}
+		.btn.btn-sea:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
+        
+        .premium_div{
+        	position:absolute;
+        }
 
         /* 사업장종류선택끝 */
     </style>
@@ -498,16 +541,16 @@
             <nav id="choise-nav">
                 <ul id="choise">
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/hotel_list'>숙박</a></div>
+                        <a href='${ contextPath }/business/hotel_list' class="btn btn-sea">숙박</a>
                     </li>
                     <li>
-                        <div class="cover" style="background-color: rgb(70, 115, 85);"><label style="color: white;">관광지</label></div>
+                        <a href='${ contextPath }/business/tour_list' class="btn btn-sea">관광지</a>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/restaurant_list'>음식점</a></div>
+                        <a href='${ contextPath }/business/restaurant_list' class="btn btn-sea">음식점</a>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/rentcar_list'>렌트카</a></div>
+                        <a href='${ contextPath }/business/rentcar_list' class="btn btn-sea">렌트카</a>
                     </li>
                 </ul>
             </nav>
@@ -518,7 +561,7 @@
                     <label class="topText">삼다도와 함께하는</label><br>
                     <label class="topText">제주도 지역의 관광지</label>
                 </div>
-                <form id="search_report_form">
+                <form id="search_business_form">
                     <div class="cover2">
                       	<input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" placeholder="관광지 이름">
                        	<button class="btn btn-secondary" id="searchBtn" type="button">검색</button>
@@ -547,10 +590,10 @@
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	                    str += "<b>★4.90(후기 99+개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>입장료 : 입장료 없음</b>";
-		                            str += "<div id='frm_read'>"
-		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
-		                            str += "</div>";               
+		                            str += "<b>"+ data[i].pro_adult +"</b>";
+		                            str += "<c:if test='${ loginUser.usno != null }'>"
+		                            str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+		                            str += "</c:if>";
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -560,10 +603,10 @@
 		    	              error : function(data){
 		    	            	 alert('error');
 		    	               
-		    	              }//error
-		    			})//ajax
-		    		});//click
-		    });//ready
+		    	              }
+		    			})
+		    		});
+		    });
 			</script>
 
             <nav id="choise2-nav">
@@ -674,15 +717,21 @@
 			<!-- 프리미엄 profile > mainprofile로 변경 -->
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                <c:forEach var="p" items="${ tourList }">
-                <c:if test="${ p.bus_classify eq 'P' && p.file_lv eq '0' }">
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/busUploadFiles/${ p.file_rename }" onclick="selectRes(${p.bus_code})">
+                <c:forEach var="t" items="${ tourList }">
+                <c:if test="${ t.bus_classify eq 'P' && t.file_lv eq '0' }">
+                    <div class='mainProfile'>
+                    <input type="hidden" id="bus_code" name="bus_code" value="${ t.bus_code }">
+                    	<div class="premium_div">                    	
+                        <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
+                    	</div>
+                        <img class="image" src="../resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                         <b>★4.90(후기 99+개)</b>
-                        <b>${ p.bus_name }</b>
-                        <b>${ p.pro_adult }</b>
-                        <p><img src="../resources/images/image_listpage/heart.png"></p>
+                        <b>${ t.tour_tema } / ${ t.tour_category }</b>
+                        <b>${ t.bus_name }</b>
+                        <b>${ t.pro_adult }원</b>
+                        <c:if test="${ loginUser.usno != null }">
+	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+	                    	</c:if>
                     </div>
                 </c:if>    
                 </c:forEach>
@@ -693,14 +742,16 @@
                 <c:if test="${t.bus_classify eq 'G' }">
                     <div class='profile'>
                     	<c:if test="${t.file_lv eq '0'}">
+                        <input type="hidden" id="bus_code" name="bus_code" value="${ t.bus_code }">
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                     	</c:if>
                         <b>★4.90(후기 99+개)</b>
+                        <b>${ t.tour_tema } / ${ t.tour_category }</b>
                         <b>${ t.bus_name }</b>
-                        <b>입장료 : 입장료 없음</b>
-                        <div id="frm_read">                
-                        <a href='javascript: like_func();'><img src="../resources/images/image_listpage/heart.png"></a>
-                        </div>
+                        <b>${ t.pro_adult }원</b>
+                        <c:if test="${ loginUser.usno != null }">
+	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+	                    	</c:if>
                     </div>
                 </c:if>
                 </c:forEach>
@@ -724,10 +775,10 @@
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 9;
+							x = 6;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+9 <= size_div)? x+9 : size_div;
+								x= (x+6 <= size_div)? x+6 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});
@@ -735,27 +786,68 @@
 
         </section>
 
-         <footer>
-            <div id="footer_left">
-                <img src="../resources/images/image_footer/footerlogo.png" class="leftImg">
-            </div>
-            <div id="footer_center">
-                <img src="../resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
-                <img src="../resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
-                <img src="../resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
-            </div>
-            <div id="footer_right">
-                <p id="samdado_news">삼다도 소식</p>
-                <img src="../resources/images/image_footer/facebook.png" class="rightImg">
-                <img src="../resources/images/image_footer/twitter.png" class="rightImg">
-                <img src="../resources/images/image_footer/LinkedIn.png" class="rightImg">
-                <img src="../resources/images/image_footer/pininterest.png" class="rightImg">
-            </div>
-            <br>
-            <br>
-            <hr>
-            <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
+        <footer>
+           <jsp:include page="../../common/footer.jsp"/>
         </footer>
+        
+        <script>
+	
+	
+	$('.jjimBtn').click(function(){
+		
+		var $this = $(this);
+		var bus_code = $(this).parent().eq(0).children().val();
+		var check=$this.find(">img");
+		
+		console.log($this);
+		console.log(check);
+		
+		var jjimOb = new Object();
+		jjimOb.bus_code = bus_code;
+		jjimOb.us_no = ${loginUser.usno};
+		
+		
+		$this.find(">img").attr("src", function(index, attr){
+			if(attr.match('_on')){
+				
+				$.ajax({
+				url : "${contextPath}/mypage/jjimoff",
+				data : JSON.stringify(jjimOb),
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				success : function(data){
+					
+					//console.log("하트 오프!");
+					
+					
+				}, error:function(e){
+					alert("error code : " + e.status + "\n" + "message : " + e.responseText);
+				}
+			});
+				return attr.replace("_on.png", "_off.png");
+				
+			} else {
+				
+				$.ajax({
+				url : "${contextPath}/mypage/jjimon",
+				data : JSON.stringify(jjimOb),
+				type : "POST",
+				contentType : "application/json; charset=utf-8",
+				success : function(data){
+					
+					//console.log("하트 온!");
+					
+					
+				}, error:function(e){
+					alert("error code : " + e.status + "\n" + "message : " + e.responseText);
+				}
+			});
+				return attr.replace("_off.png", "_on.png");
+			}
+		});
+	});
+
+</script>
 
 </body>
 

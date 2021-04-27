@@ -219,10 +219,17 @@
         #filter-img {
             width: 55px;
             height: 55px;
+            margin-left: 3%;
         }
 
         .search-result {
             padding-left: 3%;
+        }
+        
+        .topText{
+        	font-size: 35px;
+		    font-weight: bold;
+		    color: #343a40;
         }
 
         /* 검색필터끝 */
@@ -267,8 +274,8 @@
         }
 
         .premium {
-            width: 75px;
-            height: 21px;
+            width: 60px;
+            height: 60px;
         }
 
         /* 프리미엄테두리 반짝이효과 */
@@ -340,9 +347,28 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
+        }
+        
+        .mainProfile {
+
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+            /* justify-content: center; */
+            /* flex: 1; */
+            margin: 1rem;
+            padding: 1rem;
+            width: 435px;
+            height: 500px;
+            box-sizing: border-box;
+        }
+        
+        .premium_div{
+        	position:absolute;
+        	margin-bottom:368px;
         }
         
         .moreProfile {
@@ -354,7 +380,7 @@
             /* flex: 1; */
             margin: 1rem;
             padding: 1rem;
-            width: 500px;
+            width: 435px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -437,6 +463,24 @@
             padding: 10px;
         }
         
+        #searchValue{
+        	width: 300px;
+        }
+        
+        #searchBtn{
+       	    background-color: #467355;
+		    color: white;
+		    border-radius: 10px;
+		    border: none;
+		    height: 35px;
+		    font-weight:bold;
+        }
+        
+        .cover2{
+        	margin-left: 3%;
+        	margin-top: 1%;
+        }
+        
         #jjimOn{
         	display : none;
         	background-color : rgba( 0,0,0,0);
@@ -448,6 +492,13 @@
         	height : fit-content;
         	backtround-color : rgba( 0,0,0,0);
         }
+        
+        .btn.btn-sea{-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+		a{text-decoration:none;}        
+        .btn.btn-sea {font-size: 18px; white-space:nowrap; width:150px; padding:.8em 1.5em; font-family: GmarketSansBold; line-height:18px; display: inline-block;zoom: 1; color: #fff; text-align: center; position:relative; -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear; transition: border .25s linear, color .25s linear, background-color .25s linear;}      
+        .btn.btn-sea{background-color: #467355; border-color: #467355; -webkit-box-shadow: 0 3px 0 #088d74; box-shadow: 0 3px 0 #088d74;}
+		.btn.btn-sea:hover{background-color:white; color:#467355;}
+		.btn.btn-sea:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
 
         /* 사업장종류선택끝 */
     </style>
@@ -463,37 +514,73 @@
             <nav id="choise-nav">
                 <ul id="choise">
                     <li>
-                        <div class="cover" style="background-color: rgb(70, 115, 85);"><label  style="color: white;">숙박</label></div>
+                        <a href='${ contextPath }/business/hotel_list' class="btn btn-sea">숙박</a>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/tour_list'>관광지</a></div>
+                        <a href='${ contextPath }/business/tour_list' class="btn btn-sea">관광지</a>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/restaurant_list'>음식점</a></div>
+                        <a href='${ contextPath }/business/restaurant_list' class="btn btn-sea">음식점</a>
                     </li>
                     <li>
-                        <div class="cover"><a href='${ contextPath }/business/rentcar_list'>렌트카</a></div>
+                        <a href='${ contextPath }/business/rentcar_list' class="btn btn-sea">렌트카</a>
                     </li>
                 </ul>
             </nav>
 
             <nav id="filter-nav">
-                <form id="search_report_form">
-                    <div class="cover2">
-                        <ul id="filter">
-                            <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">							
-                            <li>
-                            	<input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" placeholder="관광지 이름">
-                            </li>
-                            	<button class="btn btn-secondary" id="searchBtn" type="button">검색하기</button>
-                        </ul>
-                    </div>
-                </form>
+                <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">							
                 <div class="search-result">
                     <label class="topText">삼다도와 함께하는</label><br>
-                    <label class="topText">제주도 지역의 관광지</label>
+                    <label class="topText">제주도 지역의 숙박업소</label>
                 </div>
+                <form id="search_business_form">
+                    <div class="cover2">
+                      	<input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" placeholder="숙박업소 이름">
+                       	<button class="btn btn-secondary" id="searchBtn" type="button">검색</button>
+                    </div>
+                </form>
             </nav>
+            
+            <script>	
+		    $(function(){
+		    	 $("#searchBtn").on("click", function() {
+		    		 	var search = {};		         		
+		         		search.searchValue = $("#searchValue").val();
+		         		search.searchKind = 1;
+		    			$.ajax({
+		    				 url : '${contextPath}/business/searchBusinessList', 
+		    	              data : JSON.stringify(search),
+		    	              type : "post",
+		    	              contentType : "application/json; charset=utf-8",
+		    	              dataType : "json",
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";
+		                            str += "<b>38,000원 ~ 40,000원 / 박</b>";
+		                            str += "<b>총액 80,000원</b>";
+		                            str += "<c:if test='${ loginUser.usno != null }'>"
+			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+			                        str += "</c:if>";
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }
+		    			})
+		    		});
+		    });
+			</script>
 
             <nav id="choise2-nav">
                 <ul id="choise2">
@@ -557,37 +644,29 @@
 
             <div class="list">
                 <div id="firstlist" class="gradient-border">
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/hotel1.png">
+                    <c:forEach var="h" items="${ hotelList }">
+                <c:if test="${ h.bus_classify eq 'P' && h.file_lv eq '0' }">
+                    <div class='mainProfile'>
+                    <input type="hidden" id="bus_code" name="bus_code" value="${ h.bus_code }">
+                        <div class="premium_div">                    	
+                        <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
+                    	</div>
+                        <img class="image" src="../resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
                         <b>★4.90(후기 99+개)</b>
-                        <b>제주도 좋은 호텔</b>
-                        <b>38,000 ~ 40,000 / 박</b>
-                        <b>총액 80,000</b>
-                        <p><img src="../resources/images/image_listpage/heart.png"></p>
+	                    <b>${ h.bus_name }</b>
+	                    <b>38,000 ~ 40,000 / 박</b>
+	                    <b>총액 80,000</b>
+                        <c:if test="${ loginUser.usno != null }">
+	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+	                    	</c:if>
                     </div>
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/hotel2.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>제주도 좋은 호텔</b>
-                        <b>38,000 ~ 40,000 / 박</b>
-                        <b>총액 80,000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
-                    <div class='profile'>
-                        <img class="premium" src="../resources/images/image_listpage/premium.png">
-                        <img class="image" src="../resources/images/image_listpage/hotel3.png">
-                        <b>★4.90(후기 99+개)</b>
-                        <b>제주도 좋은 호텔</b>
-                        <b>38,000 ~ 40,000 / 박</b>
-                        <b>총액 80,000</b>
-                        <p><img src="../resources/images/image_listpage/noheart.png"></p>
-                    </div>
+                </c:if>    
+                </c:forEach>
                 </div>
 
                 <div id="secondlist">
                 	<c:forEach var="h" items="${ hotelList }">
+                	<c:if test="${h.bus_classify eq 'G' }">
 	                    <div class='profile'>
 	                    	<c:if test="${ h.file_lv eq '0' }">
 	                    	<input type="hidden" id="bus_code" name="bus_code" value="${ h.bus_code }">
@@ -597,8 +676,11 @@
 	                        <b>${ h.bus_name }</b>
 	                        <b>38,000 ~ 40,000 / 박</b>
 	                        <b>총액 80,000</b>
+	                        <c:if test="${ loginUser.usno != null }">
 	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+	                    	</c:if>
 	                    </div>
+	                    </c:if>
                     </c:forEach>
                 </div>
 			</div>
@@ -619,10 +701,10 @@
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 9;
+							x = 6;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+9 <= size_div)? x+9 : size_div;
+								x= (x+6 <= size_div)? x+6 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});
@@ -683,7 +765,7 @@
 					
 					
 				}, error:function(e){
-					alert("error code : " + e.status + "\n" + "message : " + e.responseText);
+					alert("error code : " + e.status + "/n" + "message : " + e.responseText);
 				}
 			});
 				return attr.replace("_on.png", "_off.png");
@@ -701,7 +783,7 @@
 					
 					
 				}, error:function(e){
-					alert("error code : " + e.status + "\n" + "message : " + e.responseText);
+					alert("error code : " + e.status + "/n" + "message : " + e.responseText);
 				}
 			});
 				return attr.replace("_off.png", "_on.png");

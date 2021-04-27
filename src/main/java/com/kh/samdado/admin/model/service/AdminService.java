@@ -1,5 +1,6 @@
 package com.kh.samdado.admin.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.samdado.admin.model.vo.A_board;
@@ -11,7 +12,6 @@ import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
-import com.kh.samdado.user.model.vo.User;
 
 public interface AdminService {
 
@@ -77,5 +77,8 @@ public interface AdminService {
 	List<A_board> adminMainselectAboardList();
 
 	int updateRstatusToEnd(Income i);
+
+	List<Income> selectGetAllProfit(Income profitRequestDto);
+
 
 }

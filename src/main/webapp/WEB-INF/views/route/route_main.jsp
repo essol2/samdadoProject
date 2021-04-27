@@ -57,6 +57,7 @@
                 		<input type="date" name="routeDate" id="routeDate" value="routeDate" required>
                 		
                 		<button class="btn" id="searchbtn">검색하기</button>
+                		<input type="hidden" id="usno" name="usno" value="${loginUser.usno }">
                 		
                 	</form>
                 </div>

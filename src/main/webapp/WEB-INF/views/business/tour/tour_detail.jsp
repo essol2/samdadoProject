@@ -22,7 +22,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -134,8 +134,8 @@
         }
 
         #small_view_area {
-            border: 1px solid black;
-            border-radius: 13px;
+            /* border: 1px solid black; */
+    		/* border-radius: 13px; */
         }
 
         .small_view {
@@ -204,17 +204,18 @@
         }
 
         #mapBtn {
-            position: absolute;
-            background-color: white;
-            border-radius: 6px;
-            border: 1px solid rgb(70, 115, 85);
-            cursor: pointer;
-            color: skyblue;
-            font-family: Arial;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 10px 35px;
-            text-decoration: none;
+             position: relative;
+		    background-color: #ffffff;
+		    border-radius: 6px;
+		    border: 1px solid rgb(70, 115, 85);
+		    cursor: pointer;
+		    color: skyblue;
+		    /* font-family: Arial; */
+		    font-size: 15px;
+		    font-weight: bold;
+		    padding: 5px 20px;
+		    text-decoration: none;
+		    z-index: 2;	
         }
 
         /* 편의시설 체크div 및 소개 div */
@@ -634,7 +635,17 @@
     		font-weight:bold;
     	}
     	
-    
+    	.beneImgs{
+    		width: 100%;
+		    height: 325px;
+		    border-radius: 8px;
+    	}
+    	
+    	.premium {
+            width: 60px;
+            height: 60px;
+            margin-bottom:30px;
+        }
     	
     	
     </style>
@@ -656,7 +667,7 @@
             <div class="title_area">
                 <div class="title_area">
                 	<c:if test="${ tour.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premium.png"><br>
+                    <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     </c:if>
                     <label id="ho_title" class="title_tag">${ tour.bus_name }</label>
                     <br>
@@ -763,7 +774,7 @@
                 <div class="col2">
                     <div id="map" style="width: 555px; height:330px;">
                     <button type="button" id="mapBtn" 
-                    onclick="window.open('https://map.kakao.com/link/search/${tour.bus_address.substring(6)}','window_name','width=1600,height=1000,location=no,status=no,scrollbars=yes');">길찾기</button>
+                    onclick="window.open('https://map.kakao.com/link/to/${tour.bus_address.substring(6)}','window_name','width=1200,height=800,location=no,status=no,scrollbars=yes');">길찾기</button>
                     </div>
                 </div>
                 
@@ -788,10 +799,12 @@
 	            
 	            // 주소로 좌표를 검색합니다
 	            geocoder.addressSearch(splitadd[1], function(result, status) {
-	
+	            	
+						console.log(add);
+						console.log(splitadd[1]);
 	                // 정상적으로 검색이 완료됐으면 
 	                 if (status === kakao.maps.services.Status.OK) {
-	
+			
 	                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 	
 	                    // 결과값으로 받은 위치를 마커로 표시합니다
@@ -814,115 +827,22 @@
 				
                 <!-- 작은 리뷰 -->
                 <div class="col2" id="small_view_area">
-                    <button type="button" class="small_view_btn">후기</button><br>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label>
-                        <p class="small_view_con">
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지..
-
-                        </p>
-                    </div>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label><br>
-                        <p class="small_view_con">최고의 숙소 상태와 너무너무 친절하신 호스트분까지..</p>
-                    </div>
-                    <div class="small_view">
-                        <label class="small_view_con">Eunsol</label>
-                        <p class="small_view_con">
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-                            최고의 숙소 상태와 너무너무 친절하신 호스트분까지
-
-                         </p>
-                		<button type="button" id="small_view_morebtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">more...</button>
-                    </div>
-                    <!-- Modal -->
-				    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-					    <div class="modal-dialog modal-dialog-centered" style="max-width:60%;">
-					        <div class="modal-content" style="width:100%;">
-						        <div class="modal-header">
-						            <h5 class="modal-title" id="staticBackdropLabel">다녀온 고객 후기</h5>
-						            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						        </div>
-						        <div class="modal-body">
-						            <div class="review-main">
-						
-						            <!-- 리뷰 상단 -->
-						            <div class="review-title">
-						                <div class="review-name">
-						                    <h3>제주호텔 ★★★★</h3>
-						                </div>
-						                <div class="review-avg">
-						                    <div class="avg-con">
-						                        <div class="avg-img"></div>
-						                        <img src="">
-						                        <div class="avg-text">
-						                            <p style="font-size: 25px; color: blue;">최고</p>
-						                            <p>n개의 후기</p>
-						                        </div>
-						                    </div>
-						                </div>
-						            </div>
-						
-						            <!-- 리뷰 바디 -->
-						            <div class="review-body">
-						                <div class="review-box">
-						                    <div class="review-user"> 
-						                        <p>은솔이</p>
-						                        <p>2020년 2월</p>
-						                    </div>
-						                    <div class="review-con">
-						                        <img src="" style="width: 300px; height: 300px;">
-						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
-						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
-						                    </div>
-						                </div>
-						                <div class="review-box">
-						                    <div class="review-user">
-						                        <p>은솔이</p>
-						                        <p>2020년 2월</p>
-						                    </div>
-						                    <div class="review-con">
-						                        <img src="" style="width: 300px; height: 300px;">
-						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
-						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
-						                    </div>
-						                </div>
-						                <div class="review-box">
-						                    <div class="review-user">
-						                        <p>은솔이</p>
-						                        <p>2020년 2월</p>
-						                    </div>
-						                    <div class="review-con">
-						                        <img src="" style="width: 300px; height: 300px;">
-						                        <p>후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다<br>
-						                            후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다후기다</p>
-						                    </div>
-						                </div>
-						            </div>
-						            </div>
-						        </div>
-						        <div class="modal-footer">
-						            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-						            <button type="button" class="btn btn-primary">전체리뷰보기</button>
-						        </div>
-					        </div>
-					    </div>
-				    </div>
+	                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+	                  <div class="carousel-inner">
+	                  	<div class="carousel-item active">
+	                  	<c:forEach var="a" items="${ all }" varStatus="i">
+	                  		<c:if test="${ i.first }">
+								<img class="beneImgs"src="${ contextPath }/resources/busUploadFiles/alliance/${ a.aimgcname }" class="d-block w-100" alt="...">
+							</c:if>
+						</c:forEach>
+	                    </div>
+						<c:forEach var="a" items="${ all }">
+							<div class="carousel-item">
+								<img class="beneImgs"src="${ contextPath }/resources/busUploadFiles/alliance/${ a.aimgcname }" class="d-block w-100" alt="...">
+	                    	</div>
+						</c:forEach>
+	                  </div>
+	                </div>
                 </div>
             </div>
         </div>
@@ -965,7 +885,7 @@
           		</c:forEach>
             </div>
             <div class="detailView" id="detailView">
-                <b>상품명 : ${ tour.pro_name }</b><br><br>
+                <b>${ tour.pro_name }</b><br><br>
                 <label id="adult">어른 : ${ tour.pro_adult }원</label><br>
                 <label id="youth">청소년 : ${ tour.pro_youth }원</label><br>
                 <label id="child">어린이 : ${ tour.pro_child }원</label>
@@ -1069,7 +989,7 @@
                     <!-- 예약날짜-->
                     <div class="start-div">
                         <label for="startDate">예약날짜</label>
-                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)" required>
                     </div>
                 </div>
                 <div class="modal-body2">
@@ -1254,7 +1174,7 @@
                 
             </div>
             <div class="modal-footer">                
-                <button type="submit" id="reportBtn">신고하기</button>
+                <button type="submit" id="reportBtn" onclick="reportAlert()">신고하기</button>
                 <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
             </div>
             </form>

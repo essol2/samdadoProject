@@ -104,7 +104,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<id property="alno" column="AL_NO" />
 		<result property="alintro" column="AL_INTRO" />
 		<result property="alsubdate" column="AL_SUBDATE" />
+		<result property="altodate" column="ALTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
 		<result property="startdate" column="START_DATE" />
+		<result property="alstatus" column="ALSTATUS" />
 		<result property="aimgpath" column="A_IMG_PATH" />
 		<result property="aimgname" column="A_IMG_NAME" />
 		<result property="aimgcname" column="A_IMG_CNAME" />
@@ -160,6 +162,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="pro_youth" column="PRO_YOUTH" />
 		<result property="pro_child" column="PRO_CHILD" />
 		<result property="pro_fac" column="PRO_FAC" />
+	</resultMap>
+	
+	<resultMap type="Income" id="IncomeResultSet">
+		<id property="payno" column="PAY_NO" />
+		<result property="item" column="ITEM" />
+		<result property="amount" column="AMOUNT" />
+		<result property="pdate" column="PDATE" />			
+		<result property="exdate" column="EXDATE" />			
+		<result property="usno" column="US_NO" />		
+		<result property="istatus" column="ISTATUS" />
+		<!-- BUSINESS 테이블 조인을 위한 필드 -->
+		<result property="bus_code" column="BUS_CODE" />
 	</resultMap>
 	
 	<resultMap type="REVIEW" id="ReviewResultSet">
@@ -624,6 +638,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_OPENING
 		     , BT.FILE_RENAME
 		     , BT.FILE_LV
+		     , TOUR_TEMA
+		     , TOUR_CATEGORY
 		     , PRO_ADULT
 		     , PRO_YOUTH
 		     , PRO_CHILD
@@ -650,6 +666,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BUS_ADDRESS
      		 , BUS_INTRO
      		 , BUS_CATEGORY
+     		 , BUS_CLASSIFY
      		 , BUS_PHONE
      		 , BUS_OPENING
      		 , HOTEL_CATEGORY
@@ -671,31 +688,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                                      AND R.REXDATE IS NOT NULL)
 	</select>
 	
-	<!-- 호텔리스트 -->
-	<select id="priceList" resultMap="BusinessResultSet">
-		SELECT 
-       		   B.BUS_CODE
-       		 , US_NO
-             , BUS_NAME
-     		 , BUS_ADDRESS
-     		 , BUS_INTRO
-     		 , BUS_CATEGORY
-     		 , BUS_PHONE
-     		 , BUS_OPENING
-     		 , HOTEL_CATEGORY
-     		 , BT.FILE_RENAME
-     		 , BT.FILE_LV
-  		  FROM 
-  		       BUSINESS B
-  		  JOIN 
-  		       BUSINESS_ATT BT ON B.BUS_CODE = BT.BUS_CODE
-  		       
- 		 WHERE   
-       		   BUS_STATUS = 'Y'
-       	   AND BUS_CATEGORY = 'H'
-       	   AND BT.FILE_LV = '0'
-	  ORDER BY DBMS_RANDOM.RANDOM
-	</select>
 	<!-- 음식점리스트 -->
 	<select id="selectResList" resultMap="BusinessResultSet">
 		SELECT 
@@ -705,9 +697,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BUS_ADDRESS
      		 , BUS_INTRO
      		 , BUS_CATEGORY
+     		 , BUS_CLASSIFY
      		 , BUS_PHONE
-     		 , BUS_OPENING
-     		 , RES_CATEGORY
+     		 , BUS_OPENING     		 
      		 , BT.FILE_RENAME
      		 , BT.FILE_LV
   		  FROM 
@@ -768,6 +760,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  	   REPORT
 		 WHERE 
 		 	   RSTATUS = 'N'
+	</select>
+	
+	<select id="selectAlli" resultMap="AllianceResultSet">
+		SELECT
+		       A_IMG_CNAME
+		  FROM
+		       ALLIANCE A, "USER" U
+		 WHERE
+		       A.US_NO = U.US_NO
+		   AND U.PBALANCE != 0
 	</select>
 	
 	<select id="selectMyBusinessCategory" parameterType="User" resultType="Business">
@@ -1079,6 +1081,43 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                      ORDER BY REPORT_NO DESC)
        WHERE  ROWNUM = 1
    </select>
+   
+   <select id="findIncomeExdate" parameterType="Income" resultMap="IncomeResultSet">
+       SELECT
+				PAY_NO,
+				ITEM,
+				AMOUNT,
+				PDATE,
+				EXDATE,
+				INCOME.US_NO,				
+				BUSINESS.BUS_CODE,
+                ISTATUS
+		   FROM
+				INCOME, "USER", BUSINESS
+		  WHERE
+		  		 INCOME.US_NO = "USER".US_NO
+		  	AND "USER".US_NO = BUSINESS.US_NO
+			AND ITEM = '프리미엄'
+            AND BUS_CLASSIFY = 'P'
+   </select>
+   
+   <update id="updateExdate" parameterType="Income">
+		UPDATE
+				INCOME
+			SET
+				EXDATE = NULL
+		  WHERE
+	     	    PAY_NO = #{ payno }
+	</update>
+	
+	<update id="updateBusClassify" parameterType="BUSINESS">
+		UPDATE
+				BUSINESS
+			SET
+				BUS_CLASSIFY = 'G'
+		  WHERE
+	     	    BUS_CODE = #{ bus_code }
+	</update>
 
 	<insert id="insertIncome1" parameterType="Income">
 		INSERT
@@ -1403,6 +1442,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 	   R.US_NO = U.US_NO
 		   AND BUS_CODE = #{bus_code}
 		   AND REV_STATUS = 'Y'
+		    OR REV_STATUS = 'M'
 	  ORDER BY REV_DATE DESC
 	</select>
   

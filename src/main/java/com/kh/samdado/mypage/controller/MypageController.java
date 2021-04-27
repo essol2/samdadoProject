@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,7 +41,9 @@ import com.kh.samdado.mypage.model.vo.ApplyPagination;
 import com.kh.samdado.mypage.model.vo.Booking;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.mypage.model.vo.RouteMP;
 import com.kh.samdado.mypage.model.vo.SearchPoint;
+import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 
@@ -116,7 +120,7 @@ public class MypageController {
 	}
 		 
 	// 제휴회원 - 이메일, 전화번호 수정 메소드
-	@PostMapping("/updatebuInfo")
+	@GetMapping("/updatebuInfo")
 	public String updateBuInfo(@ModelAttribute("loginUser") User u,
 					           Model model,
 					           HttpSession session,
@@ -127,19 +131,7 @@ public class MypageController {
 			 
 			 
 		User loginUser = uService.loginUser(u);
-			 
-			 
-		if(email==null) {
-			u.setUsemail(loginUser.getUsemail());
-		} else {
-			u.setUsemail(email);
-		}
-			 
-		if(phone==null) {
-			u.setUsphone(loginUser.getUsphone());
-		} else {
-			u.setUsphone(phone);
-		}
+
 			 
 		// DB에 UPDATE_이메일, 전화번호 변경 메소드
 		int result = mService.updateUserInfo(u);	// 암호화 한 비번 db에 update
@@ -337,7 +329,7 @@ public class MypageController {
 		 
 		// 차트에 넣을 데이터 메소드
 		List<Business> chartDataList = mService.selectAlliChartList(usno);
-		System.out.println(chartDataList);
+		//System.out.println(chartDataList);
 		
 		 mv.addObject("api", api);
 		 mv.addObject("allList", allList);
@@ -374,6 +366,7 @@ public class MypageController {
 	 public List<Alert> selectNewAlertList(@RequestBody User u,
 			 							   Model model){
 		 
+		
 		// 안읽은 리스트
 		List<Alert> alertNList = mService.selectAlertList(u);
 		// 읽은 리스트
@@ -387,7 +380,7 @@ public class MypageController {
 		newDataList.addAll(alertNList);
 		newDataList.addAll(alertYList);
 		
-		System.out.println(newDataList);
+		//System.out.println(newDataList);
 		
 		return newDataList;
 
@@ -513,7 +506,7 @@ public class MypageController {
 //		 } else {
 //			 u.setUsphone(phone);
 //		 }
-		 System.out.println("changeEP안에서 u : " + u);
+		 //System.out.println("changeEP안에서 u : " + u);
 		// DB에 UPDATE_이메일, 전화번호 변경 메소드
 		int result = mService.updateUserInfo(u);	// 암호화 한 비번 db에 update
 		
@@ -784,7 +777,7 @@ public class MypageController {
 							   HttpServletRequest request, Model model ) {
 //		 System.out.println(file1);
 //		 System.out.println(file2);
-//		 System.out.println(file3);
+//		 //System.out.println(file3);
 		 r.setRe_star(re_star);
 		 
 		//System.out.println("r 확인 1 : " + r);
@@ -875,32 +868,6 @@ public class MypageController {
 	 }
 	 
 	 
-	 public String saveFile(MultipartFile file, HttpServletRequest request) {
-		 
-			String root = request.getSession().getServletContext().getRealPath("resources");
-			String savePath = root + "/muploadFiles";
-			File folder = new File(savePath);
-			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
-			
-			// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			String originalFileName = file.getOriginalFilename();
-			String renameFileName = sdf.format(new Date()) + "_"
-								+ (int)(Math.random() * 100000) 
-								+ originalFileName.substring(originalFileName.lastIndexOf("."));
-			
-			String renamePath = folder + "/" + renameFileName; // 저장하고자하는 경로 + 파일명
-			
-			try {
-				file.transferTo(new File(renamePath));
-				// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
-			} catch (IllegalStateException | IOException e) {
-				//System.out.println("파일 업로드 에러 : " + e.getMessage());
-			} 
-			
-			return renameFileName;
-		}
-	 
 	 // 일반회원 - 찜하기 On
 	 @RequestMapping("/jjimon")
 	 @ResponseBody
@@ -955,9 +922,52 @@ public class MypageController {
 	 
 	// 일반회원 - 내 루트
 		 @GetMapping("/myroute")
-		 public ModelAndView goToMyroute(@ModelAttribute User u, ModelAndView mv) {
+		 public ModelAndView goToMyroute(@ModelAttribute User u, ModelAndView mv, Map map) {
 			 
+			 // 이 회원이 가지고 있는 모든 경로의 모든 관광지 리스트
+			 List<RouteFinal> myRouteList = mService.selectMyRoute(u);
+			 System.out.println("myRoute확인 : " + myRouteList);
 			 
+			 // 이 회원이 가지고 있는 경로 수
+			 List<RouteMP> routeNumber = mService.selectRouteNum(u);
+			 //System.out.println("routeNumber : " + routeNumber);
+			 
+			 // route_no별로 담을 Map 객체 선언
+			 HashMap<Integer, List<RouteFinal>> routeTest = new HashMap<>(); 
+			 
+			 // 경로 별로 가지고 있는 관광지 수
+			 int routeNum = 0;
+			 // 관광지 수를 담을 리스트 선언
+			 int[] standardList = new int[100];
+			 // hashMap의 key값이 되어줄 아이(index)
+			 int mapKey = 0;
+			 // 배열 slice의 연산을 위해 호출
+			 int forIndex = 0;
+
+			 // 리스트 자르기 위한 기준 찾기 -> 관광지 갯수 별로 자르기.
+			 for(int a = 0; a < routeNumber.size(); a++) {
+				 // 모든 경로의 모든 관광지 리스트 중에서 index=0의 route_no spotNum에 넣기
+				 routeNum = routeNumber.get(a).getRoute_no();
+				 // 해당 index의 경로의 관광지 갯수 찾아서 standard에 넣기 (ex. index=0의 경로에는 standard만큼의 관광지가 들어잇음)
+				 int standard = mService.selectStandard(routeNum);
+				 // 이 관광지 개수를 standardList[0]에 넣기
+				 standardList[a] = standard;
+				 //System.out.println("standardList1["+a+"] : " + standardList[a] + ", standard : " + standard);
+			 }
+
+			 
+			 for(int b = 0; b < routeNumber.size(); b++) {
+				 List<RouteFinal> insertThis = myRouteList.subList(forIndex,forIndex+standardList[b]);
+				 routeTest.put(mapKey, insertThis);
+				 forIndex = forIndex + standardList[b];
+				 mapKey ++;
+				 //System.out.println("routeTest["+b+"] : " + routeTest.get(b));
+			 }
+			 
+			 mv.addObject("routeTest", routeTest);
+			 mv.addObject("routeNum", routeNumber);
+			 mv.addObject("standardList", standardList);
+			 mv.setViewName("mypage/mp_MyRoutes");
 			 
 			 return mv;
 		 }
@@ -968,10 +978,10 @@ public class MypageController {
 	@PostMapping("/userout")
 	public String memberOut(@ModelAttribute User u, Model model) {
 		
-		System.out.println("out u : " + u);
+		////System.out.println("out u : " + u);
 		//System.out.println(memoutPwd);
 		User loginUser = uService.loginUser(u);
-		System.out.println("out loginUser" + loginUser);
+		//System.out.println("out loginUser" + loginUser);
 		
 		List<Alert> alertNList = mService.selectAlertList(u);
 		 // 읽은 리스트
@@ -993,10 +1003,8 @@ public class MypageController {
 					model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
 					return "/mypage/mp_UserInfo";
 				} else {
-					model.addAttribute("alertNList", alertNList);
-					 model.addAttribute("alertYList", alertYList);
 					model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
-					return "/mypage/mp_UserInfo";
+					return "/mypage/mp_bUserInfo";
 				}
 				
 			}
@@ -1007,13 +1015,37 @@ public class MypageController {
 				model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
 				return "/mypage/mp_UserInfo";
 			} else {
-				model.addAttribute("alertNList", alertNList);
-				 model.addAttribute("alertYList", alertYList);
 				model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
-				return "/mypage/mp_UserInfo";
+				return "/mypage/mp_bUserInfo";
 			}
 		 }
 
-	 }	 
-		
+	 }	
+	
+	 public String saveFile(MultipartFile file, HttpServletRequest request) {
+		 
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "/muploadFiles";
+			File folder = new File(savePath);
+			if(!folder.exists()) folder.mkdirs(); // -> 해당 경로가 존재하지 않는다면 디렉토리 생성
+			
+			// 파일명 리네임 규칙 "년월일시분초_랜덤값.확장자"
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String originalFileName = file.getOriginalFilename();
+			String renameFileName = sdf.format(new Date()) + "_"
+								+ (int)(Math.random() * 100000) 
+								+ originalFileName.substring(originalFileName.lastIndexOf("."));
+			
+			String renamePath = folder + "/" + renameFileName; // 저장하고자하는 경로 + 파일명
+			
+			try {
+				file.transferTo(new File(renamePath));
+				// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
+			} catch (IllegalStateException | IOException e) {
+				//System.out.println("파일 업로드 에러 : " + e.getMessage());
+			} 
+			
+			return renameFileName;
+		}
+
 }
