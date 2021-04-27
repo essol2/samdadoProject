@@ -21,6 +21,12 @@
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    
+    <!-- masonry 로딩 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js"></script>
+	
+	<!-- imagesloaded 로딩 (모든 이미지가 로딩된 후 실행되도록 할때 필요) -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.0/imagesloaded.pkgd.min.js"></script>
     <style>
 
         /* 공통 - 폰트 */
@@ -672,7 +678,7 @@
             	</div>
                 
                 <div>
-                <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
+                        <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
 		                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">
 		                <img src="${contextPath}/resources/images/image_mp/new_w.png" class="newAlert">내 정보</p>
 					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			
