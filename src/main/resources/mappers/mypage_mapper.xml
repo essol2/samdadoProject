@@ -1212,12 +1212,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
    </select>
    
    <select id="findHotelJjimList" resultMap="JjimResultSet">
-   		SELECT *
-		FROM JJIM J, BUSINESS B, BUSINESS_ATT BA
-		WHERE J.BUS_CODE = B.BUS_CODE
-		AND B.BUS_CODE = BA.BUS_CODE
-		AND B.BUS_CATEGORY = 'H'
-		AND BA.FILE_LV = 0
-		AND J.US_NO = #{usno}
+		<![CDATA[SELECT *
+				FROM (SELECT J.BUS_CODE, B.BUS_NAME, B.HOTEL_FACILITY, BA.FILE_RENAME
+				      FROM JJIM J, BUSINESS B, BUSINESS_ATT BA
+				      WHERE J.BUS_CODE = B.BUS_CODE
+				      AND B.BUS_CODE = BA.BUS_CODE
+				      AND B.BUS_CATEGORY = 'H'
+				      AND BA.FILE_LV = 0
+				      AND J.US_NO = #{usno})
+				WHERE ROWNUM < 3]]>
    </select>
 </mapper>
