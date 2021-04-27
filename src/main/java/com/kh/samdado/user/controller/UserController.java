@@ -2,34 +2,20 @@ package com.kh.samdado.user.controller;
 
 import java.util.Random;
 
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.google.gson.JsonParser;
 import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.user.model.exception.UserException;
 import com.kh.samdado.user.model.service.UserService;
@@ -41,9 +27,7 @@ import com.kh.samdado.user.model.vo.User;
 @RequestMapping("/user")
 @SessionAttributes({"loginUser", "msg"})
 public class UserController {
-	
-   private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-   
+
    @Autowired
    UserService uService;
    

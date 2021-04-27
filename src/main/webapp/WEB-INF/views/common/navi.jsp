@@ -16,12 +16,6 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
-<!-- 
-이 제이쿼리 코드가 안먹어서 일단 주석처리 하고 위에꺼로 바꿨어요 혹시 몰라서 안지우고 주석했음.. ㅠ (저는 지혜입니다....)
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- -->
 <!-- css 외부 파일 첨부 -->
 <link rel="stylesheet" href="${ contextPath }/resources/css/common/navi.css" type="text/css">
 <link rel="stylesheet" href="${ contextPath }/resources/css/user/addMember.css" type="text/css">
@@ -531,62 +525,65 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <img src="${ contextPath }/resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
-            <h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2>
-            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+           <div class="addMember-modal-inner-header" style="display: flex; margin: auto;">
+		            <div class="col-5"><img src="${ contextPath }/resources/images/image_main/logo_g.png"></div>
+		            <div class="col-8" style="margin-top: 10%;"><h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2></div>
+	            </div>
             </div>
             
            <form action="${ contextPath }/user/join" method="post" id="joinForm" onsubmit="return joinValidate();">
-             <div class="modal-body">
-                <!--이름-->
-	                <div class="name_div">
-	                    <label for="id">* 이름</label>
-	                    <label id="test_name_label" class="test_div"></label>
-	                    <input type="text" id="name" name="usname" placeholder="홍길동" required>
-	                </div>
-	                <!--아이디-->
-	                <div class="id_div">
-	                    <label for="id">* 아이디</label>
-	                    <label id="test_id_label" class="test_div"></label>
-	                    <input type="text" id="id" name="usid" placeholder="영어숫자포함" required>
-	                </div>	
-	                <!--비밀번호-->
-	                <div class="pwd_div">
-	                    <label for="pwd">* 비밀번호</label>
-	                    <label id="test_pwd_label" class="test_div"></label>
-	                    <input type="password" id="pwd" name="uspwd" placeholder="대소문자 포함 8글자 이상" required>
-	                </div>
-	                <!--비밀번호 확인-->
-	                <div class="pwd_div2">
-	                    <label for="pwd2">* 비밀번호 확인</label>
-	                    <label id="test_pwd2_label" class="test_div"></label>
-	                    <input type="password" id="pwd2" name="uspwd2" placeholder="비밀번호 확인" required>
-	                </div>
-	                <!--이메일-->
-	                <div class="email_div">
-	                    <label for="email">* 이메일</label>
-	                    <label id="test_email_label" class="test_div"></label>
-	                    <input type="email" id="email" name="usemail" placeholder="you@example.com" required>
-	                </div>
-	                <!--생년월일-->
-	                <div class="birth_div">
-	                    <label for="birth">* 생년월일</label>
-	                    <label id="test_birth_label" class="test_div"></label>
-	                    <input type="date" id="birth" max="9999-12-31" name="usbirth" placeholder="1994-09-28" required>
-	                </div>
-	                <!--생년월일-->
-	                <div class="phone_div">
-	                    <label for="phone">* 휴대전화</label>
-	                    <label id="test_phone_label" class="test_div"></label>
-	                    <input type="text" id="phone" name="usphone" placeholder="01012345678" required>
-	                </div>
-	                <!--사업자등록번호-->
-	                <a href="javascript:display();"><h5 id="business_text"><b>&gt;&gt; 제휴회원 이세요?</b></h5></a>
-	                <div id="business_no_div">
-	                    <label for="business_no">* 사업자등록번호</label>
-	                    <label id="test_business_no_label" class="test_div"></label>
-	                    <input type="text" id="business_no" name="busno" placeholder="000-00-00000">
-	                </div>            
+             <div class="addMember-modal-inner-body" style="width: 80%;  margin: auto;">
+	             <div class="modal-body">
+	                <!--이름-->
+		                <div class="name_div">
+		                    <label for="id">* 이름</label>
+		                    <label id="test_name_label" class="test_div"></label>
+		                    <input type="text" id="name" name="usname" placeholder="홍길동" required>
+		                </div>
+		                <!--아이디-->
+		                <div class="id_div">
+		                    <label for="id">* 아이디</label>
+		                    <label id="test_id_label" class="test_div"></label>
+		                    <input type="text" id="id" name="usid" placeholder="영어숫자포함" required>
+		                </div>	
+		                <!--비밀번호-->
+		                <div class="pwd_div">
+		                    <label for="pwd">* 비밀번호</label>
+		                    <label id="test_pwd_label" class="test_div"></label>
+		                    <input type="password" id="pwd" name="uspwd" placeholder="대소문자 포함 8글자 이상" required>
+		                </div>
+		                <!--비밀번호 확인-->
+		                <div class="pwd_div2">
+		                    <label for="pwd2">* 비밀번호 확인</label>
+		                    <label id="test_pwd2_label" class="test_div"></label>
+		                    <input type="password" id="pwd2" name="uspwd2" placeholder="비밀번호 확인" required>
+		                </div>
+		                <!--이메일-->
+		                <div class="email_div">
+		                    <label for="email">* 이메일</label>
+		                    <label id="test_email_label" class="test_div"></label>
+		                    <input type="email" id="email" name="usemail" placeholder="you@example.com" required>
+		                </div>
+		                <!--생년월일-->
+		                <div class="birth_div">
+		                    <label for="birth">* 생년월일</label>
+		                    <label id="test_birth_label" class="test_div"></label>
+		                    <input type="date" id="birth" max="9999-12-31" name="usbirth" placeholder="1994-09-28" required>
+		                </div>
+		                <!--생년월일-->
+		                <div class="phone_div">
+		                    <label for="phone">* 휴대전화</label>
+		                    <label id="test_phone_label" class="test_div"></label>
+		                    <input type="text" id="phone" name="usphone" placeholder="01012345678" required>
+		                </div>
+		                <!--사업자등록번호-->
+		                <a href="javascript:display();"><h5 id="business_text"><b>&gt;&gt; 제휴회원 이세요?</b></h5></a>
+		                <div id="business_no_div">
+		                    <label for="business_no">* 사업자등록번호</label>
+		                    <label id="test_business_no_label" class="test_div"></label>
+		                    <input type="text" id="business_no" name="busno" placeholder="000-00-00000">
+		                </div>            
+			            </div>
 		            </div>
 		            <div class="modal-footer">
 		                <label><input type="checkbox" name="agreement" id="agreement_checkbox" value="개인정보수집동의" required>개인정보수집 동의</label>
@@ -603,47 +600,50 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <img src="${ contextPath }/resources/images/image_main/logo_g.png"> <!-- 이미지 경로 이동하기 -->
-            <h2 class="modal-title" id="exampleModalLabel">혼저옵서예</h2>
-            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+               <div class="login-modal-inner-header" style="display: flex; margin: auto;">
+           		   <div class="col-5"><img src="${ contextPath }/resources/images/image_main/logo_g.png"></div>
+		            <div class="col-8" style="margin-top: 10%;"><h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2></div>
+                </div>
             </div>
            
              <form action="${ contextPath }/user/login" method="post" id="loginForm"> 
-	            <div class="modal-body">
-	                <!--아이디-->
-	                <div class="id_div">
-	                    <label for="id">* 아이디</label>
-	                    <label id="test_id_label" class="test_div"></label>
-	                    <input type="text" id="id" name="usid" placeholder="영소문자로 시작하는 4~16글자 입력(숫자 포함 가능)" required>
-	                </div>
-	                <!--비밀번호-->
-	                <div class="pwd_div">
-	                    <label for="pwd">* 비밀번호</label>
-	                    <label id="test_pwd_label" class="test_div"></label>
-	                    <input type="password" id="pwd" name="uspwd" placeholder="영어대소문자/숫자/특수문자를 포함한 8~16자" required>
-	                </div> 
-	
-	                <br><br>
-	
-	                <!--간편 로그인-->
-	                <div class="easy_login_div">
-	                    <label for="pwd">간편 로그인</label> <br>
-	                    <div class="easy_login_imgs">
-	                        <div class="container">
-	                            <div class="row">
-	                            <div class="col-sm">
-	                                <a href="#"><img src="${ contextPath }/resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
-	                            </div>
-	                              <div class="col-sm">
-	                               <a href="#"><img src="${ contextPath }/resources/images/image_user/naver.png" alt=""> 네이버</a>
-	                              </div>
-	                              <div class="col-sm">
-	                                <a href="#"><img src="${ contextPath }/resources/images/image_user/kakao.png" alt=""> 카카오</a>
-	                              </div>
-	                            </div>
-	                          </div>
-	                    </div>
-	                </div> 
+	            <div class="login-modal-inner-body" style="width: 80%;  margin: auto;"> 
+		            <div class="modal-body">
+		                <!--아이디-->
+		                <div class="id_div">
+		                    <label for="id">* 아이디</label>
+		                    <label id="test_id_label" class="test_div"></label>
+		                    <input type="text" id="id" name="usid" placeholder="영소문자로 시작하는 4~16글자 입력(숫자 포함 가능)" required>
+		                </div>
+		                <!--비밀번호-->
+		                <div class="pwd_div">
+		                    <label for="pwd">* 비밀번호</label>
+		                    <label id="test_pwd_label" class="test_div"></label>
+		                    <input type="password" id="pwd" name="uspwd" placeholder="영어대소문자/숫자/특수문자를 포함한 8~16자" required>
+		                </div> 
+		
+		                <br><br>
+		
+		                <!--간편 로그인-->
+		                <div class="easy_login_div">
+		                    <label for="pwd">간편 로그인</label> <br>
+		                    <div class="easy_login_imgs">
+		                        <div class="container">
+		                            <div class="row">
+		                            <div class="col-sm">
+		                                <a href="#"><img src="${ contextPath }/resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
+		                            </div>
+		                              <div class="col-sm">
+		                               <a href="#"><img src="${ contextPath }/resources/images/image_user/naver.png" alt=""> 네이버</a>
+		                              </div>
+		                              <div class="col-sm">
+		                                <a href="#"><img src="${ contextPath }/resources/images/image_user/kakao.png" alt=""> 카카오</a>
+		                              </div>
+		                            </div>
+		                          </div>
+		                    </div>
+		                </div> 
+		            </div>
 	            </div>
 	            <div class="modal-footer">
 	                <a href="${ contextPath }/user/find" id="find_id_pwd">아이디/비밀번호 찾기</a> <!-- 새 창 띄우기-->
@@ -674,7 +674,7 @@
 				return false;
 			}
             // 아이디 중복검사
-			if(/.중복 아이디로 사용할 수 없습니다./.test($("#test_id_label").text())){
+			if(/중복 아이디로 사용할 수 없습니다./.test($("#test_id_label").text())){
 				console.log($("#test_id_label").text());
 				alert('중복된 아이디입니다.');
 				$("#id").select();
@@ -713,7 +713,7 @@
 			}
 			
 			// 이메일 중복검사
-			if(/.중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
+			if(/중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
 				console.log($("#test_email_label").text());
 				alert('중복된 이메일입니다.');
 				$("#email").select();
@@ -728,7 +728,7 @@
 			}
 			
 			// 전화번호 중복검사
-			if(/.중복 휴대전화로 사용할 수 없습니다./.test($("#test_phone_label").text())){
+			if(/중복 휴대전화로 사용할 수 없습니다./.test($("#test_phone_label").text())){
 				console.log($("#test_phone_label").text());
 				alert('중복된 전화번호입니다.');
 				$("#phone").select();
@@ -822,22 +822,7 @@
             }
   
         });
-    	
-    	
-    	<%--
-    	$("#phone").change(function() {
-           var phoneVal = $("#phone").val();
-           var regphone = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})?[0-9]{3,4}?[0-9]{4}$/;
-
-
-           if (regphone.test(phoneVal)){
-               $("#test_phone_label").html("올바른 입력입니다.").css("color","green");
-           } else {
-               $("#test_phone_label").html("올바른 형식이 아닙니다.").css("color","red");
-           }
-       });
-       --%>
-       
+    	    
        $("#email").change(function () {
     	   var emailVal = $("#email").val();
            var regemail = /^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -878,18 +863,7 @@
                 $("#test_birth_label").html("올바른 형식이 아닙니다.").css("color", "red");
             }
         });
-    	
-    	<%--
-    	$("#email").change(function () {
-            var emailVal = $("#email").val();
-            var regemail = /^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-            if (emailVal.match(regemail) != null) {
-                $("#test_email_label").html("올바른 입력입니다.").css("color", "green");
-            } else {
-                $("#test_email_label").html("올바른 형식이 아닙니다.").css("color", "red");
-            }
-        });
-    	--%>
+
     	
     	$("#pwd").change(function () { 
             var regpwd = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/;
