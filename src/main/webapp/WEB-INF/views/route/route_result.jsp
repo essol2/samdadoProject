@@ -193,7 +193,7 @@
                                       	</c:forEach>
                                     	
                                         <tr> 
-                                            <td id="tcost-content" style="text-align: right;" >총 <pre id="totalPrice"><fmt:formatNumber value="${ totalPrice }" pattern="#,###"/></pre>원&nbsp;</td>
+                                            <td id="tcost-content" style="text-align: right;" >총 <span id="totalPrice"><fmt:formatNumber value="${ totalPrice }" pattern="#,###"/></span>원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>

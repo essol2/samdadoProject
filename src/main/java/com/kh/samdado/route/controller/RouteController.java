@@ -82,7 +82,7 @@ public class RouteController {
 		
 		List<SpotBus> rlist = rService.changeRoute(rrlist);
 		
-		System.out.println("rlist: " + rlist);
+		/* System.out.println("rlist: " + rlist); */
 		 
 		model.addAttribute("list", rlist);
 
@@ -166,20 +166,13 @@ public class RouteController {
 		
 		if(result > 0) {
 			model.addAttribute("msg", "저장되었습니다. 내 정보에서 확인하세요!");
-			return "route/route_main";
+			session.setAttribute("usno", rf.getUs_no());
+			
+			return "redirect:/mypage/myroute";
 		} else {
 			throw new RouteException("저장에 실패하였습니다.");
 		}
 		
-	}
-	
-	public String deleteSpot() {		// 여행지 삭제
-		
-		return "";
-	}
-	
-	public String addSpot() {			// 여행지 추가
-		return "";
 	}
 	
 }
