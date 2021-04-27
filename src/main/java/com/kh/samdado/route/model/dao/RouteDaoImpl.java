@@ -8,8 +8,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.route.model.vo.Route;
 import com.kh.samdado.route.model.vo.RouteFinal;
+import com.kh.samdado.route.model.vo.SpotBus;
 import com.kh.samdado.route.model.vo.TourSpot;
 import com.kh.samdado.route.model.vo.rSearch;
 import com.kh.samdado.user.model.vo.User;
@@ -26,7 +28,7 @@ public class RouteDaoImpl implements RouteDao {
 	}
 	
 	@Override
-	public List<TourSpot> spotSearch(String sTitle) {
+	public List<SpotBus> spotSearch(String sTitle) {
 		return sqlSession.selectList("routeMapper.spotSearch", sTitle);
 	}
 	
@@ -34,23 +36,11 @@ public class RouteDaoImpl implements RouteDao {
 	public List<TourSpot> clearChange(String[] chlist) {
 		return sqlSession.selectList("routeMapper.clearChange", chlist);
 	}
-	
-	@Override
-	public int spotAdd() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	@Override
-	public int spotDelete() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int addRoute(String[] slist) {
 		
-		System.out.println("dao: " + Arrays.toString(slist));
+		/* System.out.println("dao: " + Arrays.toString(slist)); */
 		
 		return sqlSession.insert("routeMapper.addRoute", slist);
 	}
@@ -58,17 +48,22 @@ public class RouteDaoImpl implements RouteDao {
 	@Override
 	public int finalRoute(RouteFinal rf) {
 		
-		System.out.println("dao: " + rf);
+		/* System.out.println("dao: " + rf); */
 		
 		return sqlSession.insert("routeMapper.finalRoute", rf);
 	}
 
 	@Override
-	public List<Route> changeRoute(String[] rrlist) {
+	public List<SpotBus> changeRoute(String[] rrlist) {
 		
-		System.out.println("dao 루트: " + Arrays.toString(rrlist));
+		/* System.out.println("dao 루트: " + Arrays.toString(rrlist)); */
 		
 		return sqlSession.selectList("routeMapper.changeRoute", rrlist);
+	}
+
+	@Override
+	public List<SpotBus> spotSearch1(String sTitle) {
+		return sqlSession.selectList("routeMapper.spotSearch1", sTitle);
 	}
 
 	

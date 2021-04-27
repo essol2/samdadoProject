@@ -1,8 +1,11 @@
 package com.kh.samdado.route.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,10 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.route.model.exception.RouteException;
 import com.kh.samdado.route.model.service.RouteService;
 import com.kh.samdado.route.model.vo.Route;
 import com.kh.samdado.route.model.vo.RouteFinal;
+import com.kh.samdado.route.model.vo.SpotBus;
 import com.kh.samdado.route.model.vo.TourSpot;
 import com.kh.samdado.route.model.vo.rSearch;
 import com.kh.samdado.user.model.vo.User;
@@ -66,7 +71,7 @@ public class RouteController {
 		
 		/* System.out.println("변경하기 루트 어레이: " + Arrays.toString(rrlist)); */
 		
-		List<Route> rlist = rService.changeRoute(rrlist);
+		List<SpotBus> rlist = rService.changeRoute(rrlist);
 		
 		System.out.println("rlist: " + rlist);
 		 
@@ -78,15 +83,25 @@ public class RouteController {
 	
 	
 	@PostMapping(value="/searchSpot", produces="application/json; charset=utf-8")
-	public @ResponseBody List<TourSpot> searchSpot(String sTitle, HttpSession session) {		// 여행지 검색
+	public @ResponseBody List<SpotBus> searchSpot(String sTitle, Model model, HttpSession session) {		// 여행지 검색
 		
-		System.out.println(sTitle);
+//		System.out.println(sTitle);
 		
-		List<TourSpot> tlist = rService.spotSearch(sTitle);
+		List<SpotBus> tlist = rService.spotSearch(sTitle);
+		List<SpotBus> blist = rService.spotSearch1(sTitle);
 		
-		System.out.println(tlist);
+//		System.out.println(tlist);
+//		System.out.println("blist: " + blist);
 		
-		return tlist;
+		List<SpotBus> returnList = new ArrayList<>();
+		
+		returnList.addAll(tlist);
+		returnList.addAll(blist);
+		
+//		System.out.println("returnList: " + returnList);
+		 
+		 
+		return returnList;
 	}
 	
 	
@@ -110,6 +125,8 @@ public class RouteController {
 	
 	@PostMapping("/addRoute")
 	public String addRoute(HttpSession session, Model model, String[] slist, String tprice) {			// 루트 저장하기
+		
+//		System.out.println("slist: " + Arrays.toString(slist));
 		
 		session.setAttribute("price", tprice);
 		
