@@ -33,7 +33,10 @@
         * {
             font-family: 'Jeju Myeongjo', serif;
         }
-
+		body{
+			padding : 0px;
+			margin : 0px;
+		}
         /* 길만들러 가기 영역 */
         /* 왼쪽 텍스트 영역 전체 */
         #left_side_text {
@@ -143,7 +146,7 @@
         #top {
             width: 100%;
             height: auto;
-            background-color: black;
+            margin : 0px;
         }
         #bottom {
             width: 1440px;
@@ -209,7 +212,7 @@
 
         .content{ position:relative; padding-top:56%; width:100%; } 
 
-        #backgroundGif{ position:absolute; top:0; left:0; width:100%; height:100%; }
+        #backgroundGif{ position:absolute; top:0; left:0; width:100%; height:100%; margin:0px;}
 
         /* 푸터 css */
         footer{
@@ -1159,15 +1162,15 @@
 		}
 	</script>
 
-	 <script>
+	 
+     <script>
 	 	$(document).ready(function(){
-	 		
-	 		if(${loginUser.usid} != null){
-	 		
-	 		var searchU = new Object();
-			searchU.usno = "${loginUser.usno}";
-			searchU.uspart = "${loginUser.uspart}";
-	 			
+
+	 		if('${loginUser.usid}' != ''){
+	 			var searchU = new Object();
+					searchU.usno = "${loginUser.usno}";
+					searchU.uspart = "${loginUser.uspart}";
+					
 	 			$.ajax({
 	 				url : "${contextPath}/mypage/new",
 	 				data : JSON.stringify(searchU),
@@ -1178,20 +1181,19 @@
 	 						$('.newAlert').css("display","block");
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
-	 					} else {
-	 						
+	 					} else{
+	 						alert("세션확인 오류!");
 	 					}
 	 				},
 	 				error : function(e){
-	 					alert("error code : " + e.status + "\n"
+	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
 									+ "message : " + e.responseText);
 	 				}
 	 			});
-	 		
 	 		}
+	 		
 	 	});
 	 </script>
-	    
     
     <!-- 네이버아디디로로그인 초기화 Script -->
 	<script type="text/javascript">

@@ -902,11 +902,10 @@
         });
 	
     </script>
-    
      <script>
 	 	$(document).ready(function(){
 
-	 		if(${loginUser.usid} != null){
+	 		if('${loginUser.usid}' != ''){
 	 			var searchU = new Object();
 					searchU.usno = "${loginUser.usno}";
 					searchU.uspart = "${loginUser.uspart}";
@@ -922,10 +921,11 @@
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
 	 					} else{
+	 						alert("세션확인 오류!");
 	 					}
 	 				},
 	 				error : function(e){
-	 					alert("error code : " + e.status + "\n"
+	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
 									+ "message : " + e.responseText);
 	 				}
 	 			});

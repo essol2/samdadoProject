@@ -110,7 +110,7 @@
         background-color:rgba( 255, 255, 255, 0.8 );
         border : 5px solid white;
         width : 77%;
-        height: fit-content;
+        height: 550px;
         margin-top : 5%;
         margin-left : 3%;
     }
@@ -239,6 +239,11 @@
 	    width : 30px;
 	    height : 30px;
 	}
+	
+	#alertBox{
+		height : 400px;
+		overflow : auto;
+	}
 </style>
 <body>
 
@@ -260,8 +265,8 @@
             </div>
 
             <div id="mainBox">
+             <h2 style='margin : 3%;'>내 소식</h2>
                 <div id="alertBox">
-		            <h2 style='margin : 3%; overflow:auto;'>내 소식</h2>
 		            <table id="alertTable"> 
 		            <c:choose>
 		            <c:when test="${ !empty alertNList || !empty alertYList}">
@@ -757,10 +762,10 @@
 	        return year + '-' + month + '-' + day;
 		}
 	</script>
-	<script>
+	 <script>
 	 	$(document).ready(function(){
 
-	 		if(${!empty loginUser.usid}){
+	 		if('${loginUser.usid}' != ''){
 	 			var searchU = new Object();
 					searchU.usno = "${loginUser.usno}";
 					searchU.uspart = "${loginUser.uspart}";
@@ -776,10 +781,11 @@
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
 	 					} else{
+	 						alert("세션확인 오류!");
 	 					}
 	 				},
 	 				error : function(e){
-	 					alert("error code : " + e.status + "\n"
+	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
 									+ "message : " + e.responseText);
 	 				}
 	 			});

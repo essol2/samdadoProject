@@ -125,7 +125,7 @@
         background-color:rgba( 255, 255, 255, 0.8 );
         border : 5px solid white;
         width : 77%;
-        height : 500px;
+        height : fit-content;
     }
 
     #reservBox{
@@ -301,10 +301,10 @@
                     </div>
                 </div>
                 </c:forEach>
-                <div id="forAlign">
+               <%--  <div id="forAlign">
 	              <p style="color  : #bfbfbf; margin : 0px; padding:0px;">더보기</p>
 		          <img src="${contextPath}/resources/images/image_mp/moreBtn.png" id="moreBtn">
-		     </div>
+		     </div> --%>
                 </c:when>
                 <c:otherwise>
                 	<div style="text-align : center; margin-left : auto; margin-right : auto; margin-top:8%; margin-bottom:auto;">
@@ -405,19 +405,19 @@
 	$(document).ready(function(){
 		size_div = $('.more').length;
 							
-		x = 1;
+		x = 3;
 		$('.more:lt('+x+')').addClass('moremore');
 		$('#moreBtn').click(function(){
-			x= (x+2 <= size_div)? x+2 : size_div;
+			x= (x+3 <= size_div)? x+3 : size_div;
 			$('.more:lt('+x+')').addClass('moremore');	
 		});
 	});
 	</script>
 	
-	<script>
+ <script>
 	 	$(document).ready(function(){
 
-	 		if(${!empty loginUser.usid}){
+	 		if('${loginUser.usid}' != ''){
 	 			var searchU = new Object();
 					searchU.usno = "${loginUser.usno}";
 					searchU.uspart = "${loginUser.uspart}";
@@ -433,10 +433,11 @@
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
 	 					} else{
+	 						alert("세션확인 오류!");
 	 					}
 	 				},
 	 				error : function(e){
-	 					alert("error code : " + e.status + "\n"
+	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
 									+ "message : " + e.responseText);
 	 				}
 	 			});
