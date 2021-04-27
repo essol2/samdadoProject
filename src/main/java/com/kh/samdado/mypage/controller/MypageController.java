@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -163,7 +164,7 @@ public class MypageController {
 				 				   @ModelAttribute User u,
 				 				   @ModelAttribute Point po,
 				 				   @RequestParam(name="usno") String usno ) {
-		 
+		 		 
 		 //System.out.println("user 객체 확인 : " +usno);
 		 List<Point> pList = null;
 		 
@@ -922,7 +923,10 @@ public class MypageController {
 	 
 	// 일반회원 - 내 루트
 		 @GetMapping("/myroute")
-		 public ModelAndView goToMyroute(@ModelAttribute User u, ModelAndView mv, Map map) {
+		 public ModelAndView goToMyroute(ModelAndView mv, Map map, HttpSession session) {
+			 
+			 User loginUser = (User)session.getAttribute("loginUser");
+			 String u = loginUser.getUsno();
 			 
 			 // 이 회원이 가지고 있는 모든 경로의 모든 관광지 리스트
 			 List<RouteFinal> myRouteList = mService.selectMyRoute(u);

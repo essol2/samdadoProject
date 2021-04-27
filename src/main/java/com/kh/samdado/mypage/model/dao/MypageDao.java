@@ -181,10 +181,10 @@ public interface MypageDao {
 	public int updateUserStatus(User u);
 
 	// 내 루트 찾기
-	public List<RouteFinal> selectMyRoute(User u);
+	public List<RouteFinal> selectMyRoute(String u);
 
 	// 사용자 별로 가지고 있는 루트 갯수
-	public List<RouteMP> selectRouteNum(User u);
+	public List<RouteMP> selectRouteNum(String u);
 
 	// 루트 별로 가지고 있는 관광지 개수
 	public int selectStandard(int routeNum);
