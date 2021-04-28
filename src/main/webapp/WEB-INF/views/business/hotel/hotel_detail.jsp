@@ -308,21 +308,18 @@
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 10px 75px;
             text-decoration: none;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 50px;           
 
         }
 
         .btn {
             background-color: rgb(70, 115, 85) !important;
-            border: 1px solid rgb(70, 115, 85) !important;
-            font-family: 'GmarketSansBold' !important;
+            border: 1px solid rgb(70, 115, 85) !important;            
         }
         
          #report_btn, #jjim_btn{
@@ -458,8 +455,7 @@
             padding: 6px 55px;
             text-decoration: none;
             margin-top: 30px;
-            margin-bottom: 30px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 30px;            
             width: 98%;
         }
 
