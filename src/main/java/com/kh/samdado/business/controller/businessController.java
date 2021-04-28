@@ -545,12 +545,8 @@ public class businessController {
 		List<Business> tourList = bService.selectTourList();
 		for (Business t : tourList) {
 			List<Review> reviewList = bService.selectReviewList(t);
-			for(Review r : reviewList) {
-				r.setBus_code(t.getBus_code());
-				tourList.get(cnt).setAvstar(reviewList.get(cnt).getAvstar());
-				tourList.get(cnt).setRevcnt(reviewList.get(cnt).getRevcnt());
-				cnt ++;
-			}
+			
+			
 		}
 		System.out.println(tourList);
 		
