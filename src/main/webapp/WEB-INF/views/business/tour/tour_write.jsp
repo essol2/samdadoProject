@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>투어 등록</title>
+<link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <!-- 결제 API -->
