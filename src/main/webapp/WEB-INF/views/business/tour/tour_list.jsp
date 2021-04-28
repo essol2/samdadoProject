@@ -279,7 +279,7 @@
 
         .premium {
             width: 60px;
-            height: 60px;
+            height: 50px;
         }
 
         /* 프리미엄테두리 반짝이효과 */
