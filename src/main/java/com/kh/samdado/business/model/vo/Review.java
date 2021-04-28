@@ -50,6 +50,9 @@ public class Review {
 	private String re_star;
 	private String rev_hct; // h이냐 t이냐 c이냐
 	
+	private String avstar;
+	private String revcnt;
+	
 	private int c_booking_no;
 	private String c_bus_name;
 	private String c_booking_product;
@@ -125,6 +128,5 @@ public class Review {
 	
 	private String us_name;
 	
-	private String avstar;
-	private String revcnt;
+	
 }
