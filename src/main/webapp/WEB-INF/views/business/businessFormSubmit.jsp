@@ -69,7 +69,7 @@
                             <h6 id="modal_inner_text">
 				                                삼다도 배너 광고는 <b>관리자의 승인</b>이 필수이며 관리자 승인
 				                                여부에 따라 <b>삼다도 메인페이지 하단에 리스팅 형식으로 노출</b>됩니다.
-				                                자세한 사항은 <a href="${ contextPath }/mypage/userinfo"><b>‘삼다도에 대해서’</b></a>페이지에서 확인 해 주세요! <!-- 페이지 링크 연결-->
+				                                자세한 사항은 <a href="${ contextPath }/user/goToAboutUs"><b>‘삼다도에 대해서’</b></a>페이지에서 확인 해 주세요! <!-- 페이지 링크 연결-->
 				                
 				                <br><br>              
 				                                배너 광고는 <b style="color: red;">포인트 충전</b>이 필요한 서비스입니다. <br>

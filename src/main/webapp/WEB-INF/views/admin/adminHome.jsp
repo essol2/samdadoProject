@@ -293,7 +293,7 @@
                         <script>
 	                            function getUserData(userType) {
 	                            	
-	                            	var userData = [0, 0, 0, 0, 0, 0];
+	                            	var userData = [];
 	                            	obj = { uspart: userType }; // 키값 vo 필드명이랑 일치
 	                            	
 	                            	$.ajax({
