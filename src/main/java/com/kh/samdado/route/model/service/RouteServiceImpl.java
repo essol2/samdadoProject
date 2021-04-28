@@ -36,7 +36,10 @@ public class RouteServiceImpl implements RouteService {
 	}
 	
 	@Override
-	public List<TourSpot> clearChange(String[] chlist) {
+	public List<SpotBus> clearChange(String[] chlist) {
+		
+		System.out.println("chlist 서비스: " + Arrays.toString(chlist));
+		
 		return rDao.clearChange(chlist);
 	}
 
