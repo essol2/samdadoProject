@@ -545,17 +545,74 @@ public class MypageController {
 	 // 일반회원 - 내예약목록 페이지 이동
 	 @GetMapping("/booking")
 	 public ModelAndView goToBooking(@ModelAttribute User u,
-			 						 ModelAndView mv) {
-		 //System.out.println("usno1 : " + u.getUsno());
+			 						 ModelAndView mv, HttpSession session) {
+		 
+		 System.out.println(u);
+		 System.out.println("usno1 : " + u.getUsno());
+		 
+//		 User user = (User)session.getAttribute("loginUser");
+//		 String u = user.getUsno();
 		 
 		 List<Booking> hotelBookList = mService.selectHotelBookList(u.getUsno());
 		 List<Booking> tourBookList = mService.selectTourBookList(u.getUsno());
 		 List<Booking> carBookList = mService.selectCarBookList(u.getUsno());
 
+//		 if(hotelBookList != null && tourBookList != null && carBookList != null) {
+//			 mv.addObject("hotelList", hotelBookList);
+//			 mv.addObject("tourList", tourBookList);
+//			 mv.addObject("carList", carBookList);
+//		 } else if(hotelBookList != null) {
+//			 if(tourBookList != null && carBookList  != null) {
+//				 mv.addObject("hotelList", hotelBookList);
+//			 }
+//		 }
+		 
+//		 if(hotelBookList != null) {
+//			 if(tourBookList != null) {
+//				 if( carBookList != null) {
+//					 mv.addObject("hotelList", hotelBookList);
+//					 mv.addObject("tourList", tourBookList);
+//					 mv.addObject("carList", carBookList);
+//				 } else {
+//					 mv.addObject("hotelList", hotelBookList);
+//					 mv.addObject("tourList", tourBookList);
+//				 } 
+//			 } else if(tourBookList == null){
+//				 if(carBookList != null) {
+//					 mv.addObject("hotelList", hotelBookList);
+//					 mv.addObject("carList", carBookList);
+//				 } else {
+//					 mv.addObject("hotelList", hotelBookList);
+//				 }
+//				
+//			 }
+//		 } else if(hotelBookList == null) {
+//			 if(tourBookList != null) {
+//				 if( carBookList != null) {
+//					 mv.addObject("tourList", tourBookList);
+//					 mv.addObject("carList", carBookList);
+//				 } else {
+//					 mv.addObject("hotelList", hotelBookList);
+//					 mv.addObject("tourList", tourBookList);
+//				 } 
+//			 } else if(tourBookList == null){
+//				 if(carBookList != null) {
+//					 mv.addObject("hotelList", hotelBookList);
+//					 mv.addObject("carList", carBookList);
+//				 } else {
+//					 mv.addObject("hotelList", hotelBookList);
+//				 }
+//				
+//			 }
+//		 }
+		 
+		 System.out.println(hotelBookList);
+		 System.out.println(tourBookList);
+		 System.out.println(carBookList);
+		
 		 mv.addObject("hotelList", hotelBookList);
 		 mv.addObject("tourList", tourBookList);
 		 mv.addObject("carList", carBookList);
-		 
 		 mv.setViewName("/mypage/mp_MyReservation");		 
 		 return mv;
 	 }
