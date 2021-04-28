@@ -82,7 +82,7 @@ public class RouteController {
 		
 		List<SpotBus> rlist = rService.changeRoute(rrlist);
 		
-		/* System.out.println("rlist: " + rlist); */
+		System.out.println("rlist: " + rlist);
 		 
 		model.addAttribute("list", rlist);
 

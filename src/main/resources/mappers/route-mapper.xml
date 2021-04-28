@@ -177,37 +177,63 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<select id="changeRoute" parameterType="String" resultMap="TourSpotResultSet">
 	<bind name="st" value="'%' + _parameter + '%'" />
+		SELECT 
+			SPOT_TITLE, 
+			SPOT_ADDRESS, 
+			SPOT_PATH,
+			SPOT_ONAME 
+		FROM TOUR_SPOT 
+		WHERE 
+			SPOT_TITLE IN (
+				<foreach collection="array" item="st" separator=",">
+					#{st}
+				</foreach>
+			)
+			
+		UNION
+		
 		SELECT
+			BUS_NAME, BUS_ADDRESS, '../resources/busUploadFiles/', FILE_RENAME
+		FROM BVIEW
+		WHERE
+			BUS_NAME IN(
+				<foreach collection="array" item="st" separator=",">
+					#{st}
+				</foreach>
+			)
+	
+
+	
+		<!-- SELECT
 	    	SPOT_TITLE,
 			SPOT_ADDRESS,
 			SPOT_PATH,
 			SPOT_ONAME,
-			SPOT_PRICE
-			<!-- BUS_NAME,
+			BUS_NAME,
 			BUS_ADDRESS,
-			FILE_RENAME -->
+			FILE_RENAME
 		FROM
-	    	TOUR_SPOT<!-- , BUSINESS, BUSINESS_ATT -->
+	    	TOUR_SPOT, BUSINESS, BUSINESS_ATT
 		WHERE
 			SPOT_TITLE IN (
 				<foreach collection="array" item="st" separator=",">
 					#{st}
 				</foreach>
 	    	)
-	    	<!--  OR
+	    	OR
 	    	BUS_NAME IN (
 	    		<foreach collection="array" item="st" separator=",">
 					#{st}
 				</foreach>
 	    	)
-	    -->
+
 	    	ORDER BY (
-	    		CASE SPOT_TITLE
+	    		CASE SPOT_TITLE 
 		    	<foreach collection="array" item="st" index="idx">
 		    		WHEN #{st} THEN #{idx}
 		    	</foreach>
 		    	END
-	    	)
+	    	) -->
 	</select>
 	
 	<select id="clearChange" parameterType="String" resultMap="TourSpotResultSet">

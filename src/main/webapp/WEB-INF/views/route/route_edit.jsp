@@ -188,7 +188,7 @@
 									<c:forEach var="r" items="${ list }" varStatus="index">
 										<tr id="tr1">
 											<td>
-												<img src="${ r.spot_path }${ r.spot_oname }">
+												<img style="width: 300px; height: 225px;" src="${ r.spot_path }${ r.spot_oname }">
 											</td>
 											<td>
 												<div class="parent">

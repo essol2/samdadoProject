@@ -134,7 +134,7 @@
 									<c:forEach var="r" items="${ list }" varStatus="index">
 										<tr id="tr1">
 											<td>
-												<img src="${ r.spot_path }${ r.spot_oname }">
+												<img style="width: 300px; height: 225px" src="${ r.spot_path }${ r.spot_oname }">
 											</td>
 											<td class="spot_border">
 												<!-- <div class="spot_border"> -->
@@ -398,7 +398,7 @@
 			var $tr = $("#routeTable tbody");
 			
 			$tr.append("<tr><td colspan='2'><img id='arrow' src='../resources/images/image_route/arrow.png'></td></tr>");
-			$tr.append("<tr id='tr1'><td><img src='" + path + name + "'></td><td class='spot_border'><p class='spot_title' name='title' id='spotTitle' style='margin-top: 50%; margin-bottom:50%;'>"+title+"</p></td></tr>");
+			$tr.append("<tr id='tr1'><td><img style='width: 300px; height:225px;' src='" + path + name + "'></td><td class='spot_border'><p class='spot_title' name='title' id='spotTitle' style='margin-top: 50%; margin-bottom:50%;'>"+title+"</p></td></tr>");
 			
 			alert("추가되었습니다!");
 		}
@@ -413,7 +413,7 @@
 			var $tr = $("#routeTable tbody");
 			
 			$tr.append("<tr><td colspan='2'><img id='arrow' src='../resources/images/image_route/arrow.png'></td></tr>");
-			$tr.append("<tr id='tr1'><td><img src='../resources/busUploadFiles/" + path + "'></td><td class='spot_border'><p class='spot_title' name='title' id='spotTitle' style='margin-top: 50%; margin-bottom:50%;'>"+title+"</p></td></tr>");
+			$tr.append("<tr id='tr1'><td><img style='width: 300px; height: 225px;' src='../resources/busUploadFiles/" + path + "'></td><td class='spot_border'><p class='spot_title' name='title' id='spotTitle' style='margin-top: 50%; margin-bottom:50%;'>"+title+"</p></td></tr>");
 		
 			alert("추가되었습니다!");
 		}
