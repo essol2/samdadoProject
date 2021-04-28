@@ -274,7 +274,7 @@
 
         .premium {
             width: 60px;
-            height: 60px;
+            height: 50px;
         }
 
         /* 프리미엄테두리 반짝이효과 */
@@ -420,8 +420,7 @@
 
         .cover a, .cover label {
             text-decoration: none;
-            color: black;
-            font-family: 'GmarketSansBold' !important;
+            color: black;            
             line-height:0px;
         }
 
@@ -430,14 +429,12 @@
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 10px 75px;
             text-decoration: none;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 50px;            
         }
         
         /* 사업장종류선택 */
@@ -489,12 +486,12 @@
         	border-style : none;
         	width : fit-content;
         	height : fit-content;
-        	backtround-color : rgba( 0,0,0,0);
+        	background-color : rgba( 0,0,0,0);
         }
         
         .btn.btn-sea{-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
 		a{text-decoration:none;}        
-        .btn.btn-sea {font-size: 18px; white-space:nowrap; width:150px; padding:.8em 1.5em; font-family: GmarketSansBold; line-height:18px; display: inline-block;zoom: 1; color: #fff; text-align: center; position:relative; -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear; transition: border .25s linear, color .25s linear, background-color .25s linear;}      
+        .btn.btn-sea {font-weight: bold; font-size: 18px; white-space:nowrap; width:150px; padding:.8em 1.5em; line-height:18px; display: inline-block;zoom: 1; color: #fff; text-align: center; position:relative; -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear; transition: border .25s linear, color .25s linear, background-color .25s linear;}      
         .btn.btn-sea{background-color: #467355; border-color: #467355; -webkit-box-shadow: 0 3px 0 #088d74; box-shadow: 0 3px 0 #088d74;}
 		.btn.btn-sea:hover{background-color:white; color:#467355;}
 		.btn.btn-sea:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
