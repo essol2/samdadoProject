@@ -26,4 +26,6 @@ public interface RouteDao {
 	List<SpotBus> changeRoute(String[] rrlist);
 
 	List<SpotBus> spotSearch1(String sTitle);
+
+	List<Business> jjimBusiness(User u);
 }

@@ -73,6 +73,11 @@ public class RouteServiceImpl implements RouteService {
 		return rDao.spotSearch1(sTitle);
 	}
 
+	@Override
+	public List<Business> jjimBusiness(User u) {
+		return rDao.jjimBusiness(u);
+	}
+
 	
 
 	

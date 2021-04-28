@@ -54,13 +54,19 @@ public class RouteController {
 							@RequestParam("area") String area, 
 							@RequestParam("thema") String thema, 
 							@RequestParam("routeDate") Date routeDate ) {		// 루트 검색
-		// 사용자별 찜한 숙소리스트 가져오기
+		
 		if(u.getUsno() != null) {
+			// 사용자별 찜한 숙소리스트 가져오기
 			List<Business> jjimHotel = mService.findHotelJjimList(u);
 			//System.out.println("jjimHotel 확인 : " + jjimHotel);
+			
+			// 검색 모달창에 찜한 사업장 가져오기
+			List<Business> jjimB = rService.jjimBusiness(u);
+			/* System.out.println("찜한 사업장: " + jjimB); */
+			
 			model.addAttribute("jjimList", jjimHotel);
+			model.addAttribute("jjimB", jjimB);
 		}
-		
 		
 		model.addAttribute("area", area);
 		model.addAttribute("thema", thema);
@@ -73,7 +79,7 @@ public class RouteController {
 	}
 	
 	@PostMapping("/changeRoute")
-	public String changeRoutePage(HttpSession session, Model model, String[] rrlist) {	// 여행지 순서 바꾸기 페이지로 이동
+	public String changeRoutePage(HttpSession session, Model model, String[] rrlist, @ModelAttribute User u) {	// 여행지 순서 바꾸기 페이지로 이동
 		String area = (String)session.getAttribute("area");
 		String thema = (String)session.getAttribute("thema");
 		Date routeDate = (Date)session.getAttribute("routeDate");
@@ -83,6 +89,24 @@ public class RouteController {
 		List<SpotBus> rlist = rService.changeRoute(rrlist);
 		
 		/* System.out.println("rlist: " + rlist); */
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		u.setUsno(loginUser.getUsno());
+		
+//		System.out.println(u.getUsno());
+		
+		if(u.getUsno() != null) {
+			// 사용자별 찜한 숙소리스트 가져오기
+			List<Business> jjimHotel = mService.findHotelJjimList(u);
+			//System.out.println("jjimHotel 확인 : " + jjimHotel);
+			
+			// 검색 모달창에 찜한 사업장 가져오기
+			List<Business> jjimB = rService.jjimBusiness(u);
+			/* System.out.println("찜한 사업장: " + jjimB); */
+			
+			model.addAttribute("jjimList", jjimHotel);
+			model.addAttribute("jjimB", jjimB);
+		}
 		 
 		model.addAttribute("list", rlist);
 

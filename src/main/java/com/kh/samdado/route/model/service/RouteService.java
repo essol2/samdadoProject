@@ -27,6 +27,8 @@ public interface RouteService {
 
 	List<SpotBus> spotSearch1(String sTitle);
 
+	List<Business> jjimBusiness(User u);
+
 
 
 	
