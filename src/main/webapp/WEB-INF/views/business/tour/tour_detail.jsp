@@ -134,10 +134,6 @@
 
         }
 
-        #small_view_area {
-            /* border: 1px solid black; */
-    		/* border-radius: 13px; */
-        }
 
         .small_view {
             margin: 3%;
@@ -188,9 +184,10 @@
         }
 
         .other {
-            margin-top: 2%;
-            display: flex;
-        }
+		    margin-top: 1%;
+		    display: flex;
+		    height: 120px;
+		}
 
         .otherimage {
             width: 20%;
@@ -647,6 +644,19 @@
             height: 60px;
             margin-bottom:30px;
         }
+        
+        #small_view_area1{
+        	border: 1px solid black;
+		    border-radius: 8px;
+		    text-align: center;
+		    display: flex;
+        }
+        
+        .adlabel{
+	        margin: auto;
+		    font-size: 25px;
+		    color: #435055;
+		}
     	
     	
     </style>
@@ -827,6 +837,13 @@
 				</script>
 				
                 <!-- 작은 리뷰 -->
+                <c:choose>
+			    <c:when test="${all eq null}">
+				    <div class="col2" id="small_view_area1" style="border:1px soild black;">
+				    	<label class="adlabel">등록 된 광고가 없습니다.</label>
+				    </div> 	
+			    </c:when>
+			    <c:otherwise>
                 <div class="col2" id="small_view_area">
 	                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 	                  <div class="carousel-inner">
@@ -845,6 +862,8 @@
 	                  </div>
 	                </div>
                 </div>
+                </c:otherwise>
+			    </c:choose>
             </div>
         </div>
         <div class="checktable">
@@ -907,7 +926,7 @@
             <label class="reviewTitle">후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:#ffd700;">★</a><b></b>(후기 ${ review.size() }개)</label><br>
             <c:if test="${ empty review }">
             <div class="reviewBox">
-            <p style="font-size:60px">리뷰가 없습니다!!!</p>
+            <p style="font-size:60px">등록 된 리뷰가 없습니다</p>
             </div>
             </c:if>
             <c:forEach var="r" items="${ review }">
@@ -937,7 +956,16 @@
     </section>
     
     <script>
-    
+    $(function(){
+    	var reviews = '<c:out value="${review.size()}"/>'
+    	if(reviews == '0'){
+    		$(".reviewBox").css({
+    			"text-align": "center",
+    	    	"color": "#495975",
+    	    	"margin-bottom": "40px"
+    		});
+    	}
+    });
     
     var sum = 0;
     var cnt = 0;

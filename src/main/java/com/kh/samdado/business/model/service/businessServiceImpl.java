@@ -399,6 +399,12 @@ public class businessServiceImpl implements businessService {
 		return bDao.selectAlli();
 	}
 
+	@Override
+	public List<Review> selectReviewList(Business t) {
+		// TODO Auto-generated method stub
+		return bDao.selectReviewList(t);
+	}
+
 	
 
 	

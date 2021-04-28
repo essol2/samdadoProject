@@ -48,5 +48,6 @@ public class Room {
 	private String room_amenity;
 	private String room_state;
 	private List<RoomAtt> roomAtt;
+	private String file_rename;
 
 }

@@ -41,5 +41,6 @@ public class Car {
 	private Date car_date;
 	private Date car_modify;
 	private List<CarAtt> carList;
+	private String file_rename;
 
 }
