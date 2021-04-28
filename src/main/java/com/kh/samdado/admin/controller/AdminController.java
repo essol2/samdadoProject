@@ -491,12 +491,14 @@ public class AdminController {
 		return "admin/sendSMSForm";
 	}
 
-	@GetMapping("/selectGetProfit")
-	public @ResponseBody String selectGetProfit() {
+	@PostMapping("/selectGetUserData")
+	public @ResponseBody List<User> selectGetUserData(@RequestBody User userType) {
 	
-		List<Integer> profits = aService.selectGetProfit();
+		List<User> userData = aService.selectGetUserData(userType);
+		
+		System.out.println("userData : " + userData);
 	
-		return new Gson().toJson(profits);
+		return userData;
 	}
 	
 	@PostMapping("/selectGetAllProfit")
