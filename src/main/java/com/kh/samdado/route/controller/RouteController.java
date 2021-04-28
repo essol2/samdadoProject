@@ -82,7 +82,7 @@ public class RouteController {
 		
 		List<SpotBus> rlist = rService.changeRoute(rrlist);
 		
-		System.out.println("rlist: " + rlist);
+		/* System.out.println("rlist: " + rlist); */
 		 
 		model.addAttribute("list", rlist);
 
@@ -120,11 +120,11 @@ public class RouteController {
 		String thema = (String)session.getAttribute("thema");
 		Date routeDate = (Date)session.getAttribute("routeDate");
 		
-		/* System.out.println(Arrays.toString(chlist)); */
+		/* System.out.println("chlist: " + Arrays.toString(chlist)); */
 		
-		List<TourSpot> clist = rService.clearChange(chlist);
+		List<SpotBus> clist = rService.clearChange(chlist);
 		
-		/* System.out.println(clist); */
+		System.out.println("clist: " + clist);
 		
 		model.addAttribute("list", clist);
 		
