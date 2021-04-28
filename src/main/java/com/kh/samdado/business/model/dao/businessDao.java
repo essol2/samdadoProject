@@ -181,6 +181,8 @@ public interface businessDao {
 
 	List<Alliance> selectAlli();
 
+	List<Review> selectReviewList(Business t);
+
 	
 
 	

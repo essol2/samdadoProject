@@ -175,6 +175,8 @@ public interface businessService {
 
 	List<Alliance> selectAlli();
 
+	List<Review> selectReviewList(Business t);
+
 	
 
 	

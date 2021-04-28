@@ -217,11 +217,11 @@
 	                    <h3><label>개월</label></h3>
 	                    <span  class="box">
 	                        <select class="content" id="payCategory" name="primonth">
-		                    <option value="0" selected>선택</option>
-		                    <option value="30">1개월 : 10억</option>
-		                    <option value="90">3개월 : 27억</option>
-		                    <option value="180">6개월 : 58억</option>
-		                </select>
+			                    <option value="0" selected>선택</option>
+			                    <option value="30">1개월 : 1천만원</option>
+			                    <option value="90">3개월 : 2천만원</option>
+			                    <option value="180">6개월 : 5천만</option>
+		                	</select>
 	                    </span>
 	                </div>
 
@@ -257,7 +257,7 @@
 		                <h3><label>우편주소</label></h3>
 						<span  class="box">
 		                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" style="width: 80%;"readonly>
-			                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;">검색</button>
+			                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;"><a>검색</a></button>
 		                </span>
 	            	</div>
 		            <div class="join-wrap">
@@ -379,12 +379,18 @@
 	            	<button type="submit" class="joinBtn1" id="submitBtn" style="display:none;"><a>등록하기</a></button>
 	            	
 		            <button class="joinBtn1" id="payBtn" type="button"><a>결제하기</a></button>
-		            <button type="button" class="joinBtn" onclick="javascript.historyback()">돌아가기</button>
+		            <button type="button" id="backBtn" class="joinBtn" onclick="javascript.historyback()"><a>돌아가기</a></button>
 		        </div>
 			</form>
 		</div>
 		
-<script>	
+<script>
+$(document).on('keyup','input[inputmode=numeric]',function(event){
+	this.value = this.value.replace(/[^0-9]/g,'');   // 입력값이 숫자가 아니면 공백
+	this.value = this.value.replace(/,/g,'');          // ,값 공백처리
+	this.value = this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 정규식을 이용해서 3자리 마다 , 추가 	
+});
+
 $("#gen").change(function() {
     $("#hidenDiv").hide();
 });
@@ -452,6 +458,7 @@ console.log(name);
             var msg = '결제가 완료되었습니다!';
            	$("#payBtn").hide();
            	$("#submitBtn").show();
+           	$("#backBtn").hide();
             msg += '결제 금액 : ' + rsp.paid_amount;
         } else {
             var msg = '결제에 실패하였습니다. 다시 시도해주세요.';

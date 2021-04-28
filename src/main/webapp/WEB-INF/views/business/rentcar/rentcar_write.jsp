@@ -115,17 +115,21 @@
     }
 
     .addBtn-area{
-        width: 80%;
+        width: 100%;
+	    text-align: center;
+	    font-size: 30px;
     }
 
     .addBtn{
-        color: white;
-        float: right;
-        background-color: #467355;
-        border:1px solid #467355;
-        border-radius: 8px;
-        font-weight:bold;
-        margin-right: 5px;
+        width: 400px;
+	    height: 60px;
+	    color: white;
+	    justify-content: center;
+	    background-color: #467355;
+	    border: 1px solid #467355;
+	    border-radius: 8px;
+	    font-weight: bold;
+	    /* margin-right: 5px;*/
     }
     
     .textArea-con{
@@ -245,7 +249,7 @@
 	                <h3><label>우편주소</label></h3>
 					<span  class="box">
 	                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" style="width:80%;" readonly>
-		                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;">검색</button>
+		                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;"><a>검색</a></button>
 	                </span>
             	</div>
 	            <div class="join-wrap">
@@ -336,8 +340,8 @@
 			
 		<!-- 차량추가 버튼 -->
         <div class="addBtn-area">
-            <button type="button" class="addBtn" id="removeBtn" onclick="removeCar()" style="display:none;">차량삭제</button>
             <button type="button" class="addBtn" id="addBtn" onclick="addCar()">차량추가</button>
+            <button type="button" class="addBtn" id="removeBtn" onclick="removeCar()" style="display:none;">차량삭제</button>
         </div>
 		
 		<!-- 렌트카 추가 -->
@@ -363,7 +367,7 @@
 				<div class="join-wrap">
 				    <h3><label>가격</label></h3>
 				    <span class="box">
-				        <input multiple="multiple" type="text" id="carPrice" class="content" name="carList[0].car_price" required>
+				        <input multiple="multiple" inputmode="numeric" type="text" id="carPrice" class="content" name="carList[0].car_price" placeholder="숫자만 입력" required>
 				    </span>
 				</div>
 				
@@ -433,13 +437,19 @@
            	<button type="submit" class="joinBtn1" id="submitBtn" style="display:none;"><a>등록하기</a></button>
            	
             <button class="joinBtn1" id="payBtn" type="button"><a>결제하기</a></button>
-            <button type="button" class="joinBtn" onclick="javascript.historyback()">돌아가기</button>
+            <button type="button" id="backBtn" class="joinBtn" onclick="location.href='${ contextPath }/main'"><a>돌아가기</a></button>
         </div>
         
 		</form>
 	</div>
 	
 <script>
+$(document).on('keyup','input[inputmode=numeric]',function(event){
+	this.value = this.value.replace(/[^0-9]/g,'');   // 입력값이 숫자가 아니면 공백
+	this.value = this.value.replace(/,/g,'');          // ,값 공백처리
+	this.value = this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 정규식을 이용해서 3자리 마다 , 추가 	
+});
+
 	var _cnt = 1;
 	var num = 0;
        function addCar(){
@@ -541,6 +551,7 @@
     	            var msg = '결제가 완료되었습니다!';
     	           	$("#payBtn").hide();
     	           	$("#submitBtn").show();
+    	           	$("#backBtn").hide();
     	            msg += '결제 금액 : ' + rsp.paid_amount;
     	        } else {
     	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';

@@ -203,10 +203,10 @@
                     <span  class="box">
                         <select class="content" id="payCategory" name="primonth">
 	                    <option value="0" selected>선택</option>
-	                    <option value="30">1개월 : 10억</option>
-	                    <option value="90">3개월 : 27억</option>
-	                    <option value="180">6개월 : 58억</option>
-	                </select>
+	                    <option value="30">1개월 : 1천만원</option>
+	                    <option value="90">3개월 : 2천만원</option>
+	                    <option value="180">6개월 : 5천만</option>
+	               		</select>
                     </span>
                 </div>
 
@@ -242,7 +242,7 @@
 	                <h3><label>우편주소</label></h3>
 					<span  class="box">
 	                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" style="width:80%;" readonly>
-		                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;">검색</button>
+		                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;"><a>검색</a></button>
 	                </span>
             	</div>
 	            <div class="join-wrap">
@@ -286,6 +286,8 @@
                     <select class="content" name="tour_tema">
                         <option value="select" selected>선택</option>
                         <option value="wedding">신혼</option>
+                        <option value="fam">가족</option>
+                        <option value="fre">친구</option>
                         <option value="gradu">졸업</option>
                         <option value="life">일상</option>
                         <option value="etc">기타</option>
@@ -301,6 +303,9 @@
                         <option value="select" selected>선택</option>
                         <option value="체험">체험</option>
                         <option value="전시회">전시회</option>
+                        <option value="레저">레저</option>
+                        <option value="공연">공연</option>
+                        <option value="휴양">휴양</option>
                     </select>
                     </span>
                 </div>
@@ -311,15 +316,15 @@
 	            	<h3><label>입장료(가격)</label></h3>
 	                <h3><label>어른</label></h3>
 	                <span class="box">
-	                    <input type="text" id="bus_phone" name="pro_adult" class="content">
+	                    <input type="text" inputmode="numeric" id="bus_phone" name="pro_adult" class="content" placeholder="숫자만 입력">
 	                </span>
 	                <h3><label>청소년</label></h3>
 	                <span class="box">
-	                    <input type="text" id="bus_phone" name="pro_youth" class="content" >
+	                    <input type="text" inputmode="numeric" id="bus_phone" name="pro_youth" class="content" placeholder="숫자만 입력">
 	                </span>
 	                <h3><label>어린이</label></h3>
 	                <span class="box">
-	                    <input type="text" id="bus_phone" name="pro_child" class="content" >
+	                    <input type="text" inputmode="numeric" id="bus_phone" name="pro_child" class="content" placeholder="숫자만 입력">
 	                </span>
 	            </div>
 	            
@@ -397,11 +402,17 @@
 	            	<button type="submit" class="joinBtn1" id="submitBtn" style="display:none;"><a>등록하기</a></button>
 	            	
 		            <button class="joinBtn1" id="payBtn" type="button"><a>결제하기</a></button>
-		            <button type="button" class="joinBtn" onclick="javascript.historyback()">돌아가기</button>
+		            <button type="button" id="backBtn" class="joinBtn" onclick="location.href='${ contextPath }/main'"><a>돌아가기</a></button>
 		        </div>
 		</form>
 	</div>
-<script>	
+<script>
+$(document).on('keyup','input[inputmode=numeric]',function(event){
+	this.value = this.value.replace(/[^0-9]/g,'');   // 입력값이 숫자가 아니면 공백
+	this.value = this.value.replace(/,/g,'');          // ,값 공백처리
+	this.value = this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 정규식을 이용해서 3자리 마다 , 추가 	
+});
+
 $("#gen").change(function() {
     $("#hidenDiv").hide();
 });
@@ -469,6 +480,7 @@ console.log(name);
             var msg = '결제가 완료되었습니다!';
            	$("#payBtn").hide();
            	$("#submitBtn").show();
+           	$("#backBtn").hide();
             msg += '결제 금액 : ' + rsp.paid_amount;
         } else {
             var msg = '결제에 실패하였습니다. 다시 시도해주세요.';

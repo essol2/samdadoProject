@@ -125,10 +125,6 @@
 
         }
 
-        #small_view_area {
-            border: 1px solid black;
-            border-radius: 13px;
-        }
 
         .small_view {
             margin: 3%;
@@ -178,10 +174,11 @@
             height: 550px;
         }
 
-        .other{
-            margin-top: 2%;
-            display: flex;
-        }
+        .other {
+		    margin-top: 1%;
+		    display: flex;
+		    height: 120px;
+		}
 
         .otherimage{
             width: 20%;
@@ -727,11 +724,7 @@
                 <div id="firstlist">
 			<c:forEach var="c" items="${ cars }">
                     <div class='profile'>
-                        <c:forEach var="ca" items="${ carAtt }" varStatus="i">
-                        <c:if test="${ i.first }">
-                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ ca.file_rename }">
-                        </c:if>
-                        </c:forEach>
+                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">
                         <b>${ c.car_name }</b><br>
                         <b>${ c.car_fuel }</b><br>
                         <b>${ c.car_price }원</b><br>
@@ -750,7 +743,7 @@
             <label class="reviewTitle">후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:#ffd700;">★</a><b></b>(후기 ${ review.size() }개)</label><br>
             <c:if test="${ empty review }">
             <div class="reviewBox">
-            <p style="font-size:60px">리뷰가 없습니다!!!</p>
+            <p style="font-size:60px">등록 된 리뷰가 없습니다</p>
             </div>
             </c:if>
             <c:forEach var="r" items="${ review }">
@@ -780,7 +773,16 @@
     </section>
     
     <script>
-    
+    $(function(){
+    	var reviews = '<c:out value="${review.size()}"/>'
+    	if(reviews == '0'){
+    		$(".reviewBox").css({
+    			"text-align": "center",
+    	    	"color": "#495975",
+    	    	"margin-bottom": "40px"
+    		});
+    	}
+    });
     
     var sum = 0;
     var cnt = 0;

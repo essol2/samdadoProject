@@ -86,8 +86,19 @@ public class businessController {
 		List<Review> reviewList = bService.selectReview(bus_code);
 		List<Alliance> alliance = bService.selectAlli();
 		
+		for(int i = 0; i < roomList.size(); i++) {
+			for(int j = 0; j < roomAtt.size(); j++) {
+				if(roomList.get(i).getRoom_no() == roomAtt.get(j).getRoom_no()) {
+					roomList.get(i).setFile_rename(roomAtt.get(j).getFile_rename());
+				}
+			}
+		}
+		
+		//System.out.println("roomLKist: " + roomList.get(0).getFile_rename());
+		//System.out.println("roomLKist: " + roomList.get(1).getFile_rename());
+		
 		if(b != null && roomList != null) {
-			//System.out.println("호텔사진  : " + attList);
+			//System.out.println("roomAtt  : " + roomAtt);
 			model.addAttribute("hotel", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("room", roomList);
@@ -103,11 +114,11 @@ public class businessController {
 				int useridx = Integer.parseInt(loginUser.getUsno());		    
 				idxMap.put("bbsidx", bbsidx);
 				idxMap.put("useridx", useridx);
-				System.out.println("idxMap : " + idxMap);
+				//System.out.println("idxMap : " + idxMap);
 				
 				//jjim 테이블 에서 찜하기유무 확인하기
 				Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
-				System.out.println("jjimcheckMap : " + jjimcheckMap);
+				//System.out.println("jjimcheckMap : " + jjimcheckMap);
 				//찜 누른 기록이 없다면
 				if(jjimcheckMap == null) {
 					model.addAttribute("jjimcheck",0);
@@ -532,7 +543,11 @@ public class businessController {
 				}
 		
 		List<Business> tourList = bService.selectTourList();
-		
+
+		for (Business t : tourList) {
+			List<Review> reviewList = bService.selectReviewList(t);
+		}
+			
 		if(tourList != null) {
 			
 			mv.addObject("tourList", tourList);
@@ -801,6 +816,20 @@ public class businessController {
 		List<CarAtt> carAtt = bService.selectCarAtt(bus_code);
 		List<Review> reviewList = bService.selectReview(bus_code);
 		List<Alliance> alliance = bService.selectAlli();
+		
+		//System.out.println(carList.get(0).getCar_no());
+		//System.out.println(carAtt.get(0).getCar_no());
+		//System.out.println(carList);
+		//System.out.println(carAtt);
+		for(int i = 0; i < carList.size(); i++) {
+			for(int j = 0; j < carAtt.size(); j++) {
+				if(carList.get(i).getCar_no() == carAtt.get(j).getCar_no()) {
+					carList.get(i).setFile_rename(carAtt.get(j).getFile_rename());
+				}
+			}
+		}
+		System.out.println(carList.get(0).getFile_rename());
+		
 		if(b != null) {
 
 			model.addAttribute("car", b);

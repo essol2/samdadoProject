@@ -124,4 +124,7 @@ public class Review {
 	private int booking_no;
 	
 	private String us_name;
+	
+	private String avstar;
+	private String revcnt;
 }

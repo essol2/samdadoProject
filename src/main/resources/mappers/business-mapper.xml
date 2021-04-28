@@ -245,8 +245,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="bus_name" column="BUS_NAME" />
 	
 		<result property="us_name" column="US_NAME" />
+		
+		
 	</resultMap>
 	
+	<resultMap type="REVIEW" id="Cntresultset">
+		<result property="avstar" column="AVSTAR" />
+		<result property="revcnt" column="REVCNT" />
+	</resultMap>
 	<insert id="insertBusiness" parameterType="Business">
 		INSERT
 		  INTO BUSINESS
@@ -582,18 +588,14 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</select>
 	<select id="selectCarAtt" resultMap="CarAttResultSet">
 		SELECT
-		  	   FILE_NO
-			 , FILE_NAME
-             , FILE_STATUS
-             , FILE_RENAME
-             , FILE_LV 
-             , BUS_CODE
-		  FROM 
-		  	   BUSINESS_ATT
+		       FILE_RENAME
+		     , C.CAR_NO
+		  FROM
+		       CAR_ATT CA, CAR C, BUSINESS B
 		 WHERE
-			   BUS_CODE = #{bus_code}
-	  ORDER BY
-	  		   FILE_LV
+		       B.BUS_CODE = C.BUS_CODE
+		   AND C.CAR_NO = CA.CAR_NO
+		   AND B.BUS_CODE = #{bus_code}
 	</select>
 	<!-- 호텔 디테일 -->
 	<select id="selectHotel" resultMap="BusinessResultSet">
@@ -1767,6 +1769,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE
 		US_NO = #{us_no}
 	</update>
+	
+	<select id="selectReviewList" resultMap="Cntresultset">
+		SELECT COUNT(REV_COMMENT) AS "REVCNT", AVG(SUM(RE_STAR)) AS "AVSTAR"
+			FROM REVIEW
+			WHERE BUS_CODE = #{bus_code}
+			GROUP BY RE_STAR
+	</select>
 
 	
 	
