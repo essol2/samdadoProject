@@ -66,6 +66,34 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="rexdate" column="REXDATE" />
 		<result property="ref_bus_code" column="REF_BUS_CODE" />
 	</resultMap>
+	
+	<resultMap type="JJIM" id="JjimResultSet">
+		<id property="jjim_no" column="JJIM_NO"/>
+
+		<result property="jjim_date" column="JJIM_DATE"/>
+		<result property="jjim_status" column="JJIM_STATUS"/>
+		<result property="bus_code" column="BUS_CODE"/>
+		<result property="us_no" column="US_NO"/>
+		
+		<!-- Business Join -->
+		<result property="bus_name" column="BUS_NAME" />
+		<result property="bus_address" column="BUS_ADDRESS" />
+		<result property="bus_intro" column="BUS_INTRO" />
+		<result property="bus_date" column="BUS_DATE" />
+		<result property="bus_modify" column="BUS_MODIFY" />
+		<result property="ad_count" column="AD_COUNT" />
+		<result property="bus_classify" column="BUS_CLASSIFY" />
+		<result property="bus_category" column="BUS_CATEGORY" />
+		<result property="bus_status" column="BUS_STATUS" />
+		<result property="bus_phone" column="BUS_PHONE" />
+		<result property="res_category" column="RES_CATEGORY"/>
+		<result property="hotel_category" column="HOTEL_CATEGORY" />
+		<result property="tour_category" column="TOUR_CATEGORY" />
+		<result property="tour_tema" column="TOUR_TEMA" />
+		<result property="al_no" column="AL_NO" />
+		<result property="bus_opening" column="BUS_OPENING" />
+	</resultMap>
+		
 
 	<select id="routeSearch" parameterType="rSearch" resultMap="TourSpotResultSet">
 		SELECT 
@@ -360,4 +388,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				, #{us_no}
 			)
 	</insert>
+	
+	<select id="jjimBusiness" parameterType="String" resultMap="JjimResultSet">
+	<bind name="st" value="'%' + _parameter + '%'"/>
+		SELECT
+	    	B.BUS_NAME,
+	    	BUS_ADDRESS
+		FROM BUSINESS B, JJIM J
+		WHERE
+	    	JJIM_STATUS = '1'
+	    	AND J.US_NO = #{usno}
+	    	AND B.BUS_CODE = J.BUS_CODE
+	    	AND (BUS_CATEGORY = 'T' OR BUS_CATEGORY = 'R')
+	</select>
 </mapper>

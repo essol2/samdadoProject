@@ -286,32 +286,24 @@
 
                                 <button class="_btn" id="morebtn" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 더 보러 가기</button>
                                 
-                                <br><br>
-                                <c:if test="${ !empty loginUser }">
+                               <br><br>
+                                <c:if test="${ !empty loginUser && !empty jjimList}">
                                 <label class="content-title" id="title4">${ loginUser.usname } 님이 찜하신 숙박</label>
                                 <div class="c1_border" id="right-bottom-border">
-                                    <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
+                      			<c:forEach items="${ jjimList }" var="jl" varStatus="jlNum">
+                                    <table style="margin: auto; margin-top: 10%; margin-bottom: 10%; text-align : center;">
                                         <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
+                                            <td onclick="goToDetail(${jl.bus_code})" ><img src="${contextPath}/resources/busUploadFiles/${jl.file_rename}" style="width : 90%; height : auto;"></td>
+                                        </tr>
+                                         <tr>
+                                            <td id="navi-content" style="font-size : 30px; color : #467355; padding-top:2%;">${jl.bus_name }</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
+                                            <td id="navi-content" style="color:#bfbfbf;">${jl.hotel_facility }</td>
                                         </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔1</td>
-                                        </tr>
+                                       
                                     </table>
-                                    <table style="margin: auto; margin-bottom: 10%;">
-                                        <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔2</td>
-                                        </tr>
-                                    </table>
+                                 </c:forEach>
                                 </div>
                                 </c:if>
                                 <br>
@@ -337,52 +329,17 @@
                     
                     <div id="search_list"></div>
                     
-                    <c:if test="${ !empty loginUser }">
-                    <p id="zzim">${ loginUser.usname } 님이 찜하신 관광지</p>
-                    <div class="zzim_list">
-                        <p class="zzim_content_title">제주김만복 본점</p>
-                        <p class="zzim_content">제주 제주시 오라로 41</p>
-                        <p class="zzim_content">
-                        	오라 3동 2250-1
-                            <button id="addbtn">
-                                <img src="../resources/images/image_route/download.png">추가하기
-                            </button>
-                        </p>
-                    </div>
-                    <div class="zzim_list">
-                        <p class="zzim_content_title" >제주김만복 본점</p>
-                        <p class="zzim_content">제주 제주시 오라로 41</p>
-                        <p class="zzim_content">
-                            	오라 3동 2250-1
-                            <button id="addbtn">
-                                <img src="../resources/images/image_route/download.png">추가하기
-                            </button>
-                        </p>
-                    </div>
-                    <div class="zzim_list">
-                        <p class="zzim_content_title" >제주김만복 본점</p>
-                        <p class="zzim_content">제주 제주시 오라로 41</p>
-                        <p class="zzim_content">
-                           	 오라 3동 2250-1
-                            <button id="addbtn">
-                                <img src="../resources/images/image_route/download.png">추가하기
-                            </button>
-                        </p>
-                    </div>
-                    <div class="zzim_list">
-                        <p class="zzim_content_title" >제주김만복 본점</p>
-                        <p class="zzim_content">제주 제주시 오라로 41</p>
-                        <p class="zzim_content">
-                            	오라 3동 2250-1
-                            <button id="addbtn">
-                                <img src="../resources/images/image_route/download.png">추가하기
-                            </button>
-                        </p>
-                    </div>
-                    <br>
-                    </c:if>
+                     <c:if test="${ !empty loginUser && !empty jjimB}">
+	                    <p id="zzim">${ loginUser.usname } 님이 찜하신 관광지</p>
+	                    <c:forEach var="j" items="${ jjimB }" varStatus="jlNum">
+	                    	<div class="zzim_list" >
+		                        <p style="cursor: pointer;" class="zzim_content_title">${ j.bus_name }</p>
+		                        <p style="cursor: pointer;" class="zzim_content">${ j.bus_address }</p>
+	                    	</div>
+                  		</c:forEach>
                     
                     <br>
+                    </c:if>
                 </class>
                 </div>
             </div>

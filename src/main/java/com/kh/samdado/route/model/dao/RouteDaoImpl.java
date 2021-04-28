@@ -69,6 +69,11 @@ public class RouteDaoImpl implements RouteDao {
 		return sqlSession.selectList("routeMapper.spotSearch1", sTitle);
 	}
 
+	@Override
+	public List<Business> jjimBusiness(User u) {
+		return sqlSession.selectList("routeMapper.jjimBusiness", u);
+	}
+
 	
 
 	
