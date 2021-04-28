@@ -12,6 +12,7 @@ import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.user.model.vo.User;
 
 public interface AdminService {
 
@@ -64,7 +65,8 @@ public interface AdminService {
 
 	List<Point> getPointList();
 
-	List<Integer> selectGetProfit();
+	//List<Integer> selectGetProfit();
+	List<User> selectGetUserData(User userType);
 
 	Report selectReport(Report report);
 
@@ -79,6 +81,8 @@ public interface AdminService {
 	int updateRstatusToEnd(Income i);
 
 	List<Income> selectGetAllProfit(Income profitRequestDto);
+
+
 
 
 }
