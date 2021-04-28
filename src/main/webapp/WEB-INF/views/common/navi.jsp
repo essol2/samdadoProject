@@ -23,8 +23,24 @@
 <style>
 		/* 공통 - 폰트 */
         * {
-            font-family: 'Jeju Myeongjo', serif;
+            /* font-family: 'Jeju Myeongjo', serif; */
+             font-family: 'GyeonggiBatang';
         }
+        
+         @font-face {
+    font-family: 'GyeonggiBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+        
+        
+       @font-face {
+    font-family: 'WandohopeR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/WandohopeR.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
         
         /* 혜윤 : 네비 css */
         header {
@@ -446,7 +462,7 @@
                 <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img></a>
 
 	                <br><br>
-	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
@@ -468,7 +484,7 @@
                 <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img></a>
 
 	                <br><br>
-	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
@@ -490,7 +506,7 @@
                 <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img></a>
 
 	                <br><br>
-	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
@@ -521,7 +537,7 @@
                 <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img></a>
 
 	                <br><br>
-	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
@@ -543,10 +559,10 @@
 
         <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-           <div class="addMember-modal-inner-header" style="display: flex; margin: auto;">
-		            <div class="col-5"><img src="${ contextPath }/resources/images/image_main/logo_g.png"></div>
-		            <div class="col-8" style="margin-top: 10%;"><h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2></div>
+             <div class="modal-header">
+	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;  width : 100%;">
+		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
+		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 40px;">혼저옵서예.</h2></div>
 	            </div>
             </div>
             
@@ -619,10 +635,10 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-               <div class="login-modal-inner-header" style="display: flex; margin: auto;">
-           		   <div class="col-5"><img src="${ contextPath }/resources/images/image_main/logo_g.png"></div>
-		            <div class="col-8" style="margin-top: 10%;"><h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2></div>
-                </div>
+	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;  width : 100%;">
+		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
+		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 40px;">혼저옵서예.</h2></div>
+	            </div>
             </div>
            
              <form action="${ contextPath }/user/login" method="post" id="loginForm"> 

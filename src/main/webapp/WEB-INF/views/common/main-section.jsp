@@ -41,11 +41,11 @@
                         <div class="col" id="empty_up_div"></div>
                         <div class="col" id="center_text_div">
                             <h3>
-                                <b>"여유가 있어 여행을 가는 게 아니라 <br>
+                                <b style="font-family: 'Jeju Myeongjo', serif; ">"여유가 있어 여행을 가는 게 아니라 <br>
                                 여행을 가니까 여유가 생기는 것이다."</b>
                             </h3>  
                             <br>
-                            <h6>
+                            <h6 style="font-family: 'Jeju Myeongjo', serif; ">
                                 여행이란 우리가 사는 장소를 바꾸어 주는 것이 아니라 <br>
                                 우리의 생각과 편견을 바꾸어 주는 것이다.
                             </h6>
@@ -54,7 +54,7 @@
                         <div class="col" id="make_root_down_div">
                             <!-- 길 만들러 가기-->
                             <div class="col-3">
-                                <a href="${ contextPath }/route/m_route"><h5>길 만들러 가기</h5></a>
+                                <a href="${ contextPath }/route/m_route" style="font-family: 'Jeju Myeongjo', serif; "><h5>길 만들러 가기</h5></a>
                             </div>
                             <!-- 화살표 -->
                             <div class="col-1">
