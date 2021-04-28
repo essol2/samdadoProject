@@ -586,7 +586,7 @@
  	            var msg = '결제가 완료되었습니다!';
  	           	$("#payBtn").hide();
  	           	$("#submitBtn").show();
- 	           	${"#backBtn"}.hide();
+ 	           	$("#backBtn").hide();
  	            msg += '결제 금액 : ' + rsp.paid_amount;
  	        } else {
  	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';
