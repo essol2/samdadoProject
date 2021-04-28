@@ -346,8 +346,10 @@ public class MypageController {
 	 // 제휴회원 내소식 - 첫 로딩
 	 @GetMapping("/alert")
 	 public ModelAndView selectAlertList(ModelAndView mv,
-			 							  @ModelAttribute User u,
+			 							  @ModelAttribute User user, HttpSession session,
 			 							  @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
+		 
+		 User u = (User) session.getAttribute("loginUser");
 		 
 		 // DB에서 가져와야 할 알림 내역들 : 문의하기, 신고 받은 내역, 포인트 충전 알림, 배너광고 신청, 승인, 반려(사유), 포인트 얼마 안남음
 		 // 안읽은 리스트
@@ -364,11 +366,13 @@ public class MypageController {
 	 // 제휴회원 내소식 - ajax
 	 @RequestMapping("/alertajax")
 	 @ResponseBody
-	 public List<Alert> selectNewAlertList(@RequestBody User u,
-			 							   Model model){
+	 public List<Alert> selectNewAlertList(@RequestBody User user,
+			 							   Model model, HttpSession session){
 		 
 		
-		// 안읽은 리스트
+		User u = (User) session.getAttribute("loginUser");
+		 
+		 // 안읽은 리스트
 		List<Alert> alertNList = mService.selectAlertList(u);
 		// 읽은 리스트
 		List<Alert> alertYList = mService.selectYAlertList(u);
@@ -414,7 +418,10 @@ public class MypageController {
 	// 일반회원 마이페이지로 이동
 	 @GetMapping("/userinfo")
 	 public ModelAndView mypageUserFirstView(ModelAndView mv, 
-			 								 @ModelAttribute User user) { 
+			 								 @ModelAttribute User u, HttpSession session) { 
+		 
+		 User user = (User) session.getAttribute("loginUser");
+		 
 		 //System.out.println(user);
 		 
 		 List<Alert> alertNList = mService.selectAlertList(user);
