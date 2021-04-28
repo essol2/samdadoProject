@@ -354,13 +354,13 @@ public class MypageDaoImpl implements MypageDao{
 
 	// 내 루트 찾기
 	@Override
-	public List<RouteFinal> selectMyRoute(User u) {
+	public List<RouteFinal> selectMyRoute(String u) {
 		return sqlSession.selectList("mypageMapper.selectMyRoute", u);
 	}
 
 	// 사용자 별로 가지고 있는 루트 갯수
 	@Override
-	public List<RouteMP> selectRouteNum(User u) {
+	public List<RouteMP> selectRouteNum(String u) {
 		return sqlSession.selectList("mypageMapper.selectRouteNum", u);
 	}
 
@@ -368,6 +368,12 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public int selectStandard(int routeNum) {
 		return sqlSession.selectOne("mypageMapper.selectStandard", routeNum);
+	}
+
+	// 길찾기 내 찜하기 
+	@Override
+	public List<Business> findHotelJjimList(User u) {
+		return sqlSession.selectList("mypageMapper.findHotelJjimList", u);
 	}
 
 }

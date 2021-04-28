@@ -184,7 +184,7 @@
 						<th style="width: 50%;">
 							<label class="content-title" id="title1" >추천 길</label>
 							<div class="c_border" id="left-border">
-								<table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
+								<table id="routeTable" style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
 									<c:forEach var="r" items="${ list }" varStatus="index">
 										<tr id="tr1">
 											<td>
@@ -193,7 +193,7 @@
 											<td>
 												<div class="parent">
 													<div class="spot_border">
-														<p class="spot_title" id="spotTitle">${ r.spot_title }</p>
+														<p class="spot_title" name="title" id="spotTitle">${ r.spot_title }</p>
 														<button class="spot_btn" id="deleteSpot" onclick="deleteSpot(this)"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
 													</div>
 													<div class="spot_chnge">
@@ -215,10 +215,10 @@
 		                                    </tr>
 	                                    </c:if>
                                </c:forEach>
-                                 
+                                 </table>
+                                 <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
                                    <tr>
-                                   
-                                        <td colspan="2"> 
+                                        <td style="width: 500px;" colspan="3"> 
                                         <p style="margin-top: 15%;"></p>
                                             <button class="_btn" id="ch_btn">변경 완료</button>
                                             <button class="_btn" id="add_btn">추가하기</button>
@@ -236,13 +236,13 @@
                                         <c:set var="totalPrice" value="0"/>
                                 		<c:forEach var="r" items="${ list }">
 											<tr>
-		                                    	<td id="cost-content">&nbsp;${ r.spot_title } <fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+		                                    	<td id="cost-content">&nbsp;${ r.spot_title }<fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
 		                                        <c:set var="totalPrice" value="${ totalPrice + r.spot_price }"/>
 		                                    </tr>
                                       	</c:forEach>
                                     	
                                         <tr> 
-                                            <td id="cost-content" style="text-align: right;" >총 <fmt:formatNumber value="${ totalPrice }" pattern="#,###"/>원&nbsp;</td>
+                                            <td id="tcost-content" style="text-align: right;" >총 <span id="totalPrice"><fmt:formatNumber value="${ totalPrice }" pattern="#,###"/></span>원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -415,10 +415,50 @@
 	                </class>
 	            </div>
 	        </div>
-	    </div>
+	    </div> 
+	    
+	    <input type="hidden" id="sPath">
+	   	<input type="hidden" id="sOname">
+	   	<input type="hidden" id="bPath">
 	    <form id="clist" action="${contextPath}/route/clearChange" method="post">
 	    </form>
+	   
 	    
+	<!-- 추가하기 -->
+	<script>	
+		function addSpot1(el) {
+			var $button = $(el).closest('button');
+			var title = $button.prev().prev().html();
+			var path = $("#sPath").text();
+			var name = $("#sOname").text();
+			
+			console.log(path);
+			console.log(name);
+			
+			var $tr = $("#routeTable tbody");
+			
+			$tr.append("<tr><td colspan='2'><img id='arrow' src='../resources/images/image_route/arrow.png'></td></tr>");
+			$tr.append("<tr id='tr1'><td><img src='" + path + name +"'></td><td><div class='parent'><div class='spot_border'><p class='spot_title' name='title' id='spotTitle'>" + title + "</p><button class='spot_btn' id='deleteSpot' onclick='deleteSpot(this)'><img src='../resources/images/image_route/trashcan.png'>삭제하기</button></div><div class='spot_chnge'><button class='up_down' id='tableUp' onclick='moveUp(this)' ><img src='../resources/images/image_route/btn_up.png'></button><br><button class='up_down' id='tableDown' onclick='moveDown(this)'><img src='../resources/images/image_route/btn_down.png'></button></div></div></td></tr>");
+			
+			alert("추가되었습니다!");
+		}
+		
+		function addSpot2(el) {
+			var $button = $(el).closest('button');
+			var title = $button.prev().prev().html();
+			var path = $("#bPath").text();
+			
+			console.log(path);
+			
+			var $tr = $("#routeTable tbody");
+			
+			$tr.append("<tr><td colspan='2'><img id='arrow' src='../resources/images/image_route/arrow.png'></td></tr>");
+			$tr.append("<tr id='tr1'><td><img style='height: 225px; width: 300px;' src='../resources/busUploadFiles/" + path + "'></td><td><div class='parent'><div class='spot_border'><p class='spot_title' name='title' id='spotTitle'>" + title + "</p><button class='spot_btn' id='deleteSpot' onclick='deleteSpot(this)'><img src='../resources/images/image_route/trashcan.png'>삭제하기</button></div><div class='spot_chnge'><button class='up_down' id='tableUp' onclick='moveUp(this)' ><img src='../resources/images/image_route/btn_up.png'></button><br><button class='up_down' id='tableDown' onclick='moveDown(this)'><img src='../resources/images/image_route/btn_down.png'></button></div></div></td></tr>");
+			
+			alert("추가되었습니다!");
+		}
+	</script>
+	
 	<!-- 저장 버튼 -->
 	<script>
 		$("#add_btn").on("click", function(){
@@ -509,14 +549,31 @@
 				sdiv.html("");
 				
 				for(var i in data) {
-					div = $("<div class='zzim_list'>");
-					title = $("<p class='zzim_content_title'>").text(data[i].spot_title);
-					address = $("<p class='zzim_content'>").text(data[i].spot_address);
-					add = $("<button id='addbtn'><img src='../resources/images/image_route/download.png'>추가하기</button>");
-					br = $("<br>");
-
-					div.append(title, address, add);
-					sdiv.append(div, br);
+					if(data[i].spot_title != null) {
+						div = $("<div class='zzim_list'>");
+						title = $("<p class='zzim_content_title' id='searchSpotTitle'>").text(data[i].spot_title);
+						address = $("<p class='zzim_content'>").text(data[i].spot_address);
+						add = $("<button id='addbtn' onclick='addSpot1(this)'><img src='../resources/images/image_route/download.png'>추가하기</button>");
+						path = $("#sPath").text(data[i].spot_path);
+						oname = $("#sOname").text(data[i].spot_oname);
+						br = $("<br>");
+						
+						div.append(title, address, add);
+						sdiv.append(div, br);
+					}
+					
+					if(data[i].bus_name != null) {
+						/* if(data[i].) for문 안에 if문으로 조건 돌리기 */
+						div = $("<div class='zzim_list'>");
+						title = $("<p class='zzim_content_title' id='searchSpotTitle'>").text(data[i].bus_name);
+						address = $("<p class='zzim_content'>").text(data[i].bus_address);
+						add = $("<button id='addbtn' onclick='addSpot2(this)'><img src='../resources/images/image_route/download.png'>추가하기</button>");
+						path = $("#bPath").text(data[i].file_rename);
+						br = $("<br>");
+						
+						div.append(title, address, add);
+						sdiv.append(div, br);
+					}
 				}
 				
 				$("#search_input").val("");			

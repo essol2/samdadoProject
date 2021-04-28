@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -163,7 +164,7 @@ public class MypageController {
 				 				   @ModelAttribute User u,
 				 				   @ModelAttribute Point po,
 				 				   @RequestParam(name="usno") String usno ) {
-		 
+		 		 
 		 //System.out.println("user 객체 확인 : " +usno);
 		 List<Point> pList = null;
 		 
@@ -329,7 +330,7 @@ public class MypageController {
 		 
 		// 차트에 넣을 데이터 메소드
 		List<Business> chartDataList = mService.selectAlliChartList(usno);
-		System.out.println(chartDataList);
+		//System.out.println(chartDataList);
 		
 		 mv.addObject("api", api);
 		 mv.addObject("allList", allList);
@@ -345,8 +346,10 @@ public class MypageController {
 	 // 제휴회원 내소식 - 첫 로딩
 	 @GetMapping("/alert")
 	 public ModelAndView selectAlertList(ModelAndView mv,
-			 							  @ModelAttribute User u,
+			 							  @ModelAttribute User user, HttpSession session,
 			 							  @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
+		 
+		 User u = (User) session.getAttribute("loginUser");
 		 
 		 // DB에서 가져와야 할 알림 내역들 : 문의하기, 신고 받은 내역, 포인트 충전 알림, 배너광고 신청, 승인, 반려(사유), 포인트 얼마 안남음
 		 // 안읽은 리스트
@@ -363,10 +366,13 @@ public class MypageController {
 	 // 제휴회원 내소식 - ajax
 	 @RequestMapping("/alertajax")
 	 @ResponseBody
-	 public List<Alert> selectNewAlertList(@RequestBody User u,
-			 							   Model model){
+	 public List<Alert> selectNewAlertList(@RequestBody User user,
+			 							   Model model, HttpSession session){
 		 
-		// 안읽은 리스트
+		
+		User u = (User) session.getAttribute("loginUser");
+		 
+		 // 안읽은 리스트
 		List<Alert> alertNList = mService.selectAlertList(u);
 		// 읽은 리스트
 		List<Alert> alertYList = mService.selectYAlertList(u);
@@ -379,7 +385,7 @@ public class MypageController {
 		newDataList.addAll(alertNList);
 		newDataList.addAll(alertYList);
 		
-		System.out.println(newDataList);
+		//System.out.println(newDataList);
 		
 		return newDataList;
 
@@ -412,7 +418,10 @@ public class MypageController {
 	// 일반회원 마이페이지로 이동
 	 @GetMapping("/userinfo")
 	 public ModelAndView mypageUserFirstView(ModelAndView mv, 
-			 								 @ModelAttribute User user) { 
+			 								 @ModelAttribute User u, HttpSession session) { 
+		 
+		 User user = (User) session.getAttribute("loginUser");
+		 
 		 //System.out.println(user);
 		 
 		 List<Alert> alertNList = mService.selectAlertList(user);
@@ -505,7 +514,7 @@ public class MypageController {
 //		 } else {
 //			 u.setUsphone(phone);
 //		 }
-		 System.out.println("changeEP안에서 u : " + u);
+		 //System.out.println("changeEP안에서 u : " + u);
 		// DB에 UPDATE_이메일, 전화번호 변경 메소드
 		int result = mService.updateUserInfo(u);	// 암호화 한 비번 db에 update
 		
@@ -776,7 +785,7 @@ public class MypageController {
 							   HttpServletRequest request, Model model ) {
 //		 System.out.println(file1);
 //		 System.out.println(file2);
-//		 System.out.println(file3);
+//		 //System.out.println(file3);
 		 r.setRe_star(re_star);
 		 
 		//System.out.println("r 확인 1 : " + r);
@@ -921,7 +930,10 @@ public class MypageController {
 	 
 	// 일반회원 - 내 루트
 		 @GetMapping("/myroute")
-		 public ModelAndView goToMyroute(@ModelAttribute User u, ModelAndView mv, Map map) {
+		 public ModelAndView goToMyroute(ModelAndView mv, Map map, HttpSession session) {
+			 
+			 User loginUser = (User)session.getAttribute("loginUser");
+			 String u = loginUser.getUsno();
 			 
 			 // 이 회원이 가지고 있는 모든 경로의 모든 관광지 리스트
 			 List<RouteFinal> myRouteList = mService.selectMyRoute(u);
@@ -929,7 +941,7 @@ public class MypageController {
 			 
 			 // 이 회원이 가지고 있는 경로 수
 			 List<RouteMP> routeNumber = mService.selectRouteNum(u);
-			 System.out.println("routeNumber : " + routeNumber);
+			 //System.out.println("routeNumber : " + routeNumber);
 			 
 			 // route_no별로 담을 Map 객체 선언
 			 HashMap<Integer, List<RouteFinal>> routeTest = new HashMap<>(); 
@@ -951,7 +963,7 @@ public class MypageController {
 				 int standard = mService.selectStandard(routeNum);
 				 // 이 관광지 개수를 standardList[0]에 넣기
 				 standardList[a] = standard;
-				 System.out.println("standardList1["+a+"] : " + standardList[a] + ", standard : " + standard);
+				 //System.out.println("standardList1["+a+"] : " + standardList[a] + ", standard : " + standard);
 			 }
 
 			 
@@ -960,7 +972,7 @@ public class MypageController {
 				 routeTest.put(mapKey, insertThis);
 				 forIndex = forIndex + standardList[b];
 				 mapKey ++;
-				 System.out.println("routeTest["+b+"] : " + routeTest.get(b));
+				 //System.out.println("routeTest["+b+"] : " + routeTest.get(b));
 			 }
 			 
 			 mv.addObject("routeTest", routeTest);
@@ -977,7 +989,7 @@ public class MypageController {
 	@PostMapping("/userout")
 	public String memberOut(@ModelAttribute User u, Model model) {
 		
-		//System.out.println("out u : " + u);
+		////System.out.println("out u : " + u);
 		//System.out.println(memoutPwd);
 		User loginUser = uService.loginUser(u);
 		//System.out.println("out loginUser" + loginUser);

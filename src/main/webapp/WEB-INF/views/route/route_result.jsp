@@ -172,7 +172,6 @@
                                    <tr>
                                         <td style="width: 500px;" colspan="3"> 
                                             <button class="_btn" id="ch_btn" <%-- onclick="location.href='${ contextPath }/route/changeRoute'" --%>>변경하기</button>
-                                            
                                             <button class="_btn" id="add_btn">추가하기</button>
                                         </td>
                                    </tr>
@@ -194,7 +193,7 @@
                                       	</c:forEach>
                                     	
                                         <tr> 
-                                            <td id="tcost-content" style="text-align: right;" >총 <pre id="totalPrice"><fmt:formatNumber value="${ totalPrice }" pattern="#,###"/></pre>원&nbsp;</td>
+                                            <td id="tcost-content" style="text-align: right;" >총 <span id="totalPrice"><fmt:formatNumber value="${ totalPrice }" pattern="#,###"/></span>원&nbsp;</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -239,31 +238,23 @@
                                 <button class="_btn" id="morebtn" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 더 보러 가기</button>
                                 
                                 <br><br>
-                                <c:if test="${ !empty loginUser }">
+                                <c:if test="${ !empty loginUser  && !empty jjimList}">
                                 <label class="content-title" id="title4">${ loginUser.usname } 님이 찜하신 숙박</label>
                                 <div class="c1_border" id="right-bottom-border">
-                                    <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
+                      			<c:forEach items="${ jjimList }" var="jl" varStatus="jlNum">
+                                    <table style="margin: auto; margin-top: 10%; margin-bottom: 10%; text-align : center;">
                                         <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
+                                            <td onclick="goToDetail(${jl.bus_code})" ><img src="${contextPath}/resources/busUploadFiles/${jl.file_rename}" style="width : 90%; height : auto;"></td>
+                                        </tr>
+                                         <tr>
+                                            <td id="navi-content" style="font-size : 30px; color : #467355; padding-top:2%;">${jl.bus_name }</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
+                                            <td id="navi-content" style="color:#bfbfbf;">${jl.hotel_facility }</td>
                                         </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔1</td>
-                                        </tr>
+                                       
                                     </table>
-                                    <table style="margin: auto; margin-bottom: 10%;">
-                                        <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔2</td>
-                                        </tr>
-                                    </table>
+                                 </c:forEach>
                                 </div>
                                 </c:if>
                                 <br>
@@ -372,6 +363,7 @@
 	   <form id="saveList" action="${ contextPath }/route/addRoute" method="post"></form>
 	   <input type="hidden" id="sPath">
 	   <input type="hidden" id="sOname">
+	   <input type="hidden" id="bPath">
 	   
 	   <form id="rlist" action="${ contextPath }/route/changeRoute" method="post"></form>
 	<!-- 변경하기 -->
@@ -385,15 +377,20 @@
 			
 			$("#rlist").submit();
 			
-		})
+		});
+		
+		function goToDetail(bus_code){
+			
+			location.href="${contextPath}/business/hotel_detail?bus_code=" + bus_code;
+		}
 	</script> 
 	<!-- 추가하기  -->
 	<script>	
-		function addSpot(el) {
+		function addSpot1(el) {
 			var $button = $(el).closest('button');
 			var title = $button.prev().prev().html();
-			var path = $("#sPath").val();
-			var name = $("#sOname").val();
+			var path = $("#sPath").text();
+			var name = $("#sOname").text();
 			
 			console.log(path);
 			console.log(name);
@@ -405,9 +402,22 @@
 			
 			alert("추가되었습니다!");
 		}
+		
+		function addSpot2(el) {
+			var $button = $(el).closest('button');
+			var title = $button.prev().prev().html();
+			var path = $("#bPath").text();
+			
+			console.log(path);
+			
+			var $tr = $("#routeTable tbody");
+			
+			$tr.append("<tr><td colspan='2'><img id='arrow' src='../resources/images/image_route/arrow.png'></td></tr>");
+			$tr.append("<tr id='tr1'><td><img src='../resources/busUploadFiles/" + path + "'></td><td class='spot_border'><p class='spot_title' name='title' id='spotTitle' style='margin-top: 50%; margin-bottom:50%;'>"+title+"</p></td></tr>");
+		
+			alert("추가되었습니다!");
+		}
 	</script>
-	
-
 	
 	<!-- 루트 저장 -->
 	<script>
@@ -417,6 +427,7 @@
 				
 				$("#tr1 #spotTitle").each(function(index, element){
 					$("#saveList").append("<input type='hidden' name='slist' value='" + $(this).text() + "'/>");
+					
 				});
 				
 				console.log($("#totalPrice").text());
@@ -449,17 +460,47 @@
 				sdiv = $("#search_list");
 				sdiv.html("");
 				
-				for(var i in data) {
-					div = $("<div class='zzim_list'>");
-					title = $("<p class='zzim_content_title' id='searchSpotTitle'>").text(data[i].spot_title);
-					address = $("<p class='zzim_content'>").text(data[i].spot_address);
-					add = $("<button id='addbtn' onclick='addSpot(this)'><img src='../resources/images/image_route/download.png'>추가하기</button>");
-					spot_path = $("#sPath").val(data[i].spot_path);
-					spot_oname = $("#sOname").val(data[i].spot_oname);
-					br = $("<br>");
-					
-					div.append(title, address, add);
-					sdiv.append(div, br);
+/* 				if(data[0].spot_title != null) {
+					for(var i in data) {
+						div = $("<div class='zzim_list'>");
+						title = $("<p class='zzim_content_title' id='searchSpotTitle'>").text(data[i].spot_title);
+						address = $("<p class='zzim_content'>").text(data[i].spot_address);
+						add = $("<button id='addbtn' onclick='addSpot1(this)'><img src='../resources/images/image_route/download.png'>추가하기</button>");
+						path = $("#sPath").text(data[i].spot_path);
+						oname = $("#sOname").text(data[i].spot_oname);
+						br = $("<br>");
+						
+						div.append(title, address, add);
+						sdiv.append(div, br);
+					}
+				} */
+				
+					for(var i in data) {
+						if(data[i].spot_title != null) {
+							div = $("<div class='zzim_list'>");
+							title = $("<p class='zzim_content_title' id='searchSpotTitle'>").text(data[i].spot_title);
+							address = $("<p class='zzim_content'>").text(data[i].spot_address);
+							add = $("<button id='addbtn' onclick='addSpot1(this)'><img src='../resources/images/image_route/download.png'>추가하기</button>");
+							path = $("#sPath").text(data[i].spot_path);
+							oname = $("#sOname").text(data[i].spot_oname);
+							br = $("<br>");
+							
+							div.append(title, address, add);
+							sdiv.append(div, br);
+						}
+						
+						if(data[i].bus_name != null) {
+							/* if(data[i].) for문 안에 if문으로 조건 돌리기 */
+							div = $("<div class='zzim_list'>");
+							title = $("<p class='zzim_content_title' id='searchSpotTitle'>").text(data[i].bus_name);
+							address = $("<p class='zzim_content'>").text(data[i].bus_address);
+							add = $("<button id='addbtn' onclick='addSpot2(this)'><img src='../resources/images/image_route/download.png'>추가하기</button>");
+							path = $("#bPath").text(data[i].file_rename);
+							br = $("<br>");
+							
+							div.append(title, address, add);
+							sdiv.append(div, br);
+						}
 				}
 				
 				$("#search_input").val("");			

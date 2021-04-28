@@ -350,13 +350,13 @@ public class MypageServiceImpl implements MypageService{
 
 	// 내 루트 찾기
 	@Override
-	public List<RouteFinal> selectMyRoute(User u) {
+	public List<RouteFinal> selectMyRoute(String u) {
 		return mDao.selectMyRoute(u);
 	}
 
 	// 사용자 별로 가지고 있는 루트 갯수
 	@Override
-	public List<RouteMP> selectRouteNum(User u) {
+	public List<RouteMP> selectRouteNum(String u) {
 		return mDao.selectRouteNum(u);
 	}
 
@@ -364,6 +364,12 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int selectStandard(int routeNum) {
 		return mDao.selectStandard(routeNum);
+	}
+
+	// 길찾기 내 찜하기 
+	@Override
+	public List<Business> findHotelJjimList(User u) {
+		return mDao.findHotelJjimList(u);
 	}
 
 	

@@ -738,7 +738,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</update>
 	
 	<select id="selectGetAllProfit" parameterType="Income" resultMap="IncomeResultSet">
-
 		        SELECT ITEM, SUM(AMOUNT) AS PAMOUNT, EXTRACT(MONTH  FROM PDATE),
 		        EXTRACT(YEAR  FROM PDATE)
 			FROM 
@@ -746,7 +745,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			WHERE 
 			PDATE >= ADD_MONTHS(SYSDATE,-6)
 			AND  ITEM LIKE '%'||#{ item }||'%'
-			GROUP BY  ITEM, 
+			GROUP BY ITEM, 
 		        EXTRACT(MONTH  FROM PDATE),
 		        EXTRACT(YEAR  FROM PDATE)
 			order by EXTRACT(year  FROM PDATE)

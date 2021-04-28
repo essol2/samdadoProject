@@ -110,7 +110,7 @@
         background-color:rgba( 255, 255, 255, 0.8 );
         border : 5px solid white;
         width : 77%;
-        height: fit-content;
+        height: 550px;
         margin-top : 5%;
         margin-left : 3%;
     }
@@ -239,6 +239,11 @@
 	    width : 30px;
 	    height : 30px;
 	}
+	
+	#alertBox{
+		height : 400px;
+		overflow : auto;
+	}
 </style>
 <body>
 
@@ -260,8 +265,8 @@
             </div>
 
             <div id="mainBox">
+             <h2 style='margin : 3%;'>내 소식</h2>
                 <div id="alertBox">
-		            <h2 style='margin : 3%; overflow:auto;'>내 소식</h2>
 		            <table id="alertTable"> 
 		            <c:choose>
 		            <c:when test="${ !empty alertNList || !empty alertYList}">
@@ -615,6 +620,24 @@
 						tr4.append(tqreply);
 						blankTr2.append(blankTd2);
 						table.append(tr1, blankTr2, tr3, tr4);
+					} else if(deAlert.ncate == 'B'){ // 공지사항 상세보기
+						var tncate = $("<th style='width : 10%; text-align : right;'>").text("유형 : ");
+						var tncateData = $("<td style='width : 60%; text-align : left;'>").text("공지사항");
+
+						var blankTr2 = $("<tr>");
+						var blankTd2 = $("<td colspan='4' style='height : 30px;'>").text(" ");
+						
+						var tr3 = $("<tr>");
+						var tqcont = $("<th colspan='4'>").text("제목 : " + deAlert.btitle);
+						
+						var tr4 = $("<tr>");
+						var tqreply = $("<th colspan='4'>").text(deAlert.bcontent);
+						
+						tr1.append(tnno, tnnoData, tncate, tncateData);
+						tr3.append(tqcont);
+						tr4.append(tqreply);
+						blankTr2.append(blankTd2);
+						table.append(tr1, blankTr2, tr3, tr4);
 					}
 				
 					
@@ -739,22 +762,14 @@
 	        return year + '-' + month + '-' + day;
 		}
 	</script>
-	<script>
+	 <script>
 	 	$(document).ready(function(){
-	 		
-	 		if(${not empty sessionScope.loginUser}){
-	 			if(${loginUser.uspart eq "일반"}){
-	 				var uspart = "일반";
-	 			} else if(${loginUser.uspart eq "제휴"}){
-	 				var uspart = "제휴";
-	 			} else {
-	 				var uspart = " ";
-	 			}
-	 			
+
+	 		if('${loginUser.usid}' != ''){
 	 			var searchU = new Object();
-				searchU.usno = ${loginUser.usno};
-				searchU.uspart = uspart;
-	 			
+					searchU.usno = "${loginUser.usno}";
+					searchU.uspart = "${loginUser.uspart}";
+					
 	 			$.ajax({
 	 				url : "${contextPath}/mypage/new",
 	 				data : JSON.stringify(searchU),
@@ -765,10 +780,12 @@
 	 						$('.newAlert').css("display","block");
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
+	 					} else{
+	 						alert("세션확인 오류!");
 	 					}
 	 				},
 	 				error : function(e){
-	 					alert("error code : " + e.status + "\n"
+	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
 									+ "message : " + e.responseText);
 	 				}
 	 			});
@@ -776,6 +793,5 @@
 	 		
 	 	});
 	 </script>
-	
 </body>
 </html>

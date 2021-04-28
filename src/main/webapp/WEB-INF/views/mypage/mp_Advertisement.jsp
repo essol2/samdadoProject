@@ -296,7 +296,6 @@
 								<c:when test="${ !empty allList && empty pbusList}">
 								<h3 style="color: #467355; text-align: center;">배너광고</h3>
 									<c:forEach items="${ allList }" var="al" varStatus="alStatus">
-		
 										<div id="bannerAdverBox1">
 											<p style="text-align: center; font-size: small;">사업장 이름 :
 												${ al.bus_name }</p>
@@ -326,6 +325,40 @@
 	 								<hr>
 	 								<h3 style="color: #467355; text-align: center;">프리미엄 광고</h3>
 	 								<c:forEach items="${ pbusList }" var="pb" varStatus="pbStatus">
+										<div id="bannerAdverBox1">
+											<p style="text-align: center; font-size: small;">사업장 이름 :
+												${ pb.bus_name }</p>
+											<p style="text-align: center; font-size: small;">
+												등록일 :
+												<fmt:formatDate value="${ pb.bus_date }" type="date"
+													pattern="yyyy-MM-dd" />
+											</p>
+										</div>
+									</c:forEach>
+								</c:when>
+								<c:when test="${ !empty allList && !empty pbusList }">
+									<h3 style="color: #467355; text-align: center;">배너광고</h3>
+									<hr>
+									<c:forEach items="${ allList }" var="al" varStatus="alStatus">
+										<div id="bannerAdverBox1">
+											<p style="text-align: center; font-size: small;">사업장 이름 :
+												${ al.bus_name }</p>
+											<p style="text-align: center; font-size: small;">
+												신청일 :
+												<fmt:formatDate value="${ al.alsubdate }" type="date" pattern="yyyy-MM-dd" />
+											</p>
+											<p style="text-align: center; font-size: small;">
+												승인일 :
+												<fmt:formatDate value="${ al.startdate }" type="date"
+													pattern="yyyy-MM-dd" />
+											</p>
+		
+										</div>
+									</c:forEach>
+									<br>
+									<h3 style="color: #467355; text-align: center;">프리미엄 광고</h3>
+									<hr>
+									<c:forEach items="${ pbusList }" var="pb" varStatus="pbStatus">
 										<div id="bannerAdverBox1">
 											<p style="text-align: center; font-size: small;">사업장 이름 :
 												${ pb.bus_name }</p>
@@ -493,22 +526,14 @@
 	}
 	</script>
 	
-	<script>
+	 <script>
 	 	$(document).ready(function(){
-	 		
-	 		if(${not empty sessionScope.loginUser}){
-	 			if(${loginUser.uspart eq "일반"}){
-	 				var uspart = "일반";
-	 			} else if(${loginUser.uspart eq "제휴"}){
-	 				var uspart = "제휴";
-	 			} else {
-	 				var uspart = " ";
-	 			}
-	 			
+
+	 		if('${loginUser.usid}' != ''){
 	 			var searchU = new Object();
-				searchU.usno = ${loginUser.usno};
-				searchU.uspart = uspart;
-	 			
+					searchU.usno = "${loginUser.usno}";
+					searchU.uspart = "${loginUser.uspart}";
+					
 	 			$.ajax({
 	 				url : "${contextPath}/mypage/new",
 	 				data : JSON.stringify(searchU),
@@ -519,10 +544,12 @@
 	 						$('.newAlert').css("display","block");
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
+	 					} else{
+	 						alert("세션확인 오류!");
 	 					}
 	 				},
 	 				error : function(e){
-	 					alert("error code : " + e.status + "\n"
+	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
 									+ "message : " + e.responseText);
 	 				}
 	 			});

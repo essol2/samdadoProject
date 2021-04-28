@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
@@ -667,7 +668,7 @@
             <div class="title_area">
                 <div class="title_area">
                 	<c:if test="${ tour.bus_classify eq 'P' }">
-                    <img class="premium" src="../resources/images/image_listpage/premiumicon.PNG">
+                    <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     </c:if>
                     <label id="ho_title" class="title_tag">${ tour.bus_name }</label>
                     <br>
@@ -893,9 +894,11 @@
 
             <div class="btnArea">
                 <br>
+                <c:if test="${ loginUser.uspart == '일반'}">
                 <button type="button" id="bookingBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     예약하기
                 </button>
+                </c:if>
             </div>
         </div>
 
@@ -989,11 +992,16 @@
                     <!-- 예약날짜-->
                     <div class="start-div">
                         <label for="startDate">예약날짜</label>
-                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)" required>
                     </div>
                 </div>
                 <div class="modal-body2">
-                	<label><input type="text" id="tourName" style="border:none;width:80px;" readonly value="${ tour.pro_name }"></label><br>
+                	<input type="hidden" id="tourName" value="${ tour.pro_name }">
+                	<input type="hidden" id="adultPay">
+                	<input type="hidden" id="youthPay">
+                	<input type="hidden" id="childPay">
+                	<input type="hidden" id="payResult">
+                	<label>${ tour.pro_name }</label><br>
                     <h4 id="startDateResult"></h4>                    
                     <div id="table">
                         <div class="rows">
@@ -1016,20 +1024,25 @@
                         <div class="rows2">
                             <span class="cell cols1">성인입장권</span>
                             <span class="cell cols2">${ tour.pro_adult }원 *<span id="adultResult"></span>명</span>
-                            <span class="cell cols3"><input type="text" id="adultPay" style="border:none;width:70px" readonly>원</span>
+                            <span class="cell cols3" id="adultPayS"></span>
+                            
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">청소년입장권</span>
                             <span class="cell cols2">${ tour.pro_youth }원 *<span id="youthResult"></span>명</span>
-                            <span class="cell cols3"><input type="text" id="youthPay" style="border:none;width:70px" readonly>원</span>
+                            <span class="cell cols3" id="youthPayS"></span>
+                            
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">어린이입장권</span>
                             <span class="cell cols2">${ tour.pro_child }원 *<span id="childResult"></span>명</span>
-                            <span class="cell cols3"><input type="text" id="childPay" style="border:none;width:70px" readonly>원</span>
+                            <span class="cell cols3" id="childPayS"></span>
+                            
                         </div>
                     </div>
-                    <label>총 합계 : <input type="text" id="payResult" style="border:none;width:70px" readonly>원</label>
+                    <label>총 합계 :</label> 
+           			<label id="payResultL"></label>         
+                    <label>원</label>
                     <button class="payBtn">결제하기</button>
                 </div>
 
@@ -1055,6 +1068,10 @@
   		// var amount = payResult;
   		var amount = 100;
 	    var IMP = window.IMP;
+	    
+	    if (startDate === "") {
+            alert("예약일을 선택해주세요.");
+        } else {        	
 	    IMP.init('imp34313892');
 	    IMP.request_pay({
 	        pg : 'html5_inicis',
@@ -1083,6 +1100,7 @@
 	    
 	        alert(msg);
 	    });
+        };
   	});
     </script>
     
@@ -1105,9 +1123,13 @@
 		  	var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
 		  	var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
 	  		document.getElementById('adultPay').value = adultPay;
+	  		document.getElementById('adultPayS').innerText = adultPay+"원";
 	  		document.getElementById('youthPay').value = youthPay;
+	  		document.getElementById('youthPayS').innerText = youthPay+"원";
 	  		document.getElementById('childPay').value = childPay;
+	  		document.getElementById('childPayS').innerText = childPay+"원";
         	document.getElementById('payResult').value = adultPay + youthPay + childPay;
+        	document.getElementById('payResultL').innerText = document.getElementById('payResult').value;
 	  	}
 	    
 	    function youth(e) {
@@ -1119,9 +1141,13 @@
 			  	var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
 			  	var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
 			  	document.getElementById('adultPay').value = adultPay;
-			  	document.getElementById('youthPay').value = youthPay;
-			  	document.getElementById('childPay').value = childPay;
-			  	document.getElementById('payResult').value = adultPay + youthPay + childPay;
+		  		document.getElementById('adultPayS').innerText = adultPay+"원";
+		  		document.getElementById('youthPay').value = youthPay;
+		  		document.getElementById('youthPayS').innerText = youthPay+"원";
+		  		document.getElementById('childPay').value = childPay;
+		  		document.getElementById('childPayS').innerText = childPay+"원";
+	        	document.getElementById('payResult').value = adultPay + youthPay + childPay;
+	        	document.getElementById('payResultL').innerText = document.getElementById('payResult').value;
 		  	}
 	
 	    function child(e) {
@@ -1133,9 +1159,13 @@
 			  var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
 	    	  var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
 	    	  document.getElementById('adultPay').value = adultPay;
-			  document.getElementById('youthPay').value = youthPay;
-	    	  document.getElementById('childPay').value = childPay;
-	    	  document.getElementById('payResult').value = adultPay + youthPay + childPay;
+		  		document.getElementById('adultPayS').innerText = adultPay+"원";
+		  		document.getElementById('youthPay').value = youthPay;
+		  		document.getElementById('youthPayS').innerText = youthPay+"원";
+		  		document.getElementById('childPay').value = childPay;
+		  		document.getElementById('childPayS').innerText = childPay+"원";
+	        	document.getElementById('payResult').value = adultPay + youthPay + childPay;
+	        	document.getElementById('payResultL').innerText = document.getElementById('payResult').value;
 	    	}
 	
     </script>
@@ -1174,7 +1204,7 @@
                 
             </div>
             <div class="modal-footer">                
-                <button type="submit" id="reportBtn">신고하기</button>
+                <button type="submit" id="reportBtn" onclick="reportAlert()">신고하기</button>
                 <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
             </div>
             </form>

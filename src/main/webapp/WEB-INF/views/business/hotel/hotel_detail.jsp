@@ -1,6 +1,7 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
@@ -239,6 +240,16 @@
         /* 방 세부사진 및 정보div들 */
 
         .detail {
+            border: 1px solid black;
+            height: 300px;
+            margin-bottom: 2%;
+            margin-top: 5%;
+            display: none;
+            /* align-items: center; */
+            /* justify-content: center; */
+        }
+        
+        .moreDetail {
             border: 1px solid black;
             height: 300px;
             margin-bottom: 2%;
@@ -525,7 +536,7 @@
             <div class="title_area">
                 <div class="title_area">
                     <c:if test="${ hotel.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premium.png"><br>
+                    <img src="../resources/images/image_listpage/premiumicon.png"><br>
                     </c:if>
                     <label id="ho_title" class="title_tag">${ hotel.bus_name }</label>
                 </div>
@@ -788,9 +799,11 @@
                 <br>
                 <b>${ r.room_price }원</b><br>
                 <b>1박당 객실 요금</b><br><br>
+                <c:if test="${ loginUser.uspart == '일반'}">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     예약하기
                 </button>
+                </c:if>
             </div>
         </div>
 		</c:forEach>
@@ -798,6 +811,20 @@
         <div class="btnArea">
             <button class="moreBtn">더보기</button>
         </div>
+        
+        <!-- 더보기 -->
+			<script>				
+						$(document).ready(function(){
+							size_div = $('.detail').length;
+							
+							x = 3;
+							$('.detail:lt('+x+')').addClass('moreDetail');
+							$('.moreBtn').click(function(){
+								x= (x+3 <= size_div)? x+3 : size_div;
+								$('.detail:lt('+x+')').addClass('moreDetail');	
+							});
+						});
+			</script>
 
         <!-- 후기 -->
         <div id="review_area">
@@ -854,7 +881,9 @@
 		        		$('#starLabel').find('b').text(review);
 		        	}
     	});
-    
+    	</script>
+    	
+    	<script>
 	    $j1124.datepicker.setDefaults({
 	        dateFormat: 'yy-mm-dd',
 	        prevText: '이전 달',
@@ -874,7 +903,7 @@
     </script>
 
     <!-- Modal -->
-    <c:forEach var="r" items="${ room }">
+    
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -887,22 +916,28 @@
                     <!--체크인날짜-->
                     <div class="start-div">
                         <label for="startDate">체크인</label>
-                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)">
+                        <input type="text" id="startDate" name="startDate" class="datepicker" onchange="startDate(this)" required>
                     </div>
 
                     <!--체크아웃날짜-->
                     <div class="end-div">
                         <label for="endDate">체크아웃</label>
                         <label id="error" class="error">체크아웃날짜는 체크인날짜 이전 일 수 없습니다.</label>
-                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)">
+                        <input type="text" id="endDate" name="endDate" class="datepicker" onchange="endDate(this)" required>
                     </div>
                 </div>
 
                 <div class="modal-body2">
-                	<label><input type="text" id="roomName" style="border:none;width:200px;" readonly value="${ r.room_name }"></label><br>
+                	<c:forEach var="r" items="${ room }" varStatus="status" end="0">
+                	<h4>${ r.room_name }</h4>
                     <label>${ r.room_price }원 / 박</label><br>
+                    <input type="hidden" id="roomName" value="${ r.room_name }">
                     <input type="hidden" id="cAmount" name="cAmount" value="${ r.room_price }">                    
                     <input type="hidden" id="roomNo" name="roomNo" value="${ r.room_no }">
+                    <input type="hidden" id="personNumber">
+                    <input type="hidden" id="days">
+                    <input type="hidden" id="payResult">
+                    </c:forEach>
                     <div class="modal-book">
                         <div class="checkin">
                             <label>체크인</label><br>
@@ -916,7 +951,7 @@
                     <div class="modal-book2">
                         <div class="people">
                             <label>인원 : </label>
-                            <label><input type="text" id="personNumber" style="border:none;width:20px;" readonly>명</label>                            
+                            <label id="personNumberL"></label>                            
                         </div>
                         <div class="people2">
                             <select id="selectBox" onchange="handleOnChange(this)">
@@ -930,13 +965,14 @@
                             </select>
                         </div>
                     </div>
+                    <c:forEach var="r" items="${ room }" varStatus="status" end="0">
                     <label>${ r.room_price }원 * </label>
-                    <label><input type="text" id="days" style="border:none;width:20px;" readonly></label>
+                    </c:forEach>
+                    <label id="daysL"></label>
                     <label>박</label>
                     <br>
                     <b>총 합계 : </b>
-                    <b><input type="text" id="payResult" style="border:none;width:70px" readonly></b>
-                    <b>원</b>
+                    <b id="payResultB"></b>
                     <button class="payBtn">결제하기</button>
                 </div>
                 <div class="modal-footer">
@@ -945,7 +981,7 @@
             </div>
         </div>
     </div>
-    </c:forEach>
+    
       <script>
       
       
@@ -963,6 +999,12 @@
   		var amount = 100;
 	    var IMP = window.IMP;
 	    IMP.init('imp34313892');
+	    
+	    if (startDate === "") {
+            alert("체크인날짜를 선택해주세요.");
+        } else if(endDate === ""){
+        	alert("체크아웃날짜를 선택해주세요.");
+        } else {
 	    IMP.request_pay({
 	        pg : 'html5_inicis',
 	        pay_method : 'card',
@@ -989,6 +1031,8 @@
 	    
 	        alert(msg);
 	    });
+        	
+        };
   	});
     </script>
     
@@ -1008,8 +1052,10 @@
 		    var dif = da2 - da1;
 		    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 		    if(sdd && edd){		        
-		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
-		        document.getElementById('payResult').value = amount * days
+		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
+		    	document.getElementById('daysL').innerText = days
+		        var payResult = document.getElementById('payResult').value = amount * days
+		        document.getElementById('payResultB').innerText = payResult+"원"
 		     }
 	  	}
 	    
@@ -1029,11 +1075,19 @@
 			    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 			    
 			    if(sdd && edd){		        
-			        var days = document.getElementById('days').value = parseInt(dif/cDay) + 1			        
-			        document.getElementById('payResult').value = amount * days
+			    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
+			    	document.getElementById('daysL').innerText = days
+			        var payResult = document.getElementById('payResult').value = amount * days
+			        document.getElementById('payResultB').innerText = payResult+"원"
 			     }
 			    if(sdd >= edd){
 			    	alert('체크아웃날짜를 다시 체크해주세요.');
+			    	document.getElementById("endDate").value="";
+			    	document.getElementById('endDateResult').innerText = document.getElementById("endDate").value;
+			    	document.getElementById('payResult').value="";
+			    	document.getElementById('payResultB').innerText = "";
+			    	document.getElementById('days').value="";
+			    	document.getElementById('daysL').innerText ="";
 			    }
 		  	}
 
@@ -1041,6 +1095,8 @@
 	    	  const value = e.value;	    	  
 	    	  document.getElementById('personNumber').value
 	    	    = value;
+	    	  
+	    	  document.getElementById('personNumberL').innerText = value;
 	    	}
     </script>
     
@@ -1079,7 +1135,7 @@
                 
             </div>
             <div class="modal-footer">                
-                <button type="submit" id="reportBtn">신고하기</button>
+                <button type="submit" id="reportBtn" onclick="reportAlert()">신고하기</button>
                 <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
             </div>
             </form>

@@ -603,7 +603,7 @@
                       <tr id="forChageAjax${abStatus.index}" class="listTableTr" >
                         <td class="walletName" id='deleteClick' >${ ab.accName }</td>
                         <td class="walletCate"> ${ ab.accClassify }</td>
-                        <td class="walletPrice"><fmt:formatNumber value="${ ab.accWon }" pattern="#,###"/></td>
+                        <td class="walletPrice" id="howMuch"><fmt:formatNumber value="${ ab.accWon }" pattern="#,###"/></td>
                         <td class="walletPayDate"><fmt:formatDate value="${ ab.accTripDate }" type="date" pattern="yyyy-MM-dd"/></td>
                         <td class="walletStatus">${ab.accPstatus }</td>
                         <td class="walletTouch">
@@ -614,14 +614,18 @@
                             </label>
                             <input type="hidden" id="thisDate${abStatus.index}" value="${ab.accTripDate}">
                         	<input type="hidden" id="thisColNum${abStatus.index}" value="${ab.accno}">
+                        	<input type="hidden" id="thisAccWon${abStatus.index }" value="${ab.accWon }">
+                        	<input type="hidden" id="thisAccompany${abStatus.index }" value="${ ab.accAccompany }">
                         </td>
                         <td class="walletPerson" id="wpId${abStatus.index}">
 	                 	<fmt:formatNumber value="${ ab.accWon/ab.accAccompany }" pattern="#,###"/>
+	                 	
                         </td>
                         <td class="walletAccompany" id="together${abStatus.index}"> ${ ab.accAccompany } </td>
                         <c:choose>
 		          			<c:when test="${ empty ab.whopay }">
 		          				<td class="walletWhoPay" id="payPersonNull${abStatus.index}">${ loginUser.usname }</td>
+		          				
 		          			</c:when>
 		          			<c:when test="${ !empty ab.whopay}">
 		          				<td class="walletWhoPay" id="payPerson${abStatus.index}">${ab.whopay}</td>
@@ -838,11 +842,14 @@
 		var accDutch = $("#slideCheck"+i).prop("checked");
 		var accAccomString = "";
 		var accAccompany = 1;
+		var accWon = $("#howMuch"+i).val();
 		
-		var whopay = "";
+		//console.log("accWon = " +accWon);
 		
-		console.log("#slideCheck"+i);
-		console.log("accDutch = " + accDutch);
+		var whopay = "${loginUser.usname}";
+		
+		//console.log("#slideCheck"+i);
+		//console.log("accDutch = " + accDutch);
 		
 		if(accDutch == true){
 			accAccompany = prompt("몇명이서 더치페이 할까요?", "숫자만 입력해 주세요.");
@@ -851,18 +858,18 @@
 			accDutch = 'off';
 		} else{
 			accDutch = 'on'
-			whopay = "${loginUser.usname}";
 		}
 		var accno = $("#thisColNum"+i).val();
-		console.log("accDutch = " + accDutch);
+		/* console.log("accDutch = " + accDutch);
 		console.log("accno = " + accno);
-		console.log("whopay = " + whopay);
+		console.log("whopay = " + whopay); */
 		
 		var searchOb = new Object();
 		searchOb.accno = accno;
 		searchOb.accDutch = accDutch;
 		searchOb.accAccompany = accAccompany;
 		searchOb.whopay = whopay;
+		searchOb.accWon = accWon;
 				
 		$.ajax({
 			url : "onoff",
@@ -870,7 +877,7 @@
 			type : "POST",
 			contentType : "application/json; charset=utf-8",
 			success : function(data){
-				var wpId = $("#wpId"+i).text(data.accOneWon);
+				var wpId = $("#wpId"+i).text(data.accOneWon.format());
 				var together = $("#together"+i).text(data.accAccompany);
 				
 				if(data.whopay == null)
@@ -913,22 +920,14 @@
 		}
 	</script>
 	
-	<script>
+	 <script>
 	 	$(document).ready(function(){
-	 		
-	 		if(${not empty sessionScope.loginUser}){
-	 			if(${loginUser.uspart eq "일반"}){
-	 				var uspart = "일반";
-	 			} else if(${loginUser.uspart eq "제휴"}){
-	 				var uspart = "제휴";
-	 			} else {
-	 				var uspart = " ";
-	 			}
-	 			
+
+	 		if('${loginUser.usid}' != ''){
 	 			var searchU = new Object();
-				searchU.usno = ${loginUser.usno};
-				searchU.uspart = uspart;
-	 			
+					searchU.usno = "${loginUser.usno}";
+					searchU.uspart = "${loginUser.uspart}";
+					
 	 			$.ajax({
 	 				url : "${contextPath}/mypage/new",
 	 				data : JSON.stringify(searchU),
@@ -939,16 +938,31 @@
 	 						$('.newAlert').css("display","block");
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
+	 					} else{
+	 						alert("세션확인 오류!");
 	 					}
 	 				},
 	 				error : function(e){
-	 					alert("error code : " + e.status + "\n"
+	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
 									+ "message : " + e.responseText);
 	 				}
 	 			});
 	 		}
 	 		
 	 	});
+	 	
+	 	Number.prototype.format = function(){
+	 	    if(this==0) return 0;
+	 	 
+	 	    var reg = /(^[+-]?\d+)(\d{3})/;
+	 	    var n = (this + '');
+	 	 
+	 	    while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+	 	 
+	 	    return n;
+	 	};
 	 </script>
+	 
+	 
 </body>
 </html>

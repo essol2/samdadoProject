@@ -158,6 +158,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		
 		<!-- BUSINUESS Join -->
 		<result property="bus_name" column="BUS_NAME"/>
+		
+		<!-- A_board join -->
+		<result property="bno" column="BNO"/>
+		<result property="btitle" column="BTITLE"/>
+		<result property="bdate" column="BDATE"/>
+		<result property="bcontent" column="BCONTENT"/>
 	</resultMap>
 	
 	<resultMap type="Booking" id="BookingResultSet">
@@ -858,12 +864,13 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<select id="selectDetailAlert" resultMap="AlertResultSet">
 		SELECT *
-		FROM NEWS N, POINT P, REPORT R, "QnA" Q, ALLIANCE A, BUSINESS B
+		FROM NEWS N, POINT P, REPORT R, "QnA" Q, ALLIANCE A, BUSINESS B, A_BOARD AB
 		WHERE A.BUS_CODE = B.BUS_CODE(+)
 		AND N.NKEYNO = P.PNO(+)
 		AND N.NKEYNO = R.REPORT_NO(+)
 		AND N.NKEYNO = Q.QNA_NO(+)
 		AND N.NKEYNO = A.AL_NO(+)
+		AND N.NKEYNO = AB.BNO(+)
 		AND N.NNO = #{nno}
 	</select>
 	
@@ -1163,6 +1170,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
   <update id="updateUserStatus" parameterType="User">
   		UPDATE "USER"
   		SET US_STATUS = 'N'
+  			US_STOP = SYSDATE
   		WHERE US_NO = #{usno}
   </update>
   
@@ -1201,5 +1209,17 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		FROM ROUTE_FINAL
 		WHERE US_NO = #{usno}
 		ORDER BY ROUTE_NO DESC
+   </select>
+   
+   <select id="findHotelJjimList" resultMap="JjimResultSet">
+		<![CDATA[SELECT *
+				FROM (SELECT J.BUS_CODE, B.BUS_NAME, B.HOTEL_FACILITY, BA.FILE_RENAME
+				      FROM JJIM J, BUSINESS B, BUSINESS_ATT BA
+				      WHERE J.BUS_CODE = B.BUS_CODE
+				      AND B.BUS_CODE = BA.BUS_CODE
+				      AND B.BUS_CATEGORY = 'H'
+				      AND BA.FILE_LV = 0
+				      AND J.US_NO = #{usno})
+				WHERE ROWNUM < 3]]>
    </select>
 </mapper>

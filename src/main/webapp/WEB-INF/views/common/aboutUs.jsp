@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +13,19 @@
         * {
             font-family: 'Jeju Myeongjo', serif;
         }
-        
-        body{
-        	margin : 0px;
-        }
+   .container--fluid{
+   		width : 100%;
+   }
+	
+		body{
+			margin : 0;
+			padding : 0;
+			background-image: url("${contextPath}/resources/images/image_aboutUs/aboutUs.jpg");
+		    background-repeat: no-repeat;
+		    background-attachment: fixed;
+		    background-size : 100% 870px;
+		    width : 100%;
+		}
 
         .text1{
             font-size: 80px;
@@ -39,8 +49,7 @@
         }
         
         #content1 {
-            margin-bottom: 2%;
-
+            /* margin-bottom: 2%; */
         }
 
         .ad_text {
@@ -69,8 +78,11 @@
         }
 
         #textArea{
-            display: inline-block;
-           
+            width : 100%;
+            padding-top : 1%;
+            padding-bottom : 1%;
+            background-color : white;
+
         }
 
         .content2{            
@@ -84,7 +96,6 @@
             position: absolute;           
             width: 100%;
             float: left;
-            margin-left: 1.5%;
         }
 
         .text2{
@@ -96,92 +107,113 @@
         }
 
         .gif_box{
-           padding-top: 25%;
+           padding-top: 24.1%;
+        }
+        #imagesBox{
+        	background-color : white;
+        	margin-top : 5%;
+        	padding-bottom : 5%;
+        	text-align : center;
+        	width:
+        }
+        .infoImg{
+        	display : inline-block;
+        	width : 20%;
+        	/* border : 2px solid red; */
+        	margin : 4%;
+        }
+        
+        #adinfo{
+        	padding-top : 5%;
+        	padding-bottom : 10%;
+        	background-color : white;
+        }
+        
+        .card-img{
+        	background-attachment : fixed;
+        }
+        
+        #iconImg{
+        	float : right;
+        	padding : 2%;
+        	width : 50px;
+
         }
     </style>
 
 </head>
 <body>
+    <div class="container--fluid">
         <!-- 이미지 -->
-        <div class="row" style="height: 100vh;"> <!-- height: 100vh; 여기 사이즈를 줄이면서 내용을 넣으삼 -->
+        <div class="row" style="height: 100vh;">
             <div class="card bg-dark text-white">
-                <img src="${contextPath}/resources/images/image_about/aboutUs.jpg" class="card-img" alt="..." width="100%" height="870px" style="filter: brightness(70%); padding:0px; margin:0px;">
+            <div id="icon" style="width:100%">
+            <a href="${contextPath}/main">
+           <img src="${contextPath}/resources/images/image_main/logo_w.png" alt="..." id="iconImg">
+           </a>
+            </div>
                 <div class="main_text">
-                    <p class="text2">우리가 사랑하는 제주도의 또다름 이름.</p>
-                    <b class="text1">삼 다 도</b>
+                    <p style="color : white;">우리가 사랑하는 제주도의 또다름 이름</p>
+                    <b class="text1">삼 다 도.</b>
                 </div>
               </div>
         </div>
-            
+
+        <!-- 아래 컨탠츠 1 -->
+        <div class="row" id="content1">
+        
+        <div id="imagesBox">
+        <img src="${contextPath}/resources/images/image_aboutUs/routeinfo.png" class="infoImg" alt="...">
+        <img src="${contextPath}/resources/images/image_aboutUs/tourinfo.png" class="infoImg" alt="...">
+        <img src="${contextPath}/resources/images/image_aboutUs/accountinfo.png" class="infoImg" alt="..." >
+        </div>
         <div class="col" id="textArea">
-                <p style="font-size: 20px;" >
+               <!--  <p style="font-size: 20px;" >
+
                     <b style="font-size: 50px;">또시 꼽 옵서양</b><br><br>
                     여행은 출발하기도 전부터<br>
                     행복한 상상을 가져다주죠.<br>
                     한국인들이 사랑하는 제주도에서<br>
                     여러분들의 상상이<br>
                     현실이 되는 순간만을 기다리고 있어요.<br>
-                </p>
+                </p> -->
+               <img src="${contextPath}/resources/images/image_aboutUs/thirdImg.png" class="infoImg" alt="..." style="width:100%; margin:0;">
+                
         </div>
-            <div class="col">
-                <img src="${contextPath}/resources/images/image_about/image59.png" alt="..." width="90%" height="870px" style="float: right;">
-            </div>
-
         <!-- 아래 컨텐츠 2 -->
-        <div class="row">
-            <div class="col">
-                <img src="${contextPath}/resources/images/image_about/jaju.png" alt="..." width="96%" height="870px">
-            </div>
+        <div class="row" id="adinfo">
+                <img src="${contextPath}/resources/images/image_aboutUs/adinfo.png" alt="..." width="100%">
+            
 
-            <div class="col" id="content2">
-              <p class="textArea3" style="font-size: 20px;">
-                <b style="font-size: 50px;">많이 팝서,<br>다시 오꾸다양</b><br><br>
-                제주 여행 제휴 마케팅 1등<br>
-                삼다도와 함께해요 :)<br>
-                심플하지만 실속있는 고효율 광고<br>
-                마케팅으로 브랜드 인지도와<br>
-                구매전환율을 높여보세요.<br>
-              </p>
-
-                <!-- 광고 박스 -->
-                <div id="ad_box">
-                <div class="ad_text">
-                    <p >선택 1. 배너 광고<bR>
-                    포인트 충전 CPC 광고<br>
-                    첫 페이지에 갤러리 형식으로 배너 업로드<br>
-                    최소 300000만원 충천<br>
-                    1회 클릭 당 100원 차감<br>
-                    관리자 심사 후 광고 진행</p>
-                    <p style="font-size: 9px; color: red; margin-top: 0%;">기재 링크와 이미지가 동일하지 않을 시 반려될 수 있습니다.</p>
-                </div>
-                <div class="ad_text">
-                    <p>선택 1. 프리미엄 광고<br>
-                    프리미엄 서비스 구매 시 상위노출 혜택<br>
-                    이미지 확대 + 프리미엄 아이콘 부여</p>
-                </div>
-            </div>
-            </div>
           </div>
           
           <section class="content2">
               <div class="text2">
-                  <h1>@삼다도 인스타그램</h1>
-                  <h1># 제주  # 제주 여행 # 제주도</h1>
+                  <h1 style="color:black; font-size : 30px; margin-bottom:0;">@삼다도 인스타그램</h1>
+                  <p style="margin-top:0;"> 지금 삼다도 인스타그램에서 제주도의 신선한 여행 바람을 만나보세요</p>
+                  <img src="${contextPath}/resources/images/image_aboutUs/instagram.png" width ="10%">
+                  <h1 style="color:white"># 제주  # 제주 여행 # 제주도</h1>
               </div>
               <div class="image">
-                  <img class="mainimage" src="${contextPath}/resources/images/image_about/image60.png">
-      
-                  <img class="mainimage" src="${contextPath}/resources/images/image_about/IMG_4252.png">
-             
-                  <img class="mainimage" src="${contextPath}/resources/images/image_about/image57.png">
-              
-                  <img class="mainimage" src="${contextPath}/resources/images/image_about/image58.png">
+                  <MARQUEE scrollamount="8">
+      			  <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/image60.png">
+                  <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/IMG_4252.png">
+                  <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/image57.png">
+                  <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/image58.png">
+                  <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/image60.png">
+                  <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/IMG_4252.png">
+                  <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/image57.png">
+                  <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/image58.png"></MARQUEE>
+
               </div>
           </section>
 
         <section class="gif_box">
-            <img src="${contextPath}/resources/images/image_about/moveSamdado.gif" width="100%" height="870px ">
+            <img src="${contextPath}/resources/images/image_aboutUs/moveSamdado.gif" width="100%" height="870px ">
         </section>
+        </div>
+        <jsp:include page="./footer.jsp"/>
+
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
