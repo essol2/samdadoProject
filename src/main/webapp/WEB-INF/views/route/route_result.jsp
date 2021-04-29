@@ -211,28 +211,23 @@
                                 </c:if>
                                 
                                 <div class="c1_border" id="right-middle-border">
-                                    <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
+                                <c:forEach var="h" items="${ hotelList }">
+                                <c:if test="${ h.bus_classify eq 'P' && h.file_lv eq '0' }">
+                                   <table style="margin: auto; margin-top: 10%; margin-bottom: 10%; text-align : center;">
                                         <tr>
-                                            <td><img src="${contextPath}/resources/images/image_route/호텔이미지.png"></td>
+                                            <td onclick="goToDetail(${h.bus_code})" ><img src="${contextPath}/resources/busUploadFiles/${h.file_rename}" style="width : 90%; height : auto;"></td>
+                                        </tr>
+                                         <tr>
+                                            <td id="navi-content" style="font-size : 30px; color : #467355; padding-top:2%;">${h.bus_name }</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
+                                            <td id="navi-content" style="color:#bfbfbf;">${h.hotel_facility }</td>
                                         </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔1</td>
-                                        </tr>
+                                       
                                     </table>
-                                    <table style="margin: auto; margin-bottom: 10%;">
-                                        <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔2</td>
-                                        </tr>
-                                    </table>
+                                </c:if>
+                                </c:forEach>
+                                  
                                 </div>
                                 <br>
 

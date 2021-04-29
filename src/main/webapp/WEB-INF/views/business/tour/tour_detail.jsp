@@ -637,7 +637,7 @@
     	
     	.premium {
             width: 60px;
-            height: 60px;
+            height: 50px;
             margin-bottom:30px;
         }
         
@@ -1030,17 +1030,17 @@
                     <div id="table">
                         <div class="rows">
                             <span class="cell cols1">성인입장권</span>
-                            <span class="cell cols2"> ${ tour.pro_adult }원</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_adult }" pattern="####"/>원</span>
                             <span class="cell cols3"><input type="number" id="adultNumber" onchange="adult(this)" value="0" min="0">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">청소년입장권</span>
-                            <span class="cell cols2">${ tour.pro_youth }원</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_youth }" pattern="####"/>원</span>
                             <span class="cell cols3"><input type="number" id="youthNumber" onchange="youth(this)" value="0" min="0">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">어린이입장권</span>
-                            <span class="cell cols2">${ tour.pro_child }원</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_child }" pattern="####"/>원</span>
                             <span class="cell cols3"><input type="number" id="childNumber" onchange="child(this)" value="0" min="0">명</span>
                         </div>
                     </div>

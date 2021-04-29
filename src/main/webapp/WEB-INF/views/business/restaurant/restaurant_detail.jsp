@@ -494,6 +494,13 @@
 	    font-size: 30px;
 	    font-weight: bold;
 	}
+	
+	.premium {
+            width: 60px;
+            height: 50px;
+            margin-bottom:30px;
+        }
+        
     </style>
 
 </head>
@@ -508,7 +515,7 @@
             <div class="title_area">
                 <div class="title_area">
                     <c:if test="${ res.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premiumicon.png"><br>
+                    <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     </c:if>
                     <label id="ho_title" class="title_tag">${ res.bus_name }</label>
                     <br>

@@ -96,6 +96,11 @@ public class businessServiceImpl implements businessService {
 	public List<Business> selectHotelList() {
 		return bDao.selectHotelList();
 	}
+	// 호텔프리미엄리스트
+	@Override
+	public List<Business> selectHotelListP() {
+		return bDao.selectHotelListP();
+	}
 	// 호텔디테일
 	@Override
 	public Business selectHotel(int bus_code) {
@@ -404,6 +409,8 @@ public class businessServiceImpl implements businessService {
 		// TODO Auto-generated method stub
 		return bDao.selectReviewList(t);
 	}
+
+	
 
 	
 

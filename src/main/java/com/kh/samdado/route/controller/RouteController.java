@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.route.model.exception.RouteException;
@@ -41,19 +43,23 @@ public class RouteController {
 	@Autowired
 	private MypageService mService;
 	
+	@Autowired
+	private businessService bService;
+	
 	@GetMapping("/m_route")				// 길 만들기 페이지로 이동
 	public String route() {
 		return "route/route_main";
 	}
 	
 	@GetMapping("/search")
-	public String searchRoute(Model model, 
+	public ModelAndView searchRoute(Model model, 
 							HttpSession session,
 							@ModelAttribute User u,
 							@ModelAttribute rSearch search,
 							@RequestParam("area") String area, 
 							@RequestParam("thema") String thema, 
-							@RequestParam("routeDate") Date routeDate ) {		// 루트 검색
+							@RequestParam("routeDate") Date routeDate,
+							ModelAndView mv) {		// 루트 검색
 		
 		if(u.getUsno() != null) {
 			// 사용자별 찜한 숙소리스트 가져오기
@@ -75,7 +81,16 @@ public class RouteController {
 		List<Route> list = rService.routeSearch(search);
 		model.addAttribute("list", list);
 		
-		return "route/route_result";
+		/* 한빈 */
+		List<Business> hotelList = bService.selectHotelListP();
+		System.out.println(hotelList);
+		if(hotelList != null) {
+			mv.addObject("hotelList", hotelList);
+			System.out.println("hotelList2" + hotelList);
+			mv.setViewName("route/route_result");
+		}
+		
+		return mv;
 	}
 	
 	@PostMapping("/changeRoute")

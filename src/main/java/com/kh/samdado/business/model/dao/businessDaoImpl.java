@@ -110,6 +110,12 @@ public class businessDaoImpl implements businessDao {
 	public List<Business> selectHotelList() {
 		return sqlSession.selectList("businessMapper.selectHotelList");
 	}
+	
+	@Override
+	public List<Business> selectHotelListP() {
+		return sqlSession.selectList("businessMapper.selectHotelListP");
+	}
+	
 	// 호텔디테일
 	@Override
 	public Business selectHotel(int bus_code) {
@@ -429,6 +435,8 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.selectReviewList", t);
 	}
+
+	
 
 	
 
