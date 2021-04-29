@@ -195,8 +195,6 @@
         
         .infoLabel{
        	    font-size: 20px;
-		    /* font-weight: bold; */
-		    color: #495740;
         }
 
         #mapBtn {
@@ -808,7 +806,7 @@
     	if(reviews == '0'){
     		$(".reviewBox").css({
     			"text-align": "center",
-    	    	"color": "#495975",
+    			"color" : "#495740",
     	    	"margin-bottom": "40px"
     		});
     	}

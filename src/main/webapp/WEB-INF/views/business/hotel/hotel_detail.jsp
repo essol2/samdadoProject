@@ -509,8 +509,6 @@
     	
     	.infoLabel{
        	    font-size: 20px;
-		    /* font-weight: bold; */
-		    color: #495740;
         }
         
         .premium {
@@ -539,7 +537,8 @@
                     </c:if>
                     <label id="ho_title" class="title_tag">${ hotel.bus_name }</label>
                 </div>
-                <label id="ho_address" class="infoLabel">${ hotel.bus_address.substring(6) }</label>
+                <label id="ho_address" class="infoLabel">${ hotel.bus_address.substring(6) }</label><br>
+                <label class="infoLabel">입실 : ${ hotel.bus_opening.substring(0, 5) } ~ 퇴실 : ${ hotel.bus_opening.substring(6) }</label>&nbsp;
             </div>
 
             <div id="ho_info">
@@ -861,7 +860,7 @@
     	if(reviews == '0'){
     		$(".reviewBox").css({
     			"text-align": "center",
-    	    	"color": "#495975",
+    			"color" : "#495740",
     	    	"margin-bottom": "40px"
     		});
     	}

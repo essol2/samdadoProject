@@ -655,6 +655,7 @@
 		    	            	  var list = "";
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+ data[i].bus_code +"'>"
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
 		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
@@ -820,8 +821,8 @@
                         <b>${ t.bus_name }</b>
                         <b><fmt:formatNumber value="${ t.pro_adult }" pattern="#,###"/>원</b>
                         <c:if test="${ loginUser.usno != null }">
-	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
-	                    	</c:if>
+                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
+                    	</c:if>
                     </div>
                 </c:if>
                 </c:forEach>
