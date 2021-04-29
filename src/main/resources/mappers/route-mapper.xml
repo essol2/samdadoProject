@@ -174,7 +174,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			SPOT_ADDRESS,
 			SPOT_PATH,
 			SPOT_ONAME,
-			SPOT_PRICE
+			SPOT_PRICE,
+			spot_content
 		FROM
 			TOUR_SPOT
 		WHERE
@@ -188,6 +189,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
            , BUS_NAME
            , (SUBSTR(BUS_ADDRESS, INSTR(BUS_ADDRESS, ',', 1, 1) + 1, INSTR(BUS_ADDRESS,',',1,2)-INSTR(BUS_ADDRESS,  ',', 1, 1) - 1)) BUS_ADDRESS	
            , BT.FILE_RENAME
+           , bus_intro
         FROM
              BUSINESS B, BUSINESS_ATT BT
        	WHERE
@@ -214,7 +216,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				SPOT_ADDRESS, 
 				SPOT_PATH,
 				SPOT_ONAME,
-				SPOT_PRICE 
+				SPOT_PRICE,
+				spot_content
+				 
 			FROM TOUR_SPOT 
 			WHERE 
 				SPOT_TITLE IN (
@@ -230,7 +234,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				(SUBSTR(BUS_ADDRESS, INSTR(BUS_ADDRESS, ',', 1, 1) + 1, INSTR(BUS_ADDRESS,',',1,2)-INSTR(BUS_ADDRESS,  ',', 1, 1) - 1)) BUS_ADDRESS, 
 				'../resources/busUploadFiles/', 
 				FILE_RENAME, 
-				0
+				to_number(PRO_ADULT),
+				BUS_INTRO
 			FROM BVIEW
 			WHERE
 				BUS_NAME IN(
@@ -246,37 +251,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		    	</foreach>
 		    	END
 	    	)
-	
-		<!-- SELECT
-	    	SPOT_TITLE,
-			SPOT_ADDRESS,
-			SPOT_PATH,
-			SPOT_ONAME,
-			BUS_NAME,
-			BUS_ADDRESS,
-			FILE_RENAME
-		FROM
-	    	TOUR_SPOT, BUSINESS, BUSINESS_ATT
-		WHERE
-			SPOT_TITLE IN (
-				<foreach collection="array" item="st" separator=",">
-					#{st}
-				</foreach>
-	    	)
-	    	OR
-	    	BUS_NAME IN (
-	    		<foreach collection="array" item="st" separator=",">
-					#{st}
-				</foreach>
-	    	)
-
-	    	ORDER BY (
-	    		CASE SPOT_TITLE 
-		    	<foreach collection="array" item="st" index="idx">
-		    		WHEN #{st} THEN #{idx}
-		    	</foreach>
-		    	END
-	    	) -->
 	</select>
 	
 	<select id="clearChange" parameterType="String" resultMap="TourSpotResultSet">
@@ -290,7 +264,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				SPOT_ADDRESS, 
 				SPOT_PATH,
 				SPOT_ONAME,
-				SPOT_PRICE
+				SPOT_PRICE,
+				spot_content
 				 
 			FROM TOUR_SPOT 
 			WHERE 
@@ -303,7 +278,12 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			UNION
 			
 			SELECT
-				BUS_NAME, (SUBSTR(BUS_ADDRESS, INSTR(BUS_ADDRESS, ',', 1, 1) + 1, INSTR(BUS_ADDRESS,',',1,2)-INSTR(BUS_ADDRESS,  ',', 1, 1) - 1)) BUS_ADDRESS, '../resources/busUploadFiles/', FILE_RENAME, 0
+				BUS_NAME, 
+				(SUBSTR(BUS_ADDRESS, INSTR(BUS_ADDRESS, ',', 1, 1) + 1, INSTR(BUS_ADDRESS,',',1,2)-INSTR(BUS_ADDRESS,  ',', 1, 1) - 1)) BUS_ADDRESS, 
+				'../resources/busUploadFiles/', 
+				FILE_RENAME, 
+				to_number(PRO_ADULT),
+				BUS_INTRO
 			FROM BVIEW
 			WHERE
 				BUS_NAME IN(
