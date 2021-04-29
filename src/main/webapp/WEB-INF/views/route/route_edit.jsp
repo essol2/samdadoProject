@@ -219,7 +219,7 @@
             background-color: rgb(255,255,255);
             border: 0px;
             width: 100%;
-            margin-top:80%;
+            margin-top:60px;
         }
 
         #ch_btn {
@@ -354,8 +354,12 @@
 											<td>
 												<div class="parent">
 													<div class="spot_border">
+													<div style="height: 50%;">
 														<p class="spot_title" name="title" id="spotTitle">${ r.spot_title }</p>
-														<button class="spot_btn" id="deleteSpot" onclick="deleteSpot(this)"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
+													</div>
+														<div style="height: 50%;">
+															<button class="spot_btn" id="deleteSpot" onclick="deleteSpot(this)"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
+														</div>
 													</div>
 													<div class="spot_chnge">
 	                                                	<button class="up_down" id="tableUp" onclick="moveUp(this)" ><img src="../resources/images/image_route/btn_up.png"></button>
@@ -397,7 +401,9 @@
                                         <c:set var="totalPrice" value="0"/>
                                 		<c:forEach var="r" items="${ list }">
 											<tr>
-		                                    	<td id="cost-content">&nbsp;${ r.spot_title }<fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+		                                    	<c:if test="${ r.spot_price != 0 && r.spot_price != null}">
+		                                    		<td id="cost-content">&nbsp;&nbsp;${ r.spot_title } <fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+		                                    	</c:if>
 		                                        <c:set var="totalPrice" value="${ totalPrice + r.spot_price }"/>
 		                                    </tr>
                                       	</c:forEach>
@@ -552,7 +558,7 @@
 			var $tr = $("#routeTable tbody");
 			
 			$tr.append("<tr><td colspan='2'><img id='arrow' src='../resources/images/image_route/arrow.png'></td></tr>");
-			$tr.append("<tr id='tr1'><td><img src='" + path + name +"'></td><td><div class='parent'><div class='spot_border'><p class='spot_title' name='title' id='spotTitle'>" + title + "</p><button class='spot_btn' id='deleteSpot' onclick='deleteSpot(this)'><img src='../resources/images/image_route/trashcan.png'>삭제하기</button></div><div class='spot_chnge'><button class='up_down' id='tableUp' onclick='moveUp(this)' ><img src='../resources/images/image_route/btn_up.png'></button><br><button class='up_down' id='tableDown' onclick='moveDown(this)'><img src='../resources/images/image_route/btn_down.png'></button></div></div></td></tr>");
+			$tr.append("<tr id='tr1'><td><img src='" + path + name +"'></td><td><div class='parent'><div class='spot_border'><div style='height: 50%;'><p class='spot_title' name='title' id='spotTitle'>" + title + "</p></div><div style='height: 50%;'><button class='spot_btn' id='deleteSpot' onclick='deleteSpot(this)'><img src='../resources/images/image_route/trashcan.png'>삭제하기</button></div></div><div class='spot_chnge'><button class='up_down' id='tableUp' onclick='moveUp(this)' ><img src='../resources/images/image_route/btn_up.png'></button><br><button class='up_down' id='tableDown' onclick='moveDown(this)'><img src='../resources/images/image_route/btn_down.png'></button></div></div></td></tr>");
 			
 			alert("추가되었습니다!");
 		}
@@ -567,7 +573,7 @@
 			var $tr = $("#routeTable tbody");
 			
 			$tr.append("<tr><td colspan='2'><img id='arrow' src='../resources/images/image_route/arrow.png'></td></tr>");
-			$tr.append("<tr id='tr1'><td><img style='height: 225px; width: 300px;' src='../resources/busUploadFiles/" + path + "'></td><td><div class='parent'><div class='spot_border'><p class='spot_title' name='title' id='spotTitle'>" + title + "</p><button class='spot_btn' id='deleteSpot' onclick='deleteSpot(this)'><img src='../resources/images/image_route/trashcan.png'>삭제하기</button></div><div class='spot_chnge'><button class='up_down' id='tableUp' onclick='moveUp(this)' ><img src='../resources/images/image_route/btn_up.png'></button><br><button class='up_down' id='tableDown' onclick='moveDown(this)'><img src='../resources/images/image_route/btn_down.png'></button></div></div></td></tr>");
+			$tr.append("<tr id='tr1'><td><img style='height: 225px; width: 300px;' src='../resources/busUploadFiles/" + path + "'></td><td><div class='parent'><div class='spot_border'><div style='height: 50%;'><p class='spot_title' name='title' id='spotTitle'>" + title + "</p></div><div style='height: 50%;'><button class='spot_btn' id='deleteSpot' onclick='deleteSpot(this)'><img src='../resources/images/image_route/trashcan.png'>삭제하기</button></div></div><div class='spot_chnge'><button class='up_down' id='tableUp' onclick='moveUp(this)' ><img src='../resources/images/image_route/btn_up.png'></button><br><button class='up_down' id='tableDown' onclick='moveDown(this)'><img src='../resources/images/image_route/btn_down.png'></button></div></div></td></tr>");
 			
 			alert("추가되었습니다!");
 		}

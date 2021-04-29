@@ -166,7 +166,7 @@
             background-color: rgb(255,255,255);
             border: 0px;
             width: 100%;
-            margin-top:80%;
+            margin-top:60px;
         }
 
         #ch_btn {
@@ -350,10 +350,14 @@
                                     <table id="costTable">
                                     	<c:set var="totalPrice" value="0"/>
                                 		<c:forEach var="r" items="${ list }">
+                                			
 											<tr>
-		                                    	<td id="cost-content">&nbsp;${ r.spot_title } <fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+												<c:if test="${ r.spot_price != 0 && r.spot_price != null}">
+		                                    		<td id="cost-content">&nbsp;&nbsp;${ r.spot_title } <fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+		                                    	</c:if>
 		                                        <c:set var="totalPrice" value="${ totalPrice + r.spot_price }"/>
 		                                    </tr>
+		                                    
                                       	</c:forEach>
                                     	
                                         <tr> 
