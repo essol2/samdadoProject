@@ -334,7 +334,15 @@ public class businessController {
 				}
 		
 		List<Business> hotelList = bService.selectHotelList();
-			
+		List<Review> reviewList = bService.selectReviewList();
+		for(Business t : hotelList) {
+			for(Review r : reviewList) {
+				if(t.getBus_code() == r.getBus_code()) {
+					t.setAvstar(r.getAvstar());
+					t.setRevcnt(r.getRevcnt());
+				}
+			}
+		}	
 		if(hotelList != null) {
 			mv.addObject("hotelList", hotelList);
 			mv.setViewName("business/hotel/hotel_list");
@@ -801,7 +809,15 @@ public class businessController {
 				}
 		
 		List<Business> resList = bService.selectResList();
-		//System.out.println(resList);
+		List<Review> reviewList = bService.selectReviewList();
+		for(Business t : resList) {
+			for(Review r : reviewList) {
+				if(t.getBus_code() == r.getBus_code()) {
+					t.setAvstar(r.getAvstar());
+					t.setRevcnt(r.getRevcnt());
+				}
+			}
+		}
 		if(resList != null) {
 			mv.addObject("resList", resList);
 			mv.setViewName("business/restaurant/restaurant_list");
@@ -1177,7 +1193,7 @@ public class businessController {
 	public List<Business> starList(HttpServletResponse response, @RequestParam String kinds) {
 		
 		List<Business> starList = bService.starList();
-		System.out.println(starList);
+		//System.out.println(starList);
 		return starList;
 		
 	}
@@ -1331,7 +1347,7 @@ public class businessController {
 		try {
 			file.transferTo(new File(renamePath));
 		} catch (IllegalStateException | IOException e) {
-			System.out.println("파일 업로드 에러 : " + e.getMessage());
+			//System.out.println("파일 업로드 에러 : " + e.getMessage());
 		} 
 		
 		return renameFileName;
