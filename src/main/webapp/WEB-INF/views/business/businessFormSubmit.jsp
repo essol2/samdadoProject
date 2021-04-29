@@ -39,7 +39,7 @@
         <div id="content_div">
         	<!-- 네비 -->
      	<div class="col">
-     		<jsp:include page="../common/navi.jsp"/>
+     		<jsp:include page="../common/navi.jsp"/> <!-- 흰색바탕 navi로 바꾸기 -->
      	</div>
             <!--삼다도 광고 신청-->
             <div class="row" id="include_img_div">

@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="${ contextPath }/resources/css/common/footer.css?v=3" type="text/css">
 </head>
 <body>
-<footer>
+        <footer class="footer-outer-class">
             <div id="footer_left">
                 <img src="${ contextPath }/resources/images/image_footer/footerlogo.png" class="leftImg">
             </div>

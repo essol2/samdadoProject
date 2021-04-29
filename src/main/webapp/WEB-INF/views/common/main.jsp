@@ -140,7 +140,7 @@
             transition-timing-function:ease;
             color: white;
             border-left: 3px solid white;
-            z-index: 0;
+            z-index: 1;
         }
 
         .down {
@@ -161,7 +161,7 @@
             transition-duration:0.4s;
             transition-timing-function:ease;
             
-            z-index: -1;
+            z-index: 0;
         }
 
         #top {
@@ -292,7 +292,7 @@
                 transition-timing-function:ease;
                 color: white;
                 border-left: 3px solid white;
-                z-index: 0;
+                z-index: 1;
         
             }
 
@@ -351,7 +351,7 @@
                 transition-timing-function:ease;
                 color: white;
                 border-left: 3px solid white;
-                z-index: 0;
+                z-index: 1;
             }
             
 	           #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
@@ -406,7 +406,7 @@
                 transition-timing-function:ease;
                 color: white;
                 border-left: 3px solid white;
-                z-index: 0;
+                z-index: 1;
             }
             
            #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
@@ -883,7 +883,7 @@
 		
 		                <br><br>
 		
-		                <!--간편 로그인-->
+		                <!--간편 로그인
 		                <div class="easy_login_div">
 		                    <label for="pwd">간편 로그인</label> <br>
 		                    <div class="easy_login_imgs">
@@ -894,7 +894,7 @@
 			                            </div>
 			                              <div class="col-sm">
 			                              <a href="${naver_url}" id="naver_id_login"><img src="${contextPath}resources/images/image_user/naver.png"/></a>
-			                               <!--  <a id="naver_id_login"><img src="${contextPath}resources/images/image_user/naver.png" alt=""> 네이버</a>-->
+			                               
 			                              </div>
 			                              <div class="col-sm">
 			                                <a href="${ contextPath }/user/easyLogin/kakao"><img src="resources/images/image_user/kakao.png" alt=""> 카카오</a>
@@ -903,6 +903,8 @@
 		                          </div>
 		                    </div>
 		                </div> 
+		                -->
+		                
 	            	</div>
 	           </div>
 	            <div class="modal-footer">
@@ -1227,36 +1229,6 @@
 	 		
 	 	});
 	 </script>
-    
-    <!-- 네이버아디디로로그인 초기화 Script -->
-	<script type="text/javascript">
-		var naver_id_login = new naver_id_login("bwz0ZV165D8RHBEFHdF6", "http://localhost:8896/samdado/main");
-		var state = naver_id_login.getUniqState();
-		naver_id_login.setButton("white");
-		naver_id_login.setDomain(".service.com");
-		naver_id_login.setState(state);
-		naver_id_login.setPopup();
-		naver_id_login.init_naver_id_login();
-	</script>
-    
-    <!-- 네이버아디디로로그인 Callback페이지 처리 Script -->
-	<script type="text/javascript">
-	// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-	function naverSignInCallback() {
-		// naver_id_login.getProfileData('프로필항목명');
-		// 프로필 항목은 개발가이드를 참고하시기 바랍니다.
-		alert(naver_id_login.getProfileData('email'));
-		alert(naver_id_login.getProfileData('name'));
-		//alert(naver_id_login.getProfileData('birthday'));
-		//alert(naver_id_login.getProfileData('mobile'));
-	}
-
-
-	// 네이버 사용자 프로필 조회
-	naver_id_login.get_naver_userprofile("naverSignInCallback()");
-	</script>
-	
-
 	<!-- Optional JavaScript; choose one of the two! -->  
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

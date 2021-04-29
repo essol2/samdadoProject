@@ -263,8 +263,9 @@ header {
 #include_img_div{
     display: flex;
     background-color: #467355;
-    width: 88.2%;
+    width: 100%;
     color: white;
+    z-index: -1;
 
 }
 
