@@ -115,19 +115,19 @@
         margin-left : 3%;
     }
 
-    #alertTable{
+    .alertTable{
         color : black;
          /* border : 1px solid blue;  */
         width : 95%;
         margin : 3%;
     }
-    #alertTable th{
+    .alertTable th{
         width : 10%;
         border-top : 1px solid lightgray;
         border-bottom : 1px solid lightgray;
         font-size: small;
     }
-    #alertTable td{
+    .alertTable td{
         border-top : 1px solid lightgray;
         border-bottom : 1px solid lightgray;
         padding : 3px;
@@ -241,8 +241,23 @@
 	}
 	
 	#alertBox{
-		height : 400px;
+		height : fit-content;
+		margin : 0;
+	}
+	
+	#userAlert{
+	/* border : 1px solid black; */
+		height : 200px;
 		overflow : auto;
+	}
+	
+	#thisTable{
+		margin-top : 0px;
+		height : 300px
+	}
+	
+	#boardDiv{
+		margin : 0;
 	}
 </style>
 <body>
@@ -265,11 +280,75 @@
             </div>
 
             <div id="mainBox">
-             <h2 style='margin : 3%;'>내 소식</h2>
                 <div id="alertBox">
-		            <table id="alertTable"> 
+                	<div id="boardDiv">
+                	<h2 style='margin : 3%;'>공지사항</h2>
+         
+                		<table class="alertTable">
+	                		<c:choose>
+			            	<c:when test="${ !empty alertBoard}">
+			            	<c:forEach var="b" items="${ alertBoard }" varStatus="bStatus">
+			            		<tr style="cursor : pointer;" onclick="detailBAlert(${b.bno})" class="newList">
+			            			<td>${ b.bno }</td>
+			            			<td>${ b.btitle }</td>
+			            			<td>${ b.bdate }</td>
+			            		</tr>
+			            	</c:forEach>
+			            	</c:when>
+			            	<c:otherwise>
+			            		<tr>
+			            			<td> 공지사항이 없습니다!</td>
+			            		</tr>
+			            	</c:otherwise>
+			            	</c:choose>
+			            	<!-- 페이징 처리 -->
+								<tr style="text-align : center;">
+									<td colspan="3" style="color : black;">
+									<!-- [이전] -->
+									<c:if test="${ api.currentPage <= 1 }">
+										[이전] &nbsp;
+									</c:if>
+									<c:if test="${ api.currentPage > 1 }">
+										<c:url var="before" value="/mypage/alert">
+											<c:param name="page" value="${ api.currentPage -1 }" />
+										</c:url>
+										<a href="${ before }" style="color : black;">[이전]</a> &nbsp;
+									</c:if>
+									<!-- 페이지 숫자 -->
+									<c:forEach var="p" begin="${ api.startPage }" end="${ api.endPage }">
+										<c:if test="${ p eq api.currentPage }">
+											<font color="#467355" size="4"><b>${ p }</b></font> &nbsp;
+										</c:if>
+										<c:if test="${ p ne api.currentPage }">
+											<c:url var="pagination" value="/mypage/alert">
+												<c:param name="page" value="${ p }"/>
+											</c:url>
+											<a href="${ pagination }" style="color : black;">${ p }</a> &nbsp;
+										</c:if>
+									</c:forEach>
+									<!-- [다음] -->
+									<c:if test="${ api.currentPage >= api.maxPage }">
+										[다음]
+									</c:if>
+									<c:if test="${ api.currentPage < api.maxPage }">
+										<c:url var="after" value="/mypage/alert">
+											<c:param name="page" value="${ api.currentPage + 1 }" />
+										</c:url>
+										<a href="${ after }" style="color : black;">[다음]</a>
+									</c:if>
+									</td> 
+								</tr>
+		            	</table>
+		            </div>
+		            	
+		            	
+                	</div>
+               		<h2 style='margin-top : 0; margin-left : 3%; margin-right : 3%;'>내 소식</h2>
+               		<div id='userAlert'>
+		            <table class="alertTable" id="thisTable"> 
 		            <c:choose>
 		            <c:when test="${ !empty alertNList || !empty alertYList}">
+			            
 			            <c:forEach var="ab" items="${ alertNList }" varStatus="abStatus">
 			                <tr style="cursor : pointer;" onclick="detailNAlert(${ab.nno})" class="newList">
 			                    <th class="nno" style="color : #467355;">new</th>
@@ -326,6 +405,7 @@
 			             </c:otherwise>
 			             </c:choose>
 		            </table>
+		            </div>
 	       		</div>
             </div>
             
@@ -382,6 +462,12 @@
 		$("#modal_close_Ybtn").click(function(){
 			   $("#modalY").fadeOut();
 		});   
+		
+		function detailBAlert(bno){
+			var datailList = findBoardDetailAjax(bno);
+			$("#modalY").fadeIn();
+		}
+		
 		
 		
 		function findDetailAjax(nno){
@@ -620,25 +706,7 @@
 						tr4.append(tqreply);
 						blankTr2.append(blankTd2);
 						table.append(tr1, blankTr2, tr3, tr4);
-					} else if(deAlert.ncate == 'B'){ // 공지사항 상세보기
-						var tncate = $("<th style='width : 10%; text-align : right;'>").text("유형 : ");
-						var tncateData = $("<td style='width : 60%; text-align : left;'>").text("공지사항");
-
-						var blankTr2 = $("<tr>");
-						var blankTd2 = $("<td colspan='4' style='height : 30px;'>").text(" ");
-						
-						var tr3 = $("<tr>");
-						var tqcont = $("<th colspan='4'>").text("제목 : " + deAlert.btitle);
-						
-						var tr4 = $("<tr>");
-						var tqreply = $("<th colspan='4'>").text(deAlert.bcontent);
-						
-						tr1.append(tnno, tnnoData, tncate, tncateData);
-						tr3.append(tqcont);
-						tr4.append(tqreply);
-						blankTr2.append(blankTd2);
-						table.append(tr1, blankTr2, tr3, tr4);
-					}
+					} 
 				
 					
 	
@@ -730,6 +798,60 @@
 			
 			});
 		} 
+		
+		function findBoardDetailAjax(bno){
+			
+			//console.log("아작스 전에 nno 확인 : " + nno);
+			
+			var searchBno = new Object();
+			searchBno.bno = bno;
+			searchBno.usno = ${loginUser.usno};
+			searchBno.usnews = ${loginUser.usnews};
+			
+			//console.log("usn = " + ${loginUser.usno});
+			//console.log("usnews = " + ${loginUser.usnews});
+			
+			$.ajax({
+				url : "${contextPath}/mypage/alertboardajax",
+				data : JSON.stringify(searchBno),
+				type : "post", 
+				contentType : "application/json; charset=utf-8",
+				dataType : "json",
+				success : function(data) {
+					console.log(data);
+					
+					table =  $("#modalYTable");
+					table.html("");
+					
+					var tr1 = $("<tr>");
+					var tnno = $("<th style='width : 10%; text-align : right;'>").text("번호 : ");
+					var tnnoData = $("<td style='width : 40%; text-align : left;'>").text(data.bno);
+					
+					var tncate = $("<th style='width : 10%; text-align : right;'>").text("유형 : ");
+					var tncateData = $("<td style='width : 60%; text-align : left;'>").text("공지사항");
+
+					var blankTr2 = $("<tr>");
+					var blankTd2 = $("<td colspan='4' style='height : 30px;'>").text(" ");
+					
+					var tr3 = $("<tr>");
+					var tqcont = $("<th colspan='4'>").text("제목 : " + data.btitle);
+					
+					var tr4 = $("<tr>");
+					var tqreply = $("<th colspan='4'>").text(data.bcontent);
+					
+					tr1.append(tnno, tnnoData, tncate, tncateData);
+					tr3.append(tqcont);
+					tr4.append(tqreply);
+					blankTr2.append(blankTd2);
+					table.append(tr1, blankTr2, tr3, tr4);
+				},
+				error : function(e) {
+					alert("error code : " + e.status + "\n"
+							+ "message : " + e.responseText);
+				}
+			
+			});
+		}
 	</script>
        
     <script>

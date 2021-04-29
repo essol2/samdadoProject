@@ -934,31 +934,57 @@
     </script>
      <script>
 	 	$(document).ready(function(){
+	 		
+	 		function addCount(){
 
 	 		if('${loginUser.usid}' != ''){
+	 			var checkUP = "${loginUser.uspart}";
+	 			
 	 			var searchU = new Object();
 					searchU.usno = "${loginUser.usno}";
-					searchU.uspart = "${loginUser.uspart}";
-					
-	 			$.ajax({
-	 				url : "${contextPath}/mypage/new",
-	 				data : JSON.stringify(searchU),
-	 				type : "post",
-	 				contentType : "application/json; charset=utf-8",
-	 				success : function(data){
-	 					if(data > 0){
-	 						$('.newAlert').css("display","block");
-	 						$('.newAlert').css("display","inline-block");
-	 						$('.newAlert').css("margin-bottom","5px;");
-	 					}
-	 				},
-	 				error : function(e){
-	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
-									+ "message : " + e.responseText);
-	 				}
-	 			});
+					searchU.uspart = checkUP;
+					searchU.usnews = "${loginUser.usnews}";
+				
+				if(checkUP == "제휴"){
+		 			$.ajax({
+		 				url : "${contextPath}/mypage/new",
+		 				data : JSON.stringify(searchU),
+		 				type : "post",
+		 				contentType : "application/json; charset=utf-8",
+		 				success : function(data){
+		 					if(data > 0){
+		 						$('.newAlert').css("display","block");
+		 						$('.newAlert').css("display","inline-block");
+		 						$('.newAlert').css("margin-bottom","5px;");
+		 					}
+		 				},
+		 				error : function(e){
+		 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
+										+ "message : " + e.responseText);
+		 				}
+		 			});
+				} else if(checkUP == "일반"){
+					$.ajax({
+		 				url : "${contextPath}/mypage/usernew",
+		 				data : JSON.stringify(searchU),
+		 				type : "post",
+		 				contentType : "application/json; charset=utf-8",
+		 				success : function(data){
+		 					if(data > 0){
+		 						$('.newAlert').css("display","block");
+		 						$('.newAlert').css("display","inline-block");
+		 						$('.newAlert').css("margin-bottom","5px;");
+		 					}
+		 				},
+		 				error : function(e){
+		 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
+										+ "message : " + e.responseText);
+		 				}
+		 			});
+				}
 	 		}
-	 		
+	 		}
+	 		setInterval(addCount, 3000);
 	 	});
 	 </script>
 	 

@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="authKey" column="AUTH_KEY" />
 		<result property="pbalance" column="PBALANCE" />
 		<result property="enrolldate" column="ENROLL_DATE" />
+		<result property="usnews" column="USNEWS"/>
 	</resultMap>
 	
 	<!-- 로그인 -->
@@ -37,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			  , US_STOP
 			  , PBALANCE
 			  , ENROLL_DATE
+			  , USNEWS
 		   FROM
 		   		"USER"
 		  WHERE
@@ -61,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , US_STATUS
 		  , PBALANCE
 		  , ENROLL_DATE
+		  , USNEWS
 		)
 		VALUES
 		(
@@ -73,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usphone}
 		  , #{busno} <!-- 일반 회원일시 NULL -->
 		  , #{uspart}
+		  , DEFAULT
 		  , DEFAULT
 		  , DEFAULT
 		  , DEFAULT

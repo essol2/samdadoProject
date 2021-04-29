@@ -36,6 +36,7 @@ public class User {
 	private String authKey;
 	private int pbalance;
 	private Date enrolldate;
+	private int usnews;
 	
 	private int upartcount;
 	private String utodate;	// 관리자 서치 날짜 포멧팅을 위한 컬럼
