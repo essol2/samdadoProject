@@ -495,7 +495,7 @@ public class AdminController {
 	
 		List<User> userData = aService.selectGetUserData(userType);
 		
-		System.out.println("userData : " + userData);
+		//System.out.println("userData : " + userData);
 	
 		return userData;
 	}
