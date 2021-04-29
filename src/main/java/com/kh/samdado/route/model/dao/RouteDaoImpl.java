@@ -33,7 +33,10 @@ public class RouteDaoImpl implements RouteDao {
 	}
 	
 	@Override
-	public List<TourSpot> clearChange(String[] chlist) {
+	public List<SpotBus> clearChange(String[] chlist) {
+		
+		System.out.println("chlist dao: " + Arrays.toString(chlist));
+		
 		return sqlSession.selectList("routeMapper.clearChange", chlist);
 	}
 
@@ -64,6 +67,11 @@ public class RouteDaoImpl implements RouteDao {
 	@Override
 	public List<SpotBus> spotSearch1(String sTitle) {
 		return sqlSession.selectList("routeMapper.spotSearch1", sTitle);
+	}
+
+	@Override
+	public List<Business> jjimBusiness(User u) {
+		return sqlSession.selectList("routeMapper.jjimBusiness", u);
 	}
 
 	

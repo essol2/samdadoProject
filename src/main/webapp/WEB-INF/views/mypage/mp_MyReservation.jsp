@@ -324,7 +324,7 @@ body {
 </style>
 <body>
 	<!-- navi.jsp include -->
-	<jsp:include page="../common/navi.jsp" />
+	<jsp:include page="../common/naviWhite.jsp" />
 	
 	<c:set var="today" value="<%=new java.util.Date()%>" />
 	<fmt:formatDate var="now" type="date" value="${today}" pattern="yyyy-MM-dd" />

@@ -323,21 +323,18 @@
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 10px 75px;
             text-decoration: none;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 50px;            
 
         }
 
         .btn{
             background-color: rgb(70, 115, 85) !important;
-            border: 1px solid rgb(70, 115, 85) !important;
-            font-family: 'GmarketSansBold' !important;
+            border: 1px solid rgb(70, 115, 85) !important;            
         }
         
          #report_btn, #jjim_btn{
@@ -463,15 +460,13 @@
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 6px 55px;
             text-decoration: none;
             margin-top: 50px;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 50px;            
             width: 98%;
         }
 
@@ -532,6 +527,12 @@
 		    height: 325px;
 		    border-radius: 8px;
     	}
+    	
+    	.premium {
+            width: 60px;
+            height: 50px;
+            margin-bottom:30px;
+        }
 
     </style>
 
@@ -547,7 +548,7 @@
             <div class="title_area">
                 <div class="title_area">
                     <c:if test="${ car.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premiumicon.png"><br>
+                    <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     </c:if>
                     <label id="ho_title" class="title_tag">${car.bus_name }</label>
                     <br>
@@ -740,7 +741,7 @@
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">
                         <b>${ c.car_name }</b><br>
                         <b>${ c.car_fuel }</b><br>
-                        <b>${ c.car_price }원</b><br>
+                        <b><fmt:formatNumber value="${ c.car_price }" pattern="#,###"/>원</b><br>
                         <c:if test="${ loginUser.uspart == '일반'}">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						 예약하기</button>
@@ -915,7 +916,7 @@
                         </div>
                 </div>
                 <c:forEach var="c" items="${ cars }" varStatus="status" end="0">
-                	<label>${ c.car_price }원 * </label>
+                	<label><fmt:formatNumber value="${ c.car_price }" pattern="#,###"/>원 * </label>
                 	</c:forEach>
                     <label id="daysResult"></label><label>일</label>
                     <br>

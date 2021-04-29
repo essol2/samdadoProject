@@ -1,6 +1,7 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <html>
@@ -10,11 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Samadado</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
-    <style>
-        /* 공통 - 폰트 */
-        * {
-            font-family: 'Jeju Myeongjo', serif;
-        }
+    <style>        
 
         footer {
             background-color: rgb(70, 115, 85);
@@ -275,7 +272,7 @@
 
         .premium {
             width: 60px;
-            height: 60px;
+            height: 50px;
         }
 
         /* 프리미엄테두리 반짝이효과 */
@@ -421,8 +418,7 @@
 
         .cover a, .cover label {
             text-decoration: none;
-            color: black;
-            font-family: 'GmarketSansBold' !important;
+            color: black;            
             line-height:0px;
         }
 
@@ -431,14 +427,12 @@
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 10px 75px;
             text-decoration: none;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 50px;            
         }
         
         /* 사업장종류선택 */
@@ -490,12 +484,12 @@
         	border-style : none;
         	width : fit-content;
         	height : fit-content;
-        	backtround-color : rgba( 0,0,0,0);
+        	background-color : rgba( 0,0,0,0);
         }
         
         .btn.btn-sea{-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
 		a{text-decoration:none;}        
-        .btn.btn-sea {font-size: 18px; white-space:nowrap; width:150px; padding:.8em 1.5em; font-family: GmarketSansBold; line-height:18px; display: inline-block;zoom: 1; color: #fff; text-align: center; position:relative; -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear; transition: border .25s linear, color .25s linear, background-color .25s linear;}      
+        .btn.btn-sea {font-weight: bold; font-size: 18px; white-space:nowrap; width:150px; padding:.8em 1.5em; line-height:18px; display: inline-block;zoom: 1; color: #fff; text-align: center; position:relative; -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear; transition: border .25s linear, color .25s linear, background-color .25s linear;}      
         .btn.btn-sea{background-color: #467355; border-color: #467355; -webkit-box-shadow: 0 3px 0 #088d74; box-shadow: 0 3px 0 #088d74;}
 		.btn.btn-sea:hover{background-color:white; color:#467355;}
 		.btn.btn-sea:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
@@ -741,8 +735,8 @@
                         <img class="image" src="../resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
                         <b>★4.90(후기 99+개)</b>
 	                    <b>${ h.bus_name }</b>
-	                    <b>38,000 ~ 40,000 / 박</b>
-	                    <b>총액 80,000</b>
+	                    <b>38,000 ~ 40,000 원 / 박</b>
+	                    <b>총액 80,000 원</b>
                         <c:if test="${ loginUser.usno != null }">
 	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
 	                    	</c:if>

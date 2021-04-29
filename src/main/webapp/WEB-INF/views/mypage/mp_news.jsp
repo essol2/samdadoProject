@@ -248,7 +248,7 @@
 <body>
 
         <!-- navi.jsp include -->
-       <jsp:include page="../common/navi.jsp"/>
+       <jsp:include page="../common/naviWhite.jsp"/>
         
             <div id="topMenu">
                 <div class="menuBox" id="menuBox">

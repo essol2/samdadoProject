@@ -1,42 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!-- 메뉴바는 어떤 페이지이든 포함하고 있으므로 contextPath 변수 선언 후 application에서 모두 사용 -->
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>제주여행의 시작과 끝, 삼다도입니다.</title>
-    <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
-    <!--jQuery-->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<meta charset="UTF-8">
+<title>navi</title>
+<link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
 
-    <!-- naver 간편로그인 -->
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    
-    <!-- masonry 로딩 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js"></script>
-	
-	<!-- imagesloaded 로딩 (모든 이미지가 로딩된 후 실행되도록 할때 필요) -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.0/imagesloaded.pkgd.min.js"></script>
-    <style>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-        /* 공통 - 폰트 */
+<!--jQuery-->
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+<!-- css 외부 파일 첨부 -->
+<link rel="stylesheet" href="${ contextPath }/resources/css/common/navi.css" type="text/css">
+<link rel="stylesheet" href="${ contextPath }/resources/css/user/addMember.css" type="text/css">
+<style>
+		/* 공통 - 폰트 */
         * {
-            /* font-family: 'Jeju Myeongjo', serif;  */
-     		/* font-family: 'SDKukdetopokki-Lt'; */
-     		   font-family: 'GyeonggiBatang';
-     		   }
-      @font-face {
+            /* font-family: 'Jeju Myeongjo', serif; */
+             font-family: 'GyeonggiBatang';
+        }
+        
+         @font-face {
     font-family: 'GyeonggiBatang';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
     font-weight: normal;
@@ -50,139 +41,28 @@
     font-weight: normal;
     font-style: normal;
 }
-		body{
-			padding : 0px;
-			margin : 0px;
-		}
-        /* 길만들러 가기 영역 */
-        /* 왼쪽 텍스트 영역 전체 */
-        #left_side_text {
-            max-width: 49%;
-            max-height: 800px;
-            /* border : 1px solid red; */
-            /* margin-left : 3%; */
-        }
-
-        /* 오른쪽 이미지 영역 전체 */
-        #right_side_img {
-            max-width: 49%;
-            max-height: 800px;
-            /* border : 1px solid blue; */
-        }
-
-        /* 왼쪽 텍스트 영역에서 첫번째 컬럼(빈 공간) */
-        #empty_up_div{
-            padding-bottom: 220px;
-        }
-
-        /* "여유가 있어 여행을 가는게 아니라 여행을 가니까 여유가 생기는 것이다. 이하 " */
-        #center_text_div{
-            text-align: left;
-        }
-
-        /* 길 만들러 가기 */
-        #make_root_down_div{
-            margin-top: 170px;
-            text-align: left;
-            display: flex;
-        }
-
-        /* 길 만들러 가기 */
-        #make_root_down_div a:link{
-            color: black; text-decoration: none;
-        }
-        #make_root_down_div a:visited{
-            color: black; text-decoration: none;
-        }
-        #make_root_down_div a:hover{
-            color: black; text-decoration: none;
-        }
         
-        /*배너 위치*/
-        #bannerBoxLeft{
-            width : 46%;
-            height : auto;
-            display : inline-block;
-            /* margin-left : 3%; */
-            margin-right : 2%;
-        }
-
-        #bannerBoxRight{
-            width : 46%;
-            height : auto;
-            display:inline-block;
-            /* margin-right : 2%; */
-        }
-        .banner{
-            width : 100%;
-            height : auto;
-            margin-top : 15px;
-            margin-bottom: 15px;
-        }
-
         /* 혜윤 : 네비 css */
-        #back {
-            width: 100%;
-            height: auto;
-            margin: auto;
-            top: 0;
-        }
-
         header {
             position:fixed;
             width: 240px;
             top: 0;
             left:1200px;
             height:100%;
-            -webkit-transition-duration:0.2s;
-            -webkit-transition-timing-function:ease;
-            transition-duration:0.2s;
-            transition-timing-function:ease;
-            color: white;
             border-left: 3px solid white;
-            z-index: 0;
-        }
-
-        .down {
-            color: black;
-            -webkit-transition-duration:0.2s;
-            -webkit-transition-timing-function:ease;
-            transition-duration:0.2s;
-            transition-timing-function:ease;
-            border-left: 3px solid black;
-            
-            z-index: -1;
-        }
-
-        .down #navi {
-            color:black;
-            -webkit-transition-duration:0.4s;
-            -webkit-transition-timing-function:ease;
-            transition-duration:0.4s;
-            transition-timing-function:ease;
-            
-            z-index: -1;
-        }
-
-        #top {
-            width: 100%;
-            height: auto;
-            margin : 0px;
-        }
-        #bottom {
-            width: 1440px;
-            height: auto;
-            display: flex;
+            z-index: 1;
+            color : white;
         }
 
         #content {
-            width: 100%;
+            width: 80%;
             height: auto;
             /* background-color: rgb(255, 181, 181); */
         }
         
         .center {
             text-align: center;
+            color : whtie;
         }
 
         .right {
@@ -196,9 +76,10 @@
         #navi-title {
             font-size: 40px;
             font-weight: bold;
+            color : white;
         }
 
-        .center{
+        .center {
         	font-size: 15px;
             font-weight: 500;
         }
@@ -207,7 +88,7 @@
             height: 600px;
             /* border : 1px solid pink; */
             margin-left: 2%;
-            width : 100%;
+            width : 100%; 
         }
 
         .navi_logoimg {
@@ -215,7 +96,6 @@
             top : 92%;
             left: 70%;
         }
-
 
 		.helloName{
 			/* float : left; */
@@ -228,57 +108,7 @@
 			
 		}
 		
-        /* 동영상 css */        
-        .wrap{ 
-            width:100%;
-            z-index: -1;
-         } 
-
-        .content{ position:relative; padding-top:56%; width:100%; } 
-
-        #backgroundGif{ position:absolute; top:0; left:0; width:100%; height:100%; margin:0px;}
-
-        /* 푸터 css */
-        footer{
-            background-color: rgb(70, 115, 85);
-            height : 190px;
-        }
-
-        .leftImg{
-            margin-left:6%;
-            margin-top:20px;
-        }
-
-        #footer_center {
-            margin-left:30%;
-            margin-top:-130px;
-            color:white;
-        }
-
-        #footer_right{
-            margin-left:60%;
-            margin-top:-120px;
-            color:white;
-        }
-
-        .rightImg{
-            padding-right: 15px;
-        }
-
-        #copyRight{
-            color:white;
-            margin-left: 40%;
-            margin-right : 40%;
-            margin-top:10px;
-            margin-bottom: 0px;
-            opacity: 0.5;
-        }
-
-        hr{
-            color:white;
-        }
-
-        /* 반응형 */
+		 /* 반응형 */
         @media (max-width:1920px){
             header {
                 position:fixed;
@@ -286,13 +116,7 @@
                 top: 0;
                 left:87%;
                 height:100%;
-                -webkit-transition-duration:0.2s;
-                -webkit-transition-timing-function:ease;
-                transition-duration:0.2s;
-                transition-timing-function:ease;
-                color: white;
-                border-left: 3px solid white;
-                z-index: 0;
+                z-index: 1;
         
             }
 
@@ -345,13 +169,8 @@
                 top: 0;
                 left:85%;
                 height:100%;
-                -webkit-transition-duration:0.2s;
-                -webkit-transition-timing-function:ease;
-                transition-duration:0.2s;
-                transition-timing-function:ease;
-                color: white;
-                border-left: 3px solid white;
-                z-index: 0;
+                border-left: 3px solid black;
+                z-index: 1;
             }
             
 	           #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
@@ -400,13 +219,8 @@
                 top: 0;
                 left:83%;
                 height:100%;
-                -webkit-transition-duration:0.2s;
-                -webkit-transition-timing-function:ease;
-                transition-duration:0.2s;
-                transition-timing-function:ease;
-                color: white;
-                border-left: 3px solid white;
-                z-index: 0;
+                border-left: 3px solid black;
+                z-index: 1;
             }
             
            #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
@@ -541,9 +355,9 @@
 		    line-height: 30px;
 		}
 		
-		a:link { color: black; text-decoration: none;}
-		a:visited { color: black; text-decoration: none;}
-		a:hover { color: black; text-decoration: none;}
+		a:link { color: white; text-decoration: none;}
+		a:visited { color: white; text-decoration: none;}
+		a:hover { color: white; text-decoration: none;}
 		
 		#addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn {
 			color: white;
@@ -598,37 +412,41 @@
 		color : red;
 	}
 
-	#navi-menu, #navi-title, p:hover{
+	#navi-menu, #navi-title, p:hover, #navi-menu{
 		cursor: pointer;
 	}
- 
- .newAlert{
+	.newAlert{
  	 width : 28px;
- 	height  : 20px; 
+ 	height  : 28px; 
  	display : none;
  	/* display : inline-block; */
  	margin-right : 8px;
  	float : inherit;
- 	border : 1px solid white;
+ 	/* float : right; */
+ 	
+ }
+ 
+ #naviNew{
+ 
+	border : 1px solid white;
  	padding : 2px; 
  	border-radius : 3px;
- 	/* float : right; */
  }
-    </style>
+</style>
 </head>
 <body>
+
+  
    <!-- 메세지가 있다면 출력하고 지우기 -->
    <c:if test="${ !empty msg }">
    		<script>alert('${ msg }')</script>
    		<c:remove var="msg" />
    </c:if>
    
-
    <!-- 회원가입 제휴회원 버튼 js -->
    <script>
        function display() {
            var control = document.getElementById("business_no_div");    
-
 
            if (control.style.display == 'block') {
                control.style.display = 'none';
@@ -637,18 +455,17 @@
            }
        }
    </script>
-	
-    <!-- 혜윤 : 네비 -->
-    <div id="back">
-        <header>
-
+   
+    <header>
             <div> 
                 <!-- 1. 로그인 유저가 없을 때 -->
                 <c:if test="${ empty sessionScope.loginUser }">
                 <div class="navi">
-                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
+
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_w.png"></img></a>
+
 	                <br><br>
-	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR'; color : white">삼다도</p>
 
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
@@ -657,7 +474,7 @@
             	</div>
                 
                 <div>
-				    <p class="right" data-bs-toggle="modal" data-bs-target="#loginModal" id="navi-menu" >들어가기</p>
+				    <p class="right" data-bs-toggle="modal" data-bs-target="#loginModal" id="navi-menu">들어가기</p>
 				    <p class="right" data-bs-toggle="modal" data-bs-target="#addUserModal" id="navi-menu">회원가입</p>
 
 				</div>
@@ -667,10 +484,10 @@
                 <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '일반' }">
                 <div class="navi">
 
-                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_w.png"></img></a>
 
 	                <br><br>
-	                <p class="center" id="navi-title"  style="font-family: 'WandohopeR';">삼다도</p>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
@@ -679,8 +496,8 @@
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
                 <!-- <h5 class="helloName"> 혼저옵서예.</h5> -->
-				    <p class="right" id="navi-menu" onclick="goToInfo();">
-				    <img src="${contextPath}/resources/images/image_main/newGif.gif" class="newAlert">내 정보</p>
+ 					<p class="right" id="navi-menu" onclick="goToInfo();">
+				    <img src="${contextPath}/resources/images/image_main/newGif.gif" class="newAlert" id="naviNew" onclick="goToInfo(${loginUser.uspart});">내 정보</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
 				</div>				    
                 </c:if>
@@ -688,32 +505,31 @@
                 <!-- 3. 로그인 유저가 있을 때(제휴회원) 및 로그인 유저가 관리자가 아닐 때 -->
                 <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '제휴' && loginUser.usid ne 'samdado' }">
                 <div class="navi">
-                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
+
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_w.png"></img></a>
+
 	                <br><br>
-	                <p class="center" id="navi-title" style="font-family: 'WandohopeR';">삼다도</p>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
-
-		                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
-			                <ul class="ul-class">                
-	
-				                <li><p class="center" id="navi-menu-bus-hotel" onclick="location.href='${ contextPath }/business/hotel_write'">호텔 등록하기</p></li>
-				                <li><p class="center" id="navi-menu-bus-rent" onclick="location.href='${ contextPath }/business/rentcar_write'">렌트카 등록하기</p></li>
-				                <li><p class="center" id="navi-menu-bus-restau" onclick="location.href='${ contextPath }/business/restaurant_write'">음식점 등록하기</p></li>
-				                <li><p class="center" id="navi-menu-bus-attrac" onclick="location.href='${ contextPath }/business/tour_write'">관광지 등록하기</p></li>
-				                <li><p class="center" id="navi-menu-bus-banner" onclick="location.href='${ contextPath }/business/bannerAd'">배너(리스팅)광고</p><li>
-	
-			                </ul>
-	            		</li>
-            		
+	                
+	                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
+		                <ul class="ul-class">                
+			                <li><p class="center" id="navi-menu-bus-hotel" onclick="location.href='${ contextPath }/business/hotel_write'">호텔 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-rent" onclick="location.href='${ contextPath }/business/rentcar_write'">렌트카 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-restau" onclick="location.href='${ contextPath }/business/restaurant_write'">음식점 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-attrac" onclick="location.href='${ contextPath }/business/tour_write'">관광지 등록하기</p></li>
+			                <li><p class="center" id="navi-menu-bus-banner" onclick="location.href='${ contextPath }/business/bannerAd'">배너(리스팅)광고</p><li>
+		                </ul>
+            		</li>
             	</div>
                 
                 <div>
-                        <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
-		                <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">
-		                <img src="${contextPath}/resources/images/image_main/newGif.gif" class="newAlert">내 정보</p>
-					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>			
+                <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5>
+					 <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/mypage/buserinfo'">
+		                <img src="${contextPath}/resources/images/image_main/newGif.gif" class="newAlert" id="naviNew" onclick="location.href='${contextPath}/mypage/buserinfo'">내 정보</p>
+					    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>		
                 </div>
                 </c:if>
                
@@ -721,10 +537,10 @@
                 <c:if test="${!empty sessionScope.loginUser && loginUser.uspart eq '관리자'}">    
                 <div class="navi">
 
-                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
-	                <br><br>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_w.png"></img></a>
 
-	                <p class="center" id="navi-title" style="font-family: 'WandohopeR';">삼다도</p>
+	                <br><br>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
@@ -733,54 +549,20 @@
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
                     
-				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/admin/home'" >관리자 홈</p>
+				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/admin/home'">관리자 홈</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
 
 				</div>			    
                 </c:if>
             </div>
         </header>
-        <!-- 한빈 : 동영상 올리기 -->
-        <div id="top">
-            <div class="wrap">
-                <div class="content">
-                    <img src="resources/images/image_main/samdado.gif" id="backgroundGif">
-                </div>
-            </div>
-        </div>   
-
-		<!-- main-section include (지혜 / 은솔) -->
-		<jsp:include page="main-section.jsp"/>
-        <!--은화 : footer-->
-        <footer>
-            <div id="footer_left">
-                <img src="resources/images/image_footer/footerlogo.png" class="leftImg">
-            </div>
-            <div id="footer_center">
-                <img src="resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
-                <img src="resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
-                <img src="resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
-            </div>
-            <div id="footer_right">
-                <p id="samdado_news">삼다도 소식</p>
-                <img src="resources/images/image_footer/facebook.png" class="rightImg">
-                <img src="resources/images/image_footer/twitter.png" class="rightImg">
-                <img src="resources/images/image_footer/LinkedIn.png" class="rightImg">
-                <img src="resources/images/image_footer/pininterest.png" class="rightImg">
-            </div>
-            <br>
-            <br>
-            <hr>
-            <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
-        </footer>
-    </div>
     
     <!-- 회원가입 Modal -->
     <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
         <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+             <div class="modal-header">
 	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;  width : 100%;">
 		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
 		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 40px;">혼저옵서예.</h2></div>
@@ -791,56 +573,54 @@
              <div class="addMember-modal-inner-body" style="width: 80%;  margin: auto;">
 	             <div class="modal-body">
 	                <!--이름-->
-	                <div class="name_div">
-	                    <label for="id">* 이름</label>
-	                    <label id="test_name_label" class="test_div"></label>
-	                    <input type="text" id="name" name="usname" placeholder="홍길동" required>
-	                </div>
-	                <!--아이디-->
-	                <div class="id_div">
-	                    <label for="id">* 아이디</label>
-
-	                    <label id="test_id_label" class="test_div"></label>
-
-	                    <input type="text" id="id" name="usid" placeholder="영어숫자포함" required>
-	                </div>	
-	                <!--비밀번호-->
-	                <div class="pwd_div">
-	                    <label for="pwd">* 비밀번호</label>
-	                    <label id="test_pwd_label" class="test_div"></label>
-	                    <input type="password" id="pwd" name="uspwd" placeholder="영어대소문자/숫자/특수문자를 포함한 8~16자" required>
-	                </div>
-	                <!--비밀번호 확인-->
-	                <div class="pwd_div2">
-	                    <label for="pwd2">* 비밀번호 확인</label>
-	                    <label id="test_pwd2_label" class="test_div"></label>
-	                    <input type="password" id="pwd2" name="uspwd2" placeholder="비밀번호 확인" required>
-	                </div>
-	                <!--이메일-->
-	                <div class="email_div">
-	                    <label for="email">* 이메일</label>
-	                    <label id="test_email_label" class="test_div"></label>
-	                    <input type="email" id="email" name="usemail" placeholder="you@example.com" required>
-	                </div>
-	                <!--생년월일-->
-	                <div class="birth_div">
-	                    <label for="birth">* 생년월일</label>
-	                    <label id="test_birth_label" class="test_div"></label>
-	                    <input type="date" id="birth" max="9999-12-31" name="usbirth" placeholder="1994-09-28" required>
-	                </div>
-	                <!--생년월일-->
-	                <div class="phone_div">
-	                    <label for="phone">* 휴대전화</label>
-	                    <label id="test_phone_label" class="test_div"></label>
-	                    <input type="text" id="phone" name="usphone" placeholder="01012345678" required>
-	                </div>
-	                <!--사업자등록번호-->
-	                <a href="javascript:display();"><h5 id="business_text"><b>&gt;&gt; 제휴회원 이세요?</b></h5></a>
-	                <div id="business_no_div">
-	                    <label for="business_no">* 사업자등록번호</label>
-	                    <label id="test_business_no_label" class="test_div"></label>
-	                    <input type="text" id="business_no" name="busno" placeholder="000-00-00000">
-	                </div>            
+		                <div class="name_div">
+		                    <label for="id">* 이름</label>
+		                    <label id="test_name_label" class="test_div"></label>
+		                    <input type="text" id="name" name="usname" placeholder="홍길동" required>
+		                </div>
+		                <!--아이디-->
+		                <div class="id_div">
+		                    <label for="id">* 아이디</label>
+		                    <label id="test_id_label" class="test_div"></label>
+		                    <input type="text" id="id" name="usid" placeholder="영어숫자포함" required>
+		                </div>	
+		                <!--비밀번호-->
+		                <div class="pwd_div">
+		                    <label for="pwd">* 비밀번호</label>
+		                    <label id="test_pwd_label" class="test_div"></label>
+		                    <input type="password" id="pwd" name="uspwd" placeholder="대소문자 포함 8글자 이상" required>
+		                </div>
+		                <!--비밀번호 확인-->
+		                <div class="pwd_div2">
+		                    <label for="pwd2">* 비밀번호 확인</label>
+		                    <label id="test_pwd2_label" class="test_div"></label>
+		                    <input type="password" id="pwd2" name="uspwd2" placeholder="비밀번호 확인" required>
+		                </div>
+		                <!--이메일-->
+		                <div class="email_div">
+		                    <label for="email">* 이메일</label>
+		                    <label id="test_email_label" class="test_div"></label>
+		                    <input type="email" id="email" name="usemail" placeholder="you@example.com" required>
+		                </div>
+		                <!--생년월일-->
+		                <div class="birth_div">
+		                    <label for="birth">* 생년월일</label>
+		                    <label id="test_birth_label" class="test_div"></label>
+		                    <input type="date" id="birth" max="9999-12-31" name="usbirth" placeholder="1994-09-28" required>
+		                </div>
+		                <!--생년월일-->
+		                <div class="phone_div">
+		                    <label for="phone">* 휴대전화</label>
+		                    <label id="test_phone_label" class="test_div"></label>
+		                    <input type="text" id="phone" name="usphone" placeholder="01012345678" required>
+		                </div>
+		                <!--사업자등록번호-->
+		                <a href="javascript:display();"><h5 id="business_text"><b>&gt;&gt; 제휴회원 이세요?</b></h5></a>
+		                <div id="business_no_div">
+		                    <label for="business_no">* 사업자등록번호</label>
+		                    <label id="test_business_no_label" class="test_div"></label>
+		                    <input type="text" id="business_no" name="busno" placeholder="000-00-00000">
+		                </div>            
 			            </div>
 		            </div>
 		            <div class="modal-footer">
@@ -865,14 +645,13 @@
             </div>
            
              <form action="${ contextPath }/user/login" method="post" id="loginForm"> 
-             
-	            <div class="login-modal-inner-body" style="width: 80%;  margin: auto;">
+	            <div class="login-modal-inner-body" style="width: 80%;  margin: auto;"> 
 		            <div class="modal-body">
 		                <!--아이디-->
 		                <div class="id_div">
 		                    <label for="id">* 아이디</label>
 		                    <label id="test_id_label" class="test_div"></label>
-		                    <input type="text" id="id" name="usid" placeholder="영소문자로 시작하는 4~16글자 입력(숫자 포함)" required>
+		                    <input type="text" id="id" name="usid" placeholder="영소문자로 시작하는 4~16글자 입력(숫자 포함 가능)" required>
 		                </div>
 		                <!--비밀번호-->
 		                <div class="pwd_div">
@@ -889,63 +668,125 @@
 		                    <div class="easy_login_imgs">
 		                        <div class="container">
 		                            <div class="row">
-			                            <div class="col-sm">
-			                               <a href="${ contextPath }/user/easyLogin/google"><img src="resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
-			                            </div>
-			                              <div class="col-sm">
-			                              <a href="${naver_url}" id="naver_id_login"><img src="${contextPath}resources/images/image_user/naver.png"/></a>
-			                               <!--  <a id="naver_id_login"><img src="${contextPath}resources/images/image_user/naver.png" alt=""> 네이버</a>-->
-			                              </div>
-			                              <div class="col-sm">
-			                                <a href="${ contextPath }/user/easyLogin/kakao"><img src="resources/images/image_user/kakao.png" alt=""> 카카오</a>
-			                              </div>
+		                            <div class="col-sm">
+		                                <a href="#"><img src="${ contextPath }/resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
+		                            </div>
+		                              <div class="col-sm">
+		                               <a href="#"><img src="${ contextPath }/resources/images/image_user/naver.png" alt=""> 네이버</a>
+		                              </div>
+		                              <div class="col-sm">
+		                                <a href="#"><img src="${ contextPath }/resources/images/image_user/kakao.png" alt=""> 카카오</a>
+		                              </div>
 		                            </div>
 		                          </div>
 		                    </div>
 		                </div> 
-	            	</div>
-	           </div>
+		            </div>
+	            </div>
 	            <div class="modal-footer">
-	                <a href="${ contextPath }/user/find" id="find_id_pwd">아이디/비밀번호 찾기</a>
+	                <a href="${ contextPath }/user/find" id="find_id_pwd">아이디/비밀번호 찾기</a> <!-- 새 창 띄우기-->
 	
 	                <input type="submit" id="gologinBtn" value="로그인">
 	                <button type="button" id="closeBtn" data-bs-dismiss="modal">닫기</button>
 	            </div>
-	          
 	         </form>   
         </div>
         </div>
     </div>
+    
+     <!-- 회원가입 제출 전 유효성검사 -->
+	<script>
+		function joinValidate(){
+			
+			// 이름 유효성검사
+			if(!(/^[가-힣]{2,5}$/).test($("#name").val())){
+				alert('이름은 한글로 2~5글자 사이만 가능합니다.');
+				$("#name").select();
+				return false;
+			}
+			
+            // 아이디 유효성검사
+			if(!(/^[a-z][a-z0-9]{3,15}$/.test($("#id").val()))){
+				alert('영소문자로 시작하는 4~16글자 입력(숫자 포함 가능)');
+				$("#id").select();		
+				return false;
+			}
+            // 아이디 중복검사
+			if(/중복 아이디로 사용할 수 없습니다./.test($("#test_id_label").text())){
+				console.log($("#test_id_label").text());
+				alert('중복된 아이디입니다.');
+				$("#id").select();
+				return false;
+			}
 
- 	
- 	<!-- 네비 이미지 체인지 토글 -->
-    <script>
-        $(function(){
-            var $header = $('header'); //헤더를 변수에 넣기
-            var $page = $('.page-start'); //색상이 변할 부분
-            var $window = $(window);
-            var pageOffsetTop = $page.offset().top;//색상 변할 부분의 top값 구하기
+			// 비밀번호 유효성검사
+			if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#pwd").val()))){
+				alert('영어대소문자/숫자/특수문자를 포함한 8~16자리 입력');
+				$("#pwd").select();
+				return false;
+			}
+			
+            // 비밀번호일치 검사
+			if($("#pwd2").val() != $("#pwd").val()){
+				alert('비밀번호가 일치하지 않습니다.');
+				$("#pwd2").select();
+				return false;
+			}
+			
+			var date = new Date;
+			var inputbirth = new Date($("#birth").val());
+			
+            // 생년월일 형식 검사
+			if(inputbirth > date){
+				alert('생년월일을 정확하게 입력하세요.');
+				$("#birth").select();
+				return false;
+			}
+			
+			// 이메일 유효성검사
+			if(!((/^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i).test($("#email").val()))){
+				alert('이메일주소를 확인해주세요.');
+				$("#email").select();
+				return false;
+			}
+			
+			// 이메일 중복검사
+			if(/중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
+				console.log($("#test_email_label").text());
+				alert('중복된 이메일입니다.');
+				$("#email").select();
+				return false;
+			}
+			
+			// 전화번호 유효성검사
+			if(!(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/).test($("#phone").val())){
+				alert('전화번호를 확인해주세요.');
+				$("#phone").select();
+				return false;
+			}
+			
+			// 전화번호 중복검사
+			if(/중복 휴대전화로 사용할 수 없습니다./.test($("#test_phone_label").text())){
+				console.log($("#test_phone_label").text());
+				alert('중복된 전화번호입니다.');
+				$("#phone").select();
+				return false;
+			}
+			
+			// 사업자등록번호 유효성검사
+			var bizNum = $("#business_no").val();
+			if(bizNum != "" && !(/\d{3}[-]\d{2}[-]\d{5}/).test(bizNum)){
+				alert('사업자등록번호를 확인해주세요.');
+				$("#business_no").select();
+				return false;
+			}
 
-        $window.resize(function(){ //반응형을 대비하여 리사이즈시 top값을 다시 계산
-            pageOffsetTop = $page.offset().top;
-            });
-
-        $window.on('scroll', function(){ //스크롤시
-            var scrolled = $window.scrollTop() >= pageOffsetTop; //스크롤된 상태; true or false
-            $header.toggleClass('down', scrolled); //클래스 토글
-            if($window.scrollTop() >= pageOffsetTop) {
-                $(".navi_logoimg").attr("src", $(".navi_logoimg").attr("src").replace("_w","_g"));
-                //$(".newAlert").attr("src", $(".newAlert").attr("src").replace("_w","_b"));
-                $(".newAlert").css("border", "1px solid black");
-            } else if($window.scrollTop() < pageOffsetTop) {
-                $(".navi_logoimg").attr("src", $(".navi_logoimg").attr("src").replace("_g","_w"));
-                //$(".newAlert").attr("src", $(".newAlert").attr("src").replace("_b","_w"));
-                $(".newAlert").css("border", "1px solid white");
-            }
-            });
-        });
-    </script>
-
+			return true;
+		}
+	
+	</script>
+    
+    
     <!-- 회원가입폼 유효성검사 -->
     <script>
     	$("#name").change(function () {
@@ -982,11 +823,10 @@
        			}).fail(function(){
        				console.log("ajax response fail..");
        			}).always(function(){
-       				console.log("always done..!");
+       				console.log("always is done..!");
        			});
             } else {
                 $("#test_id_label").html("아이디를 다시 입력해주세요.").css("color", "red");
-                $("#id").select();
             }
   
         });
@@ -1013,15 +853,14 @@
        			}).fail(function(){
        				console.log("ajax response fail..");
        			}).always(function(){
-       				console.log("always done..!");
+       				console.log("always is done..!");
        			});
             } else {
                 $("#test_phone_label").html("휴대전화를 다시 입력해주세요.").css("color", "red");
-                $("#phone").select();
             }
   
         });
-       
+    	    
        $("#email").change(function () {
     	   var emailVal = $("#email").val();
            var regemail = /^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -1044,11 +883,10 @@
       			}).fail(function(){
       				console.log("ajax response fail..");
       			}).always(function(){
-      				console.log("always done..!");
+      				console.log("always is done..!");
       			});
            } else {
                $("#test_email_label").html("이메일을 다시 입력해주세요.").css("color", "red");
-               $("#email").select();
            }
  
        });
@@ -1063,6 +901,7 @@
                 $("#test_birth_label").html("올바른 형식이 아닙니다.").css("color", "red");
             }
         });
+
     	
     	$("#pwd").change(function () { 
             var regpwd = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/;
@@ -1093,110 +932,6 @@
         });
 	
     </script>
-    
-     <!-- 회원가입 제출 전 유효성검사 -->
-	<script>
-		function joinValidate(){
-			
-			// 이름 유효성검사
-			if(!(/^[가-힣]{2,5}$/).test($("#name").val())){
-				alert('이름은 한글로 2~5글자 사이만 가능합니다.');
-				$("#name").select();
-				return false;
-			}
-			
-            // 아이디 유효성검사
-			if(!(/^[a-z][a-z0-9]{3,15}$/.test($("#id").val()))){
-				alert('영소문자로 시작하는 4~16글자 입력(숫자 포함 가능)');
-				$("#id").select();		
-				return false;
-			}
-            // 아이디 중복검사
-			if(/아이디를 다시 입력해주세요./&&/중복 아이디로 사용할 수 없습니다./.test($("#test_id_label").text())){
-				console.log($("#test_id_label").text());
-				alert('아이디를 다시 입력해주세요.');
-				$("#id").select();
-				return false;
-			}
-
-			// 비밀번호 유효성검사
-			if(!(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,16}/.test($("#pwd").val()))){
-				alert('영어대소문자/숫자/특수문자를 포함한 8~16자리 입력');
-				$("#pwd").select();
-				return false;
-			}
-			
-            // 비밀번호일치 검사
-			if($("#pwd2").val() != $("#pwd").val()){
-				alert('비밀번호가 일치하지 않습니다.');
-				$("#pwd2").select();
-				return false;
-			}
-			
-			var date = new Date;
-			var inputbirth = new Date($("#birth").val());
-			
-            // 생년월일 형식 검사
-			if(inputbirth > date){
-				alert('생년월일을 정확하게 입력하세요.');
-				$("#birth").select();
-				return false;
-			}
-			
-			// 이메일 유효성검사
-			if(!((/^[a-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i).test($("#email").val()))){
-				alert('이메일주소를 확인해주세요.');
-				$("#email").select();
-				return false;
-			}
-				
-			// 이메일 중복검사
-			if(/중복된 이메일로 사용할 수 없습니다./.test($("#test_email_label").text())){
-				console.log($("#test_email_label").text());
-				alert('중복된 이메일입니다.');
-				$("#email").select();
-				return false;
-			}
-			
-			// 전화번호 유효성검사
-			if(!(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/).test($("#phone").val())){
-				alert('전화번호를 확인해주세요.');
-				$("#phone").select();
-				return false;
-			}
-			
-			
-			
-			if(/중복 휴대전화로 사용할 수 없습니다./&&/휴대전화를 다시 입력해주세요./.test($("#test_phone_label").text())){
-				console.log($("#test_phone_label").text());
-				alert('휴대전화를 다시 입력해주세요.');
-				$("#phone").select();
-				return false;
-			}
-			
-			// 사업자등록번호 유효성검사
-			var bizNum = $("#business_no").val();
-			if(bizNum != "" && !(/\d{3}[-]\d{2}[-]\d{5}/).test(bizNum)){
-				alert('사업자등록번호를 확인해주세요.');
-				$("#business_no").select();
-				return false;
-			}
-
-			return true;
-		}
-	
-		function goToInfo(){
-			var uspart = "일반";
-			location.href='${contextPath}/mypage/userinfo?usno='+${loginUser.usno}+'&uspart='+uspart;
-		}
-		
-		function aboutUst(){
-			location.href='${contextPath}/user/aboutUs';
-
-		}
-	</script>
-
-	 
      <script>
 	 	$(document).ready(function(){
 
@@ -1215,7 +950,6 @@
 	 						$('.newAlert').css("display","block");
 	 						$('.newAlert').css("display","inline-block");
 	 						$('.newAlert').css("margin-bottom","5px;");
-	 					} else{
 	 					}
 	 				},
 	 				error : function(e){
@@ -1227,43 +961,30 @@
 	 		
 	 	});
 	 </script>
-    
-    <!-- 네이버아디디로로그인 초기화 Script -->
-	<script type="text/javascript">
-		var naver_id_login = new naver_id_login("bwz0ZV165D8RHBEFHdF6", "http://localhost:8896/samdado/main");
-		var state = naver_id_login.getUniqState();
-		naver_id_login.setButton("white");
-		naver_id_login.setDomain(".service.com");
-		naver_id_login.setState(state);
-		naver_id_login.setPopup();
-		naver_id_login.init_naver_id_login();
-	</script>
-    
-    <!-- 네이버아디디로로그인 Callback페이지 처리 Script -->
-	<script type="text/javascript">
-	// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-	function naverSignInCallback() {
-		// naver_id_login.getProfileData('프로필항목명');
-		// 프로필 항목은 개발가이드를 참고하시기 바랍니다.
-		alert(naver_id_login.getProfileData('email'));
-		alert(naver_id_login.getProfileData('name'));
-		//alert(naver_id_login.getProfileData('birthday'));
-		//alert(naver_id_login.getProfileData('mobile'));
-	}
+	 
+	 <script>
+	 	function goToInfo(uspart){
+	 		var uspart = "일반";
+	 		location.href="${contextPath}/mypage/userinfo?usno="+${loginUser.usno} + "&uspart=" + uspart;
+	 	}
+	 	
+	 	function aboutUs(){
+			location.href='${contextPath}/user/aboutus';
+
+	 	}
+	 </script>
 
 
-	// 네이버 사용자 프로필 조회
-	naver_id_login.get_naver_userprofile("naverSignInCallback()");
-	</script>
-	
+    <!-- Optional JavaScript; choose one of the two! -->
 
-	<!-- Optional JavaScript; choose one of the two! -->  
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
-	<!-- 갤러리 이미지 탬플릿 사용을 위한 js cdn -->
-	<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
-	
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+    -->
     
 </body>
 </html>

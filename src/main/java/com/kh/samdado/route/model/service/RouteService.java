@@ -17,7 +17,7 @@ public interface RouteService {
 	
 	public List<SpotBus> spotSearch(String sTitle);	// 여행지 검색
 
-	List<TourSpot> clearChange(String[] chlist);	// 순서 변경 완료
+	List<SpotBus> clearChange(String[] chlist);	// 순서 변경 완료
 
 	int addRoute(String[] slist);
 
@@ -26,6 +26,8 @@ public interface RouteService {
 	List<SpotBus> changeRoute(String[] rrlist);
 
 	List<SpotBus> spotSearch1(String sTitle);
+
+	List<Business> jjimBusiness(User u);
 
 
 

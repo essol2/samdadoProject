@@ -109,15 +109,15 @@
 	                </div>
 	            </c:when>
 	            <c:otherwise>
-	            <div class="nonSelectCategory" style="text-align: center; padding: 20%;">
-		            <div class="card border-success mb-3" style="max-width: 18rem;">
-					  <div class="card-header bg-transparent border-success">삼다도에서 알려드립니다.</div>
-					  <div class="card-body text-success">
+	            <div class="nonSelectCategory" style="margin-right: 10%;">
+	            	<div class="card">
+					  <h5 class="card-header">알려드립니다.</h5>
+					  <div class="card-body">
 					    <h5 class="card-title">${ loginUser.usname }님께서 배너 광고로 등록할 수 있는 사업장이 없습니다.</h5>
-					    <p class="card-text"><b style="color: red;">관리자 승인 대기중인 사업장 또는 현재 배너 광고 중인 사업장은 목록에 리스트되지 않습니다.</b></p>
+					    <p class="card-text"><b>현재 배너 광고 중인 사업장은 목록에 리스트되지 않습니다.</b></p>
+					     <a style="font-size: 15px; color: white;" class="btn btn-secondary" href="${ contextPath }/mypage/buserinfo">마이페이지 가기</a>
 					  </div>
-					  <div class="card-footer bg-transparent border-success"><a href="${ contextPath }/mypage/buss">마이페이지 가기</a></div>
-					</div>
+					</div> 
 	            </div>   	
 	            </c:otherwise>
             </c:choose>
@@ -202,6 +202,8 @@
 		function goToPoint(){
 			location.href='${contextPath}/mypage/point?usno='+${loginUser.usno};
 		};
+		
+		
 	
 	</script>
 

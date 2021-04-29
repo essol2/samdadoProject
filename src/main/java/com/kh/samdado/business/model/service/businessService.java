@@ -53,6 +53,8 @@ public interface businessService {
 	int insertRoom(List<Room> rooms);
 	// 호텔리스트
 	List<Business> selectHotelList();
+	
+	List<Business> selectHotelListP();
 	// 호텔디테일
 	Business selectHotel(int bus_code);
 
@@ -184,6 +186,8 @@ public interface businessService {
 	List<Business> facList(String kind);
 
 	List<Business> rescateList(String kind);
+
+	
 
 	
 
