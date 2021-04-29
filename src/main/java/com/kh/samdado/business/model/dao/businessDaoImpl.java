@@ -260,6 +260,11 @@ public class businessDaoImpl implements businessDao {
 		public Point findPoint(Point p) {			
 			return sqlSession.selectOne("businessMapper.findPoint", p);
 		}
+		
+		@Override
+		public int updateUserPblance(User u) {			
+			return sqlSession.update("businessMapper.updateUserPblance", u);
+		}
 
 	@Override
 	public List<Business> businessSearch() {
@@ -459,6 +464,8 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.rescateList", kind);
 	}
+
+	
 
 	
 

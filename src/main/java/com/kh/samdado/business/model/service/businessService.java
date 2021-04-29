@@ -137,6 +137,8 @@ public interface businessService {
 	int insertPoint(Point p);
 	
 	public Point findPoint(Point p);
+	
+	int updateUserPblance(User u);
 
 	// 배너 광고 등록 폼, 본인 사업장 가져오기
 	List<Business> selectMyBusinessCategory(User loginUser);
@@ -186,6 +188,8 @@ public interface businessService {
 	List<Business> facList(String kind);
 
 	List<Business> rescateList(String kind);
+
+	
 
 	
 

@@ -254,6 +254,19 @@
             font-size: 20px;
             padding: 10px;
         }
+        
+        .cateSelect{
+        	width: 65px; 
+		    /* height: 33px; */
+		    /* border: 1px solid black; */
+		    border-radius: 10%;
+		    /* -webkit-appearance: none; */
+		    appearance: none;
+		    padding-left: 5px;
+		    font-weight: bold;
+		    border: 1px solid #467355;
+		    color: #467355;
+        }
 
         /* 정렬필터끝 */
 

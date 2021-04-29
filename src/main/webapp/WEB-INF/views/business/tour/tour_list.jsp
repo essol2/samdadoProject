@@ -429,7 +429,7 @@
         }
         
         .cateSelect {
-    	    /* width: 70px; */
+    	    width: 65px; 
 		    /* height: 33px; */
 		    /* border: 1px solid black; */
 		    border-radius: 10%;
@@ -439,8 +439,6 @@
 		    font-weight: bold;
 		    border: 1px solid #467355;
 		    color: #467355;
-		    width: 65px;		    
-		    
         }
         
         .cateSelect a, .cateSelect label {
@@ -609,8 +607,7 @@
 
             <nav id="choise2-nav">
                 <ul id="choise2">
-                    <li>
-                        <div class="coverr">
+                    <li>                        
 							<select id="cateSelect" class="cateSelect">
                                 <option value="tema">테마별</option>
                                 <option value="신혼">신혼</option>
@@ -620,10 +617,9 @@
 		                        <option value="일상">일상</option>
 		                        <option value="기타">기타</option>
                             </select>
-						</div>
+						
                     </li>
-                    <li>
-                        <div class="coverr">
+                    <li>                        
 							<select id="calSelect" class="cateSelect">
                                 <option value="tema">유형별</option>
                                 <option value="체험">체험</option>
@@ -631,8 +627,7 @@
 		                        <option value="레저">레저</option>
 		                        <option value="공연">공연</option>
 		                        <option value="휴양">휴양</option>
-                            </select>
-						</div>
+                            </select>						
                     </li>
                     <li>
                         <div class="cover"><label id="starList" >별점순</label></div>

@@ -1095,10 +1095,10 @@ public class businessController {
 	// 예약결제 성공 시 insert
 	
 	@GetMapping("/pay")
-	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code) {
+	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code, User u) {
 		
 		// 포인트에 amount 넣어주기
-		p.setPamount(i.getAmount());
+		p.setPamount(i.getAmount() * 9/10);
 		
 		// income에  들어갈 원가 10퍼센트 셋팅
 		i.setAmount(i.getAmount() * 1/10);
@@ -1119,7 +1119,12 @@ public class businessController {
 			 p.setPbalance(i.getAmount() * 9);
 		 }
 		 // 포인트 넣기
-		int point = bService.insertPoint(p);		
+		int point = bService.insertPoint(p);
+		
+		// User테이블 pbalance에 추가하기
+		u.setUsno(selectUser.getUs_no());
+		u.setPbalance(p.getPbalance());
+		int userPbalance = bService.updateUserPblance(u);
 		
 		// 예약정보 insert	
 		if(b.getBookingLv() == 1) {

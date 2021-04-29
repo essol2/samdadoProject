@@ -308,12 +308,7 @@
         	height:300px;
         	width: 100%;
         }
-        
-        .otherImgArea{
-        	height: 80px;
-        	display: flex;
-        }
-
+		
         /* 차 리스트끝 */
 
         .btnArea{
@@ -752,13 +747,7 @@
                     <div class='profile'>
                     <div class="imgArea">
                         <img id="mainPic" class="detailImg" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">
-                        <div class="otherImgArea">
-                        <c:forEach var="ca" items="${ carAtt }">
-						<c:if test="${ ca.car_no eq c.car_no}">
-						<img id="otherPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ ca.file_rename }">
-						</c:if>
-						</c:forEach>
-                        </div>
+                        
                         </div>
                         <b>${ c.car_name }</b><br>
                         <b>${ c.car_fuel }</b><br>

@@ -497,15 +497,16 @@
         /* 사업장종류선택끝 */
         
         .cateSelect {
-    	    width: 70px;
+    	    width: 65px; 
 		    /* height: 33px; */
 		    /* border: 1px solid black; */
-		    border-radius: 20%;
+		    border-radius: 10%;
 		    /* -webkit-appearance: none; */
 		    appearance: none;
 		    padding-left: 5px;
 		    font-weight: bold;
-		    
+		    border: 1px solid #467355;
+		    color: #467355;		    
         }
         
         .cateSelect a, .cateSelect label {
@@ -597,16 +598,14 @@
 
             <nav id="choise2-nav">
                 <ul id="choise2">
-                    <li>
-                        <div class="cover">
+                    <li>                        
 							<select id="facList" class="cateSelect">
                                 <option value="tema">테마별</option>
                                 <option value="호텔">호텔</option>
 		                        <option value="민박">민박</option>
 		                        <option value="게스트하우스">게스트하우스</option>
 		                        <option value="기타">기타</option>
-                            </select>
-						</div>
+                            </select>						
                     </li>
                     <li>
                         <div class="cover"><label id="starList">별점순</label></div>

@@ -136,6 +136,8 @@ public interface businessDao {
 	int insertPoint(Point p);
 	
 	public Point findPoint(Point p);
+	
+	int updateUserPblance(User u);
 
 	// 비즈니스 등록 폼, 본인이 등록한 사업장 셀렉
 	List<Business> selectMyBusinessCategory(User loginUser);
@@ -192,6 +194,8 @@ public interface businessDao {
 	List<Business> facList(String kind);
 
 	List<Business> rescateList(String kind);
+
+	
 
 	
 

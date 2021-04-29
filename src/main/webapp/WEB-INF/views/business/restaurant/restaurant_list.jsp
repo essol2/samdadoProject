@@ -477,6 +477,19 @@
         	margin-top: 1%;
         }
         
+        .cateSelect{
+        	width: 65px; 
+		    /* height: 33px; */
+		    /* border: 1px solid black; */
+		    border-radius: 10%;
+		    /* -webkit-appearance: none; */
+		    appearance: none;
+		    padding-left: 5px;
+		    font-weight: bold;
+		    border: 1px solid #467355;
+		    color: #467355;
+        }
+        
         #jjimOn{
         	display : none;
         	background-color : rgba( 0,0,0,0);
@@ -579,7 +592,6 @@
             <nav id="choise2-nav">
                 <ul id="choise2">
                     <li>
-                        <div class="cover">
                         	<select id="cateSelect" class="cateSelect">
                                 <option value="tema">종류</option>
                                 <option value="양식">양식</option>
@@ -587,8 +599,7 @@
 		                        <option value="양식">양식</option>
 		                        <option value="양식">양식</option>
 		                        <option value="기타">기타</option>
-                            </select>
-						</div>
+                            </select>						
                     </li>
                     <li>
                         <div class="cover"><label id="starList">별점순</label></div>
