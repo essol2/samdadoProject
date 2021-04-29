@@ -306,7 +306,7 @@
 		                            <c:if test="${rrt.bus_code ne 0}">
 		                            <div class="routeInfoBox">
 		                                <div class="rInfoImgArea">
-		                                    <img src="${contextPath}/resources/images/image_route/${rrt.file_rename}" alt="" style="width:100%; height:100%;">
+		                                    <img src="${contextPath}/resources/busUploadFiles/${rrt.file_rename}" alt="" style="width:100%; height:100%;">
 		                                </div>
 		                                <div class="rNameArea">
 		                                    <p>${routeTest[rrt].bus_name}</p>

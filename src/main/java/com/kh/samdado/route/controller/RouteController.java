@@ -83,10 +83,10 @@ public class RouteController {
 		
 		/* 한빈 */
 		List<Business> hotelList = bService.selectHotelListP();
-		System.out.println(hotelList);
+//		System.out.println(hotelList);
 		if(hotelList != null) {
 			mv.addObject("hotelList", hotelList);
-			System.out.println("hotelList2" + hotelList);
+//			System.out.println("hotelList2" + hotelList);
 			mv.setViewName("route/route_result");
 		}
 		
@@ -94,7 +94,7 @@ public class RouteController {
 	}
 	
 	@PostMapping("/changeRoute")
-	public String changeRoutePage(HttpSession session, Model model, String[] rrlist, @ModelAttribute User u) {	// 여행지 순서 바꾸기 페이지로 이동
+	public ModelAndView changeRoutePage(HttpSession session, Model model, String[] rrlist, @ModelAttribute User u, ModelAndView mv) {	// 여행지 순서 바꾸기 페이지로 이동
 		String area = (String)session.getAttribute("area");
 		String thema = (String)session.getAttribute("thema");
 		Date routeDate = (Date)session.getAttribute("routeDate");
@@ -103,14 +103,14 @@ public class RouteController {
 		
 		List<SpotBus> rlist = rService.changeRoute(rrlist);
 		
-		/* System.out.println("rlist: " + rlist); */
+		System.out.println("rlist: " + rlist);
+		model.addAttribute("list", rlist);
 		
 		User loginUser = (User)session.getAttribute("loginUser");
-		u.setUsno(loginUser.getUsno());
 		
-//		System.out.println(u.getUsno());
-		
-		if(u.getUsno() != null) {
+		if(loginUser != null) {
+			u.setUsno(loginUser.getUsno());
+			
 			// 사용자별 찜한 숙소리스트 가져오기
 			List<Business> jjimHotel = mService.findHotelJjimList(u);
 			//System.out.println("jjimHotel 확인 : " + jjimHotel);
@@ -122,10 +122,18 @@ public class RouteController {
 			model.addAttribute("jjimList", jjimHotel);
 			model.addAttribute("jjimB", jjimB);
 		}
-		 
-		model.addAttribute("list", rlist);
-
-		return "route/route_edit";
+		
+		
+		/* 한빈 */
+		List<Business> hotelList = bService.selectHotelListP();
+//		System.out.println(hotelList);
+		if(hotelList != null) {
+			mv.addObject("hotelList", hotelList);
+//			System.out.println("hotelList2" + hotelList);
+			mv.setViewName("route/route_edit");
+		}
+		
+		return mv;
 	}
 	
 	
@@ -154,10 +162,12 @@ public class RouteController {
 	
 	
 	@PostMapping("/clearChange")
-	public String clearChange(HttpSession session, Model model, String[] chlist) {		// 여행지 순서 바꾸기 완료
+	public ModelAndView clearChange(HttpSession session, Model model, String[] chlist,  @ModelAttribute User u, ModelAndView mv ) {		// 여행지 순서 바꾸기 완료
 		String area = (String)session.getAttribute("area");
 		String thema = (String)session.getAttribute("thema");
 		Date routeDate = (Date)session.getAttribute("routeDate");
+		User loginUser = (User)session.getAttribute("loginUser");
+		
 		
 		/* System.out.println("chlist: " + Arrays.toString(chlist)); */
 		
@@ -167,8 +177,32 @@ public class RouteController {
 		
 		model.addAttribute("list", clist);
 		
+		if(loginUser != null) {
+			u.setUsno(loginUser.getUsno());
+			// 사용자별 찜한 숙소리스트 가져오기
+			List<Business> jjimHotel = mService.findHotelJjimList(u);
+			//System.out.println("jjimHotel 확인 : " + jjimHotel);
+			
+			// 검색 모달창에 찜한 사업장 가져오기
+			List<Business> jjimB = rService.jjimBusiness(u);
+			/* System.out.println("찜한 사업장: " + jjimB); */
+			
+			model.addAttribute("jjimList", jjimHotel);
+			model.addAttribute("jjimB", jjimB);
+		}
+		
+		
+		/* 한빈 */
+		List<Business> hotelList = bService.selectHotelListP();
+//		System.out.println(hotelList);
+		if(hotelList != null) {
+			mv.addObject("hotelList", hotelList);
+//			System.out.println("hotelList2" + hotelList);
+			mv.setViewName("route/route_result");
+		}
+		
 		/* return "redirect:/route/search"; */
-		return "route/route_result";
+		return mv;
 	}
 	
 	@PostMapping("/addRoute")
