@@ -49,6 +49,7 @@ public class Jjim {
 	private String bus_opening;
 	private String hotel_facility;
 	private String usname; // user 테이블 조인
+	private String avstar;
 	
 	//BUSINNESS_ATT JOINs
 	private String file_rename;	// 리네임

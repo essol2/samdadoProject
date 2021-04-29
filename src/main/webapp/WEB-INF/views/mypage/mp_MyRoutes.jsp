@@ -173,6 +173,7 @@
         margin-right : 1%;
         margin-bottom: 1%;
         align-items : center;
+        text-align : center;
     }
 
     #rinfoText{
@@ -218,6 +219,7 @@
         align-items: center;
         margin-left : auto;
         margin-right : auto;
+        margin-top :40px;
     }
     
     #reddot{
@@ -250,7 +252,7 @@
 
     <div id="back">
          <!-- navi.jsp include -->
-       <jsp:include page="../common/naviWhite.jsp"/>
+       <jsp:include page="../common/navi.jsp"/>
         
         <section class="page-start">
             <div id="topMenu">
@@ -285,7 +287,8 @@
                     <c:when test="${!empty routeTest }">
 					<c:forEach items="${ routeTest }" var="rt" varStatus="rtNum">
                     <div class="tripReservInfoBox">
-                        <div id="rinfoText"><h3 style="font-size: medium;">${ rtNum.count }일차.</h3></div>
+                        <%-- <div id="rinfoText"><h3 style="font-size: medium;">${ rtNum.count }일차.</h3></div> --%>
+                        <div id="rinfoText"><h3 style="font-size: large;">${rt.value[0].route_date}</h3></div>
                         <div id="motherDiv">
                         	
                        		<c:forEach var='rrt' items="${rt.value}" varStatus="rrtNum"> 
@@ -299,17 +302,17 @@
 		                                    <img src="${contextPath}/resources/images/image_route/${rrt.spot_oname}" alt="" style="width:100%; height:100%;"> 
 		                                </div>
 		                                <div class="rNameArea">
-		                                    <p>${rrt.spot_title}</p>
+		                                    <p style="margin-bottom : 2px;">${rrt.spot_title}</p>
 		                                </div>
 		                            </div>
 		                            </c:if>
-		                            <c:if test="${rrt.bus_code ne 0}">
+		                            <c:if test="${rrt.bus_code > 0}">
 		                            <div class="routeInfoBox">
 		                                <div class="rInfoImgArea">
-		                                    <img src="${contextPath}/resources/busUploadFiles/${rrt.file_rename}" alt="" style="width:100%; height:100%;">
+		                                    <img src="${ contextPath }/resources/busUploadFiles/${ rrt.file_rename }" alt="" style="width:100%; height:100%;">
 		                                </div>
 		                                <div class="rNameArea">
-		                                    <p>${routeTest[rrt].bus_name}</p>
+		                                    <p style="margin-bottom : 2px;">${rrt.bus_name}</p>
 		                            </div>
 		                            </div>
 		                            </c:if>
@@ -330,7 +333,7 @@
 							<c:otherwise>
 								 <div class="tripReservInfoBox">
 			                        <div class="routesBox">
-			                            <div class="noRouteBox">
+			                            <div class="noRouteBox" style="text-align : center; align-items : center;">
 			
 			                                <img src="${contextPath}/resources/images/image_mp/noRoute.png" alt=""><br>
 											

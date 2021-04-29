@@ -526,7 +526,7 @@ public class AdminController {
 
 		int insertNewsUser = mService.updateNewUserNews(aboard);
 	
-		if (insertAboard > 0) {
+		if (insertAboard > 0 && insertNewsUser > 0) {
 			//System.out.println("insertAboard 결과 : " + insertAboard);
 			model.addAttribute("msg", "공지글 등록에 성공하였습니다.");
 			return "redirect:/admin/home";

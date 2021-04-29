@@ -167,9 +167,9 @@
                 position:fixed;
                 width: 240px;
                 top: 0;
-                left:85%;
+                left:80%;
                 height:100%;
-                border-left: 3px solid black;
+                border-left: 3px solid white;
                 z-index: 1;
             }
             

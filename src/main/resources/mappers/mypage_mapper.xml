@@ -183,6 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="c_booking_trv" column="C_TOUR_DATE"/>
 		<result property="rent_no" column="RENT_NO"/>
 		<result property="c_bus_code" column="BUS_CODE"/>
+		<result property="c_booking_trvEnd" column="C_TOUREND_DATE"/>
 		
 		<!-- hotel -->
 		<result property="r_booking_no" column="R_BOOKING_NO"/>
@@ -197,6 +198,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="r_booking_trv" column="R_TOUR_DATE"/>
 		<result property="room_no" column="HOTEL_NO"/>
 		<result property="r_bus_code" column="BUS_CODE"/>
+		<result property="r_booking_trvEnd" column="R_TOUREND_DATE"/>
 		
 		<!-- tour -->
 		<result property="t_booking_no" column="T_BOOKING_NO"/>
@@ -251,6 +253,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="c_booking_number" column="C_BOOKING_NUMBER"/>
 		<result property="c_booking_phone" column="C_BOOKING_PHONE"/>
 		<result property="c_booking_trv" column="C_TOUR_DATE"/>
+		<result property="c_booking_trvEnd" column="C_TOUREND_DATE"/>
 		<result property="rent_no" column="RENT_NO"/>
 		<result property="c_bus_code" column="BUS_CODE"/>
 		
@@ -265,6 +268,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="r_booking_number" column="R_BOOKING_NUMBER"/>
 		<result property="r_booking_phone" column="R_BOOKING_PHONE"/>
 		<result property="r_booking_trv" column="R_TOUR_DATE"/>
+		<result property="r_booking_trvEnd" column="R_TOUREND_DATE"/>
 		<result property="room_no" column="HOTEL_NO"/>
 		<result property="r_bus_code" column="BUS_CODE"/>
 		
@@ -318,6 +322,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="tour_tema" column="TOUR_TEMA" />
 		<result property="al_no" column="AL_NO" />
 		<result property="bus_opening" column="BUS_OPENING" />
+		<result property="avstar" column="AVGSTAR"/>
 		
 		<!-- 비즈니스ATT 대한 JOIN -->
 		<result property="file_rename" column="FILE_RENAME" />
@@ -815,7 +820,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</if>
 		<if test="ntitle == 'block'">
 			INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO, N_DATE)
-			VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '회원님의 사업장에대한 신고가 3회 누적되었습니다.', 'N', 'R', #{nkeyno}, SYADATE)
+			VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '회원님의 사업장에대한 신고가 3회 누적되었습니다.', 'N', 'R', #{nkeyno}, SYSDATE)
 		</if>
 	</insert>
 	
@@ -1214,7 +1219,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
    
    <select id="findHotelJjimList" resultMap="JjimResultSet">
 		<![CDATA[SELECT *
-				FROM (SELECT J.BUS_CODE, B.BUS_NAME, B.HOTEL_FACILITY, BA.FILE_RENAME
+				FROM (SELECT J.BUS_CODE, B.BUS_NAME, B.HOTEL_FACILITY, BA.FILE_RENAME, B.AVGSTAR
 				      FROM JJIM J, BUSINESS B, BUSINESS_ATT BA
 				      WHERE J.BUS_CODE = B.BUS_CODE
 				      AND B.BUS_CODE = BA.BUS_CODE
