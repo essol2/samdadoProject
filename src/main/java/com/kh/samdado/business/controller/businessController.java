@@ -60,7 +60,6 @@ import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 import com.sun.mail.handlers.multipart_mixed;
-import com.sun.org.glassfish.gmbal.ParameterNames;
 
 
 @Controller

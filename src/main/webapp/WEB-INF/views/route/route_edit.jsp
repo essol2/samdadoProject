@@ -109,7 +109,7 @@
 </head>
 <body>
 		<div id="bottom">
-            <div id="content">
+            <div id="content" style="width : 90%;">
                 <br><br><br>
                 <div class="route_title">
                     <image id="content_logo" width="70px" height="70px" src="../resources/images/image_main/logo_g.png"></image>

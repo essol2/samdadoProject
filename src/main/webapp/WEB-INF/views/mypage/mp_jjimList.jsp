@@ -310,7 +310,7 @@
                 	<div style="text-align : center; margin-left : auto; margin-right : auto; margin-top:8%; margin-bottom:auto;">
 							<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
  		            		<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">찜이 한개도 없네요<br>삼다도엔 좋은 여행지들이 한가득!!</h1>
- 		            		<button onclick="location.href='${ contextPath }/business/hotel_list'" id="goList" style="border-style:none; background-color : #467355; color : white; margin-left : auto; margin-right:auto; padding : 2%;">삼다도 여행상품들 보러가기!</button>
+ 		            		<button onclick="location.href='${ contextPath }/business/hotel_list'" id="goList" style="border-style:none; background-color : #467355; color : white; margin-left : auto; margin-right:auto; padding : 2%; margin-bottom:10%;">삼다도 여행상품들 보러가기!</button>
 					</div>
                 </c:otherwise>
                 </c:choose>
