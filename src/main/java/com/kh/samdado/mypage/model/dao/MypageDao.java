@@ -192,4 +192,7 @@ public interface MypageDao {
 	// 길찾기 내 찜하기 
 	public List<Business> findHotelJjimList(User u);
 
+	// 후기 작성 후 비즈니스에 별점 update
+	public int updateBusStar(Review r);
+
 }

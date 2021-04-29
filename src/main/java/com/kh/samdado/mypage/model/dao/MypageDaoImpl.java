@@ -376,4 +376,10 @@ public class MypageDaoImpl implements MypageDao{
 		return sqlSession.selectList("mypageMapper.findHotelJjimList", u);
 	}
 
+	// 후기 작성 후 비즈니스에 별점 update
+	@Override
+	public int updateBusStar(Review r) {
+		return sqlSession.update("mypageMapper.updateBusStar", r);
+	}
+
 }

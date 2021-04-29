@@ -372,5 +372,11 @@ public class MypageServiceImpl implements MypageService{
 		return mDao.findHotelJjimList(u);
 	}
 
+	// 후기 작성 후 비즈니스에 별점 update
+	@Override
+	public int updateBusStar(Review r) {
+		return mDao.updateBusStar(r);
+	}
+
 	
 }
