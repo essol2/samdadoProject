@@ -1,6 +1,7 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <html>
@@ -647,8 +648,8 @@
                         <img class="image" src="../resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
                         <b>★4.90(후기 99+개)</b>
 	                    <b>${ h.bus_name }</b>
-	                    <b>38,000 ~ 40,000 / 박</b>
-	                    <b>총액 80,000</b>
+	                    <b>38,000 ~ 40,000 원 / 박</b>
+	                    <b>총액 80,000 원</b>
                         <c:if test="${ loginUser.usno != null }">
 	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
 	                    	</c:if>

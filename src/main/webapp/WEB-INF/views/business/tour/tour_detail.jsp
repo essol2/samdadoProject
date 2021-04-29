@@ -902,9 +902,9 @@
             </div>
             <div class="detailView" id="detailView">
                 <b>${ tour.pro_name }</b><br><br>
-                <label id="adult">어른 : ${ tour.pro_adult }원</label><br>
-                <label id="youth">청소년 : ${ tour.pro_youth }원</label><br>
-                <label id="child">어린이 : ${ tour.pro_child }원</label>
+                <label id="adult">어른 : <fmt:formatNumber value="${ tour.pro_adult }" pattern="#,###"/>원</label><br>
+                <label id="youth">청소년 : <fmt:formatNumber value="${ tour.pro_youth }" pattern="#,###"/>원</label><br>
+                <label id="child">어린이 : <fmt:formatNumber value="${ tour.pro_child }" pattern="#,###"/>원</label>
             </div>
 
             <div class="btnArea">
@@ -1030,36 +1030,36 @@
                     <div id="table">
                         <div class="rows">
                             <span class="cell cols1">성인입장권</span>
-                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_adult }" pattern="####"/>원</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_adult }" pattern="#,###"/>원</span>
                             <span class="cell cols3"><input type="number" id="adultNumber" onchange="adult(this)" value="0" min="0">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">청소년입장권</span>
-                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_youth }" pattern="####"/>원</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_youth }" pattern="#,###"/>원</span>
                             <span class="cell cols3"><input type="number" id="youthNumber" onchange="youth(this)" value="0" min="0">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">어린이입장권</span>
-                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_child }" pattern="####"/>원</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_child }" pattern="#,###"/>원</span>
                             <span class="cell cols3"><input type="number" id="childNumber" onchange="child(this)" value="0" min="0">명</span>
                         </div>
                     </div>
                     <div id="table2">
                         <div class="rows2">
                             <span class="cell cols1">성인입장권</span>
-                            <span class="cell cols2">${ tour.pro_adult }원 *<span id="adultResult"></span>명</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_adult }" pattern="#,###"/>원 *<span id="adultResult"></span>명</span>
                             <span class="cell cols3" id="adultPayS"></span>
                             
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">청소년입장권</span>
-                            <span class="cell cols2">${ tour.pro_youth }원 *<span id="youthResult"></span>명</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_youth }" pattern="#,###"/>원 *<span id="youthResult"></span>명</span>
                             <span class="cell cols3" id="youthPayS"></span>
                             
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">어린이입장권</span>
-                            <span class="cell cols2">${ tour.pro_child }원 *<span id="childResult"></span>명</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_child }" pattern="#,###"/>원 *<span id="childResult"></span>명</span>
                             <span class="cell cols3" id="childPayS"></span>
                             
                         </div>

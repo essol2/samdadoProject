@@ -741,7 +741,7 @@
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">
                         <b>${ c.car_name }</b><br>
                         <b>${ c.car_fuel }</b><br>
-                        <b>${ c.car_price }원</b><br>
+                        <b><fmt:formatNumber value="${ c.car_price }" pattern="#,###"/>원</b><br>
                         <c:if test="${ loginUser.uspart == '일반'}">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						 예약하기</button>
@@ -916,7 +916,7 @@
                         </div>
                 </div>
                 <c:forEach var="c" items="${ cars }" varStatus="status" end="0">
-                	<label>${ c.car_price }원 * </label>
+                	<label><fmt:formatNumber value="${ c.car_price }" pattern="#,###"/>원 * </label>
                 	</c:forEach>
                     <label id="daysResult"></label><label>일</label>
                     <br>

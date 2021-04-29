@@ -408,12 +408,13 @@
 		</form>
 	</div>
 <script>
+/*
 $(document).on('keyup','input[inputmode=numeric]',function(event){
 	this.value = this.value.replace(/[^0-9]/g,'');   // 입력값이 숫자가 아니면 공백
 	this.value = this.value.replace(/,/g,'');          // ,값 공백처리
 	this.value = this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 정규식을 이용해서 3자리 마다 , 추가 	
 });
-
+*/
 $("#gen").change(function() {
     $("#hidenDiv").hide();
 });
