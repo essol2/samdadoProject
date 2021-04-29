@@ -674,7 +674,7 @@
             <div class="title_area">
                 <div class="title_area">
                 	<c:if test="${ tour.bus_classify eq 'P' }">
-                    <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
+                    <img class="premium" src="${ contextPath }/resources/images/image_listpage/premiumicon.png">
                     </c:if>
                     <label id="ho_title" class="title_tag">${ tour.bus_name }</label>
                     <br>

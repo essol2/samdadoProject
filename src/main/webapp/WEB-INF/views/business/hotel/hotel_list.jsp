@@ -495,6 +495,25 @@
 		.btn.btn-sea:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
 
         /* 사업장종류선택끝 */
+        
+        .cateSelect {
+    	    width: 70px;
+		    /* height: 33px; */
+		    /* border: 1px solid black; */
+		    border-radius: 20%;
+		    /* -webkit-appearance: none; */
+		    appearance: none;
+		    padding-left: 5px;
+		    font-weight: bold;
+		    
+        }
+        
+        .cateSelect a, .cateSelect label {
+            text-decoration: none;
+            color: black;
+            font-family: 'GmarketSansBold' !important;
+            line-height:0px;
+        }
     </style>
 </head>
 
@@ -579,49 +598,117 @@
             <nav id="choise2-nav">
                 <ul id="choise2">
                     <li>
-                        <div class="cover" id="priceList"><label>요금</label></div>
+                        <div class="cover">
+							<select id="facList" class="cateSelect">
+                                <option value="tema">테마별</option>
+                                <option value="호텔">호텔</option>
+		                        <option value="민박">민박</option>
+		                        <option value="게스트하우스">게스트하우스</option>
+		                        <option value="기타">기타</option>
+                            </select>
+						</div>
                     </li>
                     <li>
-                        <div class="cover"><label>시설</label></div>
+                        <div class="cover"><label id="starList">별점순</label></div>
                     </li>
                     <li>
-                        <div class="cover"><label>별점순</label></div>
-                    </li>
-                    <li>
-                        <div class="cover"><label>후기순</label></div>
+                        <div class="cover"><label id="reviewList">후기순</label></div>
                     </li>
                 </ul>
 
             </nav>
             
             <script>
-            $(function(){
-		    	$("#priceList").change(function(){
-		    			var kinds = {}; 
-						
+            $(function starList(){
+		    	$("#facList").change(function(){
+		    			var kinds = $(this).val();
+		    			console.log(kinds)
 		    			$.ajax({
-		    				 url : '${contextPath}/business/priceList', 
+		    				 url : '${contextPath}/business/facList', 
 		    	              type : "post", 
-		    	              data : JSON.stringify(kinds),
-							  type : "post", 
-							  contentType : "application/json; charset=utf-8",
-							  dataType : "json",
+		    	              data : {"kinds" : kinds},
 		    	              success : function(data){
-		    	            	  console.log(data);
 		    	            	  var cate = document.getElementById("secondlist");
 		    	            	  var list = "";
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	                    str += "<b>★4.90(후기 99+개)</b>";
-		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>입장료 : 입장료 없음</b>";
-		                            str += "<div id='frm_read'>"
+		    	              		str += "<b>"+ data[i].bus_name +"</b>";
+		    	              		str += "<div id='frm_read'>"
 		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
 		                            str += "</div>";               
 		                            str += "</div>";
 		                            
 		                            list += str;
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+            
+            $(function starList(){
+		    	$("#starList").click(function(){
+		    			var kinds = $(this).val(); 
+		    			$.ajax({
+		    				 url : '${contextPath}/business/starList', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	            		if(data[i].bus_category == 'H'){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>"+ data[i].bus_name +"</b>";
+		    	              		str += "<div id='frm_read'>"
+		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+		                            str += "</div>";               
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	            			}
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+		    
+		    $(function(){
+		    	$("#reviewList").click(function(){
+		    			var kinds = $(this).val(); 
+
+		    			$.ajax({
+		    				 url : '${contextPath}/business/reviewList', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	            		if(data[i].bus_category == 'H'){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>"+ data[i].bus_name +"</b>";
+		    	              		str += "<div id='frm_read'>"
+		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+		                            str += "</div>";               
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	            			}
 		    	              		}
 		    	            	  cate.innerHTML=list;
 		    	              },

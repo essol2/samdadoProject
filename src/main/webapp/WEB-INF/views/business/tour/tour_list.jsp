@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <html>
@@ -610,9 +610,12 @@
                         <div class="cover">
 							<select id="cateSelect" class="cateSelect">
                                 <option value="tema">테마별</option>
-                                <option value="wedding">신혼</option>
-                                <option value="gradu">졸업</option>
-                                <option value="trip">여행</option>
+                                <option value="신혼">신혼</option>
+		                        <option value="가족">가족</option>
+		                        <option value="친구">친구</option>
+		                        <option value="졸업">졸업</option>
+		                        <option value="일상">일상</option>
+		                        <option value="기타">기타</option>
                             </select>
 						</div>
                     </li>
@@ -620,17 +623,19 @@
                         <div class="cover">
 							<select id="calSelect" class="cateSelect">
                                 <option value="tema">유형별</option>
-                                <option value="act">체험</option>
-                                <option value="mus">전시회</option>
-                                <option value="etc">기타</option>
+                                <option value="체험">체험</option>
+		                        <option value="전시회">전시회</option>
+		                        <option value="레저">레저</option>
+		                        <option value="공연">공연</option>
+		                        <option value="휴양">휴양</option>
                             </select>
 						</div>
                     </li>
                     <li>
-                        <div class="cover"><label>별점순</label></div>
+                        <div class="cover"><label id="starList" >별점순</label></div>
                     </li>
                     <li>
-                        <div class="cover"><label>후기순</label></div>
+                        <div class="cover"><label id="reviewList">후기순</label></div>
                     </li>
                 </ul>
 
@@ -651,9 +656,8 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	                    str += "<b>★4.90(후기 99+개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>입장료 : 입장료 없음</b>";
+		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
 		                            str += "<div id='frm_read'>"
 		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
 		                            str += "</div>";               
@@ -686,15 +690,86 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	                    str += "<b>★4.90(후기 99+개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>입장료 : 입장료 없음</b>";
+		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
 		                            str += "<div id='frm_read'>"
 		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
 		                            str += "</div>";               
 		                            str += "</div>";
 		                            
 		                            list += str;
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+		    
+		    $(function starList(){
+		    	$("#starList").click(function(){
+		    			var kinds = $(this).val(); 
+		    			$.ajax({
+		    				 url : '${contextPath}/business/starList', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	            		 if(data[i].bus_category == 'T'){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>"+ data[i].bus_name +"</b>";
+		    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
+		    	              		str += "<div id='frm_read'>"
+		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+		                            str += "</div>";               
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	            		 }
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+		    
+		    $(function(){
+		    	$("#reviewList").click(function(){
+		    			var kinds = $(this).val(); 
+						
+		    			$.ajax({
+		    				 url : '${contextPath}/business/reviewList', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  //console.log(data);
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	            		  if(data[i].bus_category == 'T'){
+				    	              		str  = "<div class='moreProfile'>";
+				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+				    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+				    	              		str += "<b>"+ data[i].bus_name +"</b>";
+				    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
+				    	              		str += "<div id='frm_read'>"
+				                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+				                            str += "</div>";               
+				                            str += "</div>";
+				                            
+				                            list += str;
+				    	            		 }
 		    	              		}
 		    	            	  cate.innerHTML=list;
 		    	              },
@@ -720,7 +795,7 @@
                         <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     	</div>
                         <img class="image" src="../resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
-                        <b>★4.90(후기 99+개)</b>
+                        <b>★<fmt:formatNumber value="${ t.avstar }" pattern=".00"/>(후기 ${ t.revcnt }개)</b>
                         <b>${ t.tour_tema } / ${ t.tour_category }</b>
                         <b>${ t.bus_name }</b>
                         <b><fmt:formatNumber value="${ t.pro_adult }" pattern="#,###"/>원</b>
@@ -740,7 +815,7 @@
                         <input type="hidden" id="bus_code" name="bus_code" value="${ t.bus_code }">
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                     	</c:if>
-                        <b>★4.90(후기 99+개)</b>
+                        <b>★<fmt:formatNumber value="${ t.avstar }" pattern=".00"/>(후기 ${ t.revcnt }개)</b>
                         <b>${ t.tour_tema } / ${ t.tour_category }</b>
                         <b>${ t.bus_name }</b>
                         <b><fmt:formatNumber value="${ t.pro_adult }" pattern="#,###"/>원</b>

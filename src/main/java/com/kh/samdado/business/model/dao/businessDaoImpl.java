@@ -431,9 +431,33 @@ public class businessDaoImpl implements businessDao {
 	}
 
 	@Override
-	public List<Review> selectReviewList(Business t) {
+	public List<Review> selectReviewList() {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("businessMapper.selectReviewList", t);
+		return sqlSession.selectList("businessMapper.selectReviewList");
+	}
+
+	@Override
+	public List<Business> starList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.starList");
+	}
+
+	@Override
+	public List<Business> reviewList( ) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.reviewList");
+	}
+
+	@Override
+	public List<Business> facList(String kind) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.facList", kind);
+	}
+
+	@Override
+	public List<Business> rescateList(String kind) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.rescateList", kind);
 	}
 
 	

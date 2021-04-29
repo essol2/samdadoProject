@@ -286,12 +286,12 @@
                     <span class="box">
                     <select class="content" name="tour_tema">
                         <option value="select" selected>선택</option>
-                        <option value="wedding">신혼</option>
-                        <option value="fam">가족</option>
-                        <option value="fre">친구</option>
-                        <option value="gradu">졸업</option>
-                        <option value="life">일상</option>
-                        <option value="etc">기타</option>
+                        <option value="신혼">신혼</option>
+                        <option value="가족">가족</option>
+                        <option value="친구">친구</option>
+                        <option value="졸업">졸업</option>
+                        <option value="일상">일상</option>
+                        <option value="기타">기타</option>
                     </select>
                     </span>
                 </div>
