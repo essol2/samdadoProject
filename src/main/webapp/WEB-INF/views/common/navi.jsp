@@ -18,7 +18,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
 <!-- css 외부 파일 첨부 -->
-<link rel="stylesheet" href="${ contextPath }/resources/css/common/navi.css" type="text/css">
+<link rel="stylesheet" href="${ contextPath }/resources/css/common/navi.css?" type="text/css">
 <link rel="stylesheet" href="${ contextPath }/resources/css/user/addMember.css" type="text/css">
 <style>
 		/* 공통 - 폰트 */
@@ -50,7 +50,7 @@
             left:1200px;
             height:100%;
             border-left: 3px solid black;
-            z-index: 1;
+            z-index: 0;
         }
 
         #content {
@@ -113,7 +113,7 @@
                 top: 0;
                 left:87%;
                 height:100%;
-                z-index: 1;
+                z-index: 0;
         
             }
 
@@ -167,7 +167,7 @@
                 left:85%;
                 height:100%;
                 border-left: 3px solid black;
-                z-index: 1;
+                z-index: 0;
             }
             
 	           #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
@@ -217,7 +217,7 @@
                 left:83%;
                 height:100%;
                 border-left: 3px solid black;
-                z-index: 1;
+                z-index: 0;
             }
             
            #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
