@@ -792,7 +792,7 @@
             </div>
             <div class="btnArea">
                 <br>
-                <b>${ r.room_price }원</b><br>
+                <b><fmt:formatNumber value="${ r.room_price }" pattern="#,###"/>원</b><br>
                 <b>1박당 객실 요금</b><br><br>
                 <c:if test="${ loginUser.uspart == '일반'}">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -936,7 +936,7 @@
                 <div class="modal-body2">
                 	<c:forEach var="r" items="${ room }" varStatus="status" end="0">
                 	<h4>${ r.room_name }</h4>
-                    <label>${ r.room_price }원 / 박</label><br>
+                    <label><fmt:formatNumber value="${ r.room_price }" pattern="#,###"/>원 / 박</label><br>
                     <input type="hidden" id="roomName" value="${ r.room_name }">
                     <input type="hidden" id="cAmount" name="cAmount" value="${ r.room_price }">                    
                     <input type="hidden" id="roomNo" name="roomNo" value="${ r.room_no }">
@@ -972,7 +972,7 @@
                         </div>
                     </div>
                     <c:forEach var="r" items="${ room }" varStatus="status" end="0">
-                    <label>${ r.room_price }원 * </label>
+                    <label><fmt:formatNumber value="${ r.room_price }" pattern="#,###"/>원 * </label>
                     </c:forEach>
                     <label id="daysL"></label>
                     <label>박</label>
