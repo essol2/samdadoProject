@@ -432,11 +432,14 @@
     	    /* width: 70px; */
 		    /* height: 33px; */
 		    /* border: 1px solid black; */
-		    border-radius: 20%;
+		    border-radius: 10%;
 		    /* -webkit-appearance: none; */
 		    appearance: none;
 		    padding-left: 5px;
 		    font-weight: bold;
+		    border: 1px solid #467355;
+		    color: #467355;
+		    width: 65px;		    
 		    
         }
         
@@ -607,7 +610,7 @@
             <nav id="choise2-nav">
                 <ul id="choise2">
                     <li>
-                        <div class="cover">
+                        <div class="coverr">
 							<select id="cateSelect" class="cateSelect">
                                 <option value="tema">테마별</option>
                                 <option value="신혼">신혼</option>
@@ -620,7 +623,7 @@
 						</div>
                     </li>
                     <li>
-                        <div class="cover">
+                        <div class="coverr">
 							<select id="calSelect" class="cateSelect">
                                 <option value="tema">유형별</option>
                                 <option value="체험">체험</option>
