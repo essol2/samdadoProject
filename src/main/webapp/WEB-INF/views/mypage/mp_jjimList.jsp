@@ -258,7 +258,7 @@
 </style>
 <body>
        <!-- navi.jsp include -->
-       <jsp:include page="../common/navi.jsp"/>
+       <jsp:include page="../common/naviWhite.jsp"/>
 
             <div id="topMenu">
                 <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
