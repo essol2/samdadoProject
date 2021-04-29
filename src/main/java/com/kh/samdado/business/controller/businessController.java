@@ -92,7 +92,7 @@ public class businessController {
 					roomList.get(i).setFile_rename(roomAtt.get(j).getFile_rename());
 				}
 			}
-		}
+		}		
 		
 		//System.out.println("roomLKist: " + roomList.get(0).getFile_rename());
 		//System.out.println("roomLKist: " + roomList.get(1).getFile_rename());

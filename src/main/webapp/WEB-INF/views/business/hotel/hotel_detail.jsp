@@ -237,7 +237,7 @@
 
         .detail {
             border: 1px solid black;
-            height: 300px;
+            height: 382px;
             margin-bottom: 2%;
             margin-top: 5%;
             display: none;
@@ -247,7 +247,7 @@
         
         .moreDetail {
             border: 1px solid black;
-            height: 300px;
+            height: 383px;
             margin-bottom: 2%;
             margin-top: 5%;
             display: flex;
@@ -281,6 +281,7 @@
 
         .imgArea {
             width: 44%;
+            height:100%;
         }
         
         .beneImgs {
@@ -288,11 +289,6 @@
 		    height: 325px;
 		    border-radius: 8px;
 		}
-
-        .imgArea img {
-            width: 100%;
-            height: 100%;
-        }
 
         /* 방 세부사진 및 정보div들 끝*/
 
@@ -517,6 +513,16 @@
             width: 60px;
             height: 50px;
             margin-bottom:30px;
+        }
+        
+        .detailImg{
+        	height:300px;
+        	width: 100%;
+        }
+        
+        .otherImgArea{
+        	height: 80px;
+        	display: flex;
         }
         
     </style>
@@ -748,9 +754,15 @@
 		<c:forEach var="r" items="${ room }">
         <div class="detail">
             <div class="imgArea">
-                <img src="${ contextPath }/resources/busUploadFiles/${ r.file_rename }" class="detailImg">
+                <img id="mainPic" src="${ contextPath }/resources/busUploadFiles/${ r.file_rename }" class="detailImg">
+			<div class="otherImgArea">
+			<c:forEach var="ra" items="${ roomAtt }">
+			<c:if test="${ ra.room_no eq r.room_no}">
+			<img id="otherPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ ra.file_rename }">
+			</c:if>
+			</c:forEach>
+			</div>
             </div>
-
             <div class="detailView">
                 <b>${ r.room_name }</b><br><br>
                 <c:forTokens var="ame" items="${ r.room_amenity }" delims=",">
@@ -806,6 +818,21 @@
         <div class="btnArea">
             <button class="moreBtn">더보기</button>
         </div>
+        
+        <script>
+                var mainPic = document.querySelector("#mainPic");
+                var otherPic = document.querySelectorAll("#otherPic")
+
+                for(var i = 0; i < otherPic.length; i++){
+                    otherPic[i].addEventListener("click", changepic);
+                    
+                }
+                function changepic(){
+                    var otherPicAttribute = this.getAttribute("src");
+                    mainPic.setAttribute("src", otherPicAttribute);
+
+                }
+            </script>
         
         <!-- 더보기 -->
 			<script>				
@@ -978,7 +1005,7 @@
                     <label>박</label>
                     <br>
                     <b>총 합계 : </b>
-                    <b id="payResultB"></b>
+                    <b id="payResultB"><fmt:formatNumber value="${ r.room_price }" pattern="#,###"/></b>
                     <button class="payBtn">결제하기</button>
                 </div>
                 <div class="modal-footer">
@@ -1010,6 +1037,8 @@
             alert("체크인날짜를 선택해주세요.");
         } else if(endDate === ""){
         	alert("체크아웃날짜를 선택해주세요.");
+        } else if(personNumber === "0" || personNumber === ""){
+        	alert("인원을 선택해주세요.");
         } else {
 	    IMP.request_pay({
 	        pg : 'html5_inicis',
@@ -1047,7 +1076,7 @@
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('startDateResult').innerText
 	  	    = value;
-	  	  
+	  	  	
 		  	var sdd = document.getElementById("startDate").value;
 		    var edd = document.getElementById("endDate").value;
 		    var amount = document.getElementById("cAmount").value;
@@ -1102,7 +1131,7 @@
 	    	  document.getElementById('personNumber').value
 	    	    = value;
 	    	  
-	    	  document.getElementById('personNumberL').innerText = value;
+	    	  document.getElementById('personNumberL').innerText = value+"명";
 	    	}
     </script>
     

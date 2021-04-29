@@ -249,7 +249,8 @@
             /* flex: 5; */
             display: flex;
             align-items: center;
-
+			flex-wrap: wrap;
+			
         }
 
         #secondlist {            
@@ -277,8 +278,9 @@
             /* align-items: center; */
             justify-content: center;
             /* flex: 1; */
-            
-            width: 435px;
+            margin: 1rem; 
+  			padding: 1rem;
+            width: 400px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -290,8 +292,9 @@
             /* align-items: center; */
             justify-content: center;
             /* flex: 1; */
-            
-            width: 435px;
+            margin: 1rem; 
+  			padding: 1rem;
+            width: 400px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -302,11 +305,22 @@
             width: 350px;
             height: 200px;
         }
+        
+        .detailImg{
+        	height:300px;
+        	width: 100%;
+        }
+        
+        .otherImgArea{
+        	height: 80px;
+        	display: flex;
+        }
 
         /* 차 리스트끝 */
 
         .btnArea{
             text-align: center;
+            margin-top: 100px;
         }
 
         
@@ -734,14 +748,23 @@
 
             <hr class="boundary">
 			
-            <div class="list">
+            <div class="list" style="margin-top:50px;">
                 <div id="firstlist">
 			<c:forEach var="c" items="${ cars }">
                     <div class='profile'>
-                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">
+                    <div class="imgArea">
+                        <img id="mainPic" class="detailImg" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">
+                        <div class="otherImgArea">
+                        <c:forEach var="ca" items="${ carAtt }">
+						<c:if test="${ ca.car_no eq c.car_no}">
+						<img id="otherPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ ca.file_rename }">
+						</c:if>
+						</c:forEach>
+                        </div>
+                        </div>
                         <b>${ c.car_name }</b><br>
                         <b>${ c.car_fuel }</b><br>
-                        <b><fmt:formatNumber value="${ c.car_price }" pattern="#,###"/>원</b><br>
+                        <b><fmt:formatNumber value="${ c.car_price }" pattern="#,###"/>원 / 일</b><br>
                         <c:if test="${ loginUser.uspart == '일반'}">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						 예약하기</button>
@@ -754,15 +777,30 @@
                 <button class="moreBtn">더보기</button>
             </div>
             
+            <script>
+                var mainPic = document.querySelector("#mainPic");
+                var otherPic = document.querySelectorAll("#otherPic")
+
+                for(var i = 0; i < otherPic.length; i++){
+                    otherPic[i].addEventListener("click", changepic);
+                    
+                }
+                function changepic(){
+                    var otherPicAttribute = this.getAttribute("src");
+                    mainPic.setAttribute("src", otherPicAttribute);
+
+                }
+            </script>
+            
             <!-- 더보기 -->
 			<script>				
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 6;
+							x = 3;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+6 <= size_div)? x+6 : size_div;
+								x= (x+3 <= size_div)? x+3 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});
