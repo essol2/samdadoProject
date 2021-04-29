@@ -195,5 +195,26 @@ public interface MypageService {
 	// 후기 작성 후 비즈니스에 별점 update
 	public int updateBusStar(Review r);
 
+	// 공지사항 등록 시 해당 user의 news +1 해주기
+	public int updateNewUserNews(A_board aboard);
+
+	// 내소식에 들어갈 공지사항 리스트
+	public List<A_board> selectBoard(User u, ApplyPageInfo api);
+
+	// 특정 공지사항 가져오기
+	public A_board findThisBoard(A_board aboard);
+
+	// 일반회원 새로운 공지사항 있는지 확인
+	public int findNewUserNews(User u);
+
+	// 공지사항 읽으면 user -1 해주기
+	public int updateUserRead(A_board aboard);
+
+	// 공지사항 갯수 구하기
+	public int selectBoardListCount(String uspart);
+
+	// 일반회원 공지사항 가져오기
+	public List<A_board> selectUserBoard(User user);
+
 
 }

@@ -518,13 +518,15 @@ public class AdminController {
 		int insertAboard = aService.insertAboard(aboard);
 		
 		// -- 은솔 : news에 새로운 공지사항 넣기
-		// 1. bno 찾아오기
-		int findBno = mService.findNewBno(aboard);
+//		// 1. bno 찾아오기
+//		int findBno = mService.findNewBno(aboard);
 		
-		aboard.setBno(findBno);
-		int insertNews = mService.insertNewBoard(aboard);
-		
-		if (insertAboard > 0 && insertNews > 0) {
+//		aboard.setBno(findBno);
+//		int insertNews = mService.insertNewBoard(aboard);
+
+		int insertNewsUser = mService.updateNewUserNews(aboard);
+	
+		if (insertAboard > 0) {
 			//System.out.println("insertAboard 결과 : " + insertAboard);
 			model.addAttribute("msg", "공지글 등록에 성공하였습니다.");
 			return "redirect:/admin/home";

@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<result property="usstatus" column="US_STATUS" />
 	<result property="usstop" column="US_STOP" />
 	<result property="authKey" column="AUTH_KEY" />
+	<result property="usnews" column="USNEWS"/>
 	</resultMap>
 	
 	<resultMap type="QnA" id="qnaResultSet">
@@ -738,7 +739,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<insert id="insertNewApprove" parameterType="Alert">
 		<if test='alstatus == "Y"'>
 			INSERT 
-			INTO 	NEWS
+			INTO NEWS
 			(
 				NNO
 			  , US_NO
@@ -761,7 +762,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</if>
 		<if test='alstatus == "RI"'>
 			INSERT 
-			INTO 	NEWS
+			INTO NEWS
 			(
 				NNO
 			  , US_NO
@@ -784,7 +785,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</if>
 		<if test="alstatus == 'RP'">
 			INSERT 
-			INTO 	NEWS
+			INTO NEWS
 			(
 				NNO
 			  , US_NO
@@ -1228,4 +1229,65 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		SET AVGSTAR = (SELECT AVG(RE_STAR) FROM REVIEW WHERE BUS_CODE = #{bus_code} GROUP BY BUS_CODE)
 		WHERE BUS_CODE = #{bus_code}
    </update>
+   
+   <update id="updateNewUserNews" parameterType="A_board">
+   		<if test="uspart == '전체'">
+	   		UPDATE "USER"
+	   		SET USNEWS = USNEWS + 1
+   		</if>
+   		<if test="uspart == '일반'">
+   			UPDATE "USER"
+	   		SET USNEWS = USNEWS + 1
+	   		WHERE US_PART = '일반'
+   		</if>
+   		<if test="uspart == '제휴'">
+   			UPDATE "USER"
+	   		SET USNEWS = USNEWS + 1
+	   		WHERE US_PART = '제휴'
+   		</if>
+   </update>
+   <update id="updateUserNewNews" parameterType="String">
+   			UPDATE "USER"
+	   		SET USNEWS = USNEWS + 1
+	   		WHERE US_NO = #{usno}
+   </update>
+   <update id="updateUserRead" parameterType="String">
+   		UPDATE "USER"
+	   		SET USNEWS = USNEWS - 1
+	   		WHERE US_NO = #{usno}
+   </update>
+   <select id="selectBoard" resultMap="ABoardResultSet">
+   		<if test="uspart == '일반'">
+	   		SELECT *
+	   		FROM A_BOARD
+	   		WHERE US_PART = '전체' 
+	   		OR US_PART = '일반'
+	   		ORDER BY BNO DESC
+   		</if>
+   		<if test="uspart == '제휴'">
+   			SELECT *
+	   		FROM A_BOARD
+	   		WHERE US_PART = '전체' 
+	   		OR US_PART = '제휴'
+	   		ORDER BY BNO DESC
+   		</if>
+   </select>
+   
+   <select id="findThisBoard" resultType="A_board">
+   		SELECT *
+   		FROM A_BOARD
+   		WHERE BNO = #{ bno }
+   </select>
+   
+   <select id="findNewUserNews" resultType="_int">
+   		SELECT USNEWS
+   		FROM "USER"
+   		WHERE US_NO = #{ usno }
+   </select>
+   <select id="selectBoardListCout" resultType="_int">
+   		SELECT COUNT(*)
+   		FROM A_BOARD
+   		WHERE US_PART = #{uspart}
+   		OR US_PART = '전체' 
+   </select>
 </mapper>
