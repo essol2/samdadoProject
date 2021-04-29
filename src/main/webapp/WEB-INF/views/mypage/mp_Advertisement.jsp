@@ -453,9 +453,10 @@
 					</div>
 					<div id='ingBox'>
 					<br>
-					<h1 style="color:#467355; text-align : center;">배너광고 승인 대기 중</h1>
+					
 					<c:choose>
 						<c:when test="${!empty applyList}">
+						<h1 style="color:#467355; text-align : center;">배너광고 승인 대기 중</h1>
 							<div class="previous">
 								<c:if test="${ api.currentPage <= 1 }">
 									<h1 style="color: #467355; , text-align: center; font-size: 20px;">&lt;</h1>
