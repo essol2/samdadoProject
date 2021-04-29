@@ -19,7 +19,7 @@
 	
 	<jsp:include page="../common/navi.jsp"/>
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_modal.css" type="text/css">
-	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css">
+	<%-- <link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css"> --%>
 	<style>
 		.modal-body div {
 			margin: 0px;
@@ -51,6 +51,7 @@
         .detail_content {
             font-size: 13px;
         }
+        
 	</style>
 </head>
 <body>
