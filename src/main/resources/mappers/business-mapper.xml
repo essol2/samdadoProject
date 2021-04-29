@@ -256,6 +256,26 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="avstar" column="AVSTAR" />
 		<result property="revcnt" column="REVCNT" />
 	</resultMap>
+	
+	<resultMap type="User" id="userResultSet">
+		<id property="usno" column="US_NO" />
+		<result property="usid" column="US_ID" />
+		<result property="uspwd" column="US_PWD" />
+		<result property="usname" column="US_NAME" />
+		<result property="usbirth" column="US_BIRTH" />
+		<result property="utodate" column="UTODATE" /> <!-- TO_CHAR 포멧팅을 위한 컬럼 -->	
+		<result property="usemail" column="US_EMAIL" />
+		<result property="usphone" column="US_PHONE" />
+		<result property="busno" column="BUS_NO" />
+		<result property="uspart" column="US_PART" />
+		<result property="usstatus" column="US_STATUS" />
+		<result property="usstop" column="US_STOP" />
+		<result property="authKey" column="AUTH_KEY" />
+		<result property="pbalance" column="PBALANCE" />
+		<result property="enrolldate" column="ENROLL_DATE" />
+		<result property="upartcount" column="UPARTCOUNT" />
+	</resultMap>
+	
 	<insert id="insertBusiness" parameterType="Business">
 		INSERT
 		  INTO BUSINESS
@@ -1359,6 +1379,15 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE 
 				ROWNUM = 1
 	</select>
+	
+	<update id="updateUserPblance"  parameterType="User">
+		UPDATE
+				"USER"
+			SET
+				PBALANCE = #{pbalance}			  
+		  WHERE
+		  		US_NO = #{usno}
+	</update>
 	
 	<select id="selectRoom" resultMap="RoomResultSet">
 		SELECT

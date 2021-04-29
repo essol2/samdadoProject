@@ -255,6 +255,11 @@ public class businessServiceImpl implements businessService {
 		// TODO Auto-generated method stub
 		return bDao.findPoint(p);
 	}
+	
+	@Override
+	public int updateUserPblance(User u) {
+		return bDao.updateUserPblance(u);
+	}
 
 	// 지혜
 	@Override
@@ -433,6 +438,8 @@ public class businessServiceImpl implements businessService {
 		// TODO Auto-generated method stub
 		return bDao.rescateList(kind);
 	}
+
+	
 
 	
 
