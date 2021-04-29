@@ -1,11 +1,9 @@
 package com.kh.samdado.route.controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,7 +27,6 @@ import com.kh.samdado.route.model.service.RouteService;
 import com.kh.samdado.route.model.vo.Route;
 import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.route.model.vo.SpotBus;
-import com.kh.samdado.route.model.vo.TourSpot;
 import com.kh.samdado.route.model.vo.rSearch;
 import com.kh.samdado.user.model.vo.User;
 
@@ -103,7 +100,7 @@ public class RouteController {
 		
 		List<SpotBus> rlist = rService.changeRoute(rrlist);
 		
-		System.out.println("rlist: " + rlist);
+		//System.out.println("rlist: " + rlist);
 		model.addAttribute("list", rlist);
 		
 		User loginUser = (User)session.getAttribute("loginUser");
@@ -181,7 +178,7 @@ public class RouteController {
 			u.setUsno(loginUser.getUsno());
 			// 사용자별 찜한 숙소리스트 가져오기
 			List<Business> jjimHotel = mService.findHotelJjimList(u);
-			//System.out.println("jjimHotel 확인 : " + jjimHotel);
+			System.out.println("jjimHotel 확인 : " + jjimHotel);
 			
 			// 검색 모달창에 찜한 사업장 가져오기
 			List<Business> jjimB = rService.jjimBusiness(u);
@@ -229,7 +226,11 @@ public class RouteController {
 		User loginUser = (User)session.getAttribute("loginUser");
 		String price = (String)session.getAttribute("price");
 		
-		rf.setRoute_date(routeDate);
+		System.out.println(routeDate);
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy/MM/dd");
+		String time1 = format1.format(routeDate);
+		
+		rf.setRoute_date(time1);
 		rf.setUs_no(loginUser.getUsno());
 		rf.setRoute_price(price);
 		

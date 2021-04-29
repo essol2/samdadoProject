@@ -639,13 +639,13 @@
 						
 						var tr6 = $("<tr>");
 						var trimg = $("<th colspan='4'>")
-						var imgTd = $("<img src='${contextPath}/resources/busUploadFiles/" + deAlert.rimgcname + "' style='width : 98%;'>");
+						/* var imgTd = $("<img src='${contextPath}/resources/busUploadFiles/" + deAlert.rimgcname + "' style='width : 98%;'>"); */
 						
 						tr1.append(tnno, tnnoData, tncate, tncateData);
 						tr2.append(tqdate, tqdateData, tqcont, tqcontData);
 						tr4.append(tqreply);
 						tr5.append(tqreplyData);
-						tr6.append(trimg, imgTd);
+						tr6.append(trimg);
 						blankTr.append(blankTd2);
 						table.append(tr1, tr2, blankTr, tr4, tr5, tr6);
 					} else if(deAlert.ncate == 'R' && deAlert.rexdate != null){ // 신고하기 - block 됨
@@ -678,14 +678,14 @@
 						
 						var tr6 = $("<tr>");
 						var trimg = $("<th colspan='4'>");
-						var imgTd =  $("<img src='${contextPath}/resources/busUploadFiles/" + deAlert.rimgcname + "' style='width : 98%;'>");
+						/* var imgTd =  $("<img src='${contextPath}/resources/busUploadFiles/" + deAlert.rimgcname + "' style='width : 98%;'>"); */
 						
 						tr1.append(tnno, tnnoData, tncate, tncateData);
 						tr2.append(tqdate, tqdateData, tqcont, tqcontData);
 						tr3.append(trblockData);
 						tr4.append(tqreply);
 						tr5.append(tqreplyData);
-						tr6.append(trimg, imgTd);
+						tr6.append(trimg);
 						blankTr2.append(blankTd2);
 						table.append(tr1, tr2, blankTr2, tr3, tr4, tr5, tr6);
 					} else if(deAlert.ncate == 'P'){ // 포인트 얼마남지않음

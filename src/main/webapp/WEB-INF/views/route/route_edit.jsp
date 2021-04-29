@@ -461,7 +461,15 @@
                                             <td id="navi-content" style="font-size : 30px; color : #467355; padding-top:2%;">${jl.bus_name }</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-content" style="color:#bfbfbf;">${jl.hotel_facility }</td>
+	                                        <c:if test="${ !empty jl.avstar }">
+	                                        	<td>별점 𖤐${ jl.avstar }</td>
+	                                        </c:if>
+	                                        <c:if test="${ empty jl.avstar }">
+	                                        	<td style="font-size : small;">아직 별점이 없습니다.</td>
+	                                        </c:if>
+                                        </tr>
+                                        <tr>
+                                            <td id="navi-content" style="color:#bfbfbf;">${jl.hotel_facility }</td> 
                                         </tr>
                                        
                                     </table>

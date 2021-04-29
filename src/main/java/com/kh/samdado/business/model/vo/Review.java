@@ -65,6 +65,7 @@ public class Review {
 	private Date c_booking_trv;	
 	private int rent_no;			
 	private int c_bus_code;
+	private Date c_booking_trvEnd;
 	
 	private int r_booking_no;
 	private String r_bus_name;
@@ -78,6 +79,7 @@ public class Review {
 	private Date r_booking_trv;
 	private int room_no;
 	private int r_bus_code;
+	private Date r_booking_trvEnd;
 	
 	private int t_booking_no;			// 예약번호
 	private String t_bus_name;			// 사업장이름

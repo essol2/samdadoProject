@@ -161,7 +161,7 @@
         order : 1;
         display: inline-block;
         width : 50%;
-        height: 300px;
+        height: 290px;
         margin-top : 0px;
         margin-right : 5px;
         /* border : 1px solid red; */
@@ -170,7 +170,7 @@
 
     .reserveImg{
         width : 100%;
-        height: 300px;
+        height: 298px;
         padding : 0;
         margin : 0;
         /* border : 1px solid blue; */
@@ -289,7 +289,20 @@
                             <div id="reserveInfoArea" class="jjimBtn">
                             	<input  type="hidden"  name="bus_code"  id="bus_code"  value="${ jl.bus_code }">
                                 <img src="${contextPath}/resources/images/image_mp/heart_on.png" alt="" id="jjimIcon"><br>
-                                <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon"><br> ${ jl.bus_category }<br><br>
+                                <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon"><br> 
+                                <c:if test="${ jl.bus_category == 'H'}">
+                               		숙박
+                                </c:if>
+                                <c:if test="${ jl.bus_category == 'C'}">
+                               		렌트카
+                                </c:if>
+                                <c:if test="${ jl.bus_category == 'T'}">
+                               		관광지
+                                </c:if>
+                                <c:if test="${ jl.bus_category == 'R'}">
+                               		음식점
+                                </c:if>
+                                <br><br>
                                 <img src="${contextPath}/resources/images/image_mp/location_outline.png" alt="" class="reservIcon"><br> ${ jl.bus_address }<br><br>
                                 <img src="${contextPath}/resources/images/image_mp/phone_outline.png" alt="" class="reservIcon"><br> ${ jl.bus_phone }<br><br>
                             </div>
