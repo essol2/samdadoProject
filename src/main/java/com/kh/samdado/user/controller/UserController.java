@@ -345,7 +345,7 @@ public class UserController {
        return buffer.toString(); // 리턴타입 스트링
    }
 
-  @GetMapping("/goToAboutUs")
+  @GetMapping("/aboutus")
   public String goToAboutUs() {
 	  
 	  return "common/aboutUs";

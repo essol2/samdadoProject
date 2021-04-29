@@ -456,7 +456,7 @@
 <body>
  <div id="back">
  	   <!-- navi.jsp include -->
-       <jsp:include page="../common/navi.jsp"/>
+       <jsp:include page="../common/naviWhite.jsp"/>
         
         <section class="page-start">
             <div id="topMenu">

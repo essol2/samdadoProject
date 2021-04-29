@@ -49,8 +49,9 @@
             top: 0;
             left:1200px;
             height:100%;
-            border-left: 3px solid black;
+            border-left: 3px solid white;
             z-index: 1;
+            color : white;
         }
 
         #content {
@@ -61,6 +62,7 @@
         
         .center {
             text-align: center;
+            color : whtie;
         }
 
         .right {
@@ -74,6 +76,7 @@
         #navi-title {
             font-size: 40px;
             font-weight: bold;
+            color : white;
         }
 
         .center {
@@ -85,7 +88,7 @@
             height: 600px;
             /* border : 1px solid pink; */
             margin-left: 2%;
-            width : 100%;
+            width : 100%; 
         }
 
         .navi_logoimg {
@@ -101,7 +104,7 @@
 			/* border : 1px solid red; */
   			margin-left : 36%;
 			width : fit-content;
-			/* margin-right : 1%; */
+			margin-right : 1%;
 			
 		}
 		
@@ -352,9 +355,9 @@
 		    line-height: 30px;
 		}
 		
-		a:link { color: black; text-decoration: none;}
-		a:visited { color: black; text-decoration: none;}
-		a:hover { color: black; text-decoration: none;}
+		a:link { color: white; text-decoration: none;}
+		a:visited { color: white; text-decoration: none;}
+		a:hover { color: white; text-decoration: none;}
 		
 		#addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn {
 			color: white;
@@ -425,7 +428,7 @@
  
  #naviNew{
  
-	border : 1px solid black;
+	border : 1px solid white;
  	padding : 2px; 
  	border-radius : 3px;
  }
@@ -459,10 +462,10 @@
                 <c:if test="${ empty sessionScope.loginUser }">
                 <div class="navi">
 
-                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img></a>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_w.png"></img></a>
 
 	                <br><br>
-	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR'; color : white">삼다도</p>
 
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
@@ -481,7 +484,7 @@
                 <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '일반' }">
                 <div class="navi">
 
-                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img></a>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_w.png"></img></a>
 
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
@@ -503,7 +506,7 @@
                 <c:if test="${ !empty sessionScope.loginUser && loginUser.uspart eq '제휴' && loginUser.usid ne 'samdado' }">
                 <div class="navi">
 
-                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img></a>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_w.png"></img></a>
 
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
@@ -534,7 +537,7 @@
                 <c:if test="${!empty sessionScope.loginUser && loginUser.uspart eq '관리자'}">    
                 <div class="navi">
 
-                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_g.png"></img></a>
+                <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="${ contextPath }/resources/images/image_main/logo_w.png"></img></a>
 
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
