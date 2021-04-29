@@ -149,7 +149,7 @@
            </a>
             </div>
                 <div class="main_text">
-                    <p style="color : white;">우리가 사랑하는 제주도의 또다름 이름</p>
+                    <p style="color : white;">우리가 사랑하는 제주도의 또다른 이름</p>
                     <b class="text1">삼 다 도.</b>
                 </div>
               </div>

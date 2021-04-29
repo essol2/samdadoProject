@@ -140,7 +140,7 @@
             transition-timing-function:ease;
             color: white;
             border-left: 3px solid white;
-            z-index: 1;
+            z-index: 0;
         }
 
         .down {
@@ -150,6 +150,8 @@
             transition-duration:0.2s;
             transition-timing-function:ease;
             border-left: 3px solid black;
+            
+            z-index: -1;
         }
 
         .down #navi {
@@ -158,6 +160,8 @@
             -webkit-transition-timing-function:ease;
             transition-duration:0.4s;
             transition-timing-function:ease;
+            
+            z-index: -1;
         }
 
         #top {
@@ -172,7 +176,7 @@
         }
 
         #content {
-            width: 80%;
+            width: 100%;
             height: auto;
             /* background-color: rgb(255, 181, 181); */
         }
@@ -225,7 +229,10 @@
 		}
 		
         /* 동영상 css */        
-        .wrap{ width:100%; } 
+        .wrap{ 
+            width:100%;
+            z-index: -1;
+         } 
 
         .content{ position:relative; padding-top:56%; width:100%; } 
 
@@ -285,7 +292,7 @@
                 transition-timing-function:ease;
                 color: white;
                 border-left: 3px solid white;
-                z-index: 1;
+                z-index: 0;
         
             }
 
@@ -344,7 +351,7 @@
                 transition-timing-function:ease;
                 color: white;
                 border-left: 3px solid white;
-                z-index: 1;
+                z-index: 0;
             }
             
 	           #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
@@ -399,7 +406,7 @@
                 transition-timing-function:ease;
                 color: white;
                 border-left: 3px solid white;
-                z-index: 1;
+                z-index: 0;
             }
             
            #addMemberBtn, #myPageBtn, #loginBtn, #logOutBtn, #adminHomeBtn{
