@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,6 +60,7 @@ import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.user.model.service.UserService;
 import com.kh.samdado.user.model.vo.User;
 import com.sun.mail.handlers.multipart_mixed;
+import com.sun.org.glassfish.gmbal.ParameterNames;
 
 
 @Controller
@@ -541,14 +543,17 @@ public class businessController {
 						
 					}
 				}
-		int cnt = 0;
+		
 		List<Business> tourList = bService.selectTourList();
-		for (Business t : tourList) {
-			List<Review> reviewList = bService.selectReviewList(t);
-			
-			
+		List<Review> reviewList = bService.selectReviewList();
+		for(Business t : tourList) {
+			for(Review r : reviewList) {
+				if(t.getBus_code() == r.getBus_code()) {
+					t.setAvstar(r.getAvstar());
+					t.setRevcnt(r.getRevcnt());
+				}
+			}
 		}
-		System.out.println(tourList);
 		
 		if(tourList != null) {
 			
@@ -1125,22 +1130,41 @@ public class businessController {
 		
 	}
 	
+	@RequestMapping(value="rescateList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> rescateList(HttpServletResponse response, @RequestParam String kinds) {
+		
+		
+		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
+		List<Business> rescateList = bService.rescateList(kind);
+		return rescateList;
+		
+	}
 
 	@RequestMapping(value="cateList", method=RequestMethod.POST)
 	@ResponseBody
-	public List<Business> cateList(HttpServletResponse response, @RequestBody String kinds) {
+	public List<Business> cateList(HttpServletResponse response, @RequestParam String kinds) {
+		
 		
 		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
 		List<Business> cateList = bService.cateList(kind);
-		
-		//System.out.println("cateList : " + cateList.size());
 		return cateList;
+		
+	}
+	
+	@RequestMapping(value="facList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> facList(HttpServletResponse response, @RequestParam String kinds) {
+		
+		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
+		List<Business> facList = bService.facList(kind);
+		return facList;
 		
 	}
 	
 	@RequestMapping(value="calList", method=RequestMethod.POST)
 	@ResponseBody
-	public List<Business> calList(HttpServletResponse response, @RequestBody String kinds) {
+	public List<Business> calList(HttpServletResponse response, @RequestParam String kinds) {
 		
 		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
 		List<Business> calList = bService.calList(kind);
@@ -1149,12 +1173,26 @@ public class businessController {
 		
 	}
 	
-	@RequestMapping("/priceList")
+	@RequestMapping(value="starList", method=RequestMethod.POST)
 	@ResponseBody
-	public List<Business> priceList(HttpServletResponse response, @RequestBody Business kinds) {
-		List<Business> priceList = bService.priceList(kinds);
-		return priceList;
+	public List<Business> starList(HttpServletResponse response, @RequestParam String kinds) {
+		
+		List<Business> starList = bService.starList();
+		System.out.println(starList);
+		return starList;
+		
 	}
+	
+	@RequestMapping(value="reviewList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> reviewList(HttpServletResponse response, @RequestParam String kinds) {
+		
+		List<Business> reviewList = bService.reviewList();
+		
+		return reviewList;
+		
+	}
+	
 	//찜하기 ajax받기	
     @RequestMapping("/jjim")
     @ResponseBody

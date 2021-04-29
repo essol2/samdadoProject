@@ -51,6 +51,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<!-- 신고기록 조인 -->
 		<result property="rexdate" column="REXDATE" />
 		<result property="ref_bus_code" column="REF_BUS_CODE" />
+		
+		<result property="avstar" column="AVSTAR" />
+		<result property="revcnt" column="REVCNT" />
 	</resultMap>
 	
 	<resultMap type="BusinessAtt" id="BusinessAttResultSet">
@@ -1374,6 +1377,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , PRO_ADULT
 		     , PRO_YOUTH
 		     , PRO_CHILD
+		     , TOUR_TEMA
+		     , TOUR_CATEGORY
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
 		 WHERE
@@ -1383,7 +1388,47 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		   AND BUS_STATUS = 'Y'
            AND B.TOUR_TEMA = #{kind}
            AND BT.FILE_LV = '0'
-	  ORDER BY DBMS_RANDOM.RANDOM
+           AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
+	</select>
+	
+	<select id="rescateList" resultMap="BusinessResultSet">
+		SELECT 
+		       B.BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE   	   
+		   AND BUS_CATEGORY = 'T'
+		   AND BUS_CLASSIFY = 'G'
+		   AND BUS_STATUS = 'Y'
+           AND B.RES_CATEGORY = #{kind}
+           AND BT.FILE_LV = '0'
+           AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
 	</select>
 	
 	<!-- 유형별 리스트 -->
@@ -1408,6 +1453,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , PRO_ADULT
 		     , PRO_YOUTH
 		     , PRO_CHILD
+		     , TOUR_TEMA
+		     , TOUR_CATEGORY
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
 		 WHERE
@@ -1417,9 +1464,140 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		   AND BUS_STATUS = 'Y'
            AND B.TOUR_CATEGORY = #{kind}
            AND BT.FILE_LV = '0'
-	  ORDER BY DBMS_RANDOM.RANDOM
+           AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
+	</select>
+	<select id="facList" resultMap="BusinessResultSet">
+		SELECT 
+		       B.BUS_CODE
+		     , US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+		     , HOTEL_CATEGORY
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE  	   
+		   AND BUS_CATEGORY = 'H'
+		   AND BUS_CLASSIFY = 'G'
+		   AND BUS_STATUS = 'Y'
+           AND B.HOTEL_CATEGORY = #{kind}
+           AND BT.FILE_LV = '0'
+           AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
+	</select>
+	<select id="starList" resultMap="BusinessResultSet">
+		SELECT 
+		       B.BUS_CODE
+		     , B.US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+		     , TOUR_TEMA
+		     , TOUR_CATEGORY
+		     , PRO_ADULT
+		     , PRO_YOUTH
+		     , PRO_CHILD
+             , COUNT(REV_COMMENT) AS "REVCNT"
+             , TRUNC(AVG(RE_STAR),2) AS "AVSTAR"
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP, REVIEW R
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE
+           AND B.BUS_CODE = R.BUS_CODE
+		   AND BUS_STATUS = 'Y'
+		   AND BT.FILE_LV = '0'
+           AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
+     GROUP BY B.BUS_CODE, B.US_NO, BUS_NAME, BUS_ADDRESS, BUS_INTRO, 
+              BUS_DATE, BUS_MODIFY, AD_COUNT, BUS_CLASSIFY, BUS_CATEGORY, 
+              BUS_STATUS, BUS_PHONE, RES_CATEGORY, BUS_OPENING, BT.FILE_RENAME, 
+              BT.FILE_LV, TOUR_TEMA, TOUR_CATEGORY, PRO_ADULT, PRO_YOUTH, 
+              PRO_CHILD
+     ORDER BY AVSTAR
 	</select>
 	
+	<select id="reviewList" resultMap="BusinessResultSet">
+		SELECT 
+		       B.BUS_CODE
+		     , B.US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+		     , TOUR_TEMA
+		     , TOUR_CATEGORY
+		     , PRO_ADULT
+		     , PRO_YOUTH
+		     , PRO_CHILD
+             , COUNT(REV_COMMENT) AS "REVCNT"
+             , AVG(RE_STAR) AS "AVSTAR"
+		  FROM
+		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP, REVIEW R
+		 WHERE
+		       B.BUS_CODE = BT.BUS_CODE AND B.BUS_CODE = TP.BUS_CODE
+           AND B.BUS_CODE = R.BUS_CODE
+		   AND BUS_CATEGORY = 'T'
+		   AND BUS_STATUS = 'Y'
+		   AND BT.FILE_LV = '0'
+           AND B.BUS_CODE NOT IN (SELECT 
+           								 R.REF_BUS_CODE
+                                	FROM
+                                		 BUSINESS B, REPORT R
+                                   WHERE B.BUS_CODE = R.REF_BUS_CODE
+                                     AND R.REXDATE IS NOT NULL)
+     GROUP BY B.BUS_CODE, B.US_NO, BUS_NAME, BUS_ADDRESS, BUS_INTRO, 
+              BUS_DATE, BUS_MODIFY, AD_COUNT, BUS_CLASSIFY, BUS_CATEGORY, 
+              BUS_STATUS, BUS_PHONE, RES_CATEGORY, BUS_OPENING, BT.FILE_RENAME, 
+              BT.FILE_LV, TOUR_TEMA, TOUR_CATEGORY, PRO_ADULT, PRO_YOUTH, 
+              PRO_CHILD
+     ORDER BY REVCNT
+	</select>
 	
 	
 	<select id="selectReview" resultMap="ReviewResultSet">
@@ -1771,10 +1949,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	</update>
 	
 	<select id="selectReviewList" resultMap="Cntresultset">
-		SELECT COUNT(REV_COMMENT) AS "REVCNT", AVG(SUM(RE_STAR)) AS "AVSTAR"
-			FROM REVIEW
-			WHERE BUS_CODE = #{bus_code}
-			GROUP BY RE_STAR
+		SELECT BUS_CODE, AVG(RE_STAR) AS "AVSTAR", COUNT(REV_COMMENT) AS "REVCNT"
+		  FROM REVIEW
+      GROUP BY BUS_CODE 
 	</select>
 
 	

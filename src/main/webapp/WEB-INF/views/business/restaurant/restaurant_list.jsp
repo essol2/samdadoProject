@@ -585,17 +585,133 @@
             <nav id="choise2-nav">
                 <ul id="choise2">
                     <li>
-                        <div class="cover"><label>종류</label></div>
+                        <div class="cover">
+                        	<select id="cateSelect" class="cateSelect">
+                                <option value="tema">종류</option>
+                                <option value="양식">양식</option>
+		                        <option value="양식">양식</option>
+		                        <option value="양식">양식</option>
+		                        <option value="양식">양식</option>
+		                        <option value="기타">기타</option>
+                            </select>
+						</div>
                     </li>
                     <li>
-                        <div class="cover"><label>별점순</label></div>
+                        <div class="cover"><label id="starList">별점순</label></div>
                     </li>
                     <li>
-                        <div class="cover"><label>후기순</label></div>
+                        <div class="cover"><label id="reviewList">후기순</label></div>
                     </li>
                 </ul>
 
             </nav>
+            
+            <script>
+            $(function(){
+		    	$("#calSelect").change(function(){
+		    			var kinds = $(this).val(); 
+
+		    			$.ajax({
+		    				 url : '${contextPath}/business/rescateList', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  console.log(data);
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";
+		                            str += "<div id='frm_read'>"
+		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+		                            str += "</div>";               
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+		    
+		    $(function starList(){
+		    	$("#starList").click(function(){
+		    			var kinds = $(this).val(); 
+		    			$.ajax({
+		    				 url : '${contextPath}/business/starList', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	            		 if(data[i].bus_category == 'R'){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>"+ data[i].bus_name +"</b>";
+		    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
+		    	              		str += "<div id='frm_read'>"
+		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+		                            str += "</div>";               
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	            		 }
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+		    
+		    $(function(){
+		    	$("#reviewList").click(function(){
+		    			var kinds = $(this).val(); 
+						
+		    			$.ajax({
+		    				 url : '${contextPath}/business/reviewList', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  //console.log(data);
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	            		  if(data[i].bus_category == 'R'){
+				    	              		str  = "<div class='moreProfile'>";
+				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+				    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+				    	              		str += "<b>"+ data[i].bus_name +"</b>";
+				    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
+				    	              		str += "<div id='frm_read'>"
+				                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
+				                            str += "</div>";               
+				                            str += "</div>";
+				                            
+				                            list += str;
+				    	            		 }
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+            </script>
 
             <!-- 식당목록 div -->
 

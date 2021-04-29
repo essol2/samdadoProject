@@ -175,7 +175,15 @@ public interface businessService {
 
 	List<Alliance> selectAlli();
 
-	List<Review> selectReviewList(Business t);
+	List<Review> selectReviewList();
+
+	List<Business> starList();
+
+	List<Business> reviewList();
+
+	List<Business> facList(String kind);
+
+	List<Business> rescateList(String kind);
 
 	
 
