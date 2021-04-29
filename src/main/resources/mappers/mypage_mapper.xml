@@ -1222,4 +1222,10 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				      AND J.US_NO = #{usno})
 				WHERE ROWNUM < 3]]>
    </select>
+   
+   <update id="updateBusStar" parameterType="Review">
+   		UPDATE BUSINESS
+		SET AVGSTAR = (SELECT AVG(RE_STAR) FROM REVIEW WHERE BUS_CODE = #{bus_code} GROUP BY BUS_CODE)
+		WHERE BUS_CODE = #{bus_code}
+   </update>
 </mapper>

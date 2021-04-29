@@ -547,8 +547,8 @@ public class MypageController {
 	 public ModelAndView goToBooking(@ModelAttribute User u,
 			 						 ModelAndView mv, HttpSession session) {
 		 
-		 System.out.println(u);
-		 System.out.println("usno1 : " + u.getUsno());
+		 //System.out.println(u);
+		 //System.out.println("usno1 : " + u.getUsno());
 		 
 //		 User user = (User)session.getAttribute("loginUser");
 //		 String u = user.getUsno();
@@ -606,9 +606,9 @@ public class MypageController {
 //			 }
 //		 }
 		 
-		 System.out.println(hotelBookList);
-		 System.out.println(tourBookList);
-		 System.out.println(carBookList);
+		 //System.out.println(hotelBookList);
+		 //System.out.println(tourBookList);
+		 //System.out.println(carBookList);
 		
 		 mv.addObject("hotelList", hotelBookList);
 		 mv.addObject("tourList", tourBookList);
@@ -840,7 +840,10 @@ public class MypageController {
 							   @RequestParam( value = "re_star", required=false, defaultValue="0.5") String re_star,
 							   @RequestParam( value = "inup", required=false) String inup,
 							   HttpServletRequest request, Model model ) {
-//		 System.out.println(file1);
+		 
+		 //System.out.println(r);
+		 
+		 //		 System.out.println(file1);
 //		 System.out.println(file2);
 //		 //System.out.println(file3);
 		 r.setRe_star(re_star);
@@ -908,7 +911,10 @@ public class MypageController {
 		 	}
 			
 			
-			if(result > 0 && result2 == 1) {
+		 	// 후기 작성이 끝나면 해당 비즈니스 별점 계산해서 넣어주기
+		 	int afterStar = mService.updateBusStar(r);
+		 	
+			if(result > 0 && result2 == 1 && afterStar > 0) {
 				model.addAttribute("usno", r.getUs_no());
 				model.addAttribute("msg", "후기가 성공적으로 게시되었습니다!");
 				return "redirect:/mypage/booking";
@@ -964,7 +970,7 @@ public class MypageController {
 		 @ResponseBody
 		 public String toggleJjimOff(@RequestBody Jjim j) {
 
-			 System.out.println(j);
+			 //System.out.println(j);
 				int result = mService.deleteJjim(j);
 
 			if(result >0) 
@@ -994,7 +1000,7 @@ public class MypageController {
 			 
 			 // 이 회원이 가지고 있는 모든 경로의 모든 관광지 리스트
 			 List<RouteFinal> myRouteList = mService.selectMyRoute(u);
-			 System.out.println("myRoute확인 : " + myRouteList);
+			 //System.out.println("myRoute확인 : " + myRouteList);
 			 
 			 // 이 회원이 가지고 있는 경로 수
 			 List<RouteMP> routeNumber = mService.selectRouteNum(u);
