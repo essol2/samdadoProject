@@ -18,7 +18,7 @@
 	
 	<jsp:include page="../common/navi.jsp"/>
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_modal.css" type="text/css">
-	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css">
+	<%-- <link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css"> --%>
 	<style>
 	
 	.modal-body div {
@@ -105,6 +105,166 @@
         .detail_content {
             font-size: 13px;
         }
+        
+        /* css */
+        @charset "UTF-8";
+
+		.route_title {
+            max-width: 48%;
+            max-height: 800px;
+            margin-left : 10%;
+        }
+
+        #content-logo {
+            /* display: inline-block; */
+            position: relative;
+            margin-left: 100px;
+        }
+
+        .content-title {
+            font-size: 30px;
+            color: black;
+            display: inline-block;
+            position: relative;
+        }
+
+        #route_select {
+            border: 2px solid black;
+            width: 80%;
+            position: relative;
+            margin: auto;
+        }
+
+        #select td {
+            padding-left: 10px;
+            padding-right: 10px;
+            text-align: center;
+            width: 80px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .bold {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .tabletr {
+            padding-top: 10px;
+            padding-bottom: 5px;
+        }
+
+        #map {
+            width: 100%;
+            position: relative;
+            margin-left: 10%;
+        }
+
+        .c_border {
+            border: 1px solid black;
+            width: 75%;
+            margin-left: 20%;
+        }
+
+        .c1_border {
+            border: 1px solid black;
+            width: 60%;
+            margin-left: 20%;
+        }
+
+        #title1, #title2,  #title3,  #title4 {
+            margin-left: 20%;
+            margin-bottom: -10px;
+        }
+        
+        #morebtn {
+            width: 25%;
+            margin-left: 37.5%;
+            margin-left: 37.5%;
+        }
+
+        #left-border {
+            /* height: 1650px; */
+            height: auto;
+            width: 90%;
+        }
+
+        .spot_border {
+            height: 225px;
+            width: 150px;
+            border: rgb(70, 115, 85) 3px solid;
+        }
+        
+        ._btn {
+            background-color: rgb(70, 115, 85);
+            border: rgb(70, 115, 85);
+            color: white;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            font-weight: 700;
+            height: 45px;
+        }
+
+        .spot_title {
+            margin-top: 10%;
+            text-align: center;
+            font-weight: bolder;
+            font-size: 25px;
+            cursor: default;
+        }
+
+        .spot_btn {
+            background-color: rgb(255,255,255);
+            border: 0px;
+            width: 100%;
+            margin-top:80%;
+        }
+
+        #ch_btn {
+            width: 40%;
+            margin-left: 8%;
+            margin-right: 1%;
+        }
+
+        #add_btn {
+            width: 40%;
+            margin-right: 8%;
+            margin-left: 1%;
+        }
+
+        #arrow {
+            margin-left: 40%;
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+
+        .detail {
+            font-size: 15px;
+            font-weight: 100;
+        }
+        
+       #searchbtn {
+            font-weight: 300;
+            margin-bottom: 10px;
+            margin-left: 88%;
+            width: 100px;
+            height: 35px;
+        }
+	
+	#cost-content {
+		width: 100%;
+		padding: 10px;
+	}
+	
+	#costTable {
+		width: 100%;
+	}
+	
+	#costTable td {
+		width: 100%;
+	}
     </style>
 </head>
 <body>

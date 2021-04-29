@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.route_title {
+		.route_title {
             max-width: 48%;
             max-height: 800px;
             margin-left : 10%;
@@ -48,7 +48,7 @@
         #map {
             width: 100%;
             position: relative;
-            margin-left: 12%;
+            margin-left: 10%;
         }
 
         .c_border {
