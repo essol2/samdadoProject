@@ -40,6 +40,7 @@ public class UserController {
    
    @Autowired
    private EmailSender emailSender;
+ 
    @Autowired
    private Email email;
  
