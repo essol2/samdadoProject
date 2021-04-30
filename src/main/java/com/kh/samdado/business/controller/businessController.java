@@ -1084,7 +1084,15 @@ public class businessController {
 				}
 		
 		List<Business> carList = bService.selectCarList();
-		
+		List<Review> reviewList = bService.selectReviewList();
+		for(Business t : carList) {
+			for(Review r : reviewList) {
+				if(t.getBus_code() == r.getBus_code()) {
+					t.setAvstar(r.getAvstar());
+					t.setRevcnt(r.getRevcnt());
+				}
+			}
+		}	
 		if(carList != null) {
 			mv.addObject("carList", carList);
 			mv.setViewName("business/rentcar/car_list");
@@ -1095,10 +1103,10 @@ public class businessController {
 	// 예약결제 성공 시 insert
 	
 	@GetMapping("/pay")
-	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code) {
+	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code, User u) {
 		
 		// 포인트에 amount 넣어주기
-		p.setPamount(i.getAmount());
+		p.setPamount(i.getAmount() * 9/10);
 		
 		// income에  들어갈 원가 10퍼센트 셋팅
 		i.setAmount(i.getAmount() * 1/10);
@@ -1119,7 +1127,12 @@ public class businessController {
 			 p.setPbalance(i.getAmount() * 9);
 		 }
 		 // 포인트 넣기
-		int point = bService.insertPoint(p);		
+		int point = bService.insertPoint(p);
+		
+		// User테이블 pbalance에 추가하기
+		u.setUsno(selectUser.getUs_no());
+		u.setPbalance(p.getPbalance());
+		int userPbalance = bService.updateUserPblance(u);
 		
 		// 예약정보 insert	
 		if(b.getBookingLv() == 1) {
@@ -1197,6 +1210,15 @@ public class businessController {
 		return starList;
 		
 	}
+	@RequestMapping(value="starList2", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> starList2(HttpServletResponse response, @RequestParam String kinds) {
+		
+		List<Business> starList2 = bService.starList2();
+		//System.out.println(starList);
+		return starList2;
+		
+	}
 	
 	@RequestMapping(value="reviewList", method=RequestMethod.POST)
 	@ResponseBody
@@ -1205,6 +1227,16 @@ public class businessController {
 		List<Business> reviewList = bService.reviewList();
 		
 		return reviewList;
+		
+	}
+	
+	@RequestMapping(value="reviewList2", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> reviewList2(HttpServletResponse response, @RequestParam String kinds) {
+		
+		List<Business> reviewList2 = bService.reviewList2();
+		
+		return reviewList2;
 		
 	}
 	

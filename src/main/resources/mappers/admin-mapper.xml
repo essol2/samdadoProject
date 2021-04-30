@@ -585,6 +585,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			AND ITEM = '프리미엄'
             AND BUS_CLASSIFY = 'P'
             AND ISTATUS IS NULL
+            GROUP BY PAY_NO, <!-- 기존 코드에서 그룹바이만 추가함 -->
+				ITEM,
+				AMOUNT,
+				PDATE,
+				EXDATE,
+				INCOME.US_NO,
+				US_NAME,
+				BUSINESS.BUS_CATEGORY,
+				BUSINESS.BUS_CODE,
+                ISTATUS
 	   ORDER BY PDATE DESC
 	</select>
 	

@@ -308,12 +308,7 @@
         	height:300px;
         	width: 100%;
         }
-        
-        .otherImgArea{
-        	height: 80px;
-        	display: flex;
-        }
-
+		
         /* 차 리스트끝 */
 
         .btnArea{
@@ -751,7 +746,7 @@
 			<c:forEach var="c" items="${ cars }">
                     <div class='profile'>
                     <div class="imgArea">
-                        <img id="mainPic" class="detailImg" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">                        
+                        <img id="mainPic" class="detailImg" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">
                         </div>
                         <b>${ c.car_name }</b><br>
                         <b>${ c.car_fuel }</b><br>

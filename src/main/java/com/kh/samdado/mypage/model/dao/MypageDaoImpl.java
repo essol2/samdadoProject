@@ -56,6 +56,7 @@ public class MypageDaoImpl implements MypageDao{
 	// 알림 nstatus update
 	@Override
 	public int updateNstatus(Alert al) {
+//		sqlSession.update("mypageMapper.updateUserRead",al.getUsno());
 		return sqlSession.update("mypageMapper.updateNstatus", al);
 	}
 	
@@ -209,6 +210,7 @@ public class MypageDaoImpl implements MypageDao{
 	// 제휴회원 - QnA 새로운 알림 등록
 	@Override
 	public int insertQnANews(Alert a) {
+		//sqlSession.update("mypageMapper.updateUserNewNews", a.getUsno());
 		return sqlSession.insert("mypageMapper.insertQnANews", a);
 	}
 
@@ -221,6 +223,7 @@ public class MypageDaoImpl implements MypageDao{
 	// 제휴회원 - Alliance 새로운 알림 등록
 	@Override
 	public int insertAlliNews(Alert al) {
+		//sqlSession.update("mypageMapper.updateUserNewNews", al.getUsno());
 		return sqlSession.insert("mypageMapper.insertAlliNews", al);
 	}
 	
@@ -233,6 +236,7 @@ public class MypageDaoImpl implements MypageDao{
 	// 제휴회원 - Alliance 승인시 새로운 알림 등록
 	@Override
 	public int insertNewApprove(Alert alert) {
+		//sqlSession.update("mypageMapper.updateUserNewNews", alert.getUsno());
 		return sqlSession.insert("mypageMapper.insertNewApprove", alert);
 	}
 
@@ -246,6 +250,7 @@ public class MypageDaoImpl implements MypageDao{
 	// 제휴회원 - Report 승인시 알림 등록
 	@Override
 	public int insertNewReport(Alert a) {
+		//sqlSession.update("mypageMapper.updateUserNewNews", a.getUsno());
 		return sqlSession.insert("mypageMapper.insertNewReport", a);
 
 	}
@@ -270,7 +275,7 @@ public class MypageDaoImpl implements MypageDao{
 	// 일반회원 - 내예약 취소
 	@Override
 	public int deleteBooking(Booking b) {
-		System.out.println("dao까지는 잘 오니?");
+		//System.out.println("dao까지는 잘 오니?");
 		return sqlSession.delete("mypageMapper.deleteBooking", b);
 	}
 	// 일반회원 - 후기등록
@@ -380,6 +385,50 @@ public class MypageDaoImpl implements MypageDao{
 	@Override
 	public int updateBusStar(Review r) {
 		return sqlSession.update("mypageMapper.updateBusStar", r);
+	}
+
+	// 공지사항 등록 시 해당 user의 news +1 해주기
+	@Override
+	public int updateNewUserNews(A_board aboard) {
+		return sqlSession.update("mypageMapper.updateNewUserNews", aboard);
+	}
+
+	// 내소식에 들어갈 공지사항 리스트
+	@Override
+	public List<A_board> selectBoard(User u, ApplyPageInfo api) {
+		int offset = (api.getCurrentPage()-1) * api.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, api.getBoardLimit());
+		return sqlSession.selectList("mypageMapper.selectBoard", u, rowBounds);
+	}
+
+	// 특정 공지사항 가져오기
+	@Override
+	public A_board findThisBoard(A_board aboard) {
+		return sqlSession.selectOne("mypageMapper.findThisBoard", aboard);
+	}
+
+	// 일반회원 새로운 공지사항 있는지 확인
+	@Override
+	public int findNewUserNews(User u) {
+		return sqlSession.selectOne("mypageMapper.findNewUserNews", u);
+	}
+
+	// 공지사항 읽으면 user -1 해주기
+	@Override
+	public int updateUserRead(A_board aboard) {
+		return sqlSession.update("mypageMapper.updateUserRead", aboard);
+	}
+
+	// 공지사항 갯수 구하기
+	@Override
+	public int selectBoardListCout(String uspart) {
+		return sqlSession.selectOne("mypageMapper.selectBoardListCout", uspart);
+	}
+
+	// 일반회원 공지사항 가져오기
+	@Override
+	public List<A_board> selectUserBoard(User user) {
+		return sqlSession.selectList("mypageMapper.selectBoard", user);
 	}
 
 }
