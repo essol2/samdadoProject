@@ -182,8 +182,10 @@ public interface businessService {
 	List<Review> selectReviewList();
 
 	List<Business> starList();
+	List<Business> starList2();
 
 	List<Business> reviewList();
+	List<Business> reviewList2();
 
 	List<Business> facList(String kind);
 

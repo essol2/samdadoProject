@@ -576,8 +576,6 @@
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	                    str += "<b>★4.90(후기 99+개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>38,000원 ~ 40,000원 / 박</b>";
-		                            str += "<b>총액 80,000원</b>";
 		                            str += "<c:if test='${ loginUser.usno != null }'>"
 			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
 			                        str += "</c:if>";
@@ -630,13 +628,16 @@
 		    	            	  var cate = document.getElementById("secondlist");
 		    	            	  var list = "";
 		    	            	  for(var i in data){
-		    	              		str  = "<div class='moreProfile'>";
-		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		    	              		str += "<div id='frm_read'>"
-		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
-		                            str += "</div>";               
-		                            str += "</div>";
+		    	            		  str  = "<div class='moreProfile'>";
+		    	              		  str += "<input type='hidden' id='bus_code' name='bus_code' value='"+data[i].bus_code +"'>";
+		    	              		  str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	              		  str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
+		    	              		  str += "<b>"+ data[i].hotel_category +"</b>";
+		    	              		  str += "<b>"+ data[i].bus_name +"</b>";
+		    	              		  str += "<c:if test='${ loginUser.usno != null }'>"
+			                          str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+			                          str += "</c:if>";             
+		                              str += "</div>";
 		                            
 		                            list += str;
 		    	              		}
@@ -654,25 +655,27 @@
 		    	$("#starList").click(function(){
 		    			var kinds = $(this).val(); 
 		    			$.ajax({
-		    				 url : '${contextPath}/business/starList', 
+		    				 url : '${contextPath}/business/starList2', 
 		    	              type : "post", 
 		    	              data : {"kinds" : kinds},
 		    	              success : function(data){
 		    	            	  var cate = document.getElementById("secondlist");
 		    	            	  var list = "";
 		    	            	  for(var i in data){
-		    	            		if(data[i].bus_category == 'H'){
-		    	              		str  = "<div class='moreProfile'>";
-		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
-		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		    	              		str += "<div id='frm_read'>"
-		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
-		                            str += "</div>";               
-		                            str += "</div>";
-		                            
-		                            list += str;
-		    	            			}
+		    	            		  if(data[i].bus_category == 'H'){
+				    	              		str  = "<div class='moreProfile'>";
+				    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+data[i].bus_code +"'>";
+				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+				    	              		str += "<b>★"+ data[i].avstar +" (후기 "+ data[i].revcnt +"개)</b>";
+				    	              		str += "<b>"+ data[i].hotel_category +"</b>";
+				    	              		str += "<b>"+ data[i].bus_name +"</b>";
+				    	              		str += "<c:if test='${ loginUser.usno != null }'>"
+					                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+					                        str += "</c:if>";             
+				                            str += "</div>";
+				                            
+					                    	list += str;
+				    	            			}
 		    	              		}
 		    	            	  cate.innerHTML=list;
 		    	              },
@@ -689,7 +692,7 @@
 		    			var kinds = $(this).val(); 
 
 		    			$.ajax({
-		    				 url : '${contextPath}/business/reviewList', 
+		    				 url : '${contextPath}/business/reviewList2', 
 		    	              type : "post", 
 		    	              data : {"kinds" : kinds},
 		    	              success : function(data){
@@ -698,15 +701,17 @@
 		    	            	  for(var i in data){
 		    	            		if(data[i].bus_category == 'H'){
 		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+data[i].bus_code +"'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>★"+ data[i].avstar +" (후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>"+ data[i].hotel_category +"</b>";
 		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		    	              		str += "<div id='frm_read'>"
-		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
-		                            str += "</div>";               
+		    	              		str += "<c:if test='${ loginUser.usno != null }'>"
+			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+			                        str += "</c:if>";             
 		                            str += "</div>";
 		                            
-		                            list += str;
+			                    	list += str;
 		    	            			}
 		    	              		}
 		    	            	  cate.innerHTML=list;
@@ -732,10 +737,9 @@
                         <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     	</div>
                         <img class="image" src="../resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
-                        <b>★4.90(후기 99+개)</b>
+                        <b>★${ h.avstar }(후기 ${ h.revcnt }개)</b>
 	                    <b>${ h.bus_name }</b>
-	                    <b>38,000 ~ 40,000 원 / 박</b>
-	                    <b>총액 80,000 원</b>
+	                    <b>${ h.bus_phone }</b>
                         <c:if test="${ loginUser.usno != null }">
 	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
 	                    	</c:if>
@@ -752,10 +756,10 @@
 	                    	<input type="hidden" id="bus_code" name="bus_code" value="${ h.bus_code }">
 	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
 	                        </c:if>
-	                        <b>★4.90(후기 99+개)</b>
+	                        <b>★${ h.avstar } (후기 ${ h.revcnt }개)</b>
+	                        <b>${ h.hotel_category }</b>
 	                        <b>${ h.bus_name }</b>
-	                        <b>38,000 ~ 40,000 / 박</b>
-	                        <b>총액 80,000</b>
+	                        <b>${ h.bus_phone }</b>
 	                        <c:if test="${ loginUser.usno != null }">
 	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
 	                    	</c:if>
