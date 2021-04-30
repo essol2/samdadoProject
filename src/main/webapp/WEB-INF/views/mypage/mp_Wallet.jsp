@@ -531,28 +531,28 @@
                 	
                 	<c:forEach items="${chaList}" var="item">
                 		arr.push({accClassify:"${item.accClassify}"
-                				, oneTotalSum : "${item.oneTotalSum}"});
+                				, totalSum : "${item.totalSum}"});
                 	</c:forEach>
                 	
                 	if(arr.length == 1){
                 		for(var j=0; j<5; j++){
-                			arr.push({accClassify : '', oneTotalSum : 0});
+                			arr.push({accClassify : '', totalSum : 0});
                 		}
                 	} else if(arr.length == 2){
                 		for(var j=0; j<4; j++){
-                			arr.push({accClassify : '', oneTotalSum : 0});
+                			arr.push({accClassify : '', totalSum : 0});
                 		}
                 	} else if(arr.length == 3){
                 		for(var j=0; j<3; j++){
-                			arr.push({accClassify : '', oneTotalSum : 0});
+                			arr.push({accClassify : '', totalSum : 0});
                 		}
                 	} else if(arr.length == 4){
                 		for(var j=0; j<2; j++){
-                			arr.push({accClassify : '', oneTotalSum : 0});
+                			arr.push({accClassify : '', totalSum : 0});
                 		}
                 	} else if(arr.length == 5){
                 		for(var j=0; j<1; j++){
-                			arr.push({accClassify : '', oneTotalSum : 0});
+                			arr.push({accClassify : '', totalSum : 0});
                 		}
                 	} else{
                 		console.log(arr);
@@ -564,7 +564,7 @@
 			    	data = { 
 			    		datasets: [{ 
 			    			backgroundColor: ['#40634c', '#467355', '#689978','#88b897','#badbc5', '#c9f5d7'], 
- 			    			data: [arr[0].oneTotalSum, arr[1].oneTotalSum, arr[2].oneTotalSum, arr[3].oneTotalSum,arr[4].oneTotalSum, arr[5].oneTotalSum],
+ 			    			data: [arr[0].totalSum, arr[1].totalSum, arr[2].totalSum, arr[3].totalSum,arr[4].totalSum, arr[5].totalSum],
  							
 			    		}], 
 			    		labels: [arr[0].accClassify,arr[1].accClassify,arr[2].accClassify,arr[3].accClassify,arr[4].accClassify,arr[5].accClassify] 

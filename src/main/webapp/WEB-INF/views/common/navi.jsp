@@ -928,9 +928,7 @@
 	
     </script>
      <script>
-     $(document).ready(function(){
-
-    	 function addCount(){
+     function addCount(){
 	 		if('${loginUser.usid}' != ''){
 	 			var checkUP = "${loginUser.uspart}";
 	 			
@@ -938,6 +936,7 @@
 					searchU.usno = "${loginUser.usno}";
 					searchU.uspart = checkUP;
 					searchU.usnews = "${loginUser.usnews}";
+				
 				
 				if(checkUP == "제휴"){
 		 			$.ajax({
@@ -977,7 +976,12 @@
 		 			});
 				}
 	 		}
-    	 }
+	 		console.log("확인!");
+ 	 }
+     
+     $(document).ready(function(){
+			addCount();
+    	
 	 		setInterval(addCount, 3000);
 	 	});
 	 </script>

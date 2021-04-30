@@ -736,7 +736,7 @@
 					
 					console.log(data);
 					
-					table = $("#alertTable");
+					table = $("#thisTable");
 					table.html("");
 					
 					
@@ -757,8 +757,6 @@
 								var ajncate = $("<td>").text("신고접수");
 							} else if(data[i].ncate == 'P'){
 								var ajncate = $("<td>").text("포인트");
-							} else if(data[i] = 'B'){
-								var ajncate = $("<td>").text("공지사항");
 							} else{
 								var ajncate = $("<td>").text("배너광고");
 							}
@@ -778,8 +776,6 @@
 								var ajncate = $("<td>").text("신고접수");
 							} else if(data[i].ncate == 'P'){
 								var ajncate = $("<td>").text("포인트");
-							} else if(data[i] = 'B'){
-								var ajncate = $("<td>").text("공지사항");
 							} else{
 								var ajncate = $("<td>").text("배너광고");
 							}

@@ -15,6 +15,7 @@
  <!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
 </head>
 <style>
 
@@ -247,12 +248,55 @@
   	justify-content : center;
   	margin-left : 2%;
   }
+  
+  .footer-outer-class{
+            background-color: rgb(70, 115, 85);
+            height : 190px;
+            /* z-index: 2; */
+            /* position: relative; */
+
+        }
+
+        .leftImg{
+            margin-left:6%;
+            margin-top:20px;
+        }
+
+        #footer_center {
+            margin-left:30%;
+            margin-top:-130px;
+            color:white;
+        }
+
+        #footer_right{
+            margin-left:60%;
+            margin-top:-120px;
+            color:white;
+        }
+
+        .rightImg{
+            padding-right: 15px;
+        }
+
+        #copyRight{
+            color:white;
+            margin-left: 40%;
+            margin-right : 40%;
+            margin-top:10px;
+            margin-bottom: 0px;
+            opacity: 0.5;
+        }
+
+        hr{
+            color:white;
+        }
+  
 </style>
 <body>
 
     <div id="back">
          <!-- navi.jsp include -->
-       <jsp:include page="../common/navi.jsp"/>
+       <jsp:include page="../common/naviWhite.jsp"/>
         
         <section class="page-start">
             <div id="topMenu">
@@ -288,7 +332,7 @@
 					<c:forEach items="${ routeTest }" var="rt" varStatus="rtNum">
                     <div class="tripReservInfoBox">
                         <%-- <div id="rinfoText"><h3 style="font-size: medium;">${ rtNum.count }일차.</h3></div> --%>
-                        <div id="rinfoText"><h3 style="font-size: large;">${rt.value[0].route_date}</h3></div>
+                        <div id="rinfoText"><h3 style="font-size: xx-large; color:#467355;">${rt.value[0].route_date}</h3><hr style="width : 60%; margin-left : auto; margin-right:auto;"></div>
                         <div id="motherDiv">
                         	
                        		<c:forEach var='rrt' items="${rt.value}" varStatus="rrtNum"> 
@@ -349,7 +393,29 @@
             </div>
         </section>
     </div>
+      <footer class="footer-outer-class">
+            <div id="footer_left">
+                <img src="${ contextPath }/resources/images/image_footer/footerlogo.png" class="leftImg">
+            </div>
+            <div id="footer_center">
+                <img src="${ contextPath }/resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
+                <img src="${ contextPath }/resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
+                <img src="${ contextPath }/resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
+            </div>
+            <div id="footer_right">
+                <p id="samdado_news">삼다도 소식</p>
+                <img src="${ contextPath }/resources/images/image_footer/facebook.png" class="rightImg">
+                <img src="${ contextPath }/resources/images/image_footer/twitter.png" class="rightImg">
+                <img src="${ contextPath }/resources/images/image_footer/LinkedIn.png" class="rightImg">
+                <img src="${ contextPath }/resources/images/image_footer/pininterest.png" class="rightImg">
+            </div>
+            <br>
+            <br>
+            <hr>
+            <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
+        </footer>
      <script>
+     
     function goToWallet(){
 		/* console.log("jsp안에서 usno확인 : " + usno); */
 		location.href='${contextPath}/mypage/wallet?usno='+${loginUser.usno};
@@ -514,6 +580,9 @@
 				};
 			}
     </script>
+    
+    <!-- footer -->
+   
  
 </body>
 </html>
