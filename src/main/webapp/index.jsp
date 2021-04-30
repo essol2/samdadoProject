@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Welcome to SAMDADO</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+
 <style>
         /* 공통 - 폰트 */
         * {

@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>navi</title>
-<link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
+<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
@@ -20,6 +19,9 @@
 <!-- css 외부 파일 첨부 -->
 <link rel="stylesheet" href="${ contextPath }/resources/css/common/navi.css?" type="text/css">
 <link rel="stylesheet" href="${ contextPath }/resources/css/user/addMember.css" type="text/css">
+
+<link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
+
 <style>
 		/* 공통 - 폰트 */
         * {
@@ -99,7 +101,7 @@
 			text-align : right;
 			font-size : x-large;
 			/* border : 1px solid red; */
-  			margin-left : 36%;
+  			margin-left : 45%;
 			width : fit-content;
 			/* margin-right : 1%; */
 			
@@ -571,7 +573,7 @@
         <div class="modal-content">
              <div class="modal-header">
 	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;  width : 100%;">
-		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
+		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="${contextPath }/resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
 		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 40px;">혼저옵서예.</h2></div>
 	            </div>
             </div>
@@ -646,7 +648,7 @@
         <div class="modal-content">
             <div class="modal-header">
 	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;  width : 100%;">
-		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
+		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="${contextPath }/resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
 		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 40px;">혼저옵서예.</h2></div>
 	            </div>
             </div>

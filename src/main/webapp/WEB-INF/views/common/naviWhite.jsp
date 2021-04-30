@@ -8,7 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>navi</title>
-<link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
 
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
@@ -102,7 +101,7 @@
 			text-align : right;
 			font-size : x-large;
 			/* border : 1px solid red; */
-  			margin-left : 36%;
+  			margin-left : 45%;
 			width : fit-content;
 			margin-right : 1%;
 			

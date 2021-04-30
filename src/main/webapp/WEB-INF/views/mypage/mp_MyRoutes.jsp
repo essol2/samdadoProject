@@ -10,6 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage_route</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+    
     <!-- 지도 -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
  <!--jQuery-->
@@ -131,7 +133,7 @@
         border : 5px solid white;
         width : 77%;
         height : 600px;
-    }s
+    }
 
     #tripTopBox{
         display: flex;
@@ -249,47 +251,6 @@
   	margin-left : 2%;
   }
   
-  .footer-outer-class{
-            background-color: rgb(70, 115, 85);
-            height : 190px;
-            /* z-index: 2; */
-            /* position: relative; */
-
-        }
-
-        .leftImg{
-            margin-left:6%;
-            margin-top:20px;
-        }
-
-        #footer_center {
-            margin-left:30%;
-            margin-top:-130px;
-            color:white;
-        }
-
-        #footer_right{
-            margin-left:60%;
-            margin-top:-120px;
-            color:white;
-        }
-
-        .rightImg{
-            padding-right: 15px;
-        }
-
-        #copyRight{
-            color:white;
-            margin-left: 40%;
-            margin-right : 40%;
-            margin-top:10px;
-            margin-bottom: 0px;
-            opacity: 0.5;
-        }
-
-        hr{
-            color:white;
-        }
   
 </style>
 <body>
@@ -300,7 +261,7 @@
         
         <section class="page-start">
             <div id="topMenu">
-                <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
+                <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-1</p> </div>
                 <div class="menuBox" id="menuBox">
 
                     <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
@@ -387,33 +348,25 @@
 			                    </div>
 							</c:otherwise>
 							</c:choose>
-
+							
                    
                 </div>
+                <div style=" width : 100%!important; height : 100px;">
+						<footer style="width : 100% !important;">
+							<jsp:include page="../common/footer.jsp"/>
+						</footer>
+				</div>
             </div>
+            <br>
+        <br>
+        <br>
+        <br>
+    
         </section>
+        
     </div>
-      <footer class="footer-outer-class">
-            <div id="footer_left">
-                <img src="${ contextPath }/resources/images/image_footer/footerlogo.png" class="leftImg">
-            </div>
-            <div id="footer_center">
-                <img src="${ contextPath }/resources/images/image_footer/Vector.png" class="centerImg"> &nbsp 서울 특별시 강남구 테헤란로14길 6<br><br>
-                <img src="${ contextPath }/resources/images/image_footer/phone.png" class="centerImg"> &nbsp (064)740-6000 <br><br>
-                <img src="${ contextPath }/resources/images/image_footer/message.png" class="centerImg"> &nbsp samdado@ijto.co.kr
-            </div>
-            <div id="footer_right">
-                <p id="samdado_news">삼다도 소식</p>
-                <img src="${ contextPath }/resources/images/image_footer/facebook.png" class="rightImg">
-                <img src="${ contextPath }/resources/images/image_footer/twitter.png" class="rightImg">
-                <img src="${ contextPath }/resources/images/image_footer/LinkedIn.png" class="rightImg">
-                <img src="${ contextPath }/resources/images/image_footer/pininterest.png" class="rightImg">
-            </div>
-            <br>
-            <br>
-            <hr>
-            <p id="copyRight" style="font-size: small;">© 2021 Digital Project. Team SAMDASOO</p>
-        </footer>
+    
+
      <script>
      
     function goToWallet(){
@@ -580,9 +533,6 @@
 				};
 			}
     </script>
-    
-    <!-- footer -->
-   
  
 </body>
 </html>

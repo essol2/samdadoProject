@@ -10,6 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage_jjim</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+    
 </head>
 <style>
 
@@ -261,7 +263,7 @@
        <jsp:include page="../common/naviWhite.jsp"/>
 
             <div id="topMenu">
-                <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
+                <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-1</p> </div>
                 <div class="menuBox" id="menuBox">
 
                     <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
@@ -427,7 +429,11 @@
 	});
 	</script>
 	
- 
+ <div style="position : absolute; bottom:-20px; width : 100%; margin-bottom:auto;">
+ 	<footer>
+          <jsp:include page="../common/footer.jsp"/>
+ 	</footer>
+ </div>
  
 </body>
 </html>

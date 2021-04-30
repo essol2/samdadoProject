@@ -8,8 +8,8 @@
 		.footer-outer-class{
             background-color: rgb(70, 115, 85);
             height : 190px;
-            z-index: 2;
-            position: relative;
+            /* z-index: 2; */
+            /* position: relative; */
 
         }
 
