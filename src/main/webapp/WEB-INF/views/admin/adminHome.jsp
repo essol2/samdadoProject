@@ -281,7 +281,7 @@
 			            </div>
                      </div>
 					<br><br>
-                    <!--막대 그래프(총 매출)-->
+                    <!--막대 그래프(유입 회원)-->
                      <div class="row" style="padding-top: 4%; padding-right: 7%; padding-bottom: 5%;">
                      <h1>회원 유입수</h1>
                 	 <h6>삼다도 제휴회원 | 일반회원의 유입 데이터가 나타납니다.</h6>

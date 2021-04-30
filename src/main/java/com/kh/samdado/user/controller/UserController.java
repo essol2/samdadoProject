@@ -50,8 +50,6 @@ public class UserController {
 		   					Model model,
 		   					RedirectAttributes rd) {
 	   
-	   // System.out.println("넘어온 값 : " + u);
-	   
 	   if (u.getBusno().equals("")) { // 값이 없으면 일반회원
 		   u.setUspart("일반"); 
 	   } else { // 값이 있으면 제휴회원
@@ -78,8 +76,7 @@ public class UserController {
    
    // 3_1. 회원가입시 바로 로그인되는 컨트롤러 (DB select)
    @GetMapping(value="/login")// 일반 로그인 post 방식, 회원가입 후  바로 로그인 get 방식 -> 리다이렉트로 여기서 받음
-   public String userLogin(
-		   				   Model model,
+   public String userLogin(Model model,
 		   				   @ModelAttribute("joinedUser") User joinedUser) { // 회원가입하고 난 후 바로 로그인용 여기서 받음
 	   
 	   // 회원 가입 후 바로 로그인이니까 암호화 필요x
@@ -92,8 +89,6 @@ public class UserController {
 	   } else {
 		   throw new UserException("회원가입 후 로그인에 실패하였습니다.");
 	   }
-	   
-	  
    }
    
 
@@ -121,7 +116,7 @@ public class UserController {
    public String userchangePwdlogin(
 		   				   Model model,
 		   				   @ModelAttribute("successChangePwdUser") User successChangePwdUser) {
-	    System.out.println("111 successChangePwdUser : " + successChangePwdUser.toString());
+	    //System.out.println("111 successChangePwdUser : " + successChangePwdUser.toString());
 	   
 	   // 비번 수정 후 바로 로그인이니까 암호화 필요x
 	   if (successChangePwdUser.getUsid() != null) { // 널이 아니면

@@ -470,7 +470,6 @@ public class AdminController {
 		
 		if (alliance.getAmassage().equals("이미지 불일치")) {
 			result = aService.updateRejectBannerAdStatusRI(alliance); // RI
-			//int insertNews = mService.insertAlliNews(usno);
 			alert.setAlstatus("RI");
 			insertNew = mService.insertNewApprove(alert);
 		} else { // 포인트 미충전
@@ -494,9 +493,6 @@ public class AdminController {
 	public @ResponseBody List<User> selectGetUserData(@RequestBody User userType) {
 	
 		List<User> userData = aService.selectGetUserData(userType);
-		
-		//System.out.println("userData : " + userData);
-	
 		return userData;
 	}
 	
@@ -504,26 +500,12 @@ public class AdminController {
 	public @ResponseBody List<Income> selectGetAllProfit(@RequestBody Income profitType) {
 		
 		List<Income> profitRequestResult = aService.selectGetAllProfit(profitType); 
-
-		//System.out.println("profitRequestResult : " + profitRequestResult);
-
 		return profitRequestResult;
 	}
 	
 	@PostMapping("/sendAboard")
 	public String sendAboard(A_board aboard, Model model) {
-		
-		//System.out.println("aboard : " + aboard);
-		
 		int insertAboard = aService.insertAboard(aboard);
-		
-		// -- 은솔 : news에 새로운 공지사항 넣기
-//		// 1. bno 찾아오기
-//		int findBno = mService.findNewBno(aboard);
-		
-//		aboard.setBno(findBno);
-//		int insertNews = mService.insertNewBoard(aboard);
-
 		int insertNewsUser = mService.updateNewUserNews(aboard);
 	
 		if (insertAboard > 0 && insertNewsUser > 0) {
