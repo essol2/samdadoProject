@@ -802,10 +802,10 @@
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 6;
+							x = 3;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+6 <= size_div)? x+6 : size_div;
+								x= (x+3 <= size_div)? x+3 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});

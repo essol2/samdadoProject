@@ -704,7 +704,7 @@
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+ data[i].bus_code +"'>"
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		 str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
+		    	              		 str += "<b>★"+ data[i].avgstar +" (후기 개)</b>";
 		    	              		str += "<b>"+ data[i].bus_name +"</b>";
 		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
 		                            str += "<c:if test='${ loginUser.usno != null }'>"
@@ -739,7 +739,8 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		                            str += "<b>"+ data[i].bus_name +"</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 개)</b>";
+		    	              		str += "<b>"+ data[i].bus_name +"</b>";
 		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
 		                            str += "<c:if test='${ loginUser.usno != null }'>"
 			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
@@ -782,7 +783,7 @@
 		                            str += "</div>";
 		                            
 		                            list += str;
-		    	            		 } else if(data[i].bus_category != 'T'){
+		    	            		 } else if(data[i].bus_category != 'T' && data[i].avstar !='0'){
 			    	            			str = "<div  class='nanDiv'>";
 			    	            			str += "<label>별점(이)가 등록 된 사업장이 없습니다.</label>"
 			    	            			str += "</div>";
@@ -910,10 +911,10 @@
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 6;
+							x = 3;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+6 <= size_div)? x+6 : size_div;
+								x= (x+3 <= size_div)? x+3 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});
