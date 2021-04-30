@@ -645,9 +645,9 @@
                         	<select id="cateSelect" class="cateSelect">
                                 <option value="tema">종류별</option>
                                 <option value="양식">양식</option>
-		                        <option value="양식">양식</option>
-		                        <option value="양식">양식</option>
-		                        <option value="양식">양식</option>
+		                        <option value="중식">중식</option>
+		                        <option value="일식">일식</option>
+		                        <option value="한식">한식</option>
 		                        <option value="기타">기타</option>
                             </select>						
                     </li>
@@ -758,10 +758,10 @@
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 6;
+							x = 3;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+6 <= size_div)? x+6 : size_div;
+								x= (x+3 <= size_div)? x+3 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});
