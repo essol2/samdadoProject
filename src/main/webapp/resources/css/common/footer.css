@@ -1,10 +1,7 @@
 @charset "UTF-8";
 
 	/* 공통 - 폰트 */
-    /*    * {
-            font-family: 'Jeju Myeongjo', serif;
-        }
-     */   
+   
 		.footer-outer-class{
             background-color: rgb(70, 115, 85);
             height : 190px;

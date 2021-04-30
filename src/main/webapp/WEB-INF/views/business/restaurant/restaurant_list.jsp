@@ -13,6 +13,21 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
+    <script language = "javascript">
+	var imgArray = new Array();
+	imgArray[0] = "../resources/images/image_listpage/speechbubble1.jpg";
+	imgArray[1] = "../resources/images/image_listpage/speechbubble2.jpg";
+	imgArray[2] = "../resources/images/image_listpage/speechbubble3.jpg";
+	imgArray[3] = "../resources/images/image_listpage/speechbubble4.jpg";
+	imgArray[4] = "../resources/images/image_listpage/speechbubble5.jpg";
+	imgArray[5] = "../resources/images/image_listpage/speechbubble6.jpg";
+	
+	function showImage(){
+		var imgNum = Math.round(Math.random()*5);
+		var objImg = document.getElementById("speechbubble");
+		objImg.src = imgArray[imgNum];
+	}
+	</script>
     <style>
             
         footer {
@@ -542,7 +557,7 @@
     </style>
 </head>
 
-<body>
+<body onload = "showImage()">
      <!-- navi.jsp include -->
     <jsp:include page="../../common/navi.jsp"/>
 
@@ -570,7 +585,7 @@
                 <ul>
             		<li>            		
                 <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">
-                <img id="speechbubble" src="../resources/images/image_listpage/speechbubble.png" alt="">							
+                <img id="speechbubble" border="0">
             		</li>
             	</ul>
                 <div class="search-result">
