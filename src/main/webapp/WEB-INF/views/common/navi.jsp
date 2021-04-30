@@ -469,10 +469,10 @@
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	               <%--  <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p> --%>
 
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 숙박 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">제주도 관광지 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">제주도 음식점 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">제주도 렌트카 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">관광지 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">음식점 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">렌트카 예약</p>
             	</div>
                 
                 <div>
@@ -492,10 +492,10 @@
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
 	                <%-- <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p> --%>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 숙박 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">제주도 관광지 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">제주도 음식점 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">제주도 렌트카 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">관광지 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">음식점 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">렌트카 예약</p>
             	</div>
                 
                 <div>
@@ -516,10 +516,10 @@
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 숙박 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">제주도 관광지 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">제주도 음식점 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">제주도 렌트카 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">관광지 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">음식점 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">렌트카 예약</p>
 	                
 	                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
 		                <ul class="ul-class">                
@@ -549,10 +549,10 @@
 	                <br><br>
 	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 숙박 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">제주도 관광지 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">제주도 음식점 예약</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">제주도 렌트카 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">관광지 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">음식점 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">렌트카 예약</p>
             	</div>
                 
                 <div>
