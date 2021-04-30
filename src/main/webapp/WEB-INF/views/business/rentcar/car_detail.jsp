@@ -755,28 +755,13 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						 예약하기</button>
 						 </c:if>
-                    </div>                    
+                    </div>
             </c:forEach>
                 </div>                               
             </div>
             <div class="btnArea">
                 <button class="moreBtn">더보기</button>
             </div>
-            
-            <script>
-                var mainPic = document.querySelector("#mainPic");
-                var otherPic = document.querySelectorAll("#otherPic")
-
-                for(var i = 0; i < otherPic.length; i++){
-                    otherPic[i].addEventListener("click", changepic);
-                    
-                }
-                function changepic(){
-                    var otherPicAttribute = this.getAttribute("src");
-                    mainPic.setAttribute("src", otherPicAttribute);
-
-                }
-            </script>
             
             <!-- 더보기 -->
 			<script>				
@@ -875,7 +860,7 @@
 	    });
     
         $j1124( function() {
-          $j1124( ".datepicker" ).datepicker();
+          $j1124( ".datepicker" ).datepicker({ minDate: 0});
         } );
     </script>
 
