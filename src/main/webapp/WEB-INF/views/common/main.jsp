@@ -28,6 +28,8 @@
 	
 	<!-- imagesloaded 로딩 (모든 이미지가 로딩된 후 실행되도록 할때 필요) -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.0/imagesloaded.pkgd.min.js"></script>
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+    
     <style>
 
         /* 공통 - 폰트 */
@@ -222,7 +224,7 @@
 			text-align : right;
 			font-size : x-large;
 			/* border : 1px solid red; */
-  			margin-left : 36%;
+  			margin-left : 45%;
 			width : fit-content;
 			margin-right : 1%;
 			
@@ -343,7 +345,7 @@
                 position:fixed;
                 width: 240px;
                 top: 0;
-                left:85%;
+                left:82%;
                 height:100%;
                 -webkit-transition-duration:0.2s;
                 -webkit-transition-timing-function:ease;
@@ -398,7 +400,7 @@
                 position:fixed;
                 width: 240px;
                 top: 0;
-                left:83%;
+                left:82%;
                 height:100%;
                 -webkit-transition-duration:0.2s;
                 -webkit-transition-timing-function:ease;
@@ -871,7 +873,7 @@
         <div class="modal-content">
             <div class="modal-header">
 	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;  width : 100%;">
-		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
+		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="${contextPath }/resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
 		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 40px;">혼저옵서예.</h2></div>
 	            </div>
             </div>
@@ -1201,7 +1203,7 @@
 	
 		function goToInfo(){
 			var uspart = "일반";
-			location.href='${contextPath}/mypage/userinfo?usno='+${loginUser.usno}+'&uspart='+uspart;
+			location.href='${contextPath}/mypage/userinfo?usno='+'${loginUser.usno}'+'&uspart='+uspart;
 		}
 		
 		function aboutUst(){

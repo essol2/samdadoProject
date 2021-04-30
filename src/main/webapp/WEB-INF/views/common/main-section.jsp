@@ -25,7 +25,7 @@
 <body>
 	
 	 <section class="page-start">
-        <div id="bottom">
+        <div id="bottom" style="width:90%;">
             <div id="content">
                 <br><br><br>
                 

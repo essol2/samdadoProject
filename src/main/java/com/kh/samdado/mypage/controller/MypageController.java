@@ -310,7 +310,9 @@ public class MypageController {
 	 // 제휴회원 - 내 사업장 조회 메소드
 	 @GetMapping("/buss")
 	 public ModelAndView selectBussList(@RequestParam(name="usno") String usno,
-			 							ModelAndView mv) {
+			 							ModelAndView mv, HttpSession session) {
+		 User u = (User) session.getAttribute("loginUser");
+		 usno = u.getUsno();
 		 
 		 // 해당 사용자가 등록한 사업장 리스트 알아오기
 		 List<Business> bussList = mService.selectBussList(usno);

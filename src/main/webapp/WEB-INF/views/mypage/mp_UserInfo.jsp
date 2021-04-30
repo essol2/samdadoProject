@@ -9,12 +9,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
+
 <title>UserInfo</title>
 	<!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+
 <style>
 
     /* 폰트 */
@@ -454,13 +459,14 @@
 
 </head>
 <body>
+
  <div id="back">
  	   <!-- navi.jsp include -->
        <jsp:include page="../common/naviWhite.jsp"/>
         
-        <section class="page-start">
+        <section class="page-start" style="height : 1000px;">
             <div id="topMenu">
-                <div id="countDday"> <p>${ loginUser.usname }님의 <br> 여행까지 <br>D-100</p> </div>
+                <div id="countDday"> <p>${ loginUser.usname }님의 <br> 여행까지 <br>D-1</p> </div>
                 <div class="menuBox" id="menuBox">
 
                     <button class="clickedBtn" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userW.png" class="btnImg"> <br> 내 정보<br> <br></div></button>
@@ -584,8 +590,7 @@
 						   
 				<div class="modal_layer"></div>
 			</div>
-			</section>
-		</div>
+		
 		
 		<div id="modalN" class="modal">
 		<div class="modal_content">
@@ -753,9 +758,17 @@
 		});
 	}
     </script>
+</section>
+</div>
+
+    
      
      <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-      
+ <div style="position : absolute; bottom:-20px; width : 100%; margin-bottom:-150px;">
+ 	<footer>
+          <jsp:include page="../common/footer.jsp"/>
+ 	</footer>
+ </div>
 </body>
 </html>

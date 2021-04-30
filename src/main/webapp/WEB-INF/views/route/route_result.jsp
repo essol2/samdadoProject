@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>찾은 길</title>
-<link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
  	<!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- Bootstrap CSS -->
