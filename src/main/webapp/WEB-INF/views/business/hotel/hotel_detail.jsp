@@ -930,7 +930,7 @@
 	    });
     
         $j1124( function() {
-          $j1124( ".datepicker" ).datepicker();
+          $j1124( ".datepicker" ).datepicker({ minDate: 0});
         } );
     </script>
 

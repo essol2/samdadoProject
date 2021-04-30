@@ -219,6 +219,7 @@
             width: 55px;
             height: 55px;
             margin-left: 3%;
+            margin-top: 150px;
         }
 
         .search-result {
@@ -414,14 +415,15 @@
         .cover {
             width: 70px;
             height: 33px;
-            border: 1px solid black;
-            border-radius: 20%;            
+            border: 1px solid #467355;
+            border-radius: 10%;
         }
 
         .cover a, .cover label {
             text-decoration: none;
-            color: black;            
+            color: #467355;
             line-height:0px;
+            font-weight: bold;
         }
 
         .moreBtn {
@@ -509,6 +511,20 @@
 		.btn.btn-sea:hover{background-color:white; color:#467355;}
 		.btn.btn-sea:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
 
+		#speechbubble{
+        	width:400px;
+        	height:200px;
+        	position:absolute;
+        	margin-bottom:40px;
+        	margin-left:50px;
+        	visibility: hidden;
+        	transition: all 0.6s ease-in-out;
+        }
+        
+        #filter-nav ul li:hover #speechbubble{
+        	visibility: visible;
+        }
+			
         /* 사업장종류선택끝 */
         
         .nanDiv{
@@ -532,6 +548,7 @@
 
         <!-- 전체 section-->
         <section id="main-container">
+        <!-- 
             <nav id="choise-nav">
                <ul id="choise">
                     <li>
@@ -548,9 +565,14 @@
                     </li>
                 </ul>
             </nav>
-
+		 -->
             <nav id="filter-nav">
-                <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">							
+                <ul>
+            		<li>            		
+                <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">
+                <img id="speechbubble" src="../resources/images/image_listpage/speechbubble.png" alt="">							
+            		</li>
+            	</ul>
                 <div class="search-result">
                     <label class="topText">삼다도와 함께하는</label><br>
                     <label class="topText">제주도 지역의 음식점</label>
@@ -606,7 +628,7 @@
                 <ul id="choise2">
                     <li>
                         	<select id="cateSelect" class="cateSelect">
-                                <option value="tema">종류</option>
+                                <option value="tema">종류별</option>
                                 <option value="양식">양식</option>
 		                        <option value="양식">양식</option>
 		                        <option value="양식">양식</option>
