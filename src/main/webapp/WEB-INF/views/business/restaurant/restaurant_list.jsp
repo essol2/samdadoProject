@@ -555,7 +555,7 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
 		                            str += "<b>"+ data[i].res_category +"</b>";		                            
 		                            str += "<c:if test='${ loginUser.usno != null }'>"
@@ -617,9 +617,11 @@
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<div id='frm_read'>"
-		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
-		                            str += "</div>";               
+		                            str += "<b>"+ data[i].res_category +"</b>";
+		                            str += "<b>"+ data[i].bus_phone +"</b>";
+		                            str += "<c:if test='${ loginUser.usno != null }'>"
+		                            str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+		                            str += "</c:if>";               
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -650,10 +652,11 @@
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
 		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
-		    	              		str += "<div id='frm_read'>"
-		                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
-		                            str += "</div>";               
+		    	              		str += "<b>"+ data[i].res_category +"</b>";
+		    	              		str += "<b>"+ data[i].bus_phone +"</b>";
+		    	              		str += "<c:if test='${ loginUser.usno != null }'>"
+		                            str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+		                            str += "</c:if>";               
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -687,10 +690,11 @@
 				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 				    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
 				    	              		str += "<b>"+ data[i].bus_name +"</b>";
-				    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
-				    	              		str += "<div id='frm_read'>"
-				                            str += "<a href='javascript: like_func();'><img src='../resources/images/image_listpage/heart.png'></a>";
-				                            str += "</div>";               
+				    	              		str += "<b>"+ data[i].res_category +"</b>";
+				    	              		str += "<b>"+ data[i].bus_phone +"</b>";
+				    	              		str += "<c:if test='${ loginUser.usno != null }'>"
+				                            str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
+				                            str += "</c:if>";               
 				                            str += "</div>";
 				                            
 				                            list += str;
@@ -719,8 +723,10 @@
                         <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     	</div>
                         <img class="image" src="../resources/busUploadFiles/${ r.file_rename }" onclick="selectRes(${r.bus_code})">
-                        <b>${ r.bus_name }</b>
+                        	<b>★${ h.avstar } (후기 ${ h.revcnt }개)</b>
+                        	<b>${ r.bus_name }</b>
 	                        <b>${ r.res_category }</b>
+	                        <b>${ r.bus_phone }</b>
 	                        <c:if test="${ loginUser.usno != null }">
 	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
 	                        </c:if>
@@ -737,8 +743,10 @@
 	                        <input type="hidden" id="bus_code" name="bus_code" value="${ r.bus_code }">
 	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${r.file_rename}" onclick="selectRes(${r.bus_code})">
 	                        </c:if>	                        
+	                        <b>★${ h.avstar } (후기 ${ h.revcnt }개)</b>
 	                        <b>${ r.bus_name }</b>
 	                        <b>${ r.res_category }</b>
+	                        <b>${ r.bus_phone }</b>
 	                        <c:if test="${ loginUser.usno != null }">
 	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
 	                        </c:if>

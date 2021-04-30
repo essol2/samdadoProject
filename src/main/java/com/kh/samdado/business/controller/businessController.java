@@ -1084,7 +1084,15 @@ public class businessController {
 				}
 		
 		List<Business> carList = bService.selectCarList();
-		
+		List<Review> reviewList = bService.selectReviewList();
+		for(Business t : carList) {
+			for(Review r : reviewList) {
+				if(t.getBus_code() == r.getBus_code()) {
+					t.setAvstar(r.getAvstar());
+					t.setRevcnt(r.getRevcnt());
+				}
+			}
+		}	
 		if(carList != null) {
 			mv.addObject("carList", carList);
 			mv.setViewName("business/rentcar/car_list");
@@ -1197,6 +1205,15 @@ public class businessController {
 		return starList;
 		
 	}
+	@RequestMapping(value="starList2", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> starList2(HttpServletResponse response, @RequestParam String kinds) {
+		
+		List<Business> starList2 = bService.starList2();
+		//System.out.println(starList);
+		return starList2;
+		
+	}
 	
 	@RequestMapping(value="reviewList", method=RequestMethod.POST)
 	@ResponseBody
@@ -1205,6 +1222,16 @@ public class businessController {
 		List<Business> reviewList = bService.reviewList();
 		
 		return reviewList;
+		
+	}
+	
+	@RequestMapping(value="reviewList2", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> reviewList2(HttpServletResponse response, @RequestParam String kinds) {
+		
+		List<Business> reviewList2 = bService.reviewList2();
+		
+		return reviewList2;
 		
 	}
 	

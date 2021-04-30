@@ -441,11 +441,21 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.starList");
 	}
+	@Override
+	public List<Business> starList2() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.starList2");
+	}
 
 	@Override
-	public List<Business> reviewList( ) {
+	public List<Business> reviewList() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.reviewList");
+	}
+	@Override
+	public List<Business> reviewList2( ) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.reviewList2");
 	}
 
 	@Override

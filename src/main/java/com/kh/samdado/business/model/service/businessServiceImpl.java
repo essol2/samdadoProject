@@ -409,17 +409,27 @@ public class businessServiceImpl implements businessService {
 		// TODO Auto-generated method stub
 		return bDao.selectReviewList();
 	}
-
+	
 	@Override
 	public List<Business> starList() {
 		// TODO Auto-generated method stub
 		return bDao.starList();
+	}
+	@Override
+	public List<Business> starList2() {
+		// TODO Auto-generated method stub
+		return bDao.starList2();
 	}
 
 	@Override
 	public List<Business> reviewList() {
 		// TODO Auto-generated method stub
 		return bDao.reviewList();
+	}
+	@Override
+	public List<Business> reviewList2() {
+		// TODO Auto-generated method stub
+		return bDao.reviewList2();
 	}
 
 	@Override
