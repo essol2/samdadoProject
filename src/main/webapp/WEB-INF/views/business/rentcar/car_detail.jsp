@@ -751,14 +751,7 @@
 			<c:forEach var="c" items="${ cars }">
                     <div class='profile'>
                     <div class="imgArea">
-                        <img id="mainPic" class="detailImg" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">
-                        <div class="otherImgArea">
-                        <c:forEach var="ca" items="${ carAtt }">
-						<c:if test="${ ca.car_no eq c.car_no}">
-						<img id="otherPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ ca.file_rename }">
-						</c:if>
-						</c:forEach>
-                        </div>
+                        <img id="mainPic" class="detailImg" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">                        
                         </div>
                         <b>${ c.car_name }</b><br>
                         <b>${ c.car_fuel }</b><br>
@@ -973,6 +966,14 @@
     
     
    	<script>
+	   	Number.prototype.format = function(){
+	        if(this==0) return 0;
+	        var reg = /(^[+-]?\d+)(\d{3})/;
+	        var n = (this + '');
+	        while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+	        return n;
+	    };
+   		
 	    function startDate(e) {	  	  
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('startDateResult').innerText
@@ -991,7 +992,7 @@
 		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
 		    	document.getElementById('daysResult').innerText = days
 		        var payResult = document.getElementById('payResult').value = amount * days
-		        document.getElementById('payResultB').innerText = payResult
+		        document.getElementById('payResultB').innerText = payResult.format()
 		     }
 	  	}
 	    
@@ -1014,7 +1015,7 @@
 			        var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
 			        document.getElementById('daysResult').innerText = days
 			        var payResult = document.getElementById('payResult').value = amount * days
-			        document.getElementById('payResultB').innerText = payResult
+			        document.getElementById('payResultB').innerText = payResult.format()
 			     }
 			    if(sdd > edd){
 			    	alert('반납일을 다시 선택해주세요.');
@@ -1026,12 +1027,6 @@
 			    	document.getElementById('daysResult').innerText ="";
 			    }
 		  	}
-
-	    function handleOnChange(e) {
-	    	  const value = e.value;	    	  
-	    	  document.getElementById('personNumber').value
-	    	    = value;
-	    	}
     </script>
     
     <script>
