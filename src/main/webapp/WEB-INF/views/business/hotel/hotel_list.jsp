@@ -544,7 +544,8 @@
     		padding: 1rem;
     		height: 500px;
     		box-sizing: border-box;
-
+		}
+		
         #speechbubble{
         	width:400px;
         	height:200px;
