@@ -540,6 +540,18 @@
         }
 
         /* 사업장종류선택끝 */
+		.nanDiv{
+        	width: 100%;
+		    text-align: center;
+		    font-size: xxx-large;
+		    display: flex;
+    		flex-direction: column;
+    		justify-content: center;
+    		margin: 1rem;
+    		padding: 1rem;
+    		height: 500px;
+    		box-sizing: border-box;
+        }
     </style>
 </head>
 
@@ -606,9 +618,9 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>"+ data[i].pro_adult +"</b>";
+		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
 		                            str += "<c:if test='${ loginUser.usno != null }'>"
 		                            str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
 		                            str += "</c:if>";
@@ -755,7 +767,14 @@
 		                            str += "</div>";
 		                            
 		                            list += str;
-		    	            		 }
+		    	            		 } else if(data[i].bus_category != 'T'){
+			    	            			str = "<div  class='nanDiv'>";
+			    	            			str += "<label>별점(이)가 등록 된 사업장이 없습니다.</label>"
+			    	            			str += "</div>";
+			    	            			
+			    	            			list += str;
+			    	            			break;
+			    	            		 }
 		    	              		}
 		    	            	  cate.innerHTML=list;
 		    	              },
@@ -780,7 +799,7 @@
 		    	            	  var cate = document.getElementById("secondlist");
 		    	            	  var list = "";
 		    	            	  for(var i in data){
-		    	            		  if(data[i].bus_category == 'T'){
+		    	            		  if(data[i].bus_category == 'T' && data[i].revcnt != '0'){
 				    	              		str  = "<div class='moreProfile'>";
 				    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+data[i].bus_code +"'>";
 				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
@@ -793,7 +812,14 @@
 				                            str += "</div>";
 				                            
 				                            list += str;
-				    	            		 }
+		    	            		  } else if(data[i].bus_category != 'T'){
+			    	            			str = "<div  class='nanDiv'>";
+			    	            			str += "<label>후기(이)가 등록 된 사업장이 없습니다.</label>"
+			    	            			str += "</div>";
+			    	            			
+			    	            			list += str;
+			    	            			break;
+			    	            		 }
 		    	              		}
 		    	            	  cate.innerHTML=list;
 		    	              },

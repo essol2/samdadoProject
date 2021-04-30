@@ -527,6 +527,19 @@
         }
 		
         /* 사업장종류선택끝 */
+        
+        .nanDiv{
+        	width: 100%;
+		    text-align: center;
+		    font-size: xxx-large;
+		    display: flex;
+    		flex-direction: column;
+    		justify-content: center;
+    		margin: 1rem;
+    		padding: 1rem;
+    		height: 500px;
+    		box-sizing: border-box;
+        }
     </style>
 </head>
 
@@ -608,7 +621,7 @@
 		    	            	 alert('error');
 		    	               
 		    	              }
-		    			})
+		    			});
 		    		});
 		    });
 			</script>
@@ -630,7 +643,7 @@
 		    	$("#starList").click(function(){
 		    			var kinds = $(this).val(); 
 		    			$.ajax({
-		    				 url : '${contextPath}/business/starList', 
+		    				 url : '${contextPath}/business/starList2', 
 		    	              type : "post", 
 		    	              data : {"kinds" : kinds},
 		    	              success : function(data){
@@ -649,7 +662,14 @@
 		                            str += "</div>";
 		                            
 		                            list += str;
-		    	            		 }
+		    	            		 } else if(data[i].bus_category != 'C'){
+			    	            			str = "<div  class='nanDiv'>";
+			    	            			str += "<label>별점(이)가 등록 된 사업장이 없습니다.</label>"
+			    	            			str += "</div>";
+			    	            			
+			    	            			list += str;
+			    	            			break;
+			    	            		 }
 		    	              		}
 		    	            	  cate.innerHTML=list;
 		    	              },
@@ -666,13 +686,14 @@
 		    			var kinds = $(this).val(); 
 						
 		    			$.ajax({
-		    				 url : '${contextPath}/business/reviewList', 
+		    				 url : '${contextPath}/business/reviewList2', 
 		    	              type : "post", 
 		    	              data : {"kinds" : kinds},
 		    	              success : function(data){
 		    	            	  //console.log(data);
 		    	            	  var cate = document.getElementById("secondlist");
 		    	            	  var list = "";
+		    	            	  console.log(data);
 		    	            	  for(var i in data){
 		    	            		  if(data[i].bus_category == 'C'){
 				    	              		str  = "<div class='moreProfile'>";
@@ -686,6 +707,13 @@
 				                            str += "</div>";
 				                            
 				                            list += str;
+				    	            		 } else if(data[i].bus_category != 'C'){
+				    	            			str = "<div  class='nanDiv'>";
+				    	            			str += "<label>리뷰(이)가 등록 된 사업장이 없습니다.</label>"
+				    	            			str += "</div>";
+				    	            			
+				    	            			list += str;
+				    	            			break;
 				    	            		 }
 		    	              		}
 		    	            	  cate.innerHTML=list;

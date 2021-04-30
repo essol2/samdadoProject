@@ -526,6 +526,19 @@
         }
 			
         /* 사업장종류선택끝 */
+        
+        .nanDiv{
+        	width: 100%;
+		    text-align: center;
+		    font-size: xxx-large;
+		    display: flex;
+    		flex-direction: column;
+    		justify-content: center;
+    		margin: 1rem;
+    		padding: 1rem;
+    		height: 500px;
+    		box-sizing: border-box;
+        }
     </style>
 </head>
 
@@ -590,9 +603,9 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
 		                            str += "<b>"+ data[i].res_category +"</b>";		                            
+		                            str += "<b>"+ data[i].bus_phone +"</b>";		                            
 		                            str += "<c:if test='${ loginUser.usno != null }'>"
 			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
 			                        str += "</c:if>";
@@ -668,80 +681,6 @@
 		    			})//ajax
 		    		});//click
 		    });//ready
-		    
-		    $(function starList(){
-		    	$("#starList").click(function(){
-		    			var kinds = $(this).val(); 
-		    			$.ajax({
-		    				 url : '${contextPath}/business/starList', 
-		    	              type : "post", 
-		    	              data : {"kinds" : kinds},
-		    	              success : function(data){
-		    	            	  var cate = document.getElementById("secondlist");
-		    	            	  var list = "";
-		    	            	  for(var i in data){
-		    	            		 if(data[i].bus_category == 'R'){
-		    	              		str  = "<div class='moreProfile'>";
-		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
-		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		    	              		str += "<b>"+ data[i].res_category +"</b>";
-		    	              		str += "<b>"+ data[i].bus_phone +"</b>";
-		    	              		str += "<c:if test='${ loginUser.usno != null }'>"
-		                            str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-		                            str += "</c:if>";               
-		                            str += "</div>";
-		                            
-		                            list += str;
-		    	            		 }
-		    	              		}
-		    	            	  cate.innerHTML=list;
-		    	              },
-		    	              error : function(data){
-		    	            	 alert('error');
-		    	               
-		    	              }//error
-		    			})//ajax
-		    		});//click
-		    });//ready
-		    
-		    $(function(){
-		    	$("#reviewList").click(function(){
-		    			var kinds = $(this).val(); 
-						
-		    			$.ajax({
-		    				 url : '${contextPath}/business/reviewList', 
-		    	              type : "post", 
-		    	              data : {"kinds" : kinds},
-		    	              success : function(data){
-		    	            	  //console.log(data);
-		    	            	  var cate = document.getElementById("secondlist");
-		    	            	  var list = "";
-		    	            	  for(var i in data){
-		    	            		  if(data[i].bus_category == 'R'){
-				    	              		str  = "<div class='moreProfile'>";
-				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-				    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
-				    	              		str += "<b>"+ data[i].bus_name +"</b>";
-				    	              		str += "<b>"+ data[i].res_category +"</b>";
-				    	              		str += "<b>"+ data[i].bus_phone +"</b>";
-				    	              		str += "<c:if test='${ loginUser.usno != null }'>"
-				                            str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-				                            str += "</c:if>";               
-				                            str += "</div>";
-				                            
-				                            list += str;
-				    	            		 }
-		    	              		}
-		    	            	  cate.innerHTML=list;
-		    	              },
-		    	              error : function(data){
-		    	            	 alert('error');
-		    	               
-		    	              }//error
-		    			})//ajax
-		    		});//click
-		    });//ready
             </script>
 
             <!-- 식당목록 div -->
@@ -756,7 +695,6 @@
                         <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     	</div>
                         <img class="image" src="../resources/busUploadFiles/${ r.file_rename }" onclick="selectRes(${r.bus_code})">
-                        	<b>★${ h.avstar } (후기 ${ h.revcnt }개)</b>
                         	<b>${ r.bus_name }</b>
 	                        <b>${ r.res_category }</b>
 	                        <b>${ r.bus_phone }</b>
@@ -776,7 +714,6 @@
 	                        <input type="hidden" id="bus_code" name="bus_code" value="${ r.bus_code }">
 	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${r.file_rename}" onclick="selectRes(${r.bus_code})">
 	                        </c:if>	                        
-	                        <b>★${ h.avstar } (후기 ${ h.revcnt }개)</b>
 	                        <b>${ r.bus_name }</b>
 	                        <b>${ r.res_category }</b>
 	                        <b>${ r.bus_phone }</b>
