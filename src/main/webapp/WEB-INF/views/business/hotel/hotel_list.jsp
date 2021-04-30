@@ -515,6 +515,19 @@
             font-family: 'GmarketSansBold' !important;
             line-height:0px;
         }
+        
+        .nanDiv{
+        	width: 100%;
+		    text-align: center;
+		    font-size: xxx-large;
+		    display: flex;
+    		flex-direction: column;
+    		justify-content: center;
+    		margin: 1rem;
+    		padding: 1rem;
+    		height: 500px;
+    		box-sizing: border-box;
+        }
     </style>
 </head>
 
@@ -574,7 +587,8 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
+		    	              		  str += "<b>"+ data[i].hotel_category +"</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
 		                            str += "<c:if test='${ loginUser.usno != null }'>"
 			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
@@ -661,8 +675,9 @@
 		    	              success : function(data){
 		    	            	  var cate = document.getElementById("secondlist");
 		    	            	  var list = "";
+		    	            	  console.log(data);
 		    	            	  for(var i in data){
-		    	            		  if(data[i].bus_category == 'H'){
+		    	            		  if(data[i].bus_category){
 				    	              		str  = "<div class='moreProfile'>";
 				    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+data[i].bus_code +"'>";
 				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
@@ -675,7 +690,14 @@
 				                            str += "</div>";
 				                            
 					                    	list += str;
-				    	            			}
+				    	            			} else if(data[i].bus_category != 'H'){
+					    	            			str = "<div  class='nanDiv'>";
+					    	            			str += "<label>별점(이)가 등록 된 사업장이 없습니다.</label>"
+					    	            			str += "</div>";
+					    	            			
+					    	            			list += str;
+					    	            			break;
+					    	            		 }
 		    	              		}
 		    	            	  cate.innerHTML=list;
 		    	              },
@@ -712,6 +734,13 @@
 		                            str += "</div>";
 		                            
 			                    	list += str;
+		    	            			} else if(data[i].bus_category == 'H' && data[i].avgstar == 0){
+			    	            			str = "<div  class='nanDiv'>";
+			    	            			str += "<label>후기(이)가 등록 된 사업장이 없습니다.</label>"
+			    	            			str += "</div>";
+			    	            			
+			    	            			list += str;
+											break;
 		    	            			}
 		    	              		}
 		    	            	  cate.innerHTML=list;
@@ -738,6 +767,7 @@
                     	</div>
                         <img class="image" src="../resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
                         <b>★${ h.avstar }(후기 ${ h.revcnt }개)</b>
+                        <b>${ h.hotel_category }</b>
 	                    <b>${ h.bus_name }</b>
 	                    <b>${ h.bus_phone }</b>
                         <c:if test="${ loginUser.usno != null }">
