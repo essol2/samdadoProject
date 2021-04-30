@@ -1004,7 +1004,7 @@
                     <label>박</label>
                     <br>
                     <b>총 합계 : </b>
-                    <b id="payResultB"><fmt:formatNumber value="${ r.room_price }" pattern="#,###"/></b>
+                    <b id="payResultB"></b>
                     <button class="payBtn">결제하기</button>
                 </div>
                 <div class="modal-footer">
@@ -1071,6 +1071,15 @@
     </script>
     
     <script>
+	    Number.prototype.format = function(){
+	        if(this==0) return 0;
+	        var reg = /(^[+-]?\d+)(\d{3})/;
+	        var n = (this + '');
+	        while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+	        return n;
+	    };
+
+    
 	    function startDate(e) {	  	  
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('startDateResult').innerText
@@ -1089,7 +1098,7 @@
 		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
 		    	document.getElementById('daysL').innerText = days
 		        var payResult = document.getElementById('payResult').value = amount * days
-		        document.getElementById('payResultB').innerText = payResult+"원"
+		        document.getElementById('payResultB').innerText = payResult.format()+"원"
 		     }
 	  	}
 	    
@@ -1112,7 +1121,7 @@
 			    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
 			    	document.getElementById('daysL').innerText = days
 			        var payResult = document.getElementById('payResult').value = amount * days
-			        document.getElementById('payResultB').innerText = payResult+"원"
+			        document.getElementById('payResultB').innerText = payResult.format()+"원"
 			     }
 			    if(sdd >= edd){
 			    	alert('체크아웃날짜를 다시 체크해주세요.');

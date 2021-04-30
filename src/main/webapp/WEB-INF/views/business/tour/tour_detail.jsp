@@ -1063,8 +1063,7 @@
                         </div>
                     </div>
                     <label>총 합계 :</label> 
-           			<label id="payResultL"></label>         
-                    <label>원</label>
+           			<label id="payResultL"></label>                    
                     <button class="payBtn">결제하기</button>
                 </div>
 
@@ -1136,6 +1135,14 @@
 	</script>
     
     <script>
+	    Number.prototype.format = function(){
+	        if(this==0) return 0;
+	        var reg = /(^[+-]?\d+)(\d{3})/;
+	        var n = (this + '');
+	        while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+	        return n;
+	    };
+    
 	    function adult(e) {	  	  
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('adultResult').innerText
@@ -1144,14 +1151,14 @@
 		  	var adultPay = ${ tour.pro_adult } * document.getElementById('adultNumber').value;
 		  	var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
 		  	var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
-	  		document.getElementById('adultPay').value = adultPay;
-	  		document.getElementById('adultPayS').innerText = adultPay+"원";
+		  	document.getElementById('adultPay').value = adultPay;
+	  		document.getElementById('adultPayS').innerText = adultPay.format()+"원";
 	  		document.getElementById('youthPay').value = youthPay;
-	  		document.getElementById('youthPayS').innerText = youthPay+"원";
+	  		document.getElementById('youthPayS').innerText = youthPay.format()+"원";
 	  		document.getElementById('childPay').value = childPay;
-	  		document.getElementById('childPayS').innerText = childPay+"원";
-        	document.getElementById('payResult').value = adultPay + youthPay + childPay;
-        	document.getElementById('payResultL').innerText = document.getElementById('payResult').value;
+	  		document.getElementById('childPayS').innerText = childPay.format()+"원";
+        	var payResult = document.getElementById('payResult').value = adultPay + youthPay + childPay;
+        	document.getElementById('payResultL').innerText = payResult.format()+"원";
 	  	}
 	    
 	    function youth(e) {
@@ -1163,13 +1170,13 @@
 			  	var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
 			  	var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
 			  	document.getElementById('adultPay').value = adultPay;
-		  		document.getElementById('adultPayS').innerText = adultPay+"원";
+		  		document.getElementById('adultPayS').innerText = adultPay.format()+"원";
 		  		document.getElementById('youthPay').value = youthPay;
-		  		document.getElementById('youthPayS').innerText = youthPay+"원";
+		  		document.getElementById('youthPayS').innerText = youthPay.format()+"원";
 		  		document.getElementById('childPay').value = childPay;
-		  		document.getElementById('childPayS').innerText = childPay+"원";
-	        	document.getElementById('payResult').value = adultPay + youthPay + childPay;
-	        	document.getElementById('payResultL').innerText = document.getElementById('payResult').value;
+		  		document.getElementById('childPayS').innerText = childPay.format()+"원";
+	        	var payResult = document.getElementById('payResult').value = adultPay + youthPay + childPay;
+	        	document.getElementById('payResultL').innerText = payResult.format()+"원";
 		  	}
 	
 	    function child(e) {
@@ -1181,13 +1188,14 @@
 			  var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
 	    	  var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
 	    	  document.getElementById('adultPay').value = adultPay;
-		  		document.getElementById('adultPayS').innerText = adultPay+"원";
+	    	  document.getElementById('adultPay').value = adultPay;
+		  		document.getElementById('adultPayS').innerText = adultPay.format()+"원";
 		  		document.getElementById('youthPay').value = youthPay;
-		  		document.getElementById('youthPayS').innerText = youthPay+"원";
+		  		document.getElementById('youthPayS').innerText = youthPay.format()+"원";
 		  		document.getElementById('childPay').value = childPay;
-		  		document.getElementById('childPayS').innerText = childPay+"원";
-	        	document.getElementById('payResult').value = adultPay + youthPay + childPay;
-	        	document.getElementById('payResultL').innerText = document.getElementById('payResult').value;
+		  		document.getElementById('childPayS').innerText = childPay.format()+"원";
+	        	var payResult = document.getElementById('payResult').value = adultPay + youthPay + childPay;
+	        	document.getElementById('payResultL').innerText = payResult.format()+"원";
 	    	}
 	
     </script>
