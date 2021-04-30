@@ -97,7 +97,7 @@
 	                   <div class="card text-dark bg-light mb-3" style="max-width: 100rem;">
 								  <div class="card-header">사업장 신청 주의사항</div>
 								  <div class="card-body">
-								    <p class="card-text">* <b>신청 대기중</b> 또는 현재 <b>배너 광고가 진행중인 사업장</b>은 목록에 리스트되지 않습니다.</p>
+								    <p class="card-text">* 현재 <b>배너 광고가 진행중인 사업장</b>은 목록에 리스트되지 않습니다.</p>
 								  </div>
 								</div>
 	                    <select class="form-select" aria-label="Default select example" name="bus_code">
