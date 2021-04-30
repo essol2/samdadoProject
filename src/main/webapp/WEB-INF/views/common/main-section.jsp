@@ -98,7 +98,7 @@
                 <br>
                 <!--  data-masonry='{"percentPosition": true }' -->
                 
-                <div class="main-section-wrap" id="bannerAdImglistDiv" style="margin-left : 3%; position: relative;" >
+                <div class="main-section-wrap" id="bannerAdImglistDiv" style="margin-left : 1%; position: relative;" >
 				  
 				</div>
                 
@@ -147,7 +147,7 @@
 						for (var i in data) {
 							
 							//var div = $("<div onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
-							var img = $("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 700px;'>");
+							var img = $("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 700px; margin :0.5%;'>");
 							var atag = $("<a href='${ contextPath }/business/detail?bus_code=" + data[i].bus_code + "'>");
 							atag.append(img);
 							badiv.append(atag);
