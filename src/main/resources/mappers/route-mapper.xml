@@ -115,6 +115,20 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 							AND OR_NO = 1
 						</when>
 						<when test="thema == 'break'">
+							AND OR_NO = 2
+						</when>
+						<when test="thema == 'beach'">
+							AND OR_NO = 3
+						</when>
+					</choose>
+			   	</if>
+			   	
+			   	<if test="area == 'west'">
+					<choose>
+						<when test="thema == 'sightseeing'">
+							AND OR_NO = 4
+						</when>
+						<when test="thema == 'break'">
 							AND OR_NO = 5
 						</when>
 						<when test="thema == 'beach'">
@@ -123,30 +137,16 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 					</choose>
 			   	</if>
 			   	
-			   	<if test="area == 'west'">
+			   	<if test="area == 'south'">
 					<choose>
 						<when test="thema == 'sightseeing'">
 							AND OR_NO = 7
 						</when>
 						<when test="thema == 'break'">
-							AND OR_NO = 2
-						</when>
-						<when test="thema == 'beach'">
 							AND OR_NO = 8
 						</when>
-					</choose>
-			   	</if>
-			   	
-			   	<if test="area == 'south'">
-					<choose>
-						<when test="thema == 'sightseeing'">
-							AND OR_NO = 4
-						</when>
-						<when test="thema == 'break'">
-							AND OR_NO = 9
-						</when>
 						<when test="thema == 'beach'">
-							AND OR_NO = 3
+							AND OR_NO = 9
 						</when>
 					</choose>
 			   	</if>
@@ -164,6 +164,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 						</when>
 					</choose>
 			   	</if>
+			   	order by spot_no asc
 	</select>
 
 	<select id="spotSearch" parameterType="String" resultMap="TourSpotResultSet">
