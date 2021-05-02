@@ -96,5 +96,6 @@ public class Business {
 	private String avstar;
 	private String revcnt;
 	private int avgstar;
+	private String recnt;
 
 }

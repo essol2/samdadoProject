@@ -633,9 +633,10 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"		                            
+		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>";
+		                            str += "<b>"+ data[i].bus_phone +"</b>";
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -701,9 +702,10 @@
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+ data[i].bus_code +"'>"
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		 str += "<b>★"+ data[i].avgstar +" (후기 개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기"+ data[i].recnt +" 개)</b>";
 		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"		                            
+		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>";
+		                            str += "<b>"+ data[i].bus_phone +"</b>";
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -733,9 +735,10 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avgstar +" (후기 개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기"+ data[i].recnt +" 개)</b>";
 		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"		                            
+		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>";
+		                            str += "<b>"+ data[i].bus_phone +"</b>";
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -765,9 +768,10 @@
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+data[i].bus_code +"'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기"+ data[i].recnt +" 개)</b>";
 		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"		    	              		
+		    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>";
+		    	              		str += "<b>"+ data[i].bus_phone +"</b>";
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -803,17 +807,18 @@
 		    	            	  var cate = document.getElementById("secondlist");
 		    	            	  var list = "";
 		    	            	  for(var i in data){
-		    	            		  if(data[i].bus_category == 'T' && data[i].revcnt != '0'){
+		    	            		  if(data[i].bus_category == 'T'){
 				    	              		str  = "<div class='moreProfile'>";
 				    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+data[i].bus_code +"'>";
 				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-				    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+				    	              		str += "<b>★"+ data[i].avgstar +" (후기"+ data[i].recnt +" 개)</b>";
 				    	              		str += "<b>"+ data[i].bus_name +"</b>";
-				    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"				    	              		
+				    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>";
+				    	              		str += "<b>"+ data[i].bus_phone +"</b>";
 				                            str += "</div>";
 				                            
 				                            list += str;
-		    	            		  } else if(data[i].bus_category != 'T'){
+		    	            		  } else if(data[i].bus_category == 'T' && data[i].avgstar == 0){
 			    	            			str = "<div  class='nanDiv'>";
 			    	            			str += "<label>후기(이)가 등록 된 사업장이 없습니다.</label>"
 			    	            			str += "</div>";
@@ -828,7 +833,7 @@
 		    	            	 alert('error');
 		    	               
 		    	              }//error
-		    			})//ajax
+		    			});//ajax
 		    		});//click
 		    });//ready
 			</script>
@@ -849,7 +854,7 @@
                         <b>★<fmt:formatNumber value="${ t.avstar }" pattern=".00"/>(후기 ${ t.revcnt }개)</b>
                         <b>${ t.tour_tema } / ${ t.tour_category }</b>
                         <b>${ t.bus_name }</b>
-                        <b><fmt:formatNumber value="${ t.pro_adult }" pattern="#,###"/>원</b>                        
+                        <b>${ t.bus_phone }</b>
                     </div>
                 </c:if>    
                 </c:forEach>
@@ -866,7 +871,7 @@
                         <b>★<fmt:formatNumber value="${ t.avstar }" pattern=".00"/>(후기 ${ t.revcnt }개)</b>
                         <b>${ t.tour_tema } / ${ t.tour_category }</b>
                         <b>${ t.bus_name }</b>
-                        <b><fmt:formatNumber value="${ t.pro_adult }" pattern="#,###"/>원</b>                        
+                        <b>${ t.bus_phone }</b>
                     </div>
                 </c:if>
                 </c:forEach>

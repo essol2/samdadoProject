@@ -1233,7 +1233,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
    
    <update id="updateBusStar" parameterType="Review">
    		UPDATE BUSINESS
-		SET AVGSTAR = (SELECT AVG(RE_STAR) FROM REVIEW WHERE BUS_CODE = #{bus_code} GROUP BY BUS_CODE)
+		SET AVGSTAR = (SELECT TRUNC(AVG(RE_STAR),1) FROM REVIEW WHERE BUS_CODE = #{bus_code} GROUP BY BUS_CODE),
+        RECNT = (SELECT COUNT(REV_COMMENT) FROM REVIEW WHERE BUS_CODE = #{bus_code} GROUP BY BUS_CODE)
 		WHERE BUS_CODE = #{bus_code}
    </update>
    
