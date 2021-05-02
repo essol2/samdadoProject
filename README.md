@@ -16,18 +16,18 @@
 
 ### Functions 
 ```
-• 📝 
-• 🏠 
-• 👫 
-• 📋
-• 📈 
+• 👨‍👩‍👧‍👦 회원관리 : 로그인, 회원가입,  아이디 비밀번호 찾기(Email sender 활용) 등
+• 🏡 마이페이지 : 회원 정보 수정, 가계부 기능, 내 찜목록, 내 예약 목록, 예약 내역 날짜에 따라 후기 작성 및 수정, 내 루트 확인, 내 사업장 목록, 광고 관리, 포인트 적립 및 내역 확인, 문의하기, 알림 등
+• 🛣 루트 만들기 : 여행지 검색 및 지도에 표시, 선택된 여행지들로 루트 만들기, 루트 변경, km 계산, 예상 예산 표시 (카카오 지도 API 활용) 등
+• 💰 비즈니스 :  호텔, 렌트카, 음식점, 관광지에 대해 사업자 회원에게 사업장 정보 입력받기, 리스트 출력(정지 사업장 제외), 찜하기, 예약하기, 후기 표시, 신고하기, 검색 등
+• 📈 관리자 : 매출 관리, 회원 관리(sms sender 활용), 공지사항 등록, 신고 관리, 광고 관리(배너신청 승인, 반려), 문의하기 답변 등
 ```
 
-  • 📝 
-  • 🏠 
-  • 👫  
-  • 📋 
-  • 📈 
+  • 👨‍👩‍👧‍👦 members : login, register, find id&password (use EmailSender), etc. <br>
+  • 🏡 mypage : change Info, Account Book function, my adding cart List, my BookingList, wrtie and rewrite review, check my rotue, my BusinessList, managing Advertisement, Point, send QnA, News, etc.  <br>
+  • 🛣  route : searching tour spot, making route with selected tour spot, change my route, calculating km and budget, etc.  <br>
+  • 💰 business : insert new tour business(ex. hotel, rent car, restaurant, tour admission), show list(except expelled business), add cart, booking, show reviews, report, search, etc.  <br>
+  • 📈 administrator : managing income, managing member(use SMS sender), insert Board,  managing Report, managing Advertisement, answer QnA  <br>
 
 
 
@@ -38,8 +38,9 @@
 > 여행을 좋아하는 6명이 모여 삼다도에 대한 즐거운 여행을 상상합니다.
 여럿 삼, 많을 다, 쓸 수. 여러명의 사람이 많이 쓸 프로그램을 만드는 삼다수(甧多需)입니다.
 ```
->Introduce about Sadasoo
-
+> Six people who love to travel gather to imagine a pleasant trip to Samdado.
+Our team name implies'making programs that can be used by multiple people'.
+So, Here is who we are
 <table>
   <tr>
        <td align="center">
@@ -48,7 +49,7 @@
       <sub>
       <b>
       Jaejun Seo<br/>
-      :two_women_holding_hands:  
+      💰  
       </b>
       </sub>
       </a>
@@ -59,7 +60,7 @@
       <sub>
       <b>
       Jihye Seong<br/>
-      :house_with_garden:  
+       👨‍👩‍👧‍👦 & 📈  
       </b>
       </sub>
       </a>
@@ -70,7 +71,7 @@
       <sub>
       <b>
       Hanbin Yoo<br/>
-      :chart_with_upwards_trend: 📋  
+       💰 
       </b>
       </sub>
       </a>
@@ -81,7 +82,7 @@
       <sub>
       <b>
       Eunsol Lee (🙋‍♀️)<br/>
-      :memo: 📋  
+      🏡 
       </b>
       </sub>
       </a>
@@ -92,7 +93,7 @@
       <sub>
       <b>
       HyeYoon Han<br/>
-      :two_men_holding_hands:  
+      🛣  
       </b>
       </sub>
       </a>
