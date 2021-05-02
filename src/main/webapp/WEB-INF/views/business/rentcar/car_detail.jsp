@@ -358,11 +358,16 @@
         .review_writer label {
             margin-right: 1%;
         }
-
-        .reivew {
+        
+        .review {
             border: 1px solid black;
-            width: 70%;
+            width: 90%;
             border-radius: 6px;
+            padding: 10px;
+        }
+
+        .review a{
+        	font-size:17px;
         }
 
         .review_img {
@@ -380,6 +385,7 @@
             float: right;
             margin: 1%;
             margin-bottom: 0;
+            font-weight: bold;
         }
         
         .reviewTitle{
