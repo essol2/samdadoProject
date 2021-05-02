@@ -761,7 +761,7 @@
                     	<input type="hidden" id="bus_code" name="bus_code" value="${ c.bus_code }">
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }" onclick="selectRes(${c.bus_code})">
                         </c:if>
-                        <b>★${ h.avstar } (후기 ${ h.revcnt }개)</b>
+                        <b>★<fmt:formatNumber value="${ c.avstar }" pattern=".00"/>(후기 ${ c.revcnt }개)</b>
                         <b>${ c.bus_name }</b>
                         <b>${ c.bus_phone }</b>                        
                     </div>

@@ -313,10 +313,16 @@ Latest commit 26b9524 2 days ago
         .review_writer label {
             margin-right: 1%;
         }
-        .reivew {
+      
+        .review {
             border: 1px solid black;
-            width: 70%;
+            width: 90%;
             border-radius: 6px;
+            padding: 10px;
+        }
+
+        .review a{
+        	font-size:17px;
         }
         .review_img {
             width: 300px;
@@ -331,6 +337,7 @@ Latest commit 26b9524 2 days ago
             float: right;
             margin: 1%;
             margin-bottom: 0;
+            font-weight: bold;
         }
         /* 부트스트랩 모달*/
         .cal_top {
