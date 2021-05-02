@@ -1,3 +1,37 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@jaejunseo 
+essol2
+/
+samdadoProject
+1
+10
+Code
+Issues
+216
+Pull requests
+1
+Actions
+Projects
+Wiki
+Security
+Insights
+samdadoProject/src/main/webapp/WEB-INF/views/business/hotel/hotel_detail.jsp
+@han1208a
+han1208a [마지막 푸쉬이길]
+…
+Latest commit 26b9524 2 days ago
+ History
+ 2 contributors
+@han1208a@jaejunseo
+1225 lines (1034 sloc)  40.6 KB
+  
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -29,33 +63,27 @@
         * {
             font-family: 'Jeju Myeongjo', serif;
         }
-
         footer {
             background-color: rgb(70, 115, 85);
             height: 190px;
         }
-
         .leftImg {
             margin-left: 6%;
             margin-top: 20px;
         }
-
         #footer_center {
             margin-left: 30%;
             margin-top: -130px;
             color: white;
         }
-
         #footer_right {
             margin-left: 60%;
             margin-top: -120px;
             color: white;
         }
-
         .rightImg {
             padding-right: 15px;
         }
-
         #copyRight {
             color: white;
             margin-left: 40%;
@@ -64,14 +92,10 @@
             margin-bottom: 0px;
             opacity: 0.5;
         }
-
         hr {
             color: white;
         }
-
-
         
-
         /* 컨테이너 */
         #main-container {
             height: 100%;
@@ -80,16 +104,11 @@
             flex-direction: column;
             padding-top: 5%;
             padding-left: 6.3%;
-
         }
-
         /* 메인사진 위 정보div들 */
-
         #ho_header div {
             margin-bottom: 1%;
         }
-
-
             #ho_title {
 		    font-size: 50px;
 		    color: #343a40;
@@ -99,53 +118,41 @@
 		    font-size: 30px;
 		    font-weight: bold;
 		}
-
         #ho_grade {
             font-size: 19px;
             color: rgb(212, 71, 46);
         }
-
         .title_tag {
             margin-bottom: 1%;
         }
-
         .jjim_img {
             width: 20px;
             height: 20px;
         }
-
         .report_img {
             width: 30px;
             height: 30px;
         }
-
         /* 메인사진 위 정보div들 끝 */
-
-
         .col {
             float: left;
             display: inline;
             width: 55%;
             height: 100%;
         }
-
         .col2 {
             width: 555px;
             height: 330px;
             margin-left: 10%;
             margin-bottom: 5%;
-
         }
-
         .small_view {
             margin: 3%;
             margin-top: 0;
         }
-
 		.small_view label{
 			line-height: 20px;
 		}
-
         .small_view_btn {
             border: 0;
             outline: 0;
@@ -154,7 +161,6 @@
             padding: 0;
             font-size: 25px;
         }
-
         .small_view_con {
             font-weight: normal;
             margin-left: 3%;
@@ -164,7 +170,6 @@
             white-space: nowrap;
             max-width: 90%;
         }
-
         #small_view_morebtn {
             float: right;
             margin-right: 3%;
@@ -172,37 +177,30 @@
             outline: 0;
             background: none;
         }
-
         .col3 {
             height: 100%;
             float: left;
             display: inline;
         }
-
         .mainimage {
             width: 100%;
             /* height: 100%; */
             height: 550px;
         }
-
         .other {
 		    margin-top: 1%;
 		    display: flex;
 		    height: 120px;
 		}
-
         .otherimage {
             width: 20%;
             border: 1.2px solid black;
         }
-
         /* 지도보기 */
-
         .map {
             width: 100%;
             height: 100%;
         }
-
         #mapBtn {
             position: relative;
 		    background-color: #ffffff;
@@ -217,24 +215,18 @@
 		    text-decoration: none;
 		    z-index: 2;	
         }
-
         /* 편의시설 체크div 및 소개 div */
-
         .checktable {
             margin-top: 5%;
         }
-
         .introduce {
             width: 80%;
             font-size: 18px;
         }
-
         .boundary {
             color: black;
         }
-
         /* 방 세부사진 및 정보div들 */
-
         .detail {
             border: 1px solid black;
             height: 382px;
@@ -254,7 +246,6 @@
             /* align-items: center; */
             /* justify-content: center; */
         }
-
         .detailView {
         	padding:20px;
             width: 56%;
@@ -272,13 +263,11 @@
 		    margin-right: 15px;
 		    font-size: 18px;
 		}
-
         .btnArea {
             text-align: center;
             width: 19%;
             margin: auto;
         }
-
         .imgArea {
             width: 44%;
             height:100%;
@@ -289,16 +278,13 @@
 		    height: 325px;
 		    border-radius: 8px;
 		}
-
         /* 방 세부사진 및 정보div들 끝*/
-
         @font-face {
             font-family: 'GmarketSansBold';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
             font-weight: normal;
             font-style: normal;
         }
-
         .moreBtn {
             background-color: rgb(70, 115, 85);
             border-radius: 6px;
@@ -310,9 +296,7 @@
             padding: 10px 75px;
             text-decoration: none;
             margin-bottom: 50px;           
-
         }
-
         .btn {
             background-color: rgb(70, 115, 85) !important;
             border: 1px solid rgb(70, 115, 85) !important;            
@@ -321,18 +305,15 @@
          #report_btn, #jjim_btn{
         	cursor: pointer;
         }
-
         /* 후기 */
-
         .review_writer {
             display: flex;
             margin: 1%;
         }
-
         .review_writer label {
             margin-right: 1%;
         }
-
+      
         .review {
             border: 1px solid black;
             width: 90%;
@@ -343,81 +324,64 @@
         .review a{
         	font-size:17px;
         }
-
         .review_img {
             width: 300px;
             height: 200px;
         }
-
         .review_img_area {
             width: max-content;
             margin-left: 20%;
             margin-top: 2%;
         }
-
         .review_date_label {
             float: right;
             margin: 1%;
             margin-bottom: 0;
             font-weight: bold;
         }
-
-
-
         /* 부트스트랩 모달*/
-
         .cal_top {
             text-align: center;
             font-size: 30px;
         }
-
         .cal {
             text-align: center;
         }
-
         table.calendar {
             border: 1px solid black;
             display: inline-table;
             text-align: left;
         }
-
         table.calendar td {
             vertical-align: top;
             border: 1px solid skyblue;
             width: 100px;
         }
-
         #closeBtn, #reportBtn {
             border-style: none;
             background-color: white;
         }
-
         .modal-header {
             padding: 5%;
             margin: auto;
         }
-
         .modal-header img {
             width: 100px;
             height: 100px;
         }
-
         .modal-body {
             padding: 10%;
         }
-
         .modal-body2 {
             padding: 2%;
             text-align: center;
         }
-
         .modal-book {
             display: flex;
             border: 1px solid gray;
             border-radius: 0.8rem;
             width: 98%;
         }
-
         .modal-book2 {
             display: flex;
             border-bottom: 1px solid gray;
@@ -426,26 +390,20 @@
             border-radius: 0.8rem;
             width: 98%;
         }
-
         .people,
         .people2 {
             width: 50%;
             text-align: center;
             margin: auto;
         }
-
-
-
         .checkin,
         .checkout {
             width: 50%;
             text-align: center;
         }
-
         .checkin {
             border-right: 1px solid black;
         }
-
         .payBtn {
             background-color: rgb(70, 115, 85);
             border-radius: 6px;
@@ -460,17 +418,14 @@
             margin-bottom: 30px;            
             width: 98%;
         }
-
         .modal-content {
             margin: 0;
             width: 100%;
             display: flex;
         }
-
         .modal-body input {
             width: 100%;
         }
-
         #startDate,
         #endDate {
             border: none;
@@ -478,28 +433,22 @@
             line-height: 30px;
             display: block;
         }
-
         .modal-content div label {
             line-height: 50px;
         }
-
         #startDate:focus,
         #endDate:focus {
             outline: none;
         }
-
         .modal-body div {
             margin-bottom: 10%;
         }
-
         .error {
             color: red;
         }
-
         /* #agreement_label {
             margin-right: 35%;
         }
-
         #agreement_checkbox {
             margin-left: -118%;
         } */
@@ -632,7 +581,6 @@
 			<script>
                 var bigPic = document.querySelector("#bigPic");
                 var smallPic = document.querySelectorAll("#smallPic")
-
                 for(var i = 0; i < smallPic.length; i++){
                     smallPic[i].addEventListener("click", changepic);
                     
@@ -640,7 +588,6 @@
                 function changepic(){
                     var smallPicAttribute = this.getAttribute("src");
                     bigPic.setAttribute("src", smallPicAttribute);
-
                 }
             </script>
 
@@ -660,7 +607,6 @@
                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                     level: 3 // 지도의 확대 레벨
                 };  
-
 	            // 지도를 생성합니다    
 	            var map = new kakao.maps.Map(mapContainer, mapOption); 
 	
@@ -670,7 +616,6 @@
 	            var add = "<c:out value='${ hotel.bus_address}'/>";
 	            var splitadd = add.split(',');
 	            
-
 	            
 	            // 주소로 좌표를 검색합니다
 	            geocoder.addressSearch(splitadd[1], function(result, status) {
@@ -827,7 +772,6 @@
         <script>
                 var mainPic = document.querySelector("#mainPic");
                 var otherPic = document.querySelectorAll("#otherPic")
-
                 for(var i = 0; i < otherPic.length; i++){
                     otherPic[i].addEventListener("click", changepic);
                     
@@ -835,7 +779,6 @@
                 function changepic(){
                     var otherPicAttribute = this.getAttribute("src");
                     mainPic.setAttribute("src", otherPicAttribute);
-
                 }
             </script>
         
@@ -1023,7 +966,6 @@
       <script>
       
       
-
   	$(".payBtn").click(function() {
   		
   		var name = document.getElementById('roomName').value;
@@ -1084,7 +1026,6 @@
 	        while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
 	        return n;
 	    };
-
     
 	    function startDate(e) {	  	  
 	  	  const value = e.value;	  	  
@@ -1139,7 +1080,6 @@
 			    	document.getElementById('daysL').innerText ="";
 			    }
 		  	}
-
 	    function handleOnChange(e) {
 	    	  const value = e.value;	    	  
 	    	  document.getElementById('personNumber').value

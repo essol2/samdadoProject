@@ -620,7 +620,7 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
 		                            str += "<b>"+ data[i].bus_phone +"</b>";		                            
 		                            str += "</div>";
@@ -665,7 +665,7 @@
 		    	            		 if(data[i].bus_category == 'C'){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
 		    	              		str += "<b>"+ data[i].bus_name +"</b>";
 		    	              		str += "<b>"+ data[i].bus_phone +"</b>";		    	              		
 		                            str += "</div>";
@@ -707,7 +707,7 @@
 		    	            		  if(data[i].bus_category == 'C'){
 				    	              		str  = "<div class='moreProfile'>";
 				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-				    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
+				    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
 				    	              		str += "<b>"+ data[i].bus_name +"</b>";
 				    	              		str += "<b>"+ data[i].bus_phone +"</b>";				    	              		
 				                            str += "</div>";
@@ -745,7 +745,7 @@
                         <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     	</div>
                         <img class="image" src="../resources/busUploadFiles/${ c.file_rename }" onclick="selectRes(${c.bus_code})">
-                        	<b>★${ h.avstar } (후기 ${ h.revcnt }개)</b>
+                        	<b>★${ c.avgstar } (후기 ${ c.recnt }개)</b>
                         	<b>${ c.bus_name }</b>	                        
                         	<b>${ c.bus_phone }</b>	                        
                     </div>

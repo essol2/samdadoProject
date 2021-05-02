@@ -624,9 +624,10 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
-		    	              		  str += "<b>"+ data[i].hotel_category +"</b>";
-		                            str += "<b>"+ data[i].bus_name +"</b>";		                            
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
+		    	              		str += "<b>"+ data[i].hotel_category +"</b>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";
+		                            str += "<b>"+ data[i].bus_phone +"</b>";
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -679,9 +680,10 @@
 		    	            		  str  = "<div class='moreProfile'>";
 		    	              		  str += "<input type='hidden' id='bus_code' name='bus_code' value='"+data[i].bus_code +"'>";
 		    	              		  str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		  str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
+		    	              		  str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
 		    	              		  str += "<b>"+ data[i].hotel_category +"</b>";
-		    	              		  str += "<b>"+ data[i].bus_name +"</b>";		    	              		  
+		    	              		  str += "<b>"+ data[i].bus_name +"</b>";
+		    	              		  str += "<b>"+ data[i].bus_phone +"</b>";
 		                              str += "</div>";
 		                            
 		                            list += str;
@@ -708,13 +710,14 @@
 		    	            	  var list = "";
 		    	            	  console.log(data);
 		    	            	  for(var i in data){
-		    	            		  if(data[i].bus_category){
+		    	            		  if(data[i].bus_category == 'H'){
 				    	              		str  = "<div class='moreProfile'>";
 				    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+data[i].bus_code +"'>";
 				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-				    	              		str += "<b>★"+ data[i].avstar +" (후기 "+ data[i].revcnt +"개)</b>";
+				    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
 				    	              		str += "<b>"+ data[i].hotel_category +"</b>";
-				    	              		str += "<b>"+ data[i].bus_name +"</b>";				    	              		
+				    	              		str += "<b>"+ data[i].bus_name +"</b>";
+				    	              		str += "<b>"+ data[i].bus_phone +"</b>";
 				                            str += "</div>";
 				                            
 					                    	list += str;
@@ -753,9 +756,10 @@
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<input type='hidden' id='bus_code' name='bus_code' value='"+data[i].bus_code +"'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	              		str += "<b>★"+ data[i].avstar +" (후기 "+ data[i].revcnt +"개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
 		    	              		str += "<b>"+ data[i].hotel_category +"</b>";
-		    	              		str += "<b>"+ data[i].bus_name +"</b>";		    	              		
+		    	              		str += "<b>"+ data[i].bus_name +"</b>";
+		    	              		str += "<b>"+ data[i].bus_phone +"</b>";
 		                            str += "</div>";
 		                            
 			                    	list += str;
@@ -791,7 +795,7 @@
                         <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     	</div>
                         <img class="image" src="../resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
-                        <b>★${ h.avstar }(후기 ${ h.revcnt }개)</b>
+                        <b>★${ h.avgstar }(후기 ${ h.recnt }개)</b>
                         <b>${ h.hotel_category }</b>
 	                    <b>${ h.bus_name }</b>
 	                    <b>${ h.bus_phone }</b>                        
@@ -808,7 +812,7 @@
 	                    	<input type="hidden" id="bus_code" name="bus_code" value="${ h.bus_code }">
 	                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ h.file_rename }" onclick="selectRes(${h.bus_code})">
 	                        </c:if>
-	                        <b>★${ h.avstar } (후기 ${ h.revcnt }개)</b>
+	                        <b>★${ h.avgstar } (후기 ${ h.recnt }개)</b>
 	                        <b>${ h.hotel_category }</b>
 	                        <b>${ h.bus_name }</b>
 	                        <b>${ h.bus_phone }</b>

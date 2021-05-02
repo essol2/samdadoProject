@@ -54,6 +54,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		
 		<result property="avstar" column="AVSTAR" />
 		<result property="revcnt" column="REVCNT" />
+		
+		<result property="avgstar" column="AVGSTAR" />
+		<result property="recnt" column="RECNT" />
 	</resultMap>
 	
 	<resultMap type="BusinessAtt" id="BusinessAttResultSet">
@@ -669,6 +672,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , PRO_YOUTH
 		     , PRO_CHILD
 		     , AVGSTAR
+		     , RECNT
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
 		 WHERE
@@ -699,6 +703,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BT.FILE_RENAME
      		 , BT.FILE_LV
      		 , AVGSTAR
+     		 , RECNT
   		  FROM 
   		       BUSINESS B
   		  JOIN 
@@ -764,6 +769,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BT.FILE_LV
      		 , AVGSTAR
      		 , RES_CATEGORY
+     		 , RECNT
   		  FROM 
   		       BUSINESS B
   		  JOIN 
@@ -799,6 +805,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			 , BT.FILE_RENAME
 			 , BT.FILE_LV
 			 , AVGSTAR
+			 , RECNT
 		  FROM 
   		       BUSINESS B
   		  JOIN 
@@ -1447,6 +1454,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , TOUR_TEMA
 		     , TOUR_CATEGORY
 		     , AVGSTAR
+		     , RECNT
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
 		 WHERE
@@ -1483,6 +1491,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BT.FILE_RENAME
 		     , BT.FILE_LV
 		     , AVGSTAR
+		     , RECNT
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT
 		 WHERE
@@ -1525,6 +1534,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , TOUR_TEMA
 		     , TOUR_CATEGORY
 		     , AVGSTAR
+		     , RECNT
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
 		 WHERE
@@ -1561,6 +1571,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BT.FILE_LV
 		     , HOTEL_CATEGORY
 		     , AVGSTAR
+		     , RECNT
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT
 		 WHERE
@@ -1600,8 +1611,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , PRO_ADULT
 		     , PRO_YOUTH
 		     , PRO_CHILD
-             , COUNT(REV_COMMENT) AS "REVCNT"
-             , TRUNC(AVG(RE_STAR),2) AS "AVSTAR"
+             , RECNT
+             , AVGSTAR
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP, REVIEW R
 		 WHERE
@@ -1615,12 +1626,30 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                                 		 BUSINESS B, REPORT R
                                    WHERE B.BUS_CODE = R.REF_BUS_CODE
                                      AND R.REXDATE IS NOT NULL)
-     GROUP BY B.BUS_CODE, B.US_NO, BUS_NAME, BUS_ADDRESS, BUS_INTRO, 
-              BUS_DATE, BUS_MODIFY, AD_COUNT, BUS_CLASSIFY, BUS_CATEGORY, 
-              BUS_STATUS, BUS_PHONE, RES_CATEGORY, BUS_OPENING, BT.FILE_RENAME, 
-              BT.FILE_LV, TOUR_TEMA, TOUR_CATEGORY, PRO_ADULT, PRO_YOUTH, 
-              PRO_CHILD
-     ORDER BY AVSTAR
+     GROUP BY  B.BUS_CODE
+		     , B.US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+		     , TOUR_TEMA
+		     , TOUR_CATEGORY
+		     , PRO_ADULT
+		     , PRO_YOUTH
+		     , PRO_CHILD
+             , RECNT
+             , AVGSTAR
+     ORDER BY AVGSTAR DESC
 	</select>
 	
 	<select id="starList2" resultMap="BusinessResultSet">
@@ -1642,8 +1671,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , HOTEL_CATEGORY
 		     , BT.FILE_RENAME
 		     , BT.FILE_LV
-             , COUNT(REV_COMMENT) AS "REVCNT"
-             , AVG(RE_STAR) AS "AVSTAR"
+             , RECNT
+             , AVGSTAR
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, REVIEW R
 		 WHERE
@@ -1657,11 +1686,26 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                                 		 BUSINESS B, REPORT R
                                    WHERE B.BUS_CODE = R.REF_BUS_CODE
                                      AND R.REXDATE IS NOT NULL)
-     GROUP BY B.BUS_CODE, B.US_NO, BUS_NAME, BUS_ADDRESS, BUS_INTRO, 
-			  BUS_DATE, BUS_MODIFY, AD_COUNT, BUS_CLASSIFY, BUS_CATEGORY, 
-			  BUS_STATUS, BUS_PHONE, RES_CATEGORY, BUS_OPENING, BT.FILE_RENAME, 
-			  HOTEL_CATEGORY, BT.FILE_LV
-     ORDER BY AVSTAR
+     GROUP BY  B.BUS_CODE
+		     , B.US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , HOTEL_CATEGORY
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+             , RECNT
+             , AVGSTAR
+     ORDER BY AVGSTAR DESC
 	</select>
 	
 	<select id="reviewList" resultMap="BusinessResultSet">
@@ -1687,8 +1731,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , PRO_ADULT
 		     , PRO_YOUTH
 		     , PRO_CHILD
-             , COUNT(REV_COMMENT) AS "REVCNT"
-             , AVG(RE_STAR) AS "AVSTAR"
+             , RECNT
+             , AVGSTAR
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP, REVIEW R
 		 WHERE
@@ -1702,12 +1746,30 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                                 		 BUSINESS B, REPORT R
                                    WHERE B.BUS_CODE = R.REF_BUS_CODE
                                      AND R.REXDATE IS NOT NULL)
-     GROUP BY B.BUS_CODE, B.US_NO, BUS_NAME, BUS_ADDRESS, BUS_INTRO, 
-              BUS_DATE, BUS_MODIFY, AD_COUNT, BUS_CLASSIFY, BUS_CATEGORY, 
-              BUS_STATUS, BUS_PHONE, RES_CATEGORY, BUS_OPENING, BT.FILE_RENAME, 
-              BT.FILE_LV, TOUR_TEMA, TOUR_CATEGORY, PRO_ADULT, PRO_YOUTH, 
-              PRO_CHILD
-     ORDER BY REVCNT
+     GROUP BY  B.BUS_CODE
+		     , B.US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+		     , TOUR_TEMA
+		     , TOUR_CATEGORY
+		     , PRO_ADULT
+		     , PRO_YOUTH
+		     , PRO_CHILD
+             , RECNT
+             , AVGSTAR
+     ORDER BY RECNT DESC
 	</select>
 	<select id="reviewList2" resultMap="BusinessResultSet">
 		SELECT 
@@ -1728,8 +1790,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , HOTEL_CATEGORY
 		     , BT.FILE_RENAME
 		     , BT.FILE_LV
-             , COUNT(REV_COMMENT) AS "REVCNT"
-             , AVG(RE_STAR) AS "AVSTAR"
+             , RECNT
+             , AVGSTAR
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, REVIEW R
 		 WHERE
@@ -1743,11 +1805,26 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
                                 		 BUSINESS B, REPORT R
                                    WHERE B.BUS_CODE = R.REF_BUS_CODE
                                      AND R.REXDATE IS NOT NULL)
-     GROUP BY B.BUS_CODE, B.US_NO, BUS_NAME, BUS_ADDRESS, BUS_INTRO, 
-			  BUS_DATE, BUS_MODIFY, AD_COUNT, BUS_CLASSIFY, BUS_CATEGORY, 
-			  BUS_STATUS, BUS_PHONE, RES_CATEGORY, BUS_OPENING, BT.FILE_RENAME, 
-			  HOTEL_CATEGORY, BT.FILE_LV
-     ORDER BY REVCNT
+     GROUP BY  B.BUS_CODE
+		     , B.US_NO
+		     , BUS_NAME
+		     , BUS_ADDRESS
+		     , BUS_INTRO
+		     , BUS_DATE
+		     , BUS_MODIFY
+		     , AD_COUNT
+		     , BUS_CLASSIFY
+		     , BUS_CATEGORY
+		     , BUS_STATUS
+		     , BUS_PHONE
+		     , RES_CATEGORY
+		     , BUS_OPENING
+		     , HOTEL_CATEGORY
+		     , BT.FILE_RENAME
+		     , BT.FILE_LV
+             , RECNT
+             , AVGSTAR
+     ORDER BY RECNT DESC
 	</select>
 	
 	
@@ -1838,6 +1915,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BT.FILE_RENAME
      		 , BT.FILE_LV
      		 , AVGSTAR
+     		 , RECNT
   		  FROM 
   		       BUSINESS B
   		  JOIN 
@@ -1879,6 +1957,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , PRO_YOUTH
 		     , PRO_CHILD
 		     , AVGSTAR
+		     , RECNT
 		  FROM
 		       BUSINESS B, BUSINESS_ATT BT, TOUR_PRODUCT TP
 		 WHERE
@@ -1911,6 +1990,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
      		 , BT.FILE_RENAME
      		 , BT.FILE_LV
      		 , AVGSTAR
+     		 , RECNT
   		  FROM 
   		       BUSINESS B
   		  JOIN 
@@ -1948,6 +2028,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			 , BT.FILE_RENAME
 			 , BT.FILE_LV
 			 , AVGSTAR
+			 , RECNT
 		  FROM 
   		       BUSINESS B
   		  JOIN 
