@@ -1772,8 +1772,6 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		 WHERE
 		 	   R.US_NO = U.US_NO
 		   AND BUS_CODE = #{bus_code}
-		   AND REV_STATUS = 'Y'
-		    OR REV_STATUS = 'M'
 	  ORDER BY REV_DATE DESC
 	</select>
   
