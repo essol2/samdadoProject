@@ -122,6 +122,9 @@ So, Here is who we are
 • Plan<br>
 [삼다수_기획발표 PPT.pdf](https://github.com/essol2/samdadoProject/files/6411060/_.PPT.pdf)
 
+• Process Map<br>
+![삼다수_프로세스 맵-전체프로세스맵](https://user-images.githubusercontent.com/73922496/116808359-47419080-ab73-11eb-881c-c7b915280d01.png)
+
 • UI<br>
 <table>
    <tr>
@@ -133,6 +136,8 @@ https://www.figma.com/file/AH0mOSH9o431i5FttBSHWv/SAMDADO?node-id=0%3A1 -> for m
 
 • DB<br>
 <img width="1552" alt="Screen Shot 2021-05-02 at 6 10 00 PM" src="https://user-images.githubusercontent.com/73922496/116808045-a43c4700-ab71-11eb-9a71-d8e59fbc05a4.png">
+<br>
+[삼다수_테이블 정의서.pdf](https://github.com/essol2/samdadoProject/files/6411073/_.pdf) -> Table definition
 <br>
 https://www.erdcloud.com/d/soSMLq4sJ5adE8Ykj -> for more detail of DB
 <br><br>
