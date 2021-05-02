@@ -24,9 +24,9 @@
 ```
 
   • 👨‍👩‍👧‍👦 members : login, register, find id&password (use EmailSender), etc. <br>
-  • 🏡 mypage : change Info, Account Book function, my adding cart List, my BookingList, wrtie and rewrite review, check my rotue, my BusinessList, managing Advertisement, Point, send QnA, News, etc.  <br>
+  • 🏡 mypage : change Info, Account Book function, my adding cart List, my BookingList, wrtie and rewrite review, check my rotue, my BusinessList, etc.  <br>
   • 🛣  route : searching tour spot, making route with selected tour spot, change my route, calculating km and budget, etc.  <br>
-  • 💰 business : insert new tour business(ex. hotel, rent car, restaurant, tour admission), show list(except expelled business), add cart, booking, show reviews, report, search, etc.  <br>
+  • 💰 business : insert new tour business(ex. hotel, rent car, restaurant, tour admission), show list(except expelled business), add cart, booking, etc.  <br>
   • 📈 administrator : managing income, managing member(use SMS sender), insert Board,  managing Report, managing Advertisement, answer QnA  <br>
 
 
@@ -102,3 +102,61 @@ So, Here is who we are
  <table>
 
 <br>
+
+### Using Langages, Tools and APIs
+| OS         | Window 10, Mac BigSur |
+| ---------- | ------------- |
+| Language      | HTML, CSS, Javascript, Java, Spring  |
+| RDBMS      | Oracle 11g,  MyBatis  |
+| JDK     | Java 1.8, Java 11, servlet, JSP  |
+| IDE        | STS(Eclipse), Visual Studio Code, SQL Developer  |
+| Library       | Bootstrap, Jquery, AJAX, servlet, JSP, cos.jar, activation.jar, json-simple-1.1.1.jar, mail.jar, ojdbc6.jar |
+| API       |  KakaoMap, Import Payment, Chart.js, cafe24 SMS, excel Export  |
+|Collaboration tool | Github, Git, Source Tree, Notion|
+
+<br>
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+### Building
+• Plan<br>
+[삼다수_기획발표 PPT.pdf](https://github.com/essol2/samdadoProject/files/6411060/_.PPT.pdf)
+
+• UI<br>
+<table>
+   <tr>
+      <td><img width="1680" alt="Screen Shot 2021-05-02 at 6 17 52 PM" src="https://user-images.githubusercontent.com/73922496/116808247-bf5b8680-ab72-11eb-925e-c396833f9175.png"></td>
+   </tr>
+ </table>
+https://www.figma.com/file/AH0mOSH9o431i5FttBSHWv/SAMDADO?node-id=0%3A1 -> for more UI building
+<br><br>
+
+• DB<br>
+<img width="1552" alt="Screen Shot 2021-05-02 at 6 10 00 PM" src="https://user-images.githubusercontent.com/73922496/116808045-a43c4700-ab71-11eb-9a71-d8e59fbc05a4.png">
+<br>
+https://www.erdcloud.com/d/soSMLq4sJ5adE8Ykj -> for more detail of DB
+<br><br>
+
+
+• Final Presentaion (with Main code reviews)<br>
+
+<table>
+   <tr>
+      <td><img width="1379" alt="스크린샷 2021-02-10 오후 4 54 23" src="https://user-images.githubusercontent.com/73922496/107481250-3c551080-6bc1-11eb-9949-9fae49af8849.png"></td>
+      <td><img width="1381" alt="스크린샷 2021-02-10 오후 4 55 12" src="https://user-images.githubusercontent.com/73922496/107481268-424af180-6bc1-11eb-9099-6e62605122ed.png"></td>
+   </tr>
+   <tr>
+      <td><img width="1381" alt="스크린샷 2021-02-10 오후 4 55 44" src="https://user-images.githubusercontent.com/73922496/107481272-4414b500-6bc1-11eb-998b-f2545ad35aea.png"></td>
+      <td><img width="1377" alt="스크린샷 2021-02-10 오후 4 56 04" src="https://user-images.githubusercontent.com/73922496/107481282-470fa580-6bc1-11eb-8f02-ca753258acf4.png"></td>
+   </tr>
+   <tr>
+      <td><img width="1378" alt="스크린샷 2021-02-10 오후 4 56 22" src="https://user-images.githubusercontent.com/73922496/107481292-48d96900-6bc1-11eb-89ac-7e86bef8a88b.png"></td>
+      <td><img width="1380" alt="스크린샷 2021-02-10 오후 4 56 40" src="https://user-images.githubusercontent.com/73922496/107481299-4aa32c80-6bc1-11eb-8927-b51d0f4af98a.png"></td>
+   </tr>
+   <tr>
+      <td><img width="1378" alt="스크린샷 2021-02-10 오후 4 56 55" src="https://user-images.githubusercontent.com/73922496/107481305-4bd45980-6bc1-11eb-9d05-85f847f3d268.png"></td>
+      <td><img width="1378" alt="스크린샷 2021-02-10 오후 4 57 45" src="https://user-images.githubusercontent.com/73922496/107481312-4d9e1d00-6bc1-11eb-9e14-42669815f7ea.png"></td>
+   </tr>
+</table>
+
+[ShareHere_최종발표.pdf](https://github.com/essol2/Sharehere_SemiFinal/files/5956522/ShareHere_.pdf) -> for more codes
