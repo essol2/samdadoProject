@@ -626,10 +626,7 @@
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
 		    	              		  str += "<b>"+ data[i].hotel_category +"</b>";
-		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<c:if test='${ loginUser.usno != null }'>"
-			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-			                        str += "</c:if>";
+		                            str += "<b>"+ data[i].bus_name +"</b>";		                            
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -684,10 +681,7 @@
 		    	              		  str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	              		  str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
 		    	              		  str += "<b>"+ data[i].hotel_category +"</b>";
-		    	              		  str += "<b>"+ data[i].bus_name +"</b>";
-		    	              		  str += "<c:if test='${ loginUser.usno != null }'>"
-			                          str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-			                          str += "</c:if>";             
+		    	              		  str += "<b>"+ data[i].bus_name +"</b>";		    	              		  
 		                              str += "</div>";
 		                            
 		                            list += str;
@@ -720,10 +714,7 @@
 				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 				    	              		str += "<b>★"+ data[i].avstar +" (후기 "+ data[i].revcnt +"개)</b>";
 				    	              		str += "<b>"+ data[i].hotel_category +"</b>";
-				    	              		str += "<b>"+ data[i].bus_name +"</b>";
-				    	              		str += "<c:if test='${ loginUser.usno != null }'>"
-					                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-					                        str += "</c:if>";             
+				    	              		str += "<b>"+ data[i].bus_name +"</b>";				    	              		
 				                            str += "</div>";
 				                            
 					                    	list += str;
@@ -764,10 +755,7 @@
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	              		str += "<b>★"+ data[i].avstar +" (후기 "+ data[i].revcnt +"개)</b>";
 		    	              		str += "<b>"+ data[i].hotel_category +"</b>";
-		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		    	              		str += "<c:if test='${ loginUser.usno != null }'>"
-			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-			                        str += "</c:if>";             
+		    	              		str += "<b>"+ data[i].bus_name +"</b>";		    	              		
 		                            str += "</div>";
 		                            
 			                    	list += str;
@@ -806,10 +794,7 @@
                         <b>★${ h.avstar }(후기 ${ h.revcnt }개)</b>
                         <b>${ h.hotel_category }</b>
 	                    <b>${ h.bus_name }</b>
-	                    <b>${ h.bus_phone }</b>
-                        <c:if test="${ loginUser.usno != null }">
-	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
-	                    	</c:if>
+	                    <b>${ h.bus_phone }</b>                        
                     </div>
                 </c:if>    
                 </c:forEach>
@@ -827,9 +812,6 @@
 	                        <b>${ h.hotel_category }</b>
 	                        <b>${ h.bus_name }</b>
 	                        <b>${ h.bus_phone }</b>
-	                        <c:if test="${ loginUser.usno != null }">
-	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
-	                    	</c:if>
 	                    </div>
 	                    </c:if>
                     </c:forEach>

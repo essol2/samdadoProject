@@ -635,10 +635,7 @@
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].revcnt +"개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
-		                            str += "<c:if test='${ loginUser.usno != null }'>"
-		                            str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-		                            str += "</c:if>";
+		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"		                            
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -706,10 +703,7 @@
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	              		 str += "<b>★"+ data[i].avgstar +" (후기 개)</b>";
 		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
-		                            str += "<c:if test='${ loginUser.usno != null }'>"
-			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-			                        str += "</c:if>";              
+		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"		                            
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -741,10 +735,7 @@
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	              		str += "<b>★"+ data[i].avgstar +" (후기 개)</b>";
 		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
-		                            str += "<c:if test='${ loginUser.usno != null }'>"
-			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-			                        str += "</c:if>";               
+		                            str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"		                            
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -776,10 +767,7 @@
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 		    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
 		    	              		str += "<b>"+ data[i].bus_name +"</b>";
-		    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
-		    	              		str += "<c:if test='${ loginUser.usno != null }'>"
-			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-			                        str += "</c:if>";                
+		    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"		    	              		
 		                            str += "</div>";
 		                            
 		                            list += str;
@@ -821,10 +809,7 @@
 				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
 				    	              		str += "<b>★"+ data[i].avstar +"(후기 "+ data[i].revcnt +"개)</b>";
 				    	              		str += "<b>"+ data[i].bus_name +"</b>";
-				    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"
-				    	              		str += "<c:if test='${ loginUser.usno != null }'>"
-					                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-					                        str += "</c:if>";              
+				    	              		str += "<b>"+ data[i].tour_tema +" / "+data[i].tour_category +"</b>"				    	              		
 				                            str += "</div>";
 				                            
 				                            list += str;
@@ -864,10 +849,7 @@
                         <b>★<fmt:formatNumber value="${ t.avstar }" pattern=".00"/>(후기 ${ t.revcnt }개)</b>
                         <b>${ t.tour_tema } / ${ t.tour_category }</b>
                         <b>${ t.bus_name }</b>
-                        <b><fmt:formatNumber value="${ t.pro_adult }" pattern="#,###"/>원</b>
-                        <c:if test="${ loginUser.usno != null }">
-	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
-	                    	</c:if>
+                        <b><fmt:formatNumber value="${ t.pro_adult }" pattern="#,###"/>원</b>                        
                     </div>
                 </c:if>    
                 </c:forEach>
@@ -884,10 +866,7 @@
                         <b>★<fmt:formatNumber value="${ t.avstar }" pattern=".00"/>(후기 ${ t.revcnt }개)</b>
                         <b>${ t.tour_tema } / ${ t.tour_category }</b>
                         <b>${ t.bus_name }</b>
-                        <b><fmt:formatNumber value="${ t.pro_adult }" pattern="#,###"/>원</b>
-                        <c:if test="${ loginUser.usno != null }">
-                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
-                    	</c:if>
+                        <b><fmt:formatNumber value="${ t.pro_adult }" pattern="#,###"/>원</b>                        
                     </div>
                 </c:if>
                 </c:forEach>
