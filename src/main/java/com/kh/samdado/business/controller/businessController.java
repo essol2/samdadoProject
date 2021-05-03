@@ -343,6 +343,8 @@ public class businessController {
 				}
 			}
 		}	
+		
+		System.out.println("hotelList : " + hotelList);
 		if(hotelList != null) {
 			mv.addObject("hotelList", hotelList);
 			mv.setViewName("business/hotel/hotel_list");
