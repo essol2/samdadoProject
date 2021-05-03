@@ -127,10 +127,7 @@
 					fitWidth : true // 내용물을 가운데 정렬하기, CSS margin:0 auto; 설정이 필요함
 				});
 			});
-				// Masonry has been initialized, okay to call methods
-				
-				// not sure if you will need this here but might be worth adding in
-				//$container.masonry('reloadItems');
+			
 				
 			}
 	
@@ -146,15 +143,12 @@
 						
 						for (var i in data) {
 							
-							//var div = $("<div onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
 							var img = $("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 700px; margin :0.5%;'>");
 							var atag = $("<a href='${ contextPath }/business/detail?bus_code=" + data[i].bus_code + "'>");
 							atag.append(img);
 							badiv.append(atag);
 							loadMasonry();
 						}
-						
-							//$('.wrap img').on('click', selectBannerAdDetail(data[i].bus_code));
 						
 					},
 					error : function(e) {
@@ -171,19 +165,6 @@
 	
 	
 	</script>
-	
-	<script>
-	
-	// 해당 게시글 하나를 누르면 상세페이지가 보여지게 하는 컨트롤러 호출
-	function selectBannerAdDetail(bus_code) {
-		
-		console.log(bus_code);
-		
-		location.href='${ contextPath }/business/detail?bus_code=' + bus_code;
-	} 
-	
-	</script>
-	
 	
 	<!-- Optional JavaScript; choose one of the two! -->
     <!-- Option 1: Bootstrap Bundle with Popper -->
