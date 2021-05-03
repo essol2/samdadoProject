@@ -282,7 +282,7 @@
              <c:forEach var="jl" items="${jjimList}" varStatus="jlNumber">
                 <div id="reservBox" class="more">
                 	<br>
-                    <h5>${ jl.bus_name }</h5>
+                    <h5> &nbsp; ${ jl.bus_name }</h5>
                     <div class="reservDetail">
                         <div class="reserveImgArea">
                             <img src="${ contextPath }/resources/busUploadFiles/${jl.file_rename}" alt="" class="reserveImg" >
@@ -429,11 +429,11 @@
 	});
 	</script>
 	
- <div style="position : absolute; bottom:-20px; width : 100%; margin-bottom:auto;">
+<%--  <div style="position : absolute; bottom:-20px; width : 100%; margin-bottom:auto;">
  	<footer>
           <jsp:include page="../common/footer.jsp"/>
  	</footer>
- </div>
+ </div> --%>
  
 </body>
 </html>
