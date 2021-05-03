@@ -650,7 +650,7 @@
             <div class="modal-header">
 	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;  width : 100%;">
 		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="${contextPath }/resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
-		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 40px;">혼저옵서예.</h2></div>
+		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 38px;">혼저옵서예.</h2></div>
 	            </div>
             </div>
            
@@ -671,7 +671,7 @@
 		                </div> 
 		
 		                <br><br>
-		
+                  
 		            </div>
 	            </div>
 	            <div class="modal-footer">

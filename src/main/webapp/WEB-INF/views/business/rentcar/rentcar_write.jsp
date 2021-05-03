@@ -185,7 +185,7 @@
                 <img src="${ contextPath }/resources/images/image_main/logo_w.png" style="width: 100px; height: 100px;">
             </div>
             <div class="title-wrap">
-                <h3 style="margin: 0;">음식점 등록페이지</h3>
+                <h3 style="margin: 0;">렌트카 등록페이지</h3>
             </div>        
         </div>
         
