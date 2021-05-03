@@ -863,7 +863,7 @@
                         <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     	</div>
                         <img class="image" src="../resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
-                        <b>★<fmt:formatNumber value="${ t.avstar }" pattern=".00"/>(후기 ${ t.revcnt }개)</b>
+                        <b>★${ t.avgstar }(후기 ${ t.recnt }개)</b>
                         <b>${ t.tour_tema } / ${ t.tour_category }</b>
                         <b>${ t.bus_name }</b>
                         <b>${ t.bus_phone }</b>
@@ -880,7 +880,7 @@
                         <input type="hidden" id="bus_code" name="bus_code" value="${ t.bus_code }">
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ t.file_rename }" onclick="selectRes(${t.bus_code})">
                     	</c:if>
-                        <b>★<fmt:formatNumber value="${ t.avstar }" pattern=".00"/>(후기 ${ t.revcnt }개)</b>
+                        <b>★${ t.avgstar }(후기 ${ t.recnt }개)</b>
                         <b>${ t.tour_tema } / ${ t.tour_category }</b>
                         <b>${ t.bus_name }</b>
                         <b>${ t.bus_phone }</b>

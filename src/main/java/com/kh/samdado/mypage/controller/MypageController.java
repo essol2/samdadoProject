@@ -317,7 +317,7 @@ public class MypageController {
 		 // 해당 사용자가 등록한 사업장 리스트 알아오기
 		 List<Business> bussList = mService.selectBussList(usno);
 		 
-		 //System.out.println("bussList확인 : " + bussList);
+		 System.out.println("bussList확인 : " + bussList);
 		 
 		 mv.addObject("bussList", bussList);
 		 mv.setViewName("mypage/mp_StoreList");

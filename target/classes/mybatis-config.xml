@@ -18,8 +18,11 @@
 		<typeAlias type="com.kh.samdado.mypage.model.vo.Point" alias="Point"/>
 		<typeAlias type="com.kh.samdado.mypage.model.vo.AccountBook" alias="AccountBook"/>
 		<typeAlias type="com.kh.samdado.mypage.model.vo.Alert" alias="Alert"/>
+		<typeAlias type="com.kh.samdado.mypage.model.vo.Booking" alias="Booking"/>
+		<typeAlias type="com.kh.samdado.mypage.model.vo.RouteMP" alias="RouteMP"/>
 		<typeAlias type="com.kh.samdado.common.model.vo.Income" alias="Income"/>
 		<typeAlias type="com.kh.samdado.admin.model.vo.aSearch" alias="aSearch"/>
+	    <typeAlias type="com.kh.samdado.admin.model.vo.A_board" alias="A_board"/>
 		<typeAlias type="com.kh.samdado.common.model.vo.Report" alias="Report"/>
    		<typeAlias type="com.kh.samdado.common.model.vo.Alliance" alias="Alliance"/>
    		<typeAlias type="com.kh.samdado.business.model.vo.business.Business" alias="Business"/>
@@ -32,7 +35,10 @@
 		<typeAlias type="com.kh.samdado.business.model.vo.hotel.Room" alias="Room"/>
    		<typeAlias type="com.kh.samdado.business.model.vo.hotel.RoomAtt" alias="RoomAtt"/>
    		<typeAlias type="com.kh.samdado.business.model.vo.tour.TourProduct" alias="TourProduct"/>
+   		<typeAlias type="com.kh.samdado.business.model.vo.Review" alias="Review"/>
+   		<typeAlias type="com.kh.samdado.business.model.vo.Jjim" alias="Jjim"/>
 		<typeAlias type="com.kh.samdado.common.model.vo.Income" alias="Income"/>
+		<typeAlias type="com.kh.samdado.route.model.vo.RouteFinal" alias="RouteFinal"/>
 	</typeAliases>
 
 	 <!-- mappers -->

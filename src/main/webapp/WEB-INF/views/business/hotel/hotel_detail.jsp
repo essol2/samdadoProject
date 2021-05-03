@@ -941,8 +941,8 @@
   		var endDate = document.getElementById("endDate").value;
   	 	var personNumber = document.getElementById("personNumber").value;
   	    var bookingLv = 1;
-  		// var amount = payResult;
-  		var amount = 100;
+  		var amount = payResult;
+  		//var amount = 30000;
 	    var IMP = window.IMP;
 	    IMP.init('imp34313892');
 	    

@@ -170,7 +170,7 @@
 		                    -->
 	                    </select>
 	                    <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
-		                <button class="btn btn-secondary" type="button">검색하기</button>
+		                <button class="btn btn-secondary" type="button">검색</button>
 	                </div>
                 </form>
                 

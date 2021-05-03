@@ -618,11 +618,11 @@
   		
   		var amount = 0;
   		if(name == '3만원 충전'){
-  			amount = 300;
+  			amount = 30000;
   		} else if(name == '6만원 충전'){
-  			amount = 200;
+  			amount = 60000;
   		} else{
-  			amount = 100;
+  			amount = 90000;
   		}
   		
   		//console.log(name);

@@ -210,7 +210,7 @@
 						                        <tr>
 						                            <th style="width: 10%;">No</th>
 						                            <th>제목</th>
-						                            <th style="width: 25%;">작성일</th>
+						                            <th style="width: 28%;">작성일</th>
 						                        </tr>
 					                        </thead>
 					                        <tbody>
@@ -225,7 +225,7 @@
 					  										   <b>${ aboardList.btitle }</b>
 							                                </button>
 							                            </td>
-							                            <td>${ aboardList.bdate }</td>
+							                            <td> ${ aboardList.bdate }</td>
 							                        </tr>
 							                        
 							                        <!-- 모달 -->
@@ -257,7 +257,7 @@
 																		<br>
 																		<div class="form-floating">
 																		  <input type="text" class="form-control" placeholder="Leave a comment here" value="${ status.current.bdate }" name="bdate" id="floatingTextarea" disabled>
-																		  <label for="floatingTextarea">작성일</label>
+																		  <label for="floatingTextarea" >작성일</label>
 																		</div>
 																		<div class="modal-footer">
 																	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -414,8 +414,8 @@
                         <thead>
                         <tr>
                             <th scope="col">사업장 No</th>
-                            <th scope="col">회원명</th>
-                            <th scope="col">카테고리</th>
+                            <th scope="col" style="width : 8%;">회원명</th>
+                            <th scope="col" style="width : 10%;">카테고리</th>
                             <th scope="col">사업장명</th>
                             <th scope="col">사업장주소</th>
                         </tr>

@@ -341,7 +341,7 @@
 	                            </table>
 	                            <div id="btnArea">
 	                                <br>
-	                                <button class="btnForBusiness" id="viewDetailBtn" onclick="detailClick(${blStatus.index});">사업장 페이지로 이동</button>
+	                                <button class="btnForBusiness" id="viewDetailBtn" onclick="detailClick(this);">사업장 페이지로 이동</button>
 	                            	<input type="hidden" id="bus_code" value="${bl.bus_code}">
 	                    	        <input type="hidden" id="cgr" value="${bl.bus_category}">
 	                            </div>
@@ -411,8 +411,9 @@
 	}
 	
 	function detailClick(i){
-		
-		var bus_code = $("#bus_code").val();
+	
+		console.log($(i));
+		var bus_code = $(i).parent().children("#bus_code").val();
 		var cgr = $("#cgr").val();
 		
 		console.log(bus_code);

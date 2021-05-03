@@ -144,6 +144,7 @@ public class MypageServiceImpl implements MypageService{
 	// 제휴회원 - 사업장 조회 메소드
 	@Override
 	public List<Business> selectBussList(String usno) {
+		System.out.println("bussList확인 : " + usno);
 		return mDao.selectBussList(usno);
 	}
 	
