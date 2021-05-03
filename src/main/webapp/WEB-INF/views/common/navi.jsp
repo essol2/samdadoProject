@@ -46,6 +46,7 @@
         
         /* 혜윤 : 네비 css */
         header {
+            background-color: white;
             position:fixed;
             width: 240px;
             top: 0;
@@ -671,25 +672,6 @@
 		
 		                <br><br>
 		
-		                <!--간편 로그인-->
-		                <div class="easy_login_div">
-		                    <label for="pwd">간편 로그인</label> <br>
-		                    <div class="easy_login_imgs">
-		                        <div class="container">
-		                            <div class="row">
-		                            <div class="col-sm">
-		                                <a href="#"><img src="${ contextPath }/resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
-		                            </div>
-		                              <div class="col-sm">
-		                               <a href="#"><img src="${ contextPath }/resources/images/image_user/naver.png" alt=""> 네이버</a>
-		                              </div>
-		                              <div class="col-sm">
-		                                <a href="#"><img src="${ contextPath }/resources/images/image_user/kakao.png" alt=""> 카카오</a>
-		                              </div>
-		                            </div>
-		                          </div>
-		                    </div>
-		                </div> 
 		            </div>
 	            </div>
 	            <div class="modal-footer">
