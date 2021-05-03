@@ -46,6 +46,7 @@
         
         /* 혜윤 : 네비 css */
         header {
+            background-color: white;
             position:fixed;
             width: 240px;
             top: 0;
@@ -670,7 +671,7 @@
 		                </div> 
 		
 		                <br><br>
-	
+                  
 		            </div>
 	            </div>
 	            <div class="modal-footer">
