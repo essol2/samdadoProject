@@ -1,38 +1,4 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@jaejunseo 
-essol2
-/
-samdadoProject
-1
-10
-Code
-Issues
-216
-Pull requests
-1
-Actions
-Projects
-Wiki
-Security
-Insights
-samdadoProject/src/main/webapp/WEB-INF/views/business/hotel/hotel_detail.jsp
-@han1208a
-han1208a [마지막 푸쉬이길]
-…
-Latest commit 26b9524 2 days ago
- History
- 2 contributors
-@han1208a@jaejunseo
-1225 lines (1034 sloc)  40.6 KB
-  
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>

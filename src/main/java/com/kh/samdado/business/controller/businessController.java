@@ -343,6 +343,8 @@ public class businessController {
 				}
 			}
 		}	
+		
+		//System.out.println(hotelList);
 		if(hotelList != null) {
 			mv.addObject("hotelList", hotelList);
 			mv.setViewName("business/hotel/hotel_list");
@@ -1632,7 +1634,7 @@ public class businessController {
 			file.transferTo(new File(renamePath));
 			// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
 		} catch (IllegalStateException | IOException e) {
-			System.out.println("파일 업로드 에러 : " + e.getMessage());
+			//System.out.println("파일 업로드 에러 : " + e.getMessage());
 		} 
 		
 		return map;
