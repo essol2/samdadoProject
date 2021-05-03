@@ -632,6 +632,10 @@
 		                            
 		                            list += str;
 		    	              		}
+
+		    	            	  var d = document.getElementById("calSelect").value="tema";
+		    	            	  var d = document.getElementById("cateSelect").value="tema";
+		    	            	  document.getElementById("searchValue").value="";
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
@@ -688,6 +692,7 @@
 		                            
 		                            list += str;
 		    	              		}
+		    	            	  
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
@@ -730,6 +735,8 @@
 					    	            			break;
 					    	            		 }
 		    	              		}
+		    	            	  var d = document.getElementById("calSelect").value="tema";
+		    	            	  var d = document.getElementById("cateSelect").value="tema";
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
@@ -772,6 +779,8 @@
 											break;
 		    	            			}
 		    	              		}
+		    	            	  var d = document.getElementById("calSelect").value="tema";
+		    	            	  var d = document.getElementById("cateSelect").value="tema";
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){

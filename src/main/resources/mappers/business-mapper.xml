@@ -2003,6 +2003,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		     , BUS_PHONE
 		     , RES_CATEGORY
 		     , BUS_OPENING
+		     , TOUR_TEMA
+		     , TOUR_CATEGORY
 		     , BT.FILE_RENAME
 		     , BT.FILE_LV
 		     , PRO_ADULT
