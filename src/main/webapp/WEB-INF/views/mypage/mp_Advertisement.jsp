@@ -289,7 +289,7 @@
             <div id="mainBox">
 			<div id="adverBox">
 				<div id="leftAdverBox">
-					<div id="adverContainer">
+					<div id="adverContainer" style="overflow : auto; height : 855px;">
 						<br>
 						<div style="overflow: auto;" >
 							<c:choose>
@@ -373,7 +373,7 @@
 							<c:otherwise>
 								<div style="text-align : center; margin-left : auto; margin-right : auto;">
 									<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
- 		            				<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">광고 중인 사업장이 없습니다!</h1>
+ 		            				<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto; margin-top : 10%;">광고 중인 사업장이 없습니다!</h1>
 								</div>
 							</c:otherwise>
 							</c:choose>

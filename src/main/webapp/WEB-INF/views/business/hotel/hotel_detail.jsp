@@ -490,8 +490,8 @@
         
         <!-- 찜하기 -->
         <script>
-        var bbsidx = ${hotel.bus_code};
-        var useridx = ${loginUser.usno};
+        var bbsidx = "${hotel.bus_code}";
+        var useridx = "${loginUser.usno}";
          
         var btn_like = document.getElementById("btn_like");
          btn_like.onclick = function(){ changeHeart(); }

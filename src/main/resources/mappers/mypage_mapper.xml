@@ -655,7 +655,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE B.BUS_CODE = BA.BUS_CODE
 		AND B.US_NO = #{usno}
 		 AND BA.FILE_LV = 0
-		ORDER BY B.BUS_CODE DESC
+		ORDER BY B.BUS_DATE DESC
 	</select>
 	
 	<!-- 제휴회원 - 진행중인 광고 목록 리스트 -->
@@ -1099,6 +1099,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
   		FROM JJIM
   		WHERE US_NO =  #{us_no}
   		AND BUS_CODE = #{ bus_code }
+  		ORDER BY JJIM_NO DESC
   </select>
   
   <insert id="insertJjim" parameterType="Jjim">

@@ -651,7 +651,7 @@
             <div class="modal-header">
 	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;  width : 100%;">
 		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
-		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 40px;">혼저옵서예.</h2></div>
+		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 38px;">혼저옵서예.</h2></div>
 	            </div>
             </div>
            
@@ -672,26 +672,7 @@
 		                </div> 
 		
 		                <br><br>
-		
-		                <!--간편 로그인-->
-		                <div class="easy_login_div">
-		                    <label for="pwd">간편 로그인</label> <br>
-		                    <div class="easy_login_imgs">
-		                        <div class="container">
-		                            <div class="row">
-		                            <div class="col-sm">
-		                                <a href="#"><img src="${ contextPath }/resources/images/image_user/google.png" id="google_img" alt="">  구글</a>
-		                            </div>
-		                              <div class="col-sm">
-		                               <a href="#"><img src="${ contextPath }/resources/images/image_user/naver.png" alt=""> 네이버</a>
-		                              </div>
-		                              <div class="col-sm">
-		                                <a href="#"><img src="${ contextPath }/resources/images/image_user/kakao.png" alt=""> 카카오</a>
-		                              </div>
-		                            </div>
-		                          </div>
-		                    </div>
-		                </div> 
+	
 		            </div>
 	            </div>
 	            <div class="modal-footer">

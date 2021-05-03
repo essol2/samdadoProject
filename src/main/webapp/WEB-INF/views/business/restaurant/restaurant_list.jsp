@@ -625,6 +625,7 @@
 		                            
 		                            list += str;
 		    	              		}
+		    	            	  document.getElementById("searchValue").value="";
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
