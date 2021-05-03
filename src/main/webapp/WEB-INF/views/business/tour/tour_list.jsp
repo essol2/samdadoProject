@@ -621,6 +621,7 @@
 		    		 	var search = {};		         		
 		         		search.searchValue = $("#searchValue").val();
 		         		search.searchKind = 2;
+		         		
 		    			$.ajax({
 		    				 url : '${contextPath}/business/searchBusinessList', 
 		    	              data : JSON.stringify(search),
@@ -641,6 +642,8 @@
 		                            
 		                            list += str;
 		    	              		}
+		    	            	  var d = document.getElementById("calSelect").value="tema";
+		    	            	  var d = document.getElementById("cateSelect").value="tema";
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
@@ -710,6 +713,8 @@
 		                            
 		                            list += str;
 		    	              		}
+
+
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
@@ -743,6 +748,7 @@
 		                            
 		                            list += str;
 		    	              		}
+		    	            	  var d = document.getElementById("cateSelect").value="tema";
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
@@ -784,6 +790,8 @@
 			    	            			break;
 			    	            		 }
 		    	              		}
+		    	            	  var d = document.getElementById("calSelect").value="tema";
+		    	            	  var d = document.getElementById("cateSelect").value="tema";
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
@@ -827,6 +835,8 @@
 			    	            			break;
 			    	            		 }
 		    	              		}
+		    	            	  var d = document.getElementById("calSelect").value="tema";
+		    	            	  var d = document.getElementById("cateSelect").value="tema";
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
