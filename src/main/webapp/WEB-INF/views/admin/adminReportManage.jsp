@@ -72,8 +72,8 @@
                        </td>
                        <td id="bus_code">${ rpl.bus_code }</td>
                        <td><fmt:formatDate value='${ rpl.rdate }' type='both' pattern='yyyy-MM-dd' /></td>
-                       <td><button class="btn btn-secondary" id	="admitReportBtn">승인</button></td> <!-- db 상태 y -->
-                       <td><button class="btn btn-success" id="rejectReport">반려</button></td> <!-- db 상태 r -->
+                       <td><button type="button" class="btn btn-secondary" onclick="admitReport(this);">승인</button></td> <!-- db 상태 y -->
+                       <td><button type="button" class="btn btn-secondary" onclick="rejectReport(this);">반려</button></td> <!-- db 상태 r -->
                    </tr>
                    
                    <!-- 모달 -->
@@ -134,24 +134,26 @@
               
               
             <script>
-	             $("#admitReportBtn").click(function(){
-	
-		         		var report_no = $("#report_no").text();
-		         		var bus_code = $("#bus_code").text();
-		         		var usno = $("#hiddenUsno").val();
-		         		
-		         		location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code + "&usno=" + usno;
-	             });
+             function admitReport(data) {
+            	 
+            	var report_no = $(data).parent().parent().children('th').eq(0).text();
+	         	var bus_code = $(data).parent().parent().children('td').eq(3).text()
+	         	var usno = $(data).parent().parent().children('td').eq(0).text();
+	         		
+	         	location.href="${contextPath}/admin/admitReport?report_no=" + report_no + "&bus_code=" + bus_code + "&usno=" + usno;
+
+             }  
          	</script>
          	
          	<script>
-	         	 $("#rejectReport").click(function(){
-	
-		         		var report_no = $("#report_no").text();
-		         		var bus_code = $("#bus_code").text();
-		         		
-		         		location.href="${contextPath}/admin/rejectReport?report_no=" + report_no + "&bus_code=" + bus_code;
-	         	 });
+         	function rejectReport(data) {
+         		
+	           	var report_no = $(data).parent().parent().children('th').eq(0).text();
+	     		var bus_code = $(data).parent().parent().children('td').eq(3).text();
+	     		
+	     		location.href="${contextPath}/admin/rejectReport?report_no=" + report_no + "&bus_code=" + bus_code;
+
+            } 
          	</script>
 
               <br><hr> 
