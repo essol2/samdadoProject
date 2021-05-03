@@ -907,6 +907,41 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  AND	US_NO = #{usno}
 		  -->
 		  
+		  <!--
+		  SELECT
+				BUS_CODE,
+				US_NO,
+				BUS_NAME,
+				BUS_ADDRESS,
+				BUS_INTRO,
+				BUS_DATE,
+				BUS_MODIFY,
+				AD_COUNT,
+				BUS_CLASSIFY,
+				BUS_CATEGORY,
+				BUS_STATUS,
+				BUS_PHONE,
+				HOTEL_CATEGORY,
+				TOUR_CATEGORY,
+				TOUR_TEMA,
+				AL_NO,
+				BUS_OPENING,
+				RES_CATEGORY
+				
+		FROM    
+				 SMBCVIEW
+		WHERE   BUS_CODE NOT IN (SELECT 
+										BUS_CODE
+							     FROM   
+							     		ALLIANCE, "USER"
+							     WHERE
+                                 ALLIANCE.US_NO = "USER".US_NO
+                                 AND ALLIANCE.US_NO = #{usno}
+                                 AND ALSTATUS = 'Y' 	 
+                                 AND "USER".PBALANCE = 0)
+		  AND	US_NO = #{usno}
+		  -->
+		  <!-- 
 		  SELECT
 				BUS_CODE,
 				US_NO,
@@ -935,8 +970,25 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 							     WHERE
                                  ALLIANCE.US_NO = "USER".US_NO
                                  AND ALLIANCE.US_NO = #{usno}
-                                 AND ALSTATUS = 'Y' 	  <!-- 현재 광고 진행중이 아닌 것 -->
-                                 AND "USER".PBALANCE = 0) <!-- 포인트가 0이 아닌것 -->
+                                 AND (ALSTATUS = 'Y' OR ALSTATUS = 'N')
+                                 AND "USER".PBALANCE = 0) 
+		  AND	US_NO = #{usno}
+		   -->
+		   
+		   SELECT
+				BUS_CODE,
+				BUS_NAME,
+				BUS_ADDRESS
+		FROM    
+				BUSINESS
+		WHERE   BUS_CODE NOT IN (SELECT 
+										BUS_CODE
+							     FROM   
+							     		ALLIANCE, "USER"
+							     WHERE
+                                 ALLIANCE.US_NO = "USER".US_NO
+                                 AND (ALSTATUS = 'Y' OR ALSTATUS = 'N')
+                                 AND ALLIANCE.US_NO = #{usno}) 
 		  AND	US_NO = #{usno}
 	</select>
 	
