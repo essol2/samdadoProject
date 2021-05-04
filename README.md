@@ -110,7 +110,7 @@ So, Here is who we are
 | RDBMS      | Oracle 11g,  MyBatis  |
 | JDK     | Java 1.8, Java 11, servlet, JSP  |
 | IDE        | STS(Eclipse), Visual Studio Code, SQL Developer  |
-| Library       | Bootstrap, Jquery, AJAX, servlet, JSP, cos.jar, activation.jar, json-simple-1.1.1.jar, mail.jar, ojdbc6.jar |
+| Library       | Bootstrap, Masonry, Jquery, AJAX, servlet, JSP, cos.jar, activation.jar, json-simple-1.1.1.jar, mail.jar, ojdbc6.jar |
 | API       |  KakaoMap, Import Payment, Chart.js, cafe24 SMS, excel Export  |
 |Collaboration tool | Github, Git, Source Tree, Notion|
 
