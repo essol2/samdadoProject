@@ -839,6 +839,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		       ALLIANCE A, "USER" U
 		 WHERE
 		       A.US_NO = U.US_NO
+		   AND A.ALSTATUS = 'Y'
 		   AND U.PBALANCE != 0
 	</select>
 	

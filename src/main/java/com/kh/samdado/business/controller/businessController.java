@@ -146,7 +146,7 @@ public class businessController {
 
 	// 호텔등록
 	@PostMapping("/hotel_insert")
-	public String hotelInsert(Business b, Room r, RoomList rl, Income i, BusinessAtt bat, @RequestParam int primonth,
+	public String hotelInsert(Business b, Room r, RoomList rl, Income i, BusinessAtt bat, @RequestParam String primonth,
 							  @RequestParam(value = "uploadFile") List<MultipartFile> rfile,
 							  @RequestParam(value = "room") List<MultipartFile> roomFile, 
 							  @RequestParam(value = "mainFile") MultipartFile mainFile,
@@ -238,14 +238,14 @@ public class businessController {
 			}
 		}
 		
-		if(primonth != 0) {
+		if(primonth != null) {
 			// 넘어온 개월수에 따라 amount값 주기
-			if(primonth == 30) {
-				i.setAmount(70);		
-			} else if(primonth == 90) {
-				i.setAmount(90);
+			if(primonth == "30") {
+				i.setAmount(30000);		
+			} else if(primonth == "90") {
+				i.setAmount(50000);
 			} else {
-				i.setAmount(180);
+				i.setAmount(90000);
 			}
 			int result3 = bService.insertIncome1(i);
 		}

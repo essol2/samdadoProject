@@ -275,7 +275,7 @@
                 		
                 		&nbsp;&nbsp;&nbsp;&nbsp;<label class="bold">날짜</label>&nbsp;&nbsp;&nbsp;&nbsp;
                 		<input type="date" name="routeDate" id="routeDate" value="${routeDate}">
-                		
+                		<input type="hidden" name="usno" id="usno" value="${loginUser.usno }">
                 		<button class="_btn" id="searchbtn">검색하기</button>
                 	</form>
                 </div>

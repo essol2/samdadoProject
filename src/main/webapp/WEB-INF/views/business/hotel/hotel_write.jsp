@@ -210,9 +210,9 @@
                     <span  class="box">
                         <select class="content" id="payCategory" name="primonth">
 	                    <option value="0">선택</option>
-	                    <option value="프리미엄 1개월권">1개월 : 30,000원</option>
-	                    <option value="프리미엄 3개월권">3개월 : 50,000원</option>
-	                    <option value="프리미엄 6개월권">6개월 : 70,000원</option>
+	                    <option value="30">1개월 : 30,000원</option>
+	                    <option value="90">3개월 : 50,000원</option>
+	                    <option value="180">6개월 : 70,000원</option>
 	                </select>
                     </span>
                 </div>
@@ -560,11 +560,14 @@
 
  	// console.log(name);
  	var amount = 0;
- 	if(name == '프리미엄 1개월권'){
+ 	if(name == '30'){
+ 		name = "프리미엄 1개월권"
  		amount = 30000;
- 	} else if(name == '프리미엄 3개월권'){
+ 	} else if(name == '90'){
+ 		name = "프리미엄 3개월권"
  		amount = 50000;
  	} else{
+ 		name = "프리미엄 9개월권"
  		amount = 70000;
  	}
  	// console.log(name);

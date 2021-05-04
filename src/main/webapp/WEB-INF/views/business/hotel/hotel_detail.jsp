@@ -1008,7 +1008,7 @@
 		    var dif = da2 - da1;
 		    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 		    if(sdd && edd){		        
-		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
+		    	var days = document.getElementById('days').value = parseInt(dif/cDay);
 		    	document.getElementById('daysL').innerText = days
 		        var payResult = document.getElementById('payResult').value = amount * days
 		        document.getElementById('payResultB').innerText = payResult.format()+"원"
@@ -1031,7 +1031,7 @@
 			    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 			    
 			    if(sdd && edd){		        
-			    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
+			    	var days = document.getElementById('days').value = parseInt(dif/cDay);
 			    	document.getElementById('daysL').innerText = days
 			        var payResult = document.getElementById('payResult').value = amount * days
 			        document.getElementById('payResultB').innerText = payResult.format()+"원"

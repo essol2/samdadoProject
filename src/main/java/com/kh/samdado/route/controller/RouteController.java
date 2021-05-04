@@ -57,6 +57,9 @@ public class RouteController {
 							@RequestParam("thema") String thema, 
 							@RequestParam("routeDate") Date routeDate,
 							ModelAndView mv) {		// 루트 검색
+		User lgus = (User)session.getAttribute("loginUser");
+		
+		u.setUsno(lgus.getUsno());
 		
 		if(u.getUsno() != null) {
 			// 사용자별 찜한 숙소리스트 가져오기
