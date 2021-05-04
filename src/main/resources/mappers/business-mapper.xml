@@ -2112,7 +2112,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		AND               "USER".PBALANCE <![CDATA[<>]]> 0
 		AND              ALSTATUS = 'Y'
 		GROUP BY AL_NO, BUS_CODE, A_IMG_CNAME
-		Order by dbms_random.random
+		Order by dbms_random.random <!-- 이미지 랜덤으로 정렬 -->
    </select>
    
    <select id="selectBannerAdDetail" parameterType="_int" resultMap="BusinessResultSet">
