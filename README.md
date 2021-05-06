@@ -158,7 +158,10 @@ https://www.erdcloud.com/d/soSMLq4sJ5adE8Ykj -> for more detail of DB
       <td><img width="1680" alt="Screen Shot 2021-05-06 at 1 24 28 PM" src="https://user-images.githubusercontent.com/73922496/117241705-b3bbd880-ae6e-11eb-92ed-81e29144a95f.png"></td>
       <td><img width="1680" alt="Screen Shot 2021-05-06 at 1 24 32 PM" src="https://user-images.githubusercontent.com/73922496/117241710-b4546f00-ae6e-11eb-8d43-faa3b6b52073.png"></td>
    </tr>
-   
+   <tr>
+      <td><img width="1680" alt="Screen Shot 2021-05-06 at 1 24 37 PM" src="https://user-images.githubusercontent.com/73922496/117242035-6429dc80-ae6f-11eb-9232-359dc0406487.png"></td>
+      <td><img width="1680" alt="Screen Shot 2021-05-06 at 1 24 43 PM" src="https://user-images.githubusercontent.com/73922496/117242039-67bd6380-ae6f-11eb-9ad4-4f1ab0b0671b.png"></td>
+   </tr>
 </table>
 
 [삼다도 프로젝트_최종발표.pdf](https://github.com/essol2/samdadoProject/files/6431758/_.PPT.pdf) -> for more codes
