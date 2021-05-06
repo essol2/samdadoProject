@@ -147,21 +147,18 @@ https://www.erdcloud.com/d/soSMLq4sJ5adE8Ykj -> for more detail of DB
 
 <table>
    <tr>
-      <td><img width="1379" alt="스크린샷 2021-02-10 오후 4 54 23" src="https://user-images.githubusercontent.com/73922496/107481250-3c551080-6bc1-11eb-9949-9fae49af8849.png"></td>
-      <td><img width="1381" alt="스크린샷 2021-02-10 오후 4 55 12" src="https://user-images.githubusercontent.com/73922496/107481268-424af180-6bc1-11eb-9099-6e62605122ed.png"></td>
+      <td><img width="1680" alt="Screen Shot 2021-05-06 at 1 24 01 PM" src="https://user-images.githubusercontent.com/73922496/117241697-b0c0e800-ae6e-11eb-85cf-b3d623e39b1f.png"></td>
+      <td><img width="1680" alt="Screen Shot 2021-05-06 at 1 24 04 PM" src="https://user-images.githubusercontent.com/73922496/117241700-b1597e80-ae6e-11eb-9a4e-9f0c0d7929a4.png"></td>
    </tr>
    <tr>
-      <td><img width="1381" alt="스크린샷 2021-02-10 오후 4 55 44" src="https://user-images.githubusercontent.com/73922496/107481272-4414b500-6bc1-11eb-998b-f2545ad35aea.png"></td>
-      <td><img width="1377" alt="스크린샷 2021-02-10 오후 4 56 04" src="https://user-images.githubusercontent.com/73922496/107481282-470fa580-6bc1-11eb-8f02-ca753258acf4.png"></td>
+      <td><img width="1680" alt="Screen Shot 2021-05-06 at 1 24 20 PM" src="https://user-images.githubusercontent.com/73922496/117241703-b28aab80-ae6e-11eb-8736-2b00f7342c1d.png"></td>
+      <td><img width="1680" alt="Screen Shot 2021-05-06 at 1 24 25 PM" src="https://user-images.githubusercontent.com/73922496/117241704-b3234200-ae6e-11eb-91c2-34993923488b.png"></td>
    </tr>
    <tr>
-      <td><img width="1378" alt="스크린샷 2021-02-10 오후 4 56 22" src="https://user-images.githubusercontent.com/73922496/107481292-48d96900-6bc1-11eb-89ac-7e86bef8a88b.png"></td>
-      <td><img width="1380" alt="스크린샷 2021-02-10 오후 4 56 40" src="https://user-images.githubusercontent.com/73922496/107481299-4aa32c80-6bc1-11eb-8927-b51d0f4af98a.png"></td>
+      <td><img width="1680" alt="Screen Shot 2021-05-06 at 1 24 28 PM" src="https://user-images.githubusercontent.com/73922496/117241705-b3bbd880-ae6e-11eb-92ed-81e29144a95f.png"></td>
+      <td><img width="1680" alt="Screen Shot 2021-05-06 at 1 24 32 PM" src="https://user-images.githubusercontent.com/73922496/117241710-b4546f00-ae6e-11eb-8d43-faa3b6b52073.png"></td>
    </tr>
-   <tr>
-      <td><img width="1378" alt="스크린샷 2021-02-10 오후 4 56 55" src="https://user-images.githubusercontent.com/73922496/107481305-4bd45980-6bc1-11eb-9d05-85f847f3d268.png"></td>
-      <td><img width="1378" alt="스크린샷 2021-02-10 오후 4 57 45" src="https://user-images.githubusercontent.com/73922496/107481312-4d9e1d00-6bc1-11eb-9e14-42669815f7ea.png"></td>
-   </tr>
+   
 </table>
 
-[ShareHere_최종발표.pdf](https://github.com/essol2/Sharehere_SemiFinal/files/5956522/ShareHere_.pdf) -> for more codes
+[삼다도 프로젝트_최종발표.pdf](https://github.com/essol2/samdadoProject/files/6431758/_.PPT.pdf) -> for more codes
