@@ -27,7 +27,7 @@
   • 🏡 mypage : change Info, Account Book function, my adding cart List, my BookingList, wrtie and rewrite review, check my rotue, my BusinessList, etc.  <br>
   • 🛣  route : searching tour spot, making route with selected tour spot, change my route, calculating km and budget, etc.  <br>
   • 💰 business : insert new tour business(ex. hotel, rent car, restaurant, tour admission), show list(except expelled business), add cart, booking, etc.  <br>
-  • 📈 administrator : managing income, managing member(use SMS sender), insert Board,  managing Report, managing Advertisement, answer QnA  <br>
+  • 📈 administrator : managing income, managing member(use cafe24 SMS API), insert Board,  managing Report, managing Advertisement(Banner Ad, Premium Ad), answer QnA, etc.  <br>
 
 
 
