@@ -116,6 +116,25 @@ So, Here is who we are
 
 <br>
 
+### View of ShareHere
+|• MainPage|• Login & Register|
+|------|------|
+|![이미지 2](https://user-images.githubusercontent.com/73922496/107419451-2c0a4a80-6b5b-11eb-90d7-5b0ce7e6faf6.GIF)|![이미지 3](https://user-images.githubusercontent.com/73922496/107420199-fb76e080-6b5b-11eb-996d-3d1268eaaf87.GIF)|
+|• findID |• findPwd |
+|![findId](https://user-images.githubusercontent.com/59958929/107850252-5ce0cd00-6e44-11eb-8abc-ec748afc2103.gif)|![findPwd](https://user-images.githubusercontent.com/59958929/107850249-57838280-6e44-11eb-9603-5cf9bf7414d5.gif)|
+|• Mypage Update | • MyPage secession |
+|![mypage_update](https://user-images.githubusercontent.com/59958929/107850572-af22ed80-6e46-11eb-8c12-e8d69b2489f0.gif)|![mp_remove](https://user-images.githubusercontent.com/59958929/107850569-ab8f6680-6e46-11eb-8725-e46fe380f9d7.gif)|
+|• Making Route 1 |• Making Route 2 |
+|![길만들기1](https://user-images.githubusercontent.com/73922496/117772007-aee19500-b271-11eb-8f8c-09736378f865.gif)|![길만들기2](https://user-images.githubusercontent.com/73922496/117772029-b608a300-b271-11eb-943d-cce4f094bec0.gif)|
+|• Making Route 3 |• Making Route 4 |
+|![길만들기3](https://user-images.githubusercontent.com/73922496/117772033-b739d000-b271-11eb-8eee-072486b54c9a.gif)|![길만들기4](https://user-images.githubusercontent.com/73922496/117772038-b86afd00-b271-11eb-9bbc-041ef4e3c9eb.gif)|
+|• Making Route 5 |• Making Route 4 |
+|![길만들기5](https://user-images.githubusercontent.com/73922496/117772043-b99c2a00-b271-11eb-98f4-02fc610f4973.gif)|![길만들기4](https://user-images.githubusercontent.com/73922496/117772038-b86afd00-b271-11eb-9bbc-041ef4e3c9eb.gif)|
+|• DetailPage 1 |• Register New Business|
+|![디테일페이지1](https://user-images.githubusercontent.com/73922496/117771392-03d0db80-b271-11eb-878a-9090bf25903f.gif)|![등록페이지 상품 추가 및 삭제](https://user-images.githubusercontent.com/73922496/117771401-059a9f00-b271-11eb-91f0-3612046c7d78.gif)|
+
+<br>
+
 -------------------------------------------------------------------------------------------------------------------------------
 
 ### Building
