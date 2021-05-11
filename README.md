@@ -117,9 +117,9 @@ So, Here is who we are
 <br>
 
 ### View of ShareHere
-|• MainPage|• Login & Register|
+|• MainPage|• About Samdado|
 |------|------|
-|![이미지 2](https://user-images.githubusercontent.com/73922496/107419451-2c0a4a80-6b5b-11eb-90d7-5b0ce7e6faf6.GIF)|![이미지 3](https://user-images.githubusercontent.com/73922496/107420199-fb76e080-6b5b-11eb-996d-3d1268eaaf87.GIF)|
+|![메인페이지](https://user-images.githubusercontent.com/73922496/117774305-4cd65f00-b274-11eb-826f-35a86a8023cd.gif)|![삼다도에관하여](https://user-images.githubusercontent.com/73922496/117774120-1e588400-b274-11eb-85d3-9db60ce7c1de.gif)|
 |• findID |• findPwd |
 |![findId](https://user-images.githubusercontent.com/59958929/107850252-5ce0cd00-6e44-11eb-8abc-ec748afc2103.gif)|![findPwd](https://user-images.githubusercontent.com/59958929/107850249-57838280-6e44-11eb-9603-5cf9bf7414d5.gif)|
 |• Mypage Update | • MyPage secession |
