@@ -125,7 +125,7 @@ So, Here is who we are
 |• UserMypage_Jjim(like) | • UserMyPage_Booking |
 |![일바회원_찜하기](https://user-images.githubusercontent.com/73922496/117775399-7479f700-b275-11eb-8e11-ee651cc022fe.gif)|![예약, 후기작성](https://user-images.githubusercontent.com/73922496/117776997-1d752180-b277-11eb-9997-1fd9fc206d63.gif)|
 |• UserMypage_MyRoute | • UserMyPage_AccountBook 1 |
-|![나만의 길](https://user-images.githubusercontent.com/73922496/117777172-4c8b9300-b277-11eb-81a9-e21df0face44.gif)|![나만의 길](https://user-images.githubusercontent.com/73922496/117777172-4c8b9300-b277-11eb-81a9-e21df0face44.gif)|
+|![나만의 길](https://user-images.githubusercontent.com/73922496/117777172-4c8b9300-b277-11eb-81a9-e21df0face44.gif)|![가계부 1 데이터 인서트](https://user-images.githubusercontent.com/73922496/117778074-37633400-b278-11eb-8fa9-a618ba6a36cc.gif)|
 |• UserMyPage_AccountBook 2 | • UserMyPage_AccountBook 3 |
 |![가계부 2 데이터 삭제](https://user-images.githubusercontent.com/73922496/117778108-3fbb6f00-b278-11eb-8afe-d0625cda9a35.gif)|![가계부3 삭제, 엑셀](https://user-images.githubusercontent.com/73922496/117778370-8315dd80-b278-11eb-8048-829c5c0b3bc8.gif)|
 |• BusinessUserMypage_changeInfo |• BusinessUserMypage_showBoard & Notice |
