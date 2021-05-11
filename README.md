@@ -133,8 +133,7 @@ So, Here is who we are
 |• BusinessUserMypage_MyStores | • BusinessUserMyPage_ManagingAdvert |
 |![비즈니스_내사업장](https://user-images.githubusercontent.com/73922496/117779484-adb46600-b279-11eb-8eea-1dda80d41009.gif) |![비즈니스_광고관리](https://user-images.githubusercontent.com/73922496/117779499-b2791a00-b279-11eb-8ae9-9ce3154aa3a6.gif) |
 |• BusinessUserMypage_MyPoint | • BusinessUserMyPage_QnA |
-|![비즈니스_포인트](https://user-images.githubusercontent.com/73922496/117780012-2e736200-b27a-11eb-8004-a2aac965c3bb.gif) |![비즈니스_문의하기](https://user-images.githubusercontent.com/73922496/117780029-329f7f80-b27a-11eb-971f-ac27e1aecd5d.gif)
- |
+|![비즈니스_포인트](https://user-images.githubusercontent.com/73922496/117780012-2e736200-b27a-11eb-8004-a2aac965c3bb.gif) |![비즈니스_문의하기](https://user-images.githubusercontent.com/73922496/117780029-329f7f80-b27a-11eb-971f-ac27e1aecd5d.gif)|
 |• Making Route 1 |• Making Route 2 |
 |![길만들기1](https://user-images.githubusercontent.com/73922496/117772007-aee19500-b271-11eb-8f8c-09736378f865.gif)|![길만들기2](https://user-images.githubusercontent.com/73922496/117772029-b608a300-b271-11eb-943d-cce4f094bec0.gif)|
 |• Making Route 3 |• Making Route 4 |
