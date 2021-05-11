@@ -120,10 +120,20 @@ So, Here is who we are
 |• MainPage|• About Samdado|
 |------|------|
 |![메인페이지](https://user-images.githubusercontent.com/73922496/117774305-4cd65f00-b274-11eb-826f-35a86a8023cd.gif)|![삼다도에관하여](https://user-images.githubusercontent.com/73922496/117774120-1e588400-b274-11eb-85d3-9db60ce7c1de.gif)|
-|• findID |• findPwd |
-|![findId](https://user-images.githubusercontent.com/59958929/107850252-5ce0cd00-6e44-11eb-8abc-ec748afc2103.gif)|![findPwd](https://user-images.githubusercontent.com/59958929/107850249-57838280-6e44-11eb-9603-5cf9bf7414d5.gif)|
-|• Mypage Update | • MyPage secession |
-|![mypage_update](https://user-images.githubusercontent.com/59958929/107850572-af22ed80-6e46-11eb-8c12-e8d69b2489f0.gif)|![mp_remove](https://user-images.githubusercontent.com/59958929/107850569-ab8f6680-6e46-11eb-8725-e46fe380f9d7.gif)|
+|• UserMypage_changeInfo |• UserMypage_showBoard |
+|![일바회원_회원정보수정](https://user-images.githubusercontent.com/73922496/117774836-d84ff000-b274-11eb-979a-38a2df0d8e06.gif)|![일바회원_공지사항](https://user-images.githubusercontent.com/73922496/117774953-f4ec2800-b274-11eb-95d3-2f1177773282.gif)|
+|• UserMypage_Jjim(like) | • UserMyPage_Booking |
+|![일바회원_찜하기](https://user-images.githubusercontent.com/73922496/117775399-7479f700-b275-11eb-8e11-ee651cc022fe.gif)|![예약, 후기작성](https://user-images.githubusercontent.com/73922496/117776997-1d752180-b277-11eb-9997-1fd9fc206d63.gif)|
+|• UserMypage_MyRoute | • UserMyPage_AccountBook 1 |
+|![나만의 길](https://user-images.githubusercontent.com/73922496/117777172-4c8b9300-b277-11eb-81a9-e21df0face44.gif)|![나만의 길](https://user-images.githubusercontent.com/73922496/117777172-4c8b9300-b277-11eb-81a9-e21df0face44.gif)|
+|• UserMyPage_AccountBook 2 | • UserMyPage_AccountBook 3 |
+|![가계부 2 데이터 삭제](https://user-images.githubusercontent.com/73922496/117778108-3fbb6f00-b278-11eb-8afe-d0625cda9a35.gif)|![가계부3 삭제, 엑셀](https://user-images.githubusercontent.com/73922496/117778370-8315dd80-b278-11eb-8048-829c5c0b3bc8.gif)|
+|• BusinessUserMypage_changeInfo |• BusinessUserMypage_showBoard & Notice |
+| | |
+|• BusinessUserMypage_MyStores | • BusinessUserMyPage_ManagingAdvert |
+| | |
+|• BusinessUserMypage_MyPoint | • BusinessUserMyPage_QnA |
+| | |
 |• Making Route 1 |• Making Route 2 |
 |![길만들기1](https://user-images.githubusercontent.com/73922496/117772007-aee19500-b271-11eb-8f8c-09736378f865.gif)|![길만들기2](https://user-images.githubusercontent.com/73922496/117772029-b608a300-b271-11eb-943d-cce4f094bec0.gif)|
 |• Making Route 3 |• Making Route 4 |
