@@ -129,11 +129,12 @@ So, Here is who we are
 |• UserMyPage_AccountBook 2 | • UserMyPage_AccountBook 3 |
 |![가계부 2 데이터 삭제](https://user-images.githubusercontent.com/73922496/117778108-3fbb6f00-b278-11eb-8afe-d0625cda9a35.gif)|![가계부3 삭제, 엑셀](https://user-images.githubusercontent.com/73922496/117778370-8315dd80-b278-11eb-8048-829c5c0b3bc8.gif)|
 |• BusinessUserMypage_changeInfo |• BusinessUserMypage_showBoard & Notice |
-| | |
+|![비즈니스_회원정보 수정](https://user-images.githubusercontent.com/73922496/117779105-50201980-b279-11eb-9f5b-175671e87282.gif) |![비즈니스_게시판,공지사항](https://user-images.githubusercontent.com/73922496/117779139-57dfbe00-b279-11eb-9e38-062c0674bfff.gif) |
 |• BusinessUserMypage_MyStores | • BusinessUserMyPage_ManagingAdvert |
-| | |
+|![비즈니스_내사업장](https://user-images.githubusercontent.com/73922496/117779484-adb46600-b279-11eb-8eea-1dda80d41009.gif) |![비즈니스_광고관리](https://user-images.githubusercontent.com/73922496/117779499-b2791a00-b279-11eb-8ae9-9ce3154aa3a6.gif) |
 |• BusinessUserMypage_MyPoint | • BusinessUserMyPage_QnA |
-| | |
+|![비즈니스_포인트](https://user-images.githubusercontent.com/73922496/117780012-2e736200-b27a-11eb-8004-a2aac965c3bb.gif) |![비즈니스_문의하기](https://user-images.githubusercontent.com/73922496/117780029-329f7f80-b27a-11eb-971f-ac27e1aecd5d.gif)
+ |
 |• Making Route 1 |• Making Route 2 |
 |![길만들기1](https://user-images.githubusercontent.com/73922496/117772007-aee19500-b271-11eb-8f8c-09736378f865.gif)|![길만들기2](https://user-images.githubusercontent.com/73922496/117772029-b608a300-b271-11eb-943d-cce4f094bec0.gif)|
 |• Making Route 3 |• Making Route 4 |
