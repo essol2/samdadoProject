@@ -116,7 +116,7 @@ So, Here is who we are
 
 <br>
 
-### View of ShareHere
+### View of Samdado
 |• MainPage|• About Samdado|
 |------|------|
 |![메인페이지](https://user-images.githubusercontent.com/73922496/117774305-4cd65f00-b274-11eb-826f-35a86a8023cd.gif)|![삼다도에관하여](https://user-images.githubusercontent.com/73922496/117774120-1e588400-b274-11eb-85d3-9db60ce7c1de.gif)|
