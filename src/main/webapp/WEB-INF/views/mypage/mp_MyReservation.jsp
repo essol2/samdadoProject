@@ -10,6 +10,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>mypage_resevation</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+
 
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -324,7 +326,7 @@ body {
 </style>
 <body>
 	<!-- navi.jsp include -->
-	<jsp:include page="../common/navi.jsp" />
+	<jsp:include page="../common/naviWhite.jsp" />
 	
 	<c:set var="today" value="<%=new java.util.Date()%>" />
 	<fmt:formatDate var="now" type="date" value="${today}" pattern="yyyy-MM-dd" />
@@ -332,7 +334,7 @@ body {
 	<div id="topMenu">
 		<div id="countDday">
 			<p>${ loginUser.usname }님의
-				<br> 여행까지 <br> ${ now }
+				<br> 여행까지 <br> D-1
 			</p>
 		</div>
 		<div class="menuBox" id="menuBox">
@@ -363,7 +365,7 @@ body {
 				<div >
 					<div class="reserveContainer">
 						<img src="${contextPath}/resources/images/image_mp/calendar.png"
-							alt="" class="reservIcon">&nbsp ${ hl.r_booking_trv }<br>
+							alt="" class="reservIcon">&nbsp ${ hl.r_booking_trv } ~ ${ hl.r_booking_trvEnd }<br>
 						<br> <img
 							src="${contextPath}/resources/images/image_mp/tag-outline.png"
 							alt="" class="reservIcon">&nbsp ${ hl.r_booking_product }<br>
@@ -385,11 +387,11 @@ body {
 							</c:when>
 							
 							<c:when test="${hl.r_booking_trv < now && hl.r_review_check ne null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ hl.r_bus_name}', '${ hl.r_booking_trv }', ${ hl.r_booking_no }, '${ hl.file_rename }','h', '${hl.r_bus_code }');">후기수정</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ hl.r_bus_name}', '${ hl.r_booking_trv }', '${ hl.r_booking_trvEnd }', ${ hl.r_booking_no }, '${ hl.file_rename }','h', '${hl.r_bus_code }');">후기수정</button>
 							</c:when>
 							
 							<c:when test="${hl.r_booking_trv < now && hl.r_review_check eq null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ hl.r_bus_name}', '${ hl.r_booking_trv }', ${ hl.r_booking_no }, '${ hl.file_rename }', 'h', '${hl.r_bus_code }', 'I', 0);">후기작성</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ hl.r_bus_name}', '${ hl.r_booking_trv }','${ hl.r_booking_trvEnd }', ${ hl.r_booking_no }, '${ hl.file_rename }', 'h', '${hl.r_bus_code }', 'I', 0);">후기작성</button>
 							</c:when>
 							
 							<c:otherwise>
@@ -431,7 +433,7 @@ body {
 				<div class="reservDetail" >
 					<div class="reserveContainer">
 						<img src="${contextPath}/resources/images/image_mp/calendar.png"
-							alt="" class="reservIcon">&nbsp ${ cl.c_booking_trv }<br>
+							alt="" class="reservIcon">&nbsp ${ cl.c_booking_trv } ~ ${ cl.c_booking_trvEnd } <br>
 						<br> <img
 							src="${contextPath}/resources/images/image_mp/tag-outline.png"
 							alt="" class="reservIcon">&nbsp ${ cl.c_booking_product }<br>
@@ -454,11 +456,11 @@ body {
 							</c:when>
 							
 							<c:when test="${cl.c_booking_trv < now && cl.c_review_check ne null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ cl.c_bus_name}', '${ cl.c_booking_trv }', ${ cl.c_booking_no }, '${ cl.file_rename }','c','${hl.c_bus_code }');">후기수정</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ cl.c_bus_name}', '${ cl.c_booking_trv }','${ cl.c_booking_trvEnd }', ${ cl.c_booking_no }, '${ cl.file_rename }','c','${hl.c_bus_code }');">후기수정</button>
 							</c:when>
 							
 							<c:when test="${cl.c_booking_trv < now && cl.c_review_check eq null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ cl.c_bus_name}', '${ cl.c_booking_trv }', ${ cl.c_booking_no }, '${ cl.file_rename }', 'c', '${cl.c_bus_code }', 'I', 0);">후기작성</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ cl.c_bus_name}', '${ cl.c_booking_trv }', '${ cl.c_booking_trvEnd }', ${ cl.c_booking_no }, '${ cl.file_rename }', 'c', '${cl.c_bus_code }', 'I', 0);">후기작성</button>
 							</c:when>
 							
 							<c:otherwise>
@@ -520,11 +522,11 @@ body {
 							</c:when>
 							
 							<c:when test="${tl.t_booking_trv < now && tl.t_review_check ne null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ tl.t_bus_name}', '${ tl.t_booking_trv }', ${ tl.t_booking_no }, '${ tl.file_rename }','t', '${tl.t_bus_code }');">후기수정</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReWrite('${ tl.t_bus_name}', '${ tl.t_booking_trv }', '${ tl.t_booking_trv }', ${ tl.t_booking_no }, '${ tl.file_rename }','t', '${tl.t_bus_code }');">후기수정</button>
 							</c:when>
 							
 							<c:when test="${tl.t_booking_trv < now && tl.t_review_check eq null}">
-								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ tl.t_bus_name}', '${ tl.t_booking_trv }', ${ tl.t_booking_no }, '${ tl.file_rename }', 't', '${tl.t_bus_code }', 'I', 0);">후기작성</button>
+								<button class="reserveBtn" id="writeReview" onclick="goToReview('${ tl.t_bus_name}', '${ tl.t_booking_trv }', '${ tl.t_booking_trv }', ${ tl.t_booking_no }, '${ tl.file_rename }', 't', '${tl.t_bus_code }', 'I', 0);">후기작성</button>
 							</c:when>
 							
 							<c:otherwise>
@@ -583,7 +585,7 @@ body {
 							<td colspan="6" id="bus_name" style="text-align: center; font-size:25px;"></td>
 						</tr>
 						<tr>
-							<td colspan="6" id="goingDate" style="text-align: center; font-size:25px;"></td>
+							<td colspan="6" id="goingDate" style="text-align: center; font-size:20px;"></td>
 						</tr>
 						<tr>
 							<td colspan="6" style="text-align: center; font-size:25px; padding-left : 15%;"> 
@@ -699,7 +701,7 @@ body {
 
 	<script>
 
-		function goToReview(bus_name, goingDate, booking_no, file_rename, rev_hct, bus_code, inup, rev_no){
+		function goToReview(bus_name, goingDate, endDate, booking_no, file_rename, rev_hct, bus_code, inup, rev_no){
 			
 			//console.log(inup);
 			
@@ -713,7 +715,7 @@ body {
 			
 			$('#bus_code').val(bus_code);
 			$('#bus_name').text(bus_name);
-			$('#goingDate').text(goingDate);
+			$('#goingDate').text(goingDate + " ~ " + endDate);
 			$('#imgTd').append("<img src='${ contextPath }/resources/busUploadFiles/"+ file_rename + "' style='width : 100%; height:auto;'>");
 			$('#rev_hct').val(rev_hct);
 			$('#booking_no').val(booking_no);
@@ -746,7 +748,7 @@ body {
 		    });
 		});
 		
-		function goToReWrite(bus_name, goingDate, booking_no, file_rename, rev_hct, bus_code){
+		function goToReWrite(bus_name, goingDate, endDate, booking_no, file_rename, rev_hct, bus_code){
 			
 			var searchR = new Object();
 			searchR.usno = ${loginUser.usno};
@@ -770,6 +772,11 @@ body {
 					cdateFormat = getFormatDate(cdateFormat);
 					var tdateFormat = new Date(data.t_booking_trv);
 					tdateFormat = getFormatDate(tdateFormat);
+					
+					var renddateFormat = new Date(data.r_booking_trvEnd); // null
+					renddateFormat = getFormatDate(renddateFormat);
+					var cenddateFormat = new Date(data.c_booking_trvEnd);
+					cenddateFormat = getFormatDate(cenddateFormat);
 
 					$('#reviewContent').val(data.rev_comment);
 					
@@ -787,11 +794,11 @@ body {
 					}
 					
 					if(rev_hct == "h"){
-						goToReview(data.r_bus_name, rdateFormat, data.r_booking_no, data.file_rename, data.rev_hct, data.bus_code, 'U', data.rev_no);
+						goToReview(data.r_bus_name, rdateFormat, renddateFormat, data.r_booking_no, data.file_rename, data.rev_hct, data.bus_code, 'U', data.rev_no);
 					} else if(rev_hct == "c"){
-						goToReview(data.c_bus_name, cdateFormat, data.c_booking_no, data.file_rename, data.rev_hct, data.bus_code, 'U', data.rev_no);
+						goToReview(data.c_bus_name, cdateFormat, cenddateFormat, data.c_booking_no, data.file_rename, data.rev_hct, data.bus_code, 'U', data.rev_no);
 					} else{
-						goToReview(data.t_bus_name, tdateFormat, data.t_booking_no, data.file_rename, data.rev_hct, data.bus_code, 'U', data.rev_no);
+						goToReview(data.t_bus_name, tdateFormat, tdateFormat, data.t_booking_no, data.file_rename, data.rev_hct, data.bus_code, 'U', data.rev_no);
 					}
 
 				},
@@ -919,36 +926,6 @@ body {
 		});
 	});
 	</script>
-	 <script>
-	 	$(document).ready(function(){
-
-	 		if('${loginUser.usid}' != ''){
-	 			var searchU = new Object();
-					searchU.usno = "${loginUser.usno}";
-					searchU.uspart = "${loginUser.uspart}";
-					
-	 			$.ajax({
-	 				url : "${contextPath}/mypage/new",
-	 				data : JSON.stringify(searchU),
-	 				type : "post",
-	 				contentType : "application/json; charset=utf-8",
-	 				success : function(data){
-	 					if(data > 0){
-	 						$('.newAlert').css("display","block");
-	 						$('.newAlert').css("display","inline-block");
-	 						$('.newAlert').css("margin-bottom","5px;");
-	 					} else{
-	 						alert("세션확인 오류!");
-	 					}
-	 				},
-	 				error : function(e){
-	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
-									+ "message : " + e.responseText);
-	 				}
-	 			});
-	 		}
-	 		
-	 	});
-	 </script>
+	
 </body>
 </html>

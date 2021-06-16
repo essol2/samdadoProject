@@ -36,7 +36,10 @@ public class RouteServiceImpl implements RouteService {
 	}
 	
 	@Override
-	public List<TourSpot> clearChange(String[] chlist) {
+	public List<SpotBus> clearChange(String[] chlist) {
+		
+		System.out.println("chlist 서비스: " + Arrays.toString(chlist));
+		
 		return rDao.clearChange(chlist);
 	}
 
@@ -68,6 +71,11 @@ public class RouteServiceImpl implements RouteService {
 	@Override
 	public List<SpotBus> spotSearch1(String sTitle) {
 		return rDao.spotSearch1(sTitle);
+	}
+
+	@Override
+	public List<Business> jjimBusiness(User u) {
+		return rDao.jjimBusiness(u);
 	}
 
 	

@@ -10,6 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage_jjim</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+    
 </head>
 <style>
 
@@ -161,7 +163,7 @@
         order : 1;
         display: inline-block;
         width : 50%;
-        height: 300px;
+        height: 290px;
         margin-top : 0px;
         margin-right : 5px;
         /* border : 1px solid red; */
@@ -170,7 +172,7 @@
 
     .reserveImg{
         width : 100%;
-        height: 300px;
+        height: 298px;
         padding : 0;
         margin : 0;
         /* border : 1px solid blue; */
@@ -258,10 +260,10 @@
 </style>
 <body>
        <!-- navi.jsp include -->
-       <jsp:include page="../common/navi.jsp"/>
+       <jsp:include page="../common/naviWhite.jsp"/>
 
             <div id="topMenu">
-                <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
+                <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-1</p> </div>
                 <div class="menuBox" id="menuBox">
 
                     <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
@@ -280,7 +282,7 @@
              <c:forEach var="jl" items="${jjimList}" varStatus="jlNumber">
                 <div id="reservBox" class="more">
                 	<br>
-                    <h5>${ jl.bus_name }</h5>
+                    <h5> &nbsp; ${ jl.bus_name }</h5>
                     <div class="reservDetail">
                         <div class="reserveImgArea">
                             <img src="${ contextPath }/resources/busUploadFiles/${jl.file_rename}" alt="" class="reserveImg" >
@@ -289,7 +291,20 @@
                             <div id="reserveInfoArea" class="jjimBtn">
                             	<input  type="hidden"  name="bus_code"  id="bus_code"  value="${ jl.bus_code }">
                                 <img src="${contextPath}/resources/images/image_mp/heart_on.png" alt="" id="jjimIcon"><br>
-                                <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon"><br> ${ jl.bus_category }<br><br>
+                                <img src="${contextPath}/resources/images/image_mp/tag-outline.png" alt="" class="reservIcon"><br> 
+                                <c:if test="${ jl.bus_category == 'H'}">
+                               		숙박
+                                </c:if>
+                                <c:if test="${ jl.bus_category == 'C'}">
+                               		렌트카
+                                </c:if>
+                                <c:if test="${ jl.bus_category == 'T'}">
+                               		관광지
+                                </c:if>
+                                <c:if test="${ jl.bus_category == 'R'}">
+                               		음식점
+                                </c:if>
+                                <br><br>
                                 <img src="${contextPath}/resources/images/image_mp/location_outline.png" alt="" class="reservIcon"><br> ${ jl.bus_address }<br><br>
                                 <img src="${contextPath}/resources/images/image_mp/phone_outline.png" alt="" class="reservIcon"><br> ${ jl.bus_phone }<br><br>
                             </div>
@@ -310,7 +325,7 @@
                 	<div style="text-align : center; margin-left : auto; margin-right : auto; margin-top:8%; margin-bottom:auto;">
 							<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
  		            		<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">찜이 한개도 없네요<br>삼다도엔 좋은 여행지들이 한가득!!</h1>
- 		            		<button onclick="location.href='${ contextPath }/business/hotel_list'" id="goList" style="border-style:none; background-color : #467355; color : white; margin-left : auto; margin-right:auto; padding : 2%;">삼다도 여행상품들 보러가기!</button>
+ 		            		<button onclick="location.href='${ contextPath }/business/hotel_list'" id="goList" style="border-style:none; background-color : #467355; color : white; margin-left : auto; margin-right:auto; padding : 2%; margin-bottom:10%;">삼다도 여행상품들 보러가기!</button>
 					</div>
                 </c:otherwise>
                 </c:choose>
@@ -414,37 +429,11 @@
 	});
 	</script>
 	
- <script>
-	 	$(document).ready(function(){
-
-	 		if('${loginUser.usid}' != ''){
-	 			var searchU = new Object();
-					searchU.usno = "${loginUser.usno}";
-					searchU.uspart = "${loginUser.uspart}";
-					
-	 			$.ajax({
-	 				url : "${contextPath}/mypage/new",
-	 				data : JSON.stringify(searchU),
-	 				type : "post",
-	 				contentType : "application/json; charset=utf-8",
-	 				success : function(data){
-	 					if(data > 0){
-	 						$('.newAlert').css("display","block");
-	 						$('.newAlert').css("display","inline-block");
-	 						$('.newAlert').css("margin-bottom","5px;");
-	 					} else{
-	 						alert("세션확인 오류!");
-	 					}
-	 				},
-	 				error : function(e){
-	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
-									+ "message : " + e.responseText);
-	 				}
-	 			});
-	 		}
-	 		
-	 	});
-	 </script>
+<%--  <div style="position : absolute; bottom:-20px; width : 100%; margin-bottom:auto;">
+ 	<footer>
+          <jsp:include page="../common/footer.jsp"/>
+ 	</footer>
+ </div> --%>
  
 </body>
 </html>

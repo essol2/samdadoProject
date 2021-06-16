@@ -11,6 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>삼다도 배너광고 신청</title>
+<link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
 
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
@@ -38,10 +39,10 @@
         <div id="content_div">
         	<!-- 네비 -->
      	<div class="col">
-     		<jsp:include page="../common/navi.jsp"/>
+     		<jsp:include page="../common/navi.jsp"/> 
      	</div>
             <!--삼다도 광고 신청-->
-            <div class="row" id="include_img_div">
+            <div class="row" id="include_img_div" style="width: 100%;">
                 <div class="row">
                       <div class="col-1">
                       	<br>
@@ -69,7 +70,7 @@
                             <h6 id="modal_inner_text">
 				                                삼다도 배너 광고는 <b>관리자의 승인</b>이 필수이며 관리자 승인
 				                                여부에 따라 <b>삼다도 메인페이지 하단에 리스팅 형식으로 노출</b>됩니다.
-				                                자세한 사항은 <a href="${ contextPath }/mypage/userinfo"><b>‘삼다도에 대해서’</b></a>페이지에서 확인 해 주세요! <!-- 페이지 링크 연결-->
+				                                자세한 사항은 <a href="${ contextPath }/user/goToAboutUs"><b>‘삼다도에 대해서’</b></a>페이지에서 확인 해 주세요! <!-- 페이지 링크 연결-->
 				                
 				                <br><br>              
 				                                배너 광고는 <b style="color: red;">포인트 충전</b>이 필요한 서비스입니다. <br>
@@ -96,7 +97,7 @@
 	                   <div class="card text-dark bg-light mb-3" style="max-width: 100rem;">
 								  <div class="card-header">사업장 신청 주의사항</div>
 								  <div class="card-body">
-								    <p class="card-text">* <b>신청 대기중</b> 또는 현재 <b>배너 광고가 진행중인 사업장</b>은 목록에 리스트되지 않습니다.</p>
+								    <p class="card-text">* 현재 <b>배너 광고가 진행중인 사업장</b>은 목록에 리스트되지 않습니다.</p>
 								  </div>
 								</div>
 	                    <select class="form-select" aria-label="Default select example" name="bus_code">
@@ -108,15 +109,15 @@
 	                </div>
 	            </c:when>
 	            <c:otherwise>
-	            <div class="nonSelectCategory" style="text-align: center; padding: 20%;">
-		            <div class="card border-success mb-3" style="max-width: 18rem;">
-					  <div class="card-header bg-transparent border-success">삼다도에서 알려드립니다.</div>
-					  <div class="card-body text-success">
+	            <div class="nonSelectCategory" style="margin-right: 10%;">
+	            	<div class="card">
+					  <h5 class="card-header">알려드립니다.</h5>
+					  <div class="card-body">
 					    <h5 class="card-title">${ loginUser.usname }님께서 배너 광고로 등록할 수 있는 사업장이 없습니다.</h5>
-					    <p class="card-text"><b style="color: red;">관리자 승인 대기중인 사업장 또는 현재 배너 광고 중인 사업장은 목록에 리스트되지 않습니다.</b></p>
+					    <p class="card-text"><b>현재 배너 광고 중인 사업장은 목록에 리스트되지 않습니다.</b></p>
+					     <a style="font-size: 15px; color: white;" class="btn btn-secondary" href="${ contextPath }/mypage/buserinfo">마이페이지 가기</a>
 					  </div>
-					  <div class="card-footer bg-transparent border-success"><a href="${ contextPath }/mypage/buss">마이페이지 가기</a></div>
-					</div>
+					</div> 
 	            </div>   	
 	            </c:otherwise>
             </c:choose>
@@ -201,6 +202,8 @@
 		function goToPoint(){
 			location.href='${contextPath}/mypage/point?usno='+${loginUser.usno};
 		};
+		
+		
 	
 	</script>
 

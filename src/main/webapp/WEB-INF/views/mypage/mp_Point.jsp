@@ -9,6 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage_point</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+    
     
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -475,7 +477,7 @@
 
     <div id="back">
          <!-- navi.jsp include -->
-       <jsp:include page="../common/navi.jsp"/>
+       <jsp:include page="../common/naviWhite.jsp"/>
         
         <section class="page-start">
             <div id="topMenu">
@@ -616,11 +618,11 @@
   		
   		var amount = 0;
   		if(name == '3만원 충전'){
-  			amount = 300;
+  			amount = 30000;
   		} else if(name == '6만원 충전'){
-  			amount = 200;
+  			amount = 60000;
   		} else{
-  			amount = 100;
+  			amount = 90000;
   		}
   		
   		//console.log(name);
@@ -714,36 +716,6 @@
 	}
 	</script>
 	
-	 <script>
-	 	$(document).ready(function(){
-
-	 		if('${loginUser.usid}' != ''){
-	 			var searchU = new Object();
-					searchU.usno = "${loginUser.usno}";
-					searchU.uspart = "${loginUser.uspart}";
-					
-	 			$.ajax({
-	 				url : "${contextPath}/mypage/new",
-	 				data : JSON.stringify(searchU),
-	 				type : "post",
-	 				contentType : "application/json; charset=utf-8",
-	 				success : function(data){
-	 					if(data > 0){
-	 						$('.newAlert').css("display","block");
-	 						$('.newAlert').css("display","inline-block");
-	 						$('.newAlert').css("margin-bottom","5px;");
-	 					} else{
-	 						alert("세션확인 오류!");
-	 					}
-	 				},
-	 				error : function(e){
-	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
-									+ "message : " + e.responseText);
-	 				}
-	 			});
-	 		}
-	 		
-	 	});
-	 </script>
+	
 </body>
 </html>

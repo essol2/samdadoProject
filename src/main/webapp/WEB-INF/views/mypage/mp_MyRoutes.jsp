@@ -10,11 +10,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage_route</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+    
     <!-- 지도 -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ed8f27ec110d0e26833182650945f3b6&libraries=services,clusterer,drawing"></script>
  <!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
 </head>
 <style>
 
@@ -130,7 +133,7 @@
         border : 5px solid white;
         width : 77%;
         height : 600px;
-    }s
+    }
 
     #tripTopBox{
         display: flex;
@@ -173,6 +176,7 @@
         margin-right : 1%;
         margin-bottom: 1%;
         align-items : center;
+        text-align : center;
     }
 
     #rinfoText{
@@ -218,6 +222,7 @@
         align-items: center;
         margin-left : auto;
         margin-right : auto;
+        margin-top :40px;
     }
     
     #reddot{
@@ -245,16 +250,18 @@
   	justify-content : center;
   	margin-left : 2%;
   }
+  
+  
 </style>
 <body>
 
     <div id="back">
          <!-- navi.jsp include -->
-       <jsp:include page="../common/navi.jsp"/>
+       <jsp:include page="../common/naviWhite.jsp"/>
         
         <section class="page-start">
             <div id="topMenu">
-                <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-100</p> </div>
+                <div id="countDday"> <p>삼다수님의 <br> 여행까지 <br>D-1</p> </div>
                 <div class="menuBox" id="menuBox">
 
                     <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
@@ -285,7 +292,8 @@
                     <c:when test="${!empty routeTest }">
 					<c:forEach items="${ routeTest }" var="rt" varStatus="rtNum">
                     <div class="tripReservInfoBox">
-                        <div id="rinfoText"><h3 style="font-size: medium;">${ rtNum.count }일차.</h3></div>
+                        <%-- <div id="rinfoText"><h3 style="font-size: medium;">${ rtNum.count }일차.</h3></div> --%>
+                        <div id="rinfoText"><h3 style="font-size: xx-large; color:#467355;">${rt.value[0].route_date}</h3><hr style="width : 60%; margin-left : auto; margin-right:auto;"></div>
                         <div id="motherDiv">
                         	
                        		<c:forEach var='rrt' items="${rt.value}" varStatus="rrtNum"> 
@@ -299,17 +307,17 @@
 		                                    <img src="${contextPath}/resources/images/image_route/${rrt.spot_oname}" alt="" style="width:100%; height:100%;"> 
 		                                </div>
 		                                <div class="rNameArea">
-		                                    <p>${rrt.spot_title}</p>
+		                                    <p style="margin-bottom : 2px;">${rrt.spot_title}</p>
 		                                </div>
 		                            </div>
 		                            </c:if>
-		                            <c:if test="${rrt.bus_code ne 0}">
+		                            <c:if test="${rrt.bus_code > 0}">
 		                            <div class="routeInfoBox">
 		                                <div class="rInfoImgArea">
-		                                    <img src="${contextPath}/resources/images/image_route/${rrt.file_rename}" alt="" style="width:100%; height:100%;">
+		                                    <img src="${ contextPath }/resources/busUploadFiles/${ rrt.file_rename }" alt="" style="width:100%; height:100%;">
 		                                </div>
 		                                <div class="rNameArea">
-		                                    <p>${routeTest[rrt].bus_name}</p>
+		                                    <p style="margin-bottom : 2px;">${rrt.bus_name}</p>
 		                            </div>
 		                            </div>
 		                            </c:if>
@@ -330,7 +338,7 @@
 							<c:otherwise>
 								 <div class="tripReservInfoBox">
 			                        <div class="routesBox">
-			                            <div class="noRouteBox">
+			                            <div class="noRouteBox" style="text-align : center; align-items : center;">
 			
 			                                <img src="${contextPath}/resources/images/image_mp/noRoute.png" alt=""><br>
 											
@@ -340,13 +348,27 @@
 			                    </div>
 							</c:otherwise>
 							</c:choose>
-
+							
                    
                 </div>
+                <div style=" width : 100%!important; height : 100px;">
+						<footer style="width : 100% !important;">
+							<jsp:include page="../common/footer.jsp"/>
+						</footer>
+				</div>
             </div>
+            <br>
+        <br>
+        <br>
+        <br>
+    
         </section>
+        
     </div>
+    
+
      <script>
+     
     function goToWallet(){
 		/* console.log("jsp안에서 usno확인 : " + usno); */
 		location.href='${contextPath}/mypage/wallet?usno='+${loginUser.usno};
@@ -388,37 +410,7 @@
     </script> -->
    
     
-    <script>
-	 	$(document).ready(function(){
-
-	 		if('${loginUser.usid}' != ''){
-	 			var searchU = new Object();
-					searchU.usno = "${loginUser.usno}";
-					searchU.uspart = "${loginUser.uspart}";
-					
-	 			$.ajax({
-	 				url : "${contextPath}/mypage/new",
-	 				data : JSON.stringify(searchU),
-	 				type : "post",
-	 				contentType : "application/json; charset=utf-8",
-	 				success : function(data){
-	 					if(data > 0){
-	 						$('.newAlert').css("display","block");
-	 						$('.newAlert').css("display","inline-block");
-	 						$('.newAlert').css("margin-bottom","5px;");
-	 					} else{
-	 						alert("세션확인 오류!");
-	 					}
-	 				},
-	 				error : function(e){
-	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
-									+ "message : " + e.responseText);
-	 				}
-	 			});
-	 		}
-	 		
-	 	});
-	 </script>
+    
 	  <script language=JavaScript>
     	var arr = new Array();
     	<c:forEach items="${list}" var="list">

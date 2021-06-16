@@ -83,8 +83,6 @@
 		
 		.infoLabel {
 		    font-size: 20px;
-		    /* font-weight: bold; */
-		    color: #495740;
 		}
 
         #ho_grade {
@@ -121,11 +119,6 @@
             margin-left: 10%;
             margin-bottom: 5%;
 
-        }
-
-        #small_view_area {
-            border: 1px solid black;
-            border-radius: 13px;
         }
 
         .small_view {
@@ -178,10 +171,11 @@
             border: 1px solid black;
         }
 
-        .other{
-            margin-top: 2%;
-            display: flex;
-        }
+        .other {
+		    margin-top: 1%;
+		    display: flex;
+		    height: 120px;
+		}
 
         .otherimage{
             width: 20%;
@@ -296,14 +290,12 @@
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 10px 75px;
             text-decoration: none;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 50px;            
 
         }
         
@@ -322,10 +314,8 @@
             margin-right: 1%;
         }
 
-        .reivew {
-            border: 1px solid black;
-            width: 70%;
-            border-radius: 6px;
+        .review a{
+        	font-size:17px;
         }
 
         .review_img {
@@ -343,6 +333,7 @@
             float: right;
             margin: 1%;
             margin-bottom: 0;
+            font-weight: bold;
         }
         
 
@@ -500,6 +491,13 @@
 	    font-size: 30px;
 	    font-weight: bold;
 	}
+	
+	.premium {
+            width: 60px;
+            height: 50px;
+            margin-bottom:30px;
+        }
+        
     </style>
 
 </head>
@@ -514,7 +512,7 @@
             <div class="title_area">
                 <div class="title_area">
                     <c:if test="${ res.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premiumicon.png"><br>
+                    <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     </c:if>
                     <label id="ho_title" class="title_tag">${ res.bus_name }</label>
                     <br>
@@ -722,7 +720,7 @@
             <label class="reviewTitle">후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:#ffd700;">★</a><b></b>(후기 ${ review.size() }개)</label><br>
             <c:if test="${ empty review }">
             <div class="reviewBox">
-            <p style="font-size:60px">리뷰가 없습니다!!!</p>
+            <p style="font-size:60px">등록 된 리뷰가 없습니다</p>
             </div>
             </c:if>
             <c:forEach var="r" items="${ review }">
@@ -794,7 +792,18 @@
         </div>
     </div>
     
-    <script> 
+    <script>
+    $(function(){
+    	var reviews = '<c:out value="${review.size()}"/>'
+    	if(reviews == '0'){
+    		$(".reviewBox").css({
+    			"text-align": "center",
+    			"color" : "#495740",
+    	    	"margin-bottom": "40px"
+    		});
+    	}
+    });
+    
     	function reportAlert(){ 
     		alert('신고가 완료되었습니다.'); 
     	}

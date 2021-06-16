@@ -1,11 +1,9 @@
 package com.kh.samdado.route.controller;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.samdado.business.model.service.businessService;
 import com.kh.samdado.business.model.vo.business.Business;
 import com.kh.samdado.mypage.model.service.MypageService;
 import com.kh.samdado.route.model.exception.RouteException;
@@ -27,7 +27,6 @@ import com.kh.samdado.route.model.service.RouteService;
 import com.kh.samdado.route.model.vo.Route;
 import com.kh.samdado.route.model.vo.RouteFinal;
 import com.kh.samdado.route.model.vo.SpotBus;
-import com.kh.samdado.route.model.vo.TourSpot;
 import com.kh.samdado.route.model.vo.rSearch;
 import com.kh.samdado.user.model.vo.User;
 
@@ -41,26 +40,39 @@ public class RouteController {
 	@Autowired
 	private MypageService mService;
 	
+	@Autowired
+	private businessService bService;
+	
 	@GetMapping("/m_route")				// 길 만들기 페이지로 이동
 	public String route() {
 		return "route/route_main";
 	}
 	
 	@GetMapping("/search")
-	public String searchRoute(Model model, 
+	public ModelAndView searchRoute(Model model, 
 							HttpSession session,
 							@ModelAttribute User u,
 							@ModelAttribute rSearch search,
 							@RequestParam("area") String area, 
 							@RequestParam("thema") String thema, 
-							@RequestParam("routeDate") Date routeDate ) {		// 루트 검색
-		// 사용자별 찜한 숙소리스트 가져오기
+							@RequestParam("routeDate") Date routeDate,
+							ModelAndView mv) {		// 루트 검색
+		User lgus = (User)session.getAttribute("loginUser");
+		
+		u.setUsno(lgus.getUsno());
+		
 		if(u.getUsno() != null) {
+			// 사용자별 찜한 숙소리스트 가져오기
 			List<Business> jjimHotel = mService.findHotelJjimList(u);
 			//System.out.println("jjimHotel 확인 : " + jjimHotel);
+			
+			// 검색 모달창에 찜한 사업장 가져오기
+			List<Business> jjimB = rService.jjimBusiness(u);
+			/* System.out.println("찜한 사업장: " + jjimB); */
+			
 			model.addAttribute("jjimList", jjimHotel);
+			model.addAttribute("jjimB", jjimB);
 		}
-		
 		
 		model.addAttribute("area", area);
 		model.addAttribute("thema", thema);
@@ -69,11 +81,20 @@ public class RouteController {
 		List<Route> list = rService.routeSearch(search);
 		model.addAttribute("list", list);
 		
-		return "route/route_result";
+		/* 한빈 */
+		List<Business> hotelList = bService.selectHotelListP();
+//		System.out.println(hotelList);
+		if(hotelList != null) {
+			mv.addObject("hotelList", hotelList);
+//			System.out.println("hotelList2" + hotelList);
+			mv.setViewName("route/route_result");
+		}
+		
+		return mv;
 	}
 	
 	@PostMapping("/changeRoute")
-	public String changeRoutePage(HttpSession session, Model model, String[] rrlist) {	// 여행지 순서 바꾸기 페이지로 이동
+	public ModelAndView changeRoutePage(HttpSession session, Model model, String[] rrlist, @ModelAttribute User u, ModelAndView mv) {	// 여행지 순서 바꾸기 페이지로 이동
 		String area = (String)session.getAttribute("area");
 		String thema = (String)session.getAttribute("thema");
 		Date routeDate = (Date)session.getAttribute("routeDate");
@@ -82,11 +103,37 @@ public class RouteController {
 		
 		List<SpotBus> rlist = rService.changeRoute(rrlist);
 		
-		/* System.out.println("rlist: " + rlist); */
-		 
+		//System.out.println("rlist: " + rlist);
 		model.addAttribute("list", rlist);
-
-		return "route/route_edit";
+		
+		User loginUser = (User)session.getAttribute("loginUser");
+		
+		if(loginUser != null) {
+			u.setUsno(loginUser.getUsno());
+			
+			// 사용자별 찜한 숙소리스트 가져오기
+			List<Business> jjimHotel = mService.findHotelJjimList(u);
+			//System.out.println("jjimHotel 확인 : " + jjimHotel);
+			
+			// 검색 모달창에 찜한 사업장 가져오기
+			List<Business> jjimB = rService.jjimBusiness(u);
+			/* System.out.println("찜한 사업장: " + jjimB); */
+			
+			model.addAttribute("jjimList", jjimHotel);
+			model.addAttribute("jjimB", jjimB);
+		}
+		
+		
+		/* 한빈 */
+		List<Business> hotelList = bService.selectHotelListP();
+//		System.out.println(hotelList);
+		if(hotelList != null) {
+			mv.addObject("hotelList", hotelList);
+//			System.out.println("hotelList2" + hotelList);
+			mv.setViewName("route/route_edit");
+		}
+		
+		return mv;
 	}
 	
 	
@@ -115,21 +162,47 @@ public class RouteController {
 	
 	
 	@PostMapping("/clearChange")
-	public String clearChange(HttpSession session, Model model, String[] chlist) {		// 여행지 순서 바꾸기 완료
+	public ModelAndView clearChange(HttpSession session, Model model, String[] chlist,  @ModelAttribute User u, ModelAndView mv ) {		// 여행지 순서 바꾸기 완료
 		String area = (String)session.getAttribute("area");
 		String thema = (String)session.getAttribute("thema");
 		Date routeDate = (Date)session.getAttribute("routeDate");
+		User loginUser = (User)session.getAttribute("loginUser");
 		
-		/* System.out.println(Arrays.toString(chlist)); */
 		
-		List<TourSpot> clist = rService.clearChange(chlist);
+		/* System.out.println("chlist: " + Arrays.toString(chlist)); */
 		
-		/* System.out.println(clist); */
+		List<SpotBus> clist = rService.clearChange(chlist);
+		
+		System.out.println("clist: " + clist);
 		
 		model.addAttribute("list", clist);
 		
+		if(loginUser != null) {
+			u.setUsno(loginUser.getUsno());
+			// 사용자별 찜한 숙소리스트 가져오기
+			List<Business> jjimHotel = mService.findHotelJjimList(u);
+			System.out.println("jjimHotel 확인 : " + jjimHotel);
+			
+			// 검색 모달창에 찜한 사업장 가져오기
+			List<Business> jjimB = rService.jjimBusiness(u);
+			/* System.out.println("찜한 사업장: " + jjimB); */
+			
+			model.addAttribute("jjimList", jjimHotel);
+			model.addAttribute("jjimB", jjimB);
+		}
+		
+		
+		/* 한빈 */
+		List<Business> hotelList = bService.selectHotelListP();
+//		System.out.println(hotelList);
+		if(hotelList != null) {
+			mv.addObject("hotelList", hotelList);
+//			System.out.println("hotelList2" + hotelList);
+			mv.setViewName("route/route_result");
+		}
+		
 		/* return "redirect:/route/search"; */
-		return "route/route_result";
+		return mv;
 	}
 	
 	@PostMapping("/addRoute")
@@ -156,7 +229,11 @@ public class RouteController {
 		User loginUser = (User)session.getAttribute("loginUser");
 		String price = (String)session.getAttribute("price");
 		
-		rf.setRoute_date(routeDate);
+		System.out.println(routeDate);
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy/MM/dd");
+		String time1 = format1.format(routeDate);
+		
+		rf.setRoute_date(time1);
 		rf.setUs_no(loginUser.getUsno());
 		rf.setRoute_price(price);
 		

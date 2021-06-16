@@ -15,6 +15,7 @@ import com.kh.samdado.common.model.vo.Income;
 import com.kh.samdado.common.model.vo.Report;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
+import com.kh.samdado.user.model.vo.User;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -154,10 +155,16 @@ public class AdminServiceImpl implements AdminService {
 		return aDao.getPointList();
 	}
 
+//	@Override
+//	public List<Integer> selectGetProfit() {
+//		// TODO Auto-generated method stub
+//		return aDao.selectGetProfit();
+//	}
+	
 	@Override
-	public List<Integer> selectGetProfit() {
+	public List<User> selectGetUserData(User userType) {
 		// TODO Auto-generated method stub
-		return aDao.selectGetProfit();
+		return aDao.selectGetUserData(userType);
 	}
 
 	@Override
@@ -201,6 +208,8 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return aDao.selectGetAllProfit(profitRequestDto);
 	}
+
+	
 
 
 

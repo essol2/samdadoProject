@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>길 수정하기</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
  <!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- Bootstrap CSS -->
@@ -17,7 +18,7 @@
 	
 	<jsp:include page="../common/navi.jsp"/>
 	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_modal.css" type="text/css">
-	<link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css">
+	<%-- <link rel="stylesheet" href="${ contextPath }/resources/css/route/route_result.css" type="text/css"> --%>
 	<style>
 	
 	.modal-body div {
@@ -104,11 +105,171 @@
         .detail_content {
             font-size: 13px;
         }
+        
+        /* css */
+        @charset "UTF-8";
+
+		.route_title {
+            max-width: 48%;
+            max-height: 800px;
+            margin-left : 10%;
+        }
+
+        #content-logo {
+            /* display: inline-block; */
+            position: relative;
+            margin-left: 100px;
+        }
+
+        .content-title {
+            font-size: 30px;
+            color: black;
+            display: inline-block;
+            position: relative;
+        }
+
+        #route_select {
+            border: 2px solid black;
+            width: 80%;
+            position: relative;
+            margin: auto;
+        }
+
+        #select td {
+            padding-left: 10px;
+            padding-right: 10px;
+            text-align: center;
+            width: 80px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .bold {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .tabletr {
+            padding-top: 10px;
+            padding-bottom: 5px;
+        }
+
+        #map {
+            width: 100%;
+            position: relative;
+            margin-left: 10%;
+        }
+
+        .c_border {
+            border: 1px solid black;
+            width: 75%;
+            margin-left: 20%;
+        }
+
+        .c1_border {
+            border: 1px solid black;
+            width: 60%;
+            margin-left: 20%;
+        }
+
+        #title1, #title2,  #title3,  #title4 {
+            margin-left: 20%;
+            margin-bottom: -10px;
+        }
+        
+        #morebtn {
+            width: 25%;
+            margin-left: 37.5%;
+            margin-left: 37.5%;
+        }
+
+        #left-border {
+            /* height: 1650px; */
+            height: auto;
+            width: 90%;
+        }
+
+        .spot_border {
+            height: 225px;
+            width: 150px;
+            border: rgb(70, 115, 85) 3px solid;
+        }
+        
+        ._btn {
+            background-color: rgb(70, 115, 85);
+            border: rgb(70, 115, 85);
+            color: white;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            font-weight: 700;
+            height: 45px;
+        }
+
+        .spot_title {
+            margin-top: 10%;
+            text-align: center;
+            font-weight: bolder;
+            font-size: 25px;
+            cursor: default;
+        }
+
+        .spot_btn {
+            background-color: rgb(255,255,255);
+            border: 0px;
+            width: 100%;
+            margin-top:60px;
+        }
+
+        #ch_btn {
+            width: 40%;
+            margin-left: 8%;
+            margin-right: 1%;
+        }
+
+        #add_btn {
+            width: 40%;
+            margin-right: 8%;
+            margin-left: 1%;
+        }
+
+        #arrow {
+            margin-left: 40%;
+            margin-top: 2%;
+            margin-bottom: 2%;
+        }
+
+        .detail {
+            font-size: 15px;
+            font-weight: 100;
+        }
+        
+       #searchbtn {
+            font-weight: 300;
+            margin-bottom: 10px;
+            margin-left: 88%;
+            width: 100px;
+            height: 35px;
+        }
+	
+	#cost-content {
+		width: 100%;
+		padding: 10px;
+	}
+	
+	#costTable {
+		width: 100%;
+	}
+	
+	#costTable td {
+		width: 100%;
+	}
     </style>
 </head>
 <body>
 		<div id="bottom">
-            <div id="content">
+            <div id="content" style="width : 90%;">
                 <br><br><br>
                 <div class="route_title">
                     <image id="content_logo" width="70px" height="70px" src="../resources/images/image_main/logo_g.png"></image>
@@ -188,13 +349,17 @@
 									<c:forEach var="r" items="${ list }" varStatus="index">
 										<tr id="tr1">
 											<td>
-												<img src="${ r.spot_path }${ r.spot_oname }">
+												<img style="width: 300px; height: 225px;" src="${ r.spot_path }${ r.spot_oname }">
 											</td>
 											<td>
 												<div class="parent">
 													<div class="spot_border">
+													<div style="height: 50%;">
 														<p class="spot_title" name="title" id="spotTitle">${ r.spot_title }</p>
-														<button class="spot_btn" id="deleteSpot" onclick="deleteSpot(this)"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
+													</div>
+														<div style="height: 50%;">
+															<button class="spot_btn" id="deleteSpot" onclick="deleteSpot(this)"><img src="../resources/images/image_route/trashcan.png">삭제하기</button>
+														</div>
 													</div>
 													<div class="spot_chnge">
 	                                                	<button class="up_down" id="tableUp" onclick="moveUp(this)" ><img src="../resources/images/image_route/btn_up.png"></button>
@@ -236,7 +401,9 @@
                                         <c:set var="totalPrice" value="0"/>
                                 		<c:forEach var="r" items="${ list }">
 											<tr>
-		                                    	<td id="cost-content">&nbsp;${ r.spot_title }<fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+		                                    	<c:if test="${ r.spot_price != 0 && r.spot_price != null}">
+		                                    		<td id="cost-content">&nbsp;&nbsp;${ r.spot_title } <fmt:formatNumber value="${ r.spot_price }" pattern="#,###"/>원</td>
+		                                    	</c:if>
 		                                        <c:set var="totalPrice" value="${ totalPrice + r.spot_price }"/>
 		                                    </tr>
                                       	</c:forEach>
@@ -257,60 +424,56 @@
                                 <c:if test="${ empty loginUser }">
                                 	<label class="content-title" id="title3">삼다도의 추천 숙박</label>
                                 </c:if>
-                                <div class="c1_border" id="right-middle-border">
-                                    <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
+                                
+                                 <div class="c1_border" id="right-middle-border">
+                                <c:forEach var="h" items="${ hotelList }">
+                                <c:if test="${ h.bus_classify eq 'P' && h.file_lv eq '0' }">
+                                   <table style="margin: auto; margin-top: 10%; margin-bottom: 10%; text-align : center;">
                                         <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
+                                            <td onclick="goToDetail(${h.bus_code})" ><img src="${contextPath}/resources/busUploadFiles/${h.file_rename}" style="width : 90%; height : auto;"></td>
+                                        </tr>
+                                         <tr>
+                                            <td id="navi-content" style="font-size : 30px; color : #467355; padding-top:2%;">${h.bus_name }</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
+                                            <td id="navi-content" style="color:#bfbfbf;">${h.hotel_facility }</td>
                                         </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔1</td>
-                                        </tr>
+                                       
                                     </table>
-                                    <table style="margin: auto; margin-bottom: 10%;">
-                                        <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔2</td>
-                                        </tr>
-                                    </table>
+                                </c:if>
+                                </c:forEach>
+                                  
                                 </div>
                                 <br>
 
                                 <button class="_btn" id="morebtn" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 더 보러 가기</button>
                                 
-                                <br><br>
-                                <c:if test="${ !empty loginUser }">
+                               <br><br>
+                                <c:if test="${ !empty loginUser && !empty jjimList}">
                                 <label class="content-title" id="title4">${ loginUser.usname } 님이 찜하신 숙박</label>
                                 <div class="c1_border" id="right-bottom-border">
-                                    <table style="margin: auto; margin-top: 10%; margin-bottom: 10%;">
+                      			<c:forEach items="${ jjimList }" var="jl" varStatus="jlNum">
+                                    <table style="margin: auto; margin-top: 10%; margin-bottom: 10%; text-align : center;">
                                         <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
+                                            <td onclick="goToDetail(${jl.bus_code})" ><img src="${contextPath}/resources/busUploadFiles/${jl.file_rename}" style="width : 90%; height : auto;"></td>
+                                        </tr>
+                                         <tr>
+                                            <td id="navi-content" style="font-size : 30px; color : #467355; padding-top:2%;">${jl.bus_name }</td>
                                         </tr>
                                         <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
+	                                        <c:if test="${ !empty jl.avstar }">
+	                                        	<td>별점 𖤐${ jl.avstar }</td>
+	                                        </c:if>
+	                                        <c:if test="${ empty jl.avstar }">
+	                                        	<td style="font-size : small;">아직 별점이 없습니다.</td>
+	                                        </c:if>
                                         </tr>
                                         <tr>
-                                            <td id="navi-content">제주도 좋은 호텔1</td>
+                                            <td id="navi-content" style="color:#bfbfbf;">${jl.hotel_facility }</td> 
                                         </tr>
+                                       
                                     </table>
-                                    <table style="margin: auto; margin-bottom: 10%;">
-                                        <tr>
-                                            <td><img src="../resources/images/image_route/호텔이미지.png"></td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content" style="padding-top: 10px;">★4.90(후기 99+개)</td>
-                                        </tr>
-                                        <tr>
-                                            <td id="navi-content">제주도 좋은 호텔2</td>
-                                        </tr>
-                                    </table>
+                                 </c:forEach>
                                 </div>
                                 </c:if>
                                 <br>
@@ -336,52 +499,17 @@
                     
                     <div id="search_list"></div>
                     
-                    <c:if test="${ !empty loginUser }">
-                    <p id="zzim">${ loginUser.usname } 님이 찜하신 관광지</p>
-                    <div class="zzim_list">
-                        <p class="zzim_content_title">제주김만복 본점</p>
-                        <p class="zzim_content">제주 제주시 오라로 41</p>
-                        <p class="zzim_content">
-                        	오라 3동 2250-1
-                            <button id="addbtn">
-                                <img src="../resources/images/image_route/download.png">추가하기
-                            </button>
-                        </p>
-                    </div>
-                    <div class="zzim_list">
-                        <p class="zzim_content_title" >제주김만복 본점</p>
-                        <p class="zzim_content">제주 제주시 오라로 41</p>
-                        <p class="zzim_content">
-                            	오라 3동 2250-1
-                            <button id="addbtn">
-                                <img src="../resources/images/image_route/download.png">추가하기
-                            </button>
-                        </p>
-                    </div>
-                    <div class="zzim_list">
-                        <p class="zzim_content_title" >제주김만복 본점</p>
-                        <p class="zzim_content">제주 제주시 오라로 41</p>
-                        <p class="zzim_content">
-                           	 오라 3동 2250-1
-                            <button id="addbtn">
-                                <img src="../resources/images/image_route/download.png">추가하기
-                            </button>
-                        </p>
-                    </div>
-                    <div class="zzim_list">
-                        <p class="zzim_content_title" >제주김만복 본점</p>
-                        <p class="zzim_content">제주 제주시 오라로 41</p>
-                        <p class="zzim_content">
-                            	오라 3동 2250-1
-                            <button id="addbtn">
-                                <img src="../resources/images/image_route/download.png">추가하기
-                            </button>
-                        </p>
-                    </div>
-                    <br>
-                    </c:if>
+                     <c:if test="${ !empty loginUser && !empty jjimB}">
+	                    <p id="zzim">${ loginUser.usname } 님이 찜하신 관광지</p>
+	                    <c:forEach var="j" items="${ jjimB }" varStatus="jlNum">
+	                    	<div class="zzim_list" >
+		                        <p style="cursor: pointer;" class="zzim_content_title">${ j.bus_name }</p>
+		                        <p style="cursor: pointer;" class="zzim_content">${ j.bus_address }</p>
+	                    	</div>
+                  		</c:forEach>
                     
                     <br>
+                    </c:if>
                 </class>
                 </div>
             </div>
@@ -438,7 +566,7 @@
 			var $tr = $("#routeTable tbody");
 			
 			$tr.append("<tr><td colspan='2'><img id='arrow' src='../resources/images/image_route/arrow.png'></td></tr>");
-			$tr.append("<tr id='tr1'><td><img src='" + path + name +"'></td><td><div class='parent'><div class='spot_border'><p class='spot_title' name='title' id='spotTitle'>" + title + "</p><button class='spot_btn' id='deleteSpot' onclick='deleteSpot(this)'><img src='../resources/images/image_route/trashcan.png'>삭제하기</button></div><div class='spot_chnge'><button class='up_down' id='tableUp' onclick='moveUp(this)' ><img src='../resources/images/image_route/btn_up.png'></button><br><button class='up_down' id='tableDown' onclick='moveDown(this)'><img src='../resources/images/image_route/btn_down.png'></button></div></div></td></tr>");
+			$tr.append("<tr id='tr1'><td><img src='" + path + name +"'></td><td><div class='parent'><div class='spot_border'><div style='height: 50%;'><p class='spot_title' name='title' id='spotTitle'>" + title + "</p></div><div style='height: 50%;'><button class='spot_btn' id='deleteSpot' onclick='deleteSpot(this)'><img src='../resources/images/image_route/trashcan.png'>삭제하기</button></div></div><div class='spot_chnge'><button class='up_down' id='tableUp' onclick='moveUp(this)' ><img src='../resources/images/image_route/btn_up.png'></button><br><button class='up_down' id='tableDown' onclick='moveDown(this)'><img src='../resources/images/image_route/btn_down.png'></button></div></div></td></tr>");
 			
 			alert("추가되었습니다!");
 		}
@@ -453,7 +581,7 @@
 			var $tr = $("#routeTable tbody");
 			
 			$tr.append("<tr><td colspan='2'><img id='arrow' src='../resources/images/image_route/arrow.png'></td></tr>");
-			$tr.append("<tr id='tr1'><td><img style='height: 225px; width: 300px;' src='../resources/busUploadFiles/" + path + "'></td><td><div class='parent'><div class='spot_border'><p class='spot_title' name='title' id='spotTitle'>" + title + "</p><button class='spot_btn' id='deleteSpot' onclick='deleteSpot(this)'><img src='../resources/images/image_route/trashcan.png'>삭제하기</button></div><div class='spot_chnge'><button class='up_down' id='tableUp' onclick='moveUp(this)' ><img src='../resources/images/image_route/btn_up.png'></button><br><button class='up_down' id='tableDown' onclick='moveDown(this)'><img src='../resources/images/image_route/btn_down.png'></button></div></div></td></tr>");
+			$tr.append("<tr id='tr1'><td><img style='height: 225px; width: 300px;' src='../resources/busUploadFiles/" + path + "'></td><td><div class='parent'><div class='spot_border'><div style='height: 50%;'><p class='spot_title' name='title' id='spotTitle'>" + title + "</p></div><div style='height: 50%;'><button class='spot_btn' id='deleteSpot' onclick='deleteSpot(this)'><img src='../resources/images/image_route/trashcan.png'>삭제하기</button></div></div><div class='spot_chnge'><button class='up_down' id='tableUp' onclick='moveUp(this)' ><img src='../resources/images/image_route/btn_up.png'></button><br><button class='up_down' id='tableDown' onclick='moveDown(this)'><img src='../resources/images/image_route/btn_down.png'></button></div></div></td></tr>");
 			
 			alert("추가되었습니다!");
 		}

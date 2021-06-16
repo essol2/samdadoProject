@@ -110,6 +110,12 @@ public class businessDaoImpl implements businessDao {
 	public List<Business> selectHotelList() {
 		return sqlSession.selectList("businessMapper.selectHotelList");
 	}
+	
+	@Override
+	public List<Business> selectHotelListP() {
+		return sqlSession.selectList("businessMapper.selectHotelListP");
+	}
+	
 	// 호텔디테일
 	@Override
 	public Business selectHotel(int bus_code) {
@@ -253,6 +259,11 @@ public class businessDaoImpl implements businessDao {
 		@Override
 		public Point findPoint(Point p) {			
 			return sqlSession.selectOne("businessMapper.findPoint", p);
+		}
+		
+		@Override
+		public int updateUserPblance(User u) {			
+			return sqlSession.update("businessMapper.updateUserPblance", u);
 		}
 
 	@Override
@@ -423,6 +434,50 @@ public class businessDaoImpl implements businessDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("businessMapper.selectAlli");
 	}
+
+	@Override
+	public List<Review> selectReviewList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.selectReviewList");
+	}
+
+	@Override
+	public List<Business> starList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.starList");
+	}
+	@Override
+	public List<Business> starList2() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.starList2");
+	}
+
+	@Override
+	public List<Business> reviewList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.reviewList");
+	}
+	@Override
+	public List<Business> reviewList2( ) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.reviewList2");
+	}
+
+	@Override
+	public List<Business> facList(String kind) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.facList", kind);
+	}
+
+	@Override
+	public List<Business> rescateList(String kind) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("businessMapper.rescateList", kind);
+	}
+
+	
+
+	
 
 	
 

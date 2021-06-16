@@ -126,10 +126,6 @@
 
         }
 
-        #small_view_area {
-            border: 1px solid black;
-            border-radius: 13px;
-        }
 
         .small_view {
             margin: 3%;
@@ -179,10 +175,11 @@
             height: 550px;
         }
 
-        .other{
-            margin-top: 2%;
-            display: flex;
-        }
+        .other {
+		    margin-top: 1%;
+		    display: flex;
+		    height: 120px;
+		}
 
         .otherimage{
             width: 20%;
@@ -198,8 +195,6 @@
         
         .infoLabel{
        	    font-size: 20px;
-		    /* font-weight: bold; */
-		    color: #495740;
         }
 
         #mapBtn {
@@ -252,7 +247,8 @@
             /* flex: 5; */
             display: flex;
             align-items: center;
-
+			flex-wrap: wrap;
+			
         }
 
         #secondlist {            
@@ -280,8 +276,9 @@
             /* align-items: center; */
             justify-content: center;
             /* flex: 1; */
-            
-            width: 435px;
+            margin: 1rem; 
+  			padding: 1rem;
+            width: 400px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -293,8 +290,9 @@
             /* align-items: center; */
             justify-content: center;
             /* flex: 1; */
-            
-            width: 435px;
+            margin: 1rem; 
+  			padding: 1rem;
+            width: 400px;
             height: 500px;
             box-sizing: border-box;
         }
@@ -305,11 +303,17 @@
             width: 350px;
             height: 200px;
         }
-
+        
+        .detailImg{
+        	height:300px;
+        	width: 100%;
+        }
+		
         /* 차 리스트끝 */
 
         .btnArea{
             text-align: center;
+            margin-top: 100px;
         }
 
         
@@ -326,21 +330,18 @@
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 10px 75px;
             text-decoration: none;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 50px;            
 
         }
 
         .btn{
             background-color: rgb(70, 115, 85) !important;
-            border: 1px solid rgb(70, 115, 85) !important;
-            font-family: 'GmarketSansBold' !important;
+            border: 1px solid rgb(70, 115, 85) !important;            
         }
         
          #report_btn, #jjim_btn{
@@ -357,11 +358,16 @@
         .review_writer label {
             margin-right: 1%;
         }
-
-        .reivew {
+        
+        .review {
             border: 1px solid black;
-            width: 70%;
+            width: 90%;
             border-radius: 6px;
+            padding: 10px;
+        }
+
+        .review a{
+        	font-size:17px;
         }
 
         .review_img {
@@ -379,6 +385,7 @@
             float: right;
             margin: 1%;
             margin-bottom: 0;
+            font-weight: bold;
         }
         
         .reviewTitle{
@@ -466,15 +473,13 @@
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 6px 55px;
             text-decoration: none;
             margin-top: 50px;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 50px;            
             width: 98%;
         }
 
@@ -535,6 +540,12 @@
 		    height: 325px;
 		    border-radius: 8px;
     	}
+    	
+    	.premium {
+            width: 60px;
+            height: 50px;
+            margin-bottom:30px;
+        }
 
     </style>
 
@@ -550,7 +561,7 @@
             <div class="title_area">
                 <div class="title_area">
                     <c:if test="${ car.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premiumicon.png"><br>
+                    <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     </c:if>
                     <label id="ho_title" class="title_tag">${car.bus_name }</label>
                     <br>
@@ -736,23 +747,21 @@
 
             <hr class="boundary">
 			
-            <div class="list">
+            <div class="list" style="margin-top:50px;">
                 <div id="firstlist">
 			<c:forEach var="c" items="${ cars }">
                     <div class='profile'>
-                        <c:forEach var="ca" items="${ carAtt }" varStatus="i">
-                        <c:if test="${ i.first }">
-                        <img class="image" src="${ contextPath }/resources/busUploadFiles/${ ca.file_rename }">
-                        </c:if>
-                        </c:forEach>
+                    <div class="imgArea">
+                        <img id="mainPic" class="detailImg" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }">
+                        </div>
                         <b>${ c.car_name }</b><br>
                         <b>${ c.car_fuel }</b><br>
-                        <b>${ c.car_price }원</b><br>
+                        <b><fmt:formatNumber value="${ c.car_price }" pattern="#,###"/>원 / 일</b><br>
                         <c:if test="${ loginUser.uspart == '일반'}">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 						 예약하기</button>
 						 </c:if>
-                    </div>                    
+                    </div>
             </c:forEach>
                 </div>                               
             </div>
@@ -765,10 +774,10 @@
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 6;
+							x = 3;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+6 <= size_div)? x+6 : size_div;
+								x= (x+3 <= size_div)? x+3 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});
@@ -779,7 +788,7 @@
             <label class="reviewTitle">후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:#ffd700;">★</a><b></b>(후기 ${ review.size() }개)</label><br>
             <c:if test="${ empty review }">
             <div class="reviewBox">
-            <p style="font-size:60px">리뷰가 없습니다!!!</p>
+            <p style="font-size:60px">등록 된 리뷰가 없습니다</p>
             </div>
             </c:if>
             <c:forEach var="r" items="${ review }">
@@ -809,7 +818,16 @@
     </section>
     
     <script>
-    
+    $(function(){
+    	var reviews = '<c:out value="${review.size()}"/>'
+    	if(reviews == '0'){
+    		$(".reviewBox").css({
+    			"text-align": "center",
+    			"color" : "#495740",
+    	    	"margin-bottom": "40px"
+    		});
+    	}
+    });
     
     var sum = 0;
     var cnt = 0;
@@ -848,7 +866,7 @@
 	    });
     
         $j1124( function() {
-          $j1124( ".datepicker" ).datepicker();
+          $j1124( ".datepicker" ).datepicker({ minDate: 0});
         } );
     </script>
 
@@ -913,7 +931,7 @@
                         </div>
                 </div>
                 <c:forEach var="c" items="${ cars }" varStatus="status" end="0">
-                	<label>${ c.car_price }원 * </label>
+                	<label><fmt:formatNumber value="${ c.car_price }" pattern="#,###"/>원 * </label>
                 	</c:forEach>
                     <label id="daysResult"></label><label>일</label>
                     <br>
@@ -934,6 +952,14 @@
     
     
    	<script>
+	   	Number.prototype.format = function(){
+	        if(this==0) return 0;
+	        var reg = /(^[+-]?\d+)(\d{3})/;
+	        var n = (this + '');
+	        while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+	        return n;
+	    };
+   		
 	    function startDate(e) {	  	  
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('startDateResult').innerText
@@ -952,7 +978,7 @@
 		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
 		    	document.getElementById('daysResult').innerText = days
 		        var payResult = document.getElementById('payResult').value = amount * days
-		        document.getElementById('payResultB').innerText = payResult
+		        document.getElementById('payResultB').innerText = payResult.format()
 		     }
 	  	}
 	    
@@ -975,7 +1001,7 @@
 			        var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
 			        document.getElementById('daysResult').innerText = days
 			        var payResult = document.getElementById('payResult').value = amount * days
-			        document.getElementById('payResultB').innerText = payResult
+			        document.getElementById('payResultB').innerText = payResult.format()
 			     }
 			    if(sdd > edd){
 			    	alert('반납일을 다시 선택해주세요.');
@@ -987,12 +1013,6 @@
 			    	document.getElementById('daysResult').innerText ="";
 			    }
 		  	}
-
-	    function handleOnChange(e) {
-	    	  const value = e.value;	    	  
-	    	  document.getElementById('personNumber').value
-	    	    = value;
-	    	}
     </script>
     
     <script>

@@ -6,6 +6,8 @@
 <!doctype html>
 <html lang="en">
   <head>
+      <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+  
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -248,7 +250,7 @@
 		                    <option value="usstatus" <c:if test="${ param.searchCondition == 'usstatus' }">selected</c:if>>회원 상태</option>	                  
 	                    </select>
 	                    <input type="text" name="searchValue" id="searchValue" value="${ param.searchValue }" class="form-control">
-		                <button class="btn btn-secondary" type="button">검색하기</button>
+		                <button class="btn btn-secondary" type="button">검색</button>
 	                </div>
                 </form>
                 

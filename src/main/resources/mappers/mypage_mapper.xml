@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<result property="usstatus" column="US_STATUS" />
 	<result property="usstop" column="US_STOP" />
 	<result property="authKey" column="AUTH_KEY" />
+	<result property="usnews" column="USNEWS"/>
 	</resultMap>
 	
 	<resultMap type="QnA" id="qnaResultSet">
@@ -182,6 +183,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="c_booking_trv" column="C_TOUR_DATE"/>
 		<result property="rent_no" column="RENT_NO"/>
 		<result property="c_bus_code" column="BUS_CODE"/>
+		<result property="c_booking_trvEnd" column="C_TOUREND_DATE"/>
 		
 		<!-- hotel -->
 		<result property="r_booking_no" column="R_BOOKING_NO"/>
@@ -196,6 +198,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="r_booking_trv" column="R_TOUR_DATE"/>
 		<result property="room_no" column="HOTEL_NO"/>
 		<result property="r_bus_code" column="BUS_CODE"/>
+		<result property="r_booking_trvEnd" column="R_TOUREND_DATE"/>
 		
 		<!-- tour -->
 		<result property="t_booking_no" column="T_BOOKING_NO"/>
@@ -250,6 +253,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="c_booking_number" column="C_BOOKING_NUMBER"/>
 		<result property="c_booking_phone" column="C_BOOKING_PHONE"/>
 		<result property="c_booking_trv" column="C_TOUR_DATE"/>
+		<result property="c_booking_trvEnd" column="C_TOUREND_DATE"/>
 		<result property="rent_no" column="RENT_NO"/>
 		<result property="c_bus_code" column="BUS_CODE"/>
 		
@@ -264,6 +268,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="r_booking_number" column="R_BOOKING_NUMBER"/>
 		<result property="r_booking_phone" column="R_BOOKING_PHONE"/>
 		<result property="r_booking_trv" column="R_TOUR_DATE"/>
+		<result property="r_booking_trvEnd" column="R_TOUREND_DATE"/>
 		<result property="room_no" column="HOTEL_NO"/>
 		<result property="r_bus_code" column="BUS_CODE"/>
 		
@@ -317,6 +322,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="tour_tema" column="TOUR_TEMA" />
 		<result property="al_no" column="AL_NO" />
 		<result property="bus_opening" column="BUS_OPENING" />
+		<result property="avstar" column="AVGSTAR"/>
 		
 		<!-- 비즈니스ATT 대한 JOIN -->
 		<result property="file_rename" column="FILE_RENAME" />
@@ -628,16 +634,18 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	
 	<!-- 가계부 차트 데이터 리스트 -->
 	<select id="selectChartList" resultMap="accountResultSet">
-		SELECT 
+		 SELECT 
 				ACC_CLASSIFY
 			  , SUM(ACC_WON) AS totalSum
 			  , SUM(ACC_ONEWON) AS oneTotalSum
+              , ACC_TRIPD
 		FROM 
 				ACCOUNT
 		WHERE 
 				US_NO = #{usno}
+        AND ACC_TRIPD = #{searchDate}
 		GROUP BY 
-				ACC_CLASSIFY
+				ACC_CLASSIFY, ACC_TRIPD
 	</select> 
 	
 	<!-- 제휴회원 - 내 사업장 조회 리스트 -->
@@ -647,7 +655,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		WHERE B.BUS_CODE = BA.BUS_CODE
 		AND B.US_NO = #{usno}
 		 AND BA.FILE_LV = 0
-		ORDER BY B.BUS_CODE DESC
+		ORDER BY B.BUS_DATE DESC
 	</select>
 	
 	<!-- 제휴회원 - 진행중인 광고 목록 리스트 -->
@@ -738,7 +746,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 	<insert id="insertNewApprove" parameterType="Alert">
 		<if test='alstatus == "Y"'>
 			INSERT 
-			INTO 	NEWS
+			INTO NEWS
 			(
 				NNO
 			  , US_NO
@@ -761,7 +769,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</if>
 		<if test='alstatus == "RI"'>
 			INSERT 
-			INTO 	NEWS
+			INTO NEWS
 			(
 				NNO
 			  , US_NO
@@ -784,7 +792,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</if>
 		<if test="alstatus == 'RP'">
 			INSERT 
-			INTO 	NEWS
+			INTO NEWS
 			(
 				NNO
 			  , US_NO
@@ -814,7 +822,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		</if>
 		<if test="ntitle == 'block'">
 			INSERT INTO NEWS(NNO, US_NO, NTITLE, NSTATUS, NCATE, NKEYNO, N_DATE)
-			VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '회원님의 사업장에대한 신고가 3회 누적되었습니다.', 'N', 'R', #{nkeyno}, SYADATE)
+			VALUES (NEWS_SEQ_NO.NEXTVAL, #{usno}, '회원님의 사업장에대한 신고가 3회 누적되었습니다.', 'N', 'R', #{nkeyno}, SYSDATE)
 		</if>
 	</insert>
 	
@@ -1091,6 +1099,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
   		FROM JJIM
   		WHERE US_NO =  #{us_no}
   		AND BUS_CODE = #{ bus_code }
+  		ORDER BY JJIM_NO DESC
   </select>
   
   <insert id="insertJjim" parameterType="Jjim">
@@ -1213,7 +1222,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
    
    <select id="findHotelJjimList" resultMap="JjimResultSet">
 		<![CDATA[SELECT *
-				FROM (SELECT J.BUS_CODE, B.BUS_NAME, B.HOTEL_FACILITY, BA.FILE_RENAME
+				FROM (SELECT J.BUS_CODE, B.BUS_NAME, B.HOTEL_FACILITY, BA.FILE_RENAME, B.AVGSTAR
 				      FROM JJIM J, BUSINESS B, BUSINESS_ATT BA
 				      WHERE J.BUS_CODE = B.BUS_CODE
 				      AND B.BUS_CODE = BA.BUS_CODE
@@ -1221,5 +1230,73 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				      AND BA.FILE_LV = 0
 				      AND J.US_NO = #{usno})
 				WHERE ROWNUM < 3]]>
+   </select>
+   
+   <update id="updateBusStar" parameterType="Review">
+   		UPDATE BUSINESS
+		SET AVGSTAR = (SELECT TRUNC(AVG(RE_STAR),2) FROM REVIEW WHERE BUS_CODE = #{bus_code} GROUP BY BUS_CODE),
+        RECNT = (SELECT COUNT(REV_COMMENT) FROM REVIEW WHERE BUS_CODE = #{bus_code} GROUP BY BUS_CODE)
+		WHERE BUS_CODE = #{bus_code}
+   </update>
+   
+   <update id="updateNewUserNews" parameterType="A_board">
+   		<if test="uspart == '전체'">
+	   		UPDATE "USER"
+	   		SET USNEWS = USNEWS + 1
+   		</if>
+   		<if test="uspart == '일반'">
+   			UPDATE "USER"
+	   		SET USNEWS = USNEWS + 1
+	   		WHERE US_PART = '일반'
+   		</if>
+   		<if test="uspart == '제휴'">
+   			UPDATE "USER"
+	   		SET USNEWS = USNEWS + 1
+	   		WHERE US_PART = '제휴'
+   		</if>
+   </update>
+   <update id="updateUserNewNews" parameterType="String">
+   			UPDATE "USER"
+	   		SET USNEWS = USNEWS + 1
+	   		WHERE US_NO = #{usno}
+   </update>
+   <update id="updateUserRead" parameterType="String">
+   		UPDATE "USER"
+	   		SET USNEWS = USNEWS - 1
+	   		WHERE US_NO = #{usno}
+   </update>
+   <select id="selectBoard" resultMap="ABoardResultSet">
+   		<if test="uspart == '일반'">
+	   		SELECT *
+	   		FROM A_BOARD
+	   		WHERE US_PART = '전체' 
+	   		OR US_PART = '일반'
+	   		ORDER BY BNO DESC
+   		</if>
+   		<if test="uspart == '제휴'">
+   			SELECT *
+	   		FROM A_BOARD
+	   		WHERE US_PART = '전체' 
+	   		OR US_PART = '제휴'
+	   		ORDER BY BNO DESC
+   		</if>
+   </select>
+   
+   <select id="findThisBoard" resultType="A_board">
+   		SELECT *
+   		FROM A_BOARD
+   		WHERE BNO = #{ bno }
+   </select>
+   
+   <select id="findNewUserNews" resultType="_int">
+   		SELECT USNEWS
+   		FROM "USER"
+   		WHERE US_NO = #{ usno }
+   </select>
+   <select id="selectBoardListCout" resultType="_int">
+   		SELECT COUNT(*)
+   		FROM A_BOARD
+   		WHERE US_PART = #{uspart}
+   		OR US_PART = '전체' 
    </select>
 </mapper>

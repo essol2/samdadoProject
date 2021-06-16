@@ -17,7 +17,7 @@ public interface RouteDao {
 
 	List<SpotBus> spotSearch(String sTitle);
 	
-	List<TourSpot> clearChange(String[] chlist);
+	List<SpotBus> clearChange(String[] chlist);
 	
 	int addRoute(String[] slist);
 
@@ -26,4 +26,6 @@ public interface RouteDao {
 	List<SpotBus> changeRoute(String[] rrlist);
 
 	List<SpotBus> spotSearch1(String sTitle);
+
+	List<Business> jjimBusiness(User u);
 }

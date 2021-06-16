@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>호텔 등록</title>
+<link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <!-- 결제 API -->
@@ -117,17 +118,21 @@
     }
 
     .addBtn-area{
-        width: 80%;
+        width: 100%;
+	    text-align: center;
+	    font-size: 30px;
     }
 
     .addBtn{
-        color: white;
-	    float: right;
+        width: 400px;
+	    height: 60px;
+	    color: white;
+	    justify-content: center;
 	    background-color: #467355;
 	    border: 1px solid #467355;
 	    border-radius: 8px;
 	    font-weight: bold;
-	    margin-right: 5px;
+	    /* margin-right: 5px;*/
     }
     
     .textArea-con{
@@ -204,10 +209,10 @@
                     <h3><label>개월</label></h3>
                     <span  class="box">
                         <select class="content" id="payCategory" name="primonth">
-	                    <option value="0" selected>선택</option>
-	                    <option value="30">1개월 : 10억</option>
-	                    <option value="90">3개월 : 27억</option>
-	                    <option value="180">6개월 : 58억</option>
+	                    <option value="0">선택</option>
+	                    <option value="30">1개월 : 30,000원</option>
+	                    <option value="90">3개월 : 50,000원</option>
+	                    <option value="180">6개월 : 70,000원</option>
 	                </select>
                     </span>
                 </div>
@@ -242,7 +247,7 @@
 	                <h3><label>우편주소</label></h3>
 					<span  class="box">
 	                    <input type="text" id="address1" class="postcodify_postcode5" name="bus_address" style="width:80%;" readonly>
-		                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;">검색</button>
+		                <button type="button" id="postcodify_search_button" style="height: 30px; float:right;"><a>검색</a></button>
 	                </span>
 	           	</div>
 	            <div class="join-wrap">
@@ -369,8 +374,8 @@
 			
 		<!-- 방추가 버튼 -->
         <div class="addBtn-area">
-	        <button type="button" class="addBtn" id="removeBtn" onclick="removeCar()" style="display:none;">방삭제</button>
             <button type="button" class="addBtn" id="addBtn" onclick="addCar()">방추가</button>
+	        <button type="button" class="addBtn" id="removeBtn" onclick="removeCar()" style="display:none;">방삭제</button>
         </div>
         
 		<!-- 렌트카 추가 -->
@@ -389,7 +394,7 @@
 		        <div class="join-wrap">
 		            <h3><label>가격</label></h3>
 		            <span class="box">
-		                <input type="text" id="room_price" class="content" name="roomList[0].room_price">
+		                <input type="text" inputmode="numeric" id="room_price" class="content" name="roomList[0].room_price" placeholder="숫자만 입력" required="required">
 		            </span>
 		        </div>
 		        
@@ -469,12 +474,19 @@
            	<button type="submit" class="joinBtn1" id="submitBtn" style="display:none;"><a>등록하기</a></button>
            	
             <button class="joinBtn1" id="payBtn" type="button"><a>결제하기</a></button>
-            <button type="button" class="joinBtn" onclick="javascript.historyback()">돌아가기</button>
+            <button type="button" id="backBtn" class="joinBtn" onclick="location.href='${ contextPath }/main'"><a>돌아가기</a></button>
         </div>
        
 		</form>
 	</div>
 	<script>
+	/*
+	$(document).on('keyup','input[inputmode=numeric]',function(event){
+		this.value = this.value.replace(/[^0-9]/g,'');   // 입력값이 숫자가 아니면 공백
+		this.value = this.value.replace(/,/g,'');          // ,값 공백처리
+		this.value = this.value.replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 정규식을 이용해서 3자리 마다 , 추가 	
+	});
+	*/
 	var _cnt = 1;
     function addCar(){
         var div = document.createElement('div');
@@ -549,11 +561,14 @@
  	// console.log(name);
  	var amount = 0;
  	if(name == '30'){
- 		amount = 100;
+ 		name = "프리미엄 1개월권"
+ 		amount = 30000;
  	} else if(name == '90'){
- 		amount = 200;
+ 		name = "프리미엄 3개월권"
+ 		amount = 50000;
  	} else{
- 		amount = 300;
+ 		name = "프리미엄 9개월권"
+ 		amount = 70000;
  	}
  	// console.log(name);
 
@@ -575,6 +590,7 @@
  	            var msg = '결제가 완료되었습니다!';
  	           	$("#payBtn").hide();
  	           	$("#submitBtn").show();
+ 	           	$("#backBtn").hide();
  	            msg += '결제 금액 : ' + rsp.paid_amount;
  	        } else {
  	            var msg = '결제에 실패하였습니다. 다시 시도해주세요.';

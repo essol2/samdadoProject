@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage_adver</title>
-
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
     <!-- 차트 링크 --> 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
@@ -271,7 +271,7 @@
 
     <div id="back">
         <!-- navi.jsp include -->
-       <jsp:include page="../common/navi.jsp"/>
+       <jsp:include page="../common/naviWhite.jsp"/>
             <div id="topMenu">
                 <div class="menuBox" id="menuBox">
 
@@ -289,7 +289,7 @@
             <div id="mainBox">
 			<div id="adverBox">
 				<div id="leftAdverBox">
-					<div id="adverContainer">
+					<div id="adverContainer" style="overflow : auto; height : 855px;">
 						<br>
 						<div style="overflow: auto;" >
 							<c:choose>
@@ -373,7 +373,7 @@
 							<c:otherwise>
 								<div style="text-align : center; margin-left : auto; margin-right : auto;">
 									<img src="${ contextPath }/resources/images/image_main/logo_g.png" style="margin-left : auto; margin-right:auto;"><br><br>
- 		            				<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto;">광고 중인 사업장이 없습니다!</h1>
+ 		            				<h1 style="color : #467355; font-size : 30px; text-align : center; margin-left : auto; margin-right : auto; margin-top : 10%;">광고 중인 사업장이 없습니다!</h1>
 								</div>
 							</c:otherwise>
 							</c:choose>
@@ -453,9 +453,10 @@
 					</div>
 					<div id='ingBox'>
 					<br>
-					<h1 style="color:#467355; text-align : center;">배너광고 승인 대기 중</h1>
+					
 					<c:choose>
 						<c:when test="${!empty applyList}">
+						<h1 style="color:#467355; text-align : center;">배너광고 승인 대기 중</h1>
 							<div class="previous">
 								<c:if test="${ api.currentPage <= 1 }">
 									<h1 style="color: #467355; , text-align: center; font-size: 20px;">&lt;</h1>
@@ -526,36 +527,6 @@
 	}
 	</script>
 	
-	 <script>
-	 	$(document).ready(function(){
-
-	 		if('${loginUser.usid}' != ''){
-	 			var searchU = new Object();
-					searchU.usno = "${loginUser.usno}";
-					searchU.uspart = "${loginUser.uspart}";
-					
-	 			$.ajax({
-	 				url : "${contextPath}/mypage/new",
-	 				data : JSON.stringify(searchU),
-	 				type : "post",
-	 				contentType : "application/json; charset=utf-8",
-	 				success : function(data){
-	 					if(data > 0){
-	 						$('.newAlert').css("display","block");
-	 						$('.newAlert').css("display","inline-block");
-	 						$('.newAlert').css("margin-bottom","5px;");
-	 					} else{
-	 						alert("세션확인 오류!");
-	 					}
-	 				},
-	 				error : function(e){
-	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
-									+ "message : " + e.responseText);
-	 				}
-	 			});
-	 		}
-	 		
-	 	});
-	 </script>
+	
 </body>
 </html>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -86,8 +87,19 @@ public class businessController {
 		List<Review> reviewList = bService.selectReview(bus_code);
 		List<Alliance> alliance = bService.selectAlli();
 		
+		for(int i = 0; i < roomList.size(); i++) {
+			for(int j = 0; j < roomAtt.size(); j++) {
+				if(roomList.get(i).getRoom_no() == roomAtt.get(j).getRoom_no()) {
+					roomList.get(i).setFile_rename(roomAtt.get(j).getFile_rename());
+				}
+			}
+		}		
+		
+		//System.out.println("roomLKist: " + roomList.get(0).getFile_rename());
+		//System.out.println("roomLKist: " + roomList.get(1).getFile_rename());
+		
 		if(b != null && roomList != null) {
-			//System.out.println("호텔사진  : " + attList);
+			//System.out.println("roomAtt  : " + roomAtt);
 			model.addAttribute("hotel", b);
 			model.addAttribute("att", attList);
 			model.addAttribute("room", roomList);
@@ -103,11 +115,11 @@ public class businessController {
 				int useridx = Integer.parseInt(loginUser.getUsno());		    
 				idxMap.put("bbsidx", bbsidx);
 				idxMap.put("useridx", useridx);
-				System.out.println("idxMap : " + idxMap);
+				//System.out.println("idxMap : " + idxMap);
 				
 				//jjim 테이블 에서 찜하기유무 확인하기
 				Map<String,Object> jjimcheckMap = bService.jjimcheck(idxMap);
-				System.out.println("jjimcheckMap : " + jjimcheckMap);
+				//System.out.println("jjimcheckMap : " + jjimcheckMap);
 				//찜 누른 기록이 없다면
 				if(jjimcheckMap == null) {
 					model.addAttribute("jjimcheck",0);
@@ -134,7 +146,7 @@ public class businessController {
 
 	// 호텔등록
 	@PostMapping("/hotel_insert")
-	public String hotelInsert(Business b, Room r, RoomList rl, Income i, BusinessAtt bat, @RequestParam int primonth,
+	public String hotelInsert(Business b, Room r, RoomList rl, Income i, BusinessAtt bat, @RequestParam String primonth,
 							  @RequestParam(value = "uploadFile") List<MultipartFile> rfile,
 							  @RequestParam(value = "room") List<MultipartFile> roomFile, 
 							  @RequestParam(value = "mainFile") MultipartFile mainFile,
@@ -226,14 +238,14 @@ public class businessController {
 			}
 		}
 		
-		if(primonth != 0) {
+		if(primonth != null) {
 			// 넘어온 개월수에 따라 amount값 주기
-			if(primonth == 30) {
-				i.setAmount(70);		
-			} else if(primonth == 90) {
-				i.setAmount(90);
+			if(primonth == "30") {
+				i.setAmount(30000);		
+			} else if(primonth == "90") {
+				i.setAmount(50000);
 			} else {
-				i.setAmount(180);
+				i.setAmount(90000);
 			}
 			int result3 = bService.insertIncome1(i);
 		}
@@ -322,7 +334,17 @@ public class businessController {
 				}
 		
 		List<Business> hotelList = bService.selectHotelList();
-			
+		List<Review> reviewList = bService.selectReviewList();
+		for(Business t : hotelList) {
+			for(Review r : reviewList) {
+				if(t.getBus_code() == r.getBus_code()) {
+					t.setAvstar(r.getAvstar());
+					t.setRevcnt(r.getRevcnt());
+				}
+			}
+		}	
+		
+
 		if(hotelList != null) {
 			mv.addObject("hotelList", hotelList);
 			mv.setViewName("business/hotel/hotel_list");
@@ -532,6 +554,15 @@ public class businessController {
 				}
 		
 		List<Business> tourList = bService.selectTourList();
+		List<Review> reviewList = bService.selectReviewList();
+		for(Business t : tourList) {
+			for(Review r : reviewList) {
+				if(t.getBus_code() == r.getBus_code()) {
+					t.setAvstar(r.getAvstar());
+					t.setRevcnt(r.getRevcnt());
+				}
+			}
+		}
 		
 		if(tourList != null) {
 			
@@ -780,7 +811,15 @@ public class businessController {
 				}
 		
 		List<Business> resList = bService.selectResList();
-		//System.out.println(resList);
+		List<Review> reviewList = bService.selectReviewList();
+		for(Business t : resList) {
+			for(Review r : reviewList) {
+				if(t.getBus_code() == r.getBus_code()) {
+					t.setAvstar(r.getAvstar());
+					t.setRevcnt(r.getRevcnt());
+				}
+			}
+		}
 		if(resList != null) {
 			mv.addObject("resList", resList);
 			mv.setViewName("business/restaurant/restaurant_list");
@@ -801,6 +840,20 @@ public class businessController {
 		List<CarAtt> carAtt = bService.selectCarAtt(bus_code);
 		List<Review> reviewList = bService.selectReview(bus_code);
 		List<Alliance> alliance = bService.selectAlli();
+		
+		//System.out.println(carList.get(0).getCar_no());
+		//System.out.println(carAtt.get(0).getCar_no());
+		//System.out.println(carList);
+		//System.out.println(carAtt);
+		for(int i = 0; i < carList.size(); i++) {
+			for(int j = 0; j < carAtt.size(); j++) {
+				if(carList.get(i).getCar_no() == carAtt.get(j).getCar_no()) {
+					carList.get(i).setFile_rename(carAtt.get(j).getFile_rename());
+				}
+			}
+		}
+		System.out.println(carList.get(0).getFile_rename());
+		
 		if(b != null) {
 
 			model.addAttribute("car", b);
@@ -1033,7 +1086,15 @@ public class businessController {
 				}
 		
 		List<Business> carList = bService.selectCarList();
-		
+		List<Review> reviewList = bService.selectReviewList();
+		for(Business t : carList) {
+			for(Review r : reviewList) {
+				if(t.getBus_code() == r.getBus_code()) {
+					t.setAvstar(r.getAvstar());
+					t.setRevcnt(r.getRevcnt());
+				}
+			}
+		}	
 		if(carList != null) {
 			mv.addObject("carList", carList);
 			mv.setViewName("business/rentcar/car_list");
@@ -1044,10 +1105,10 @@ public class businessController {
 	// 예약결제 성공 시 insert
 	
 	@GetMapping("/pay")
-	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code) {
+	public String payBtn(@ModelAttribute Income i, @ModelAttribute Booking b, @ModelAttribute Point p, int bus_code, User u) {
 		
 		// 포인트에 amount 넣어주기
-		p.setPamount(i.getAmount());
+		p.setPamount(i.getAmount() * 9/10);
 		
 		// income에  들어갈 원가 10퍼센트 셋팅
 		i.setAmount(i.getAmount() * 1/10);
@@ -1068,7 +1129,12 @@ public class businessController {
 			 p.setPbalance(i.getAmount() * 9);
 		 }
 		 // 포인트 넣기
-		int point = bService.insertPoint(p);		
+		int point = bService.insertPoint(p);
+		
+		// User테이블 pbalance에 추가하기
+		u.setUsno(selectUser.getUs_no());
+		u.setPbalance(p.getPbalance());
+		int userPbalance = bService.updateUserPblance(u);
 		
 		// 예약정보 insert	
 		if(b.getBookingLv() == 1) {
@@ -1094,22 +1160,41 @@ public class businessController {
 		
 	}
 	
+	@RequestMapping(value="rescateList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> rescateList(HttpServletResponse response, @RequestParam String kinds) {
+		
+		
+		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
+		List<Business> rescateList = bService.rescateList(kind);
+		return rescateList;
+		
+	}
 
 	@RequestMapping(value="cateList", method=RequestMethod.POST)
 	@ResponseBody
-	public List<Business> cateList(HttpServletResponse response, @RequestBody String kinds) {
+	public List<Business> cateList(HttpServletResponse response, @RequestParam String kinds) {
+		
 		
 		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
 		List<Business> cateList = bService.cateList(kind);
-		
-		//System.out.println("cateList : " + cateList.size());
 		return cateList;
+		
+	}
+	
+	@RequestMapping(value="facList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> facList(HttpServletResponse response, @RequestParam String kinds) {
+		
+		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
+		List<Business> facList = bService.facList(kind);
+		return facList;
 		
 	}
 	
 	@RequestMapping(value="calList", method=RequestMethod.POST)
 	@ResponseBody
-	public List<Business> calList(HttpServletResponse response, @RequestBody String kinds) {
+	public List<Business> calList(HttpServletResponse response, @RequestParam String kinds) {
 		
 		String kind = kinds.substring(kinds.lastIndexOf("=")+1);
 		List<Business> calList = bService.calList(kind);
@@ -1118,12 +1203,45 @@ public class businessController {
 		
 	}
 	
-	@RequestMapping("/priceList")
+	@RequestMapping(value="starList", method=RequestMethod.POST)
 	@ResponseBody
-	public List<Business> priceList(HttpServletResponse response, @RequestBody Business kinds) {
-		List<Business> priceList = bService.priceList(kinds);
-		return priceList;
+	public List<Business> starList(HttpServletResponse response, @RequestParam String kinds) {
+		
+		List<Business> starList = bService.starList();
+		//System.out.println(starList);
+		return starList;
+		
 	}
+	@RequestMapping(value="starList2", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> starList2(HttpServletResponse response, @RequestParam String kinds) {
+		
+		List<Business> starList2 = bService.starList2();
+		//System.out.println(starList);
+		return starList2;
+		
+	}
+	
+	@RequestMapping(value="reviewList", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> reviewList(HttpServletResponse response, @RequestParam String kinds) {
+		
+		List<Business> reviewList = bService.reviewList();
+		
+		return reviewList;
+		
+	}
+	
+	@RequestMapping(value="reviewList2", method=RequestMethod.POST)
+	@ResponseBody
+	public List<Business> reviewList2(HttpServletResponse response, @RequestParam String kinds) {
+		
+		List<Business> reviewList2 = bService.reviewList2();
+		
+		return reviewList2;
+		
+	}
+	
 	//찜하기 ajax받기	
     @RequestMapping("/jjim")
     @ResponseBody
@@ -1263,7 +1381,7 @@ public class businessController {
 		try {
 			file.transferTo(new File(renamePath));
 		} catch (IllegalStateException | IOException e) {
-			System.out.println("파일 업로드 에러 : " + e.getMessage());
+			//System.out.println("파일 업로드 에러 : " + e.getMessage());
 		} 
 		
 		return renameFileName;
@@ -1516,7 +1634,7 @@ public class businessController {
 			file.transferTo(new File(renamePath));
 			// => 업로드 된 파일 (MultipartFile) 이 rename명으로 서버에 저장
 		} catch (IllegalStateException | IOException e) {
-			System.out.println("파일 업로드 에러 : " + e.getMessage());
+			//System.out.println("파일 업로드 에러 : " + e.getMessage());
 		} 
 		
 		return map;

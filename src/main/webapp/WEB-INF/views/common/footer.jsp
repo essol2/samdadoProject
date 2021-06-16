@@ -1,17 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-
 <!-- css 외부 파일 첨부 -->
-<link rel="stylesheet" href="${ contextPath }/resources/css/common/footer.css" type="text/css">
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>footer</title>
+<link rel="stylesheet" href="${ contextPath }/resources/css/common/footer.css?v=3" type="text/css">
 </head>
 <body>
-<footer>
+        <footer class="footer-outer-class">
             <div id="footer_left">
                 <img src="${ contextPath }/resources/images/image_footer/footerlogo.png" class="leftImg">
             </div>

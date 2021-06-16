@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>제주여행의 시작과 끝, 삼다도입니다.</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -27,12 +28,30 @@
 	
 	<!-- imagesloaded 로딩 (모든 이미지가 로딩된 후 실행되도록 할때 필요) -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.0/imagesloaded.pkgd.min.js"></script>
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+    
     <style>
 
         /* 공통 - 폰트 */
         * {
-            font-family: 'Jeju Myeongjo', serif;
-        }
+            /* font-family: 'Jeju Myeongjo', serif;  */
+     		/* font-family: 'SDKukdetopokki-Lt'; */
+     		   font-family: 'GyeonggiBatang';
+     		   }
+      @font-face {
+    font-family: 'GyeonggiBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+        
+        
+       @font-face {
+    font-family: 'WandohopeR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/WandohopeR.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 		body{
 			padding : 0px;
 			margin : 0px;
@@ -133,6 +152,8 @@
             transition-duration:0.2s;
             transition-timing-function:ease;
             border-left: 3px solid black;
+            
+            z-index: -1;
         }
 
         .down #navi {
@@ -141,6 +162,8 @@
             -webkit-transition-timing-function:ease;
             transition-duration:0.4s;
             transition-timing-function:ease;
+            
+            z-index: 0;
         }
 
         #top {
@@ -155,7 +178,7 @@
         }
 
         #content {
-            width: 80%;
+            width: 100%;
             height: auto;
             /* background-color: rgb(255, 181, 181); */
         }
@@ -201,14 +224,17 @@
 			text-align : right;
 			font-size : x-large;
 			/* border : 1px solid red; */
-  			margin-left : 36%;
+  			margin-left : 45%;
 			width : fit-content;
 			margin-right : 1%;
 			
 		}
 		
         /* 동영상 css */        
-        .wrap{ width:100%; } 
+        .wrap{ 
+            width:100%;
+            z-index: -1;
+         } 
 
         .content{ position:relative; padding-top:56%; width:100%; } 
 
@@ -319,7 +345,7 @@
                 position:fixed;
                 width: 240px;
                 top: 0;
-                left:85%;
+                left:82%;
                 height:100%;
                 -webkit-transition-duration:0.2s;
                 -webkit-transition-timing-function:ease;
@@ -374,7 +400,7 @@
                 position:fixed;
                 width: 240px;
                 top: 0;
-                left:83%;
+                left:82%;
                 height:100%;
                 -webkit-transition-duration:0.2s;
                 -webkit-transition-timing-function:ease;
@@ -624,16 +650,19 @@
                 <div class="navi">
                 <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
-	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'">삼다도</p>
+	                <p class="center" id="navi-title" onclick="location.href='${ contextPath }/main'" style="font-family: 'WandohopeR';">삼다도</p>
 
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
+	                <%-- <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p> --%>
 
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">관광지 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">음식점 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">렌트카 예약</p>
             	</div>
                 
                 <div>
-				    <p class="right" data-bs-toggle="modal" data-bs-target="#loginModal" id="navi-menu">들어가기</p>
+				    <p class="right" data-bs-toggle="modal" data-bs-target="#loginModal" id="navi-menu" >들어가기</p>
 				    <p class="right" data-bs-toggle="modal" data-bs-target="#addUserModal" id="navi-menu">회원가입</p>
 
 				</div>
@@ -646,10 +675,13 @@
                 <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 
 	                <br><br>
-	                <p class="center" id="navi-title">삼다도</p>
+	                <p class="center" id="navi-title"  style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
+	                <%-- <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p> --%>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">관광지 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">음식점 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">렌트카 예약</p>
             	</div>
                 
                 <div>
@@ -666,10 +698,13 @@
                 <div class="navi">
                 <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
-	                <p class="center" id="navi-title">삼다도</p>
+	                <p class="center" id="navi-title" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
+	                <%-- <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p> --%>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">관광지 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">음식점 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">렌트카 예약</p>
 
 		                <li class="bus-li-class"><p class="center" id="navi-menu-bus">삼다도에서 사업하기</p>
 			                <ul class="ul-class">                
@@ -700,16 +735,19 @@
                 <a href="${contextPath}/user/aboutus"><img class="navi_logoimg" width="50px" height="50px" src="resources/images/image_main/logo_w.png"></img></a>
 	                <br><br>
 
-	                <p class="center" id="navi-title">삼다도</p>
+	                <p class="center" id="navi-title" style="font-family: 'WandohopeR';">삼다도</p>
 	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/route/m_route'">나만의 길 만들기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p>
-	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">제주도 필수 예약</p>
+	                <%-- <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">전체 제주 관광지 보기</p> --%>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/hotel_list'">숙박 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/tour_list'">관광지 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/restaurant_list'">음식점 예약</p>
+	                <p class="center" id="navi-menu" onclick="location.href='${ contextPath }/business/rentcar_list'">렌트카 예약</p>
             	</div>
                 
                 <div>
                 <h5 class="helloName">${ loginUser.usname }님 <br> 혼저옵서예</h5> 
                     
-				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/admin/home'">관리자 홈</p>
+				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/admin/home'" >관리자 홈</p>
 				    <p class="right" id="navi-menu" onclick="location.href='${ contextPath }/user/logout'">일상으로</p>
 
 				</div>			    
@@ -757,9 +795,9 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;">
-		            <div class="col-5"><img src="resources/images/image_main/logo_g.png"></div>
-		            <div class="col-8" style="margin-top: 10%;"><h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2></div>
+	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;  width : 100%;">
+		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
+		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 40px;">혼저옵서예.</h2></div>
 	            </div>
             </div>
             
@@ -834,10 +872,10 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-	            <div class="login-modal-inner-header" style="display: flex; margin: auto;">
-		            <div class="col-5"><img src="resources/images/image_main/logo_g.png"></div>
-		            <div class="col-8" style="margin-top: 10%;"><h2 class="modal-title" id="exampleModalLabel">혼저옵서예.</h2></div>
-	            </div>           
+	            <div class="addMember-modal-inner-header" style="display: flex; margin: auto;  width : 100%;">
+		            <div class="col-4" style="margin-top: 5%; margin-right : 1.5%; text-align : right;"><img src="${contextPath }/resources/images/image_main/logo_g.png" style="width : 50px; height:50px;  margin-top : 4%;"></div>
+		            <div class="col-8" style="margin-top: 5%; text-align : left;"><h2 class="modal-title" id="exampleModalLabel" style="font-family: 'WandohopeR'; font-size: 40px;">혼저옵서예.</h2></div>
+	            </div>
             </div>
            
              <form action="${ contextPath }/user/login" method="post" id="loginForm"> 
@@ -859,7 +897,7 @@
 		
 		                <br><br>
 		
-		                <!--간편 로그인-->
+		                <!--간편 로그인
 		                <div class="easy_login_div">
 		                    <label for="pwd">간편 로그인</label> <br>
 		                    <div class="easy_login_imgs">
@@ -870,7 +908,7 @@
 			                            </div>
 			                              <div class="col-sm">
 			                              <a href="${naver_url}" id="naver_id_login"><img src="${contextPath}resources/images/image_user/naver.png"/></a>
-			                               <!--  <a id="naver_id_login"><img src="${contextPath}resources/images/image_user/naver.png" alt=""> 네이버</a>-->
+			                               
 			                              </div>
 			                              <div class="col-sm">
 			                                <a href="${ contextPath }/user/easyLogin/kakao"><img src="resources/images/image_user/kakao.png" alt=""> 카카오</a>
@@ -879,6 +917,8 @@
 		                          </div>
 		                    </div>
 		                </div> 
+		                -->
+		                
 	            	</div>
 	           </div>
 	            <div class="modal-footer">
@@ -1163,7 +1203,7 @@
 	
 		function goToInfo(){
 			var uspart = "일반";
-			location.href='${contextPath}/mypage/userinfo?usno='+${loginUser.usno}+'&uspart='+uspart;
+			location.href='${contextPath}/mypage/userinfo?usno='+'${loginUser.usno}'+'&uspart='+uspart;
 		}
 		
 		function aboutUst(){
@@ -1174,65 +1214,63 @@
 
 	 
      <script>
-	 	$(document).ready(function(){
-
+     function addCount(){
 	 		if('${loginUser.usid}' != ''){
+	 			var checkUP = "${loginUser.uspart}";
+	 			
 	 			var searchU = new Object();
 					searchU.usno = "${loginUser.usno}";
-					searchU.uspart = "${loginUser.uspart}";
-					
-	 			$.ajax({
-	 				url : "${contextPath}/mypage/new",
-	 				data : JSON.stringify(searchU),
-	 				type : "post",
-	 				contentType : "application/json; charset=utf-8",
-	 				success : function(data){
-	 					if(data > 0){
-	 						$('.newAlert').css("display","block");
-	 						$('.newAlert').css("display","inline-block");
-	 						$('.newAlert').css("margin-bottom","5px;");
-	 					} else{
-	 					}
-	 				},
-	 				error : function(e){
-	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
-									+ "message : " + e.responseText);
-	 				}
-	 			});
+					searchU.uspart = checkUP;
+					searchU.usnews = "${loginUser.usnews}";
+				
+				
+				if(checkUP == "제휴"){
+		 			$.ajax({
+		 				url : "${contextPath}/mypage/new",
+		 				data : JSON.stringify(searchU),
+		 				type : "post",
+		 				contentType : "application/json; charset=utf-8",
+		 				success : function(data){
+		 					if(data > 0){
+		 						$('.newAlert').css("display","block");
+		 						$('.newAlert').css("display","inline-block");
+		 						$('.newAlert').css("margin-bottom","5px;");
+		 					}
+		 				},
+		 				error : function(e){
+		 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
+										+ "message : " + e.responseText);
+		 				}
+		 			});
+				} else if(checkUP == "일반"){
+					$.ajax({
+		 				url : "${contextPath}/mypage/usernew",
+		 				data : JSON.stringify(searchU),
+		 				type : "post",
+		 				contentType : "application/json; charset=utf-8",
+		 				success : function(data){
+		 					if(data > 0){
+		 						$('.newAlert').css("display","block");
+		 						$('.newAlert').css("display","inline-block");
+		 						$('.newAlert').css("margin-bottom","5px;");
+		 					}
+		 				},
+		 				error : function(e){
+		 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
+										+ "message : " + e.responseText);
+		 				}
+		 			});
+				}
 	 		}
-	 		
+	 		console.log("확인!");
+ 	 }
+     
+     $(document).ready(function(){
+			addCount();
+    	
+	 		setInterval(addCount, 3000);
 	 	});
 	 </script>
-    
-    <!-- 네이버아디디로로그인 초기화 Script -->
-	<script type="text/javascript">
-		var naver_id_login = new naver_id_login("bwz0ZV165D8RHBEFHdF6", "http://localhost:8896/samdado/main");
-		var state = naver_id_login.getUniqState();
-		naver_id_login.setButton("white");
-		naver_id_login.setDomain(".service.com");
-		naver_id_login.setState(state);
-		naver_id_login.setPopup();
-		naver_id_login.init_naver_id_login();
-	</script>
-    
-    <!-- 네이버아디디로로그인 Callback페이지 처리 Script -->
-	<script type="text/javascript">
-	// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-	function naverSignInCallback() {
-		// naver_id_login.getProfileData('프로필항목명');
-		// 프로필 항목은 개발가이드를 참고하시기 바랍니다.
-		alert(naver_id_login.getProfileData('email'));
-		alert(naver_id_login.getProfileData('name'));
-		//alert(naver_id_login.getProfileData('birthday'));
-		//alert(naver_id_login.getProfileData('mobile'));
-	}
-
-
-	// 네이버 사용자 프로필 조회
-	naver_id_login.get_naver_userprofile("naverSignInCallback()");
-	</script>
-	
-
 	<!-- Optional JavaScript; choose one of the two! -->  
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

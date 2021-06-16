@@ -11,6 +11,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mypage_wallet</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+    
     <!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -488,11 +490,11 @@
 <body>
     <div id="back">
          <!-- navi.jsp include -->
-       <jsp:include page="../common/navi.jsp"/>
+       <jsp:include page="../common/naviWhite.jsp"/>
         
         <section class="page-start">
             <div id="topMenu">
-				<div id="countDday"> <p>${ loginUser.usname }님의 <br> 여행까지 <br>D-100</p> </div>
+				<div id="countDday"> <p>${ loginUser.usname }님의 <br> 여행까지 <br>D-1</p> </div>
                 <div class="menuBox" id="menuBox">
                     <button class="menuButton" id="myInfo" onclick="goToInfo();"> <div class="menuBoxEle" ><br><img src="${contextPath}/resources/images/image_mp/mp_userB.png" class="btnImg"> <br> 내 정보</div></button>
                     <img src="${contextPath}/resources/images/image_mp/dot_r.png" class="newAlert" id="reddot">
@@ -531,28 +533,28 @@
                 	
                 	<c:forEach items="${chaList}" var="item">
                 		arr.push({accClassify:"${item.accClassify}"
-                				, oneTotalSum : "${item.oneTotalSum}"});
+                				, totalSum : "${item.totalSum}"});
                 	</c:forEach>
                 	
                 	if(arr.length == 1){
                 		for(var j=0; j<5; j++){
-                			arr.push({accClassify : '', oneTotalSum : 0});
+                			arr.push({accClassify : '', totalSum : 0});
                 		}
                 	} else if(arr.length == 2){
                 		for(var j=0; j<4; j++){
-                			arr.push({accClassify : '', oneTotalSum : 0});
+                			arr.push({accClassify : '', totalSum : 0});
                 		}
                 	} else if(arr.length == 3){
                 		for(var j=0; j<3; j++){
-                			arr.push({accClassify : '', oneTotalSum : 0});
+                			arr.push({accClassify : '', totalSum : 0});
                 		}
                 	} else if(arr.length == 4){
                 		for(var j=0; j<2; j++){
-                			arr.push({accClassify : '', oneTotalSum : 0});
+                			arr.push({accClassify : '', totalSum : 0});
                 		}
                 	} else if(arr.length == 5){
                 		for(var j=0; j<1; j++){
-                			arr.push({accClassify : '', oneTotalSum : 0});
+                			arr.push({accClassify : '', totalSum : 0});
                 		}
                 	} else{
                 		console.log(arr);
@@ -564,7 +566,7 @@
 			    	data = { 
 			    		datasets: [{ 
 			    			backgroundColor: ['#40634c', '#467355', '#689978','#88b897','#badbc5', '#c9f5d7'], 
- 			    			data: [arr[0].oneTotalSum, arr[1].oneTotalSum, arr[2].oneTotalSum, arr[3].oneTotalSum,arr[4].oneTotalSum, arr[5].oneTotalSum],
+ 			    			data: [arr[0].totalSum, arr[1].totalSum, arr[2].totalSum, arr[3].totalSum,arr[4].totalSum, arr[5].totalSum],
  							
 			    		}], 
 			    		labels: [arr[0].accClassify,arr[1].accClassify,arr[2].accClassify,arr[3].accClassify,arr[4].accClassify,arr[5].accClassify] 
@@ -921,35 +923,7 @@
 	</script>
 	
 	 <script>
-	 	$(document).ready(function(){
-
-	 		if('${loginUser.usid}' != ''){
-	 			var searchU = new Object();
-					searchU.usno = "${loginUser.usno}";
-					searchU.uspart = "${loginUser.uspart}";
-					
-	 			$.ajax({
-	 				url : "${contextPath}/mypage/new",
-	 				data : JSON.stringify(searchU),
-	 				type : "post",
-	 				contentType : "application/json; charset=utf-8",
-	 				success : function(data){
-	 					if(data > 0){
-	 						$('.newAlert').css("display","block");
-	 						$('.newAlert').css("display","inline-block");
-	 						$('.newAlert').css("margin-bottom","5px;");
-	 					} else{
-	 						alert("세션확인 오류!");
-	 					}
-	 				},
-	 				error : function(e){
-	 					alert("세션확인 오류2!"+ "error code : " + e.status + "\n"
-									+ "message : " + e.responseText);
-	 				}
-	 			});
-	 		}
-	 		
-	 	});
+	 	
 	 	
 	 	Number.prototype.format = function(){
 	 	    if(this==0) return 0;

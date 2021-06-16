@@ -103,8 +103,6 @@
         
         .infoLabel{
        	    font-size: 20px;
-		    /* font-weight: bold; */
-		    color: #495740;
         }
 
         .jjim_img {
@@ -134,10 +132,6 @@
 
         }
 
-        #small_view_area {
-            /* border: 1px solid black; */
-    		/* border-radius: 13px; */
-        }
 
         .small_view {
             margin: 3%;
@@ -188,9 +182,10 @@
         }
 
         .other {
-            margin-top: 2%;
-            display: flex;
-        }
+		    margin-top: 1%;
+		    display: flex;
+		    height: 120px;
+		}
 
         .otherimage {
             width: 20%;
@@ -291,21 +286,18 @@
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 10px 75px;
             text-decoration: none;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 50px;            
 
         }
 
         #bookingBtn {
             background-color: rgb(70, 115, 85) !important;
-            border: 1px solid rgb(70, 115, 85) !important;
-            font-family: 'GmarketSansBold' !important;
+            border: 1px solid rgb(70, 115, 85) !important;            
         }
         
          #report_btn, #jjim_btn{
@@ -475,8 +467,7 @@
             padding: 6px 55px;
             text-decoration: none;
             margin-top: 30px;
-            margin-bottom: 30px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 30px;            
             width: 98%;
         }
 
@@ -644,9 +635,22 @@
     	
     	.premium {
             width: 60px;
-            height: 60px;
+            height: 50px;
             margin-bottom:30px;
         }
+        
+        #small_view_area1{
+        	border: 1px solid black;
+		    border-radius: 8px;
+		    text-align: center;
+		    display: flex;
+        }
+        
+        .adlabel{
+	        margin: auto;
+		    font-size: 25px;
+		    color: #435055;
+		}
     	
     	
     </style>
@@ -668,7 +672,7 @@
             <div class="title_area">
                 <div class="title_area">
                 	<c:if test="${ tour.bus_classify eq 'P' }">
-                    <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
+                    <img class="premium" src="${ contextPath }/resources/images/image_listpage/premiumicon.png">
                     </c:if>
                     <label id="ho_title" class="title_tag">${ tour.bus_name }</label>
                     <br>
@@ -827,6 +831,13 @@
 				</script>
 				
                 <!-- 작은 리뷰 -->
+                <c:choose>
+			    <c:when test="${all eq null}">
+				    <div class="col2" id="small_view_area1" style="border:1px soild black;">
+				    	<label class="adlabel">등록 된 광고가 없습니다.</label>
+				    </div> 	
+			    </c:when>
+			    <c:otherwise>
                 <div class="col2" id="small_view_area">
 	                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 	                  <div class="carousel-inner">
@@ -845,6 +856,8 @@
 	                  </div>
 	                </div>
                 </div>
+                </c:otherwise>
+			    </c:choose>
             </div>
         </div>
         <div class="checktable">
@@ -887,9 +900,9 @@
             </div>
             <div class="detailView" id="detailView">
                 <b>${ tour.pro_name }</b><br><br>
-                <label id="adult">어른 : ${ tour.pro_adult }원</label><br>
-                <label id="youth">청소년 : ${ tour.pro_youth }원</label><br>
-                <label id="child">어린이 : ${ tour.pro_child }원</label>
+                <label id="adult">어른 : <fmt:formatNumber value="${ tour.pro_adult }" pattern="#,###"/>원</label><br>
+                <label id="youth">청소년 : <fmt:formatNumber value="${ tour.pro_youth }" pattern="#,###"/>원</label><br>
+                <label id="child">어린이 : <fmt:formatNumber value="${ tour.pro_child }" pattern="#,###"/>원</label>
             </div>
 
             <div class="btnArea">
@@ -907,7 +920,7 @@
             <label class="reviewTitle">후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:#ffd700;">★</a><b></b>(후기 ${ review.size() }개)</label><br>
             <c:if test="${ empty review }">
             <div class="reviewBox">
-            <p style="font-size:60px">리뷰가 없습니다!!!</p>
+            <p style="font-size:60px">등록 된 리뷰가 없습니다</p>
             </div>
             </c:if>
             <c:forEach var="r" items="${ review }">
@@ -937,7 +950,16 @@
     </section>
     
     <script>
-    
+    $(function(){
+    	var reviews = '<c:out value="${review.size()}"/>'
+    	if(reviews == '0'){
+    		$(".reviewBox").css({
+    			"text-align": "center",
+    			"color" : "#495740",
+    	    	"margin-bottom": "40px"
+    		});
+    	}
+    });
     
     var sum = 0;
     var cnt = 0;
@@ -974,7 +996,7 @@
 	    });
     
     	$j1124( function() {
-    		$j1124( ".datepicker" ).datepicker();
+    		$j1124( ".datepicker" ).datepicker({ minDate: 0});
         } );
         
     </script>
@@ -1006,43 +1028,42 @@
                     <div id="table">
                         <div class="rows">
                             <span class="cell cols1">성인입장권</span>
-                            <span class="cell cols2"> ${ tour.pro_adult }원</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_adult }" pattern="#,###"/>원</span>
                             <span class="cell cols3"><input type="number" id="adultNumber" onchange="adult(this)" value="0" min="0">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">청소년입장권</span>
-                            <span class="cell cols2">${ tour.pro_youth }원</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_youth }" pattern="#,###"/>원</span>
                             <span class="cell cols3"><input type="number" id="youthNumber" onchange="youth(this)" value="0" min="0">명</span>
                         </div>
                         <div class="rows">
                             <span class="cell cols1">어린이입장권</span>
-                            <span class="cell cols2">${ tour.pro_child }원</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_child }" pattern="#,###"/>원</span>
                             <span class="cell cols3"><input type="number" id="childNumber" onchange="child(this)" value="0" min="0">명</span>
                         </div>
                     </div>
                     <div id="table2">
                         <div class="rows2">
                             <span class="cell cols1">성인입장권</span>
-                            <span class="cell cols2">${ tour.pro_adult }원 *<span id="adultResult"></span>명</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_adult }" pattern="#,###"/>원 *<span id="adultResult"></span>명</span>
                             <span class="cell cols3" id="adultPayS"></span>
                             
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">청소년입장권</span>
-                            <span class="cell cols2">${ tour.pro_youth }원 *<span id="youthResult"></span>명</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_youth }" pattern="#,###"/>원 *<span id="youthResult"></span>명</span>
                             <span class="cell cols3" id="youthPayS"></span>
                             
                         </div>
                         <div class="rows2">
                             <span class="cell cols1">어린이입장권</span>
-                            <span class="cell cols2">${ tour.pro_child }원 *<span id="childResult"></span>명</span>
+                            <span class="cell cols2"><fmt:formatNumber value="${ tour.pro_child }" pattern="#,###"/>원 *<span id="childResult"></span>명</span>
                             <span class="cell cols3" id="childPayS"></span>
                             
                         </div>
                     </div>
                     <label>총 합계 :</label> 
-           			<label id="payResultL"></label>         
-                    <label>원</label>
+           			<label id="payResultL"></label>                    
                     <button class="payBtn">결제하기</button>
                 </div>
 
@@ -1114,6 +1135,14 @@
 	</script>
     
     <script>
+	    Number.prototype.format = function(){
+	        if(this==0) return 0;
+	        var reg = /(^[+-]?\d+)(\d{3})/;
+	        var n = (this + '');
+	        while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+	        return n;
+	    };
+    
 	    function adult(e) {	  	  
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('adultResult').innerText
@@ -1122,14 +1151,14 @@
 		  	var adultPay = ${ tour.pro_adult } * document.getElementById('adultNumber').value;
 		  	var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
 		  	var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
-	  		document.getElementById('adultPay').value = adultPay;
-	  		document.getElementById('adultPayS').innerText = adultPay+"원";
+		  	document.getElementById('adultPay').value = adultPay;
+	  		document.getElementById('adultPayS').innerText = adultPay.format()+"원";
 	  		document.getElementById('youthPay').value = youthPay;
-	  		document.getElementById('youthPayS').innerText = youthPay+"원";
+	  		document.getElementById('youthPayS').innerText = youthPay.format()+"원";
 	  		document.getElementById('childPay').value = childPay;
-	  		document.getElementById('childPayS').innerText = childPay+"원";
-        	document.getElementById('payResult').value = adultPay + youthPay + childPay;
-        	document.getElementById('payResultL').innerText = document.getElementById('payResult').value;
+	  		document.getElementById('childPayS').innerText = childPay.format()+"원";
+        	var payResult = document.getElementById('payResult').value = adultPay + youthPay + childPay;
+        	document.getElementById('payResultL').innerText = payResult.format()+"원";
 	  	}
 	    
 	    function youth(e) {
@@ -1141,13 +1170,13 @@
 			  	var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
 			  	var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
 			  	document.getElementById('adultPay').value = adultPay;
-		  		document.getElementById('adultPayS').innerText = adultPay+"원";
+		  		document.getElementById('adultPayS').innerText = adultPay.format()+"원";
 		  		document.getElementById('youthPay').value = youthPay;
-		  		document.getElementById('youthPayS').innerText = youthPay+"원";
+		  		document.getElementById('youthPayS').innerText = youthPay.format()+"원";
 		  		document.getElementById('childPay').value = childPay;
-		  		document.getElementById('childPayS').innerText = childPay+"원";
-	        	document.getElementById('payResult').value = adultPay + youthPay + childPay;
-	        	document.getElementById('payResultL').innerText = document.getElementById('payResult').value;
+		  		document.getElementById('childPayS').innerText = childPay.format()+"원";
+	        	var payResult = document.getElementById('payResult').value = adultPay + youthPay + childPay;
+	        	document.getElementById('payResultL').innerText = payResult.format()+"원";
 		  	}
 	
 	    function child(e) {
@@ -1159,13 +1188,14 @@
 			  var youthPay = ${ tour.pro_youth } * document.getElementById('youthNumber').value;
 	    	  var childPay = ${ tour.pro_child } * document.getElementById('childNumber').value;
 	    	  document.getElementById('adultPay').value = adultPay;
-		  		document.getElementById('adultPayS').innerText = adultPay+"원";
+	    	  document.getElementById('adultPay').value = adultPay;
+		  		document.getElementById('adultPayS').innerText = adultPay.format()+"원";
 		  		document.getElementById('youthPay').value = youthPay;
-		  		document.getElementById('youthPayS').innerText = youthPay+"원";
+		  		document.getElementById('youthPayS').innerText = youthPay.format()+"원";
 		  		document.getElementById('childPay').value = childPay;
-		  		document.getElementById('childPayS').innerText = childPay+"원";
-	        	document.getElementById('payResult').value = adultPay + youthPay + childPay;
-	        	document.getElementById('payResultL').innerText = document.getElementById('payResult').value;
+		  		document.getElementById('childPayS').innerText = childPay.format()+"원";
+	        	var payResult = document.getElementById('payResult').value = adultPay + youthPay + childPay;
+	        	document.getElementById('payResultL').innerText = payResult.format()+"원";
 	    	}
 	
     </script>

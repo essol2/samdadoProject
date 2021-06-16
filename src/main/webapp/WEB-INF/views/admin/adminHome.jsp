@@ -6,6 +6,8 @@
 <!doctype html>
 <html lang="en">
   <head>
+      <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+  
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,7 +49,7 @@
                  		   <br><br>
                            <div class="row" style="padding-top: 4%;">
                            <h1>광고별 매출</h1>
-                	       <h6>배너광고 | 프리미엄 광고 | 커미션 매출 내역이 보여집니다.</h6>
+                	       <h6>최근 6개월 배너광고 | 프리미엄 광고 | 커미션 | 총매출 내역이 보여집니다.</h6>
                 	       <br><br>
                             <div>
                                 <canvas id="myAllChart"></canvas>
@@ -67,60 +69,65 @@
 	                    				method: "post", 
 	                    				async: false, // 비동기가 아니도록 처리
 	                    				success : function(data) {
-	                    					console.log("AJAX SUCCESS!");
+	                    					//console.log("AJAX SUCCESS!");
                     			            //console.log(data);
                     			            
                     			            for (var i in data) {
-                    			            	
                     			            	//var pamount = $(data[i].pamount);
-                    			            	
                     			            	//console.log(pamount);
-                    			            	
                     			            	allprofits.push(data[i].pamount);
-                    			            	
-                    			            	
                     			            }
 
 	                    				},
 	                    				error : function(e) {
-	                    					 console.log("AJAX FAILED..");
+	                    					 //console.log("AJAX FAILED..");
 
 	                    				}
 	                    			});
 	                            	
-	                            	console.log(allprofits);
+	                            	//console.log(allprofits);
 	                            	return allprofits;
 	                            }
                             </script>
                                     	
 		                  	<script>
-				                  	const DATA_COUNT = 6;
-				                  	const NUMBER_CFG = {count: DATA_COUNT, min: 0};
+				                  	var DATA_COUNT = 6;
+				                  	var NUMBER_CFG = {count: DATA_COUNT, min: 0};
 		
-				                  	const labels = ["11월", "12월", "1월", "2월", "3월", "4월"];
+				                  	var labels = ["11월", "12월", "1월", "2월", "3월", "4월"];
 				                  	
-				                  	const data = {
+				                  	var data = {
 				                  	  labels: labels,
 				                  	  datasets: [
 				                  	    {
 				                  	      label: '커미션',
 				                  	      data: getAllProfit("수수료"),
 				                  	      backgroundColor: "rgb(54, 162, 235)",
+				                  	      order: 1
 				                  	    },
 				                  	    {
 				                  	      label: '프리미엄',
 				                  	      data: getAllProfit("프리미엄"),
 				                  	      backgroundColor: "rgb(75, 192, 192)",
+				                  	      order: 1
 				                  	    },
 				                  	    {
 				                  	      label: '배너',
 				                  	      data: getAllProfit("충전"),
 				                  	      backgroundColor: "rgb(255, 99, 132)",
-				                  	    }
+				                  	      order: 1
+				                  	    },
+				                  	    {
+				                  	      label: '총매출',
+				                  	      data: getAllProfit(),
+				                     	  borderColor: "rgb(255, 135, 99)",
+				                  	      type: 'line',
+				                          order: 0
+					                  	}
 				                  	  ]
 				                  	};
 				                   
-				                  	const config = {
+				                  	var config = {
 				                  		  type: 'bar',
 				                  		  data: data,
 				                  		  options: {
@@ -203,7 +210,7 @@
 						                        <tr>
 						                            <th style="width: 10%;">No</th>
 						                            <th>제목</th>
-						                            <th style="width: 25%;">작성일</th>
+						                            <th style="width: 28%;">작성일</th>
 						                        </tr>
 					                        </thead>
 					                        <tbody>
@@ -218,7 +225,7 @@
 					  										   <b>${ aboardList.btitle }</b>
 							                                </button>
 							                            </td>
-							                            <td>${ aboardList.bdate }</td>
+							                            <td> ${ aboardList.bdate }</td>
 							                        </tr>
 							                        
 							                        <!-- 모달 -->
@@ -250,7 +257,7 @@
 																		<br>
 																		<div class="form-floating">
 																		  <input type="text" class="form-control" placeholder="Leave a comment here" value="${ status.current.bdate }" name="bdate" id="floatingTextarea" disabled>
-																		  <label for="floatingTextarea">작성일</label>
+																		  <label for="floatingTextarea" >작성일</label>
 																		</div>
 																		<div class="modal-footer">
 																	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -276,78 +283,99 @@
 			            </div>
                      </div>
 					<br><br>
-                    <!--막대 그래프(총 매출)-->
+                    <!--막대 그래프(유입 회원)-->
                      <div class="row" style="padding-top: 4%; padding-right: 7%; padding-bottom: 5%;">
-                     <h1>최근 6개월 총 매출</h1>
-                	 <h6>최근 날짜 기준으로 6개월 간의 매출 내역이 보여집니다.</h6>
+                     <h1>회원 유입수</h1>
+                	 <h6>삼다도 제휴회원 | 일반회원의 유입 데이터가 나타납니다.</h6>
                 	 <br><br>
                         <!--차트 그려지는 영역-->
                         <canvas id="myBarChart" width="400" height="300"></canvas>
 
                         <!-- 막대그래프 create chart-->
                         <script>
-                        
-                        function getProfit() {
-                        	
-                        	var profits = [0, 0, 0, 0, 0, 0];
-                        	
-                        	$.ajax({
-                				url : "${ contextPath }/admin/selectGetProfit",
-                				dataType : "json",
-                				async: false, // 비동기가 아니도록 처리
-                				success : function(data) {
-                					//alert(JSON.stringify(data));
-                					profits = data;
-                				},
-                				error : function(e) {
-                					alert("code : " + e.status + "\n"
-                							+ "message : " + e.responseText);
-                				}
-                			});
-                        	
-                			//alert(JSON.stringify(profits));
-                        	return profits;
-                        }
-                        
-                        
-                        var ctx = document.getElementById('myBarChart').getContext('2d');
-                        var myChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: ['11월', '12월', '1월', '2월', '3월', '4월'],
-                                datasets: [{
-                                    label: '최근 6개월간 매출',
-                                    data: getProfit(),
-                                    backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(255, 99, 132, 1)',
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 206, 86, 1)',
-                                        'rgba(75, 192, 192, 1)',
-                                        'rgba(153, 102, 255, 1)',
-                                        'rgba(255, 159, 64, 1)'
-                                    ],
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    yAxes: [{
-                                        ticks: {
-                                            beginAtZero: true
-                                        }
-                                    }]
-                                }
-                            }
-                        });
-                        </script>
+	                            function getUserData(userType) {
+	                            	
+	                            	var userData = [];
+	                            	obj = { uspart: userType }; // 키값 vo 필드명이랑 일치
+	                            	
+	                            	$.ajax({
+	                    				url : "${ contextPath }/admin/selectGetUserData",
+	                    				dataType : "json",
+	                    				data: JSON.stringify(obj),
+	                    				contentType: "application/json",
+	                    				method: "post", 
+	                    				async: false, // 비동기가 아니도록 처리
+	                    				success : function(data) {
+	                    					console.log("AJAX SUCCESS!");
+                    			            //console.log(data);
+                    			            
+                    			            for (var i in data) {
+                    			            	//var upartcount = $(data[i].upartcount);
+                    			            	//console.log(upartcount);
+                    			            
+                    			            	 userData.push(data[i].upartcount);
+                    			            }
+
+	                    				},
+	                    				error : function(e) {
+	                    					 console.log("AJAX FAILED..");
+
+	                    				}
+	                    			});
+	                            	console.log(userData);
+	                            	return userData;
+	                            }
+                            </script>
+                                    	
+		                  	<script>
+		                  	        DATA_COUNT = 6;
+		                  	        NUMBER_CFG = {count: DATA_COUNT};
+		
+		                  	        labels = ["11월", "12월", "1월", "2월", "3월", "4월"];
+				                  	
+				                  	data = {
+				                  	  labels: labels,
+				                  	  datasets: [
+				                  	    {
+				                  	      label: '제휴',
+				                  	      data: getUserData("제휴"),
+				                  	      backgroundColor: "rgb(000, 204, 204)",
+				                  	      borderColor: "rgb(000, 204, 204)"
+				                  	    },
+				                  	    {
+				                  	      label: '일반',
+				                  	      data: getUserData("일반"),
+				                  	      backgroundColor: "rgb(204, 000, 153)",
+				                  	      borderColor: "rgb(204, 000, 153)"
+				                  	    }
+				                  	  ]
+				                  	};
+				                  	
+				                  	config = {
+				                  		  type: 'radar',
+				                  		  data: data,
+				                  		  options: {
+				                  		    responsive: true,
+				                  		    plugins: {
+				                  		      title: {
+				                  		        display: true,
+				                  		        text: 'Chart.js Radar Chart'
+				                  		      }
+				                  		    }
+				                  		  },
+				                  		};
+				                  	
+				                  	var chartOptions = {
+					                  		ticks: {
+					                  			beginAtZero: true,
+					                  			min: 0,
+					                  			max: 100,
+					                  			stepSize: 1
+					                  		},
+					                  	};
+		                  	       
+				                   var myAllChart = new Chart(document.getElementById('myBarChart'), config);
+		                  	</script>
                     </div>
                 </div>
             </div>
@@ -386,8 +414,8 @@
                         <thead>
                         <tr>
                             <th scope="col">사업장 No</th>
-                            <th scope="col">회원명</th>
-                            <th scope="col">카테고리</th>
+                            <th scope="col" style="width : 8%;">회원명</th>
+                            <th scope="col" style="width : 10%;">카테고리</th>
                             <th scope="col">사업장명</th>
                             <th scope="col">사업장주소</th>
                         </tr>

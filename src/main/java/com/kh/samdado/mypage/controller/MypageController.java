@@ -11,7 +11,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.samdado.admin.model.vo.A_board;
 import com.kh.samdado.business.model.vo.Jjim;
 import com.kh.samdado.business.model.vo.Review;
 import com.kh.samdado.business.model.vo.business.Business;
@@ -40,6 +40,7 @@ import com.kh.samdado.mypage.model.vo.Alert;
 import com.kh.samdado.mypage.model.vo.ApplyPageInfo;
 import com.kh.samdado.mypage.model.vo.ApplyPagination;
 import com.kh.samdado.mypage.model.vo.Booking;
+import com.kh.samdado.mypage.model.vo.MpBoardPagination;
 import com.kh.samdado.mypage.model.vo.Point;
 import com.kh.samdado.mypage.model.vo.QnA;
 import com.kh.samdado.mypage.model.vo.RouteMP;
@@ -71,9 +72,35 @@ public class MypageController {
 		// --은솔 : 새로운 알림 있는지 확인하기
 		  int newNews = mService.findNewNews(u);
 		  //System.out.println("mpcontroller newNews : " + newNews);
+		  //int newBoardNews = mService.findNewUserNews(u);
+		  int userNews = u.getUsnews();
+		  
+		  //System.out.println(newNews);
+		  //System.out.println(userNews);
+		  
+		  
+		  if(newNews > 0 || userNews > 0) {
+			  return 1;
+		  } else {
+			  return 0;
+		  }
+		  
+		
+	}
+	
+	@RequestMapping("/usernew")
+	@ResponseBody
+	public int findNewAlert(@RequestBody User u){
+		
+		//System.out.println("User확인 : " + u);
+		// --은솔 : 새로운 알림 있는지 확인하기
+		  //int newNews = mService.findNewUserNews(u);
+		  //System.out.println("mpcontroller newNews : " + newNews);
+		int newNews = u.getUsnews();
 		
 		return newNews;
 	}
+	 
 	 
 	// 제휴회원 마이페이지로 이동
 	 @GetMapping("/buserinfo")
@@ -283,12 +310,14 @@ public class MypageController {
 	 // 제휴회원 - 내 사업장 조회 메소드
 	 @GetMapping("/buss")
 	 public ModelAndView selectBussList(@RequestParam(name="usno") String usno,
-			 							ModelAndView mv) {
+			 							ModelAndView mv, HttpSession session) {
+		 User u = (User) session.getAttribute("loginUser");
+		 usno = u.getUsno();
 		 
 		 // 해당 사용자가 등록한 사업장 리스트 알아오기
 		 List<Business> bussList = mService.selectBussList(usno);
 		 
-		 //System.out.println("bussList확인 : " + bussList);
+		 System.out.println("bussList확인 : " + bussList);
 		 
 		 mv.addObject("bussList", bussList);
 		 mv.setViewName("mypage/mp_StoreList");
@@ -332,6 +361,7 @@ public class MypageController {
 		List<Business> chartDataList = mService.selectAlliChartList(usno);
 		//System.out.println(chartDataList);
 		
+		
 		 mv.addObject("api", api);
 		 mv.addObject("allList", allList);
 		 mv.addObject("applyList", applyList);
@@ -351,12 +381,23 @@ public class MypageController {
 		 
 		 User u = (User) session.getAttribute("loginUser");
 		 
+		// 공지사항 갯수 구하기
+		int boardListCount = mService.selectBoardListCount(u.getUspart());
+		//System.out.println("공지사항 전체 글 갯수 확인 : " + boardListCount);
+				 
+		 // 요청 페이지에 맞는 게시글 리스트 조회
+		 ApplyPageInfo api = MpBoardPagination.getApplyPageInfo(currentPage, boardListCount);
+		 
 		 // DB에서 가져와야 할 알림 내역들 : 문의하기, 신고 받은 내역, 포인트 충전 알림, 배너광고 신청, 승인, 반려(사유), 포인트 얼마 안남음
 		 // 안읽은 리스트
 		 List<Alert> alertNList = mService.selectAlertList(u);
 		 // 읽은 리스트
 		 List<Alert> alertYList = mService.selectYAlertList(u);
+		 // 공지사항
+		 List<A_board> alertBoard = mService.selectBoard(u, api);
 		 
+		 mv.addObject("api", api);
+		 mv.addObject("alertBoard", alertBoard);
 		 mv.addObject("alertNList", alertNList);
 		 mv.addObject("alertYList", alertYList);
 		 mv.setViewName("mypage/mp_news");
@@ -377,6 +418,7 @@ public class MypageController {
 		// 읽은 리스트
 		List<Alert> alertYList = mService.selectYAlertList(u);
 		
+		
 		// 두개의 리스트 합치기
 		List<Alert> newDataList = new ArrayList<>();
 		
@@ -385,7 +427,7 @@ public class MypageController {
 		newDataList.addAll(alertNList);
 		newDataList.addAll(alertYList);
 		
-		//System.out.println(newDataList);
+		System.out.println(newDataList);
 		
 		return newDataList;
 
@@ -404,8 +446,8 @@ public class MypageController {
 		 
 		 //  2. 읽음으로 처리해주기
 		 int result =  mService.updateNstatus(al);
-		 
-		 if(deAlert != null) {
+		 System.out.println(result);
+		 if(deAlert != null && result > 0) {
 			 return deAlert;
 		 } else {
 			 return null;
@@ -424,17 +466,10 @@ public class MypageController {
 		 
 		 //System.out.println(user);
 		 
-		 List<Alert> alertNList = mService.selectAlertList(user);
-		 // 읽은 리스트
-		 List<Alert> alertYList = mService.selectYAlertList(user);
+		// 공지사항
+		List<A_board> alertBoard = mService.selectUserBoard(user);
 		 
-		 //System.out.println(alertNList);
-		 //System.out.println(alertYList);
-		 
-		 mv.addObject("alertNList", alertNList);
-		 mv.addObject("alertYList", alertYList);
-		 //mv.addObject("usno", user.getUsno());
-		 //mv.addObject("uspart",user.getUspart());
+		 mv.addObject("alertBoard", alertBoard);
 		 mv.setViewName("mypage/mp_UserInfo");
 		return mv;
 	}
@@ -453,7 +488,7 @@ public class MypageController {
 		//System.out.println("change안에서 u : " + u);
 		 
 		 User loginUser = uService.loginUser(u);
-		 
+		 List<A_board> alertBoard = null;
 		 
 		 if(bcryptPasswordEncoder.matches(cPwd, loginUser.getUspwd())) {
 			// 4) 비밀번호 변경 값 받아서 암호화
@@ -463,26 +498,29 @@ public class MypageController {
 		    // 5) db에 update 후
 			int result = uService.updatePwdUser(u);	// 암호화 한 비번 db에 update
 			u.setUspart("일반");
-			 List<Alert> alertNList = mService.selectAlertList(u);
-			 // 읽은 리스트
-			 List<Alert> alertYList = mService.selectYAlertList(u);
+			 
+			User user = (User) session.getAttribute("loginUser");
+			 
+			 //System.out.println(user);
+			 
+			// 공지사항
+			alertBoard = mService.selectUserBoard(user);
+			 //System.out.println(alertBoard);
+			
 			
 		    // 6) 마이페이지로 돌아가기
 			if (result > 0) {
-				 model.addAttribute("alertNList", alertNList);
-				 model.addAttribute("alertYList", alertYList);
+				model.addAttribute("alertBoard", alertBoard);
 				model.addAttribute("msg", "비밀번호가 수정되었습니다.");
 				return "/mypage/mp_UserInfo";
 			} else {
-				 model.addAttribute("alertNList", alertNList);
-				 model.addAttribute("alertYList", alertYList);
+				model.addAttribute("alertBoard", alertBoard);
 			    model.addAttribute("msg", "비밀번호 변경에 실패하였습니다. 다시 시도해주세요.");
 			    return "/mypage/mp_UserInfo";
 			}
 			 
 		 } else {
-			 model.addAttribute("usno", u.getUsno());
-			 model.addAttribute("uspart", u.getUspart());
+			 model.addAttribute("alertBoard", alertBoard);
 			 model.addAttribute("msg", "현재 비밀번호가 틀립니다.");
 			 return "/mypage/mp_UserInfo";
 		 }
@@ -520,21 +558,21 @@ public class MypageController {
 		
 		//변경 값 다시 loginUser에 넣어주기
 		User loginUser = uService.loginUser(u);
-		
-		//System.out.println("loginUser가 변경 되었는지 확인해보쟈 : " + loginUser);
-		 u.setUspart("일반");
-		 List<Alert> alertNList = mService.selectAlertList(u);
-		 // 읽은 리스트
-		 List<Alert> alertYList = mService.selectYAlertList(u);
+
+		 List<A_board> alertBoard = null;
+		 User user = (User) session.getAttribute("loginUser");
+		 
+		 //System.out.println(user);
+		 
+		 // 공지사항
+		 alertBoard = mService.selectUserBoard(user);
 		 
 		if (result > 0) {
-			model.addAttribute("alertNList", alertNList);
-			model.addAttribute("alertYList", alertYList);
+			model.addAttribute("alertBoard", alertBoard);
 			model.addAttribute("msg", "수정이 완료되었습니다!");
 			return "/mypage/mp_UserInfo";
 		} else {
-			model.addAttribute("alertNList", alertNList);
-			model.addAttribute("alertYList", alertYList);
+			model.addAttribute("alertBoard", alertBoard);
 		    model.addAttribute("msg", "수정에 실패했습니다. 다시 시도해주세요.");
 			return "/mypage/mp_UserInfo";
 		}
@@ -545,17 +583,74 @@ public class MypageController {
 	 // 일반회원 - 내예약목록 페이지 이동
 	 @GetMapping("/booking")
 	 public ModelAndView goToBooking(@ModelAttribute User u,
-			 						 ModelAndView mv) {
+			 						 ModelAndView mv, HttpSession session) {
+		 
+		 //System.out.println(u);
 		 //System.out.println("usno1 : " + u.getUsno());
+		 
+//		 User user = (User)session.getAttribute("loginUser");
+//		 String u = user.getUsno();
 		 
 		 List<Booking> hotelBookList = mService.selectHotelBookList(u.getUsno());
 		 List<Booking> tourBookList = mService.selectTourBookList(u.getUsno());
 		 List<Booking> carBookList = mService.selectCarBookList(u.getUsno());
 
+//		 if(hotelBookList != null && tourBookList != null && carBookList != null) {
+//			 mv.addObject("hotelList", hotelBookList);
+//			 mv.addObject("tourList", tourBookList);
+//			 mv.addObject("carList", carBookList);
+//		 } else if(hotelBookList != null) {
+//			 if(tourBookList != null && carBookList  != null) {
+//				 mv.addObject("hotelList", hotelBookList);
+//			 }
+//		 }
+		 
+//		 if(hotelBookList != null) {
+//			 if(tourBookList != null) {
+//				 if( carBookList != null) {
+//					 mv.addObject("hotelList", hotelBookList);
+//					 mv.addObject("tourList", tourBookList);
+//					 mv.addObject("carList", carBookList);
+//				 } else {
+//					 mv.addObject("hotelList", hotelBookList);
+//					 mv.addObject("tourList", tourBookList);
+//				 } 
+//			 } else if(tourBookList == null){
+//				 if(carBookList != null) {
+//					 mv.addObject("hotelList", hotelBookList);
+//					 mv.addObject("carList", carBookList);
+//				 } else {
+//					 mv.addObject("hotelList", hotelBookList);
+//				 }
+//				
+//			 }
+//		 } else if(hotelBookList == null) {
+//			 if(tourBookList != null) {
+//				 if( carBookList != null) {
+//					 mv.addObject("tourList", tourBookList);
+//					 mv.addObject("carList", carBookList);
+//				 } else {
+//					 mv.addObject("hotelList", hotelBookList);
+//					 mv.addObject("tourList", tourBookList);
+//				 } 
+//			 } else if(tourBookList == null){
+//				 if(carBookList != null) {
+//					 mv.addObject("hotelList", hotelBookList);
+//					 mv.addObject("carList", carBookList);
+//				 } else {
+//					 mv.addObject("hotelList", hotelBookList);
+//				 }
+//				
+//			 }
+//		 }
+		 
+		 //System.out.println(hotelBookList);
+		 //System.out.println(tourBookList);
+		 //System.out.println(carBookList);
+		
 		 mv.addObject("hotelList", hotelBookList);
 		 mv.addObject("tourList", tourBookList);
 		 mv.addObject("carList", carBookList);
-		 
 		 mv.setViewName("/mypage/mp_MyReservation");		 
 		 return mv;
 	 }
@@ -783,7 +878,10 @@ public class MypageController {
 							   @RequestParam( value = "re_star", required=false, defaultValue="0.5") String re_star,
 							   @RequestParam( value = "inup", required=false) String inup,
 							   HttpServletRequest request, Model model ) {
-//		 System.out.println(file1);
+		 
+		 //System.out.println(r);
+		 
+		 //		 System.out.println(file1);
 //		 System.out.println(file2);
 //		 //System.out.println(file3);
 		 r.setRe_star(re_star);
@@ -851,7 +949,10 @@ public class MypageController {
 		 	}
 			
 			
-			if(result > 0 && result2 == 1) {
+		 	// 후기 작성이 끝나면 해당 비즈니스 별점 계산해서 넣어주기
+		 	int afterStar = mService.updateBusStar(r);
+		 	
+			if(result > 0 && result2 == 1 && afterStar > 0) {
 				model.addAttribute("usno", r.getUs_no());
 				model.addAttribute("msg", "후기가 성공적으로 게시되었습니다!");
 				return "redirect:/mypage/booking";
@@ -869,7 +970,7 @@ public class MypageController {
 		 
 		 //System.out.println("가기전에 r 확인 : " + r);
 		 Review reviewDetail = mService.selectReview(r);
-		 //System.out.println("reviewDetail 확인 : " + reviewDetail);
+		 System.out.println("reviewDetail 확인 : " + reviewDetail);
 		 
 		 return reviewDetail;
 		 
@@ -907,7 +1008,7 @@ public class MypageController {
 		 @ResponseBody
 		 public String toggleJjimOff(@RequestBody Jjim j) {
 
-			 System.out.println(j);
+			 //System.out.println(j);
 				int result = mService.deleteJjim(j);
 
 			if(result >0) 
@@ -937,7 +1038,7 @@ public class MypageController {
 			 
 			 // 이 회원이 가지고 있는 모든 경로의 모든 관광지 리스트
 			 List<RouteFinal> myRouteList = mService.selectMyRoute(u);
-			 System.out.println("myRoute확인 : " + myRouteList);
+			 //System.out.println("myRoute확인 : " + myRouteList);
 			 
 			 // 이 회원이 가지고 있는 경로 수
 			 List<RouteMP> routeNumber = mService.selectRouteNum(u);
@@ -972,7 +1073,7 @@ public class MypageController {
 				 routeTest.put(mapKey, insertThis);
 				 forIndex = forIndex + standardList[b];
 				 mapKey ++;
-				 //System.out.println("routeTest["+b+"] : " + routeTest.get(b));
+				 System.out.println("routeTest["+b+"] : " + routeTest.get(b));
 			 }
 			 
 			 mv.addObject("routeTest", routeTest);
@@ -987,17 +1088,19 @@ public class MypageController {
 		 
 	// 회원 탈퇴
 	@PostMapping("/userout")
-	public String memberOut(@ModelAttribute User u, Model model) {
+	public String memberOut(@ModelAttribute User u, Model model, HttpSession session) {
 		
 		////System.out.println("out u : " + u);
 		//System.out.println(memoutPwd);
 		User loginUser = uService.loginUser(u);
 		//System.out.println("out loginUser" + loginUser);
-		
-		List<Alert> alertNList = mService.selectAlertList(u);
-		 // 읽은 리스트
-		 List<Alert> alertYList = mService.selectYAlertList(u);
-		
+		User user = (User) session.getAttribute("loginUser");
+		 
+		 //System.out.println(user);
+		 
+		// 공지사항
+		List<A_board> alertBoard = mService.selectUserBoard(user);
+
 		
 		if(bcryptPasswordEncoder.matches(u.getUspwd(), loginUser.getUspwd())) {
 
@@ -1009,8 +1112,7 @@ public class MypageController {
 				return "redirect:/main";
 			} else {
 				if(u.getUspart() == "일반") {
-					model.addAttribute("alertNList", alertNList);
-					 model.addAttribute("alertYList", alertYList);
+					model.addAttribute("alertBoard", alertBoard);
 					model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
 					return "/mypage/mp_UserInfo";
 				} else {
@@ -1021,8 +1123,7 @@ public class MypageController {
 			}
 		} else {
 			if(u.getUspart() == "일반") {
-				model.addAttribute("alertNList", alertNList);
-				 model.addAttribute("alertYList", alertYList);
+				model.addAttribute("alertBoard", alertBoard);
 				model.addAttribute("msg", "문제가 발생했습니다. 잠시 후에 다시 시도해 주세요!");
 				return "/mypage/mp_UserInfo";
 			} else {
@@ -1059,4 +1160,24 @@ public class MypageController {
 			return renameFileName;
 		}
 
+	 // 공지사항 디테일 가져오기
+	 @RequestMapping("/alertboardajax")
+	 @ResponseBody
+	 public A_board findBoardAjax(@RequestBody A_board aboard) {
+		 //System.out.println("aboard 확인 : " + aboard);
+		 A_board ab = mService.findThisBoard(aboard);
+		 
+		 int result = 0;
+		 
+		 if(aboard.getUsnews() > 0) {
+			 result  = mService.updateUserRead(aboard);
+		 }
+		 
+		 if(ab != null && result > 0) {
+			 return ab;
+		 } else {
+			 return ab;
+		 }
+		 
+	 }
 }

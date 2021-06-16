@@ -1,4 +1,4 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -29,33 +29,27 @@
         * {
             font-family: 'Jeju Myeongjo', serif;
         }
-
         footer {
             background-color: rgb(70, 115, 85);
             height: 190px;
         }
-
         .leftImg {
             margin-left: 6%;
             margin-top: 20px;
         }
-
         #footer_center {
             margin-left: 30%;
             margin-top: -130px;
             color: white;
         }
-
         #footer_right {
             margin-left: 60%;
             margin-top: -120px;
             color: white;
         }
-
         .rightImg {
             padding-right: 15px;
         }
-
         #copyRight {
             color: white;
             margin-left: 40%;
@@ -64,14 +58,10 @@
             margin-bottom: 0px;
             opacity: 0.5;
         }
-
         hr {
             color: white;
         }
-
-
         
-
         /* 컨테이너 */
         #main-container {
             height: 100%;
@@ -80,16 +70,11 @@
             flex-direction: column;
             padding-top: 5%;
             padding-left: 6.3%;
-
         }
-
         /* 메인사진 위 정보div들 */
-
         #ho_header div {
             margin-bottom: 1%;
         }
-
-
             #ho_title {
 		    font-size: 50px;
 		    color: #343a40;
@@ -99,58 +84,41 @@
 		    font-size: 30px;
 		    font-weight: bold;
 		}
-
         #ho_grade {
             font-size: 19px;
             color: rgb(212, 71, 46);
         }
-
         .title_tag {
             margin-bottom: 1%;
         }
-
         .jjim_img {
             width: 20px;
             height: 20px;
         }
-
         .report_img {
             width: 30px;
             height: 30px;
         }
-
         /* 메인사진 위 정보div들 끝 */
-
-
         .col {
             float: left;
             display: inline;
             width: 55%;
             height: 100%;
         }
-
         .col2 {
             width: 555px;
             height: 330px;
             margin-left: 10%;
             margin-bottom: 5%;
-
         }
-
-        #small_view_area {
-            border: 1px solid black;
-            border-radius: 13px;
-        }
-
         .small_view {
             margin: 3%;
             margin-top: 0;
         }
-
 		.small_view label{
 			line-height: 20px;
 		}
-
         .small_view_btn {
             border: 0;
             outline: 0;
@@ -159,7 +127,6 @@
             padding: 0;
             font-size: 25px;
         }
-
         .small_view_con {
             font-weight: normal;
             margin-left: 3%;
@@ -169,7 +136,6 @@
             white-space: nowrap;
             max-width: 90%;
         }
-
         #small_view_morebtn {
             float: right;
             margin-right: 3%;
@@ -177,36 +143,30 @@
             outline: 0;
             background: none;
         }
-
         .col3 {
             height: 100%;
             float: left;
             display: inline;
         }
-
         .mainimage {
             width: 100%;
             /* height: 100%; */
             height: 550px;
         }
-
         .other {
-            margin-top: 2%;
-            display: flex;
-        }
-
+		    margin-top: 1%;
+		    display: flex;
+		    height: 120px;
+		}
         .otherimage {
             width: 20%;
             border: 1.2px solid black;
         }
-
         /* 지도보기 */
-
         .map {
             width: 100%;
             height: 100%;
         }
-
         #mapBtn {
             position: relative;
 		    background-color: #ffffff;
@@ -221,27 +181,21 @@
 		    text-decoration: none;
 		    z-index: 2;	
         }
-
         /* 편의시설 체크div 및 소개 div */
-
         .checktable {
             margin-top: 5%;
         }
-
         .introduce {
             width: 80%;
             font-size: 18px;
         }
-
         .boundary {
             color: black;
         }
-
         /* 방 세부사진 및 정보div들 */
-
         .detail {
             border: 1px solid black;
-            height: 300px;
+            height: 382px;
             margin-bottom: 2%;
             margin-top: 5%;
             display: none;
@@ -251,14 +205,13 @@
         
         .moreDetail {
             border: 1px solid black;
-            height: 300px;
+            height: 383px;
             margin-bottom: 2%;
             margin-top: 5%;
             display: flex;
             /* align-items: center; */
             /* justify-content: center; */
         }
-
         .detailView {
         	padding:20px;
             width: 56%;
@@ -276,15 +229,14 @@
 		    margin-right: 15px;
 		    font-size: 18px;
 		}
-
         .btnArea {
             text-align: center;
             width: 19%;
             margin: auto;
         }
-
         .imgArea {
             width: 44%;
+            height:100%;
         }
         
         .beneImgs {
@@ -292,137 +244,110 @@
 		    height: 325px;
 		    border-radius: 8px;
 		}
-
-        .imgArea img {
-            width: 100%;
-            height: 100%;
-        }
-
         /* 방 세부사진 및 정보div들 끝*/
-
         @font-face {
             font-family: 'GmarketSansBold';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
             font-weight: normal;
             font-style: normal;
         }
-
         .moreBtn {
             background-color: rgb(70, 115, 85);
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 10px 75px;
             text-decoration: none;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
-
+            margin-bottom: 50px;           
         }
-
         .btn {
             background-color: rgb(70, 115, 85) !important;
-            border: 1px solid rgb(70, 115, 85) !important;
-            font-family: 'GmarketSansBold' !important;
+            border: 1px solid rgb(70, 115, 85) !important;            
         }
         
          #report_btn, #jjim_btn{
         	cursor: pointer;
         }
-
         /* 후기 */
-
         .review_writer {
             display: flex;
             margin: 1%;
         }
-
         .review_writer label {
             margin-right: 1%;
         }
-
-        .reivew {
+      
+        .review {
             border: 1px solid black;
-            width: 70%;
+            width: 90%;
             border-radius: 6px;
+            padding: 10px;
         }
 
+        .review a{
+        	font-size:17px;
+        }
         .review_img {
             width: 300px;
             height: 200px;
         }
-
         .review_img_area {
             width: max-content;
             margin-left: 20%;
             margin-top: 2%;
         }
-
         .review_date_label {
             float: right;
             margin: 1%;
             margin-bottom: 0;
+            font-weight: bold;
         }
-
-
-
         /* 부트스트랩 모달*/
-
         .cal_top {
             text-align: center;
             font-size: 30px;
         }
-
         .cal {
             text-align: center;
         }
-
         table.calendar {
             border: 1px solid black;
             display: inline-table;
             text-align: left;
         }
-
         table.calendar td {
             vertical-align: top;
             border: 1px solid skyblue;
             width: 100px;
         }
-
         #closeBtn, #reportBtn {
             border-style: none;
             background-color: white;
         }
-
         .modal-header {
             padding: 5%;
             margin: auto;
         }
-
         .modal-header img {
             width: 100px;
             height: 100px;
         }
-
         .modal-body {
             padding: 10%;
         }
-
         .modal-body2 {
             padding: 2%;
             text-align: center;
         }
-
         .modal-book {
             display: flex;
             border: 1px solid gray;
             border-radius: 0.8rem;
             width: 98%;
         }
-
         .modal-book2 {
             display: flex;
             border-bottom: 1px solid gray;
@@ -431,26 +356,20 @@
             border-radius: 0.8rem;
             width: 98%;
         }
-
         .people,
         .people2 {
             width: 50%;
             text-align: center;
             margin: auto;
         }
-
-
-
         .checkin,
         .checkout {
             width: 50%;
             text-align: center;
         }
-
         .checkin {
             border-right: 1px solid black;
         }
-
         .payBtn {
             background-color: rgb(70, 115, 85);
             border-radius: 6px;
@@ -462,21 +381,17 @@
             padding: 6px 55px;
             text-decoration: none;
             margin-top: 30px;
-            margin-bottom: 30px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 30px;            
             width: 98%;
         }
-
         .modal-content {
             margin: 0;
             width: 100%;
             display: flex;
         }
-
         .modal-body input {
             width: 100%;
         }
-
         #startDate,
         #endDate {
             border: none;
@@ -484,28 +399,22 @@
             line-height: 30px;
             display: block;
         }
-
         .modal-content div label {
             line-height: 50px;
         }
-
         #startDate:focus,
         #endDate:focus {
             outline: none;
         }
-
         .modal-body div {
             margin-bottom: 10%;
         }
-
         .error {
             color: red;
         }
-
         /* #agreement_label {
             margin-right: 35%;
         }
-
         #agreement_checkbox {
             margin-left: -118%;
         } */
@@ -517,9 +426,24 @@
     	
     	.infoLabel{
        	    font-size: 20px;
-		    /* font-weight: bold; */
-		    color: #495740;
         }
+        
+        .premium {
+            width: 60px;
+            height: 50px;
+            margin-bottom:30px;
+        }
+        
+        .detailImg{
+        	height:300px;
+        	width: 100%;
+        }
+        
+        .otherImgArea{
+        	height: 80px;
+        	display: flex;
+        }
+        
     </style>
 
 </head>
@@ -536,11 +460,12 @@
             <div class="title_area">
                 <div class="title_area">
                     <c:if test="${ hotel.bus_classify eq 'P' }">
-                    <img src="../resources/images/image_listpage/premiumicon.png"><br>
+                    <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     </c:if>
                     <label id="ho_title" class="title_tag">${ hotel.bus_name }</label>
                 </div>
-                <label id="ho_address" class="infoLabel">${ hotel.bus_address.substring(6) }</label>
+                <label id="ho_address" class="infoLabel">${ hotel.bus_address.substring(6) }</label><br>
+                <label class="infoLabel">입실 : ${ hotel.bus_opening.substring(0, 5) } ~ 퇴실 : ${ hotel.bus_opening.substring(6) }</label>&nbsp;
             </div>
 
             <div id="ho_info">
@@ -565,8 +490,8 @@
         
         <!-- 찜하기 -->
         <script>
-        var bbsidx = ${hotel.bus_code};
-        var useridx = ${loginUser.usno};
+        var bbsidx = "${hotel.bus_code}";
+        var useridx = "${loginUser.usno}";
          
         var btn_like = document.getElementById("btn_like");
          btn_like.onclick = function(){ changeHeart(); }
@@ -622,7 +547,6 @@
 			<script>
                 var bigPic = document.querySelector("#bigPic");
                 var smallPic = document.querySelectorAll("#smallPic")
-
                 for(var i = 0; i < smallPic.length; i++){
                     smallPic[i].addEventListener("click", changepic);
                     
@@ -630,7 +554,6 @@
                 function changepic(){
                     var smallPicAttribute = this.getAttribute("src");
                     bigPic.setAttribute("src", smallPicAttribute);
-
                 }
             </script>
 
@@ -650,7 +573,6 @@
                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                     level: 3 // 지도의 확대 레벨
                 };  
-
 	            // 지도를 생성합니다    
 	            var map = new kakao.maps.Map(mapContainer, mapOption); 
 	
@@ -660,7 +582,6 @@
 	            var add = "<c:out value='${ hotel.bus_address}'/>";
 	            var splitadd = add.split(',');
 	            
-
 	            
 	            // 주소로 좌표를 검색합니다
 	            geocoder.addressSearch(splitadd[1], function(result, status) {
@@ -749,13 +670,15 @@
 		<c:forEach var="r" items="${ room }">
         <div class="detail">
             <div class="imgArea">
-            	<c:forEach var="ra" items="${ roomAtt }" varStatus="i">
-            	<c:if test="${ i.first }">
-                <img src="${ contextPath }/resources/busUploadFiles/${ ra.file_rename }" class="detailImg">
-                </c:if>
-                </c:forEach>
+                <img id="mainPic" src="${ contextPath }/resources/busUploadFiles/${ r.file_rename }" class="detailImg">
+			<div class="otherImgArea">
+			<c:forEach var="ra" items="${ roomAtt }">
+			<c:if test="${ ra.room_no eq r.room_no}">
+			<img id="otherPic" class="otherimage" src="${ contextPath }/resources/busUploadFiles/${ ra.file_rename }">
+			</c:if>
+			</c:forEach>
+			</div>
             </div>
-
             <div class="detailView">
                 <b>${ r.room_name }</b><br><br>
                 <c:forTokens var="ame" items="${ r.room_amenity }" delims=",">
@@ -797,7 +720,7 @@
             </div>
             <div class="btnArea">
                 <br>
-                <b>${ r.room_price }원</b><br>
+                <b><fmt:formatNumber value="${ r.room_price }" pattern="#,###"/>원</b><br>
                 <b>1박당 객실 요금</b><br><br>
                 <c:if test="${ loginUser.uspart == '일반'}">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -811,6 +734,19 @@
         <div class="btnArea">
             <button class="moreBtn">더보기</button>
         </div>
+        
+        <script>
+                var mainPic = document.querySelector("#mainPic");
+                var otherPic = document.querySelectorAll("#otherPic")
+                for(var i = 0; i < otherPic.length; i++){
+                    otherPic[i].addEventListener("click", changepic);
+                    
+                }
+                function changepic(){
+                    var otherPicAttribute = this.getAttribute("src");
+                    mainPic.setAttribute("src", otherPicAttribute);
+                }
+            </script>
         
         <!-- 더보기 -->
 			<script>				
@@ -831,7 +767,7 @@
             <label class="reviewTitle">후기</label>&nbsp;&nbsp;<label id="starLabel"style="font-size: 30px;"><a style="color:#ffd700;">★</a><b></b>(후기 ${ review.size() }개)</label><br>
             <c:if test="${ empty review }">
             <div class="reviewBox">
-            <p style="font-size:60px">리뷰가 없습니다!!!</p>
+            <p style="font-size:60px">등록 된 리뷰가 없습니다</p>
             </div>
             </c:if>
             <c:forEach var="r" items="${ review }">
@@ -861,6 +797,17 @@
         
     </section>
     <script>
+    $(function(){
+    	var reviews = '<c:out value="${review.size()}"/>'
+    	if(reviews == '0'){
+    		$(".reviewBox").css({
+    			"text-align": "center",
+    			"color" : "#495740",
+    	    	"margin-bottom": "40px"
+    		});
+    	}
+    });
+    
     var sum = 0;
     var cnt = 0;
     	$(function(){
@@ -898,7 +845,7 @@
 	    });
     
         $j1124( function() {
-          $j1124( ".datepicker" ).datepicker();
+          $j1124( ".datepicker" ).datepicker({ minDate: 0});
         } );
     </script>
 
@@ -930,7 +877,7 @@
                 <div class="modal-body2">
                 	<c:forEach var="r" items="${ room }" varStatus="status" end="0">
                 	<h4>${ r.room_name }</h4>
-                    <label>${ r.room_price }원 / 박</label><br>
+                    <label><fmt:formatNumber value="${ r.room_price }" pattern="#,###"/>원 / 박</label><br>
                     <input type="hidden" id="roomName" value="${ r.room_name }">
                     <input type="hidden" id="cAmount" name="cAmount" value="${ r.room_price }">                    
                     <input type="hidden" id="roomNo" name="roomNo" value="${ r.room_no }">
@@ -966,7 +913,7 @@
                         </div>
                     </div>
                     <c:forEach var="r" items="${ room }" varStatus="status" end="0">
-                    <label>${ r.room_price }원 * </label>
+                    <label><fmt:formatNumber value="${ r.room_price }" pattern="#,###"/>원 * </label>
                     </c:forEach>
                     <label id="daysL"></label>
                     <label>박</label>
@@ -985,7 +932,6 @@
       <script>
       
       
-
   	$(".payBtn").click(function() {
   		
   		var name = document.getElementById('roomName').value;
@@ -995,8 +941,8 @@
   		var endDate = document.getElementById("endDate").value;
   	 	var personNumber = document.getElementById("personNumber").value;
   	    var bookingLv = 1;
-  		// var amount = payResult;
-  		var amount = 100;
+  		var amount = payResult;
+  		//var amount = 30000;
 	    var IMP = window.IMP;
 	    IMP.init('imp34313892');
 	    
@@ -1004,6 +950,8 @@
             alert("체크인날짜를 선택해주세요.");
         } else if(endDate === ""){
         	alert("체크아웃날짜를 선택해주세요.");
+        } else if(personNumber === "0" || personNumber === ""){
+        	alert("인원을 선택해주세요.");
         } else {
 	    IMP.request_pay({
 	        pg : 'html5_inicis',
@@ -1037,11 +985,19 @@
     </script>
     
     <script>
+	    Number.prototype.format = function(){
+	        if(this==0) return 0;
+	        var reg = /(^[+-]?\d+)(\d{3})/;
+	        var n = (this + '');
+	        while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+	        return n;
+	    };
+    
 	    function startDate(e) {	  	  
 	  	  const value = e.value;	  	  
 	  	  document.getElementById('startDateResult').innerText
 	  	    = value;
-	  	  
+	  	  	
 		  	var sdd = document.getElementById("startDate").value;
 		    var edd = document.getElementById("endDate").value;
 		    var amount = document.getElementById("cAmount").value;
@@ -1052,10 +1008,10 @@
 		    var dif = da2 - da1;
 		    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 		    if(sdd && edd){		        
-		    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
+		    	var days = document.getElementById('days').value = parseInt(dif/cDay);
 		    	document.getElementById('daysL').innerText = days
 		        var payResult = document.getElementById('payResult').value = amount * days
-		        document.getElementById('payResultB').innerText = payResult+"원"
+		        document.getElementById('payResultB').innerText = payResult.format()+"원"
 		     }
 	  	}
 	    
@@ -1075,10 +1031,10 @@
 			    var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
 			    
 			    if(sdd && edd){		        
-			    	var days = document.getElementById('days').value = parseInt(dif/cDay) + 1
+			    	var days = document.getElementById('days').value = parseInt(dif/cDay);
 			    	document.getElementById('daysL').innerText = days
 			        var payResult = document.getElementById('payResult').value = amount * days
-			        document.getElementById('payResultB').innerText = payResult+"원"
+			        document.getElementById('payResultB').innerText = payResult.format()+"원"
 			     }
 			    if(sdd >= edd){
 			    	alert('체크아웃날짜를 다시 체크해주세요.');
@@ -1090,13 +1046,12 @@
 			    	document.getElementById('daysL').innerText ="";
 			    }
 		  	}
-
 	    function handleOnChange(e) {
 	    	  const value = e.value;	    	  
 	    	  document.getElementById('personNumber').value
 	    	    = value;
 	    	  
-	    	  document.getElementById('personNumberL').innerText = value;
+	    	  document.getElementById('personNumberL').innerText = value+"명";
 	    	}
     </script>
     

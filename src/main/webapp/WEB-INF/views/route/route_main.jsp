@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>길 만들기</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
  <!--jQuery-->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
      <!-- Bootstrap CSS -->
@@ -20,7 +21,7 @@
    <jsp:include page="../common/navi.jsp"/>
         <!-- 내용 -->
         <div id="bottom">
-            <div id="content">
+            <div id="content" style="width:90%;">
                 <br><br><br>
                 <div class="route_title">
                     <img id="content_logo" width="70px" height="70px" src="../resources/images/image_main/logo_g.png"/>

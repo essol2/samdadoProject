@@ -144,6 +144,7 @@ public class MypageServiceImpl implements MypageService{
 	// 제휴회원 - 사업장 조회 메소드
 	@Override
 	public List<Business> selectBussList(String usno) {
+		System.out.println("bussList확인 : " + usno);
 		return mDao.selectBussList(usno);
 	}
 	
@@ -370,6 +371,54 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public List<Business> findHotelJjimList(User u) {
 		return mDao.findHotelJjimList(u);
+	}
+
+	// 후기 작성 후 비즈니스에 별점 update
+	@Override
+	public int updateBusStar(Review r) {
+		return mDao.updateBusStar(r);
+	}
+
+	// 공지사항 등록 시 해당 user의 news +1 해주기
+	@Override
+	public int updateNewUserNews(A_board aboard) {
+		return mDao.updateNewUserNews(aboard);
+	}
+
+	// 내소식에 들어갈 공지사항 리스트
+	@Override
+	public List<A_board> selectBoard(User u,ApplyPageInfo api) {
+		return mDao.selectBoard(u, api);
+	}
+
+	// 특정 공지사항 가져오기
+	@Override
+	public A_board findThisBoard(A_board aboard) {
+		return mDao.findThisBoard(aboard);
+	}
+
+	// 일반회원 새로운 공지사항 있는지 확인
+	@Override
+	public int findNewUserNews(User u) {
+		return mDao.findNewUserNews(u);
+	}
+
+	// 공지사항 읽으면 user -1 해주기
+	@Override
+	public int updateUserRead(A_board aboard) {
+		return mDao.updateUserRead(aboard);
+	}
+
+	// 공지사항 갯수 구하기
+	@Override
+	public int selectBoardListCount(String uspart) {
+		return mDao.selectBoardListCout(uspart);
+	}
+
+	// 일반회원 공지사항 가져오기
+	@Override
+	public List<A_board> selectUserBoard(User user) {
+		return mDao.selectUserBoard(user);
 	}
 
 	

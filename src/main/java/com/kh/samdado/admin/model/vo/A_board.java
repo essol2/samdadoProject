@@ -30,5 +30,5 @@ public class A_board {
 	private String bstatus;
 	private String usno;
 	private String uspart;
-	
+	private int usnews;
 }

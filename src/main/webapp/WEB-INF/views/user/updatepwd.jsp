@@ -18,6 +18,7 @@
     <!-- css 파일 경로 이동하기 -->
 
     <title>비밀번호 변경</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
   </head>
   <body>
   

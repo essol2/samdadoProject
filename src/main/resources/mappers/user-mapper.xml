@@ -18,6 +18,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		<result property="usstop" column="US_STOP" />
 		<result property="authKey" column="AUTH_KEY" />
 		<result property="pbalance" column="PBALANCE" />
+		<result property="enrolldate" column="ENROLL_DATE" />
+		<result property="usnews" column="USNEWS"/>
 	</resultMap>
 	
 	<!-- 로그인 -->
@@ -35,6 +37,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			  , US_STATUS
 			  , US_STOP
 			  , PBALANCE
+			  , ENROLL_DATE
+			  , USNEWS
 		   FROM
 		   		"USER"
 		  WHERE
@@ -58,6 +62,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , US_PART
 		  , US_STATUS
 		  , PBALANCE
+		  , ENROLL_DATE
+		  , USNEWS
 		)
 		VALUES
 		(
@@ -70,6 +76,8 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 		  , #{usphone}
 		  , #{busno} <!-- 일반 회원일시 NULL -->
 		  , #{uspart}
+		  , DEFAULT
+		  , DEFAULT
 		  , DEFAULT
 		  , DEFAULT
 		)
@@ -268,6 +276,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 			  , US_STOP
 			  , AUTH_KEY
 			  , PBALANCE
+			  , ENROLL_DATE
 		   FROM
 		   		"USER"
 		  WHERE US_STOP IS NULL	
@@ -287,6 +296,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				,US_PART
 				,US_STATUS
 				,PBALANCE
+				,ENROLL_DATE
 		  FROM
 		        "USER"	
 		<where>
@@ -321,6 +331,9 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 				<when test="searchCondition == 'pbalance'">
 					AND PBALANCE LIKE #{sv}
 				</when>
+				<when test="searchCondition == 'enrolldate'">
+					AND ENROLL_DATE LIKE #{sv}
+				</when>
 				<otherwise>
 					AND (US_NO LIKE #{sv}
 						 OR US_ID LIKE #{sv}
@@ -332,6 +345,7 @@ PUBLIC "-//mybatis.org//DTD Mapepr 3.0//EN"
 						 OR US_PART LIKE #{sv})
 						 OR US_STATUS LIKE #{sv})
 						 OR PBALANCE LIKE #{sv})
+						 OR ENROLL_DATE LIKE #{sv})
 				</otherwise>	
 			</choose>
 		</where>

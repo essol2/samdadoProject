@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application" />
 <!DOCTYPE html>
 <html>
@@ -9,6 +10,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Samadado</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
+    <script language = "javascript">
+	var imgArray = new Array();
+	imgArray[0] = "../resources/images/image_listpage/speechbubble1.jpg";
+	imgArray[1] = "../resources/images/image_listpage/speechbubble2.jpg";
+	imgArray[2] = "../resources/images/image_listpage/speechbubble3.jpg";
+	imgArray[3] = "../resources/images/image_listpage/speechbubble4.jpg";
+	imgArray[4] = "../resources/images/image_listpage/speechbubble5.jpg";
+	imgArray[5] = "../resources/images/image_listpage/speechbubble6.jpg";
+	
+	function showImage(){
+		var imgNum = Math.round(Math.random()*5);
+		var objImg = document.getElementById("speechbubble");
+		objImg.src = imgArray[imgNum];
+	}
+	</script>
     <style>
         /* 공통 - 폰트 */
         * {
@@ -219,6 +235,7 @@
             width: 55px;
             height: 55px;
             margin-left: 3%;
+            margin-top: 150px;
         }
 
         .search-result {
@@ -253,6 +270,19 @@
             font-size: 20px;
             padding: 10px;
         }
+        
+        .cateSelect{
+        	width: 65px; 
+		    /* height: 33px; */
+		    /* border: 1px solid black; */
+		    border-radius: 10%;
+		    /* -webkit-appearance: none; */
+		    appearance: none;
+		    padding-left: 5px;
+		    font-weight: bold;
+		    border: 1px solid #467355;
+		    color: #467355;
+        }
 
         /* 정렬필터끝 */
 
@@ -274,7 +304,7 @@
 
         .premium {
             width: 60px;
-            height: 60px;
+            height: 50px;
         }
 
         /* 프리미엄테두리 반짝이효과 */
@@ -414,15 +444,15 @@
         .cover {
             width: 70px;
             height: 33px;
-            border: 1px solid black;
-            border-radius: 20%;            
+            border: 1px solid #467355;
+            border-radius: 10%;
         }
 
         .cover a, .cover label {
             text-decoration: none;
-            color: black;
-            font-family: 'GmarketSansBold' !important;
+            color: #467355;
             line-height:0px;
+            font-weight: bold;
         }
 
         .moreBtn {
@@ -430,14 +460,12 @@
             border-radius: 6px;
             border: 1px solid rgb(70, 115, 85);
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
+            color: #ffffff;            
             font-size: 18px;
             font-weight: bold;
             padding: 10px 75px;
             text-decoration: none;
-            margin-bottom: 50px;
-            font-family: 'GmarketSansBold' !important;
+            margin-bottom: 50px;            
         }
         
         /* 사업장종류선택 */
@@ -489,27 +517,55 @@
         	border-style : none;
         	width : fit-content;
         	height : fit-content;
-        	backtround-color : rgba( 0,0,0,0);
+        	background-color : rgba( 0,0,0,0);
         }
         
         .btn.btn-sea{-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
 		a{text-decoration:none;}        
-        .btn.btn-sea {font-size: 18px; white-space:nowrap; width:150px; padding:.8em 1.5em; font-family: GmarketSansBold; line-height:18px; display: inline-block;zoom: 1; color: #fff; text-align: center; position:relative; -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear; transition: border .25s linear, color .25s linear, background-color .25s linear;}      
+        .btn.btn-sea {font-weight: bold; font-size: 18px; white-space:nowrap; width:150px; padding:.8em 1.5em; line-height:18px; display: inline-block;zoom: 1; color: #fff; text-align: center; position:relative; -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear; transition: border .25s linear, color .25s linear, background-color .25s linear;}      
         .btn.btn-sea{background-color: #467355; border-color: #467355; -webkit-box-shadow: 0 3px 0 #088d74; box-shadow: 0 3px 0 #088d74;}
 		.btn.btn-sea:hover{background-color:white; color:#467355;}
 		.btn.btn-sea:active{ top: 3px; outline: none; -webkit-box-shadow: none; box-shadow: none;}
-
+		
+		#speechbubble{
+        	width:400px;
+        	height:200px;
+        	position:absolute;
+        	margin-bottom:40px;
+        	margin-left:50px;
+        	visibility: hidden;
+        	transition: all 0.6s ease-in-out;
+        }
+        
+        #filter-nav ul li:hover #speechbubble{
+        	visibility: visible;
+        }
+		
         /* 사업장종류선택끝 */
+        
+        .nanDiv{
+        	width: 100%;
+		    text-align: center;
+		    font-size: xxx-large;
+		    display: flex;
+    		flex-direction: column;
+    		justify-content: center;
+    		margin: 1rem;
+    		padding: 1rem;
+    		height: 500px;
+    		box-sizing: border-box;
+        }
     </style>
 </head>
 
-<body>
+<body onload = "showImage()">
      <!-- navi.jsp include -->
     <jsp:include page="../../common/navi.jsp"/>
 
         <!-- 전체 section-->
         <section id="main-container">
 			<!-- 페이지 이동 nav -->
+			<!-- 
             <nav id="choise-nav">
             	<ul id="choise">
                     <li>
@@ -526,9 +582,14 @@
                     </li>
                 </ul>
             </nav>
-
+		 -->
             <nav id="filter-nav">
-                <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">							
+                <ul>
+            		<li>            		
+                <img id="filter-img" src="../resources/images/image_main/logo_g.png" alt="">
+                <img id="speechbubble" border="0">
+            		</li>
+            	</ul>
                 <div class="search-result">
                     <label class="topText">삼다도와 함께하는</label><br>
                     <label class="topText">제주도 지역의 렌트카</label>
@@ -559,22 +620,21 @@
 		    	            	  for(var i in data){
 		    	              		str  = "<div class='moreProfile'>";
 		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
-		    	                    str += "<b>★4.90(후기 99+개)</b>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
 		                            str += "<b>"+ data[i].bus_name +"</b>";
-		                            str += "<c:if test='${ loginUser.usno != null }'>"
-			                        str += "<button id='jjimToggle' class='jjimBtn'><img src='${contextPath}/resources/images/image_listpage/heart_off.png'></button>";
-			                        str += "</c:if>";
+		                            str += "<b>"+ data[i].bus_phone +"</b>";		                            
 		                            str += "</div>";
 		                            
 		                            list += str;
 		    	              		}
+		    	            	  document.getElementById("searchValue").value="";
 		    	            	  cate.innerHTML=list;
 		    	              },
 		    	              error : function(data){
 		    	            	 alert('error');
 		    	               
 		    	              }
-		    			})
+		    			});
 		    		});
 		    });
 			</script>
@@ -582,14 +642,97 @@
             <nav id="choise2-nav">
                 <ul id="choise2">                    
                     <li>
-                        <div class="cover"><label>별점순</label></div>
+                        <div class="cover"><label id="starList">별점순</label></div>
                     </li>
                     <li>
-                        <div class="cover"><label>후기순</label></div>
+                        <div class="cover"><label id="reviewList">후기순</label></div>
                     </li>
                 </ul>
 
             </nav>
+            
+            <script>
+            $(function starList(){
+		    	$("#starList").click(function(){
+		    			var kinds = $(this).val(); 
+		    			$.ajax({
+		    				 url : '${contextPath}/business/starList2', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  for(var i in data){
+		    	            		 if(data[i].bus_category == 'C'){
+		    	              		str  = "<div class='moreProfile'>";
+		    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+		    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
+		    	              		str += "<b>"+ data[i].bus_name +"</b>";
+		    	              		str += "<b>"+ data[i].bus_phone +"</b>";		    	              		
+		                            str += "</div>";
+		                            
+		                            list += str;
+		    	            		 } else if(data[i].bus_category != 'C'){
+			    	            			str = "<div  class='nanDiv'>";
+			    	            			str += "<label>별점(이)가 등록 된 사업장이 없습니다.</label>"
+			    	            			str += "</div>";
+			    	            			
+			    	            			list += str;
+			    	            			break;
+			    	            		 }
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+		    
+		    $(function(){
+		    	$("#reviewList").click(function(){
+		    			var kinds = $(this).val(); 
+						
+		    			$.ajax({
+		    				 url : '${contextPath}/business/reviewList2', 
+		    	              type : "post", 
+		    	              data : {"kinds" : kinds},
+		    	              success : function(data){
+		    	            	  //console.log(data);
+		    	            	  var cate = document.getElementById("secondlist");
+		    	            	  var list = "";
+		    	            	  console.log(data);
+		    	            	  for(var i in data){
+		    	            		  if(data[i].bus_category == 'C'){
+				    	              		str  = "<div class='moreProfile'>";
+				    	              		str += "<img class='image' src='${ contextPath }/resources/busUploadFiles/"+ data[i].file_rename +"' onclick='selectRes(" + data[i].bus_code + ")'>";
+				    	              		str += "<b>★"+ data[i].avgstar +" (후기 "+ data[i].recnt +"개)</b>";
+				    	              		str += "<b>"+ data[i].bus_name +"</b>";
+				    	              		str += "<b>"+ data[i].bus_phone +"</b>";				    	              		
+				                            str += "</div>";
+				                            
+				                            list += str;
+				    	            		 } else if(data[i].bus_category != 'C'){
+				    	            			str = "<div  class='nanDiv'>";
+				    	            			str += "<label>리뷰(이)가 등록 된 사업장이 없습니다.</label>"
+				    	            			str += "</div>";
+				    	            			
+				    	            			list += str;
+				    	            			break;
+				    	            		 }
+		    	              		}
+		    	            	  cate.innerHTML=list;
+		    	              },
+		    	              error : function(data){
+		    	            	 alert('error');
+		    	               
+		    	              }//error
+		    			})//ajax
+		    		});//click
+		    });//ready
+            </script>
 
             <!-- 관광지목록 div -->
 
@@ -603,10 +746,9 @@
                         <img class="premium" src="../resources/images/image_listpage/premiumicon.png">
                     	</div>
                         <img class="image" src="../resources/busUploadFiles/${ c.file_rename }" onclick="selectRes(${c.bus_code})">
-                        <b>${ c.bus_name }</b>	                        
-	                        <c:if test="${ loginUser.usno != null }">
-	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
-	                        </c:if>
+                        	<b>★${ c.avgstar } (후기 ${ c.recnt }개)</b>
+                        	<b>${ c.bus_name }</b>	                        
+                        	<b>${ c.bus_phone }</b>	                        
                     </div>
                 </c:if>    
                 </c:forEach>
@@ -620,11 +762,9 @@
                     	<input type="hidden" id="bus_code" name="bus_code" value="${ c.bus_code }">
                         <img class="image" src="${ contextPath }/resources/busUploadFiles/${ c.file_rename }" onclick="selectRes(${c.bus_code})">
                         </c:if>
-                        <b>★4.90(후기 99+개)</b>
+                        <b>★<fmt:formatNumber value="${ c.avstar }" pattern=".00"/>(후기 ${ c.revcnt }개)</b>
                         <b>${ c.bus_name }</b>
-                        <c:if test="${ loginUser.usno != null }">
-	                        <button id="jjimToggle" class="jjimBtn"><img src="${contextPath}/resources/images/image_listpage/heart_off.png"></button>
-	                        </c:if>
+                        <b>${ c.bus_phone }</b>                        
                     </div>
                     </c:if>
                 </c:forEach>
@@ -648,10 +788,10 @@
 						$(document).ready(function(){
 							size_div = $('.profile').length;
 							
-							x = 6;
+							x = 3;
 							$('.profile:lt('+x+')').addClass('moreProfile');
 							$('.moreBtn').click(function(){
-								x= (x+6 <= size_div)? x+6 : size_div;
+								x= (x+3 <= size_div)? x+3 : size_div;
 								$('.profile:lt('+x+')').addClass('moreProfile');	
 							});
 						});

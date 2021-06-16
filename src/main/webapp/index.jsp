@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Welcome to SAMDADO</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+
 <style>
         /* 공통 - 폰트 */
         * {
@@ -34,8 +36,8 @@
             border-style: none;
             width : 200px;
             height : 70px;
-            margin-left : 25%;
-            margin-right : 40%;
+            margin-left : auto;
+            margin-right : auto;
             margin-bottom : 10%;
             color : white;
         }
@@ -44,9 +46,11 @@
             width : 30%;
             height : 100%;
             margin-top:5%;
-            margin-left : 35%;
+            margin-left : auto;
+            margin-right : auto;
             padding-top : 3%;
             background-color: rgba( 255, 255, 255, 0.8 );
+            text-align : center;
         }
 
     </style>

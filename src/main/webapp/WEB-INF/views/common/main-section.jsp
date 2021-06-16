@@ -10,12 +10,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
 <!-- masonry 로딩 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js"></script>
-
-<!-- imagesloaded 로딩 (모든 이미지가 로딩된 후 실행되도록 할때 필요) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.0/imagesloaded.pkgd.min.js"></script>
 
 <style type="text/css">
 
@@ -28,7 +25,7 @@
 <body>
 	
 	 <section class="page-start">
-        <div id="bottom">
+        <div id="bottom" style="width:90%;">
             <div id="content">
                 <br><br><br>
                 
@@ -41,11 +38,11 @@
                         <div class="col" id="empty_up_div"></div>
                         <div class="col" id="center_text_div">
                             <h3>
-                                <b>"여유가 있어 여행을 가는 게 아니라 <br>
+                                <b style="font-family: 'Jeju Myeongjo', serif; ">"여유가 있어 여행을 가는 게 아니라 <br>
                                 여행을 가니까 여유가 생기는 것이다."</b>
                             </h3>  
                             <br>
-                            <h6>
+                            <h6 style="font-family: 'Jeju Myeongjo', serif; ">
                                 여행이란 우리가 사는 장소를 바꾸어 주는 것이 아니라 <br>
                                 우리의 생각과 편견을 바꾸어 주는 것이다.
                             </h6>
@@ -54,7 +51,7 @@
                         <div class="col" id="make_root_down_div">
                             <!-- 길 만들러 가기-->
                             <div class="col-3">
-                                <a href="${ contextPath }/route/m_route"><h5>길 만들러 가기</h5></a>
+                                <a href="${ contextPath }/route/m_route" style="font-family: 'Jeju Myeongjo', serif; "><h5>길 만들러 가기</h5></a>
                             </div>
                             <!-- 화살표 -->
                             <div class="col-1">
@@ -101,8 +98,8 @@
                 <br>
                 <!--  data-masonry='{"percentPosition": true }' -->
                 
-                <div class="wrap" id="bannerAdImglistDiv" style="margin-left : 3%;">
-				  <div class="grid-item">...</div>
+                <div class="main-section-wrap" id="bannerAdImglistDiv" style="margin-left : 1%; position: relative;" >
+				  
 				</div>
                 
          
@@ -114,75 +111,65 @@
         
      <!-- ajax -->
 	<script>
-		function zeroFill(sVal, nCnt){ // zeroFill(값, 채울갯수)
-			var zero = '';
-			var ret  = sVal.toString();
-			if(nCnt > 100) return sVal; // 100개 이상 채울 수 없음;;
-			for(var i=0 ; i < nCnt-ret.length ; i++){
-				zero += '0';
-			}
-			return zero + ret;
-		}
-	
-	
-		$(function() {
-			selectBannerAdImgList();
-			//setInterval(selectBannerAdImgList, 10000);
-			$imgs = $('.wrap');
+		
+	(function($) {
+	    
+		function loadMasonry(){
+				
+			//$container will always be a new copy
+			var $imgs = $('.main-section-wrap');
+			
+			//running images loaded again after page load / ajax event 
 			$imgs.imagesLoaded(function(){
-				$imgs.masonry('reload');
+				//$imgs.masonry('reload');
 				$imgs.masonry({
 					itemSelector : 'img', // img 태그를 대상으로 masonry 적용
 					fitWidth : true // 내용물을 가운데 정렬하기, CSS margin:0 auto; 설정이 필요함
 				});
 			});
-		});
-		
-		function selectBannerAdImgList() {
-			$.ajax({
-				url : "${ contextPath }/business/selectBannerAdImgList",
-				dataType : "json",
-				success : function(data) {
-					console.log(data);
-					
-					badiv = $("#bannerAdImglistDiv");
-					badiv.html("");
-					
-					for (var i in data) {
-						
-						//var div = $("<div onclick='selectBannerAdDetail(" + data[i].bus_code + ")'>");
-						var img = $("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' onclick='selectBannerAdDetail(" + data[i].bus_code + ")' style='width: 700px;'>");
-						
-						badiv.append(img);
-					}
-					
-					
-				},
-				error : function(e) {
-					alert("code : " + e.status + "\n"
-							+ "message : " + e.responseText);
-				}
-			});
-		}
-		
-		// 해당 게시글 하나를 누르면 상세페이지가 보여지게 하는 컨트롤러 호출
-		function selectBannerAdDetail(bus_code) {
-			location.href='${ contextPath }/business/detail?bus_code=' + bus_code;
-		}
-		
-		// wrap 클래스안의 모든 이미지가 로딩되면 masonry 적용
-		/* $imgs = $('.wrap').imagesLoaded(function(){
-			$imgs.masonry({
-				itemSelector : 'img', // img 태그를 대상으로 masonry 적용
-				fitWidth : true // 내용물을 가운데 정렬하기, CSS margin:0 auto; 설정이 필요함
-			});
-		}); */
-	</script>
+			
+				
+			}
 	
+			function selectBannerAdImgList() {
+				$.ajax({
+					url : "${ contextPath }/business/selectBannerAdImgList",
+					dataType : "json",
+					success : function(data) {
+						console.log(data);
+						
+						badiv = $("#bannerAdImglistDiv");
+						badiv.html("");
+						
+						for (var i in data) {
+							
+							var img = $("<img src='${ contextPath }/resources/busUploadFiles/alliance/" + data[i].aimgcname + "' style='width: 700px; margin :0.5%;'>");
+							var atag = $("<a href='${ contextPath }/business/detail?bus_code=" + data[i].bus_code + "'>");
+							atag.append(img);
+							badiv.append(atag);
+							loadMasonry();
+						}
+						
+					},
+					error : function(e) {
+						alert("code : " + e.status + "\n"
+								+ "message : " + e.responseText);
+					}
+				});
+			}
+		
+		selectBannerAdImgList();
+		
+		$(document).on("click",".img",function(){console.log('gg');})
+	}(jQuery));
+	
+	
+	</script>
 	
 	<!-- Optional JavaScript; choose one of the two! -->
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-
+	<!-- imagesloaded 로딩 (모든 이미지가 로딩된 후 실행되도록 할때 필요) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.0/imagesloaded.pkgd.min.js"></script>
 </body>
 </html>

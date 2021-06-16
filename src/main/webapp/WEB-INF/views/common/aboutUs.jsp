@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Samdado</title>
+        <link rel="icon" type="image/png" sizes="16x16" href="${contextPath }/resources/images/image_main/logo_g.png">
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="../resources/images/image_main/logo_g.png">
     <style>
 
         * {
@@ -26,7 +27,6 @@
 		    background-size : 100% 870px;
 		    width : 100%;
 		}
-
         .text1{
             font-size: 80px;
             margin-right: 0px;
@@ -37,7 +37,6 @@
         .text2{
             font-size: 15px;
             margin-left: 0px;
-            color : white;
         }
         
         .main_text { 
@@ -50,6 +49,7 @@
         
         #content1 {
             /* margin-bottom: 2%; */
+
         }
 
         .ad_text {
@@ -82,7 +82,6 @@
             padding-top : 1%;
             padding-bottom : 1%;
             background-color : white;
-
         }
 
         .content2{            
@@ -137,7 +136,6 @@
         	float : right;
         	padding : 2%;
         	width : 50px;
-
         }
     </style>
 
@@ -153,7 +151,7 @@
            </a>
             </div>
                 <div class="main_text">
-                    <p style="color : white;">우리가 사랑하는 제주도의 또다름 이름</p>
+                    <p style="color : white;">우리가 사랑하는 제주도의 또다른 이름</p>
                     <b class="text1">삼 다 도.</b>
                 </div>
               </div>
@@ -169,7 +167,6 @@
         </div>
         <div class="col" id="textArea">
                <!--  <p style="font-size: 20px;" >
-
                     <b style="font-size: 50px;">또시 꼽 옵서양</b><br><br>
                     여행은 출발하기도 전부터<br>
                     행복한 상상을 가져다주죠.<br>
@@ -184,7 +181,6 @@
         <div class="row" id="adinfo">
                 <img src="${contextPath}/resources/images/image_aboutUs/adinfo.png" alt="..." width="100%">
             
-
           </div>
           
           <section class="content2">
@@ -204,7 +200,6 @@
                   <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/IMG_4252.png">
                   <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/image57.png">
                   <img class="mainimage" src="${contextPath}/resources/images/image_aboutUs/image58.png"></MARQUEE>
-
               </div>
           </section>
 
@@ -213,7 +208,6 @@
         </section>
         </div>
         <jsp:include page="./footer.jsp"/>
-
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

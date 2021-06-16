@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.google.gson.Gson;
 import com.kh.samdado.admin.model.exception.AdminException;
 import com.kh.samdado.admin.model.service.AdminService;
 import com.kh.samdado.admin.model.vo.A_board;
@@ -471,7 +470,6 @@ public class AdminController {
 		
 		if (alliance.getAmassage().equals("이미지 불일치")) {
 			result = aService.updateRejectBannerAdStatusRI(alliance); // RI
-			//int insertNews = mService.insertAlliNews(usno);
 			alert.setAlstatus("RI");
 			insertNew = mService.insertNewApprove(alert);
 		} else { // 포인트 미충전
@@ -491,39 +489,26 @@ public class AdminController {
 		return "admin/sendSMSForm";
 	}
 
-	@GetMapping("/selectGetProfit")
-	public @ResponseBody String selectGetProfit() {
+	@PostMapping("/selectGetUserData")
+	public @ResponseBody List<User> selectGetUserData(@RequestBody User userType) {
 	
-		List<Integer> profits = aService.selectGetProfit();
-	
-		return new Gson().toJson(profits);
+		List<User> userData = aService.selectGetUserData(userType);
+		return userData;
 	}
 	
 	@PostMapping("/selectGetAllProfit")
 	public @ResponseBody List<Income> selectGetAllProfit(@RequestBody Income profitType) {
 		
 		List<Income> profitRequestResult = aService.selectGetAllProfit(profitType); 
-
-		//System.out.println("profitRequestResult : " + profitRequestResult);
-
 		return profitRequestResult;
 	}
 	
 	@PostMapping("/sendAboard")
 	public String sendAboard(A_board aboard, Model model) {
-		
-		//System.out.println("aboard : " + aboard);
-		
 		int insertAboard = aService.insertAboard(aboard);
-		
-		// -- 은솔 : news에 새로운 공지사항 넣기
-		// 1. bno 찾아오기
-		int findBno = mService.findNewBno(aboard);
-		
-		aboard.setBno(findBno);
-		int insertNews = mService.insertNewBoard(aboard);
-		
-		if (insertAboard > 0 && insertNews > 0) {
+		int insertNewsUser = mService.updateNewUserNews(aboard);
+	
+		if (insertAboard > 0 && insertNewsUser > 0) {
 			//System.out.println("insertAboard 결과 : " + insertAboard);
 			model.addAttribute("msg", "공지글 등록에 성공하였습니다.");
 			return "redirect:/admin/home";
